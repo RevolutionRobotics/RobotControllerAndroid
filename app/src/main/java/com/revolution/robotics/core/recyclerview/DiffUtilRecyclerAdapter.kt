@@ -28,9 +28,11 @@ abstract class DiffUtilRecyclerAdapter<T : DiffUtilRecyclerAdapter.BaseListViewM
 
                         override fun getNewListSize() = newItems.size
 
-                        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int) = oldItems[oldItemPosition].idField == newItems[newItemPosition].idField
+                        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int) =
+                            oldItems[oldItemPosition].idField == newItems[newItemPosition].idField
 
-                        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int) = oldItems[oldItemPosition] == newItems[newItemPosition]
+                        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int) =
+                            oldItems[oldItemPosition] == newItems[newItemPosition]
                     })
                 }.dispatchUpdatesTo(this@DiffUtilRecyclerAdapter)
                 items.swap(newItems)

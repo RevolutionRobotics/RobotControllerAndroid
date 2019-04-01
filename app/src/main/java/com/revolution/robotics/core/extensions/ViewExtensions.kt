@@ -12,7 +12,13 @@ import androidx.annotation.StyleableRes
 import androidx.viewpager.widget.ViewPager
 
 @JvmOverloads
-fun View.useStyledAttributes(set: AttributeSet?, @StyleableRes attrs: IntArray, defStyleAttr: Int = 0, defStyleRes: Int = 0, block: TypedArray.() -> Unit) = set?.let {
+fun View.useStyledAttributes(
+    set: AttributeSet?,
+    @StyleableRes attrs: IntArray,
+    defStyleAttr: Int = 0,
+    defStyleRes: Int = 0,
+    block: TypedArray.() -> Unit
+) = set?.let {
     val typedArray = context.theme.obtainStyledAttributes(set, attrs, defStyleAttr, defStyleRes)
     try {
         block(typedArray)
@@ -30,7 +36,6 @@ fun ViewPager.onPageSelected(listener: (position: Int) -> Unit) {
         }
 
         override fun onPageSelected(position: Int) = listener(position)
-
     })
 }
 
@@ -39,7 +44,6 @@ var View.visible: Boolean
         this.visibility = if (value) View.VISIBLE else View.GONE
     }
     get() = this.visibility == View.VISIBLE
-
 
 val ViewGroup.views: List<View>
     get() = (0 until childCount).map { getChildAt(it) }

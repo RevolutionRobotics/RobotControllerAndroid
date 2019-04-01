@@ -22,5 +22,4 @@ abstract class BaseFragment<B : ViewDataBinding>(@LayoutRes private val layoutRe
         super.onDestroy()
         binding = null
     }
-
 }

@@ -4,16 +4,18 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.revolution.robotics.core.extensions.swap
 
-abstract class RecyclerAdapter<T: Any> : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+abstract class RecyclerAdapter<T : Any> : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     protected val items = mutableListOf<T>()
     protected val adapterDelegate = AdapterDelegate<T>()
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) = adapterDelegate.onBindViewHolder(holder, items[position])
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) =
+        adapterDelegate.onBindViewHolder(holder, items[position])
 
     override fun getItemCount(): Int = items.count()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder = adapterDelegate.onCreateViewHolder(parent, viewType)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
+        adapterDelegate.onCreateViewHolder(parent, viewType)
 
     override fun getItemViewType(position: Int): Int = adapterDelegate.getItemViewType(items[position])
 
@@ -46,5 +48,4 @@ abstract class RecyclerAdapter<T: Any> : RecyclerView.Adapter<RecyclerView.ViewH
             holder.clearResources(MemoryOptimizedViewHolder.Reason.DETACHED)
         }
     }
-
 }

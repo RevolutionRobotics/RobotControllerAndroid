@@ -6,4 +6,3 @@ fun <T> MutableCollection<T>.swap(newCollection: List<T>) {
 }
 
 fun <T> List<T>?.isEmptyOrNull() = this == null || this.isEmpty()
-

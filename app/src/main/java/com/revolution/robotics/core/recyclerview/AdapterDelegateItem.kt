@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
-
 abstract class AdapterDelegateItem<in T> {
 
     abstract fun canHandleData(data: Any): Boolean
@@ -13,6 +12,6 @@ abstract class AdapterDelegateItem<in T> {
 
     abstract fun onCreateViewHolder(parent: ViewGroup, inflater: LayoutInflater): RecyclerView.ViewHolder
 
-    fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder = onCreateViewHolder(parent, LayoutInflater.from(parent.context))
-
+    fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder =
+        onCreateViewHolder(parent, LayoutInflater.from(parent.context))
 }
