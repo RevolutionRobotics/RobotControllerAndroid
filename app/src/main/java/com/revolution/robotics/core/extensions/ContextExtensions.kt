@@ -9,6 +9,7 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat
+import java.lang.IllegalArgumentException
 
 fun Context.color(@ColorRes colorId: Int) = ContextCompat.getColor(this, colorId)
 
@@ -18,6 +19,7 @@ fun Context.dimensionAsFloat(@DimenRes dimensionId: Int) = resources.getDimensio
 
 fun Context.drawable(@DrawableRes drawableId: Int) = AppCompatResources.getDrawable(this, drawableId)
 
-fun Context.font(@FontRes fontId: Int) = ResourcesCompat.getFont(this, fontId) ?: throw(Throwable("Font doesn't exist"))
+fun Context.font(@FontRes fontId: Int) =
+    ResourcesCompat.getFont(this, fontId) ?: throw IllegalArgumentException("Font doesn't exist")
 
 fun Context.animatedDrawable(@DrawableRes drawableId: Int) = AnimatedVectorDrawableCompat.create(this, drawableId)

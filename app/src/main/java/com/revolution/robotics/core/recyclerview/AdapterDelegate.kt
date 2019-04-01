@@ -3,7 +3,6 @@ package com.revolution.robotics.core.recyclerview
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
-
 class AdapterDelegate<T : Any> {
 
     private val adapterItems: ArrayList<AdapterDelegateItem<T>> = ArrayList()
@@ -12,9 +11,11 @@ class AdapterDelegate<T : Any> {
         adapterItems.add(item)
     }
 
-    fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder = getAdapterItemForViewType(viewType).onCreateViewHolder(parent)
+    fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
+        getAdapterItemForViewType(viewType).onCreateViewHolder(parent)
 
-    fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, data: T) = getAdapterItemForViewType(viewHolder.itemViewType).onBindViewHolder(viewHolder, data)
+    fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, data: T) =
+        getAdapterItemForViewType(viewHolder.itemViewType).onBindViewHolder(viewHolder, data)
 
     fun getItemViewType(data: T): Int {
         adapterItems.forEach {

@@ -11,5 +11,4 @@ class RoboticsApplication : Application() {
 
         startKoin(this, listOf(appModule))
     }
-
 }
