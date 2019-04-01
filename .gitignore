@@ -9,6 +9,9 @@
 /.idea/navEditor.xml
 /.idea/assetWizardSettings.xml
 /.idea/dictionaries/*.xml
+/.idea/checkstyle-idea.xml
+/.idea/inspectionProfiles/
+/.idea/vcs.xml
 .DS_Store
 /build
 /captures
