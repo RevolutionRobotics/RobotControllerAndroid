@@ -2,22 +2,14 @@ package com.revolution.robotics
 
 import android.app.Application
 import com.revolution.robotics.core.koin.appModule
-import org.koin.android.ext.koin.androidContext
-import org.koin.android.ext.koin.androidLogger
-import org.koin.core.context.startKoin
+import org.koin.android.ext.android.startKoin
 
-class RoboticsApplication: Application() {
+class RoboticsApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
 
-        // Koin
-        startKoin {
-            // TODO only enable logger for release builds
-            androidLogger()
-            androidContext(this@RoboticsApplication)
-            modules(appModule)
-        }
+        startKoin(this, listOf(appModule))
     }
 
 }
