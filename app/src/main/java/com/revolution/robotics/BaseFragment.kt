@@ -13,8 +13,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 
-abstract class BaseFragment<B : ViewDataBinding, V : ViewModel>(@LayoutRes private val layoutResourceId: Int) :
-    Fragment() {
+abstract class BaseFragment<B : ViewDataBinding, V : ViewModel>(@LayoutRes private val layoutResourceId: Int)
+    : Fragment() {
 
     protected var binding: B? = null
     protected var viewModel: V? = null
