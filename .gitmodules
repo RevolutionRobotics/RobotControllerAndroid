@@ -1,0 +1,6 @@
+[submodule "sc-danger"]
+	path = sc-danger
+	url = git@gitlab.supercharge.io:misc/sc-danger.git
+[submodule "android-quality-config"]
+	path = android-quality-config
+	url = git@gitlab.supercharge.io:misc/android-quality-config.git

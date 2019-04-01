@@ -13,6 +13,9 @@ buildscript {
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
+    ext {
+        code_quality_rootDir = "${project.rootDir}/android-quality-config/"
+    }
 }
 
 allprojects {
@@ -38,4 +41,16 @@ subprojects {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+allprojects {
+    tasks.withType(JavaCompile) {
+        options.compilerArgs << "-Xmaxerrs" << "99999"
+    }
+
+    tasks.whenTaskAdded { task ->
+        if (task.name.contains("Test")) {
+            task.enabled = false
+        }
+    }
 }
