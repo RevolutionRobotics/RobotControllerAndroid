@@ -8,7 +8,4 @@ val appModule = module {
     // Singletons
     single { DynamicPermissionHandler() }
 
-    // Normal instances
-    factory { ConnectivityHandler() }
-
 }
