@@ -70,6 +70,7 @@ def junit = "4.12"
 def test_runner = "1.1.1"
 def espresso = "3.1.1"
 def koin_version = "1.0.2"
+def lifecycle_version = "2.0.0"
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
@@ -97,6 +98,11 @@ dependencies {
 
     // Koin
     implementation "org.koin:koin-android:$koin_version"
+
+    // ViewModel & Livedata
+    implementation "androidx.lifecycle:lifecycle-viewmodel:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-livedata:$lifecycle_version"
 
     testImplementation "junit:junit:$junit"
     androidTestImplementation "androidx.test:runner:$test_runner"
