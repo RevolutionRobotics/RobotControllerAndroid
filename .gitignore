@@ -4,9 +4,11 @@
 /.idea/caches
 /.idea/libraries
 /.idea/modules.xml
+/.idea/misc.xml
 /.idea/workspace.xml
 /.idea/navEditor.xml
 /.idea/assetWizardSettings.xml
+/.idea/dictionaries/*.xml
 .DS_Store
 /build
 /captures
