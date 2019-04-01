@@ -7,5 +7,4 @@ val appModule = module {
 
     // Singletons
     single { DynamicPermissionHandler() }
-
 }
