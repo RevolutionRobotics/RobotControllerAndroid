@@ -13,13 +13,45 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-    buildTypes {
+
+    signingConfigs {
         release {
+            storeFile file('../codesign/prod.jks')
+            storePassword "62d0636e6e344195a62ccb4528d26ede"
+            keyAlias "robotics"
+            keyPassword "62d0636e6e344195a62ccb4528d26ede"
+        }
+        debug {
+            storeFile file('../codesign/debug.keystore')
+            storePassword 'android'
+            keyAlias 'androiddebugkey'
+            keyPassword 'android'
+        }
+    }
+
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.debug
             minifyEnabled false
+        }
+
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 
+    flavorDimensions "default"
+    productFlavors {
+        dev {
+            applicationIdSuffix ".demo"
+        }
+
+        prod {
+
+        }
+    }
 
     dataBinding {
         enabled = true
