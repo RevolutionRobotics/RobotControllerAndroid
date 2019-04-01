@@ -16,7 +16,7 @@ android {
 
     signingConfigs {
         release {
-            storeFile file('/Users/laszlonagy/dev/project_studio/robotics/codesign/prod.jks')
+            storeFile file('../codesign/prod.jks')
             storePassword "62d0636e6e344195a62ccb4528d26ede"
             keyAlias "robotics"
             keyPassword "62d0636e6e344195a62ccb4528d26ede"
