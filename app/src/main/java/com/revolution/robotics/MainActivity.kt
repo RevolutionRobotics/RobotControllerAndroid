@@ -13,11 +13,11 @@ class MainActivity : AppCompatActivity(), KodeinAware {
     override val kodein by kodein()
     private val dynamicPermissionHandler: DynamicPermissionHandler by instance()
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) =
-        dynamicPermissionHandler.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(BlocklyView(this))
     }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) =
+        dynamicPermissionHandler.onRequestPermissionsResult(requestCode, permissions, grantResults)
 }
