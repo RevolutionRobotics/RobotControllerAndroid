@@ -8,5 +8,4 @@ data class Robot(
     var defaultProgram: String? = null,
     var description: String? = null,
     var name: String? = null
-
 )
