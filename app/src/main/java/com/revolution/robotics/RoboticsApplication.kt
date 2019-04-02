@@ -20,5 +20,6 @@ class RoboticsApplication : Application(), KodeinAware {
         if (!BuildConfig.DEBUG) {
             Fabric.with(this, Crashlytics())
         }
+        FirebaseApp.initializeApp(this)
     }
 }

@@ -1,0 +1,35 @@
+{
+  "project_info": {
+    "project_number": "753863076984",
+    "firebase_url": "https://revolutionrobotics-afeb5.firebaseio.com",
+    "project_id": "revolutionrobotics-afeb5",
+    "storage_bucket": "revolutionrobotics-afeb5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:753863076984:android:d73de4f842046935",
+        "android_client_info": {
+          "package_name": "com.revolution.robotics.dev"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCK9lpyWV9el5TKHZ2RWTSFarzXBA8wIDo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "753863076984-h4nktqi28b1fufegftaa3ugku1prnpc8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
