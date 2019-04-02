@@ -14,7 +14,6 @@ abstract class DiffUtilRecyclerAdapter<T : DiffUtilRecyclerAdapter.BaseListViewM
                 override fun areItemsTheSame(oldItem: T, newItem: T): Boolean = oldItem.idField == newItem.idField
 
                 override fun areContentsTheSame(oldItem: T, newItem: T): Boolean = oldItem == newItem
-
             }).build()
         )
     }
