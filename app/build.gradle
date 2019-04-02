@@ -57,6 +57,10 @@ android {
     dataBinding {
         enabled = true
     }
+
+    packagingOptions {
+        exclude 'META-INF/main.kotlin_module'
+    }
 }
 
 def glide_version = "4.9.0"
@@ -70,7 +74,7 @@ def junit = "4.12"
 def test_runner = "1.1.1"
 def espresso = "3.1.1"
 def lifecycle_version = "2.0.0"
-def kodein_version = "6.1.0"
+def kodein_version = "5.1.1"
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
@@ -98,6 +102,7 @@ dependencies {
 
     // Kodein
     implementation "org.kodein.di:kodein-di-erased-jvm:$kodein_version"
+    implementation "org.kodein.di:kodein-di-framework-android:$kodein_version"
 
     // ViewModel & Livedata
     implementation "androidx.lifecycle:lifecycle-viewmodel:$lifecycle_version"
