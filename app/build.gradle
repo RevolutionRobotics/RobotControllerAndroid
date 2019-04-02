@@ -69,8 +69,8 @@ def recyclerview = "1.0.0"
 def junit = "4.12"
 def test_runner = "1.1.1"
 def espresso = "3.1.1"
-def koin_version = "1.0.2"
 def lifecycle_version = "2.0.0"
+def kodein_version = "6.1.0"
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
@@ -96,8 +96,8 @@ dependencies {
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
 
-    // Koin
-    implementation "org.koin:koin-android:$koin_version"
+    // Kodein
+    implementation "org.kodein.di:kodein-di-erased-jvm:$kodein_version"
 
     // ViewModel & Livedata
     implementation "androidx.lifecycle:lifecycle-viewmodel:$lifecycle_version"
