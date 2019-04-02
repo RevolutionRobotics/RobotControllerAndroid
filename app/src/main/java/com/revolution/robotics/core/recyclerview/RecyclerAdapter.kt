@@ -6,7 +6,7 @@ import com.revolution.robotics.core.extensions.swap
 
 abstract class RecyclerAdapter<T : Any> : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    protected val items = mutableListOf<T>()
+    protected open val items = mutableListOf<T>()
     protected val adapterDelegate = AdapterDelegate<T>()
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) =
@@ -24,7 +24,7 @@ abstract class RecyclerAdapter<T : Any> : RecyclerView.Adapter<RecyclerView.View
         notifyDataSetChanged()
     }
 
-    fun getItem(position: Int): T = items[position]
+    open fun getItem(position: Int): T = items[position]
 
     fun clearItems() = setItems(listOf())
 
