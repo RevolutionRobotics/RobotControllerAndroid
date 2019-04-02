@@ -1,7 +1,10 @@
 package com.revolution.robotics.core.kodein
 
 import android.content.Context
+import com.revolution.robotics.core.interactor.BuildStepInteractor
+import com.revolution.robotics.core.interactor.ConfigurationInteractor
 import com.revolution.robotics.core.interactor.RobotInteractor
+import com.revolution.robotics.core.interactor.TestCodeInteractor
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.core.utils.dynamicPermissions.DynamicPermissionHandler
 import org.kodein.di.Kodein
@@ -23,4 +26,7 @@ fun createAppModule(context: Context) =
 fun createInteractorModule() =
     Kodein.Module("InteractorModule") {
         bind<RobotInteractor>() with provider { RobotInteractor() }
+        bind<BuildStepInteractor>() with provider { BuildStepInteractor() }
+        bind<ConfigurationInteractor>() with provider { ConfigurationInteractor() }
+        bind<TestCodeInteractor>() with provider { TestCodeInteractor() }
     }
