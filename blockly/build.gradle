@@ -30,3 +30,14 @@ dependencies {
 repositories {
     mavenCentral()
 }
+
+task copyBlocklyFiles(type: Copy) {
+    from('../blockly-js/Blockly') {
+        include 'blockly_compressed.js', 'blocks_compressed.js', 'msg/js/**', 'media/**', 'webview.html', 'toolbox_standard.js'
+    }
+    into project(':blockly').file('./src/main/assets/blockly')
+}
+
+project.afterEvaluate {
+    preBuild.dependsOn(copyBlocklyFiles)
+}

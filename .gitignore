@@ -6,3 +6,4 @@
 /build
 /captures
 .externalNativeBuild
+/blockly/src/main/assets/blockly/**
