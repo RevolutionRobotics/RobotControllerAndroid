@@ -9,5 +9,4 @@ val appModule = Kodein.Module("AppModule") {
 
     // Singletons
     bind<DynamicPermissionHandler>() with singleton { DynamicPermissionHandler() }
-
 }
