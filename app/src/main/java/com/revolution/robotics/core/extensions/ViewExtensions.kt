@@ -9,6 +9,7 @@ import android.view.ViewTreeObserver
 import android.widget.TextView
 import androidx.annotation.StyleRes
 import androidx.annotation.StyleableRes
+import androidx.databinding.BindingAdapter
 import androidx.viewpager.widget.ViewPager
 
 @JvmOverloads
@@ -39,11 +40,26 @@ fun ViewPager.onPageSelected(listener: (position: Int) -> Unit) {
     })
 }
 
-var View.visible: Boolean
+@set:BindingAdapter("visible")
+var View.visible
+    get() = visibility == View.VISIBLE
     set(value) {
-        this.visibility = if (value) View.VISIBLE else View.GONE
+        visibility = if (value) View.VISIBLE else View.INVISIBLE
     }
-    get() = this.visibility == View.VISIBLE
+
+@set:BindingAdapter("invisible")
+var View.invisible
+    get() = visibility == View.INVISIBLE
+    set(value) {
+        visibility = if (value) View.INVISIBLE else View.VISIBLE
+    }
+
+@set:BindingAdapter("gone")
+var View.gone
+    get() = visibility == View.GONE
+    set(value) {
+        visibility = if (value) View.GONE else View.VISIBLE
+    }
 
 val ViewGroup.views: List<View>
     get() = (0 until childCount).map { getChildAt(it) }

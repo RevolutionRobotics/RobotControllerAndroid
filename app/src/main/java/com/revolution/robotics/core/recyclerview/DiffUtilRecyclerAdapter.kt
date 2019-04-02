@@ -1,43 +1,30 @@
 package com.revolution.robotics.core.recyclerview
 
+import androidx.recyclerview.widget.AdapterListUpdateCallback
+import androidx.recyclerview.widget.AsyncDifferConfig
+import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
-import com.revolution.robotics.core.extensions.swap
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.withContext
-import kotlin.coroutines.CoroutineContext
 
 abstract class DiffUtilRecyclerAdapter<T : DiffUtilRecyclerAdapter.BaseListViewModel> : RecyclerAdapter<T>() {
 
-    private var coroutine: CoroutineContext? = null
+    private val asyncListDiffer by lazy {
+        AsyncListDiffer(
+            AdapterListUpdateCallback(this),
+            AsyncDifferConfig.Builder<T>(object : DiffUtil.ItemCallback<T>() {
+                override fun areItemsTheSame(oldItem: T, newItem: T): Boolean = oldItem.idField == newItem.idField
+
+                override fun areContentsTheSame(oldItem: T, newItem: T): Boolean = oldItem == newItem
+            }).build()
+        )
+    }
+
+    override val items: MutableList<T>
+        get() {
+            return asyncListDiffer.currentList
+        }
 
     override fun setItems(newItems: List<T>) {
-        if (items.isEmpty()) {
-            if (newItems.isNotEmpty()) {
-                super.setItems(newItems)
-            }
-        } else {
-            coroutine?.cancel()
-            coroutine = GlobalScope.async(Dispatchers.Main) {
-                val oldItems = items.toList()
-                withContext(Dispatchers.IO) {
-                    DiffUtil.calculateDiff(object : DiffUtil.Callback() {
-                        override fun getOldListSize() = oldItems.size
-
-                        override fun getNewListSize() = newItems.size
-
-                        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int) =
-                            oldItems[oldItemPosition].idField == newItems[newItemPosition].idField
-
-                        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int) =
-                            oldItems[oldItemPosition] == newItems[newItemPosition]
-                    })
-                }.dispatchUpdatesTo(this@DiffUtilRecyclerAdapter)
-                items.swap(newItems)
-            }
-        }
+        asyncListDiffer.submitList(newItems)
     }
 
     abstract class BaseListViewModel {
