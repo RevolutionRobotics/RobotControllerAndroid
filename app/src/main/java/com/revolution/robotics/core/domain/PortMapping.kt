@@ -29,6 +29,6 @@ open class PortMapping {
     var M2: Motor? = null
     var M3: Motor? = null
     var M4: Motor? = null
-    var M6: Motor? = null
     var M5: Motor? = null
+    var M6: Motor? = null
 }

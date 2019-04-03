@@ -9,7 +9,8 @@ import androidx.room.Query
 
 @Entity
 data class UserConfiguration(
-    @PrimaryKey(autoGenerate = true) var id: Int = 0,
+    @PrimaryKey(autoGenerate = true)
+    var id: Int = 0,
     var controller: String? = null,
     @Embedded
     var mappingId: UserMapping? = null
