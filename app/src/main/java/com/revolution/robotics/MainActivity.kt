@@ -17,13 +17,7 @@ class MainActivity : AppCompatActivity(), KodeinAware {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val frameLayout = FrameLayout(this)
-        frameLayout.id = R.id.line1
-        setContentView(frameLayout)
-
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.line1, MainMenuFragment())
-            .commit()
+        setContentView(BlocklyView(this))
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) =
