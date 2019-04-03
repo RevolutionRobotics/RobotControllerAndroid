@@ -1,4 +1,4 @@
-package com.revolution.robotics.core.domain
+package com.revolution.robotics.core.domain.remote
 
 data class BuildStep(
     var image: String? = null,

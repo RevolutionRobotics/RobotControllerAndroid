@@ -2,7 +2,7 @@ package com.revolution.robotics.core.interactor
 
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.GenericTypeIndicator
-import com.revolution.robotics.core.domain.FirebaseException
+import com.revolution.robotics.core.domain.remote.FirebaseException
 
 abstract class FirebaseListInteractor<T> : FirebaseInteractor<ArrayList<T>>() {
 
