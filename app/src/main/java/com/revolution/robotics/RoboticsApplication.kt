@@ -4,6 +4,7 @@ import android.app.Application
 import com.crashlytics.android.Crashlytics
 import com.google.firebase.FirebaseApp
 import com.revolution.robotics.core.kodein.createAppModule
+import com.revolution.robotics.core.kodein.createDbModule
 import com.revolution.robotics.core.kodein.createInteractorModule
 import com.revolution.robotics.core.kodein.createMainModule
 import com.revolution.robotics.core.kodein.createViewModelModule
@@ -18,6 +19,7 @@ class RoboticsApplication : Application(), KodeinAware {
         import(createAppModule(this@RoboticsApplication))
         import(createInteractorModule())
         import(createViewModelModule())
+        import(createDbModule(this@RoboticsApplication))
     }
 
     override fun onCreate() {
