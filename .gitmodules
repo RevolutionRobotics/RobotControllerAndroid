@@ -3,7 +3,7 @@
 	url = git@gitlab.supercharge.io:misc/sc-danger.git
 [submodule "android-quality-config"]
 	path = android-quality-config
-	url = git@gitlab.supercharge.io:misc/android-quality-config.git
+	url = git@gitlab.supercharge.io:code-quality/android-quality-config.git
 [submodule "blockly-js"]
 	path = blockly-js
 	url = git@gitlab.supercharge.io:revolutionrobotics/blockly-js.git
