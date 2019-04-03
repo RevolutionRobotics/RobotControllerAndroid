@@ -7,6 +7,7 @@ import com.revolution.robotics.core.interactor.RobotInteractor
 import com.revolution.robotics.core.interactor.TestCodeInteractor
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.core.utils.dynamicPermissions.DynamicPermissionHandler
+import com.revolution.robotics.mainmenu.MainMenuViewModel
 import org.kodein.di.Kodein
 import org.kodein.di.erased.bind
 import org.kodein.di.erased.provider
@@ -29,4 +30,9 @@ fun createInteractorModule() =
         bind<BuildStepInteractor>() with provider { BuildStepInteractor() }
         bind<ConfigurationInteractor>() with provider { ConfigurationInteractor() }
         bind<TestCodeInteractor>() with provider { TestCodeInteractor() }
+    }
+
+fun createViewModelModule() =
+    Kodein.Module("ViewModelModule") {
+        bind<MainMenuViewModel>() with provider { MainMenuViewModel() }
     }
