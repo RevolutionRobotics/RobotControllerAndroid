@@ -1,10 +1,8 @@
 package com.revolution.robotics
 
 import android.os.Bundle
-import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.revolution.robotics.core.utils.dynamicPermissions.DynamicPermissionHandler
-import com.revolution.robotics.mainmenu.MainMenuFragment
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.erased.instance
