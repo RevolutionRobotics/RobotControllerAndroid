@@ -1,15 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable name="viewModel" type="com.revolution.robotics.mainmenu.MainMenuViewModel"/>
     </data>
 
 
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                 android:layout_width="match_parent"
-                 android:layout_height="match_parent"
-                 android:background="@color/colorPrimary">
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                       android:layout_width="match_parent"
+                                                       android:layout_height="match_parent">
 
-    </FrameLayout>
+
+        <Button
+                android:id="@+id/btn_robots"
+                android:layout_width="120dp"
+                android:layout_height="180dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                android:text="Robots"/>
+
+        <Button
+                android:id="@+id/btn_coding"
+                android:layout_width="120dp"
+                android:layout_height="180dp"
+                app:layout_constraintLeft_toRightOf="@id/btn_robots"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                android:text="Coding"/>
+
+        <Button
+                android:id="@+id/btn_challenges"
+                android:layout_width="120dp"
+                android:layout_height="180dp"
+                app:layout_constraintLeft_toRightOf="@id/btn_coding"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                android:text="Challenges"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
