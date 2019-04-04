@@ -2,6 +2,8 @@ package com.revolution.robotics.core.kodein
 
 import android.content.Context
 import androidx.room.Room
+import com.revolution.robotics.challenges.ChallengesViewModel
+import com.revolution.robotics.coding.CodingViewModel
 import com.revolution.robotics.core.db.RoboticsDatabase
 import com.revolution.robotics.core.domain.local.UserConfigurationDao
 import com.revolution.robotics.core.domain.local.UserRobotDao
@@ -13,6 +15,7 @@ import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.core.navigation.NavigationEventBus
 import com.revolution.robotics.core.utils.dynamicPermissions.DynamicPermissionHandler
 import com.revolution.robotics.mainmenu.MainMenuViewModel
+import com.revolution.robotics.robots.RobotsViewModel
 import org.kodein.di.Kodein
 import org.kodein.di.erased.bind
 import org.kodein.di.erased.instance
@@ -54,5 +57,8 @@ fun createDbModule(context: Context) =
 
 fun createViewModelModule() =
     Kodein.Module("ViewModelModule") {
-        bind<MainMenuViewModel>() with provider { MainMenuViewModel() }
+        bind<MainMenuViewModel>() with provider { MainMenuViewModel(instance()) }
+        bind<CodingViewModel>() with provider { CodingViewModel() }
+        bind<ChallengesViewModel>() with provider { ChallengesViewModel() }
+        bind<RobotsViewModel>() with provider { RobotsViewModel() }
     }

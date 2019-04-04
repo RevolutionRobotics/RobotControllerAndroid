@@ -3,6 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: "kotlin-kapt"
 apply plugin: "io.fabric"
+apply plugin: "androidx.navigation.safeargs.kotlin"
 apply from: "${project.code_quality_rootDir}/config/quality/quality.gradle"
 
 

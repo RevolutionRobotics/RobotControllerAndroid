@@ -5,5 +5,17 @@
 
     <fragment android:id="@+id/mainMenuFragment"
               android:name="com.revolution.robotics.mainmenu.MainMenuFragment"
-              android:label="MainMenuFragment"/>
+              android:label="MainMenuFragment">
+        <action android:id="@+id/action_mainMenuFragment_to_codingFragment" app:destination="@id/codingFragment"/>
+        <action android:id="@+id/action_mainMenuFragment_to_challengesFragment"
+                app:destination="@id/challengesFragment"/>
+        <action android:id="@+id/action_mainMenuFragment_to_robotsFragment" app:destination="@id/robotsFragment"/>
+    </fragment>
+
+    <fragment android:id="@+id/codingFragment" android:name="com.revolution.robotics.coding.CodingFragment"
+              android:label="CodingFragment"/>
+    <fragment android:id="@+id/challengesFragment" android:name="com.revolution.robotics.challenges.ChallengesFragment"
+              android:label="ChallengesFragment"/>
+    <fragment android:id="@+id/robotsFragment" android:name="com.revolution.robotics.robots.RobotsFragment"
+              android:label="RobotsFragment"/>
 </navigation>
