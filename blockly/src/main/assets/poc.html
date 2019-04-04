@@ -1,0 +1,23 @@
+<html>
+	<head>
+		<title>Robotics POC</title>
+	</head>
+	<body>
+		<h3>Robotics POC</h3>
+		<p>This HTML is the Proof of Concept for Javascript bridging. We need to validate that Javascript can call native methods with parameters, as well as handling their return value.</p>
+		<p>To validate this, the link below calls two native methods of the <code><strong>NativePoc</strong></code> class: <code><strong>createMessage(String): String</strong></code> and <code><strong>displayMessage(String)</strong></code>.</p>
+		<ul>
+			<li><code><strong>createMessage(String): String</strong></code> should return the parameter string with ' World' appended to it. For example, if the parameter is 'Hello', the returned string should be 'Hello World'.</li>
+			<li><code><strong>displayMessage(String)</strong></code> should show a Toast/Alert with the message received as a parameter.</li>
+		</ul>
+
+		<a href="#" onclick="poc('Hello')">Press me!</a>
+	</body>
+
+	<script>
+		function poc(message) {
+			var nativeMessage = NativePoc.createMessage(message);
+			NativePoc.displayMessage(nativeMessage);
+		}
+	</script>
+</html>
