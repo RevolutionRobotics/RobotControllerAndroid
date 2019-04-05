@@ -11,6 +11,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+
+        <View android:layout_width="match_parent"
+              android:layout_height="?attr/actionBarSize"
+        />
+
         <Button
                 android:id="@+id/btn_robots"
                 android:layout_width="120dp"
