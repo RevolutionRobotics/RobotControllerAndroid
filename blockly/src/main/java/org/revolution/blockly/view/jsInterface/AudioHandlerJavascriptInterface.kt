@@ -4,7 +4,7 @@ import android.content.Context
 import android.media.MediaPlayer
 import android.webkit.JavascriptInterface
 
-class AudioHandlerJavascriptInterface(ctx: Context): BlocklyJavascriptInterface {
+class AudioHandlerJavascriptInterface(ctx: Context) : BlocklyJavascriptInterface {
 
     private var context: Context? = ctx
     private val mediaPlayer = MediaPlayer()
