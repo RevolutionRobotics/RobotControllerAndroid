@@ -3,30 +3,33 @@ package org.revolution.blockly.view
 import android.content.Context
 import android.util.AttributeSet
 import android.webkit.WebView
-import org.revolution.blockly.view.jsInterface.AudioHandlerJavascriptInterface
+import org.revolution.blockly.view.jsInterface.BlocklyJavascriptInterface
 
 @Suppress("SetJavaScriptEnabled")
 class BlocklyView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
     WebView(context, attrs, defStyleAttr) {
 
-    private val jsInterface = AudioHandlerJavascriptInterface(context)
-
-    companion object {
-        // TODO remove POC implementation
-        // private const val ASSET_PATH = "file:///android_asset/blockly/webview.html"
-        private const val ASSET_PATH = "file:///android_asset/play_sound.html"
-    }
+    private var javascriptInterface: BlocklyJavascriptInterface? = null
 
     init {
         webChromeClient = BlocklyWebChromeClient()
         settings.javaScriptEnabled = true
-        addJavascriptInterface(jsInterface, "Native")
-        loadUrl(ASSET_PATH)
+    }
+
+    @Suppress("JavascriptInterface")
+    fun init(htmlPath: String, interfaceDescriptor: JavascriptInterfaceDescriptor? = null) {
+        if (interfaceDescriptor != null) {
+            this.javascriptInterface = interfaceDescriptor.javascriptInterface
+            addJavascriptInterface(javascriptInterface, interfaceDescriptor.name)
+        }
+
+        loadUrl(htmlPath)
     }
 
     override fun onDetachedFromWindow() {
-        jsInterface.release()
+        javascriptInterface?.release()
         super.onDetachedFromWindow()
     }
 
+    data class JavascriptInterfaceDescriptor(val javascriptInterface: BlocklyJavascriptInterface, val name: String)
 }
