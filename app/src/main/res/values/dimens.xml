@@ -2,5 +2,6 @@
 <resources>
     <dimen name="header_height">42dp</dimen>
     <dimen name="footer_height">28dp</dimen>
-    <dimen name="header_border_size">32dp</dimen>
+    <dimen name="header_border_size">34dp</dimen>
+    <dimen name="toolbar_icon_size">34dp</dimen>
 </resources>
