@@ -26,8 +26,8 @@ class MainActivity : AppCompatActivity(), KodeinAware, NavigationEventBus.Naviga
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         navigationEventBus.unregisterListener(this)
+        super.onDestroy()
     }
 
     override fun onNavigationEvent(navDirections: NavDirections) {
