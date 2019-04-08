@@ -2,7 +2,7 @@ package com.revolution.robotics.core.navigation
 
 import androidx.navigation.NavDirections
 
-class NavigationEventBus {
+class Navigator {
 
     private var listener: NavigationEventListener? = null
 
@@ -16,7 +16,7 @@ class NavigationEventBus {
         }
     }
 
-    fun publishEvent(navDirections: NavDirections) {
+    fun navigate(navDirections: NavDirections) {
         listener?.onNavigationEvent(navDirections)
     }
 

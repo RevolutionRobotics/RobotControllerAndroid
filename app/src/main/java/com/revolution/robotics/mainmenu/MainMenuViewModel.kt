@@ -1,25 +1,27 @@
 package com.revolution.robotics.mainmenu
 
 import androidx.lifecycle.ViewModel
-import com.revolution.robotics.core.navigation.NavigationEventBus
+import com.revolution.robotics.core.navigation.Navigator
 
-class MainMenuViewModel(private val navigationEventBus: NavigationEventBus) : ViewModel() {
+class MainMenuViewModel(private val navigator: Navigator) : ViewModel() {
 
     fun onRobotsClicked() {
-        navigationEventBus.publishEvent(MainMenuFragmentDirections.actionMainMenuFragmentToRobotsFragment())
+        navigator.navigate(MainMenuFragmentDirections.toRobots())
     }
 
     fun onCodingClicked() {
-        navigationEventBus.publishEvent(MainMenuFragmentDirections.actionMainMenuFragmentToCodingFragment())
+        navigator.navigate(MainMenuFragmentDirections.toCoding())
     }
 
     fun onChallengesClicked() {
-        navigationEventBus.publishEvent(MainMenuFragmentDirections.actionMainMenuFragmentToChallengesFragment())
+        navigator.navigate(MainMenuFragmentDirections.toChallenges())
     }
 
-    // Handle community navigation
-    fun onCommunityIconClicked() {}
+    fun onCommunityIconClicked() {
+        // navigator.navigate(MainMenuFragmentDirections.toCommunity())
+    }
 
-    // Handle robotics icon navigation
-    fun onRoboticsIconClicked() {}
+    fun onRoboticsIconClicked() {
+        // navigator.navigate(MainMenuFragmentDirections.toRobotics())
+    }
 }

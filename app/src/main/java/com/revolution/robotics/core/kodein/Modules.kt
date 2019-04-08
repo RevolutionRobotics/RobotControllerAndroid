@@ -12,7 +12,7 @@ import com.revolution.robotics.core.interactor.ConfigurationInteractor
 import com.revolution.robotics.core.interactor.RobotInteractor
 import com.revolution.robotics.core.interactor.TestCodeInteractor
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
-import com.revolution.robotics.core.navigation.NavigationEventBus
+import com.revolution.robotics.core.navigation.Navigator
 import com.revolution.robotics.core.utils.dynamicPermissions.DynamicPermissionHandler
 import com.revolution.robotics.mainmenu.MainMenuViewModel
 import com.revolution.robotics.robots.RobotsViewModel
@@ -26,7 +26,7 @@ fun createMainModule() =
     Kodein.Module("MainModule") {
         // Singletons
         bind<DynamicPermissionHandler>() with singleton { DynamicPermissionHandler() }
-        bind<NavigationEventBus>() with singleton { NavigationEventBus() }
+        bind<Navigator>() with singleton { Navigator() }
     }
 
 fun createAppModule(context: Context) =
