@@ -5,8 +5,8 @@
     <dimen name="header_border_size">30dp</dimen>
     <dimen name="toolbar_icon_size">34dp</dimen>
 
-    <dimen name="dimen_small">4dp</dimen>
-    <dimen name="dimen_medium">8dp</dimen>
-    <dimen name="dimen_large">16dp</dimen>
-    <dimen name="dimen_xlarge">32dp</dimen>
+    <dimen name="dimen_4dp">4dp</dimen>
+    <dimen name="dimen_8dp">8dp</dimen>
+    <dimen name="dimen_16dp">16dp</dimen>
+    <dimen name="dimen_32dp">32dp</dimen>
 </resources>

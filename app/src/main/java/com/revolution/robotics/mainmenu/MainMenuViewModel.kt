@@ -18,11 +18,8 @@ class MainMenuViewModel(private val navigationEventBus: NavigationEventBus) : Vi
     }
 
     // Handle community navigation
-    fun onCommunityIconClicked() {
-    }
+    fun onCommunityIconClicked() {}
 
     // Handle robotics icon navigation
-    fun onRoboticsIconClicked() {
-    }
-
+    fun onRoboticsIconClicked() {}
 }
