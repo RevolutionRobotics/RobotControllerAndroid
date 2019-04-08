@@ -6,10 +6,10 @@
     <fragment android:id="@+id/mainMenuFragment"
               android:name="com.revolution.robotics.mainmenu.MainMenuFragment"
               android:label="MainMenuFragment">
-        <action android:id="@+id/action_mainMenuFragment_to_codingFragment" app:destination="@id/codingFragment"/>
-        <action android:id="@+id/action_mainMenuFragment_to_challengesFragment"
+        <action android:id="@+id/toCoding" app:destination="@id/codingFragment"/>
+        <action android:id="@+id/toChallenges"
                 app:destination="@id/challengesFragment"/>
-        <action android:id="@+id/action_mainMenuFragment_to_robotsFragment" app:destination="@id/robotsFragment"/>
+        <action android:id="@+id/toRobots" app:destination="@id/robotsFragment"/>
     </fragment>
 
     <fragment android:id="@+id/codingFragment" android:name="com.revolution.robotics.coding.CodingFragment"
