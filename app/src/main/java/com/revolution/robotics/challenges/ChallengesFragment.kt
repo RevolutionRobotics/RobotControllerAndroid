@@ -6,10 +6,9 @@ import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
 import com.revolution.robotics.databinding.FragmentChallengesBinding
 import org.revolution.blockly.view.BlocklyView
-import org.revolution.blockly.view.jsInterface.AudioHandlerJavascriptInterface
+import com.revolution.robotics.blockly.AudioHandlerJavascriptInterface
 
-class ChallengesFragment :
-    BaseFragment<FragmentChallengesBinding, ChallengesViewModel>(R.layout.fragment_challenges) {
+class ChallengesFragment : BaseFragment<FragmentChallengesBinding, ChallengesViewModel>(R.layout.fragment_challenges) {
 
     override val viewModelClass: Class<ChallengesViewModel> = ChallengesViewModel::class.java
 
