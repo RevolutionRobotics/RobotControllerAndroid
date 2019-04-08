@@ -17,9 +17,11 @@ class MainMenuViewModel(private val navigator: Navigator) : ViewModel() {
         navigator.navigate(MainMenuFragmentDirections.toChallenges())
     }
 
-    // Handle community navigation
-    fun onCommunityIconClicked() {}
+    fun onCommunityIconClicked() {
+        // navigator.navigate(MainMenuFragmentDirections.toCommunity())
+    }
 
-    // Handle robotics icon navigation
-    fun onRoboticsIconClicked() {}
+    fun onRoboticsIconClicked() {
+        // navigator.navigate(MainMenuFragmentDirections.toRobotics())
+    }
 }
