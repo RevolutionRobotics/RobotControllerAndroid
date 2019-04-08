@@ -16,4 +16,10 @@ class MainMenuViewModel(private val navigationEventBus: NavigationEventBus) : Vi
     fun onChallengesClicked() {
         navigationEventBus.publishEvent(MainMenuFragmentDirections.actionMainMenuFragmentToChallengesFragment())
     }
+
+    // Handle community navigation
+    fun onCommunityIconClicked() {}
+
+    // Handle robotics icon navigation
+    fun onRoboticsIconClicked() {}
 }
