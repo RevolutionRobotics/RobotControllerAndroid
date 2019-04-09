@@ -68,24 +68,26 @@
                 android:background="@color/gray_28"
                 app:layout_constraintBottom_toBottomOf="parent"/>
 
-        <Button
+        <include
+                layout="@layout/layout_main_menu_button"
                 android:id="@+id/btn_robots"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                app:viewModel="@{viewModel.robotButton}"
                 app:layout_constraintDimensionRatio="H,3:4"
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@id/btn_coding"
                 app:layout_constraintTop_toBottomOf="@id/header_border"
                 app:layout_constraintBottom_toTopOf="@id/bottom_border"
-                android:layout_margin="@dimen/dimen_32dp"
-                android:onClick="@{() -> viewModel.onRobotsClicked()}"
-                android:text="@string/menu_robots"/>
+                android:layout_margin="@dimen/dimen_32dp"/>
 
-        <Button
+        <include
+                layout="@layout/layout_main_menu_button"
                 android:id="@+id/btn_coding"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                app:viewModel="@{viewModel.programsButton}"
                 app:layout_constraintDimensionRatio="H,3:4"
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintLeft_toRightOf="@id/btn_robots"
@@ -93,13 +95,14 @@
                 app:layout_constraintTop_toBottomOf="@id/header_border"
                 app:layout_constraintBottom_toTopOf="@id/bottom_border"
                 android:layout_margin="@dimen/dimen_32dp"
-                android:onClick="@{() -> viewModel.onCodingClicked()}"
                 android:text="@string/menu_coding"/>
 
-        <Button
+        <include
+                layout="@layout/layout_main_menu_button"
                 android:id="@+id/btn_challenges"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                app:viewModel="@{viewModel.challengesButton}"
                 app:layout_constraintDimensionRatio="H,3:4"
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintLeft_toRightOf="@id/btn_coding"
@@ -107,7 +110,6 @@
                 app:layout_constraintTop_toBottomOf="@id/header_border"
                 app:layout_constraintBottom_toTopOf="@id/bottom_border"
                 android:layout_margin="@dimen/dimen_32dp"
-                android:onClick="@{() -> viewModel.onChallengesClicked()}"
                 android:text="@string/menu_challenges"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

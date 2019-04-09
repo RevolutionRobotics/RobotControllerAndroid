@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Robotics</string>
-    <string name="menu_robots">Robots</string>
-    <string name="menu_coding">Coding</string>
-    <string name="menu_challenges">Challenges</string>
+    <string name="menu_robots">robots</string>
+    <string name="menu_coding">programs</string>
+    <string name="menu_challenges">challenges</string>
 </resources>

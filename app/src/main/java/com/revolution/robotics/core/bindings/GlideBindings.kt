@@ -1,6 +1,7 @@
 package com.revolution.robotics.core.bindings
 
 import android.widget.ImageView
+import androidx.annotation.DrawableRes
 import androidx.databinding.BindingAdapter
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
@@ -10,6 +11,13 @@ import com.revolution.robotics.core.glide.GlideApp
 fun loadImage(imageView: ImageView, url: String?) {
     GlideApp.with(imageView)
         .load(url)
+        .into(imageView)
+}
+
+@BindingAdapter("localResource")
+fun loadLocalResource(imageView: ImageView, @DrawableRes localResource: Int) {
+    GlideApp.with(imageView)
+        .load(localResource)
         .into(imageView)
 }
 
