@@ -6,15 +6,18 @@
 		<h3>Play sound</h3>
 
 		<ul>
-			<li><a href="#" onclick="playSound('bell_1')">Bell #1</a></li>
-			<li><a href="#" onclick="playSound('bell_2')">Bell #2</a></li>
-			<li><a href="#" onclick="playSound('bell_3')">Bell #3</a></li>
+			<li><a href="#" onclick="getTextInput()">Play sound</a></li>
 		</ul>
 	</body>
 
 	<script>
-		function playSound(file) {
-			Native.playSound(file);
+		function getTextInput() {
+		    var sound = prompt("{\"type\": \"text\"}");
+		    playSound(sound);
+		}
+
+		function playSound(number) {
+			Native.playSound('bell_' + number);
 		}
 	</script>
 </html>

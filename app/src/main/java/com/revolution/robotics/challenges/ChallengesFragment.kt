@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
+import com.revolution.robotics.blockly.AudioHandlerJavascriptInterface
 import com.revolution.robotics.databinding.FragmentChallengesBinding
 import com.revolution.robotics.blockly.DialogFactory
 
@@ -12,6 +13,9 @@ class ChallengesFragment : BaseFragment<FragmentChallengesBinding, ChallengesVie
     override val viewModelClass: Class<ChallengesViewModel> = ChallengesViewModel::class.java
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding?.viewBlockly?.init("file:///android_asset/play_sound.html", DialogFactory())
+        binding?.viewBlockly?.apply {
+            init("file:///android_asset/play_sound.html", DialogFactory())
+            addJavascriptInterface(AudioHandlerJavascriptInterface(context), "Native")
+        }
     }
 }
