@@ -3,8 +3,10 @@ package com.revolution.robotics.blockly
 import android.content.Context
 import android.view.LayoutInflater
 import android.webkit.JsPromptResult
+import com.revolution.robotics.blockly.dialogs.SliderDialogViewModel
 import com.revolution.robotics.blockly.dialogs.TextInputDialogViewModel
 import com.revolution.robotics.databinding.BlocklyDialogInputTextBinding
+import com.revolution.robotics.databinding.BlocklyDialogSliderBinding
 import org.revolution.blockly.view.DialogFactory
 
 class DialogFactory : DialogFactory {
@@ -17,7 +19,9 @@ class DialogFactory : DialogFactory {
     }
 
     override fun showSliderDialog(result: JsPromptResult, context: Context) {
-        // TODO display slider dialog
-        result.confirm("3")
+        BlocklyDialogSliderBinding.inflate(LayoutInflater.from(context), null, false).apply {
+            viewModel = SliderDialogViewModel(result, this)
+            viewModel?.createAndShowDialog()
+        }
     }
 }
