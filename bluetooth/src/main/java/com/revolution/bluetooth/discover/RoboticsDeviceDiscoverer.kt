@@ -14,7 +14,11 @@ class RoboticsDeviceDiscoverer : ScanCallback() {
     var bluetoothAdapter: BluetoothAdapter? = null
     var scanResultListener: ScanResultListener? = null
 
-    @RequiresPermission(allOf = [Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION])
+    @RequiresPermission(
+        allOf = [Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.BLUETOOTH]
+    )
     fun discoverRobots(context: Context, scanResultListener: ScanResultListener) {
         bluetoothAdapter = context.getBLEManager().adapter
         this.scanResultListener = scanResultListener
