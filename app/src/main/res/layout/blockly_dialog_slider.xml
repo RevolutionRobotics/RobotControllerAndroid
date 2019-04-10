@@ -13,10 +13,21 @@
         <SeekBar
                 android:id="@+id/slider"
                 android:layout_width="0dp"
+                android:max="@{viewModel.maxValue}"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+                android:id="@+id/label"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/slider"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="@dimen/dimen_8dp"
+                android:gravity="center"
+                app:layout_constraintEnd_toEndOf="parent"/>
 
         <Button
                 android:id="@+id/button_cancel"
@@ -26,7 +37,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 android:onClick="@{() -> viewModel.onCancelClicked()}"
                 app:layout_constraintEnd_toStartOf="@id/button_ok"
-                app:layout_constraintTop_toBottomOf="@id/slider"
+                app:layout_constraintTop_toBottomOf="@id/label"
                 android:layout_marginTop="@dimen/dimen_16dp"/>
 
         <Button

@@ -12,7 +12,7 @@
 
 	<script>
 		function getTextInput() {
-		    var sound = prompt("{\"type\": \"slider\"}");
+		    var sound = prompt("{\"type\": \"slider\", \"options\": {\"minValue\": 1, \"maxValue\": 3}}");
 		    playSound(sound);
 		}
 

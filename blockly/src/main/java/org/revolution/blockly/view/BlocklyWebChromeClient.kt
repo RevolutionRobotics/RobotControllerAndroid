@@ -8,10 +8,11 @@ import org.json.JSONObject
 
 class BlocklyWebChromeClient(dialogFactory: DialogFactory) : WebChromeClient() {
 
-    private val factoryMethods = hashMapOf<String, ((JsPromptResult, Context) -> Unit)>(
+    private val factoryMethods = hashMapOf<String, ((JsPromptResult, JSONObject, Context) -> Unit)>(
         "text" to dialogFactory::showTextInputDialog,
         "slider" to dialogFactory::showSliderDialog
     )
+    private val defaultMethod = dialogFactory::customAction
 
     override fun onJsPrompt(
         view: WebView?,
@@ -22,14 +23,14 @@ class BlocklyWebChromeClient(dialogFactory: DialogFactory) : WebChromeClient() {
     ) =
         if (view != null && message != null && result != null) {
             // we didn't want to add the GSON dependency to a library module, so we're left with JSONObject
-            val expectedResultType = JSONObject(message).getString("type")
-            val method = factoryMethods[expectedResultType]
-            if (method != null) {
-                method.invoke(result, view.context)
-                true
+            val json = JSONObject(message)
+            val method = factoryMethods[json.getString("type")]
+            if (method == null) {
+                defaultMethod.invoke(json)
             } else {
-                false
+                method.invoke(result, json.getJSONObject("options"), view.context)
             }
+            true
         } else {
             super.onJsPrompt(view, url, message, defaultValue, result)
         }
