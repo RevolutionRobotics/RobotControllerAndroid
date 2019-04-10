@@ -24,5 +24,4 @@ class SliderDialogViewModel(jsResult: JsPromptResult, binding: BlocklyDialogSlid
     override fun onStopTrackingTouch(seekBar: SeekBar?) = Unit
 
     override fun getResult() = "${binding.slider.progress + (minValue ?: 0)}"
-
 }

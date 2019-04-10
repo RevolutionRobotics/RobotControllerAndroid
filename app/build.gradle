@@ -24,6 +24,9 @@ android {
 
     lintOptions {
         disable 'ContentDescription'
+        disable 'Autofill'
+        disable 'LabelFor'
+        disable 'UnusedResources'
     }
 
     signingConfigs {

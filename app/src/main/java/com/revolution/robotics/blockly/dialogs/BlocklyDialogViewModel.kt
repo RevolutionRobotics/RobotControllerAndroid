@@ -29,5 +29,4 @@ abstract class BlocklyDialogViewModel<T : ViewDataBinding>(
     }
 
     abstract fun getResult(): String
-
 }
