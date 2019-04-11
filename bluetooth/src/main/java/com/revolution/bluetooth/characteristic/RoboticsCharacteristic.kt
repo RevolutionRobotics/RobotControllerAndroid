@@ -15,9 +15,9 @@ abstract class RoboticsCharacteristic(private val handler: BLEConnectionHandler)
     }
 
     fun write(data: ByteArray) {
-        getCharacteristic()?.let {
-            it.value = data
-            handler.gattConnection?.writeCharacteristic(it)
+        getCharacteristic()?.let { characteristic ->
+            characteristic.value = data
+            handler.gattConnection?.writeCharacteristic(characteristic)
         }
     }
 
@@ -30,7 +30,7 @@ abstract class RoboticsCharacteristic(private val handler: BLEConnectionHandler)
         }
     }
 
-    fun usubscribeForUpdates() {
+    fun unubscribeForUpdates() {
         getCharacteristic()?.let { characteristic ->
             handler.gattConnection?.setCharacteristicNotification(characteristic, true)
             val descriptor = characteristic.getDescriptor(configId)

@@ -3,16 +3,21 @@ package com.revolution.bluetooth.discover
 import android.Manifest
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.le.ScanCallback
+import android.bluetooth.le.ScanFilter
 import android.bluetooth.le.ScanResult
+import android.bluetooth.le.ScanSettings
 import android.content.Context
+import android.os.ParcelUuid
 import androidx.annotation.RequiresPermission
+import com.revolution.bluetooth.communication.BLEConnectionHandler
 import com.revolution.bluetooth.exception.BLEScanFailedException
 import com.revolution.bluetooth.extensions.getBLEManager
+import java.util.UUID
 
 class RoboticsDeviceDiscoverer : ScanCallback() {
 
-    var bluetoothAdapter: BluetoothAdapter? = null
-    var scanResultListener: ScanResultListener? = null
+    private var bluetoothAdapter: BluetoothAdapter? = null
+    private var scanResultListener: ScanResultListener? = null
 
     @RequiresPermission(
         allOf = [Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -22,8 +27,17 @@ class RoboticsDeviceDiscoverer : ScanCallback() {
     fun discoverRobots(context: Context, scanResultListener: ScanResultListener) {
         bluetoothAdapter = context.getBLEManager().adapter
         this.scanResultListener = scanResultListener
-        // TODO Add filters and settings
-        bluetoothAdapter?.bluetoothLeScanner?.startScan(this)
+        bluetoothAdapter?.bluetoothLeScanner?.startScan(
+            listOf(
+                ScanFilter.Builder().setServiceUuid(
+                    ParcelUuid(
+                        UUID.fromString(
+                            BLEConnectionHandler.SERVICE_ID
+                        )
+                    )
+                ).build()
+            ), ScanSettings.Builder().build(), this
+        )
     }
 
     fun stopDiscovering() {

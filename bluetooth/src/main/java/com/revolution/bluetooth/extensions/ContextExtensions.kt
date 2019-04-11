@@ -7,7 +7,7 @@ import com.revolution.bluetooth.exception.BLEDisabledException
 import com.revolution.bluetooth.exception.MissingBLEFeatureException
 
 fun Context.getBLEManager(): BluetoothManager {
-    if (packageManager.hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
+    if (!packageManager.hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
         throw MissingBLEFeatureException()
     }
 

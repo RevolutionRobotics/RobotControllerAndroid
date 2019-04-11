@@ -6,12 +6,13 @@ import android.bluetooth.BluetoothGattCallback
 import android.bluetooth.BluetoothGattCharacteristic
 import android.bluetooth.BluetoothGattService
 import android.content.Context
+import com.revolution.bluetooth.characteristic.TestCharacteristic
 import java.util.UUID
 
 class BLEConnectionHandler : BluetoothGattCallback() {
 
     companion object {
-        const val SERVICE_ID = "TODO"
+        const val SERVICE_ID = "0000ffe0-0000-1000-8000-00805f9b34fb"
     }
 
     var device: BluetoothDevice? = null
@@ -19,6 +20,8 @@ class BLEConnectionHandler : BluetoothGattCallback() {
     var gattService: BluetoothGattService? = null
 
     var connectionListener: ConnectionListener? = null
+
+    val characteristics = arrayOf(TestCharacteristic(this))
 
     fun connect(context: Context, device: BluetoothDevice, connectionListener: ConnectionListener) {
         this.device = device
@@ -31,27 +34,37 @@ class BLEConnectionHandler : BluetoothGattCallback() {
         connectionListener?.onConnectionStateChanged(ConnectionListener.ConnectionState.parseConnectionId(newState))
     }
 
-    override fun onServicesDiscovered(gatt: BluetoothGatt?, status: Int) {
+    override fun onServicesDiscovered(gatt: BluetoothGatt, status: Int) {
         super.onServicesDiscovered(gatt, status)
         gattConnection = gatt
         gattService = gattConnection?.getService(UUID.fromString(SERVICE_ID))
 
+        characteristics.forEach {
+            it.init(gatt)
+        }
     }
 
-    override fun onCharacteristicChanged(gatt: BluetoothGatt?, characteristic: BluetoothGattCharacteristic?) {
+    override fun onCharacteristicChanged(gatt: BluetoothGatt?, characteristic: BluetoothGattCharacteristic) {
         super.onCharacteristicChanged(gatt, characteristic)
+        characteristics.find { it.id == characteristic.uuid }?.onCharacteristicChanged(characteristic)
     }
 
-    override fun onCharacteristicRead(gatt: BluetoothGatt?, characteristic: BluetoothGattCharacteristic?, status: Int) {
+    override fun onCharacteristicRead(gatt: BluetoothGatt?, characteristic: BluetoothGattCharacteristic, status: Int) {
         super.onCharacteristicRead(gatt, characteristic, status)
+        if (status == BluetoothGatt.GATT_SUCCESS) {
+            characteristics.find { it.id == characteristic.uuid }?.onCharacteristicRead(characteristic)
+        }
     }
 
     override fun onCharacteristicWrite(
         gatt: BluetoothGatt?,
-        characteristic: BluetoothGattCharacteristic?,
+        characteristic: BluetoothGattCharacteristic,
         status: Int
     ) {
         super.onCharacteristicWrite(gatt, characteristic, status)
+        if (status == BluetoothGatt.GATT_SUCCESS) {
+            characteristics.find { it.id == characteristic.uuid }?.onCharacteristicWrite(characteristic)
+        }
     }
 
     override fun onMtuChanged(gatt: BluetoothGatt?, mtu: Int, status: Int) {
