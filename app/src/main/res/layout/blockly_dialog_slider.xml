@@ -5,10 +5,7 @@
         <variable name="viewModel" type="com.revolution.robotics.blockly.dialogs.slider.SliderDialogViewModel"/>
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/dimen_16dp">
+    <merge>
 
         <SeekBar
                 android:id="@+id/slider"
@@ -31,6 +28,6 @@
                 android:gravity="center"
                 app:layout_constraintEnd_toEndOf="parent"/>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </merge>
 
 </layout>

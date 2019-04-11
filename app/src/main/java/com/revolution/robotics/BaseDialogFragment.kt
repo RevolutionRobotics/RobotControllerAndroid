@@ -33,8 +33,7 @@ abstract class BaseDialogFragment<B : ViewDataBinding>(@LayoutRes private val la
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val core = BlocklyDialogCoreBinding.inflate(inflater, container, false)
         core.dialogInterface = this
-        binding = DataBindingUtil.inflate(inflater, layoutResourceId, core.container, false)
-        core.container.addView(binding.root)
+        binding = DataBindingUtil.inflate(inflater, layoutResourceId, core.container, true)
         return core.root
     }
 

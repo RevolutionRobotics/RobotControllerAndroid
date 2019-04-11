@@ -38,7 +38,7 @@ class BlocklyWebChromeClient(private val dialogFactory: DialogFactory) : WebChro
             super.onJsPrompt(view, url, message, defaultValue, result)
         }
 
-    // JSON converters
+    // JSON converters --------------------------------------------------------
     private fun JSONObject?.toTextOptions() = DialogFactory.TextOptions(
         string("title", DEFAULT_TEXT_TITLE)
     )
@@ -48,7 +48,7 @@ class BlocklyWebChromeClient(private val dialogFactory: DialogFactory) : WebChro
         int("maxValue", DEFAULT_SLIDER_MAX_VALUE)
     )
 
-    // JSON type accessors
+    // JSON type accessors ----------------------------------------------------
     private fun JSONObject?.string(key: String, defaultValue: String) =
         this?.optString(key, defaultValue) ?: defaultValue
 

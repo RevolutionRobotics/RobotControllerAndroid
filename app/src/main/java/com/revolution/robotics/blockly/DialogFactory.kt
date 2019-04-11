@@ -14,13 +14,12 @@ class DialogFactory(
 
     override fun showTextInputDialog(result: JsPromptResult, options: DialogFactory.TextOptions) {
         javascriptResultHandler.registerResult(result)
-        TextInputDialog().show(fragmentManager, TextInputDialog::class.java.simpleName)
+        TextInputDialog.newInstance(options).show(fragmentManager, TextInputDialog::class.java.simpleName)
     }
 
     override fun showSliderDialog(result: JsPromptResult, options: DialogFactory.SliderOptions) {
         javascriptResultHandler.registerResult(result)
-        val dialog = SliderDialog()
-        dialog.options = options
+        val dialog = SliderDialog.newInstance(options)
         dialog.show(fragmentManager, SliderDialog::class.java.simpleName)
     }
 }
