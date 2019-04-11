@@ -20,6 +20,7 @@
                 app:layout_constraintTop_toTopOf="parent"/>
 
         <ImageView
+                android:id="@+id/header_border"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/header_border_size"
                 android:scaleType="fitXY"
@@ -30,7 +31,8 @@
                 android:id="@+id/img_logo"
                 android:layout_width="@dimen/toolbar_icon_size"
                 android:layout_height="@dimen/toolbar_icon_size"
-                android:padding="@dimen/dimen_4dp"
+                android:padding="@dimen/dimen_8dp"
+                android:background="@drawable/bg_button_default"
                 app:layout_constraintTop_toTopOf="@id/header_background"
                 app:layout_constraintBottom_toBottomOf="@id/header_background"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -42,16 +44,18 @@
         <ImageView
                 android:layout_width="@dimen/toolbar_icon_size"
                 android:layout_height="@dimen/toolbar_icon_size"
-                android:padding="@dimen/dimen_4dp"
+                android:padding="@dimen/dimen_8dp"
+                android:background="@drawable/bg_button_default"
                 app:layout_constraintTop_toTopOf="@id/header_background"
                 app:layout_constraintBottom_toBottomOf="@id/header_background"
-                app:layout_constraintRight_toLeftOf="@id/img_logo"
+                app:layout_constraintEnd_toStartOf="@id/img_logo"
                 android:layout_marginEnd="@dimen/dimen_32dp"
                 android:src="@drawable/ic_community"
                 android:onClick="@{() -> viewModel.onCommunityIconClicked()}"/>
 
 
         <ImageView
+                android:id="@+id/bottom_border"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/header_border_size"
                 android:scaleType="fitXY"
@@ -66,46 +70,48 @@
                 android:background="@color/gray_28"
                 app:layout_constraintBottom_toBottomOf="parent"/>
 
-        <Button
+        <include
+                layout="@layout/layout_main_menu_button"
                 android:id="@+id/btn_robots"
-                android:layout_width="120dp"
-                android:layout_height="158dp"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:viewModel="@{viewModel.robotButton}"
+                app:layout_constraintDimensionRatio="H,3:4"
                 app:layout_constraintHorizontal_chainStyle="packed"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@id/btn_coding"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginStart="32dp"
-                android:layout_marginEnd="32dp"
-                android:onClick="@{() -> viewModel.onRobotsClicked()}"
-                android:text="@string/menu_robots"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/btn_coding"
+                app:layout_constraintTop_toBottomOf="@id/header_border"
+                app:layout_constraintBottom_toTopOf="@id/bottom_border"
+                android:layout_margin="@dimen/dimen_32dp"/>
 
-        <Button
+        <include
+                layout="@layout/layout_main_menu_button"
                 android:id="@+id/btn_coding"
-                android:layout_width="120dp"
-                android:layout_height="158dp"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:viewModel="@{viewModel.programsButton}"
+                app:layout_constraintDimensionRatio="H,3:4"
                 app:layout_constraintHorizontal_chainStyle="packed"
-                app:layout_constraintLeft_toRightOf="@id/btn_robots"
-                app:layout_constraintRight_toLeftOf="@id/btn_challenges"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginStart="32dp"
-                android:layout_marginEnd="32dp"
-                android:onClick="@{() -> viewModel.onCodingClicked()}"
+                app:layout_constraintStart_toEndOf="@id/btn_robots"
+                app:layout_constraintEnd_toStartOf="@id/btn_challenges"
+                app:layout_constraintTop_toBottomOf="@id/header_border"
+                app:layout_constraintBottom_toTopOf="@id/bottom_border"
+                android:layout_margin="@dimen/dimen_32dp"
                 android:text="@string/menu_coding"/>
 
-        <Button
+        <include
+                layout="@layout/layout_main_menu_button"
                 android:id="@+id/btn_challenges"
-                android:layout_width="120dp"
-                android:layout_height="158dp"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:viewModel="@{viewModel.challengesButton}"
+                app:layout_constraintDimensionRatio="H,3:4"
                 app:layout_constraintHorizontal_chainStyle="packed"
-                app:layout_constraintLeft_toRightOf="@id/btn_coding"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginStart="32dp"
-                android:layout_marginEnd="32dp"
-                android:onClick="@{() -> viewModel.onChallengesClicked()}"
+                app:layout_constraintStart_toEndOf="@id/btn_coding"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/header_border"
+                app:layout_constraintBottom_toTopOf="@id/bottom_border"
+                android:layout_margin="@dimen/dimen_32dp"
                 android:text="@string/menu_challenges"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
