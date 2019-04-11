@@ -8,6 +8,9 @@ import java.util.UUID
 
 abstract class RoboticsCharacteristic(protected val handler: BLEConnectionHandler) {
 
+    abstract val id: UUID
+    abstract val configId: UUID
+
     fun read() {
         getCharacteristic()?.let {
             handler.gattConnection?.readCharacteristic(it)
@@ -40,9 +43,6 @@ abstract class RoboticsCharacteristic(protected val handler: BLEConnectionHandle
     }
 
     abstract fun getCharacteristic(): BluetoothGattCharacteristic?
-
-    abstract val id: UUID
-    abstract val configId: UUID
 
     abstract fun init(bluetoothGatt: BluetoothGatt)
     abstract fun onCharacteristicChanged(characteristic: BluetoothGattCharacteristic)

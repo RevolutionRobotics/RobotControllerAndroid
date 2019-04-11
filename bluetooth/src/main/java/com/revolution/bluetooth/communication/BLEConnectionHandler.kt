@@ -32,12 +32,10 @@ class BLEConnectionHandler : BluetoothGattCallback() {
     }
 
     override fun onConnectionStateChange(gatt: BluetoothGatt?, status: Int, newState: Int) {
-        super.onConnectionStateChange(gatt, status, newState)
         connectionListener?.onConnectionStateChanged(ConnectionListener.ConnectionState.parseConnectionId(newState))
     }
 
     override fun onServicesDiscovered(gatt: BluetoothGatt, status: Int) {
-        super.onServicesDiscovered(gatt, status)
         gattConnection = gatt
         gattLiveService = gattConnection?.getService(SERVICE_ID_LIVE)
         gattLongService = gattConnection?.getService(SERVICE_ID_LONG)
@@ -48,12 +46,10 @@ class BLEConnectionHandler : BluetoothGattCallback() {
     }
 
     override fun onCharacteristicChanged(gatt: BluetoothGatt?, characteristic: BluetoothGattCharacteristic) {
-        super.onCharacteristicChanged(gatt, characteristic)
         characteristics.find { it.id == characteristic.uuid }?.onCharacteristicChanged(characteristic)
     }
 
     override fun onCharacteristicRead(gatt: BluetoothGatt?, characteristic: BluetoothGattCharacteristic, status: Int) {
-        super.onCharacteristicRead(gatt, characteristic, status)
         if (status == BluetoothGatt.GATT_SUCCESS) {
             characteristics.find { it.id == characteristic.uuid }?.onCharacteristicRead(characteristic)
         }
@@ -64,21 +60,18 @@ class BLEConnectionHandler : BluetoothGattCallback() {
         characteristic: BluetoothGattCharacteristic,
         status: Int
     ) {
-        super.onCharacteristicWrite(gatt, characteristic, status)
         if (status == BluetoothGatt.GATT_SUCCESS) {
             characteristics.find { it.id == characteristic.uuid }?.onCharacteristicWrite(characteristic)
         }
     }
 
     override fun onMtuChanged(gatt: BluetoothGatt?, mtu: Int, status: Int) {
-        super.onMtuChanged(gatt, mtu, status)
         if (status == BluetoothGatt.GATT_SUCCESS) {
             connectionListener?.onMTUChanged(mtu)
         }
     }
 
     override fun onReadRemoteRssi(gatt: BluetoothGatt?, rssi: Int, status: Int) {
-        super.onReadRemoteRssi(gatt, rssi, status)
         if (status == BluetoothGatt.GATT_SUCCESS) {
             connectionListener?.onRSSIChanged(rssi)
         }
