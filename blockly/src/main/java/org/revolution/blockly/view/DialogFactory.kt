@@ -2,13 +2,15 @@ package org.revolution.blockly.view
 
 import android.content.Context
 import android.webkit.JsPromptResult
-import org.json.JSONObject
 
 interface DialogFactory {
 
-    fun showTextInputDialog(result: JsPromptResult, parameters: JSONObject?, context: Context)
+    fun showTextInputDialog(result: JsPromptResult, options: TextOptions, context: Context)
 
-    fun showSliderDialog(result: JsPromptResult, parameters: JSONObject?, context: Context)
+    fun showSliderDialog(result: JsPromptResult, options: SliderOptions, context: Context)
 
-    fun customAction(json: JSONObject) = Unit
+    // Option classes
+
+    data class TextOptions(val title: String)
+    data class SliderOptions(val minValue: Int, val maxValue: Int)
 }

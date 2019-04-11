@@ -12,18 +12,18 @@ import org.revolution.blockly.view.DialogFactory
 
 class DialogFactory : DialogFactory {
 
-    override fun showTextInputDialog(result: JsPromptResult, parameters: JSONObject?, context: Context) {
+    override fun showTextInputDialog(result: JsPromptResult, options: DialogFactory.TextOptions, context: Context) {
         BlocklyDialogInputTextBinding.inflate(LayoutInflater.from(context), null, false).apply {
             viewModel = TextInputDialogViewModel(result, this)
             viewModel?.createAndShowDialog()
         }
     }
 
-    override fun showSliderDialog(result: JsPromptResult, parameters: JSONObject?, context: Context) {
+    override fun showSliderDialog(result: JsPromptResult, options: DialogFactory.SliderOptions, context: Context) {
         BlocklyDialogSliderBinding.inflate(LayoutInflater.from(context), null, false).apply {
             viewModel = SliderDialogViewModel(result, this).apply {
-                minValue = parameters?.getInt("minValue")
-                maxValue = parameters?.getInt("maxValue")
+                minValue = options.minValue
+                maxValue = options.maxValue
             }
             viewModel?.createAndShowDialog()
         }
