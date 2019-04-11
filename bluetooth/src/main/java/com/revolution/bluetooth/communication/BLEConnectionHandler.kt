@@ -6,22 +6,24 @@ import android.bluetooth.BluetoothGattCallback
 import android.bluetooth.BluetoothGattCharacteristic
 import android.bluetooth.BluetoothGattService
 import android.content.Context
-import com.revolution.bluetooth.characteristic.TestCharacteristic
+import com.revolution.bluetooth.characteristic.RoboticsCharacteristic
 import java.util.UUID
 
 class BLEConnectionHandler : BluetoothGattCallback() {
 
     companion object {
-        const val SERVICE_ID = "0000ffe0-0000-1000-8000-00805f9b34fb"
+        val SERVICE_ID_LIVE = UUID.fromString("d2d5558c-5b9d-11e9-8647-d663bd873d93")
+        val SERVICE_ID_LONG = UUID.fromString("97148a03-5b9d-11e9-8647-d663bd873d93")
     }
 
     var device: BluetoothDevice? = null
     var gattConnection: BluetoothGatt? = null
-    var gattService: BluetoothGattService? = null
+    var gattLiveService: BluetoothGattService? = null
+    var gattLongService: BluetoothGattService? = null
 
     var connectionListener: ConnectionListener? = null
 
-    val characteristics = arrayOf(TestCharacteristic(this))
+    private val characteristics = mutableListOf<RoboticsCharacteristic>()
 
     fun connect(context: Context, device: BluetoothDevice, connectionListener: ConnectionListener) {
         this.device = device
@@ -37,7 +39,8 @@ class BLEConnectionHandler : BluetoothGattCallback() {
     override fun onServicesDiscovered(gatt: BluetoothGatt, status: Int) {
         super.onServicesDiscovered(gatt, status)
         gattConnection = gatt
-        gattService = gattConnection?.getService(UUID.fromString(SERVICE_ID))
+        gattLiveService = gattConnection?.getService(SERVICE_ID_LIVE)
+        gattLongService = gattConnection?.getService(SERVICE_ID_LONG)
 
         characteristics.forEach {
             it.init(gatt)
@@ -84,7 +87,8 @@ class BLEConnectionHandler : BluetoothGattCallback() {
     fun disconnect() {
         gattConnection?.close()
         gattConnection = null
-        gattService = null
+        gattLongService = null
+        gattLiveService = null
         device = null
     }
 }

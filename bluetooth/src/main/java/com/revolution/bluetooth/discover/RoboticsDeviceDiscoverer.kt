@@ -12,7 +12,6 @@ import androidx.annotation.RequiresPermission
 import com.revolution.bluetooth.communication.BLEConnectionHandler
 import com.revolution.bluetooth.exception.BLEScanFailedException
 import com.revolution.bluetooth.extensions.getBLEManager
-import java.util.UUID
 
 class RoboticsDeviceDiscoverer : ScanCallback() {
 
@@ -29,13 +28,8 @@ class RoboticsDeviceDiscoverer : ScanCallback() {
         this.scanResultListener = scanResultListener
         bluetoothAdapter?.bluetoothLeScanner?.startScan(
             listOf(
-                ScanFilter.Builder().setServiceUuid(
-                    ParcelUuid(
-                        UUID.fromString(
-                            BLEConnectionHandler.SERVICE_ID
-                        )
-                    )
-                ).build()
+                ScanFilter.Builder().setServiceUuid(ParcelUuid(BLEConnectionHandler.SERVICE_ID_LIVE)).build(),
+                ScanFilter.Builder().setServiceUuid(ParcelUuid(BLEConnectionHandler.SERVICE_ID_LONG)).build()
             ), ScanSettings.Builder().build(), this
         )
     }

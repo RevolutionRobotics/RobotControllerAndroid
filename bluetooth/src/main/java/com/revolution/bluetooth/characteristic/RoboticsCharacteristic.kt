@@ -6,7 +6,7 @@ import android.bluetooth.BluetoothGattDescriptor
 import com.revolution.bluetooth.communication.BLEConnectionHandler
 import java.util.UUID
 
-abstract class RoboticsCharacteristic(private val handler: BLEConnectionHandler) {
+abstract class RoboticsCharacteristic(protected val handler: BLEConnectionHandler) {
 
     fun read() {
         getCharacteristic()?.let {
@@ -39,7 +39,7 @@ abstract class RoboticsCharacteristic(private val handler: BLEConnectionHandler)
         }
     }
 
-    private fun getCharacteristic(): BluetoothGattCharacteristic? = handler.gattService?.getCharacteristic(id)
+    abstract fun getCharacteristic(): BluetoothGattCharacteristic?
 
     abstract val id: UUID
     abstract val configId: UUID
