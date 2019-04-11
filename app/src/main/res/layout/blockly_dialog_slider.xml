@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <variable name="viewModel" type="com.revolution.robotics.blockly.dialogs.SliderDialogViewModel"/>
+        <variable name="viewModel" type="com.revolution.robotics.blockly.dialogs.slider.SliderDialogViewModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,6 +15,7 @@
                 android:layout_width="0dp"
                 android:max="@{viewModel.maxValue}"
                 android:layout_height="wrap_content"
+                app:listener="@{viewModel}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
@@ -25,30 +26,10 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/slider"
                 app:layout_constraintStart_toStartOf="parent"
+                android:text="@{viewModel.labelText}"
                 android:layout_marginTop="@dimen/dimen_8dp"
                 android:gravity="center"
                 app:layout_constraintEnd_toEndOf="parent"/>
-
-        <Button
-                android:id="@+id/button_cancel"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/dimen_48dp"
-                android:text="@string/cancel"
-                app:layout_constraintStart_toStartOf="parent"
-                android:onClick="@{() -> viewModel.onCancelClicked()}"
-                app:layout_constraintEnd_toStartOf="@id/button_ok"
-                app:layout_constraintTop_toBottomOf="@id/label"
-                android:layout_marginTop="@dimen/dimen_16dp"/>
-
-        <Button
-                android:id="@+id/button_ok"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/dimen_48dp"
-                android:text="@string/ok"
-                android:onClick="@{() -> viewModel.onOkClicked()}"
-                app:layout_constraintStart_toEndOf="@id/button_cancel"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/button_cancel"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

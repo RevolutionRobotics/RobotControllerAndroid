@@ -26,8 +26,8 @@ class BlocklyWebChromeClient(private val dialogFactory: DialogFactory) : WebChro
             val options: JSONObject? = json.optJSONObject("options")
             var wasDialogCreated = true
             when (json["type"]) {
-                "text" -> dialogFactory.showTextInputDialog(result, options.toTextOptions(), view.context)
-                "slider" -> dialogFactory.showSliderDialog(result, options.toSliderOptions(), view.context)
+                "text" -> dialogFactory.showTextInputDialog(result, options.toTextOptions())
+                "slider" -> dialogFactory.showSliderDialog(result, options.toSliderOptions())
                 else -> {
                     super.onJsPrompt(view, url, message, defaultValue, result)
                     wasDialogCreated = false

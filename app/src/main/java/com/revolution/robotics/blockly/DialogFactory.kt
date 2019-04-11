@@ -1,31 +1,26 @@
 package com.revolution.robotics.blockly
 
-import android.content.Context
-import android.view.LayoutInflater
 import android.webkit.JsPromptResult
-import com.revolution.robotics.blockly.dialogs.SliderDialogViewModel
-import com.revolution.robotics.blockly.dialogs.TextInputDialogViewModel
-import com.revolution.robotics.databinding.BlocklyDialogInputTextBinding
-import com.revolution.robotics.databinding.BlocklyDialogSliderBinding
-import org.json.JSONObject
+import androidx.fragment.app.FragmentManager
+import com.revolution.robotics.blockly.dialogs.slider.SliderDialog
+import com.revolution.robotics.blockly.dialogs.text.TextInputDialog
+import com.revolution.robotics.blockly.utils.JavascriptResultHandler
 import org.revolution.blockly.view.DialogFactory
 
-class DialogFactory : DialogFactory {
+class DialogFactory(
+    private val javascriptResultHandler: JavascriptResultHandler,
+    private val fragmentManager: FragmentManager?
+) : DialogFactory {
 
-    override fun showTextInputDialog(result: JsPromptResult, options: DialogFactory.TextOptions, context: Context) {
-        BlocklyDialogInputTextBinding.inflate(LayoutInflater.from(context), null, false).apply {
-            viewModel = TextInputDialogViewModel(result, this)
-            viewModel?.createAndShowDialog()
-        }
+    override fun showTextInputDialog(result: JsPromptResult, options: DialogFactory.TextOptions) {
+        javascriptResultHandler.registerResult(result)
+        TextInputDialog().show(fragmentManager, TextInputDialog::class.java.simpleName)
     }
 
-    override fun showSliderDialog(result: JsPromptResult, options: DialogFactory.SliderOptions, context: Context) {
-        BlocklyDialogSliderBinding.inflate(LayoutInflater.from(context), null, false).apply {
-            viewModel = SliderDialogViewModel(result, this).apply {
-                minValue = options.minValue
-                maxValue = options.maxValue
-            }
-            viewModel?.createAndShowDialog()
-        }
+    override fun showSliderDialog(result: JsPromptResult, options: DialogFactory.SliderOptions) {
+        javascriptResultHandler.registerResult(result)
+        val dialog = SliderDialog()
+        dialog.options = options
+        dialog.show(fragmentManager, SliderDialog::class.java.simpleName)
     }
 }

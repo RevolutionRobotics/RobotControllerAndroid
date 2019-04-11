@@ -1,13 +1,12 @@
 package org.revolution.blockly.view
 
-import android.content.Context
 import android.webkit.JsPromptResult
 
 interface DialogFactory {
 
-    fun showTextInputDialog(result: JsPromptResult, options: TextOptions, context: Context)
+    fun showTextInputDialog(result: JsPromptResult, options: TextOptions)
 
-    fun showSliderDialog(result: JsPromptResult, options: SliderOptions, context: Context)
+    fun showSliderDialog(result: JsPromptResult, options: SliderOptions)
 
     // Option classes
 

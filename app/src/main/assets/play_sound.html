@@ -3,21 +3,23 @@
 		<title>Robotics POC</title>
 	</head>
 	<body>
-		<h3>Play sound</h3>
+		<h3 id="title">Play sound</h3>
 
 		<ul>
-			<li><a href="#" onclick="getTextInput()">Play sound</a></li>
+			<li><a href="#" onclick="getSliderInput()">Play sound</a></li>
+			<li><a href="#" onclick="getTextInput()">Update title</a></li>
 		</ul>
 	</body>
 
 	<script>
-		function getTextInput() {
+		function getSliderInput() {
 		    var sound = prompt("{\"type\": \"slider\", \"options\": {\"minValue\": 1, \"maxValue\": 3}}");
-		    playSound(sound);
+		    Native.playSound('bell_' + sound);
 		}
 
-		function playSound(number) {
-			Native.playSound('bell_' + number);
+		function getTextInput() {
+		    var input = prompt("{\"type\": \"text\"}");
+		    document.getElementById("title").innerHTML = input;
 		}
 	</script>
 </html>
