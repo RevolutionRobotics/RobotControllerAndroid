@@ -11,6 +11,8 @@ import com.revolution.robotics.core.interactor.RobotInteractor
 import com.revolution.robotics.core.interactor.TestCodeInteractor
 import com.revolution.robotics.mainmenu.MainMenuMvp
 import com.revolution.robotics.mainmenu.MainMenuPresenter
+import com.revolution.robotics.robots.RobotsMvp
+import com.revolution.robotics.robots.RobotsPresenter
 import org.kodein.di.Kodein
 import org.kodein.di.erased.bind
 import org.kodein.di.erased.instance
@@ -28,6 +30,7 @@ fun createInteractorModule() =
 fun createPresenterModule() =
     Kodein.Module("PresenterModule") {
         bind<MainMenuMvp.Presenter>() with singleton { MainMenuPresenter(instance()) }
+        bind<RobotsMvp.Presenter>() with singleton { RobotsPresenter() }
     }
 
 fun createDbModule(context: Context) =

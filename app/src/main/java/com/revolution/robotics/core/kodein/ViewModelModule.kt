@@ -15,6 +15,6 @@ fun createViewModelModule() =
         bind<MainMenuViewModel>() with provider { MainMenuViewModel(instance()) }
         bind<CodingViewModel>() with provider { CodingViewModel() }
         bind<ChallengesViewModel>() with provider { ChallengesViewModel() }
-        bind<RobotsViewModel>() with provider { RobotsViewModel() }
+        bind<RobotsViewModel>() with provider { RobotsViewModel(instance()) }
         bind<BuildStepSliderViewModel>() with provider { BuildStepSliderViewModel() }
     }
