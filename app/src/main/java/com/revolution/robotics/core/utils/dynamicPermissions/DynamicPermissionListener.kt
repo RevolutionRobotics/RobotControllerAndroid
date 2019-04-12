@@ -1,6 +1,6 @@
 package com.revolution.robotics.core.utils.dynamicPermissions
 
-data class DynamicPermissionListener(
-    val onPermissionGranted: () -> Unit,
-    val onPermissionDenied: (() -> Unit)? = null
-)
+interface DynamicPermissionListener {
+    fun onAllPermissionsGranted()
+    fun onPermissionDenied(deniedPermissions: List<String>)
+}
