@@ -23,9 +23,9 @@ class DynamicPermissionHandler {
             }
 
             if (permissionsDenied.isEmpty()) {
-                currentRequest.getListener()?.onAllPermissionsGranted()
+                currentRequest.listener?.onAllPermissionsGranted()
             } else {
-                currentRequest.getListener()?.onPermissionDenied(permissionsDenied.toList())
+                currentRequest.listener?.onPermissionDenied(permissionsDenied.toList())
             }
         }
     }
@@ -35,9 +35,7 @@ class DynamicPermissionHandler {
         private val permissions: MutableList<String>
     ) {
 
-        private var listener: DynamicPermissionListener? = null
-
-        fun getListener() = listener
+        var listener: DynamicPermissionListener? = null
 
         fun listener(listener: DynamicPermissionListener): PermissionRequest {
             this.listener = listener
@@ -51,13 +49,13 @@ class DynamicPermissionHandler {
                 handler.requestCode++
             }
 
-            if (listener != null) {
+            listener?.let { listener ->
                 permissions.removeAll {
                     ContextCompat.checkSelfPermission(activity, it) == PackageManager.PERMISSION_GRANTED
                 }
 
                 if (permissions.isEmpty()) {
-                    listener?.onAllPermissionsGranted()
+                    listener.onAllPermissionsGranted()
                 } else {
                     ActivityCompat.requestPermissions(activity, permissions.toTypedArray(), currentRequestCode)
                 }
