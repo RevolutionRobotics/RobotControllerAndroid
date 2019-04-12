@@ -1,8 +1,9 @@
-package org.revolution.blockly.view.jsInterface
+package com.revolution.robotics.blockly
 
 import android.content.Context
 import android.media.MediaPlayer
 import android.webkit.JavascriptInterface
+import org.revolution.blockly.view.jsInterface.BlocklyJavascriptInterface
 
 class AudioHandlerJavascriptInterface(ctx: Context) : BlocklyJavascriptInterface {
 

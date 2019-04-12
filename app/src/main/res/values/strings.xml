@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">Robotics</string>
+    <!-- General strings -->
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+
+    <!-- Main menu -->
     <string name="menu_robots">robots</string>
     <string name="menu_coding">programs</string>
     <string name="menu_challenges">challenges</string>

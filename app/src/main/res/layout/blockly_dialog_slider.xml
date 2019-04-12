@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable name="viewModel" type="com.revolution.robotics.blockly.dialogs.slider.SliderDialogViewModel"/>
+    </data>
+
+    <merge>
+
+        <SeekBar
+                android:id="@+id/slider"
+                android:layout_width="0dp"
+                android:max="@{viewModel.maxValue}"
+                android:layout_height="wrap_content"
+                app:listener="@{viewModel}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+                android:id="@+id/label"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/slider"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="@{viewModel.labelText}"
+                android:layout_marginTop="@dimen/dimen_8dp"
+                android:gravity="center"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+    </merge>
+
+</layout>

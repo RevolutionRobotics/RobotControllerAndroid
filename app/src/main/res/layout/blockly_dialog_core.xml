@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable name="dialogInterface" type="com.revolution.robotics.blockly.dialogs.BlocklyDialogInterface"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dimen_16dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/container"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+        <Button
+                android:id="@+id/button_cancel"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dimen_48dp"
+                android:onClick="@{() -> dialogInterface.dismiss()}"
+                android:text="@string/cancel"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/button_ok"
+                app:layout_constraintTop_toBottomOf="@id/container"
+                android:layout_marginTop="@dimen/dimen_16dp"/>
+
+        <Button
+                android:id="@+id/button_ok"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dimen_48dp"
+                android:text="@string/ok"
+                android:onClick="@{() -> dialogInterface.confirm()}"
+                app:layout_constraintStart_toEndOf="@id/button_cancel"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/button_cancel"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -2,6 +2,7 @@ package com.revolution.robotics.core.kodein
 
 import android.content.Context
 import androidx.room.Room
+import com.revolution.robotics.blockly.utils.JavascriptResultHandler
 import com.revolution.robotics.challenges.ChallengesViewModel
 import com.revolution.robotics.coding.CodingViewModel
 import com.revolution.robotics.core.db.RoboticsDatabase
@@ -27,6 +28,7 @@ fun createMainModule() =
         // Singletons
         bind<DynamicPermissionHandler>() with singleton { DynamicPermissionHandler() }
         bind<Navigator>() with singleton { Navigator() }
+        bind<JavascriptResultHandler>() with singleton { JavascriptResultHandler() }
     }
 
 fun createAppModule(context: Context) =
