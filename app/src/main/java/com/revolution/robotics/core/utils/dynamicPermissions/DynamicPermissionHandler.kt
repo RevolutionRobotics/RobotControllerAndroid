@@ -7,31 +7,58 @@ import androidx.core.content.ContextCompat
 
 class DynamicPermissionHandler {
 
-    private val listeners = HashMap<Int, DynamicPermissionListener>()
-
     private var requestCode = 0
+    private var requests = HashMap<Int, PermissionRequest>()
 
-    fun request(permission: String, activity: Activity, onGrantedListener: () -> Unit) =
-        request(permission, DynamicPermissionListener(onGrantedListener), activity)
+    fun permissions(vararg permissions: String) =
+        PermissionRequest(this, permissions.toMutableList())
 
-    fun request(permission: String, listener: DynamicPermissionListener, activity: Activity) {
-        val currentRequestCode = requestCode
-        requestCode++
-        listeners[currentRequestCode] = listener
+    fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        requests[requestCode]?.let { currentRequest ->
+            val permissionsDenied = mutableListOf<String>()
+            permissions.forEachIndexed { index, permission ->
+                if (grantResults[index] != PackageManager.PERMISSION_GRANTED) {
+                    permissionsDenied.add(permission)
+                }
+            }
 
-        if (ContextCompat.checkSelfPermission(activity, permission) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(activity, arrayOf(permission), currentRequestCode)
-        } else {
-            listener.onPermissionGranted.invoke()
+            if (permissionsDenied.isEmpty()) {
+                currentRequest.listener?.onAllPermissionsGranted()
+            } else {
+                currentRequest.listener?.onPermissionDenied(permissionsDenied.toList())
+            }
         }
     }
 
-    fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        listeners[requestCode]?.let { listener ->
-            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                listener.onPermissionGranted.invoke()
-            } else {
-                listener.onPermissionDenied?.invoke()
+    class PermissionRequest(
+        private var handler: DynamicPermissionHandler?,
+        private val permissions: MutableList<String>
+    ) {
+
+        var listener: DynamicPermissionListener? = null
+
+        fun listener(listener: DynamicPermissionListener): PermissionRequest {
+            this.listener = listener
+            return this
+        }
+
+        fun request(activity: Activity) {
+            val currentRequestCode = handler?.requestCode ?: 0
+            handler?.let { handler ->
+                handler.requests[currentRequestCode] = this
+                handler.requestCode++
+            }
+
+            listener?.let { listener ->
+                permissions.removeAll {
+                    ContextCompat.checkSelfPermission(activity, it) == PackageManager.PERMISSION_GRANTED
+                }
+
+                if (permissions.isEmpty()) {
+                    listener.onAllPermissionsGranted()
+                } else {
+                    ActivityCompat.requestPermissions(activity, permissions.toTypedArray(), currentRequestCode)
+                }
             }
         }
     }
