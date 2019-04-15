@@ -89,7 +89,7 @@
                 android:id="@+id/btn_coding"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:viewModel="@{viewModel.programsButton}"
+                app:viewModel="@{viewModel.codingButton}"
                 app:layout_constraintDimensionRatio="H,3:4"
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toEndOf="@id/btn_robots"

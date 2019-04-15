@@ -2,33 +2,31 @@ package com.revolution.robotics.mainmenu
 
 import androidx.lifecycle.ViewModel
 import com.revolution.robotics.R
-import com.revolution.robotics.core.navigation.Navigator
 
-class MainMenuViewModel(private val navigator: Navigator) : ViewModel() {
+class MainMenuViewModel(private val presenter: MainMenuMvp.Presenter) : ViewModel(), MainMenuMvp.Model {
 
-    val robotButton = MainMenuButtonViewModel(
+    override val robotButton = MainMenuButtonViewModel(
         R.string.menu_robots,
         R.drawable.card_border_red,
-        R.drawable.ic_robots
-    ) { navigator.navigate(MainMenuFragmentDirections.toRobots()) }
+        R.drawable.ic_robots,
+        presenter::navigateToRobots
+    )
 
-    val programsButton = MainMenuButtonViewModel(
+    override val codingButton = MainMenuButtonViewModel(
         R.string.menu_coding,
         R.drawable.card_border_yellow,
-        R.drawable.ic_programs
-    ) { navigator.navigate(MainMenuFragmentDirections.toCoding()) }
+        R.drawable.ic_programs,
+        presenter::navigateToCoding
+    )
 
-    val challengesButton = MainMenuButtonViewModel(
+    override val challengesButton = MainMenuButtonViewModel(
         R.string.menu_challenges,
         R.drawable.card_border_blue,
-        R.drawable.ic_challenges
-    ) { navigator.navigate(MainMenuFragmentDirections.toChallenges()) }
+        R.drawable.ic_challenges,
+        presenter::navigateToChallenges
+    )
 
-    fun onCommunityIconClicked() {
-        // navigator.navigate(MainMenuFragmentDirections.toCommunity())
-    }
+    override fun onCommunityIconClicked() = Unit
 
-    fun onRoboticsIconClicked() {
-        // navigator.navigate(MainMenuFragmentDirections.toRobotics())
-    }
+    override fun onRoboticsIconClicked() = Unit
 }

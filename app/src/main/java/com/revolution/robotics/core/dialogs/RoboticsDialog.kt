@@ -43,6 +43,7 @@ abstract class RoboticsDialog : BaseDialog() {
             return binding?.root
         }
 
+        @Suppress("OptionalUnit")
         open fun onViewCreated(binding: B) = Unit
 
         private fun releaseFace() {
