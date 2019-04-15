@@ -1,4 +1,4 @@
-package com.revolution.robotics
+package com.revolution.robotics.blockly
 
 import android.content.DialogInterface
 import android.os.Bundle
@@ -10,6 +10,7 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
+import com.revolution.robotics.BaseDialog
 import com.revolution.robotics.blockly.dialogs.BlocklyDialogInterface
 import com.revolution.robotics.blockly.utils.JavascriptResultHandler
 import com.revolution.robotics.databinding.BlocklyDialogCoreBinding
@@ -17,8 +18,8 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.LateInitKodein
 import org.kodein.di.erased.instance
 
-abstract class BaseDialogFragment<B : ViewDataBinding>(@LayoutRes private val layoutResourceId: Int) :
-    DialogFragment(), BlocklyDialogInterface {
+abstract class JavascriptPromptDialog<B : ViewDataBinding>(@LayoutRes private val layoutResourceId: Int) :
+    BaseDialog(), BlocklyDialogInterface {
 
     lateinit var binding: B
 
@@ -35,11 +36,6 @@ abstract class BaseDialogFragment<B : ViewDataBinding>(@LayoutRes private val la
         core.dialogInterface = this
         binding = DataBindingUtil.inflate(inflater, layoutResourceId, core.container, true)
         return core.root
-    }
-
-    override fun onResume() {
-        super.onResume()
-        dialog?.window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
     }
 
     override fun onDismiss(dialog: DialogInterface?) {

@@ -3,13 +3,13 @@ package com.revolution.robotics.blockly.dialogs.slider
 import android.os.Bundle
 import android.view.View
 import com.revolution.robotics.R
-import com.revolution.robotics.BaseDialogFragment
+import com.revolution.robotics.blockly.JavascriptPromptDialog
 import com.revolution.robotics.core.extensions.withArguments
 import com.revolution.robotics.core.utils.BundleArgumentDelegate
 import com.revolution.robotics.databinding.BlocklyDialogSliderBinding
 import org.revolution.blockly.view.DialogFactory
 
-class SliderDialog : BaseDialogFragment<BlocklyDialogSliderBinding>(R.layout.blockly_dialog_slider) {
+class SliderDialog : JavascriptPromptDialog<BlocklyDialogSliderBinding>(R.layout.blockly_dialog_slider) {
 
     companion object {
 
