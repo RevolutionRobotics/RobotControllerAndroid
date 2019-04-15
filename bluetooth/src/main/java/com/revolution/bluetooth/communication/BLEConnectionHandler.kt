@@ -7,11 +7,8 @@ import android.bluetooth.BluetoothGattCharacteristic
 import android.bluetooth.BluetoothGattService
 import android.content.Context
 import com.revolution.bluetooth.characteristic.RoboticsCharacteristic
+import com.revolution.bluetooth.threading.moveToUIThread
 import java.util.UUID
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class BLEConnectionHandler : BluetoothGattCallback() {
 
@@ -123,13 +120,5 @@ class BLEConnectionHandler : BluetoothGattCallback() {
         gattLongService = null
         gattLiveService = null
         device = null
-    }
-
-    private fun moveToUIThread(f: () -> Unit) {
-        GlobalScope.launch(Dispatchers.Main) {
-            withContext(Dispatchers.Main) {
-                f.invoke()
-            }
-        }
     }
 }
