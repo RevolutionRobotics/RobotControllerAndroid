@@ -42,6 +42,9 @@ class BLEConnectionHandler : BluetoothGattCallback() {
         device.connectGatt(context, true, this)
     }
 
+    @Suppress("UNCHECKED_CAST")
+    fun <T : RoboticsCharacteristic> getCharacteristicHandler(id: UUID): T? = characteristics.find { it.id == id } as T?
+
     override fun onConnectionStateChange(gatt: BluetoothGatt?, status: Int, newState: Int) {
         moveToUIThread {
             connectionListener?.onConnectionStateChanged(
