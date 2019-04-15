@@ -26,12 +26,19 @@ class BLEConnectionHandler : BluetoothGattCallback() {
     var gattLongService: BluetoothGattService? = null
 
     var connectionListener: ConnectionListener? = null
+    var characteristicListener: RoboticCharacteristicListener? = null
 
     private val characteristics = mutableListOf<RoboticsCharacteristic>()
 
-    fun connect(context: Context, device: BluetoothDevice, connectionListener: ConnectionListener) {
+    fun connect(
+        context: Context,
+        device: BluetoothDevice,
+        connectionListener: ConnectionListener,
+        characteristicListener: RoboticCharacteristicListener
+    ) {
         this.device = device
         this.connectionListener = connectionListener
+        this.characteristicListener = characteristicListener
         device.connectGatt(context, true, this)
     }
 
@@ -57,15 +64,21 @@ class BLEConnectionHandler : BluetoothGattCallback() {
     }
 
     override fun onCharacteristicChanged(gatt: BluetoothGatt?, characteristic: BluetoothGattCharacteristic) {
-        moveToUIThread {
-            characteristics.find { it.id == characteristic.uuid }?.onCharacteristicChanged(characteristic)
+        characteristics.find { it.id == characteristic.uuid }?.let { characteristicHandler ->
+            characteristicHandler.onCharacteristicChanged(characteristic)
+            moveToUIThread {
+                characteristicHandler.invokeEvent(characteristicListener)
+            }
         }
     }
 
     override fun onCharacteristicRead(gatt: BluetoothGatt?, characteristic: BluetoothGattCharacteristic, status: Int) {
         if (status == BluetoothGatt.GATT_SUCCESS) {
-            moveToUIThread {
-                characteristics.find { it.id == characteristic.uuid }?.onCharacteristicRead(characteristic)
+            characteristics.find { it.id == characteristic.uuid }?.let { characteristicHandler ->
+                characteristicHandler.onCharacteristicRead(characteristic)
+                moveToUIThread {
+                    characteristicHandler.invokeEvent(characteristicListener)
+                }
             }
         }
     }
@@ -76,8 +89,11 @@ class BLEConnectionHandler : BluetoothGattCallback() {
         status: Int
     ) {
         if (status == BluetoothGatt.GATT_SUCCESS) {
-            moveToUIThread {
-                characteristics.find { it.id == characteristic.uuid }?.onCharacteristicWrite(characteristic)
+            characteristics.find { it.id == characteristic.uuid }?.let { characteristicHandler ->
+                characteristicHandler.onCharacteristicWrite(characteristic)
+                moveToUIThread {
+                    characteristicHandler.invokeEvent(characteristicListener)
+                }
             }
         }
     }

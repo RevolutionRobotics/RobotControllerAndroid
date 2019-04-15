@@ -3,7 +3,10 @@ package com.revolution.bluetooth.characteristic
 import android.bluetooth.BluetoothGatt
 import android.bluetooth.BluetoothGattCharacteristic
 import android.bluetooth.BluetoothGattDescriptor
+import androidx.annotation.MainThread
+import androidx.annotation.WorkerThread
 import com.revolution.bluetooth.communication.BLEConnectionHandler
+import com.revolution.bluetooth.communication.RoboticCharacteristicListener
 import java.util.UUID
 
 abstract class RoboticsCharacteristic(protected val handler: BLEConnectionHandler) {
@@ -45,7 +48,13 @@ abstract class RoboticsCharacteristic(protected val handler: BLEConnectionHandle
     abstract fun getCharacteristic(): BluetoothGattCharacteristic?
 
     abstract fun init(bluetoothGatt: BluetoothGatt)
+    @WorkerThread
     abstract fun onCharacteristicChanged(characteristic: BluetoothGattCharacteristic)
+    @WorkerThread
     abstract fun onCharacteristicRead(characteristic: BluetoothGattCharacteristic)
+    @WorkerThread
     abstract fun onCharacteristicWrite(characteristic: BluetoothGattCharacteristic)
+
+    @MainThread
+    abstract fun invokeEvent(roboticCharacteristicListener: RoboticCharacteristicListener?)
 }
