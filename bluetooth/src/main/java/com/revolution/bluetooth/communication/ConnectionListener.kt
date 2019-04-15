@@ -1,6 +1,7 @@
 package com.revolution.bluetooth.communication
 
 import android.bluetooth.BluetoothProfile
+import androidx.annotation.MainThread
 
 interface ConnectionListener {
 
@@ -16,7 +17,10 @@ interface ConnectionListener {
         }
     }
 
+    @MainThread
     fun onConnectionStateChanged(connectionState: ConnectionState)
+    @MainThread
     fun onRSSIChanged(rssi: Int)
+    @MainThread
     fun onMTUChanged(mtu: Int)
 }
