@@ -27,7 +27,7 @@ fun createInteractorModule() =
 
 fun createPresenterModule() =
     Kodein.Module("PresenterModule") {
-        bind<MainMenuMvp.Presenter>() with provider { MainMenuPresenter(instance()) }
+        bind<MainMenuMvp.Presenter>() with singleton { MainMenuPresenter(instance()) }
     }
 
 fun createDbModule(context: Context) =
