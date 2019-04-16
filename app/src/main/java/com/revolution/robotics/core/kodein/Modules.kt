@@ -17,6 +17,7 @@ import com.revolution.robotics.core.navigation.Navigator
 import com.revolution.robotics.core.utils.dynamicPermissions.DynamicPermissionHandler
 import com.revolution.robotics.mainmenu.MainMenuViewModel
 import com.revolution.robotics.robots.RobotsViewModel
+import com.revolution.robotics.slider.BuildStepSliderViewModel
 import org.kodein.di.Kodein
 import org.kodein.di.erased.bind
 import org.kodein.di.erased.instance
@@ -63,4 +64,5 @@ fun createViewModelModule() =
         bind<CodingViewModel>() with provider { CodingViewModel() }
         bind<ChallengesViewModel>() with provider { ChallengesViewModel() }
         bind<RobotsViewModel>() with provider { RobotsViewModel() }
+        bind<BuildStepSliderViewModel>() with provider { BuildStepSliderViewModel() }
     }

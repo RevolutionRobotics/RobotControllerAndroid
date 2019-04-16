@@ -32,26 +32,34 @@ class RoboticsSeekBar @JvmOverloads constructor(context: Context, attrs: Attribu
         thumbOffset = Math.round(thumbWidth / 2.0f)
     }
 
-    fun setBuildSteps(steps: List<BuildStep>) {
+    fun setBuildSteps(steps: List<BuildStep>, startIndex: Int = 0) {
         this.steps.clear()
         this.steps.addAll(steps)
-        max = steps.size
-        progress = 0
+        max = steps.size - 1
+        progress = startIndex
         calculateMilestoneRect(steps)
         invalidate()
     }
 
+    fun selectNext() {
+        progress = Math.min(max, progress + 1)
+    }
+
+    fun selectPrevious() {
+        progress = Math.max(0, progress - 1)
+    }
+
     private fun calculateMilestoneRect(steps: List<BuildStep>) {
         milestoneRects.clear()
-        val stepWidth = (width - (paddingLeft + paddingRight)) / steps.size.toFloat()
+        val stepWidth = (width - (paddingLeft + paddingRight)) / (steps.size - 1).toFloat()
         val leftMilestoneMargin = Math.max((stepWidth - maxWidth) / 2.0f, 0.0f)
         steps.forEachIndexed { index, buildStep ->
             if (buildStep.milestone != null) {
                 milestoneRects.add(
                     RectF(
-                        paddingLeft + index * stepWidth + leftMilestoneMargin + stepWidth / 2.0f,
+                        paddingLeft + (index - 1) * stepWidth + leftMilestoneMargin + stepWidth / 2.0f,
                         topMilestonePadding,
-                        paddingLeft + index * stepWidth + Math.min(
+                        paddingLeft + (index - 1) * stepWidth + Math.min(
                             stepWidth,
                             maxWidth
                         ) + leftMilestoneMargin + stepWidth / 2.0f,
