@@ -8,7 +8,6 @@ import org.kodein.di.erased.instance
 class MainMenuFragment : BaseFragment<FragmentMainMenuBinding, MainMenuViewModel>(R.layout.fragment_main_menu),
     MainMenuMvp.View {
 
-    override val presenter: MainMenuMvp.Presenter by kodein.instance()
-
     override val viewModelClass: Class<MainMenuViewModel> = MainMenuViewModel::class.java
+    private val presenter: MainMenuMvp.Presenter by kodein.instance()
 }

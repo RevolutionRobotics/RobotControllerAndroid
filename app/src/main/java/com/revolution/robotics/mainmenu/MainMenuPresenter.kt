@@ -5,7 +5,7 @@ import com.revolution.robotics.core.navigation.Navigator
 class MainMenuPresenter(private val navigator: Navigator) : MainMenuMvp.Presenter {
 
     override var view: MainMenuMvp.View? = null
-    override var model: MainMenuMvp.Model? = null
+    override var model: MainMenuViewModel? = null
 
     override fun navigateToRobots() {
         navigator.navigate(MainMenuFragmentDirections.toRobots())
