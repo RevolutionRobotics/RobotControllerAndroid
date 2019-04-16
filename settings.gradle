@@ -1,1 +1,19 @@
 include ':app', ':bluetooth', ':blockly'
+
+ext.IS_CI_RUN = System.getenv().containsKey("BUILD_CACHE_CREDS")
+
+buildCache {
+    local {
+        enabled = !IS_CI_RUN
+    }
+
+    remote(HttpBuildCache) {
+        url = 'https://gradle-cache.schq.io/cache/'
+        push = IS_CI_RUN
+
+        credentials {
+            username = System.env.BUILD_CACHE_CREDS_USR
+            password = System.env.BUILD_CACHE_CREDS_PSW
+        }
+    }
+}
