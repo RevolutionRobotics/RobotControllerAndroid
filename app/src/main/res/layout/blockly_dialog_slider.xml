@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
 
     <data>
         <variable name="viewModel" type="com.revolution.robotics.blockly.dialogs.slider.SliderDialogViewModel"/>
     </data>
 
-    <merge>
+    <merge tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
 
         <SeekBar
                 android:id="@+id/slider"

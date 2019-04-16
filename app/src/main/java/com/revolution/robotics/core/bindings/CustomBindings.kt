@@ -12,9 +12,6 @@ fun setSeekbarListener(seekBar: SeekBar, listener: SeekBar.OnSeekBarChangeListen
 }
 
 @BindingAdapter("chippedBoxConfig")
-fun setChippedBoxConfig(
-    view: View,
-    config: ChippedBoxConfig
-) {
+fun setChippedBoxConfig(view: View, config: ChippedBoxConfig) {
     view.background = ChippedBoxDrawable(view.context, config)
 }
