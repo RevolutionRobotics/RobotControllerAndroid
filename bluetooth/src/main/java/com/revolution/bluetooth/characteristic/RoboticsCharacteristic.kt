@@ -12,7 +12,7 @@ import java.util.UUID
 abstract class RoboticsCharacteristic(protected val handler: BLEConnectionHandler) {
 
     abstract val id: UUID
-    abstract val configId: UUID
+    abstract val configId: UUID?
 
     fun read() {
         getCharacteristic()?.let {
@@ -28,6 +28,10 @@ abstract class RoboticsCharacteristic(protected val handler: BLEConnectionHandle
     }
 
     fun subscribeForUpdates() {
+        if (configId == null) {
+            return
+        }
+
         getCharacteristic()?.let { characteristic ->
             handler.gattConnection?.setCharacteristicNotification(characteristic, true)
             val descriptor = characteristic.getDescriptor(configId)
@@ -37,6 +41,10 @@ abstract class RoboticsCharacteristic(protected val handler: BLEConnectionHandle
     }
 
     fun unubscribeForUpdates() {
+        if (configId == null) {
+            return
+        }
+
         getCharacteristic()?.let { characteristic ->
             handler.gattConnection?.setCharacteristicNotification(characteristic, true)
             val descriptor = characteristic.getDescriptor(configId)
@@ -50,8 +58,10 @@ abstract class RoboticsCharacteristic(protected val handler: BLEConnectionHandle
     abstract fun init(bluetoothGatt: BluetoothGatt)
     @WorkerThread
     abstract fun onCharacteristicChanged(characteristic: BluetoothGattCharacteristic)
+
     @WorkerThread
     abstract fun onCharacteristicRead(characteristic: BluetoothGattCharacteristic)
+
     @WorkerThread
     abstract fun onCharacteristicWrite(characteristic: BluetoothGattCharacteristic)
 

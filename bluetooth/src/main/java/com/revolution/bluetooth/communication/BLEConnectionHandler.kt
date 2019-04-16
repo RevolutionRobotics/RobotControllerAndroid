@@ -7,6 +7,7 @@ import android.bluetooth.BluetoothGattCharacteristic
 import android.bluetooth.BluetoothGattService
 import android.content.Context
 import com.revolution.bluetooth.characteristic.RoboticsCharacteristic
+import com.revolution.bluetooth.characteristic.live.KeepAliveCharacteristic
 import com.revolution.bluetooth.threading.moveToUIThread
 import java.util.UUID
 
@@ -25,7 +26,7 @@ class BLEConnectionHandler : BluetoothGattCallback() {
     var connectionListener: ConnectionListener? = null
     var characteristicListener: RoboticCharacteristicListener? = null
 
-    private val characteristics = mutableListOf<RoboticsCharacteristic>()
+    private val characteristics = mutableListOf<RoboticsCharacteristic>(KeepAliveCharacteristic(this))
 
     fun connect(
         context: Context,
