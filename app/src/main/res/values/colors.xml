@@ -5,4 +5,5 @@
     <color name="colorAccent">#D81B60</color>
     <color name="gray_28">#FF282828</color>
     <color name="pressed_button">#11FFFFFF</color>
+    <color name="robotics_red">#e60312</color>
 </resources>
