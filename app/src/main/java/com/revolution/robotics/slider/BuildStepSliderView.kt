@@ -12,29 +12,27 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.erased.instance
 
-class BuildStepSlider @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) :
+class BuildStepSliderView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) :
     ConstraintLayout(context, attrs), KodeinAware, SeekBar.OnSeekBarChangeListener {
 
     override val kodein: Kodein by kodein()
     private val viewModel: BuildStepSliderViewModel by instance()
+    private val binding = SliderBuildStepBinding.inflate(LayoutInflater.from(context), this, true).apply {
+        viewModel = this@BuildStepSliderView.viewModel
+        seekbarBuildSteps.setOnSeekBarChangeListener(this@BuildStepSliderView)
+        imgBack.setOnClickListener { seekbarBuildSteps.selectPrevious() }
+        imgNext.setOnClickListener { seekbarBuildSteps.selectNext() }
+    }
 
     private var buildStepSelectedListener: BuildStepSelectedListener? = null
-
-    private val binding: SliderBuildStepBinding =
-        SliderBuildStepBinding.inflate(LayoutInflater.from(context), this, true)
-
-    init {
-        binding.viewModel = viewModel
-        binding.seekbarBuildSteps.setOnSeekBarChangeListener(this)
-        binding.imgBack.setOnClickListener { binding.seekbarBuildSteps.selectPrevious() }
-        binding.imgNext.setOnClickListener { binding.seekbarBuildSteps.selectNext() }
-    }
 
     fun setBuildSteps(buildSteps: List<BuildStep>, listener: BuildStepSelectedListener, startIndex: Int = 0) {
         this.buildStepSelectedListener = listener
         viewModel.buildSteps.value = buildSteps
-        binding.seekbarBuildSteps.setBuildSteps(buildSteps, startIndex)
-        binding.seekbarBuildSteps.progress = startIndex
+        binding.seekbarBuildSteps.apply {
+            setBuildSteps(buildSteps, startIndex)
+            progress = startIndex
+        }
     }
 
     override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
