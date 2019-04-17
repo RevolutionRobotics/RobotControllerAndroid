@@ -3,7 +3,7 @@ package com.revolution.bluetooth.characteristic.live
 import android.bluetooth.BluetoothGatt
 import android.bluetooth.BluetoothGattCharacteristic
 import androidx.annotation.IntRange
-import com.revolution.bluetooth.communication.BLEConnectionHandler
+import com.revolution.bluetooth.communication.RoboticsDeviceConnector
 import com.revolution.bluetooth.communication.RoboticCharacteristicListener
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
@@ -13,9 +13,11 @@ import java.util.UUID
 import kotlin.experimental.and
 import kotlin.experimental.or
 
-class PeriodicControllerCharacteristic(handler: BLEConnectionHandler) : LiveRoboticsCharacteristic(handler) {
+class PeriodicControllerCharacteristic(handler: RoboticsDeviceConnector) : LiveRoboticsCharacteristic(handler) {
 
     companion object {
+        val CHARACHTERISTIC_ID = UUID.fromString("7486bec3-bb6b-4abd-a9ca-20adc281a0a4")
+
         const val DELAY_TIME_IN_MILLIS = 500L
         const val COUNTER_MAX = 16
 
@@ -27,7 +29,7 @@ class PeriodicControllerCharacteristic(handler: BLEConnectionHandler) : LiveRobo
         const val MAX_BYTE_MASK = 255.toByte()
     }
 
-    override val id: UUID = UUID.fromString("7486bec3-bb6b-4abd-a9ca-20adc281a0a4")
+    override val id: UUID = CHARACHTERISTIC_ID
     override val configId: UUID? = null
 
     private var isRunning = false
@@ -70,8 +72,11 @@ class PeriodicControllerCharacteristic(handler: BLEConnectionHandler) : LiveRobo
         schedulerJob = null
     }
 
-    fun updateDirection(@IntRange(from = 0, to = 255) x: Int, @IntRange(from = 0, to = 255) y: Int) {
+    fun updateXDirection(@IntRange(from = 0, to = 255) x: Int) {
         this.x = x.toByte()
+    }
+
+    fun updateYDirection(@IntRange(from = 0, to = 255) y: Int) {
         this.y = y.toByte()
     }
 

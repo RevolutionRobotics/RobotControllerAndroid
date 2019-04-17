@@ -1,3 +1,3 @@
 package com.revolution.bluetooth.exception
 
-class MissingBLEFeatureException : BluetoothException()
+class MissingBLEFeatureException : BLEException()
