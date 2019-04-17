@@ -1,24 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout
+    <data>
+        <variable name="background" type="com.revolution.robotics.core.utils.chippedBox.ChippedBoxConfig"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/root"
+            app:chippedBoxConfig="@{background}"
+            android:padding="@dimen/dimen_4dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
         <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/container"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/button_container"
+                android:layout_marginBottom="@dimen/dimen_4dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
         <LinearLayout
                 android:id="@+id/button_container"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_height="@dimen/dialog_button_height"
                 android:orientation="horizontal"/>
 
-    </LinearLayout>
-
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

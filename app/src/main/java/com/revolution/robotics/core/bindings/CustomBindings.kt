@@ -1,7 +1,9 @@
 package com.revolution.robotics.core.bindings
 
 import android.view.View
+import android.widget.ImageView
 import android.widget.SeekBar
+import androidx.annotation.DrawableRes
 import androidx.databinding.BindingAdapter
 import com.revolution.robotics.core.utils.chippedBox.ChippedBoxConfig
 import com.revolution.robotics.core.utils.chippedBox.ChippedBoxDrawable
@@ -14,4 +16,9 @@ fun setSeekbarListener(seekBar: SeekBar, listener: SeekBar.OnSeekBarChangeListen
 @BindingAdapter("chippedBoxConfig")
 fun setChippedBoxConfig(view: View, config: ChippedBoxConfig) {
     view.background = ChippedBoxDrawable(view.context, config)
+}
+
+@BindingAdapter("drawable")
+fun setImageDrawable(imageView: ImageView, @DrawableRes drawableRes: Int) {
+    imageView.setImageResource(drawableRes)
 }

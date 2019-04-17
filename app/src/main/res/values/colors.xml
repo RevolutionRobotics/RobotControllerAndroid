@@ -3,7 +3,14 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
-    <color name="gray_28">#FF282828</color>
+
+    <color name="white">#ffffff</color>
+
+    <color name="overlay_black_42">#42000000</color>
+
+    <color name="grey_28">#FF282828</color>
+    <color name="grey_1e">#FF1E1E1E</color>
+
     <color name="pressed_button">#11FFFFFF</color>
     <color name="robotics_red">#e60312</color>
 </resources>
