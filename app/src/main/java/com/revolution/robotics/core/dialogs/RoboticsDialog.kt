@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.annotation.LayoutRes
 import androidx.core.view.forEachIndexed
 import androidx.databinding.DataBindingUtil
@@ -41,10 +42,11 @@ abstract class RoboticsDialog : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         coreBinding.buttonContainer.forEachIndexed { index, child ->
-            if (index != coreBinding.buttonContainer.childCount - 1) {
-                child.layoutParams = (child.layoutParams as ViewGroup.MarginLayoutParams).apply {
+            child.layoutParams = (child.layoutParams as LinearLayout.LayoutParams).apply {
+                if (index != coreBinding.buttonContainer.childCount - 1) {
                     marginEnd = view.context.dimension(R.dimen.dimen_2dp)
                 }
+                weight = 1.0f
             }
         }
     }
