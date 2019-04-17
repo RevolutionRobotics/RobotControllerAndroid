@@ -30,7 +30,7 @@ class BuildStepSlider @JvmOverloads constructor(context: Context, attrs: Attribu
         binding.imgNext.setOnClickListener { binding.seekbarBuildSteps.selectNext() }
     }
 
-    fun setBuildSteps(buildSteps: List<BuildStep>, listener: BuildStepSelectedListener, startIndex: Int = 0,) {
+    fun setBuildSteps(buildSteps: List<BuildStep>, listener: BuildStepSelectedListener, startIndex: Int = 0) {
         this.buildStepSelectedListener = listener
         viewModel.buildSteps.value = buildSteps
         binding.seekbarBuildSteps.setBuildSteps(buildSteps, startIndex)
