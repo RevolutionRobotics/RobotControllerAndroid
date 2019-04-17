@@ -10,5 +10,7 @@ interface MainMenuMvp : Mvp {
         fun navigateToRobots()
         fun navigateToCoding()
         fun navigateToChallenges()
+        fun onCommunityClicked()
+        fun onSettingsClicked()
     }
 }

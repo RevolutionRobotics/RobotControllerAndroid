@@ -26,9 +26,11 @@ class RoboticsToolbar @JvmOverloads constructor(context: Context, attrs: Attribu
             if (value != null) {
                 logo.visibility = if (value.isLogoVisible) View.VISIBLE else View.INVISIBLE
                 back.visibility = if (value.hasBackOption) View.VISIBLE else View.INVISIBLE
-                title.setText(value.title)
+                title.text = value.title
+                value.options.reversed().forEach { createOption(it) }
             }
         }
+    private var lastIconAddedId = 0
 
     init {
         ViewToolbarBinding.inflate(LayoutInflater.from(context), this, true)
@@ -79,6 +81,34 @@ class RoboticsToolbar @JvmOverloads constructor(context: Context, attrs: Attribu
         layoutParams = (layoutParams as MarginLayoutParams).apply {
             marginStart = R.dimen.toolbar_box_size.toDimension()
         }
+    }
+
+    private fun createOption(option: ToolbarOption) = AppCompatImageView(context).apply {
+        id = View.generateViewId()
+        setImageResource(option.icon)
+        setBackgroundResource(R.drawable.bg_button_default)
+        scaleType = ImageView.ScaleType.FIT_XY
+        addView(this, R.dimen.toolbar_icon_size.toDimension(), R.dimen.toolbar_icon_size.toDimension())
+        makeConnections { connections ->
+            if (lastIconAddedId == 0) {
+                connections.connect(id, ConstraintSet.END, lastIconAddedId, ConstraintSet.END)
+            } else {
+                connections.connect(id, ConstraintSet.END, lastIconAddedId, ConstraintSet.START)
+            }
+            connections.connect(id, ConstraintSet.TOP, R.id.header_background, ConstraintSet.TOP)
+            connections.connect(id, ConstraintSet.BOTTOM, R.id.header_background, ConstraintSet.BOTTOM)
+        }
+        layoutParams = (layoutParams as MarginLayoutParams).apply {
+            marginEnd = R.dimen.dimen_24dp.toDimension()
+            setPadding(
+                R.dimen.dimen_8dp.toDimension(),
+                R.dimen.dimen_8dp.toDimension(),
+                R.dimen.dimen_8dp.toDimension(),
+                R.dimen.dimen_8dp.toDimension()
+            )
+        }
+        setOnClickListener { option.onClick.invoke() }
+        lastIconAddedId = id
     }
 
     private fun Int.toDimension() = context.dimension(this)

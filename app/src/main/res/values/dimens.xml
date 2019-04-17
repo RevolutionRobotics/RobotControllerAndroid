@@ -3,7 +3,6 @@
     <dimen name="header_height">42dp</dimen>
     <dimen name="footer_height">28dp</dimen>
     <dimen name="header_border_size">30dp</dimen>
-    <dimen name="toolbar_icon_size">42dp</dimen>
 
     <dimen name="dimen_1dp">1dp</dimen>
     <dimen name="dimen_2dp">2dp</dimen>
@@ -33,5 +32,6 @@
     <dimen name="toolbar_logo_size">38dp</dimen>
     <dimen name="toolbar_back_size">24dp</dimen>
     <dimen name="toolbar_box_size">66dp</dimen>
+    <dimen name="toolbar_icon_size">40dp</dimen>
 
 </resources>

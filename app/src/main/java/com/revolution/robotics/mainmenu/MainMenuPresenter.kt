@@ -18,4 +18,8 @@ class MainMenuPresenter(private val navigator: Navigator) : MainMenuMvp.Presente
     override fun navigateToChallenges() {
         navigator.navigate(MainMenuFragmentDirections.toChallenges())
     }
+
+    override fun onCommunityClicked() = Unit
+
+    override fun onSettingsClicked() = Unit
 }
