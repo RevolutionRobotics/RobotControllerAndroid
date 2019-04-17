@@ -2,6 +2,8 @@ package com.revolution.robotics.core.kodein
 
 import android.content.Context
 import androidx.room.Room
+import com.revolution.robotics.controller.LiveControllerMvp
+import com.revolution.robotics.controller.LiveControllerPresenter
 import com.revolution.robotics.core.db.RoboticsDatabase
 import com.revolution.robotics.core.domain.local.UserConfigurationDao
 import com.revolution.robotics.core.domain.local.UserRobotDao
@@ -31,6 +33,7 @@ fun createPresenterModule() =
     Kodein.Module("PresenterModule") {
         bind<MainMenuMvp.Presenter>() with singleton { MainMenuPresenter(instance()) }
         bind<RobotsMvp.Presenter>() with singleton { RobotsPresenter() }
+        bind<LiveControllerMvp.Presenter>() with singleton { LiveControllerPresenter(instance()) }
     }
 
 fun createDbModule(context: Context) =
