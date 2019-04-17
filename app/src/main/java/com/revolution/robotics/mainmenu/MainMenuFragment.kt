@@ -1,5 +1,7 @@
 package com.revolution.robotics.mainmenu
 
+import android.os.Bundle
+import android.view.View
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
 import com.revolution.robotics.databinding.FragmentMainMenuBinding
@@ -10,4 +12,8 @@ class MainMenuFragment : BaseFragment<FragmentMainMenuBinding, MainMenuViewModel
 
     override val viewModelClass: Class<MainMenuViewModel> = MainMenuViewModel::class.java
     private val presenter: MainMenuMvp.Presenter by kodein.instance()
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        binding?.toolbarViewModel = MainMenuToolbarViewModel(presenter)
+    }
 }
