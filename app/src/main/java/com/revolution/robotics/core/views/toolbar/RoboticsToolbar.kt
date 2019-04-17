@@ -12,11 +12,12 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import com.revolution.robotics.R
 import com.revolution.robotics.core.extensions.dimension
+import com.revolution.robotics.core.extensions.invisible
 import com.revolution.robotics.core.extensions.makeConnections
 import com.revolution.robotics.core.extensions.setAppearance
 import com.revolution.robotics.databinding.ViewToolbarBinding
 
-@Suppress("UnusedPrivateMember", "UnnecessaryApply")
+@Suppress("UnnecessaryApply")
 class RoboticsToolbar @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
     ConstraintLayout(context, attrs, defStyleAttr) {
 
@@ -24,8 +25,8 @@ class RoboticsToolbar @JvmOverloads constructor(context: Context, attrs: Attribu
         set(value) {
             field = value
             if (value != null) {
-                logo.visibility = if (value.isLogoVisible) View.VISIBLE else View.INVISIBLE
-                back.visibility = if (value.hasBackOption) View.VISIBLE else View.INVISIBLE
+                logo.invisible = !value.isLogoVisible
+                back.invisible = !value.hasBackOption
                 title.text = value.title
                 value.options.reversed().forEach { createOption(it) }
             }
