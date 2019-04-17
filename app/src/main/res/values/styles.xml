@@ -12,4 +12,12 @@
         <item name="android:windowFullscreen">true</item>
     </style>
 
+    <style name="RoboticsSeekBar" parent="Widget.AppCompat.SeekBar">
+        <item name="android:thumb">@drawable/ic_marker</item>
+        <item name="android:progressDrawable">@drawable/robotics_seekbar_progress</item>
+        <item name="android:splitTrack">false</item>
+        <item name="android:paddingBottom">0dp</item>
+
+    </style>
+
 </resources>

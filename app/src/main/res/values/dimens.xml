@@ -7,7 +7,11 @@
 
     <dimen name="dimen_4dp">4dp</dimen>
     <dimen name="dimen_8dp">8dp</dimen>
+    <dimen name="dimen_12dp">12dp</dimen>
     <dimen name="dimen_16dp">16dp</dimen>
     <dimen name="dimen_32dp">32dp</dimen>
     <dimen name="dimen_48dp">48dp</dimen>
+    <dimen name="seekbar_progress_height">14dp</dimen>
+    <dimen name="seekbar_milestone_top_margin">6dp</dimen>
+    <dimen name="seekbar_thumb_width">13dp</dimen>
 </resources>
