@@ -10,7 +10,6 @@ import com.revolution.bluetooth.domain.ConnectionState
 import com.revolution.bluetooth.domain.Device
 import com.revolution.bluetooth.exception.BLEConnectionException
 import com.revolution.bluetooth.exception.BLEException
-import com.revolution.bluetooth.service.RoboticsBLEService
 import com.revolution.bluetooth.service.RoboticsDeviceService
 import com.revolution.bluetooth.service.RoboticsLiveControllerService
 import com.revolution.bluetooth.threading.moveToUIThread
@@ -51,12 +50,10 @@ class RoboticsDeviceConnector : BluetoothGattCallback() {
     override fun onConnectionStateChange(gatt: BluetoothGatt?, status: Int, newState: Int) {
         moveToUIThread {
             if (status == BluetoothGatt.GATT_SUCCESS) {
-                ConnectionState.parseConnectionId(newState).apply {
-                    when (this) {
-                        ConnectionState.CONNECTED -> onConnected?.invoke()
-                        ConnectionState.DISCONNECTED -> onDisconnected?.invoke()
-                        ConnectionState.DISCONNECTING, ConnectionState.CONNECTING -> Unit
-                    }
+                when (ConnectionState.parseConnectionId(newState)) {
+                    ConnectionState.CONNECTED -> onConnected?.invoke()
+                    ConnectionState.DISCONNECTED -> onDisconnected?.invoke()
+                    ConnectionState.DISCONNECTING, ConnectionState.CONNECTING -> Unit
                 }
             } else {
                 onError?.invoke(BLEConnectionException(status))
@@ -94,6 +91,11 @@ class RoboticsDeviceConnector : BluetoothGattCallback() {
             serivces.forEach { it.onCharacteristicWrite(gatt, characteristic, status) }
         }
     }
+
+    fun getDeviceService() = serivces.first { it is RoboticsDeviceService } as RoboticsDeviceService
+
+    fun getLiveControllerService(): RoboticsLiveControllerService =
+        serivces.first { it is RoboticsLiveControllerService } as RoboticsLiveControllerService
 
     override fun onMtuChanged(gatt: BluetoothGatt?, mtu: Int, status: Int) = Unit
 

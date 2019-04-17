@@ -100,6 +100,7 @@ class RoboticsLiveControllerService : RoboticsBLEService {
         this[POSITION_BUTTON] = buttonByte
     }
 
+    @Suppress("UnusedPrivateMember")
     private infix fun Int.pow(exponent: Int): Int {
         var res = 1
         for (i in exponent downTo 1) {
