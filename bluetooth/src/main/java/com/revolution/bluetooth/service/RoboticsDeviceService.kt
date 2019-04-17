@@ -27,10 +27,13 @@ class RoboticsDeviceService : RoboticsBLEService {
     private val errorCallbackMap = hashMapOf<UUID, (exception: BLEException) -> Unit>()
 
     override fun init(bluetoothGatt: BluetoothGatt) {
+        this.bluetoothGatt = bluetoothGatt
         service = bluetoothGatt.getService(SERVICE_ID)
     }
 
     override fun disconnect() {
+        successCallbackMap.clear()
+        errorCallbackMap.clear()
         service = null
     }
 
@@ -77,8 +80,7 @@ class RoboticsDeviceService : RoboticsBLEService {
 
     override fun onCharacteristicChanged(
         gatt: BluetoothGatt?,
-        characteristic: BluetoothGattCharacteristic,
-        status: Int
+        characteristic: BluetoothGattCharacteristic
     ) = Unit
 
     private fun readCharachteristic(

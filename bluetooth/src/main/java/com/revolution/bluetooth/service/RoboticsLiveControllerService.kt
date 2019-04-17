@@ -1,24 +1,24 @@
-package com.revolution.bluetooth.characteristic.live
+package com.revolution.bluetooth.service
 
 import android.bluetooth.BluetoothGatt
 import android.bluetooth.BluetoothGattCharacteristic
+import android.bluetooth.BluetoothGattService
 import androidx.annotation.IntRange
-import com.revolution.bluetooth.communication.RoboticsDeviceConnector
-import com.revolution.bluetooth.communication.RoboticCharacteristicListener
+import java.util.UUID
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.util.UUID
 import kotlin.experimental.and
 import kotlin.experimental.or
 
-class PeriodicControllerCharacteristic(handler: RoboticsDeviceConnector) : LiveRoboticsCharacteristic(handler) {
+class RoboticsLiveControllerService : RoboticsBLEService {
 
     companion object {
         val CHARACHTERISTIC_ID = UUID.fromString("7486bec3-bb6b-4abd-a9ca-20adc281a0a4")
+        val SERVICE_ID = UUID.fromString("d2d5558c-5b9d-11e9-8647-d663bd873d93")
 
-        const val DELAY_TIME_IN_MILLIS = 500L
+        const val DELAY_TIME_IN_MILLIS = 100L
         const val COUNTER_MAX = 16
 
         const val POSITION_KEEP_ALIVE = 0
@@ -29,8 +29,8 @@ class PeriodicControllerCharacteristic(handler: RoboticsDeviceConnector) : LiveR
         const val MAX_BYTE_MASK = 255.toByte()
     }
 
-    override val id: UUID = CHARACHTERISTIC_ID
-    override val configId: UUID? = null
+    private var service: BluetoothGattService? = null
+    private var bluetoothGatt: BluetoothGatt? = null
 
     private var isRunning = false
     private var schedulerJob: Job? = null
@@ -39,15 +39,15 @@ class PeriodicControllerCharacteristic(handler: RoboticsDeviceConnector) : LiveR
     private var y = 0.toByte()
     private var buttonByte = 0.toByte()
 
-    override fun init(bluetoothGatt: BluetoothGatt) = Unit
+    override fun init(bluetoothGatt: BluetoothGatt) {
+        this.bluetoothGatt = bluetoothGatt
+        service = bluetoothGatt.getService(SERVICE_ID)
+    }
 
-    override fun onCharacteristicChanged(characteristic: BluetoothGattCharacteristic) = Unit
-
-    override fun onCharacteristicRead(characteristic: BluetoothGattCharacteristic) = Unit
-
-    override fun onCharacteristicWrite(characteristic: BluetoothGattCharacteristic) = Unit
-
-    override fun invokeEvent(roboticCharacteristicListener: RoboticCharacteristicListener?) = Unit
+    override fun disconnect() {
+        bluetoothGatt = null
+        service = null
+    }
 
     fun start() {
         isRunning = true
@@ -59,7 +59,10 @@ class PeriodicControllerCharacteristic(handler: RoboticsDeviceConnector) : LiveR
                     if (counter == COUNTER_MAX) {
                         counter = 0
                     }
-                    write(generateMessage(counter))
+                    service?.getCharacteristic(CHARACHTERISTIC_ID)?.let { characteristic ->
+                        characteristic.value = generateMessage(counter)
+                        bluetoothGatt?.writeCharacteristic(characteristic)
+                    }
                 }
                 delay(DELAY_TIME_IN_MILLIS)
             } while (isRunning)
@@ -80,8 +83,8 @@ class PeriodicControllerCharacteristic(handler: RoboticsDeviceConnector) : LiveR
         this.y = y.toByte()
     }
 
-    fun changeButtonState(buttonIndex: Int, enable: Boolean) {
-        buttonByte = if (enable) {
+    fun changeButtonState(buttonIndex: Int, pressed: Boolean) {
+        buttonByte = if (pressed) {
             buttonByte or getMaskBasedOnIndex(buttonIndex)
         } else {
             buttonByte and (MAX_BYTE_MASK - getMaskBasedOnIndex(buttonIndex)).toByte()
@@ -97,7 +100,6 @@ class PeriodicControllerCharacteristic(handler: RoboticsDeviceConnector) : LiveR
         this[POSITION_BUTTON] = buttonByte
     }
 
-
     private infix fun Int.pow(exponent: Int): Int {
         var res = 1
         for (i in exponent downTo 1) {
@@ -105,4 +107,12 @@ class PeriodicControllerCharacteristic(handler: RoboticsDeviceConnector) : LiveR
         }
         return res
     }
+
+    override fun onCharacteristicRead(gatt: BluetoothGatt?, characteristic: BluetoothGattCharacteristic, status: Int) =
+        Unit
+
+    override fun onCharacteristicWrite(gatt: BluetoothGatt?, characteristic: BluetoothGattCharacteristic, status: Int) =
+        Unit
+
+    override fun onCharacteristicChanged(gatt: BluetoothGatt?, characteristic: BluetoothGattCharacteristic) = Unit
 }

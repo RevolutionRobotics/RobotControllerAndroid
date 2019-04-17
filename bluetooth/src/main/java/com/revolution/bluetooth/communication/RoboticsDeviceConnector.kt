@@ -12,6 +12,7 @@ import com.revolution.bluetooth.exception.BLEConnectionException
 import com.revolution.bluetooth.exception.BLEException
 import com.revolution.bluetooth.service.RoboticsBLEService
 import com.revolution.bluetooth.service.RoboticsDeviceService
+import com.revolution.bluetooth.service.RoboticsLiveControllerService
 import com.revolution.bluetooth.threading.moveToUIThread
 import java.util.UUID
 
@@ -31,7 +32,7 @@ class RoboticsDeviceConnector : BluetoothGattCallback() {
     var onDisconnected: (() -> Unit)? = null
     var onError: ((exception: BLEException) -> Unit)? = null
 
-    val serivces = listOf<RoboticsBLEService>(RoboticsDeviceService())
+    val serivces = listOf(RoboticsDeviceService(), RoboticsLiveControllerService())
 
     fun connect(
         context: Context,
