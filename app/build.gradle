@@ -27,6 +27,7 @@ android {
         disable 'Autofill'
         disable 'LabelFor'
         disable 'UnusedResources'
+        disable 'ObsoleteLayoutParam'
     }
 
     signingConfigs {

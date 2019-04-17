@@ -29,7 +29,7 @@ data class ChippedBoxConfig(
         if (chipBottomLeft) chipArray[BOTTOM_LEFT_INDEX] = chipSizeResource
     }
 
-    @Suppress("UnnecessaryApply")
+    @Suppress("UnnecessaryApply", "TooManyFunctions")
     class Builder {
         private var chipSizeResource = 0
         private var chipBorderSize = 0
