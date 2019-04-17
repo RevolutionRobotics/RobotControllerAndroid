@@ -7,6 +7,7 @@ import com.revolution.robotics.core.kodein.createAppModule
 import com.revolution.robotics.core.kodein.createDbModule
 import com.revolution.robotics.core.kodein.createInteractorModule
 import com.revolution.robotics.core.kodein.createMainModule
+import com.revolution.robotics.core.kodein.createPresenterModule
 import com.revolution.robotics.core.kodein.createViewModelModule
 import io.fabric.sdk.android.Fabric
 import org.kodein.di.Kodein
@@ -17,9 +18,10 @@ class RoboticsApplication : Application(), KodeinAware {
     override var kodein = Kodein {
         import(createMainModule())
         import(createAppModule(this@RoboticsApplication))
-        import(createInteractorModule())
-        import(createViewModelModule())
         import(createDbModule(this@RoboticsApplication))
+        import(createInteractorModule())
+        import(createPresenterModule())
+        import(createViewModelModule())
     }
 
     override fun onCreate() {

@@ -7,7 +7,7 @@ interface Mvp {
 
     interface View
 
-    interface Presenter<V : View, M : ViewModel> {
+    interface Presenter<V : View, M : ViewModel?> {
         var view: V?
         var model: M?
 

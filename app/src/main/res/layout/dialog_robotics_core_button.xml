@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable name="viewModel" type="com.revolution.robotics.core.dialogs.DialogButtonViewModel"/>
+    </data>
+
+    <LinearLayout
+            app:chippedBoxConfig="@{viewModel.background}"
+            android:onClick="@{() -> viewModel.onClick.invoke()}"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dialog_button_height">
+
+        <ImageView
+                android:id="@+id/icon"
+                android:layout_width="@dimen/dialog_icon_size"
+                android:layout_height="@dimen/dialog_icon_size"
+                app:drawable="@{viewModel.icon}"
+                android:scaleType="centerInside"/>
+
+        <TextView
+                android:id="@+id/text"
+                android:text="@{viewModel.text}"
+                android:layout_marginStart="@dimen/dimen_8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+</layout>
