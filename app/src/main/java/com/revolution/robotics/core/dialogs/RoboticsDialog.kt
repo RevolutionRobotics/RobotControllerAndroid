@@ -17,7 +17,6 @@ import com.revolution.robotics.core.utils.chippedBox.ChippedBoxConfig
 import com.revolution.robotics.databinding.DialogRoboticsCoreBinding
 import com.revolution.robotics.databinding.DialogRoboticsCoreButtonBinding
 
-@Suppress("UnnecessaryApply")
 abstract class RoboticsDialog : DialogFragment() {
 
     abstract val dialogFaces: List<DialogFace<*>>

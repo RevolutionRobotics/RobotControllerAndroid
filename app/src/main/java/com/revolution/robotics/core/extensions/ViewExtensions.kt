@@ -9,6 +9,8 @@ import android.view.ViewTreeObserver
 import android.widget.TextView
 import androidx.annotation.StyleRes
 import androidx.annotation.StyleableRes
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.databinding.BindingAdapter
 import androidx.viewpager.widget.ViewPager
 
@@ -90,3 +92,10 @@ inline fun View.waitForPreDraw(crossinline f: () -> Boolean) = with(viewTreeObse
         }
     })
 }
+
+inline fun ConstraintLayout.makeConnections(block: (constraintSet: ConstraintSet) -> Unit) =
+    ConstraintSet().let { constraintSet ->
+        constraintSet.clone(this)
+        block.invoke(constraintSet)
+        constraintSet.applyTo(this)
+    }
