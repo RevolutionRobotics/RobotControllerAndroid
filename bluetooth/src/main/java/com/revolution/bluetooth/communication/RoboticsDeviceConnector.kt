@@ -24,7 +24,7 @@ class RoboticsDeviceConnector : BluetoothGattCallback() {
     private var onDisconnected: (() -> Unit)? = null
     private var onError: ((exception: BLEException) -> Unit)? = null
 
-    private val services = listOf(
+    private val services = setOf(
         RoboticsDeviceService(),
         RoboticsLiveControllerService(),
         RoboticsBatteryService(),

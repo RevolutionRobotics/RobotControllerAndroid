@@ -6,9 +6,10 @@ import com.revolution.bluetooth.discover.RoboticsDeviceDiscoverer
 import com.revolution.bluetooth.domain.ConnectionState
 import com.revolution.bluetooth.exception.BLEException
 import com.revolution.bluetooth.service.RoboticsLiveControllerService
-import com.revolution.robotics.core.kodein.utils.ResourceResolver
+import com.revolution.robotics.core.kodein.utils.ApplicationContextProvider
 
-class LiveControllerPresenter(private val resourceResolver: ResourceResolver) : LiveControllerMvp.Presenter {
+class LiveControllerPresenter(private val applicationContextProvider: ApplicationContextProvider) :
+    LiveControllerMvp.Presenter {
 
     override var view: LiveControllerMvp.View? = null
     override var model: LiveControllerViewModel? = null
@@ -21,10 +22,10 @@ class LiveControllerPresenter(private val resourceResolver: ResourceResolver) : 
     override fun register(view: LiveControllerMvp.View, model: LiveControllerViewModel?) {
         super.register(view, model)
         model?.connectionState?.value = "Discovering"
-        bleDeviceDiscoverer.discoverRobots(resourceResolver.context) { devices ->
+        bleDeviceDiscoverer.discoverRobots(applicationContextProvider.applicationContext) { devices ->
             if (devices.isNotEmpty()) {
                 bleHandler.connect(
-                    resourceResolver.context,
+                    applicationContextProvider.applicationContext,
                     devices.first(),
                     ::onConnected,
                     ::onDisconnected,
@@ -52,10 +53,10 @@ class LiveControllerPresenter(private val resourceResolver: ResourceResolver) : 
     }
 
     override fun unregister() {
-        super.unregister()
         bleDeviceDiscoverer.stopDiscovering()
         liveControllerService?.stop()
         bleHandler.disconnect()
+        super.unregister()
     }
 
     override fun onButtonClicked(index: Int) {

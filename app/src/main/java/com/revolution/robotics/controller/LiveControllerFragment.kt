@@ -19,8 +19,10 @@ class LiveControllerFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         presenter.register(this, viewModel)
-        binding?.seekbarXCoord?.setOnSeekBarChangeListener(this)
-        binding?.seekbarYCoord?.setOnSeekBarChangeListener(this)
+        binding?.apply {
+            seekbarXCoord.setOnSeekBarChangeListener(this@LiveControllerFragment)
+            seekbarYCoord.setOnSeekBarChangeListener(this@LiveControllerFragment)
+        }
     }
 
     override fun onProgressChanged(seekbar: SeekBar?, progress: Int, fromUser: Boolean) {
@@ -34,8 +36,8 @@ class LiveControllerFragment :
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         presenter.unregister()
+        super.onDestroyView()
     }
 
     override fun onStartTrackingTouch(p0: SeekBar?) = Unit

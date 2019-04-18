@@ -103,7 +103,7 @@ class RoboticsLiveControllerService : RoboticsBLEService() {
     @Suppress("UnusedPrivateMember")
     private infix fun Int.pow(exponent: Int): Int {
         var res = 1
-        for (i in exponent downTo 1) {
+        repeat(exponent.downTo(1).count()) {
             res *= this
         }
         return res
