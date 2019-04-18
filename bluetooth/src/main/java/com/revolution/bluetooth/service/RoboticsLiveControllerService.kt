@@ -11,6 +11,7 @@ import java.util.UUID
 import kotlin.experimental.and
 import kotlin.experimental.or
 
+@Suppress("TooManyFunctions")
 class RoboticsLiveControllerService : RoboticsBLEService() {
 
     companion object {
@@ -43,6 +44,7 @@ class RoboticsLiveControllerService : RoboticsBLEService() {
     override fun disconnect() {
         stop()
         service = null
+        super.disconnect()
     }
 
     fun start() {

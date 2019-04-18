@@ -15,6 +15,7 @@ import com.revolution.bluetooth.service.RoboticsDeviceService
 import com.revolution.bluetooth.service.RoboticsLiveControllerService
 import com.revolution.bluetooth.threading.moveToUIThread
 
+@Suppress("TooManyFunctions")
 class RoboticsDeviceConnector : BluetoothGattCallback() {
 
     private var device: BluetoothDevice? = null
@@ -43,6 +44,16 @@ class RoboticsDeviceConnector : BluetoothGattCallback() {
         this.onDisconnected = onDisconnected
         this.onError = onError
         this.device?.connectGatt(context, true, this)
+    }
+
+    fun disconnect() {
+        services.forEach {
+            it.disconnect()
+        }
+        gattConnection?.disconnect()
+        gattConnection?.close()
+        gattConnection = null
+        device = null
     }
 
     override fun onConnectionStateChange(gatt: BluetoothGatt?, status: Int, newState: Int) {
@@ -103,14 +114,4 @@ class RoboticsDeviceConnector : BluetoothGattCallback() {
     override fun onMtuChanged(gatt: BluetoothGatt?, mtu: Int, status: Int) = Unit
 
     override fun onReadRemoteRssi(gatt: BluetoothGatt?, rssi: Int, status: Int) = Unit
-
-    fun disconnect() {
-        services.forEach {
-            it.disconnect()
-        }
-        gattConnection?.disconnect()
-        gattConnection?.close()
-        gattConnection = null
-        device = null
-    }
 }

@@ -6,6 +6,7 @@ import com.revolution.bluetooth.exception.BLEConnectionException
 import com.revolution.bluetooth.exception.BLEException
 import java.util.UUID
 
+@Suppress("TooManyFunctions")
 class RoboticsDeviceService : RoboticsBLEService() {
 
     companion object {
@@ -27,6 +28,7 @@ class RoboticsDeviceService : RoboticsBLEService() {
     override fun disconnect() {
         successCallbackMap.clear()
         errorCallbackMap.clear()
+        super.disconnect()
     }
 
     override fun onCharacteristicRead(gatt: BluetoothGatt?, characteristic: BluetoothGattCharacteristic, status: Int) {
