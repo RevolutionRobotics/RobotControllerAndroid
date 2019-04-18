@@ -16,13 +16,22 @@ import com.revolution.robotics.core.extensions.dimension
 import com.revolution.robotics.core.utils.chippedBox.ChippedBoxConfig
 import com.revolution.robotics.databinding.DialogRoboticsCoreBinding
 import com.revolution.robotics.databinding.DialogRoboticsCoreButtonBinding
+import org.kodein.di.KodeinAware
+import org.kodein.di.LateInitKodein
 
 abstract class RoboticsDialog : DialogFragment() {
 
     abstract val dialogFaces: List<DialogFace<*>>
     abstract val dialogButtons: List<DialogButton>
 
+    protected var kodein = LateInitKodein()
+
     private lateinit var coreBinding: DialogRoboticsCoreBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        kodein.baseKodein = (requireContext().applicationContext as KodeinAware).kodein
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         coreBinding = DialogRoboticsCoreBinding.inflate(inflater, container, false)
