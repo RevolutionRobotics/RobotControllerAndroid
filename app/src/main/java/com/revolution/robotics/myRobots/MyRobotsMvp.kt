@@ -9,5 +9,4 @@ interface MyRobotsMvp : Mvp {
     interface Presenter : Mvp.Presenter<View, MyRobotsViewModel> {
         fun navigateToRobots()
     }
-
 }
