@@ -26,6 +26,7 @@ class MainMenuViewModel(private val presenter: MainMenuMvp.Presenter) : ViewMode
         presenter::navigateToChallenges
     )
 
+    @Suppress("OptionalUnit")
     fun onCommunityIconClicked() = Unit
 
     fun onRoboticsIconClicked() {
