@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="header_height">42dp</dimen>
-    <dimen name="footer_height">28dp</dimen>
-    <dimen name="header_border_size">30dp</dimen>
-
+    <!-- GENERAL -->
     <dimen name="dimen_1dp">1dp</dimen>
     <dimen name="dimen_2dp">2dp</dimen>
     <dimen name="dimen_4dp">4dp</dimen>
@@ -17,9 +14,18 @@
     <dimen name="dimen_44dp">44dp</dimen>
     <dimen name="dimen_48dp">48dp</dimen>
 
+    <!-- CUSTOM VIEW: SEEKBAR -->
     <dimen name="seekbar_progress_height">14dp</dimen>
     <dimen name="seekbar_milestone_top_margin">6dp</dimen>
     <dimen name="seekbar_thumb_width">13dp</dimen>
+
+    <!-- CUSTOM VIEW: TOOLBAR -->
+    <dimen name="toolbar_logo_size">38dp</dimen>
+    <dimen name="toolbar_back_size">24dp</dimen>
+    <dimen name="toolbar_box_size">66dp</dimen>
+    <dimen name="toolbar_icon_size">40dp</dimen>
+
+    <!-- CUSTOM DIALOG -->
 
     <dimen name="dialog_width">460dp</dimen>
     <dimen name="dialog_height">240dp</dimen>
@@ -29,30 +35,23 @@
     <dimen name="dialog_button_height">46dp</dimen>
     <dimen name="dialog_icon_size">16dp</dimen>
 
-    <dimen name="toolbar_logo_size">38dp</dimen>
-    <dimen name="toolbar_back_size">24dp</dimen>
-    <dimen name="toolbar_box_size">66dp</dimen>
-    <dimen name="toolbar_icon_size">40dp</dimen>
+    <!-- SCREEN: MAIN MENU -->
+    <dimen name="main_menu_footer_height">28dp</dimen>
+    <dimen name="main_menu_header_border_size">30dp</dimen>
 
+    <!-- SCREEN: ROBOTS -->
     <dimen name="robots_pager_horizontal_padding">214dp</dimen>
-    <item name="header_background_percentage" type="dimen">0.1281</item>
-    <item name="header_image_background_percentage" type="dimen">0.1031</item>
-    <item name="robots_viewpager_top_guide_percentage" type="dimen">0.2313</item>
-    <item name="robots_viewpager_bottom_guide_percentage" type="dimen">0.9313</item>
-    <item name="robots_buttons_center_guide_percentage" type="dimen">0.597</item>
-    <item name="robots_pager_button_width_percentage" type="dimen">0.0405</item>
-    <item name="robots_pager_button_height_percentage" type="dimen">0.16</item>
-
-    <item name="robots_card_text_guide_percentage" type="dimen">0.1071</item>
-    <item name="robots_card_image_top_guide_percentage" type="dimen">0.2946</item>
-    <item name="robots_card_image_bottom_guide_percentage" type="dimen">0.7054</item>
-    <item name="robots_card_time_top_guide_percentage" type="dimen">0.8088</item>
-    <item name="robots_card_clock_icon_height_percentage" type="dimen">0.0536</item>
-
-    <string name="robots_card_dimension_ratio">W, 0.9508</string>
-    <string name="robots_card_timer_guide_ratio">W, 1.467</string>
-    <string name="robots_card_clock_icon_ratio">W, 1.0</string>
-    <string name="robots_card_time_spacer_ratio">W, 0.01785</string>
-
+    <dimen name="robots_header_background_percentage">0.1281</dimen>
+    <dimen name="robots_header_image_background_percentage">0.1031</dimen>
+    <dimen name="robots_viewpager_top_guide_percentage">0.2313</dimen>
+    <dimen name="robots_viewpager_bottom_guide_percentage">0.9313</dimen>
+    <dimen name="robots_buttons_center_guide_percentage">0.597</dimen>
+    <dimen name="robots_pager_button_width_percentage">0.0405</dimen>
+    <dimen name="robots_pager_button_height_percentage">0.16</dimen>
+    <dimen name="robots_card_text_guide_percentage">0.1071</dimen>
+    <dimen name="robots_card_image_top_guide_percentage">0.2946</dimen>
+    <dimen name="robots_card_image_bottom_guide_percentage">0.7054</dimen>
+    <dimen name="robots_card_time_top_guide_percentage">0.8088</dimen>
+    <dimen name="robots_card_clock_icon_height_percentage">0.0536</dimen>
 
 </resources>

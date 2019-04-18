@@ -3,9 +3,13 @@
     <!-- General strings -->
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
+    <string name="build_new">build new</string>
 
     <!-- Main menu -->
     <string name="menu_robots">robots</string>
     <string name="menu_coding">programs</string>
     <string name="menu_challenges">challenges</string>
+
+    <!-- My robots -->
+    <string name="my_robots_title">Your robots</string>
 </resources>

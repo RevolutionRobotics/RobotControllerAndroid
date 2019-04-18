@@ -7,7 +7,7 @@ interface MainMenuMvp : Mvp {
     interface View : Mvp.View
 
     interface Presenter : Mvp.Presenter<View, MainMenuViewModel> {
-        fun navigateToRobots()
+        fun navigateToMyRobots()
         fun navigateToCoding()
         fun navigateToChallenges()
         fun onCommunityClicked()

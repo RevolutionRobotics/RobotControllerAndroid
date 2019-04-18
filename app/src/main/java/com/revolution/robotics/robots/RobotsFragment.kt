@@ -11,9 +11,12 @@ import com.revolution.robotics.robots.adapter.RobotsPageTransformer
 import com.revolution.robotics.robots.adapter.RobotsPagerAdapter
 import org.kodein.di.erased.instance
 
-const val ROBOTS_PAGER_OFFSCREEN_PAGE_LIMIT = 3
-
 class RobotsFragment : BaseFragment<FragmentRobotsBinding, RobotsViewModel>(R.layout.fragment_robots), RobotsMvp.View {
+
+    companion object {
+        private const val ROBOTS_PAGER_OFFSCREEN_PAGE_LIMIT = 3
+    }
+
     override val viewModelClass: Class<RobotsViewModel> = RobotsViewModel::class.java
     private lateinit var adapter: RobotsPagerAdapter
     private val presenter: RobotsMvp.Presenter by kodein.instance()

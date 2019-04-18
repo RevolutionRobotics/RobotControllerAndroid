@@ -15,7 +15,7 @@
                 android:layout_height="0dp"
                 android:scaleType="fitXY"
                 app:drawable="@{viewModel.isSelected ? viewModel.selectedResource : viewModel.defaultResource}"
-                app:layout_constraintDimensionRatio="@string/robots_card_dimension_ratio"
+                app:layout_constraintDimensionRatio="W, 0.9508"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -73,7 +73,7 @@
                 app:layout_constraintStart_toStartOf="@id/robotsCard"
                 app:layout_constraintBottom_toBottomOf="@id/robotsCard"
                 app:layout_constraintTop_toTopOf="@id/robotsCardTimeTopGuide"
-                app:layout_constraintDimensionRatio="@string/robots_card_timer_guide_ratio"
+                app:layout_constraintDimensionRatio="W, 1.467"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:gravity="center"
@@ -84,7 +84,7 @@
                 android:src="@drawable/clock_icon"
                 android:scaleType="fitCenter"
                 app:layout_constraintHeight_percent="@dimen/robots_card_clock_icon_height_percentage"
-                app:layout_constraintDimensionRatio="@string/robots_card_clock_icon_ratio"
+                app:layout_constraintDimensionRatio="W, 1.0"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 app:layout_constraintHorizontal_chainStyle="packed"
@@ -97,7 +97,7 @@
                 android:id="@+id/robotsCardTimeSpacer"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                app:layout_constraintDimensionRatio="@string/robots_card_time_spacer_ratio"
+                app:layout_constraintDimensionRatio="W, 0.01785"
                 app:layout_constraintTop_toTopOf="@id/robotsCardTimerGuideView"
                 app:layout_constraintBottom_toBottomOf="@id/robotsCardTimerGuideView"
                 app:layout_constraintStart_toEndOf="@id/robotsCardClockIcon"
@@ -106,13 +106,12 @@
         <TextView
                 android:id="@+id/robotsCardTime"
                 android:text="@{viewModel.time}"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="@id/robotsCardTimerGuideView"
-        app:layout_constraintBottom_toBottomOf="@id/robotsCardTimerGuideView"
-        app:layout_constraintStart_toEndOf="@id/robotsCardTimeSpacer"
-        app:layout_constraintEnd_toEndOf="@id/robotsCardTimerGuideView"
-        />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/robotsCardTimerGuideView"
+                app:layout_constraintBottom_toBottomOf="@id/robotsCardTimerGuideView"
+                app:layout_constraintStart_toEndOf="@id/robotsCardTimeSpacer"
+                app:layout_constraintEnd_toEndOf="@id/robotsCardTimerGuideView"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

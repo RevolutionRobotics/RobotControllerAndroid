@@ -68,7 +68,7 @@
         <ImageView
                 android:id="@+id/bottom_border"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/header_border_size"
+                android:layout_height="@dimen/main_menu_header_border_size"
                 android:scaleType="fitXY"
                 android:src="@drawable/bg_bottom_footer"
                 app:layout_constraintBottom_toTopOf="@id/bottom_header_background"/>
@@ -76,7 +76,7 @@
         <View
                 android:id="@+id/bottom_header_background"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/footer_height"
+                android:layout_height="@dimen/main_menu_footer_height"
                 android:background="@color/grey_28"
                 app:layout_constraintBottom_toBottomOf="parent"/>
 

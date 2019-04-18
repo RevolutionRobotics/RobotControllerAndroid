@@ -9,7 +9,7 @@ class MainMenuViewModel(private val presenter: MainMenuMvp.Presenter) : ViewMode
         R.string.menu_robots,
         R.drawable.card_border_red,
         R.drawable.ic_robots,
-        presenter::navigateToRobots
+        presenter::navigateToMyRobots
     )
 
     val codingButton = MainMenuButtonViewModel(
