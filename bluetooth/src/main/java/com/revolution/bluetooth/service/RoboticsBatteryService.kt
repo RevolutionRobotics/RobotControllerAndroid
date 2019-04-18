@@ -19,9 +19,9 @@ class RoboticsBatteryService : RoboticsBLEService() {
     private val errorCallbackMap = hashMapOf<UUID, (exception: BLEException) -> Unit>()
 
     override fun disconnect() {
-        super.disconnect()
         successCallbackMap.clear()
         errorCallbackMap.clear()
+        super.disconnect()
     }
 
     override fun onCharacteristicRead(gatt: BluetoothGatt?, characteristic: BluetoothGattCharacteristic, status: Int) {

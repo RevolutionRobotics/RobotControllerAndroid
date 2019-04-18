@@ -36,7 +36,5 @@ class RobotsPagerAdapter(private val context: Context) : PagerAdapter() {
         mViews[position] = null
     }
 
-    override fun getCount(): Int {
-        return mData.size
-    }
+    override fun getCount(): Int = mData.size
 }
