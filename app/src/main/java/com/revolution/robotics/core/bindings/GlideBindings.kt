@@ -30,9 +30,9 @@ fun loadFirebaseImage(imageView: ImageView, reference: StorageReference) {
 
 @BindingAdapter("firebaseImageUrl")
 fun loadFirebaseImage(imageView: ImageView, gsUrl: String?) {
-    gsUrl?.let {
+    gsUrl?.let { url ->
         GlideApp.with(imageView)
-            .load(FirebaseStorage.getInstance().getReferenceFromUrl(it))
+            .load(FirebaseStorage.getInstance().getReferenceFromUrl(url))
             .into(imageView)
     }
 }

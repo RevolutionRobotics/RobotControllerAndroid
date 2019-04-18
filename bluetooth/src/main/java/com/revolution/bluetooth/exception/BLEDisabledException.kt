@@ -1,3 +1,3 @@
 package com.revolution.bluetooth.exception
 
-class BLEDisabledException : BluetoothException()
+class BLEDisabledException : BLEException()

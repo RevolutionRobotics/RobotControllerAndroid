@@ -3,7 +3,7 @@ package com.revolution.robotics.mainmenu
 import androidx.lifecycle.ViewModel
 import com.revolution.robotics.R
 
-class MainMenuViewModel(presenter: MainMenuMvp.Presenter) : ViewModel() {
+class MainMenuViewModel(private val presenter: MainMenuMvp.Presenter) : ViewModel() {
 
     val robotButton = MainMenuButtonViewModel(
         R.string.menu_robots,
@@ -26,7 +26,10 @@ class MainMenuViewModel(presenter: MainMenuMvp.Presenter) : ViewModel() {
         presenter::navigateToChallenges
     )
 
+    @Suppress("OptionalUnit")
     fun onCommunityIconClicked() = Unit
 
-    fun onRoboticsIconClicked() = Unit
+    fun onRoboticsIconClicked() {
+        presenter.onSettingsClicked()
+    }
 }

@@ -13,7 +13,6 @@ import com.revolution.robotics.core.extensions.dimension
 import kotlin.math.max
 import kotlin.math.sqrt
 
-@Suppress("UnnecessaryApply")
 class ChippedBoxDrawable(context: Context, private val config: ChippedBoxConfig) : Drawable() {
 
     companion object {
@@ -24,7 +23,7 @@ class ChippedBoxDrawable(context: Context, private val config: ChippedBoxConfig)
         val CORRECTION_MULTIPLIER = 1f / sqrt(2f)
     }
 
-    private val contentPaint = Paint().apply { style = Paint.Style.FILL }
+    private val contentPaint = Paint().also { it.style = Paint.Style.FILL }
     private val chipBorderSize =
         if (config.chipBorderSizeResource == 0) {
             0
@@ -83,7 +82,6 @@ class ChippedBoxDrawable(context: Context, private val config: ChippedBoxConfig)
 
     override fun setColorFilter(colorFilter: ColorFilter?) {}
 
-    @Suppress("DataClassContainsFunctions")
     inner class ChippedBoxPathData(
         val config: ChippedBoxConfig,
         val isBorder: Boolean,

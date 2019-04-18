@@ -12,8 +12,8 @@
         <action android:id="@+id/toRobots" app:destination="@id/robotsFragment"/>
         <action android:id="@+id/toCommunity"
                 app:destination="@id/placeholder_community"/>
-        <action android:id="@+id/toRobotics"
-                app:destination="@id/placeholder_robotics"/>
+        <action android:id="@+id/toLiveController"
+                app:destination="@id/liveControllerFragment"/>
     </fragment>
 
     <fragment android:id="@+id/codingFragment" android:name="com.revolution.robotics.coding.CodingFragment"
@@ -22,6 +22,8 @@
               android:label="ChallengesFragment"/>
     <fragment android:id="@+id/robotsFragment" android:name="com.revolution.robotics.robots.RobotsFragment"
               android:label="RobotsFragment"/>
-    <fragment android:id="@+id/placeholder_robotics" />
     <fragment android:id="@+id/placeholder_community"/>
+    <fragment android:id="@+id/liveControllerFragment"
+              android:name="com.revolution.robotics.controller.LiveControllerFragment"
+              android:label="LiveControllerFragment"/>
 </navigation>

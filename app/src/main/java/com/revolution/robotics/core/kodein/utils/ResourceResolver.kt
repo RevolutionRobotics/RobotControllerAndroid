@@ -13,7 +13,7 @@ import com.revolution.robotics.core.extensions.color
 import com.revolution.robotics.core.extensions.dimension
 import com.revolution.robotics.core.extensions.font
 
-class ResourceResolver(private val context: Context) {
+class ResourceResolver(val context: Context) {
 
     fun string(@StringRes stringId: Int, vararg arguments: Any): String? = context.getString(stringId, arguments)
 

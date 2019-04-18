@@ -3,7 +3,6 @@ package com.revolution.robotics.core.dialogs
 import com.revolution.robotics.R
 import com.revolution.robotics.core.utils.chippedBox.ChippedBoxConfig
 
-@Suppress("DataClassContainsFunctions")
 data class DialogButtonViewModel(
     private val dialogButton: DialogButton,
     private val isFirst: Boolean,
