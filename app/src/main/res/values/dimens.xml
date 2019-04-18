@@ -34,4 +34,25 @@
     <dimen name="toolbar_box_size">66dp</dimen>
     <dimen name="toolbar_icon_size">40dp</dimen>
 
+    <dimen name="robots_pager_horizontal_padding">214dp</dimen>
+    <item name="header_background_percentage" type="dimen">0.1281</item>
+    <item name="header_image_background_percentage" type="dimen">0.1031</item>
+    <item name="robots_viewpager_top_guide_percentage" type="dimen">0.2313</item>
+    <item name="robots_viewpager_bottom_guide_percentage" type="dimen">0.9313</item>
+    <item name="robots_buttons_center_guide_percentage" type="dimen">0.597</item>
+    <item name="robots_pager_button_width_percentage" type="dimen">0.0405</item>
+    <item name="robots_pager_button_height_percentage" type="dimen">0.16</item>
+
+    <item name="robots_card_text_guide_percentage" type="dimen">0.1071</item>
+    <item name="robots_card_image_top_guide_percentage" type="dimen">0.2946</item>
+    <item name="robots_card_image_bottom_guide_percentage" type="dimen">0.7054</item>
+    <item name="robots_card_time_top_guide_percentage" type="dimen">0.8088</item>
+    <item name="robots_card_clock_icon_height_percentage" type="dimen">0.0536</item>
+
+    <string name="robots_card_dimension_ratio">W, 0.9508</string>
+    <string name="robots_card_timer_guide_ratio">W, 1.467</string>
+    <string name="robots_card_clock_icon_ratio">W, 1.0</string>
+    <string name="robots_card_time_spacer_ratio">W, 0.01785</string>
+
+
 </resources>
