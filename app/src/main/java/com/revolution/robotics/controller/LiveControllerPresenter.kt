@@ -20,6 +20,7 @@ class LiveControllerPresenter(private val resourceResolver: ResourceResolver) : 
     @SuppressLint("MissingPermission")
     override fun register(view: LiveControllerMvp.View, model: LiveControllerViewModel?) {
         super.register(view, model)
+        model?.connectionState?.value = "Discovering"
         bleDeviceDiscoverer.discoverRobots(resourceResolver.context) { devices ->
             if (devices.isNotEmpty()) {
                 bleHandler.connect(
@@ -52,6 +53,7 @@ class LiveControllerPresenter(private val resourceResolver: ResourceResolver) : 
 
     override fun unregister() {
         super.unregister()
+        bleDeviceDiscoverer.stopDiscovering()
         liveControllerService?.stop()
         bleHandler.disconnect()
     }

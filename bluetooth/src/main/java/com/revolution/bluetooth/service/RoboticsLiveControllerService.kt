@@ -4,11 +4,11 @@ import android.bluetooth.BluetoothGatt
 import android.bluetooth.BluetoothGattCharacteristic
 import android.bluetooth.BluetoothGattService
 import androidx.annotation.IntRange
-import java.util.UUID
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.util.UUID
 import kotlin.experimental.and
 import kotlin.experimental.or
 
@@ -35,8 +35,8 @@ class RoboticsLiveControllerService : RoboticsBLEService {
     private var isRunning = false
     private var schedulerJob: Job? = null
 
-    private var x = 0.toByte()
-    private var y = 0.toByte()
+    private var x = 127.toByte()
+    private var y = 127.toByte()
     private var buttonByte = 0.toByte()
 
     override fun init(bluetoothGatt: BluetoothGatt) {
@@ -83,7 +83,7 @@ class RoboticsLiveControllerService : RoboticsBLEService {
         this.y = y.toByte()
     }
 
-    fun changeButtonState(buttonIndex: Int, pressed: Boolean) {
+    fun changeButtonState(@IntRange(from = 0, to = 8) buttonIndex: Int, pressed: Boolean) {
         buttonByte = if (pressed) {
             buttonByte or getMaskBasedOnIndex(buttonIndex)
         } else {

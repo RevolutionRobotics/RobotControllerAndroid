@@ -7,5 +7,5 @@ class LiveControllerViewModel : ViewModel() {
 
     val connectionState = MutableLiveData<String>()
 
-    fun buttonText(index: Int) = "Button $index}"
+    fun buttonText(index: Int) = "Button $index"
 }

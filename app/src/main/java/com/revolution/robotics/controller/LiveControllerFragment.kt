@@ -21,14 +21,14 @@ class LiveControllerFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         presenter.register(this, viewModel)
-        binding?.btn1?.setOnTouchListener(ButtonTouchListener(presenter, 1))
-        binding?.btn2?.setOnTouchListener(ButtonTouchListener(presenter, 2))
-        binding?.btn3?.setOnTouchListener(ButtonTouchListener(presenter, 3))
-        binding?.btn4?.setOnTouchListener(ButtonTouchListener(presenter, 4))
-        binding?.btn5?.setOnTouchListener(ButtonTouchListener(presenter, 5))
-        binding?.btn6?.setOnTouchListener(ButtonTouchListener(presenter, 6))
-        binding?.btn7?.setOnTouchListener(ButtonTouchListener(presenter, 7))
-        binding?.btn8?.setOnTouchListener(ButtonTouchListener(presenter, 8))
+        binding?.btn1?.setOnTouchListener(ButtonTouchListener(presenter, 0))
+        binding?.btn2?.setOnTouchListener(ButtonTouchListener(presenter, 1))
+        binding?.btn3?.setOnTouchListener(ButtonTouchListener(presenter, 2))
+        binding?.btn4?.setOnTouchListener(ButtonTouchListener(presenter, 3))
+        binding?.btn5?.setOnTouchListener(ButtonTouchListener(presenter, 4))
+        binding?.btn6?.setOnTouchListener(ButtonTouchListener(presenter, 5))
+        binding?.btn7?.setOnTouchListener(ButtonTouchListener(presenter, 6))
+        binding?.btn8?.setOnTouchListener(ButtonTouchListener(presenter, 7))
 
         binding?.seekbarXCoord?.setOnSeekBarChangeListener(this)
     }
