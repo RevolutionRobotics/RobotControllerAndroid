@@ -18,9 +18,9 @@ class AdapterDelegate<T : Any> {
         getAdapterItemForViewType(viewHolder.itemViewType).onBindViewHolder(viewHolder, data)
 
     fun getItemViewType(data: T): Int {
-        adapterItems.forEach {
-            if (it.canHandleData(data)) {
-                return adapterItems.indexOf(it)
+        adapterItems.forEach { delegateItem ->
+            if (delegateItem.canHandleData(data)) {
+                return adapterItems.indexOf(delegateItem)
             }
         }
         throw IllegalArgumentException("Unhandled item: $data")
