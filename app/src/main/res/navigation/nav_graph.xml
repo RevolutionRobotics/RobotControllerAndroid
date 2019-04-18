@@ -16,6 +16,17 @@
                 app:destination="@id/placeholder_community"/>
     </fragment>
 
+    <fragment android:id="@+id/myRobotsFragment"
+              android:name="com.revolution.robotics.myRobots.MyRobotsFragment"
+              android:label="MyRobotsFragment">
+        <action android:id="@+id/toRobots"
+                app:destination="@id/robotsFragment"/>
+    </fragment>
+
+    <fragment android:id="@+id/robotsFragment"
+              android:name="com.revolution.robotics.robots.RobotsFragment"
+              android:label="RobotsFragment"/>
+
     <fragment android:id="@+id/codingFragment"
               android:name="com.revolution.robotics.coding.CodingFragment"
               android:label="CodingFragment"/>
@@ -23,14 +34,6 @@
     <fragment android:id="@+id/challengesFragment"
               android:name="com.revolution.robotics.challenges.ChallengesFragment"
               android:label="ChallengesFragment"/>
-
-    <fragment android:id="@+id/myRobotsFragment"
-              android:name="com.revolution.robotics.myRobots.MyRobotsFragment"
-              android:label="MyRobotsFragment"/>
-
-    <fragment android:id="@+id/robotsFragment"
-              android:name="com.revolution.robotics.robots.RobotsFragment"
-              android:label="RobotsFragment"/>
 
     <fragment android:id="@+id/liveControllerFragment"
               android:name="com.revolution.robotics.controller.LiveControllerFragment"

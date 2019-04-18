@@ -13,6 +13,8 @@ import com.revolution.robotics.core.interactor.RobotInteractor
 import com.revolution.robotics.core.interactor.TestCodeInteractor
 import com.revolution.robotics.mainmenu.MainMenuMvp
 import com.revolution.robotics.mainmenu.MainMenuPresenter
+import com.revolution.robotics.myRobots.MyRobotsMvp
+import com.revolution.robotics.myRobots.MyRobotsPresenter
 import com.revolution.robotics.robots.RobotsMvp
 import com.revolution.robotics.robots.RobotsPresenter
 import org.kodein.di.Kodein
@@ -34,6 +36,7 @@ fun createPresenterModule() =
         bind<MainMenuMvp.Presenter>() with singleton { MainMenuPresenter(instance()) }
         bind<RobotsMvp.Presenter>() with singleton { RobotsPresenter() }
         bind<LiveControllerMvp.Presenter>() with singleton { LiveControllerPresenter(instance()) }
+        bind<MyRobotsMvp.Presenter>() with singleton { MyRobotsPresenter(instance()) }
     }
 
 fun createDbModule(context: Context) =
