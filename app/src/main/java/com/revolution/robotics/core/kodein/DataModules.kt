@@ -2,6 +2,8 @@ package com.revolution.robotics.core.kodein
 
 import android.content.Context
 import androidx.room.Room
+import com.revolution.robotics.build.milestone.MilestoneFinishedMvp
+import com.revolution.robotics.build.milestone.MilestoneFinishedPresenter
 import com.revolution.robotics.controller.LiveControllerMvp
 import com.revolution.robotics.controller.LiveControllerPresenter
 import com.revolution.robotics.core.db.RoboticsDatabase
@@ -37,6 +39,7 @@ fun createPresenterModule() =
         bind<RobotsMvp.Presenter>() with singleton { RobotsPresenter() }
         bind<LiveControllerMvp.Presenter>() with singleton { LiveControllerPresenter(instance()) }
         bind<MyRobotsMvp.Presenter>() with singleton { MyRobotsPresenter(instance()) }
+        bind<MilestoneFinishedMvp.Presenter>() with singleton { MilestoneFinishedPresenter() }
     }
 
 fun createDbModule(context: Context) =
