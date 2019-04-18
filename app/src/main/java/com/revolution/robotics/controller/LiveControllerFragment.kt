@@ -1,8 +1,6 @@
 package com.revolution.robotics.controller
 
-import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.MotionEvent
 import android.view.View
 import android.widget.SeekBar
 import com.revolution.robotics.BaseFragment
@@ -21,16 +19,8 @@ class LiveControllerFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         presenter.register(this, viewModel)
-        binding?.btn1?.setOnTouchListener(ButtonTouchListener(presenter, 0))
-        binding?.btn2?.setOnTouchListener(ButtonTouchListener(presenter, 1))
-        binding?.btn3?.setOnTouchListener(ButtonTouchListener(presenter, 2))
-        binding?.btn4?.setOnTouchListener(ButtonTouchListener(presenter, 3))
-        binding?.btn5?.setOnTouchListener(ButtonTouchListener(presenter, 4))
-        binding?.btn6?.setOnTouchListener(ButtonTouchListener(presenter, 5))
-        binding?.btn7?.setOnTouchListener(ButtonTouchListener(presenter, 6))
-        binding?.btn8?.setOnTouchListener(ButtonTouchListener(presenter, 7))
-
         binding?.seekbarXCoord?.setOnSeekBarChangeListener(this)
+        binding?.seekbarYCoord?.setOnSeekBarChangeListener(this)
     }
 
     override fun onProgressChanged(seekbar: SeekBar?, progress: Int, fromUser: Boolean) {
@@ -51,19 +41,4 @@ class LiveControllerFragment :
     override fun onStartTrackingTouch(p0: SeekBar?) = Unit
 
     override fun onStopTrackingTouch(p0: SeekBar?) = Unit
-
-    class ButtonTouchListener(private val presenter: LiveControllerMvp.Presenter, private val index: Int) :
-        View.OnTouchListener {
-
-        @SuppressLint("ClickableViewAccessibility")
-        override fun onTouch(view: View, event: MotionEvent): Boolean {
-            if (event.action == MotionEvent.ACTION_DOWN) {
-                presenter.buttonActionDown(index)
-            }
-            if (event.action == MotionEvent.ACTION_UP) {
-                presenter.buttonActionUp(index)
-            }
-            return true
-        }
-    }
 }

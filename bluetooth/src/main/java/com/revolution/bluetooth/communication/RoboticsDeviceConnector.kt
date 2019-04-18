@@ -4,34 +4,32 @@ import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothGatt
 import android.bluetooth.BluetoothGattCallback
 import android.bluetooth.BluetoothGattCharacteristic
-import android.bluetooth.BluetoothGattService
 import android.content.Context
 import com.revolution.bluetooth.domain.ConnectionState
 import com.revolution.bluetooth.domain.Device
 import com.revolution.bluetooth.exception.BLEConnectionException
 import com.revolution.bluetooth.exception.BLEException
+import com.revolution.bluetooth.service.RoboticsBatteryService
+import com.revolution.bluetooth.service.RoboticsConfigurationService
 import com.revolution.bluetooth.service.RoboticsDeviceService
 import com.revolution.bluetooth.service.RoboticsLiveControllerService
 import com.revolution.bluetooth.threading.moveToUIThread
-import java.util.UUID
 
 class RoboticsDeviceConnector : BluetoothGattCallback() {
 
-    companion object {
-        val SERVICE_ID_LIVE: UUID = UUID.fromString("d2d5558c-5b9d-11e9-8647-d663bd873d93")
-        val SERVICE_ID_LONG: UUID = UUID.fromString("97148a03-5b9d-11e9-8647-d663bd873d93")
-    }
+    private var device: BluetoothDevice? = null
+    private var gattConnection: BluetoothGatt? = null
 
-    var device: BluetoothDevice? = null
-    var gattConnection: BluetoothGatt? = null
-    var gattLiveService: BluetoothGattService? = null
-    var gattLongService: BluetoothGattService? = null
+    private var onConnected: (() -> Unit)? = null
+    private var onDisconnected: (() -> Unit)? = null
+    private var onError: ((exception: BLEException) -> Unit)? = null
 
-    var onConnected: (() -> Unit)? = null
-    var onDisconnected: (() -> Unit)? = null
-    var onError: ((exception: BLEException) -> Unit)? = null
-
-    val serivces = listOf(RoboticsDeviceService(), RoboticsLiveControllerService())
+    private val services = listOf(
+        RoboticsDeviceService(),
+        RoboticsLiveControllerService(),
+        RoboticsBatteryService(),
+        RoboticsConfigurationService()
+    )
 
     fun connect(
         context: Context,
@@ -55,6 +53,7 @@ class RoboticsDeviceConnector : BluetoothGattCallback() {
                     ConnectionState.DISCONNECTED -> onDisconnected?.invoke()
                     ConnectionState.DISCONNECTING, ConnectionState.CONNECTING -> Unit
                 }
+                gatt?.discoverServices()
             } else {
                 onError?.invoke(BLEConnectionException(status))
             }
@@ -63,22 +62,20 @@ class RoboticsDeviceConnector : BluetoothGattCallback() {
 
     override fun onServicesDiscovered(gatt: BluetoothGatt, status: Int) {
         gattConnection = gatt
-        gattLiveService = gattConnection?.getService(SERVICE_ID_LIVE)
-        gattLongService = gattConnection?.getService(SERVICE_ID_LONG)
-        serivces.forEach {
+        services.forEach {
             it.init(gatt)
         }
     }
 
     override fun onCharacteristicChanged(gatt: BluetoothGatt?, characteristic: BluetoothGattCharacteristic) {
         moveToUIThread {
-            serivces.forEach { it.onCharacteristicChanged(gatt, characteristic) }
+            services.forEach { it.onCharacteristicChanged(gatt, characteristic) }
         }
     }
 
     override fun onCharacteristicRead(gatt: BluetoothGatt?, characteristic: BluetoothGattCharacteristic, status: Int) {
         moveToUIThread {
-            serivces.forEach { it.onCharacteristicRead(gatt, characteristic, status) }
+            services.forEach { it.onCharacteristicRead(gatt, characteristic, status) }
         }
     }
 
@@ -88,27 +85,32 @@ class RoboticsDeviceConnector : BluetoothGattCallback() {
         status: Int
     ) {
         moveToUIThread {
-            serivces.forEach { it.onCharacteristicWrite(gatt, characteristic, status) }
+            services.forEach { it.onCharacteristicWrite(gatt, characteristic, status) }
         }
     }
 
-    fun getDeviceService() = serivces.first { it is RoboticsDeviceService } as RoboticsDeviceService
+    fun getDeviceService() = services.first { it is RoboticsDeviceService } as RoboticsDeviceService
 
     fun getLiveControllerService(): RoboticsLiveControllerService =
-        serivces.first { it is RoboticsLiveControllerService } as RoboticsLiveControllerService
+        services.first { it is RoboticsLiveControllerService } as RoboticsLiveControllerService
+
+    fun getBatteryService(): RoboticsBatteryService =
+        services.first { it is RoboticsBatteryService } as RoboticsBatteryService
+
+    fun getConfigurationService(): RoboticsConfigurationService =
+        services.first { it is RoboticsConfigurationService } as RoboticsConfigurationService
 
     override fun onMtuChanged(gatt: BluetoothGatt?, mtu: Int, status: Int) = Unit
 
     override fun onReadRemoteRssi(gatt: BluetoothGatt?, rssi: Int, status: Int) = Unit
 
     fun disconnect() {
-        serivces.forEach {
+        services.forEach {
             it.disconnect()
         }
+        gattConnection?.disconnect()
         gattConnection?.close()
         gattConnection = null
-        gattLongService = null
-        gattLiveService = null
         device = null
     }
 }

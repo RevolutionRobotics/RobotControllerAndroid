@@ -9,12 +9,17 @@ import android.bluetooth.le.ScanSettings
 import android.content.Context
 import android.os.ParcelUuid
 import androidx.annotation.RequiresPermission
-import com.revolution.bluetooth.communication.RoboticsDeviceConnector
 import com.revolution.bluetooth.domain.Device
 import com.revolution.bluetooth.exception.BLEScanFailedException
 import com.revolution.bluetooth.extensions.getBLEManager
+import java.util.UUID
 
 class RoboticsDeviceDiscoverer : ScanCallback() {
+
+    companion object {
+        val SERVICE_ID_LIVE: UUID = UUID.fromString("d2d5558c-5b9d-11e9-8647-d663bd873d93")
+        val SERVICE_ID_DEVICE_INFO: UUID = UUID.fromString("F000180A-0451-4000-B000-000000000000")
+    }
 
     private var bluetoothAdapter: BluetoothAdapter? = null
     private var scanResultListener: ((List<Device>) -> Unit)? = null
@@ -29,8 +34,8 @@ class RoboticsDeviceDiscoverer : ScanCallback() {
         scanResultListener = listener
         bluetoothAdapter?.bluetoothLeScanner?.startScan(
             listOf(
-                ScanFilter.Builder().setServiceUuid(ParcelUuid(RoboticsDeviceConnector.SERVICE_ID_LIVE)).build(),
-                ScanFilter.Builder().setServiceUuid(ParcelUuid(RoboticsDeviceConnector.SERVICE_ID_LONG)).build()
+                ScanFilter.Builder().setServiceUuid(ParcelUuid(SERVICE_ID_LIVE)).build(),
+                ScanFilter.Builder().setServiceUuid(ParcelUuid(SERVICE_ID_DEVICE_INFO)).build()
             ), ScanSettings.Builder().build(), this
         )
     }

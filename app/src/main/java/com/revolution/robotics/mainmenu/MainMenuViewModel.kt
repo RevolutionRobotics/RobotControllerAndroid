@@ -29,6 +29,6 @@ class MainMenuViewModel(private val presenter: MainMenuMvp.Presenter) : ViewMode
     fun onCommunityIconClicked() = Unit
 
     fun onRoboticsIconClicked() {
-        presenter.navigateToLiveController()
+        presenter.onSettingsClicked()
     }
 }

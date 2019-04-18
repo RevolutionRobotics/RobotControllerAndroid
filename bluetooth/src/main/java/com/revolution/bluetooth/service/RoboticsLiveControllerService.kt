@@ -2,7 +2,6 @@ package com.revolution.bluetooth.service
 
 import android.bluetooth.BluetoothGatt
 import android.bluetooth.BluetoothGattCharacteristic
-import android.bluetooth.BluetoothGattService
 import androidx.annotation.IntRange
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
@@ -12,40 +11,37 @@ import java.util.UUID
 import kotlin.experimental.and
 import kotlin.experimental.or
 
-class RoboticsLiveControllerService : RoboticsBLEService {
+class RoboticsLiveControllerService : RoboticsBLEService() {
 
     companion object {
-        val CHARACHTERISTIC_ID = UUID.fromString("7486bec3-bb6b-4abd-a9ca-20adc281a0a4")
-        val SERVICE_ID = UUID.fromString("d2d5558c-5b9d-11e9-8647-d663bd873d93")
+        const val SERVICE_ID = "d2d5558c-5b9d-11e9-8647-d663bd873d93"
+
+        val CHARACTERISTIC_ID: UUID = UUID.fromString("7486bec3-bb6b-4abd-a9ca-20adc281a0a4")
 
         const val DELAY_TIME_IN_MILLIS = 100L
         const val COUNTER_MAX = 16
 
-        const val POSITION_KEEP_ALIVE = 0
+        const val POSITION_KEEP_ALIVE = 1
         const val POSITION_X_COORD = 1
         const val POSITION_Y_COORD = 2
         const val POSITION_BUTTON = 11
+
         const val MESSAGE_LENGTH = 20
         const val MAX_BYTE_MASK = 255.toByte()
+        const val DEFAULT_COORDINATE = 127.toByte()
     }
 
-    private var service: BluetoothGattService? = null
-    private var bluetoothGatt: BluetoothGatt? = null
+    override val serviceId: UUID = UUID.fromString(SERVICE_ID)
 
     private var isRunning = false
     private var schedulerJob: Job? = null
 
-    private var x = 127.toByte()
-    private var y = 127.toByte()
+    private var x = DEFAULT_COORDINATE
+    private var y = DEFAULT_COORDINATE
     private var buttonByte = 0.toByte()
 
-    override fun init(bluetoothGatt: BluetoothGatt) {
-        this.bluetoothGatt = bluetoothGatt
-        service = bluetoothGatt.getService(SERVICE_ID)
-    }
-
     override fun disconnect() {
-        bluetoothGatt = null
+        stop()
         service = null
     }
 
@@ -59,7 +55,7 @@ class RoboticsLiveControllerService : RoboticsBLEService {
                     if (counter == COUNTER_MAX) {
                         counter = 0
                     }
-                    service?.getCharacteristic(CHARACHTERISTIC_ID)?.let { characteristic ->
+                    service?.getCharacteristic(CHARACTERISTIC_ID)?.let { characteristic ->
                         characteristic.value = generateMessage(counter)
                         bluetoothGatt?.writeCharacteristic(characteristic)
                     }
@@ -89,6 +85,10 @@ class RoboticsLiveControllerService : RoboticsBLEService {
         } else {
             buttonByte and (MAX_BYTE_MASK - getMaskBasedOnIndex(buttonIndex)).toByte()
         }
+    }
+
+    fun negateButtonState(@IntRange(from = 0, to = 8) buttonIndex: Int) {
+        changeButtonState(buttonIndex, getMaskBasedOnIndex(buttonIndex) and buttonByte == 0.toByte())
     }
 
     private fun getMaskBasedOnIndex(buttonIndex: Int) = (2 pow buttonIndex).toByte()

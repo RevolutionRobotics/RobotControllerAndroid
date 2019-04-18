@@ -58,12 +58,8 @@ class LiveControllerPresenter(private val resourceResolver: ResourceResolver) : 
         bleHandler.disconnect()
     }
 
-    override fun buttonActionUp(buttonIndex: Int) {
-        liveControllerService?.changeButtonState(buttonIndex, false)
-    }
-
-    override fun buttonActionDown(buttonIndex: Int) {
-        liveControllerService?.changeButtonState(buttonIndex, true)
+    override fun onButtonClicked(index: Int) {
+        liveControllerService?.negateButtonState(index)
     }
 
     override fun onXAxisChanged(value: Int) {
