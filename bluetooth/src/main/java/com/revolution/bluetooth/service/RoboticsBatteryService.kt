@@ -9,8 +9,8 @@ import java.util.UUID
 class RoboticsBatteryService : RoboticsBLEService() {
 
     companion object {
-        const val SERVICE_ID = "F000180F-0451-4000-B000-000000000000"
-        val CHARACTERISTIC_PRIMARY_BATTERY: UUID = UUID.fromString("F0002A19-0451-4000-B000-000000000000")
+        const val SERVICE_ID = "0000180f-0000-1000-8000-00805f9b34fb"
+        val CHARACTERISTIC_PRIMARY_BATTERY: UUID = UUID.fromString("00002a19-0000-1000-8000-00805f9b34fb")
         val CHARACTERISTIC_MOTOR_BATTERY: UUID = UUID.fromString("00002a19-0000-1000-8000-00805f9b34fa")
     }
 
