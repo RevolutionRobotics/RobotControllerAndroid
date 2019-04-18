@@ -9,6 +9,7 @@ import com.revolution.robotics.core.domain.remote.Milestone
 import com.revolution.robotics.core.extensions.withArguments
 import com.revolution.robotics.core.utils.BundleArgumentDelegate
 import com.revolution.robotics.databinding.DialogFaceMilestoneFinishedBinding
+import com.revolution.robotics.views.dialogs.DialogFace
 import org.kodein.di.erased.instance
 
 class MilestoneFinishedDialog : RoboticsDialog(), MilestoneFinishedMvp.View {

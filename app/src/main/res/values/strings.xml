@@ -23,4 +23,8 @@
     <string name="build_chapter_finish_dialog_button_home">Home</string>
     <string name="build_chapter_finish_dialog_button_next_chapter">Next chapter</string>
     <string name="build_chapter_finish_dialog_button_test">Test</string>
+
+    <!-- Available robots -->
+    <string name="available_robots_title">Available robots</string>
+
 </resources>

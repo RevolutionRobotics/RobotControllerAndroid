@@ -24,6 +24,7 @@ android {
     }
 
     lintOptions {
+        disable 'UseCompoundDrawables'
         disable 'ContentDescription'
         disable 'Autofill'
         disable 'LabelFor'

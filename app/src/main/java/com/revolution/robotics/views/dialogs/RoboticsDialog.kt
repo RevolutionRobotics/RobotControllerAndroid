@@ -5,14 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import androidx.annotation.LayoutRes
 import androidx.core.view.forEachIndexed
-import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import com.revolution.robotics.R
 import com.revolution.robotics.core.extensions.dimension
+import com.revolution.robotics.core.extensions.gone
+import com.revolution.robotics.core.extensions.visible
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 import com.revolution.robotics.databinding.DialogRoboticsCoreBinding
 import com.revolution.robotics.databinding.DialogRoboticsCoreButtonBinding
@@ -27,7 +26,7 @@ abstract class RoboticsDialog : DialogFragment() {
 
     protected var kodein = LateInitKodein()
 
-    private lateinit var coreBinding: DialogRoboticsCoreBinding
+    protected lateinit var binding: DialogRoboticsCoreBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,25 +34,30 @@ abstract class RoboticsDialog : DialogFragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        coreBinding = DialogRoboticsCoreBinding.inflate(inflater, container, false)
-        dialogFaces[0].activate(inflater, coreBinding.container)
+        binding = DialogRoboticsCoreBinding.inflate(inflater, container, false)
+        dialogFaces[0].activate(this, inflater, binding.container)
         dialogButtons.forEachIndexed { index, button ->
-            val buttonBinding = DialogRoboticsCoreButtonBinding.inflate(inflater, coreBinding.buttonContainer, false)
+            val buttonBinding = DialogRoboticsCoreButtonBinding.inflate(inflater, binding.buttonContainer, false)
             buttonBinding.viewModel = DialogButtonViewModel(button, index == 0, index == dialogButtons.size - 1)
-            coreBinding.buttonContainer.addView(buttonBinding.root)
+            binding.buttonContainer.addView(buttonBinding.root)
         }
-        coreBinding.background = ChippedBoxConfig.Builder()
+
+        if (dialogButtons.isEmpty()) {
+            binding.buttonContainer.gone = true
+        }
+
+        binding.background = ChippedBoxConfig.Builder()
             .chipSize(R.dimen.dialog_chip_size)
             .backgroundColorResource(R.color.grey_1e)
             .create()
-        coreBinding.viewModel = ViewModel(hasCloseButton)
-        return coreBinding.root
+        binding.viewModel = RoboticsDialogViewModel(hasCloseButton) { dialog.dismiss() }
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        coreBinding.buttonContainer.forEachIndexed { index, child ->
+        binding.buttonContainer.forEachIndexed { index, child ->
             child.layoutParams = (child.layoutParams as LinearLayout.LayoutParams).apply {
-                if (index != coreBinding.buttonContainer.childCount - 1) {
+                if (index != binding.buttonContainer.childCount - 1) {
                     marginEnd = view.context.dimension(R.dimen.dimen_2dp)
                 }
                 weight = 1.0f
@@ -70,40 +74,10 @@ abstract class RoboticsDialog : DialogFragment() {
     }
 
     fun activateFace(dialogFace: DialogFace<*>) {
-        coreBinding.container.removeAllViews()
-        context?.let { context -> dialogFace.activate(LayoutInflater.from(context), coreBinding.container) }
+        binding.container.removeAllViews()
+        context?.let { context -> dialogFace.activate(this, LayoutInflater.from(context), binding.container) }
     }
 
     fun show(fragmentManager: FragmentManager?) =
         show(fragmentManager, javaClass.simpleName)
-
-    inner class ViewModel(val closeButtonVisibility: Boolean) {
-        fun onCloseClicked() {
-            dialog.dismiss()
-        }
-    }
-
-    open class DialogFace<B : ViewDataBinding>(@LayoutRes private val layoutResourceId: Int) {
-
-        companion object {
-            private var activeFace: DialogFace<*>? = null
-        }
-
-        protected var binding: B? = null
-
-        fun activate(inflater: LayoutInflater, container: ViewGroup): View? {
-            activeFace?.releaseFace()
-            binding = DataBindingUtil.inflate(inflater, layoutResourceId, container, true)
-            binding?.let { binding -> onViewCreated(binding) }
-            activeFace = this
-            return binding?.root
-        }
-
-        @Suppress("OptionalUnit")
-        open fun onViewCreated(binding: B) = Unit
-
-        private fun releaseFace() {
-            binding = null
-        }
-    }
 }

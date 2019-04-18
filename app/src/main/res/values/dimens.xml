@@ -37,6 +37,20 @@
     <dimen name="dialog_button_height">46dp</dimen>
     <dimen name="dialog_icon_size">16dp</dimen>
 
+    <!-- CUSTOM DIALOG: AVAILABLE ROBOTS -->
+    <dimen name="dialog_available_robots_title_padding_top">32dp</dimen>
+    <dimen name="dialog_available_robots_title_padding_bottom">12dp</dimen>
+    <dimen name="dialog_available_robots_border_spacer_width">32dp</dimen>
+    <dimen name="dialog_available_robots_image_width">91dp</dimen>
+    <dimen name="dialog_available_robots_image_height">47dp</dimen>
+    <dimen name="dialog_available_robots_item_vertical_padding">10dp</dimen>
+    <dimen name="dialog_available_robots_item_horizontal_padding">21dp</dimen>
+    <dimen name="dialog_available_robots_item_vertical_margin">6dp</dimen>
+    <dimen name="dialog_available_robots_item_image_size">12dp</dimen>
+    <dimen name="dialog_available_robots_item_text_size">15sp</dimen>
+    <dimen name="dialog_available_robots_title_text_size">18sp</dimen>
+
+
     <!-- SCREEN: MAIN MENU -->
     <dimen name="main_menu_header_border_size">30dp</dimen>
     <dimen name="main_menu_footer_height">28dp</dimen>
