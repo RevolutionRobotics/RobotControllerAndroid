@@ -15,9 +15,6 @@ class MyRobotsFragment : BaseFragment<FragmentMyRobotsBinding, MyRobotsViewModel
     private val resourceResolver: ResourceResolver by kodein.instance()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding?.apply {
-            viewModel = this@MyRobotsFragment.viewModel
-            toolbarViewModel = MyRobotsToolbarViewModel(resourceResolver)
-        }
+        binding?.toolbarViewModel = MyRobotsToolbarViewModel(resourceResolver)
     }
 }
