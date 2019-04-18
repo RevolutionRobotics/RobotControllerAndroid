@@ -3,10 +3,13 @@ package com.revolution.robotics.robots
 import com.revolution.robotics.robots.adapter.RobotsAdapterItem
 import kotlin.math.max
 
-private const val EXAMPLE_ITEM_RANGE = 5
-const val EXAMPLE_START_INDEX: Int = 5
-
 class RobotsPresenter : RobotsMvp.Presenter {
+
+    companion object {
+        private const val EXAMPLE_ITEM_RANGE = 5
+        private const val EXAMPLE_START_INDEX: Int = 5
+    }
+
     override var model: RobotsViewModel? = null
     override var view: RobotsMvp.View? = null
 

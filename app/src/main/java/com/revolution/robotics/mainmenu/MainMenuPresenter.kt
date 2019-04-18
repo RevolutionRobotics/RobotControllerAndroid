@@ -7,8 +7,8 @@ class MainMenuPresenter(private val navigator: Navigator) : MainMenuMvp.Presente
     override var view: MainMenuMvp.View? = null
     override var model: MainMenuViewModel? = null
 
-    override fun navigateToRobots() {
-        navigator.navigate(MainMenuFragmentDirections.toRobots())
+    override fun navigateToMyRobots() {
+        navigator.navigate(MainMenuFragmentDirections.toMyRobots())
     }
 
     override fun navigateToCoding() {

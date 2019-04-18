@@ -6,24 +6,39 @@
     <fragment android:id="@+id/mainMenuFragment"
               android:name="com.revolution.robotics.mainmenu.MainMenuFragment"
               android:label="MainMenuFragment">
-        <action android:id="@+id/toCoding" app:destination="@id/codingFragment"/>
+        <action android:id="@+id/toCoding"
+                app:destination="@id/codingFragment"/>
         <action android:id="@+id/toChallenges"
                 app:destination="@id/challengesFragment"/>
-        <action android:id="@+id/toRobots" app:destination="@id/robotsFragment"/>
+        <action android:id="@+id/toMyRobots"
+                app:destination="@id/myRobotsFragment"/>
         <action android:id="@+id/toCommunity"
                 app:destination="@id/placeholder_community"/>
-        <action android:id="@+id/toLiveController"
-                app:destination="@id/liveControllerFragment"/>
     </fragment>
 
-    <fragment android:id="@+id/codingFragment" android:name="com.revolution.robotics.coding.CodingFragment"
-              android:label="CodingFragment"/>
-    <fragment android:id="@+id/challengesFragment" android:name="com.revolution.robotics.challenges.ChallengesFragment"
-              android:label="ChallengesFragment"/>
-    <fragment android:id="@+id/robotsFragment" android:name="com.revolution.robotics.robots.RobotsFragment"
+    <fragment android:id="@+id/myRobotsFragment"
+              android:name="com.revolution.robotics.myRobots.MyRobotsFragment"
+              android:label="MyRobotsFragment">
+        <action android:id="@+id/toRobots"
+                app:destination="@id/robotsFragment"/>
+    </fragment>
+
+    <fragment android:id="@+id/robotsFragment"
+              android:name="com.revolution.robotics.robots.RobotsFragment"
               android:label="RobotsFragment"/>
-    <fragment android:id="@+id/placeholder_community"/>
+
+    <fragment android:id="@+id/codingFragment"
+              android:name="com.revolution.robotics.coding.CodingFragment"
+              android:label="CodingFragment"/>
+
+    <fragment android:id="@+id/challengesFragment"
+              android:name="com.revolution.robotics.challenges.ChallengesFragment"
+              android:label="ChallengesFragment"/>
+
     <fragment android:id="@+id/liveControllerFragment"
               android:name="com.revolution.robotics.controller.LiveControllerFragment"
               android:label="LiveControllerFragment"/>
+
+    <fragment android:id="@+id/placeholder_robotics"/>
+    <fragment android:id="@+id/placeholder_community"/>
 </navigation>

@@ -3,10 +3,13 @@ package com.revolution.robotics.robots.adapter
 import android.view.View
 import androidx.viewpager.widget.ViewPager
 
-const val ITEM_SCALE_BASE = 0.75f
-const val ITEM_SCALE_DYNAMIC = 0.25f
-
 class RobotsPageTransformer(private val viewPager: ViewPager) : ViewPager.PageTransformer {
+
+    companion object {
+        private const val ITEM_SCALE_BASE = 0.75f
+        private const val ITEM_SCALE_DYNAMIC = 0.25f
+    }
+
     override fun transformPage(page: View, position: Float) {
         val pageWidth =
             viewPager.measuredWidth - viewPager.paddingLeft - viewPager.paddingRight

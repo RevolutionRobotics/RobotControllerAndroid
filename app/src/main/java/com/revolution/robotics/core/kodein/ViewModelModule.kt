@@ -4,6 +4,7 @@ import com.revolution.robotics.challenges.ChallengesViewModel
 import com.revolution.robotics.coding.CodingViewModel
 import com.revolution.robotics.controller.LiveControllerViewModel
 import com.revolution.robotics.mainmenu.MainMenuViewModel
+import com.revolution.robotics.myRobots.MyRobotsViewModel
 import com.revolution.robotics.robots.RobotsViewModel
 import com.revolution.robotics.slider.BuildStepSliderViewModel
 import org.kodein.di.Kodein
@@ -19,4 +20,5 @@ fun createViewModelModule() =
         bind<RobotsViewModel>() with provider { RobotsViewModel(instance()) }
         bind<BuildStepSliderViewModel>() with provider { BuildStepSliderViewModel() }
         bind<LiveControllerViewModel>() with provider { LiveControllerViewModel(instance()) }
+        bind<MyRobotsViewModel>() with provider { MyRobotsViewModel(instance()) }
     }
