@@ -21,20 +21,21 @@ class MilestoneFinishedDialog : RoboticsDialog(), MilestoneFinishedMvp.View {
         }
     }
 
-    override val dialogFaces: List<DialogFace<*>> = listOf(MilestoneFinishedDialogFace())
+    override val hasCloseButton = false
+    override val dialogFaces: List<DialogFace<*>> = listOf(
+        MilestoneFinishedDialogFace()
+    )
     override val dialogButtons: List<DialogButton> = listOf(
         DialogButton(
             R.string.build_chapter_finish_dialog_button_home,
-            R.drawable.ic_home,
-            false
+            R.drawable.ic_home
         ) {
             requireActivity().onBackPressed()
             dismissAllowingStateLoss()
         },
         DialogButton(
             R.string.build_chapter_finish_dialog_button_next_chapter,
-            R.drawable.ic_next,
-            false
+            R.drawable.ic_next
         ) {
             dismissAllowingStateLoss()
         },
@@ -56,8 +57,8 @@ class MilestoneFinishedDialog : RoboticsDialog(), MilestoneFinishedMvp.View {
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         presenter.unregister()
+        super.onDestroyView()
     }
 
     class MilestoneFinishedDialogFace :
