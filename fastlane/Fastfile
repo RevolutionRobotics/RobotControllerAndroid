@@ -1,0 +1,28 @@
+default_platform(:android)
+
+platform :android do
+  desc "Runs all the tests"
+  lane :test do
+    gradle(task: "test")
+  end
+
+  lane :beta do |options|
+
+    build_nr = `git rev-list --count HEAD`
+
+    android_set_version_code(version_code: build_nr.to_i)
+    android_set_version_name(version_name: options[:version])
+
+    gradle(task: "clean assembleDevRelease")
+
+    emails = ['richard.radics@supercharge.io']
+    groups = ['supercharge']
+
+    crashlytics(
+      api_token: "67f938d8e574a4ead3786995193bd4fec3d43c01",
+      build_secret: "bd9ebad83e0940c8d27774be4c51e149e32afd3dde6406b186aa6968b18e38c0",
+      emails: emails,
+      groups: groups,
+      notifications: true)
+  end
+end
