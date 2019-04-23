@@ -1,19 +1,19 @@
-package com.revolution.robotics.features.robots
+package com.revolution.robotics.features.whoToBuild
 
-import com.revolution.robotics.features.robots.adapter.RobotsAdapterItem
+import com.revolution.robotics.features.whoToBuild.adapter.RobotsAdapterItem
 import kotlin.math.max
 
-class RobotsPresenter : RobotsMvp.Presenter {
+class WhoToBuildPresenter : WhoToBuildMvp.Presenter {
 
     companion object {
         private const val EXAMPLE_ITEM_RANGE = 5
-        private const val EXAMPLE_START_INDEX: Int = 5
+        private const val START_INDEX: Int = 5
     }
 
-    override var model: RobotsViewModel? = null
-    override var view: RobotsMvp.View? = null
+    override var model: WhoToBuildViewModel? = null
+    override var view: WhoToBuildMvp.View? = null
 
-    override fun register(view: RobotsMvp.View, model: RobotsViewModel?) {
+    override fun register(view: WhoToBuildMvp.View, model: WhoToBuildViewModel?) {
         super.register(view, model)
 
         model?.run {
@@ -21,9 +21,9 @@ class RobotsPresenter : RobotsMvp.Presenter {
                 RobotsAdapterItem("Example $it", "${it}h")
             }.toList()
 
-            startIndex.set(EXAMPLE_START_INDEX)
-            robotsList.value?.get(EXAMPLE_START_INDEX)?.isSelected?.set(true)
-            updateButtonsVisibility(EXAMPLE_START_INDEX)
+            startIndex.set(START_INDEX)
+            robotsList.value?.getOrNull(START_INDEX)?.isSelected?.set(true)
+            updateButtonsVisibility(START_INDEX)
         }
     }
 

@@ -1,4 +1,4 @@
-package com.revolution.robotics.features.robots
+package com.revolution.robotics.features.whoToBuild
 
 import android.os.Bundle
 import android.view.View
@@ -6,29 +6,32 @@ import androidx.viewpager.widget.ViewPager
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
 import com.revolution.robotics.core.extensions.waitForLayout
-import com.revolution.robotics.databinding.FragmentRobotsBinding
-import com.revolution.robotics.features.robots.adapter.RobotsPageTransformer
-import com.revolution.robotics.features.robots.adapter.RobotsPagerAdapter
+import com.revolution.robotics.core.kodein.utils.ResourceResolver
+import com.revolution.robotics.databinding.FragmentWhoToBuildBinding
+import com.revolution.robotics.features.whoToBuild.adapter.RobotsPageTransformer
+import com.revolution.robotics.features.whoToBuild.adapter.RobotsPagerAdapter
 import org.kodein.di.erased.instance
 import kotlin.math.floor
 
 @Suppress("UnnecessaryApply")
-class RobotsFragment : BaseFragment<FragmentRobotsBinding, RobotsViewModel>(R.layout.fragment_robots), RobotsMvp.View {
+class WhoToBuildFragment : BaseFragment<FragmentWhoToBuildBinding, WhoToBuildViewModel>(R.layout.fragment_who_to_build),
+    WhoToBuildMvp.View {
 
     companion object {
         private const val ROBOTS_PAGER_OFFSCREEN_PAGE_LIMIT = 3
         private const val VIEWPAGER_PADDING_MULTIPLIER = 0.3125
     }
 
-    override val viewModelClass: Class<RobotsViewModel> = RobotsViewModel::class.java
-    private lateinit var adapter: RobotsPagerAdapter
-    private val presenter: RobotsMvp.Presenter by kodein.instance()
+    override val viewModelClass: Class<WhoToBuildViewModel> = WhoToBuildViewModel::class.java
+    private val adapter = RobotsPagerAdapter()
+    private val presenter: WhoToBuildMvp.Presenter by kodein.instance()
+    private val resourceResolver: ResourceResolver by kodein.instance()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         presenter.register(this, viewModel)
         binding?.apply {
-            adapter = RobotsPagerAdapter(view.context)
+            toolbarViewModel = WhoToBuildToolbarViewModel(resourceResolver)
             robotsViewpager.adapter = adapter
             robotsViewpager.offscreenPageLimit = ROBOTS_PAGER_OFFSCREEN_PAGE_LIMIT
             robotsViewpager.setPageTransformer(false, RobotsPageTransformer(robotsViewpager))

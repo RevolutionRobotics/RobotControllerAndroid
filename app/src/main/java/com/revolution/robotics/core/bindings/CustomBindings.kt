@@ -8,8 +8,8 @@ import androidx.databinding.BindingAdapter
 import androidx.viewpager.widget.ViewPager
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 import com.revolution.robotics.views.chippedBox.ChippedBoxDrawable
-import com.revolution.robotics.features.robots.adapter.RobotsAdapterItem
-import com.revolution.robotics.features.robots.adapter.RobotsPagerAdapter
+import com.revolution.robotics.features.whoToBuild.adapter.RobotsAdapterItem
+import com.revolution.robotics.features.whoToBuild.adapter.RobotsPagerAdapter
 
 @BindingAdapter("listener")
 fun setSeekbarListener(seekBar: SeekBar, listener: SeekBar.OnSeekBarChangeListener) {

@@ -1,4 +1,4 @@
-package com.revolution.robotics.features.robots.adapter
+package com.revolution.robotics.features.whoToBuild.adapter
 
 import androidx.annotation.DrawableRes
 import androidx.databinding.ObservableBoolean

@@ -3,7 +3,9 @@
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <variable name="viewModel" type="com.revolution.robotics.features.robots.RobotsViewModel"/>
+        <variable name="viewModel" type="com.revolution.robotics.features.whoToBuild.WhoToBuildViewModel"/>
+        <variable name="toolbarViewModel"
+                  type="com.revolution.robotics.features.whoToBuild.WhoToBuildToolbarViewModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -11,22 +13,62 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        <View
-                android:id="@+id/header_background"
+        <com.revolution.robotics.views.toolbar.RoboticsToolbar
+                android:id="@+id/toolbar"
+                app:viewModel="@{toolbarViewModel}"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 android:layout_width="match_parent"
+                android:layout_height="@dimen/toolbar_height"/>
+
+        <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/toolbar_body_bottom"
+                android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:layout_constraintHeight_percent="@dimen/robots_header_background_percentage"
-                android:background="@color/grey_28"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintGuide_begin="@dimen/toolbar_header_height"
+                android:orientation="horizontal"/>
+
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dimen_32dp"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:background="?attr/selectableItemBackground"
+                android:paddingTop="@dimen/dimen_4dp"
+                android:paddingBottom="@dimen/dimen_4dp"
+                android:paddingEnd="@dimen/dimen_12dp"
+                android:paddingStart="@dimen/dimen_12dp"
+                android:layout_marginEnd="@dimen/dimen_12dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/toolbar_body_bottom"
+                app:layout_constraintEnd_toEndOf="parent">
+
+            <ImageView
+                    android:layout_width="@dimen/dimen_24dp"
+                    android:layout_height="@dimen/dimen_24dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_add"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/who_to_build_build_your_own"
+                    android:layout_marginStart="@dimen/dimen_8dp"
+                    android:textSize="15sp"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/barlow_regular"/>
+
+        </LinearLayout>
 
         <ImageView
-                android:id="@+id/header_image_background"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                app:layout_constraintHeight_percent="@dimen/robots_header_image_background_percentage"
-                android:scaleType="fitXY"
-                android:src="@drawable/bg_header_menu"
-                app:layout_constraintTop_toBottomOf="@id/header_background"/>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/bg_glow"
+                app:layout_constraintTop_toBottomOf="@id/toolbar"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
 
         <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/robots_viewpager_top_guide"
@@ -46,8 +88,7 @@
                 app:layout_constraintTop_toBottomOf="@id/robots_viewpager_top_guide"
                 app:layout_constraintBottom_toBottomOf="@+id/robots_viewpager_bottom_guide"
                 android:clipToPadding="false"
-                android:overScrollMode="never"
-        />
+                android:overScrollMode="never"/>
 
         <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/robots_viewpager_bottom_guide"

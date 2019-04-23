@@ -1,12 +1,12 @@
-package com.revolution.robotics.features.robots
+package com.revolution.robotics.features.whoToBuild
 
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableInt
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.revolution.robotics.features.robots.adapter.RobotsAdapterItem
+import com.revolution.robotics.features.whoToBuild.adapter.RobotsAdapterItem
 
-class RobotsViewModel(private val presenter: RobotsMvp.Presenter) : ViewModel() {
+class WhoToBuildViewModel(private val presenter: WhoToBuildMvp.Presenter) : ViewModel() {
     val robotsList: MutableLiveData<List<RobotsAdapterItem>> = MutableLiveData()
     var startIndex: ObservableInt = ObservableInt()
     var currentPosition: ObservableInt = ObservableInt()
