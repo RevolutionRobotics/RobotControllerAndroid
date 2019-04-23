@@ -7,11 +7,10 @@ import androidx.lifecycle.ViewModel
 import com.revolution.robotics.features.whoToBuild.adapter.RobotsAdapterItem
 
 class WhoToBuildViewModel(private val presenter: WhoToBuildMvp.Presenter) : ViewModel() {
-    val robotsList: MutableLiveData<List<RobotsAdapterItem>> = MutableLiveData()
-    var startIndex: ObservableInt = ObservableInt()
+    val robotsList: MutableLiveData<List<RobotsAdapterItem>?> = MutableLiveData()
     var currentPosition: ObservableInt = ObservableInt()
-    var isNextButtonVisible: ObservableBoolean = ObservableBoolean(true)
-    var isPreviousButtonVisible: ObservableBoolean = ObservableBoolean(true)
+    var isNextButtonVisible: ObservableBoolean = ObservableBoolean(false)
+    var isPreviousButtonVisible: ObservableBoolean = ObservableBoolean(false)
 
     fun nextButtonClick() = presenter.nextButtonClick()
     fun previousButtonClick() = presenter.previousButtonClick()

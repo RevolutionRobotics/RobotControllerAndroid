@@ -1,30 +1,29 @@
 package com.revolution.robotics.features.whoToBuild
 
+import com.revolution.robotics.core.extensions.isEmptyOrNull
+import com.revolution.robotics.core.interactor.RobotInteractor
 import com.revolution.robotics.features.whoToBuild.adapter.RobotsAdapterItem
 import kotlin.math.max
 
-class WhoToBuildPresenter : WhoToBuildMvp.Presenter {
-
-    companion object {
-        private const val EXAMPLE_ITEM_RANGE = 5
-        private const val START_INDEX: Int = 5
-    }
+class WhoToBuildPresenter(private val robotsInteractor: RobotInteractor) : WhoToBuildMvp.Presenter {
 
     override var model: WhoToBuildViewModel? = null
     override var view: WhoToBuildMvp.View? = null
 
     override fun register(view: WhoToBuildMvp.View, model: WhoToBuildViewModel?) {
         super.register(view, model)
-
-        model?.run {
-            robotsList.value = (0..EXAMPLE_ITEM_RANGE).map {
-                RobotsAdapterItem("Example $it", "${it}h")
-            }.toList()
-
-            startIndex.set(START_INDEX)
-            robotsList.value?.getOrNull(START_INDEX)?.isSelected?.set(true)
-            updateButtonsVisibility(START_INDEX)
-        }
+        robotsInteractor.execute(
+            onResponse = { response ->
+                model?.apply {
+                    robotsList.value = response.map {
+                        RobotsAdapterItem(it.name ?: "", it.buildTime ?: "")
+                    }
+                    robotsList.value?.firstOrNull()?.isSelected?.set(true)
+                    updateButtonsVisibility(0)
+                }
+            }, onError = { error ->
+                // TODO add error handling
+            })
     }
 
     override fun onPageSelected(position: Int) {
@@ -32,9 +31,14 @@ class WhoToBuildPresenter : WhoToBuildMvp.Presenter {
             robotsList.value?.get(currentPosition.get())?.isSelected?.set(false)
             robotsList.value?.get(position)?.isSelected?.set(true)
             currentPosition.set(position)
-        }
 
-        updateButtonsVisibility(position)
+            if (robotsList.value.isEmptyOrNull()) {
+                isPreviousButtonVisible.set(false)
+                isNextButtonVisible.set(false)
+            } else {
+                updateButtonsVisibility(position)
+            }
+        }
     }
 
     private fun updateButtonsVisibility(position: Int) {

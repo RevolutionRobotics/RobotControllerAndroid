@@ -36,7 +36,7 @@ fun createInteractorModule() =
 fun createPresenterModule() =
     Kodein.Module("PresenterModule") {
         bind<MainMenuMvp.Presenter>() with singleton { MainMenuPresenter(instance()) }
-        bind<WhoToBuildMvp.Presenter>() with singleton { WhoToBuildPresenter() }
+        bind<WhoToBuildMvp.Presenter>() with singleton { WhoToBuildPresenter(instance()) }
         bind<LiveControllerMvp.Presenter>() with singleton { LiveControllerPresenter(instance()) }
         bind<MyRobotsMvp.Presenter>() with singleton { MyRobotsPresenter(instance()) }
         bind<MilestoneFinishedMvp.Presenter>() with singleton { MilestoneFinishedPresenter() }
