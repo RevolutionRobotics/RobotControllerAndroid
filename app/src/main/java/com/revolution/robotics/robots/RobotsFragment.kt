@@ -6,10 +6,14 @@ import androidx.viewpager.widget.ViewPager
 
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
+import com.revolution.robotics.core.extensions.waitForLayout
 import com.revolution.robotics.databinding.FragmentRobotsBinding
 import com.revolution.robotics.robots.adapter.RobotsPageTransformer
 import com.revolution.robotics.robots.adapter.RobotsPagerAdapter
 import org.kodein.di.erased.instance
+import kotlin.math.floor
+
+private const val VIEWPAGER_PADDING_MULTIPLIER = 0.3125
 
 class RobotsFragment : BaseFragment<FragmentRobotsBinding, RobotsViewModel>(R.layout.fragment_robots), RobotsMvp.View {
 
@@ -24,6 +28,7 @@ class RobotsFragment : BaseFragment<FragmentRobotsBinding, RobotsViewModel>(R.la
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         presenter.register(this, viewModel)
 
         binding?.apply {
@@ -32,6 +37,12 @@ class RobotsFragment : BaseFragment<FragmentRobotsBinding, RobotsViewModel>(R.la
             robotsViewpager.offscreenPageLimit = ROBOTS_PAGER_OFFSCREEN_PAGE_LIMIT
             robotsViewpager.setPageTransformer(false, RobotsPageTransformer(robotsViewpager))
             robotsViewpager.addOnPageChangeListener(RobotsOnPageChangeListener())
+
+        }
+
+        view.waitForLayout {
+            val viewPagePadding = floor(view.width * VIEWPAGER_PADDING_MULTIPLIER).toInt()
+            binding?.robotsViewpager?.setPaddingRelative(viewPagePadding, 0, viewPagePadding, 0)
         }
     }
 

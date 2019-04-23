@@ -46,7 +46,6 @@
     <dimen name="my_robots_placeholder_height">165dp</dimen>
 
     <!-- SCREEN: ROBOTS -->
-    <dimen name="robots_pager_horizontal_padding">214dp</dimen>
     <dimen name="robots_header_background_percentage">0.1281</dimen>
     <dimen name="robots_header_image_background_percentage">0.1031</dimen>
     <dimen name="robots_viewpager_top_guide_percentage">0.2313</dimen>
