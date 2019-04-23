@@ -52,11 +52,10 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"/>
 
-            <ImageView
+            <com.revolution.robotics.views.RemoteImageView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     app:firebaseImageUrl="@{viewModel.imageUrl}"
-                    android:scaleType="fitCenter"
                     app:layout_constraintTop_toTopOf="@id/robotsCardImageTopGuide"
                     app:layout_constraintBottom_toBottomOf="@id/robotsCardImageBottomGuide"/>
 

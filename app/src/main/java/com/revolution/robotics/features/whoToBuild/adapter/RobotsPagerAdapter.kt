@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.viewpager.widget.PagerAdapter
-import com.google.firebase.storage.StorageReference
 import com.revolution.robotics.databinding.ItemRobotsBinding
 
 class RobotsPagerAdapter : PagerAdapter() {

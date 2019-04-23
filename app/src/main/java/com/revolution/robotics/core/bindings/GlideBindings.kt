@@ -6,6 +6,7 @@ import androidx.databinding.BindingAdapter
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.revolution.robotics.core.glide.GlideApp
+import com.revolution.robotics.views.RemoteImageView
 
 @BindingAdapter("android:src")
 fun loadImage(imageView: ImageView, url: String?) {
@@ -36,3 +37,7 @@ fun loadFirebaseImage(imageView: ImageView, gsUrl: String?) {
             .into(imageView)
     }
 }
+
+@BindingAdapter("firebaseImageUrl")
+fun loadFirebaseImage(remoteImageView: RemoteImageView, gsUrl: String?) =
+    loadFirebaseImage(remoteImageView.image, gsUrl)
