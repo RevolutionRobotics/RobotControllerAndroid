@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <variable name="viewModel" type="com.revolution.robotics.slider.BuildStepSliderViewModel"/>
+        <variable name="viewModel" type="com.revolution.robotics.views.slider.BuildStepSliderViewModel"/>
     </data>
 
     <merge
@@ -21,17 +21,18 @@
                 app:layout_constraintTop_toTopOf="@id/seekbar_build_steps"
                 app:layout_constraintBottom_toBottomOf="@id/seekbar_build_steps"/>
 
-        <ImageView android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:id="@+id/img_next"
-                   android:layout_marginTop="3dp"
-                   app:layout_constraintEnd_toEndOf="parent"
-                   app:layout_constraintTop_toTopOf="@id/seekbar_build_steps"
-                   app:layout_constraintBottom_toBottomOf="@id/seekbar_build_steps"
-                   android:padding="@dimen/dimen_12dp"
-                   android:src="@drawable/ic_next"/>
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/img_next"
+                android:layout_marginTop="3dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/seekbar_build_steps"
+                app:layout_constraintBottom_toBottomOf="@id/seekbar_build_steps"
+                android:padding="@dimen/dimen_12dp"
+                android:src="@drawable/ic_next"/>
 
-        <com.revolution.robotics.slider.RoboticsSeekBar
+        <com.revolution.robotics.views.slider.RoboticsSeekBar
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 style="@style/RoboticsSeekBar"
@@ -39,7 +40,6 @@
                 app:layout_constraintStart_toEndOf="@id/img_back"
                 app:layout_constraintEnd_toStartOf="@id/img_next"
                 android:id="@+id/seekbar_build_steps"/>
-
 
     </merge>
 </layout>

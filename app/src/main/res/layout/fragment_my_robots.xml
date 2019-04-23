@@ -2,8 +2,8 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <variable name="viewModel" type="com.revolution.robotics.myRobots.MyRobotsViewModel"/>
-        <variable name="toolbarViewModel" type="com.revolution.robotics.myRobots.MyRobotsToolbarViewModel"/>
+        <variable name="viewModel" type="com.revolution.robotics.features.myRobots.MyRobotsViewModel"/>
+        <variable name="toolbarViewModel" type="com.revolution.robotics.features.myRobots.MyRobotsToolbarViewModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

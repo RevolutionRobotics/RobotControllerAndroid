@@ -2,8 +2,8 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <variable name="background" type="com.revolution.robotics.core.utils.chippedBox.ChippedBoxConfig"/>
-        <variable name="viewModel" type="com.revolution.robotics.core.dialogs.RoboticsDialog.ViewModel"/>
+        <variable name="background" type="com.revolution.robotics.views.chippedBox.ChippedBoxConfig"/>
+        <variable name="viewModel" type="com.revolution.robotics.views.dialogs.RoboticsDialog.ViewModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

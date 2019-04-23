@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools" xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:tools="http://schemas.android.com/tools" xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-        <variable name="viewModel" type="com.revolution.robotics.mainmenu.MainMenuButtonViewModel"/>
+        <variable name="viewModel" type="com.revolution.robotics.features.mainmenu.MainMenuButtonViewModel"/>
     </data>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                  android:orientation="vertical"
-                  app:backgroundResource="@{viewModel.background}"
-                  android:layout_width="match_parent"
-                  android:layout_height="match_parent"
-                  tools:background="@drawable/card_border_red"
-                  android:onClick="@{() -> viewModel.onClick.invoke()}"
-                  tools:layout_width="120dp"
-                  tools:layout_height="160dp">
+    <LinearLayout
+            android:orientation="vertical"
+            app:backgroundResource="@{viewModel.background}"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:background="@drawable/card_border_red"
+            android:onClick="@{() -> viewModel.onClick.invoke()}"
+            tools:layout_width="120dp"
+            tools:layout_height="160dp">
 
         <TextView android:layout_width="match_parent"
                   android:layout_height="wrap_content"
