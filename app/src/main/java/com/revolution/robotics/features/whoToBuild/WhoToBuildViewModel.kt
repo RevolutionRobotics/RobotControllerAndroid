@@ -4,10 +4,10 @@ import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableInt
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.revolution.robotics.features.whoToBuild.adapter.RobotsAdapterItem
+import com.revolution.robotics.features.whoToBuild.adapter.RobotItem
 
 class WhoToBuildViewModel(private val presenter: WhoToBuildMvp.Presenter) : ViewModel() {
-    val robotsList: MutableLiveData<List<RobotsAdapterItem>?> = MutableLiveData()
+    val robotsList: MutableLiveData<List<RobotItem>?> = MutableLiveData()
     var currentPosition: ObservableInt = ObservableInt()
     var isNextButtonVisible: ObservableBoolean = ObservableBoolean(false)
     var isPreviousButtonVisible: ObservableBoolean = ObservableBoolean(false)

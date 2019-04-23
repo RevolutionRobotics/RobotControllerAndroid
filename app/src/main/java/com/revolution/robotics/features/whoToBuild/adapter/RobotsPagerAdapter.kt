@@ -4,20 +4,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.viewpager.widget.PagerAdapter
+import com.google.firebase.storage.StorageReference
 import com.revolution.robotics.databinding.ItemRobotsBinding
 
 class RobotsPagerAdapter : PagerAdapter() {
     private val mViews: ArrayList<View?> = ArrayList()
-    private val mData: MutableList<RobotsAdapterItem> = mutableListOf()
+    private val mData: MutableList<RobotItem> = mutableListOf()
 
     override fun isViewFromObject(view: View, `object`: Any): Boolean = view == `object`
 
-    fun setItems(itemList: List<RobotsAdapterItem>) {
+    fun setItems(itemList: List<RobotItem>) {
         itemList.forEach(::addItem)
         notifyDataSetChanged()
     }
 
-    private fun addItem(item: RobotsAdapterItem) {
+    private fun addItem(item: RobotItem) {
         mViews.add(null)
         mData.add(item)
     }

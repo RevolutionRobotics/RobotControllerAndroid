@@ -2,7 +2,7 @@ package com.revolution.robotics.features.whoToBuild
 
 import com.revolution.robotics.core.extensions.isEmptyOrNull
 import com.revolution.robotics.core.interactor.RobotInteractor
-import com.revolution.robotics.features.whoToBuild.adapter.RobotsAdapterItem
+import com.revolution.robotics.features.whoToBuild.adapter.RobotItem
 import kotlin.math.max
 
 class WhoToBuildPresenter(private val robotsInteractor: RobotInteractor) : WhoToBuildMvp.Presenter {
@@ -20,7 +20,7 @@ class WhoToBuildPresenter(private val robotsInteractor: RobotInteractor) : WhoTo
             onResponse = { response ->
                 model?.apply {
                     robotsList.value = response.map {
-                        RobotsAdapterItem(it.name ?: "", it.buildTime ?: "")
+                        RobotItem(it.name ?: "", it.buildTime ?: "", it.coverImage ?: "")
                     }
                     robotsList.value?.firstOrNull()?.isSelected?.set(true)
                     updateButtonsVisibility(0)

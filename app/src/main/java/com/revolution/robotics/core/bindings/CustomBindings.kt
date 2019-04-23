@@ -6,10 +6,9 @@ import android.widget.SeekBar
 import androidx.annotation.DrawableRes
 import androidx.databinding.BindingAdapter
 import androidx.viewpager.widget.ViewPager
-import com.revolution.robotics.core.extensions.isEmptyOrNull
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 import com.revolution.robotics.views.chippedBox.ChippedBoxDrawable
-import com.revolution.robotics.features.whoToBuild.adapter.RobotsAdapterItem
+import com.revolution.robotics.features.whoToBuild.adapter.RobotItem
 import com.revolution.robotics.features.whoToBuild.adapter.RobotsPagerAdapter
 
 @BindingAdapter("listener")
@@ -28,7 +27,7 @@ fun setImageDrawable(imageView: ImageView, @DrawableRes drawableRes: Int) {
 }
 
 @BindingAdapter("robots")
-fun setRobotsViewPagerItems(viewPager: ViewPager, itemList: List<RobotsAdapterItem>?) {
+fun setRobotsViewPagerItems(viewPager: ViewPager, itemList: List<RobotItem>?) {
     if (itemList != null && itemList.isNotEmpty()) {
         (viewPager.adapter as? RobotsPagerAdapter)?.setItems(itemList)
         viewPager.currentItem = 0
