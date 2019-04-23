@@ -12,6 +12,10 @@ class WhoToBuildPresenter(private val robotsInteractor: RobotInteractor) : WhoTo
 
     override fun register(view: WhoToBuildMvp.View, model: WhoToBuildViewModel?) {
         super.register(view, model)
+        loadRobots()
+    }
+
+    private fun loadRobots() {
         robotsInteractor.execute(
             onResponse = { response ->
                 model?.apply {
@@ -20,6 +24,7 @@ class WhoToBuildPresenter(private val robotsInteractor: RobotInteractor) : WhoTo
                     }
                     robotsList.value?.firstOrNull()?.isSelected?.set(true)
                     updateButtonsVisibility(0)
+                    view?.onRobotsLoaded()
                 }
             }, onError = { error ->
                 // TODO add error handling

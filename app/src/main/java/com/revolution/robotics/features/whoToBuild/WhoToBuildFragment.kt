@@ -5,6 +5,7 @@ import android.view.View
 import androidx.viewpager.widget.ViewPager
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
+import com.revolution.robotics.core.extensions.forceApplyTransformer
 import com.revolution.robotics.core.extensions.waitForLayout
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.databinding.FragmentWhoToBuildBinding
@@ -41,6 +42,10 @@ class WhoToBuildFragment : BaseFragment<FragmentWhoToBuildBinding, WhoToBuildVie
             val viewPagePadding = floor(view.width * VIEWPAGER_PADDING_MULTIPLIER).toInt()
             binding?.robotsViewpager?.setPaddingRelative(viewPagePadding, 0, viewPagePadding, 0)
         }
+    }
+
+    override fun onRobotsLoaded() {
+        binding?.robotsViewpager?.forceApplyTransformer()
     }
 
     override fun showNextRobot() {

@@ -4,6 +4,7 @@ import com.revolution.robotics.core.Mvp
 
 interface WhoToBuildMvp : Mvp {
     interface View : Mvp.View {
+        fun onRobotsLoaded()
         fun showNextRobot()
         fun showPreviousRobot()
     }
