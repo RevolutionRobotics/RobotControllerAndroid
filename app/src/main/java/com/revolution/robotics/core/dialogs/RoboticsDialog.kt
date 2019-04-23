@@ -21,6 +21,7 @@ import org.kodein.di.LateInitKodein
 
 abstract class RoboticsDialog : DialogFragment() {
 
+    abstract val hasCloseButton: Boolean
     abstract val dialogFaces: List<DialogFace<*>>
     abstract val dialogButtons: List<DialogButton>
 
@@ -45,6 +46,7 @@ abstract class RoboticsDialog : DialogFragment() {
             .chipSize(R.dimen.dialog_chip_size)
             .backgroundColorResource(R.color.grey_1e)
             .create()
+        coreBinding.viewModel = ViewModel(hasCloseButton)
         return coreBinding.root
     }
 
@@ -74,6 +76,12 @@ abstract class RoboticsDialog : DialogFragment() {
 
     fun show(fragmentManager: FragmentManager?) =
         show(fragmentManager, javaClass.simpleName)
+
+    inner class ViewModel(val closeButtonVisibility: Boolean) {
+        fun onCloseClicked() {
+            dialog.dismiss()
+        }
+    }
 
     open class DialogFace<B : ViewDataBinding>(@LayoutRes private val layoutResourceId: Int) {
 
