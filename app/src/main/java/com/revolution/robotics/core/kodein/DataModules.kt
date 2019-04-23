@@ -2,10 +2,10 @@ package com.revolution.robotics.core.kodein
 
 import android.content.Context
 import androidx.room.Room
-import com.revolution.robotics.build.milestone.MilestoneFinishedMvp
-import com.revolution.robotics.build.milestone.MilestoneFinishedPresenter
-import com.revolution.robotics.controller.LiveControllerMvp
-import com.revolution.robotics.controller.LiveControllerPresenter
+import com.revolution.robotics.features.build.milestone.MilestoneFinishedMvp
+import com.revolution.robotics.features.build.milestone.MilestoneFinishedPresenter
+import com.revolution.robotics.features.controller.LiveControllerMvp
+import com.revolution.robotics.features.controller.LiveControllerPresenter
 import com.revolution.robotics.core.db.RoboticsDatabase
 import com.revolution.robotics.core.domain.local.UserConfigurationDao
 import com.revolution.robotics.core.domain.local.UserRobotDao
@@ -13,12 +13,12 @@ import com.revolution.robotics.core.interactor.BuildStepInteractor
 import com.revolution.robotics.core.interactor.ConfigurationInteractor
 import com.revolution.robotics.core.interactor.RobotInteractor
 import com.revolution.robotics.core.interactor.TestCodeInteractor
-import com.revolution.robotics.mainmenu.MainMenuMvp
-import com.revolution.robotics.mainmenu.MainMenuPresenter
-import com.revolution.robotics.myRobots.MyRobotsMvp
-import com.revolution.robotics.myRobots.MyRobotsPresenter
-import com.revolution.robotics.robots.RobotsMvp
-import com.revolution.robotics.robots.RobotsPresenter
+import com.revolution.robotics.features.mainmenu.MainMenuMvp
+import com.revolution.robotics.features.mainmenu.MainMenuPresenter
+import com.revolution.robotics.features.myRobots.MyRobotsMvp
+import com.revolution.robotics.features.myRobots.MyRobotsPresenter
+import com.revolution.robotics.features.robots.RobotsMvp
+import com.revolution.robotics.features.robots.RobotsPresenter
 import org.kodein.di.Kodein
 import org.kodein.di.erased.bind
 import org.kodein.di.erased.instance

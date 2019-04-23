@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
-import com.revolution.robotics.core.navigation.Navigator
+import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.core.utils.dynamicPermissions.DynamicPermissionHandler
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein

@@ -10,7 +10,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        <com.revolution.robotics.core.views.toolbar.RoboticsToolbar
+        <com.revolution.robotics.views.toolbar.RoboticsToolbar
                 android:id="@+id/toolbar"
                 app:viewModel="@{toolbarViewModel}"
                 app:layout_constraintTop_toTopOf="parent"

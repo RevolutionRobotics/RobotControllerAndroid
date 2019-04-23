@@ -4,7 +4,7 @@ import android.content.Context
 import com.revolution.robotics.blockly.utils.JavascriptResultHandler
 import com.revolution.robotics.core.kodein.utils.ApplicationContextProvider
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
-import com.revolution.robotics.core.navigation.Navigator
+import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.core.utils.dynamicPermissions.DynamicPermissionHandler
 import org.kodein.di.Kodein
 import org.kodein.di.erased.bind
