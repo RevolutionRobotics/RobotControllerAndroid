@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-        <variable name="viewModel" type="com.revolution.robotics.challenges.ChallengesViewModel"/>
+        <variable name="viewModel" type="com.revolution.robotics.features.challenges.ChallengesViewModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

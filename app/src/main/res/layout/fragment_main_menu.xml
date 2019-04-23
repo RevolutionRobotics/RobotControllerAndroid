@@ -2,8 +2,8 @@
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <variable name="viewModel" type="com.revolution.robotics.mainmenu.MainMenuViewModel"/>
-        <variable name="toolbarViewModel" type="com.revolution.robotics.mainmenu.MainMenuToolbarViewModel"/>
+        <variable name="viewModel" type="com.revolution.robotics.features.mainmenu.MainMenuViewModel"/>
+        <variable name="toolbarViewModel" type="com.revolution.robotics.features.mainmenu.MainMenuToolbarViewModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -11,7 +11,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        <com.revolution.robotics.core.views.toolbar.RoboticsToolbar
+        <com.revolution.robotics.views.toolbar.RoboticsToolbar
                 android:id="@+id/toolbar"
                 app:viewModel="@{toolbarViewModel}"
                 app:layout_constraintTop_toTopOf="parent"
@@ -21,7 +21,7 @@
                 android:layout_height="@dimen/toolbar_height"/>
 
         <include
-                layout="@layout/layout_main_menu_button"
+                layout="@layout/include_main_menu_button"
                 android:id="@+id/btn_robots"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
@@ -35,7 +35,7 @@
                 android:layout_margin="@dimen/dimen_32dp"/>
 
         <include
-                layout="@layout/layout_main_menu_button"
+                layout="@layout/include_main_menu_button"
                 android:id="@+id/btn_coding"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
@@ -50,7 +50,7 @@
                 android:text="@string/menu_coding"/>
 
         <include
-                layout="@layout/layout_main_menu_button"
+                layout="@layout/include_main_menu_button"
                 android:id="@+id/btn_challenges"
                 android:layout_width="0dp"
                 android:layout_height="0dp"

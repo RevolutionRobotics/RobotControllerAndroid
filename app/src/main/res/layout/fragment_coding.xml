@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-        <variable name="viewModel" type="com.revolution.robotics.coding.CodingViewModel"/>
+        <variable name="viewModel" type="com.revolution.robotics.features.coding.CodingViewModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -3,7 +3,7 @@
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <variable name="viewModel" type="com.revolution.robotics.robots.RobotsViewModel"/>
+        <variable name="viewModel" type="com.revolution.robotics.features.robots.RobotsViewModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -1,12 +1,12 @@
 package com.revolution.robotics.core.kodein
 
-import com.revolution.robotics.challenges.ChallengesViewModel
-import com.revolution.robotics.coding.CodingViewModel
-import com.revolution.robotics.controller.LiveControllerViewModel
-import com.revolution.robotics.mainmenu.MainMenuViewModel
-import com.revolution.robotics.myRobots.MyRobotsViewModel
-import com.revolution.robotics.robots.RobotsViewModel
-import com.revolution.robotics.slider.BuildStepSliderViewModel
+import com.revolution.robotics.features.challenges.ChallengesViewModel
+import com.revolution.robotics.features.coding.CodingViewModel
+import com.revolution.robotics.features.controller.LiveControllerViewModel
+import com.revolution.robotics.features.mainmenu.MainMenuViewModel
+import com.revolution.robotics.features.myRobots.MyRobotsViewModel
+import com.revolution.robotics.features.robots.RobotsViewModel
+import com.revolution.robotics.views.slider.BuildStepSliderViewModel
 import org.kodein.di.Kodein
 import org.kodein.di.erased.bind
 import org.kodein.di.erased.instance
