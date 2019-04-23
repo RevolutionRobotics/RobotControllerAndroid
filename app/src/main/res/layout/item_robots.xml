@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <variable name="viewModel" type="com.revolution.robotics.features.robots.adapter.RobotsAdapterItem"/>
+        <variable name="viewModel" type="com.revolution.robotics.features.whoToBuild.adapter.RobotItem"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -27,8 +27,7 @@
                 app:layout_constraintTop_toTopOf="@id/robotsCard"
                 app:layout_constraintBottom_toBottomOf="@id/robotsCard"
                 app:layout_constraintStart_toStartOf="@id/robotsCard"
-                app:layout_constraintEnd_toEndOf="@id/robotsCard"
-        >
+                app:layout_constraintEnd_toEndOf="@id/robotsCard">
 
             <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/robotsCardTextTopGuide"
@@ -53,11 +52,10 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"/>
 
-            <ImageView
+            <com.revolution.robotics.views.RemoteImageView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:src="@drawable/robots_placeholder"
-                    android:scaleType="fitCenter"
+                    app:firebaseImageUrl="@{viewModel.imageUrl}"
                     app:layout_constraintTop_toTopOf="@id/robotsCardImageTopGuide"
                     app:layout_constraintBottom_toBottomOf="@id/robotsCardImageBottomGuide"/>
 

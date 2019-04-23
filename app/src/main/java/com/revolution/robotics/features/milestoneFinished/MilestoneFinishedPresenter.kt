@@ -1,4 +1,4 @@
-package com.revolution.robotics.features.build.milestone
+package com.revolution.robotics.features.milestoneFinished
 
 import androidx.lifecycle.ViewModel
 import com.revolution.robotics.core.domain.remote.Milestone

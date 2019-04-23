@@ -1,4 +1,4 @@
-package com.revolution.robotics.features.robots.adapter
+package com.revolution.robotics.features.whoToBuild.adapter
 
 import android.view.View
 import androidx.viewpager.widget.ViewPager

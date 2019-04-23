@@ -1,4 +1,4 @@
-package com.revolution.robotics.features.build.milestone
+package com.revolution.robotics.features.milestoneFinished
 
 import android.os.Bundle
 import android.view.View
