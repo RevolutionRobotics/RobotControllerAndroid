@@ -19,13 +19,20 @@
     <fragment android:id="@+id/myRobotsFragment"
               android:name="com.revolution.robotics.features.myRobots.MyRobotsFragment"
               android:label="MyRobotsFragment">
-        <action android:id="@+id/toRobots"
-                app:destination="@id/robotsFragment"/>
+        <action android:id="@+id/toWhoToBuild"
+                app:destination="@id/whoToBuildFragment"/>
     </fragment>
 
-    <fragment android:id="@+id/robotsFragment"
+    <fragment android:id="@+id/whoToBuildFragment"
               android:name="com.revolution.robotics.features.whoToBuild.WhoToBuildFragment"
-              android:label="RobotsFragment"/>
+              android:label="WhoToBuildFragment">
+        <action android:id="@+id/toBuildRobot"
+                app:destination="@id/buildRobotFragment"/>
+    </fragment>
+
+    <fragment android:id="@+id/buildRobotFragment"
+              android:name="com.revolution.robotics.features.build.BuildRobotFragment"
+              android:label="BuildRobotFragment"/>
 
     <fragment android:id="@+id/codingFragment"
               android:name="com.revolution.robotics.features.coding.CodingFragment"

@@ -7,6 +7,6 @@ interface MyRobotsMvp : Mvp {
     interface View : Mvp.View
 
     interface Presenter : Mvp.Presenter<View, MyRobotsViewModel> {
-        fun navigateToRobots()
+        fun navigateToWhoToBuild()
     }
 }

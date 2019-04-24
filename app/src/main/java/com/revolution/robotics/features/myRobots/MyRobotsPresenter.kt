@@ -7,7 +7,7 @@ class MyRobotsPresenter(private val navigator: Navigator) : MyRobotsMvp.Presente
     override var view: MyRobotsMvp.View? = null
     override var model: MyRobotsViewModel? = null
 
-    override fun navigateToRobots() {
-        navigator.navigate(MyRobotsFragmentDirections.toRobots())
+    override fun navigateToWhoToBuild() {
+        navigator.navigate(MyRobotsFragmentDirections.toWhoToBuild())
     }
 }
