@@ -47,9 +47,6 @@
     @android.arch.lifecycle.OnLifecycleEvent *;
 }
 
-# DATA BINDING
--keep class android.databinding.** { *; }
-
 # GSON
 -dontwarn sun.misc.**
 -keep class sun.misc.Unsafe { *; }
