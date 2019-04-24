@@ -15,18 +15,24 @@
 # Uncomment this to preserve the line number information for
 # debugging stack traces.
 -keepattributes SourceFile,LineNumberTable
+-renamesourcefileattribute SourceFile
 
 -keepattributes *Annotation*
--keep public class * extends java.lang.Exception
+-keepattributes Signature
 
 # KOTLIN
--keepnames class kotlinx.** { *; }
 -keep class kotlin.Metadata { *; }
+-keep class kotlin.reflect.** { *; }
+-dontwarn kotlin.**
+-keepclassmembers class **$WhenMappings {
+    <fields>;
+}
+-keepclassmembers class kotlin.Metadata {
+    public <methods>;
+}
 -keepclassmembernames class kotlinx.** {
     volatile <fields>;
 }
--dontwarn kotlinx.atomicfu.**
--dontwarn kotlin.**
 
 # JETPACK
 -keep class * implements android.arch.lifecycle.LifecycleObserver {
@@ -42,15 +48,11 @@
 }
 
 # DATA BINDING
--dontwarn android.databinding.**
 -keep class android.databinding.** { *; }
 
 # GSON
--keepattributes Signature
--keepattributes *Annotation*
 -dontwarn sun.misc.**
 -keep class sun.misc.Unsafe { *; }
--keep class com.google.gson.examples.android.model.** { *; }
 -keep class * implements com.google.gson.TypeAdapterFactory
 -keep class * implements com.google.gson.JsonSerializer
 -keep class * implements com.google.gson.JsonDeserializer
@@ -63,12 +65,7 @@
   public *;
 }
 
-# CRASHLYTICS
--keep class com.crashlytics.** { *; }
--dontwarn com.crashlytics.**
-
 # APP SPECIFIC
--keep public class * extends com.revolution.robotics.BaseFragment
 -keep public class com.revolution.robotics.core.domain.** {
   *;
 }
