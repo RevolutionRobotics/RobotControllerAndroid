@@ -13,6 +13,8 @@ import com.revolution.robotics.core.interactor.BuildStepInteractor
 import com.revolution.robotics.core.interactor.ConfigurationInteractor
 import com.revolution.robotics.core.interactor.RobotInteractor
 import com.revolution.robotics.core.interactor.TestCodeInteractor
+import com.revolution.robotics.features.build.BuildRobotMvp
+import com.revolution.robotics.features.build.BuildRobotPresenter
 import com.revolution.robotics.features.mainmenu.MainMenuMvp
 import com.revolution.robotics.features.mainmenu.MainMenuPresenter
 import com.revolution.robotics.features.myRobots.MyRobotsMvp
@@ -40,6 +42,7 @@ fun createPresenterModule() =
         bind<LiveControllerMvp.Presenter>() with singleton { LiveControllerPresenter(instance()) }
         bind<MyRobotsMvp.Presenter>() with singleton { MyRobotsPresenter(instance()) }
         bind<MilestoneFinishedMvp.Presenter>() with singleton { MilestoneFinishedPresenter() }
+        bind<BuildRobotMvp.Presenter>() with singleton { BuildRobotPresenter(instance()) }
     }
 
 fun createDbModule(context: Context) =

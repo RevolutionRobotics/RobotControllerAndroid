@@ -8,38 +8,28 @@ import com.revolution.robotics.core.domain.remote.BuildStep
 import com.revolution.robotics.core.domain.remote.Milestone
 import com.revolution.robotics.databinding.FragmentBuildRobotBinding
 import com.revolution.robotics.views.slider.BuildStepSliderView
+import org.kodein.di.erased.instance
 
 @Suppress("UnnecessaryApply")
 class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotViewModel>(R.layout.fragment_build_robot),
-    BuildStepSliderView.BuildStepSelectedListener {
+    BuildRobotMvp.View, BuildStepSliderView.BuildStepSelectedListener {
 
     override val viewModelClass = BuildRobotViewModel::class.java
+    private val presenter: BuildRobotMvp.Presenter by kodein.instance()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding?.apply {
-            toolbarViewModel = BuildRobotToolbarViewModel()
-            seekbar.setBuildSteps(
-                listOf(
-                    BuildStep(null, null, 0, 1, null),
-                    BuildStep(null, null, 0, 2, null),
-                    BuildStep(null, null, 0, 3, null),
-                    BuildStep(null, null, 0, 4, null),
-                    BuildStep(null, null, 0, 5, Milestone(null, 0, null)),
-                    BuildStep(null, null, 0, 6, null),
-                    BuildStep(null, null, 0, 7, null),
-                    BuildStep(null, null, 0, 8, null),
-                    BuildStep(null, null, 0, 9, null),
-                    BuildStep(null, null, 0, 10, null),
-                    BuildStep(null, null, 0, 11, Milestone(null, 0, null)),
-                    BuildStep(null, null, 0, 12, null),
-                    BuildStep(null, null, 0, 13, null),
-                    BuildStep(null, null, 0, 14, null)
-                ), this@BuildRobotFragment
-            )
-        }
+        presenter.register(this, viewModel)
+        // TODO set robotID as an argument parameter
+        presenter.loadBuildSteps(110)
+        binding?.apply { toolbarViewModel = BuildRobotToolbarViewModel() }
+    }
+
+    override fun onBuildStepsLoaded(steps: List<BuildStep>) {
+        binding?.seekbar?.setBuildSteps(steps, this)
+        onBuildStepSelected(steps.first(), false)
     }
 
     override fun onBuildStepSelected(buildStep: BuildStep, fromUser: Boolean) {
-        // TODO
+        viewModel?.buildStep?.value = buildStep
     }
 }
