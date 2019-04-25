@@ -16,7 +16,7 @@ import kotlin.math.floor
 
 @Suppress("UnnecessaryApply")
 class WhoToBuildFragment : BaseFragment<FragmentWhoToBuildBinding, WhoToBuildViewModel>(R.layout.fragment_who_to_build),
-    WhoToBuildMvp.View {
+    WhoToBuildMvp.View, ViewPager.OnPageChangeListener {
 
     companion object {
         private const val ROBOTS_PAGER_OFFSCREEN_PAGE_LIMIT = 3
@@ -36,12 +36,17 @@ class WhoToBuildFragment : BaseFragment<FragmentWhoToBuildBinding, WhoToBuildVie
             robotsViewpager.adapter = adapter
             robotsViewpager.offscreenPageLimit = ROBOTS_PAGER_OFFSCREEN_PAGE_LIMIT
             robotsViewpager.setPageTransformer(false, RobotsPageTransformer(robotsViewpager))
-            robotsViewpager.addOnPageChangeListener(RobotsOnPageChangeListener())
+            robotsViewpager.addOnPageChangeListener(this@WhoToBuildFragment)
         }
         view.waitForLayout {
             val viewPagePadding = floor(view.width * VIEWPAGER_PADDING_MULTIPLIER).toInt()
             binding?.robotsViewpager?.setPaddingRelative(viewPagePadding, 0, viewPagePadding, 0)
         }
+    }
+
+    override fun onDestroyView() {
+        presenter.unregister()
+        super.onDestroyView()
     }
 
     override fun onRobotsLoaded() {
@@ -56,17 +61,11 @@ class WhoToBuildFragment : BaseFragment<FragmentWhoToBuildBinding, WhoToBuildVie
         binding?.apply { robotsViewpager.currentItem-- }
     }
 
-    inner class RobotsOnPageChangeListener : ViewPager.OnPageChangeListener {
-        override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) = Unit
-        override fun onPageScrollStateChanged(state: Int) = Unit
+    override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) = Unit
 
-        override fun onPageSelected(position: Int) {
-            presenter.onPageSelected(position)
-        }
-    }
+    override fun onPageScrollStateChanged(state: Int) = Unit
 
-    override fun onDestroyView() {
-        presenter.unregister()
-        super.onDestroyView()
+    override fun onPageSelected(position: Int) {
+        presenter.onPageSelected(position)
     }
 }

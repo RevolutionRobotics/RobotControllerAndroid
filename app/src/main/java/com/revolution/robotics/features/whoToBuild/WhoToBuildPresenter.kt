@@ -2,10 +2,14 @@ package com.revolution.robotics.features.whoToBuild
 
 import com.revolution.robotics.core.extensions.isEmptyOrNull
 import com.revolution.robotics.core.interactor.RobotInteractor
+import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.features.whoToBuild.adapter.RobotItem
 import kotlin.math.max
 
-class WhoToBuildPresenter(private val robotsInteractor: RobotInteractor) : WhoToBuildMvp.Presenter {
+class WhoToBuildPresenter(
+    private val robotsInteractor: RobotInteractor,
+    private val navigator: Navigator
+) : WhoToBuildMvp.Presenter {
 
     override var model: WhoToBuildViewModel? = null
     override var view: WhoToBuildMvp.View? = null
@@ -19,8 +23,15 @@ class WhoToBuildPresenter(private val robotsInteractor: RobotInteractor) : WhoTo
         robotsInteractor.execute(
             onResponse = { response ->
                 model?.apply {
-                    robotsList.value = response.map {
-                        RobotItem(it.name ?: "", it.buildTime ?: "", it.coverImage ?: "")
+                    robotsList.value = response.map { robot ->
+                        val robotItem = RobotItem(
+                            robot.id,
+                            robot.name ?: "",
+                            robot.buildTime ?: "",
+                            robot.coverImage ?: "",
+                            this@WhoToBuildPresenter
+                        )
+                        robotItem
                     }
                     robotsList.value?.firstOrNull()?.isSelected?.set(true)
                     updateButtonsVisibility(0)
@@ -28,6 +39,7 @@ class WhoToBuildPresenter(private val robotsInteractor: RobotInteractor) : WhoTo
                 }
             }, onError = { error ->
                 // TODO add error handling
+                error.printStackTrace()
             })
     }
 
@@ -36,20 +48,19 @@ class WhoToBuildPresenter(private val robotsInteractor: RobotInteractor) : WhoTo
             robotsList.value?.get(currentPosition.get())?.isSelected?.set(false)
             robotsList.value?.get(position)?.isSelected?.set(true)
             currentPosition.set(position)
-
-            if (robotsList.value.isEmptyOrNull()) {
-                isPreviousButtonVisible.set(false)
-                isNextButtonVisible.set(false)
-            } else {
-                updateButtonsVisibility(position)
-            }
+            updateButtonsVisibility(position)
         }
     }
 
     private fun updateButtonsVisibility(position: Int) {
         model?.run {
-            isPreviousButtonVisible.set(position != 0)
-            isNextButtonVisible.set(position != max((robotsList.value?.size ?: 0) - 1, 0))
+            if (robotsList.value.isEmptyOrNull()) {
+                isPreviousButtonVisible.set(false)
+                isNextButtonVisible.set(false)
+            } else {
+                isPreviousButtonVisible.set(position != 0)
+                isNextButtonVisible.set(position != max((robotsList.value?.size ?: 0) - 1, 0))
+            }
         }
     }
 
@@ -59,5 +70,9 @@ class WhoToBuildPresenter(private val robotsInteractor: RobotInteractor) : WhoTo
 
     override fun previousButtonClick() {
         view?.showPreviousRobot()
+    }
+
+    override fun onRobotSelected(id: Int) {
+        navigator.navigate(WhoToBuildFragmentDirections.toBuildRobot())
     }
 }

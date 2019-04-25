@@ -45,7 +45,7 @@
     <dimen name="my_robots_placeholder_width">285dp</dimen>
     <dimen name="my_robots_placeholder_height">165dp</dimen>
 
-    <!-- SCREEN: ROBOTS -->
+    <!-- SCREEN: WHO_TO_BUILD -->
     <dimen name="robots_header_background_percentage">0.1281</dimen>
     <dimen name="robots_header_image_background_percentage">0.1031</dimen>
     <dimen name="robots_viewpager_top_guide_percentage">0.2313</dimen>
@@ -58,5 +58,8 @@
     <dimen name="robots_card_image_bottom_guide_percentage">0.7054</dimen>
     <dimen name="robots_card_time_top_guide_percentage">0.8088</dimen>
     <dimen name="robots_card_clock_icon_height_percentage">0.0536</dimen>
+
+    <!-- SCREEN: BUILD ROBOT -->
+    <dimen name="build_robot_parts_size">112dp</dimen>
 
 </resources>

@@ -1,5 +1,6 @@
 package com.revolution.robotics.core.kodein
 
+import com.revolution.robotics.features.build.BuildRobotViewModel
 import com.revolution.robotics.features.challenges.ChallengesViewModel
 import com.revolution.robotics.features.coding.CodingViewModel
 import com.revolution.robotics.features.controller.LiveControllerViewModel
@@ -21,4 +22,5 @@ fun createViewModelModule() =
         bind<BuildStepSliderViewModel>() with provider { BuildStepSliderViewModel() }
         bind<LiveControllerViewModel>() with provider { LiveControllerViewModel(instance()) }
         bind<MyRobotsViewModel>() with provider { MyRobotsViewModel(instance()) }
+        bind<BuildRobotViewModel>() with provider { BuildRobotViewModel(instance()) }
     }

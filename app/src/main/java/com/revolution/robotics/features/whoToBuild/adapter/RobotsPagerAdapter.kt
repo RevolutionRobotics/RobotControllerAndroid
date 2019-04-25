@@ -13,13 +13,13 @@ class RobotsPagerAdapter : PagerAdapter() {
     override fun isViewFromObject(view: View, `object`: Any): Boolean = view == `object`
 
     fun setItems(itemList: List<RobotItem>) {
-        itemList.forEach(::addItem)
+        mViews.clear()
+        mData.clear()
+        itemList.forEach { item ->
+            mViews.add(null)
+            mData.add(item)
+        }
         notifyDataSetChanged()
-    }
-
-    private fun addItem(item: RobotItem) {
-        mViews.add(null)
-        mData.add(item)
     }
 
     override fun instantiateItem(collection: ViewGroup, position: Int): Any {

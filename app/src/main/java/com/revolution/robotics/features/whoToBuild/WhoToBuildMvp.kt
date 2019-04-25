@@ -13,5 +13,6 @@ interface WhoToBuildMvp : Mvp {
         fun onPageSelected(position: Int)
         fun nextButtonClick()
         fun previousButtonClick()
+        fun onRobotSelected(id: Int)
     }
 }
