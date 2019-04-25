@@ -2,6 +2,7 @@ package com.revolution.robotics.views.chippedBox
 
 import androidx.annotation.ColorRes
 import androidx.annotation.DimenRes
+import com.revolution.robotics.R
 import com.revolution.robotics.views.chippedBox.ChippedBoxDrawable.Companion.BOTTOM_LEFT_INDEX
 import com.revolution.robotics.views.chippedBox.ChippedBoxDrawable.Companion.BOTTOM_RIGHT_INDEX
 import com.revolution.robotics.views.chippedBox.ChippedBoxDrawable.Companion.TOP_LEFT_INDEX
@@ -43,15 +44,20 @@ data class ChippedBoxConfig(
         private var clipRightSide = false
 
         fun chipSize(@DimenRes size: Int) = apply { chipSizeResource = size }
-        fun borderSize(@DimenRes size: Int) = apply { chipBorderSize = size }
-        fun backgroundColorResource(@ColorRes colorRes: Int) = apply { chipBackgroundColorResource = colorRes }
-        fun borderColorResource(@ColorRes colorRes: Int) = apply { chipBorderColorResource = colorRes }
         fun chipTopLeft(chip: Boolean = true) = apply { chipTopLeft = chip }
         fun chipTopRight(chip: Boolean = true) = apply { chipTopRight = chip }
         fun chipBottomRight(chip: Boolean = true) = apply { chipBottomRight = chip }
         fun chipBottomLeft(chip: Boolean = true) = apply { chipBottomLeft = chip }
         fun clipLeftSide(clip: Boolean = true) = apply { clipLeftSide = clip }
         fun clipRightSide(clip: Boolean = true) = apply { clipRightSide = clip }
+        fun borderSize(@DimenRes size: Int) = apply { chipBorderSize = size }
+        fun backgroundColorResource(@ColorRes colorRes: Int) = apply { chipBackgroundColorResource = colorRes }
+        fun borderColorResource(@ColorRes colorRes: Int) = apply {
+            chipBorderColorResource = colorRes
+            if (chipBorderSize == 0) {
+                chipBorderSize = R.dimen.dimen_1dp
+            }
+        }
 
         fun create() =
             ChippedBoxConfig(

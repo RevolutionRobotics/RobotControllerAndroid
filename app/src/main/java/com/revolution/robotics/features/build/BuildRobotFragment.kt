@@ -5,8 +5,8 @@ import android.view.View
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.remote.BuildStep
-import com.revolution.robotics.core.domain.remote.Milestone
 import com.revolution.robotics.databinding.FragmentBuildRobotBinding
+import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 import com.revolution.robotics.views.slider.BuildStepSliderView
 import org.kodein.di.erased.instance
 
@@ -16,20 +16,32 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
 
     override val viewModelClass = BuildRobotViewModel::class.java
     private val presenter: BuildRobotMvp.Presenter by kodein.instance()
+    private var buildStepCount = 0
 
+    // TODO remove this suppress
+    @Suppress("MagicNumber")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         presenter.register(this, viewModel)
+        binding?.apply {
+            toolbarViewModel = BuildRobotToolbarViewModel()
+            background = ChippedBoxConfig.Builder()
+                .chipSize(R.dimen.dialog_chip_size)
+                .backgroundColorResource(R.color.grey_28)
+                .borderColorResource(R.color.grey_6d)
+                .create()
+        }
+
         // TODO set robotID as an argument parameter
         presenter.loadBuildSteps(110)
-        binding?.apply { toolbarViewModel = BuildRobotToolbarViewModel() }
     }
 
     override fun onBuildStepsLoaded(steps: List<BuildStep>) {
         binding?.seekbar?.setBuildSteps(steps, this)
+        buildStepCount = steps.size
         onBuildStepSelected(steps.first(), false)
     }
 
     override fun onBuildStepSelected(buildStep: BuildStep, fromUser: Boolean) {
-        viewModel?.buildStep?.value = buildStep
+        viewModel?.setBuildStep(buildStep, buildStepCount)
     }
 }

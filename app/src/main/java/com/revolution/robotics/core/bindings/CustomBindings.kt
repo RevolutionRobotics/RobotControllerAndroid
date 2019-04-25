@@ -1,5 +1,7 @@
 package com.revolution.robotics.core.bindings
 
+import android.graphics.ColorMatrix
+import android.graphics.ColorMatrixColorFilter
 import android.view.View
 import android.widget.ImageView
 import android.widget.SeekBar
@@ -32,4 +34,16 @@ fun setRobotsViewPagerItems(viewPager: ViewPager, itemList: List<RobotItem>?) {
         (viewPager.adapter as? RobotsPagerAdapter)?.setItems(itemList)
         viewPager.currentItem = 0
     }
+}
+
+@BindingAdapter("greyscale")
+fun setGreyscale(imageView: ImageView, greyscale: Boolean) {
+    imageView.colorFilter =
+        if (greyscale) {
+            val matrix = ColorMatrix()
+            matrix.setSaturation(0.0f)
+            ColorMatrixColorFilter(matrix)
+        } else {
+            null
+        }
 }

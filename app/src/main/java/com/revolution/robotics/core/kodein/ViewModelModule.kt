@@ -22,5 +22,5 @@ fun createViewModelModule() =
         bind<BuildStepSliderViewModel>() with provider { BuildStepSliderViewModel() }
         bind<LiveControllerViewModel>() with provider { LiveControllerViewModel(instance()) }
         bind<MyRobotsViewModel>() with provider { MyRobotsViewModel(instance()) }
-        bind<BuildRobotViewModel>() with provider { BuildRobotViewModel() }
+        bind<BuildRobotViewModel>() with provider { BuildRobotViewModel(instance()) }
     }
