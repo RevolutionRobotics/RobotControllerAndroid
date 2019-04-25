@@ -16,7 +16,7 @@
                 android:layout_height="0dp"
                 android:scaleType="fitXY"
                 app:drawable="@{viewModel.isSelected ? viewModel.selectedResource : viewModel.defaultResource}"
-                app:layout_constraintDimensionRatio="0.9508"
+                app:layout_constraintDimensionRatio="@dimen/robots_card_dimen_ratio"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -42,6 +42,9 @@
                     android:layout_height="wrap_content"
                     android:text="@{viewModel.name}"
                     android:textAlignment="center"
+                    android:fontFamily="@font/jura_bold"
+                    android:textSize="@dimen/robots_card_title_text_size"
+                    android:textColor="@color/white"
                     app:layout_constraintTop_toTopOf="@id/robotsCardTextTopGuide"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"/>
@@ -114,8 +117,10 @@
                     android:text="@{viewModel.time}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="@id/robotsCardTimerGuideView"
-                    app:layout_constraintBottom_toBottomOf="@id/robotsCardTimerGuideView"
+                    android:textSize="@dimen/robots_card_time_text_size"
+                    android:fontFamily="@font/barlow_medium"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="@id/robotsCardClockIcon"
                     app:layout_constraintStart_toEndOf="@id/robotsCardTimeSpacer"
                     app:layout_constraintEnd_toEndOf="@id/robotsCardTimerGuideView"/>
 
