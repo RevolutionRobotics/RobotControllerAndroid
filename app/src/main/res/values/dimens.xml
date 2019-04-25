@@ -58,5 +58,8 @@
     <dimen name="robots_card_image_bottom_guide_percentage">0.7054</dimen>
     <dimen name="robots_card_time_top_guide_percentage">0.8088</dimen>
     <dimen name="robots_card_clock_icon_height_percentage">0.0536</dimen>
+    <dimen name="robots_card_dimen_ratio">0.9508</dimen>
+    <dimen name="robots_card_title_text_size">16sp</dimen>
+    <dimen name="robots_card_time_text_size">16sp</dimen>
 
 </resources>
