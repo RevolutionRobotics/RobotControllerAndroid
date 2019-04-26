@@ -1,6 +1,7 @@
 package com.revolution.robotics.features.mainmenu
 
 import com.revolution.robotics.core.utils.Navigator
+import com.revolution.robotics.features.build.connect.ConnectDialog
 
 class MainMenuPresenter(private val navigator: Navigator) : MainMenuMvp.Presenter {
 
@@ -19,7 +20,9 @@ class MainMenuPresenter(private val navigator: Navigator) : MainMenuMvp.Presente
         navigator.navigate(MainMenuFragmentDirections.toChallenges())
     }
 
-    override fun onCommunityClicked() = Unit
+    override fun onCommunityClicked() {
+        view?.showDialog(ConnectDialog.newInstance())
+    }
 
     override fun onSettingsClicked() = Unit
 }

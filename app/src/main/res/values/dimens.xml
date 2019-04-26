@@ -37,6 +37,10 @@
     <dimen name="dialog_button_height">46dp</dimen>
     <dimen name="dialog_icon_size">16dp</dimen>
 
+    <!-- DIALOG: CONNECT TO ROBOT -->
+    <dimen name="dialog_connect_image_width">91dp</dimen>
+    <dimen name="dialog_connect_image_height">47dp</dimen>
+
     <!-- SCREEN: MAIN MENU -->
     <dimen name="main_menu_header_border_size">30dp</dimen>
     <dimen name="main_menu_footer_height">28dp</dimen>

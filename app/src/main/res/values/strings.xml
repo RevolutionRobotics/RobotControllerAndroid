@@ -16,6 +16,7 @@
     <!-- Who to build -->
     <string name="who_to_build_title">Who to build?</string>
     <string name="who_to_build_build_your_own">build your own</string>
+    <string name="who_to_build_searching_title">Searching for robots in the area</string>
 
     <!-- Chapter finished -->
     <string name="build_chapter_finish_dialog_title">Chapter finished</string>
@@ -23,4 +24,5 @@
     <string name="build_chapter_finish_dialog_button_home">Home</string>
     <string name="build_chapter_finish_dialog_button_next_chapter">Next chapter</string>
     <string name="build_chapter_finish_dialog_button_test">Test</string>
+
 </resources>

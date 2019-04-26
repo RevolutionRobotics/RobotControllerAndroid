@@ -7,11 +7,14 @@ import android.widget.ImageView
 import android.widget.SeekBar
 import androidx.annotation.DrawableRes
 import androidx.databinding.BindingAdapter
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 import com.revolution.robotics.views.chippedBox.ChippedBoxDrawable
 import com.revolution.robotics.features.whoToBuild.adapter.RobotItem
 import com.revolution.robotics.features.whoToBuild.adapter.RobotsPagerAdapter
+import com.revolution.robotics.features.build.connect.adapter.ConnectAdapter
+import com.revolution.robotics.features.build.connect.adapter.ConnectRobotItem
 
 @BindingAdapter("listener")
 fun setSeekbarListener(seekBar: SeekBar, listener: SeekBar.OnSeekBarChangeListener) {
@@ -19,8 +22,10 @@ fun setSeekbarListener(seekBar: SeekBar, listener: SeekBar.OnSeekBarChangeListen
 }
 
 @BindingAdapter("chippedBoxConfig")
-fun setChippedBoxConfig(view: View, config: ChippedBoxConfig) {
-    view.background = ChippedBoxDrawable(view.context, config)
+fun setChippedBoxConfig(view: View, config: ChippedBoxConfig?) {
+    if (config != null) {
+        view.background = ChippedBoxDrawable(view.context, config)
+    }
 }
 
 @BindingAdapter("drawable")
@@ -46,4 +51,11 @@ fun setGreyscale(imageView: ImageView, greyscale: Boolean) {
         } else {
             null
         }
+}
+
+@BindingAdapter("availableRobots")
+fun setAvailableRobotsItems(recyclerView: RecyclerView, itemList: List<ConnectRobotItem>?) {
+    if (itemList != null) {
+        (recyclerView.adapter as? ConnectAdapter)?.setItems(itemList)
+    }
 }

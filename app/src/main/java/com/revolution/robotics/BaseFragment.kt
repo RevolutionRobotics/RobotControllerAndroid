@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import com.revolution.robotics.views.dialogs.RoboticsDialog
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.LateInitKodein
@@ -45,6 +46,10 @@ abstract class BaseFragment<B : ViewDataBinding, V : ViewModel>(@LayoutRes priva
     override fun onDestroy() {
         super.onDestroy()
         binding = null
+    }
+
+    fun showDialog(roboticsDialog: RoboticsDialog) {
+        roboticsDialog.show(fragmentManager)
     }
 
     // Override if you have a custom ViewModelFactory

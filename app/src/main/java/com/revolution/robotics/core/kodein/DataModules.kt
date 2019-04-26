@@ -2,8 +2,8 @@ package com.revolution.robotics.core.kodein
 
 import android.content.Context
 import androidx.room.Room
-import com.revolution.robotics.features.milestoneFinished.MilestoneFinishedMvp
-import com.revolution.robotics.features.milestoneFinished.MilestoneFinishedPresenter
+import com.revolution.robotics.features.build.milestoneFinished.MilestoneFinishedMvp
+import com.revolution.robotics.features.build.milestoneFinished.MilestoneFinishedPresenter
 import com.revolution.robotics.features.controller.LiveControllerMvp
 import com.revolution.robotics.features.controller.LiveControllerPresenter
 import com.revolution.robotics.core.db.RoboticsDatabase
@@ -15,6 +15,8 @@ import com.revolution.robotics.core.interactor.RobotInteractor
 import com.revolution.robotics.core.interactor.TestCodeInteractor
 import com.revolution.robotics.features.build.BuildRobotMvp
 import com.revolution.robotics.features.build.BuildRobotPresenter
+import com.revolution.robotics.features.build.connect.availableRobotsFace.ConnectMvp
+import com.revolution.robotics.features.build.connect.availableRobotsFace.ConnectPresenter
 import com.revolution.robotics.features.mainmenu.MainMenuMvp
 import com.revolution.robotics.features.mainmenu.MainMenuPresenter
 import com.revolution.robotics.features.myRobots.MyRobotsMvp
@@ -43,6 +45,7 @@ fun createPresenterModule() =
         bind<MyRobotsMvp.Presenter>() with singleton { MyRobotsPresenter(instance()) }
         bind<MilestoneFinishedMvp.Presenter>() with singleton { MilestoneFinishedPresenter() }
         bind<BuildRobotMvp.Presenter>() with singleton { BuildRobotPresenter(instance()) }
+        bind<ConnectMvp.Presenter>() with singleton { ConnectPresenter() }
     }
 
 fun createDbModule(context: Context) =

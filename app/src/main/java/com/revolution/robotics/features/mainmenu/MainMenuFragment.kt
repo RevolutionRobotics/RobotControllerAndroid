@@ -14,6 +14,7 @@ class MainMenuFragment : BaseFragment<FragmentMainMenuBinding, MainMenuViewModel
     private val presenter: MainMenuMvp.Presenter by kodein.instance()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        presenter.register(this, viewModel)
         binding?.toolbarViewModel = MainMenuToolbarViewModel(presenter)
     }
 }

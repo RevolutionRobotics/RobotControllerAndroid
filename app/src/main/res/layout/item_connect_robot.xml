@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable name="viewModel" type="com.revolution.robotics.features.build.connect.adapter.ConnectRobotItem"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/robotBackground"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_40dp"
+            android:layout_marginBottom="@dimen/dimen_12dp"
+            app:chippedBoxConfig="@{viewModel.boxConfig}"
+            android:onClick="@{()->viewModel.onItemClicked()}">
+
+        <TextView
+                android:id="@+id/robotName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="@dimen/dimen_24dp"
+                android:textSize="15sp"
+                android:fontFamily="@font/barlow_regular"
+                android:text="@{viewModel.name}"/>
+
+        <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="@dimen/dimen_16dp"
+                android:layout_height="@dimen/dimen_16dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="@dimen/dimen_16dp"
+                android:indeterminate="true"
+                app:visible="@{viewModel.isProgressBarVisible}"
+                android:indeterminateTint="@color/white"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
