@@ -1,6 +1,7 @@
 package com.revolution.robotics.features.build.permission
 
 import com.revolution.robotics.R
+import com.revolution.robotics.core.eventBus.DialogEventBus
 import com.revolution.robotics.core.utils.dynamicPermissions.DynamicPermissionHandler
 import com.revolution.robotics.core.utils.dynamicPermissions.DynamicPermissionListener
 import com.revolution.robotics.databinding.DialogBluetoothPermissionBinding
@@ -17,6 +18,7 @@ class BluetoothPermissionDialog : RoboticsDialog(), DynamicPermissionListener {
     }
 
     private val dynamicPermissionHandler: DynamicPermissionHandler by kodein.instance()
+    private val dialogEventBus: DialogEventBus by kodein.instance()
 
     override val hasCloseButton = false
     override val dialogFaces: List<DialogFace<*>> = listOf(PermissionDialogFace())
@@ -31,6 +33,7 @@ class BluetoothPermissionDialog : RoboticsDialog(), DynamicPermissionListener {
 
     override fun onAllPermissionsGranted() {
         dialog.dismiss()
+        dialogEventBus.publish(this, DialogEventBus.Event.POSITIVE)
     }
 
     override fun onPermissionDenied(deniedPermissions: List<String>) = Unit

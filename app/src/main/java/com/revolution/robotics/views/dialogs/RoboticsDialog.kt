@@ -11,13 +11,13 @@ import androidx.fragment.app.FragmentManager
 import com.revolution.robotics.R
 import com.revolution.robotics.core.extensions.dimension
 import com.revolution.robotics.core.extensions.gone
-import com.revolution.robotics.core.extensions.visible
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 import com.revolution.robotics.databinding.DialogRoboticsCoreBinding
 import com.revolution.robotics.databinding.DialogRoboticsCoreButtonBinding
 import org.kodein.di.KodeinAware
 import org.kodein.di.LateInitKodein
 
+@Suppress("OptionalUnit")
 abstract class RoboticsDialog : DialogFragment() {
 
     abstract val hasCloseButton: Boolean
@@ -50,7 +50,10 @@ abstract class RoboticsDialog : DialogFragment() {
             .chipSize(R.dimen.dialog_chip_size)
             .backgroundColorResource(R.color.grey_1e)
             .create()
-        binding.viewModel = RoboticsDialogViewModel(hasCloseButton) { dialog.dismiss() }
+        binding.viewModel = RoboticsDialogViewModel(hasCloseButton) {
+            dialog.dismiss()
+            onDialogCloseButtonClicked()
+        }
         return binding.root
     }
 
@@ -73,11 +76,16 @@ abstract class RoboticsDialog : DialogFragment() {
         }
     }
 
+    open fun onDialogCloseButtonClicked() = Unit
+
     fun activateFace(dialogFace: DialogFace<*>) {
         binding.container.removeAllViews()
         context?.let { context -> dialogFace.activate(this, LayoutInflater.from(context), binding.container) }
     }
 
     fun show(fragmentManager: FragmentManager?) =
-        show(fragmentManager, javaClass.simpleName)
+        show(fragmentManager, getFragmentTag())
+
+    fun getFragmentTag() =
+        javaClass.simpleName
 }

@@ -6,16 +6,19 @@ import android.view.View
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.remote.BuildStep
+import com.revolution.robotics.core.eventBus.DialogEventBus
 import com.revolution.robotics.core.utils.dynamicPermissions.DynamicPermissionHandler
 import com.revolution.robotics.databinding.FragmentBuildRobotBinding
+import com.revolution.robotics.features.build.connect.ConnectDialog
 import com.revolution.robotics.features.build.permission.BluetoothPermissionDialog
+import com.revolution.robotics.features.build.turnOnTheBrain.TurnOnTheBrainDialog
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 import com.revolution.robotics.views.slider.BuildStepSliderView
 import org.kodein.di.erased.instance
 
 @Suppress("UnnecessaryApply")
 class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotViewModel>(R.layout.fragment_build_robot),
-    BuildRobotMvp.View, BuildStepSliderView.BuildStepSelectedListener {
+    BuildRobotMvp.View, BuildStepSliderView.BuildStepSelectedListener, DialogEventBus.Listener {
 
     companion object {
         const val CUSTOM_ROBOT_ID = -1
@@ -29,6 +32,7 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
     override val viewModelClass = BuildRobotViewModel::class.java
     private val presenter: BuildRobotMvp.Presenter by kodein.instance()
     private val dynamicPermissionHandler: DynamicPermissionHandler by kodein.instance()
+    private val dialogEventBus: DialogEventBus by kodein.instance()
     private var buildStepCount = 0
 
     // TODO remove this suppress
@@ -46,10 +50,27 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
 
         // TODO set robotID as an argument parameter
         presenter.loadBuildSteps(110)
+        dialogEventBus.register(this)
 
-        if (!dynamicPermissionHandler.hasPermissions(REQUIRED_PERMISSIONS, requireActivity())) {
+        if (dynamicPermissionHandler.hasPermissions(REQUIRED_PERMISSIONS, requireActivity())) {
+            TurnOnTheBrainDialog.newInstance().show(fragmentManager)
+        } else {
             BluetoothPermissionDialog.newInstance().show(fragmentManager)
         }
+    }
+
+    override fun onDialogEvent(tag: String, event: DialogEventBus.Event) {
+        if (tag == BluetoothPermissionDialog::class.java.simpleName && event == DialogEventBus.Event.POSITIVE) {
+            TurnOnTheBrainDialog.newInstance().show(fragmentManager)
+        }
+        if (tag == TurnOnTheBrainDialog::class.java.simpleName && event == DialogEventBus.Event.POSITIVE) {
+            ConnectDialog.newInstance().show(fragmentManager)
+        }
+    }
+
+    override fun onDestroyView() {
+        dialogEventBus.unregister(this)
+        super.onDestroyView()
     }
 
     override fun onBuildStepsLoaded(steps: List<BuildStep>) {

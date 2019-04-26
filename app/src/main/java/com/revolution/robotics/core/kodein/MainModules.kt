@@ -2,6 +2,7 @@ package com.revolution.robotics.core.kodein
 
 import android.content.Context
 import com.revolution.robotics.blockly.utils.JavascriptResultHandler
+import com.revolution.robotics.core.eventBus.DialogEventBus
 import com.revolution.robotics.core.kodein.utils.ApplicationContextProvider
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.core.utils.Navigator
@@ -16,6 +17,7 @@ fun createMainModule() =
         bind<DynamicPermissionHandler>() with singleton { DynamicPermissionHandler() }
         bind<Navigator>() with singleton { Navigator() }
         bind<JavascriptResultHandler>() with singleton { JavascriptResultHandler() }
+        bind<DialogEventBus>() with singleton { DialogEventBus() }
     }
 
 fun createAppModule(context: Context) =
