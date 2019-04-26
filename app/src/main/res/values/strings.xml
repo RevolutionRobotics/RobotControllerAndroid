@@ -18,6 +18,11 @@
     <string name="who_to_build_build_your_own">build your own</string>
     <string name="who_to_build_searching_title">Searching for robots in the area</string>
 
+    <!-- Bluetooth permission -->
+    <string name="permission_bluetooth_title">Bluetooth permissions</string>
+    <string name="permission_bluetooth_description">We need your location permissions to search for bluetooth devices. We can explain here how is this exactly working</string>
+    <string name="permission_bluetooth_agree">Agree and continue</string>
+
     <!-- Chapter finished -->
     <string name="build_chapter_finish_dialog_title">Chapter finished</string>
     <string name="build_chapter_finish_dialog_description">Well done!</string>

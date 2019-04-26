@@ -2,15 +2,25 @@ package com.revolution.robotics.core.utils.dynamicPermissions
 
 import android.app.Activity
 import android.content.pm.PackageManager
+import android.util.SparseArray
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.util.set
 
 class DynamicPermissionHandler {
 
     private var requestCode = 0
-    private var requests = HashMap<Int, PermissionRequest>()
+    private var requests = SparseArray<PermissionRequest>()
 
-    fun permissions(vararg permissions: String) =
+    fun hasPermissions(permissions: List<String>, activity: Activity): Boolean {
+        val permissionList = permissions.toMutableList()
+        permissionList.removeAll {
+            ContextCompat.checkSelfPermission(activity, it) == PackageManager.PERMISSION_GRANTED
+        }
+        return permissionList.isEmpty()
+    }
+
+    fun permissions(permissions: List<String>) =
         PermissionRequest(this, permissions.toMutableList())
 
     fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -45,7 +55,7 @@ class DynamicPermissionHandler {
         fun request(activity: Activity) {
             val currentRequestCode = handler?.requestCode ?: 0
             handler?.let { handler ->
-                handler.requests[currentRequestCode] = this
+                handler.requests.set(currentRequestCode, this)
                 handler.requestCode++
             }
 
