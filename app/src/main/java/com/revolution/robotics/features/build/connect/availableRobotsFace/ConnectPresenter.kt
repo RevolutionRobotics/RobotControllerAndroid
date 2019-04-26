@@ -2,6 +2,8 @@ package com.revolution.robotics.features.build.connect.availableRobotsFace
 
 import com.revolution.robotics.features.build.connect.adapter.ConnectRobotItem
 
+// TODO remove this suppress
+@Suppress("MagicNumber")
 class ConnectPresenter : ConnectMvp.Presenter {
 
     companion object {
