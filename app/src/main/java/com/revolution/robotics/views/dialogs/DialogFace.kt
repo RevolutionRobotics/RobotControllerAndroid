@@ -19,13 +19,9 @@ open class DialogFace<B : ViewDataBinding>(@LayoutRes private val layoutResource
     open fun activate(fragment: Fragment, inflater: LayoutInflater, container: ViewGroup): View? {
         activeFace?.releaseFace()
         binding = DataBindingUtil.inflate(inflater, layoutResourceId, container, true)
-        binding?.let { binding -> onViewCreated(binding) }
         activeFace = this
         return binding?.root
     }
-
-    @Suppress("OptionalUnit")
-    open fun onViewCreated(binding: B) = Unit
 
     open fun releaseFace() {
         binding = null

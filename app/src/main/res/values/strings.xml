@@ -25,6 +25,6 @@
     <string name="build_chapter_finish_dialog_button_test">Test</string>
 
     <!-- Available robots -->
-    <string name="available_robots_title">Available robots</string>
+    <string name="available_robots_title">Searching for robots in the area</string>
 
 </resources>

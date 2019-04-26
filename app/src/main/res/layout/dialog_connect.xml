@@ -3,7 +3,7 @@
 
     <data>
         <variable name="viewModel"
-                  type="com.revolution.robotics.features.availableRobots.availableRobotsFace.AvailableRobotsDialogFaceViewModel"/>
+                  type="com.revolution.robotics.features.build.connect.availableRobotsFace.ConnectViewModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -23,8 +23,7 @@
                 android:paddingBottom="@dimen/dialog_available_robots_title_padding_bottom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/available_robots_title"
-        />
+                android:text="@string/available_robots_title"/>
 
         <Space
                 android:id="@+id/leftBorderSpace"
@@ -74,4 +73,5 @@
                 app:layout_constraintEnd_toEndOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

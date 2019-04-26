@@ -13,8 +13,8 @@ import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 import com.revolution.robotics.views.chippedBox.ChippedBoxDrawable
 import com.revolution.robotics.features.whoToBuild.adapter.RobotItem
 import com.revolution.robotics.features.whoToBuild.adapter.RobotsPagerAdapter
-import com.revolution.robotics.features.availableRobots.adapter.AvailableRobotsAdapter
-import com.revolution.robotics.features.availableRobots.adapter.AvailableRobotsItem
+import com.revolution.robotics.features.build.connect.adapter.ConnectAdapter
+import com.revolution.robotics.features.build.connect.adapter.ConnectRobotItem
 
 @BindingAdapter("listener")
 fun setSeekbarListener(seekBar: SeekBar, listener: SeekBar.OnSeekBarChangeListener) {
@@ -54,8 +54,8 @@ fun setGreyscale(imageView: ImageView, greyscale: Boolean) {
 }
 
 @BindingAdapter("availableRobots")
-fun setAvailableRobotsItems(recyclerView: RecyclerView, itemList: List<AvailableRobotsItem>?) {
+fun setAvailableRobotsItems(recyclerView: RecyclerView, itemList: List<ConnectRobotItem>?) {
     if (itemList != null) {
-        (recyclerView.adapter as? AvailableRobotsAdapter)?.setItems(itemList)
+        (recyclerView.adapter as? ConnectAdapter)?.setItems(itemList)
     }
 }

@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <variable name="itemViewModel" type="com.revolution.robotics.features.availableRobots.adapter.AvailableRobotsItem"/>
+        <variable name="viewModel" type="com.revolution.robotics.features.build.connect.adapter.ConnectRobotItem"/>
     </data>
 
     <LinearLayout
@@ -15,10 +15,10 @@
             android:layout_marginTop="@dimen/dialog_available_robots_item_vertical_margin"
             android:layout_marginBottom="@dimen/dialog_available_robots_item_vertical_margin"
             android:gravity="center"
-            app:chippedBoxConfig="@{itemViewModel.boxConfig}"
+            app:chippedBoxConfig="@{viewModel.boxConfig}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="@{()->itemViewModel.onItemClick()}">
+            android:onClick="@{()->viewModel.onItemClicked()}">
 
         <TextView
                 android:id="@+id/robotName"
@@ -26,17 +26,19 @@
                 android:layout_weight="1"
                 android:textSize="@dimen/dialog_available_robots_item_text_size"
                 android:fontFamily="@font/barlow_regular"
-                android:text="@{itemViewModel.name}"
+                android:text="@{viewModel.name}"
                 android:layout_height="wrap_content"/>
 
         <ProgressBar
                 android:id="@+id/progressBar"
                 android:indeterminate="true"
                 android:visible="false"
-                app:visible="@{itemViewModel.isProgressBarVisible}"
+                app:visible="@{viewModel.isProgressBarVisible}"
+                android:layout_marginStart="8dp"
                 android:layout_width="@dimen/dialog_available_robots_item_image_size"
                 android:layout_height="@dimen/dialog_available_robots_item_image_size"
                 android:indeterminateTint="@color/white"/>
 
     </LinearLayout>
+
 </layout>

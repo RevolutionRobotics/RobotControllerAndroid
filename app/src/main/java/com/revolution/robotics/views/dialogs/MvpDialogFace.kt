@@ -16,8 +16,10 @@ import org.kodein.di.LateInitKodein
 import org.kodein.di.TT
 import org.kodein.di.direct
 
-abstract class DialogViewModelFace<B : ViewDataBinding, V : ViewModel>(@LayoutRes private val layoutResourceId: Int) :
+@Suppress("OptionalUnit")
+abstract class MvpDialogFace<B : ViewDataBinding, V : ViewModel>(@LayoutRes private val layoutResourceId: Int) :
     DialogFace<B>(layoutResourceId) {
+
     protected var viewModel: V? = null
     protected var kodein = LateInitKodein()
 
@@ -31,12 +33,18 @@ abstract class DialogViewModelFace<B : ViewDataBinding, V : ViewModel>(@LayoutRe
             binding.lifecycleOwner = fragment
             binding.setVariable(BR.viewModel, viewModel)
         }
+        onViewCreated(fragment, container)
         return view
     }
 
+    open fun onViewCreated(fragment: Fragment, container: ViewGroup) = Unit
+
+    open fun onDestroyView() = Unit
+
     override fun releaseFace() {
-        super.releaseFace()
+        onDestroyView()
         viewModel = null
+        super.releaseFace()
     }
 
     private fun getViewModelFactory(): ViewModelProvider.Factory? = KodeinViewModelFactory(kodein)

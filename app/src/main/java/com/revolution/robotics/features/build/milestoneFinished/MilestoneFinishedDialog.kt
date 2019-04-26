@@ -1,4 +1,4 @@
-package com.revolution.robotics.features.milestoneFinished
+package com.revolution.robotics.features.build.milestoneFinished
 
 import android.os.Bundle
 import android.view.View
@@ -8,7 +8,7 @@ import com.revolution.robotics.views.dialogs.RoboticsDialog
 import com.revolution.robotics.core.domain.remote.Milestone
 import com.revolution.robotics.core.extensions.withArguments
 import com.revolution.robotics.core.utils.BundleArgumentDelegate
-import com.revolution.robotics.databinding.DialogFaceMilestoneFinishedBinding
+import com.revolution.robotics.databinding.DialogMilestoneFinishedBinding
 import com.revolution.robotics.views.dialogs.DialogFace
 import org.kodein.di.erased.instance
 
@@ -62,6 +62,5 @@ class MilestoneFinishedDialog : RoboticsDialog(), MilestoneFinishedMvp.View {
         super.onDestroyView()
     }
 
-    class MilestoneFinishedDialogFace :
-        DialogFace<DialogFaceMilestoneFinishedBinding>(R.layout.dialog_face_milestone_finished)
+    class MilestoneFinishedDialogFace : DialogFace<DialogMilestoneFinishedBinding>(R.layout.dialog_milestone_finished)
 }
