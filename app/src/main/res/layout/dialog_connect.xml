@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable name="viewModel"
@@ -7,70 +8,45 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
         <TextView
                 android:id="@+id/dialogTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="@dimen/dimen_32dp"
                 android:fontFamily="@font/jura_regular"
-                android:textSize="@dimen/dialog_available_robots_title_text_size"
-                android:paddingTop="@dimen/dialog_available_robots_title_padding_top"
-                android:paddingBottom="@dimen/dialog_available_robots_title_padding_bottom"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/available_robots_title"/>
-
-        <Space
-                android:id="@+id/leftBorderSpace"
-                android:layout_width="@dimen/dialog_available_robots_border_spacer_width"
-                android:layout_height="0dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/bluetoothImage"/>
+                android:textSize="18sp"
+                android:text="@string/who_to_build_searching_title"/>
 
         <ImageView
                 android:id="@+id/bluetoothImage"
-                app:layout_constraintStart_toEndOf="@id/leftBorderSpace"
-                app:layout_constraintEnd_toStartOf="@id/middleSpace"
-                app:layout_constraintTop_toTopOf="parent"
+                android:layout_width="@dimen/dialog_connect_image_width"
+                android:layout_height="@dimen/dialog_connect_image_height"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="@dimen/dimen_32dp"
+                android:layout_marginEnd="@dimen/dimen_32dp"
+                app:layout_constraintEnd_toStartOf="@id/robotsRecyclerView"
+                app:layout_constraintTop_toBottomOf="@id/dialogTitle"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:scaleType="fitCenter"
-                android:src="@drawable/bluetooth_connect"
-                android:layout_width="@dimen/dialog_available_robots_image_width"
-                android:layout_height="@dimen/dialog_available_robots_image_height"/>
-
-        <Space
-                android:id="@+id/middleSpace"
-                android:layout_width="@dimen/dialog_available_robots_border_spacer_width"
-                android:layout_height="0dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@id/bluetoothImage"
-                app:layout_constraintEnd_toStartOf="@id/robotsRecyclerView"/>
+                android:src="@drawable/bluetooth_connect"/>
 
         <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/robotsRecyclerView"
                 app:layout_constraintTop_toBottomOf="@id/dialogTitle"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@id/middleSpace"
-                app:layout_constraintEnd_toStartOf="@id/rightBorderSpace"
+                android:layout_marginTop="@dimen/dimen_12dp"
+                app:layout_constraintStart_toEndOf="@id/bluetoothImage"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="@dimen/dimen_32dp"
                 app:availableRobots="@{viewModel.availableRobots}"
                 android:layout_width="0dp"
                 android:layout_height="0dp"/>
-
-        <Space
-                android:id="@+id/rightBorderSpace"
-                android:layout_width="@dimen/dialog_available_robots_border_spacer_width"
-                android:layout_height="0dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
