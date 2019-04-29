@@ -10,6 +10,7 @@ import com.revolution.robotics.core.eventBus.DialogEventBus
 import com.revolution.robotics.core.utils.dynamicPermissions.DynamicPermissionHandler
 import com.revolution.robotics.databinding.FragmentBuildRobotBinding
 import com.revolution.robotics.features.build.connect.ConnectDialog
+import com.revolution.robotics.features.build.connectionResult.ConnectionFailedDialog
 import com.revolution.robotics.features.build.connectionResult.ConnectionSuccessDialog
 import com.revolution.robotics.features.build.permission.BluetoothPermissionDialog
 import com.revolution.robotics.features.build.turnOnTheBrain.TurnOnTheBrainDialog
@@ -60,6 +61,7 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
         }
     }
 
+    @Suppress("ComplexMethod")
     override fun onDialogEvent(tag: String, event: DialogEventBus.Event) {
         if (tag == BluetoothPermissionDialog::class.java.simpleName && event == DialogEventBus.Event.POSITIVE) {
             TurnOnTheBrainDialog.newInstance().show(fragmentManager)
@@ -68,7 +70,11 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
         } else if (tag == ConnectDialog::class.java.simpleName && event == DialogEventBus.Event.POSITIVE) {
             ConnectionSuccessDialog.newInstance().show(fragmentManager)
         } else if (tag == ConnectDialog::class.java.simpleName && event == DialogEventBus.Event.NEGATIVE) {
-            // TODO display connection error dialog here
+            ConnectionFailedDialog.newInstance().show(fragmentManager)
+        } else if (tag == ConnectionFailedDialog::class.java.simpleName && event == DialogEventBus.Event.OTHER) {
+            // TODO show tips dialog here
+        } else if (tag == ConnectionFailedDialog::class.java.simpleName && event == DialogEventBus.Event.POSITIVE) {
+            ConnectDialog.newInstance().show(fragmentManager)
         }
     }
 
