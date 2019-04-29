@@ -69,6 +69,7 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
         } else if (dialog == DialogId.TURN_ON_THE_BRAIN && event == DialogEventBus.Event.POSITIVE) {
             ConnectDialog.newInstance().show(fragmentManager)
         } else if (dialog == DialogId.CONNECT && event == DialogEventBus.Event.POSITIVE) {
+            viewModel?.isBluetoothConnected?.value = true
             ConnectionSuccessDialog.newInstance().show(fragmentManager)
         } else if (dialog == DialogId.CONNECT && event == DialogEventBus.Event.NEGATIVE) {
             ConnectionFailedDialog.newInstance().show(fragmentManager)

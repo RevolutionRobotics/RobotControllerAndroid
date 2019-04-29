@@ -7,7 +7,6 @@ import com.revolution.robotics.R
 import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
 import com.revolution.robotics.core.eventBus.dialog.DialogId
 import com.revolution.robotics.databinding.DialogConnectBinding
-import com.revolution.robotics.features.build.connect.ConnectDialog
 import com.revolution.robotics.features.build.connect.adapter.ConnectAdapter
 import com.revolution.robotics.views.dialogs.MvpDialogFace
 import com.revolution.robotics.views.dialogs.RoboticsDialog
