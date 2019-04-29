@@ -84,8 +84,5 @@ abstract class RoboticsDialog : DialogFragment() {
     }
 
     fun show(fragmentManager: FragmentManager?) =
-        show(fragmentManager, getFragmentTag())
-
-    fun getFragmentTag() =
-        javaClass.simpleName
+        show(fragmentManager, javaClass.simpleName)
 }

@@ -1,6 +1,4 @@
-package com.revolution.robotics.core.eventBus
-
-import com.revolution.robotics.views.dialogs.RoboticsDialog
+package com.revolution.robotics.core.eventBus.dialog
 
 class DialogEventBus {
 
@@ -18,16 +16,13 @@ class DialogEventBus {
         listeners.remove(listener)
     }
 
-    fun publish(dialog: RoboticsDialog, event: Event) =
-        publish(dialog.getFragmentTag(), event)
-
-    fun publish(tag: String, event: Event) {
+    fun publish(dialog: DialogId, event: Event) {
         listeners.forEach { listener ->
-            listener.onDialogEvent(tag, event)
+            listener.onDialogEvent(dialog, event)
         }
     }
 
     interface Listener {
-        fun onDialogEvent(tag: String, event: Event)
+        fun onDialogEvent(dialog: DialogId, event: Event)
     }
 }

@@ -6,7 +6,8 @@ import android.view.View
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.remote.BuildStep
-import com.revolution.robotics.core.eventBus.DialogEventBus
+import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
+import com.revolution.robotics.core.eventBus.dialog.DialogId
 import com.revolution.robotics.core.utils.dynamicPermissions.DynamicPermissionHandler
 import com.revolution.robotics.databinding.FragmentBuildRobotBinding
 import com.revolution.robotics.features.build.connect.ConnectDialog
@@ -62,18 +63,18 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
     }
 
     @Suppress("ComplexMethod")
-    override fun onDialogEvent(tag: String, event: DialogEventBus.Event) {
-        if (tag == BluetoothPermissionDialog::class.java.simpleName && event == DialogEventBus.Event.POSITIVE) {
+    override fun onDialogEvent(dialog: DialogId, event: DialogEventBus.Event) {
+        if (dialog == DialogId.PERMISSION && event == DialogEventBus.Event.POSITIVE) {
             TurnOnTheBrainDialog.newInstance().show(fragmentManager)
-        } else if (tag == TurnOnTheBrainDialog::class.java.simpleName && event == DialogEventBus.Event.POSITIVE) {
+        } else if (dialog == DialogId.TURN_ON_THE_BRAIN && event == DialogEventBus.Event.POSITIVE) {
             ConnectDialog.newInstance().show(fragmentManager)
-        } else if (tag == ConnectDialog::class.java.simpleName && event == DialogEventBus.Event.POSITIVE) {
+        } else if (dialog == DialogId.CONNECT && event == DialogEventBus.Event.POSITIVE) {
             ConnectionSuccessDialog.newInstance().show(fragmentManager)
-        } else if (tag == ConnectDialog::class.java.simpleName && event == DialogEventBus.Event.NEGATIVE) {
+        } else if (dialog == DialogId.CONNECT && event == DialogEventBus.Event.NEGATIVE) {
             ConnectionFailedDialog.newInstance().show(fragmentManager)
-        } else if (tag == ConnectionFailedDialog::class.java.simpleName && event == DialogEventBus.Event.OTHER) {
+        } else if (dialog == DialogId.CONNECTION_FAILED && event == DialogEventBus.Event.OTHER) {
             // TODO show tips dialog here
-        } else if (tag == ConnectionFailedDialog::class.java.simpleName && event == DialogEventBus.Event.POSITIVE) {
+        } else if (dialog == DialogId.CONNECTION_FAILED && event == DialogEventBus.Event.POSITIVE) {
             ConnectDialog.newInstance().show(fragmentManager)
         }
     }
