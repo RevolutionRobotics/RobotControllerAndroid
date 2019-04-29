@@ -37,7 +37,7 @@ abstract class BaseFragment<B : ViewDataBinding, V : ViewModel>(@LayoutRes priva
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, layoutResourceId, container, false)
         binding?.let { binding ->
-            binding.lifecycleOwner = this
+            binding.lifecycleOwner = this.viewLifecycleOwner
             binding.setVariable(BR.viewModel, viewModel)
         }
         return binding?.root
