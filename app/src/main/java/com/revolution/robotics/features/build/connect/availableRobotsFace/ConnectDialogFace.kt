@@ -20,7 +20,7 @@ class ConnectDialogFace : MvpDialogFace<DialogConnectBinding, ConnectViewModel>(
         viewModel?.let {
             binding?.robotsRecyclerView?.let { recycler ->
                 recycler.layoutManager = LinearLayoutManager(container.context)
-                recycler.adapter = ConnectAdapter(fragment)
+                recycler.adapter = ConnectAdapter(fragment.viewLifecycleOwner)
             }
         }
     }

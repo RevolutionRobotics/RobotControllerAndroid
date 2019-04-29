@@ -30,7 +30,7 @@ abstract class MvpDialogFace<B : ViewDataBinding, V : ViewModel>(@LayoutRes priv
         kodein.baseKodein = (fragment.context as KodeinAware).kodein
         viewModel = ViewModelProviders.of(fragment, getViewModelFactory()).get(viewModelClass)
         binding?.let { binding ->
-            binding.lifecycleOwner = fragment
+            binding.lifecycleOwner = fragment.viewLifecycleOwner
             binding.setVariable(BR.viewModel, viewModel)
         }
         onViewCreated(fragment, container)

@@ -20,9 +20,7 @@ class MainMenuPresenter(private val navigator: Navigator) : MainMenuMvp.Presente
         navigator.navigate(MainMenuFragmentDirections.toChallenges())
     }
 
-    override fun onCommunityClicked() {
-        view?.showDialog(ConnectDialog.newInstance())
-    }
+    override fun onCommunityClicked() = Unit
 
     override fun onSettingsClicked() = Unit
 }
