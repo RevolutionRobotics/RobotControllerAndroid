@@ -77,4 +77,14 @@
     <!-- SCREEN: BUILD ROBOT -->
     <dimen name="build_robot_parts_size">112dp</dimen>
 
+    <!-- DIALOG: TIPS -->
+    <dimen name="tips_dialog_layout_margin">32dp</dimen>
+    <dimen name="tips_dialog_title_top_margin">18dp</dimen>
+    <dimen name="tips_dialog_icon_end_margin">10dp</dimen>
+    <dimen name="tips_dialog_sub_title_top_margin">8dp</dimen>
+    <dimen name="tips_dialog_text_top_margin">5dp</dimen>
+    <dimen name="tips_dialog_title_text_size">18sp</dimen>
+    <dimen name="tips_dialog_sub_title_text_size">14sp</dimen>
+    <dimen name="tips_dialog_list_text_size">12sp</dimen>
+
 </resources>
