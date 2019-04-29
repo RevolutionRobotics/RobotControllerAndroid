@@ -10,6 +10,7 @@ import com.revolution.robotics.core.eventBus.DialogEventBus
 import com.revolution.robotics.core.utils.dynamicPermissions.DynamicPermissionHandler
 import com.revolution.robotics.databinding.FragmentBuildRobotBinding
 import com.revolution.robotics.features.build.connect.ConnectDialog
+import com.revolution.robotics.features.build.connectionResult.ConnectionSuccessDialog
 import com.revolution.robotics.features.build.permission.BluetoothPermissionDialog
 import com.revolution.robotics.features.build.turnOnTheBrain.TurnOnTheBrainDialog
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
@@ -62,9 +63,12 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
     override fun onDialogEvent(tag: String, event: DialogEventBus.Event) {
         if (tag == BluetoothPermissionDialog::class.java.simpleName && event == DialogEventBus.Event.POSITIVE) {
             TurnOnTheBrainDialog.newInstance().show(fragmentManager)
-        }
-        if (tag == TurnOnTheBrainDialog::class.java.simpleName && event == DialogEventBus.Event.POSITIVE) {
+        } else if (tag == TurnOnTheBrainDialog::class.java.simpleName && event == DialogEventBus.Event.POSITIVE) {
             ConnectDialog.newInstance().show(fragmentManager)
+        } else if (tag == ConnectDialog::class.java.simpleName && event == DialogEventBus.Event.POSITIVE) {
+            ConnectionSuccessDialog.newInstance().show(fragmentManager)
+        } else if (tag == ConnectDialog::class.java.simpleName && event == DialogEventBus.Event.NEGATIVE) {
+            // TODO display connection error dialog here
         }
     }
 

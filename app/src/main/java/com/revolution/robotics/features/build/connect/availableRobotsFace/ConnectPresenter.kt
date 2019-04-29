@@ -1,39 +1,38 @@
 package com.revolution.robotics.features.build.connect.availableRobotsFace
 
+import android.annotation.SuppressLint
+import com.revolution.bluetooth.communication.RoboticsDeviceConnector
+import com.revolution.bluetooth.discover.RoboticsDeviceDiscoverer
+import com.revolution.robotics.core.kodein.utils.ApplicationContextProvider
 import com.revolution.robotics.features.build.connect.adapter.ConnectRobotItem
 
-// TODO remove this suppress
-@Suppress("MagicNumber")
-class ConnectPresenter : ConnectMvp.Presenter {
-
-    companion object {
-        const val EXAMPLE_AVAILABLE_ROBOTS_RANGE = 5
-    }
+@SuppressLint("MissingPermission")
+class ConnectPresenter(private val applicationContextProvider: ApplicationContextProvider) : ConnectMvp.Presenter {
 
     override var view: ConnectMvp.View? = null
     override var model: ConnectViewModel? = null
 
-    private var selectedItemId = -1
+    private val bleDeviceDiscoverer = RoboticsDeviceDiscoverer()
+    private val bleHandler = RoboticsDeviceConnector()
+    private var isConnectionInProgress = false
 
     override fun register(view: ConnectMvp.View, model: ConnectViewModel?) {
         super.register(view, model)
 
-        // TODO add real data
-        model?.availableRobots?.value = listOf(
-            ConnectRobotItem(1, "Robot #1", this),
-            ConnectRobotItem(2, "Robot #2", this),
-            ConnectRobotItem(3, "Robot #3", this),
-            ConnectRobotItem(4, "Robot #4", this),
-            ConnectRobotItem(5, "Robot #5", this)
-        )
+        bleDeviceDiscoverer.discoverRobots(applicationContextProvider.applicationContext) { devices ->
+            model?.availableRobots?.value = devices.map { device -> ConnectRobotItem(device, this) }
+            model?.isDiscovering?.value = false
+        }
     }
 
-    override fun onItemClicked(robotId: Int) {
-        getRobotById(selectedItemId)?.setSelected(false)
-        getRobotById(robotId)?.setSelected(true)
-        selectedItemId = robotId
+    override fun onItemClicked(robot: ConnectRobotItem) {
+        if (!isConnectionInProgress) {
+            isConnectionInProgress = true
+            robot.setSelected(true)
+            bleHandler.connect(applicationContextProvider.applicationContext, robot.device,
+                onConnected = { view?.onConnectionSuccess() },
+                onDisconnected = { view?.onConnectionError() },
+                onError = { view?.onConnectionError() })
+        }
     }
-
-    private fun getRobotById(robotId: Int) =
-        model?.availableRobots?.value?.find { it.robotId == robotId }
 }

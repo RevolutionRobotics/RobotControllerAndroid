@@ -1,13 +1,14 @@
 package com.revolution.robotics.features.build.connect.adapter
 
 import androidx.lifecycle.MutableLiveData
+import com.revolution.bluetooth.domain.Device
 import com.revolution.robotics.R
 import com.revolution.robotics.core.utils.recyclerview.DiffUtilRecyclerAdapter
 import com.revolution.robotics.features.build.connect.availableRobotsFace.ConnectMvp
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 
 @Suppress("DataClassContainsFunctions")
-data class ConnectRobotItem(val robotId: Int, val name: String, private val presenter: ConnectMvp.Presenter) :
+data class ConnectRobotItem(val device: Device, private val presenter: ConnectMvp.Presenter) :
     DiffUtilRecyclerAdapter.BaseListViewModel() {
 
     companion object {
@@ -28,7 +29,8 @@ data class ConnectRobotItem(val robotId: Int, val name: String, private val pres
             .create()
     }
 
-    override val idField = robotId
+    override val idField = device.hashCode()
+    val name = device.name
     val boxConfig: MutableLiveData<ChippedBoxConfig> = MutableLiveData()
     val isProgressBarVisible: MutableLiveData<Boolean> = MutableLiveData()
 
@@ -42,6 +44,6 @@ data class ConnectRobotItem(val robotId: Int, val name: String, private val pres
     }
 
     fun onItemClicked() {
-        presenter.onItemClicked(robotId)
+        presenter.onItemClicked(this)
     }
 }

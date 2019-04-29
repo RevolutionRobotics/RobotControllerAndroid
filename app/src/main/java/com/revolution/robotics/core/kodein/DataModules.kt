@@ -45,7 +45,7 @@ fun createPresenterModule() =
         bind<MyRobotsMvp.Presenter>() with singleton { MyRobotsPresenter(instance()) }
         bind<MilestoneFinishedMvp.Presenter>() with singleton { MilestoneFinishedPresenter() }
         bind<BuildRobotMvp.Presenter>() with singleton { BuildRobotPresenter(instance()) }
-        bind<ConnectMvp.Presenter>() with singleton { ConnectPresenter() }
+        bind<ConnectMvp.Presenter>() with singleton { ConnectPresenter(instance()) }
     }
 
 fun createDbModule(context: Context) =

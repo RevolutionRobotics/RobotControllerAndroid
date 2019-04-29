@@ -8,7 +8,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 
-open class DialogFace<B : ViewDataBinding>(@LayoutRes private val layoutResourceId: Int) {
+open class DialogFace<B : ViewDataBinding>(
+    @LayoutRes private val layoutResourceId: Int,
+    protected val dialog: RoboticsDialog? = null
+) {
 
     companion object {
         private var activeFace: DialogFace<*>? = null
@@ -20,8 +23,12 @@ open class DialogFace<B : ViewDataBinding>(@LayoutRes private val layoutResource
         activeFace?.releaseFace()
         binding = DataBindingUtil.inflate(inflater, layoutResourceId, container, true)
         activeFace = this
+        onActivated()
         return binding?.root
     }
+
+    @Suppress("OptionalUnit")
+    open fun onActivated() = Unit
 
     open fun releaseFace() {
         binding = null

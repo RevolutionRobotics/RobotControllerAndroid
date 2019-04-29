@@ -23,6 +23,14 @@
     <string name="permission_bluetooth_description">We need your location permissions to search for bluetooth devices. We can explain here how is this exactly working</string>
     <string name="permission_bluetooth_agree">Agree and continue</string>
 
+    <!-- Connect to robot -->
+    <string name="connection_successful_message">Connection has been established</string>
+    <string name="connection_failed_message">Connection failed</string>
+    <string name="connection_failed_subtitle">What to do?</string>
+    <string name="connection_failed_skip_button_title">Skip connection</string>
+    <string name="connection_failed_tips_button_title">Tips</string>
+    <string name="connection_failed_try_again_button_title">Try again</string>
+
     <!-- Build robot -->
     <string name="build_robot_turn_on_the_brain_instruction">To take control, switch the brain on</string>
     <string name="build_robot_turn_on_the_brain_tip">Once it is ready, tap start</string>

@@ -18,9 +18,12 @@ class DialogEventBus {
         listeners.remove(listener)
     }
 
-    fun publish(dialog: RoboticsDialog, event: Event) {
+    fun publish(dialog: RoboticsDialog, event: Event) =
+        publish(dialog.getFragmentTag(), event)
+
+    fun publish(tag: String, event: Event) {
         listeners.forEach { listener ->
-            listener.onDialogEvent(dialog.getFragmentTag(), event)
+            listener.onDialogEvent(tag, event)
         }
     }
 

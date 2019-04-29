@@ -11,6 +11,6 @@ class ConnectDialog : RoboticsDialog() {
     }
 
     override val hasCloseButton = true
-    override val dialogFaces = listOf(ConnectDialogFace())
+    override val dialogFaces = listOf(ConnectDialogFace(this))
     override val dialogButtons = emptyList<DialogButton>()
 }
