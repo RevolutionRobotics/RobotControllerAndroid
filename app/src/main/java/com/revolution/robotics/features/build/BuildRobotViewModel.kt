@@ -17,13 +17,15 @@ class BuildRobotViewModel(private val resourceResolver: ResourceResolver) : View
     val partsImage: MutableLiveData<String?> = MutableLiveData()
     val partsQuantity: MutableLiveData<String?> = MutableLiveData()
 
+    init {
+        isBluetoothConnected.value = false
+    }
+
     // TODO remove this suppress
     @Suppress("MagicNumber")
     fun setBuildStep(buildStep: BuildStep, totalSteps: Int) {
         imageUrl.value = buildStep.image
         step.value = createStepText(buildStep.stepNumber, totalSteps)
-        // TODO update bluetooth connectivity
-        isBluetoothConnected.value = buildStep.stepNumber % 4 != 3
         partsImage.value = buildStep.partImage
         // TODO update parts quantity
         partsQuantity.value = "${buildStep.stepNumber % 3 + 1}x"

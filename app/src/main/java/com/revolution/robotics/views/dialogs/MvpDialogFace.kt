@@ -17,8 +17,10 @@ import org.kodein.di.TT
 import org.kodein.di.direct
 
 @Suppress("OptionalUnit")
-abstract class MvpDialogFace<B : ViewDataBinding, V : ViewModel>(@LayoutRes private val layoutResourceId: Int) :
-    DialogFace<B>(layoutResourceId) {
+abstract class MvpDialogFace<B : ViewDataBinding, V : ViewModel>(
+    @LayoutRes private val layoutResourceId: Int,
+    dialog: RoboticsDialog? = null
+) : DialogFace<B>(layoutResourceId, dialog) {
 
     protected var viewModel: V? = null
     protected var kodein = LateInitKodein()

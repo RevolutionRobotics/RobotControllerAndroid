@@ -6,4 +6,9 @@ import com.revolution.robotics.features.build.connect.adapter.ConnectRobotItem
 
 class ConnectViewModel : ViewModel() {
     val availableRobots: MutableLiveData<List<ConnectRobotItem>> = MutableLiveData()
+    var isDiscovering: MutableLiveData<Boolean> = MutableLiveData()
+
+    init {
+        isDiscovering.value = true
+    }
 }

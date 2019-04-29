@@ -41,6 +41,14 @@
     <dimen name="dialog_connect_image_width">91dp</dimen>
     <dimen name="dialog_connect_image_height">47dp</dimen>
 
+    <!-- DIALOG: BLUETOOTH PERMISSION -->
+    <dimen name="permission_image_width">234dp</dimen>
+    <dimen name="permission_image_height">62dp</dimen>
+
+    <!-- DIALOG: TURN ON THE BRAIN -->
+    <dimen name="brain_image_width">94dp</dimen>
+    <dimen name="brain_image_height">62dp</dimen>
+
     <!-- SCREEN: MAIN MENU -->
     <dimen name="main_menu_header_border_size">30dp</dimen>
     <dimen name="main_menu_footer_height">28dp</dimen>
