@@ -13,6 +13,7 @@ import com.revolution.robotics.databinding.FragmentBuildRobotBinding
 import com.revolution.robotics.features.build.connect.ConnectDialog
 import com.revolution.robotics.features.build.connectionResult.ConnectionFailedDialog
 import com.revolution.robotics.features.build.connectionResult.ConnectionSuccessDialog
+import com.revolution.robotics.features.build.chapterFinished.ChapterFinishedDialog
 import com.revolution.robotics.features.build.permission.BluetoothPermissionDialog
 import com.revolution.robotics.features.build.turnOnTheBrain.TurnOnTheBrainDialog
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
@@ -36,7 +37,9 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
     private val presenter: BuildRobotMvp.Presenter by kodein.instance()
     private val dynamicPermissionHandler: DynamicPermissionHandler by kodein.instance()
     private val dialogEventBus: DialogEventBus by kodein.instance()
+
     private var buildStepCount = 0
+    private var currentBuildStep: BuildStep? = null
 
     // TODO remove this suppress
     @Suppress("MagicNumber")
@@ -74,9 +77,11 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
         } else if (dialog == DialogId.CONNECT && event == DialogEventBus.Event.NEGATIVE) {
             ConnectionFailedDialog.newInstance().show(fragmentManager)
         } else if (dialog == DialogId.CONNECTION_FAILED && event == DialogEventBus.Event.OTHER) {
-            // TODO show tips dialog here
+            // TODO show connection failed tips dialog here
         } else if (dialog == DialogId.CONNECTION_FAILED && event == DialogEventBus.Event.POSITIVE) {
             ConnectDialog.newInstance().show(fragmentManager)
+        } else if (dialog == DialogId.CHAPTER_FINISHED && event == DialogEventBus.Event.POSITIVE) {
+            // TODO show testing dialog here
         }
     }
 
@@ -88,10 +93,16 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
     override fun onBuildStepsLoaded(steps: List<BuildStep>) {
         binding?.seekbar?.setBuildSteps(steps, this)
         buildStepCount = steps.size
-        onBuildStepSelected(steps.first(), false)
+        onBuildStepSelected(steps.first(), true)
     }
 
     override fun onBuildStepSelected(buildStep: BuildStep, fromUser: Boolean) {
+        currentBuildStep?.let { currentBuildStep ->
+            if (currentBuildStep.stepNumber < buildStep.stepNumber && !fromUser) {
+                currentBuildStep.milestone?.let { ChapterFinishedDialog.newInstance(it).show(fragmentManager) }
+            }
+        }
         viewModel?.setBuildStep(buildStep, buildStepCount)
+        currentBuildStep = buildStep
     }
 }

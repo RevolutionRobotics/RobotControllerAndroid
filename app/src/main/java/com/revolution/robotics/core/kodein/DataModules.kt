@@ -2,8 +2,8 @@ package com.revolution.robotics.core.kodein
 
 import android.content.Context
 import androidx.room.Room
-import com.revolution.robotics.features.build.milestoneFinished.MilestoneFinishedMvp
-import com.revolution.robotics.features.build.milestoneFinished.MilestoneFinishedPresenter
+import com.revolution.robotics.features.build.chapterFinished.ChapterFinishedMvp
+import com.revolution.robotics.features.build.chapterFinished.ChapterFinishedPresenter
 import com.revolution.robotics.features.controller.LiveControllerMvp
 import com.revolution.robotics.features.controller.LiveControllerPresenter
 import com.revolution.robotics.core.db.RoboticsDatabase
@@ -43,7 +43,7 @@ fun createPresenterModule() =
         bind<WhoToBuildMvp.Presenter>() with singleton { WhoToBuildPresenter(instance(), instance()) }
         bind<LiveControllerMvp.Presenter>() with singleton { LiveControllerPresenter(instance()) }
         bind<MyRobotsMvp.Presenter>() with singleton { MyRobotsPresenter(instance()) }
-        bind<MilestoneFinishedMvp.Presenter>() with singleton { MilestoneFinishedPresenter() }
+        bind<ChapterFinishedMvp.Presenter>() with singleton { ChapterFinishedPresenter() }
         bind<BuildRobotMvp.Presenter>() with singleton { BuildRobotPresenter(instance()) }
         bind<ConnectMvp.Presenter>() with singleton { ConnectPresenter(instance()) }
     }
