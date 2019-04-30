@@ -3,6 +3,7 @@ package com.revolution.robotics.features.build
 import android.Manifest
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.remote.BuildStep
@@ -10,6 +11,7 @@ import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
 import com.revolution.robotics.core.eventBus.dialog.DialogId
 import com.revolution.robotics.core.utils.dynamicPermissions.DynamicPermissionHandler
 import com.revolution.robotics.databinding.FragmentBuildRobotBinding
+import com.revolution.robotics.features.build.buildFinished.BuildFinishedDialog
 import com.revolution.robotics.features.build.connect.ConnectDialog
 import com.revolution.robotics.features.build.connectionResult.ConnectionFailedDialog
 import com.revolution.robotics.features.build.connectionResult.ConnectionSuccessDialog
@@ -104,5 +106,9 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
         }
         viewModel?.setBuildStep(buildStep, buildStepCount)
         currentBuildStep = buildStep
+    }
+
+    override fun onBuildFinished() {
+        BuildFinishedDialog.newInstance().show(fragmentManager)
     }
 }
