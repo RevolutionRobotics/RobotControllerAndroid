@@ -1,9 +1,9 @@
-package com.revolution.robotics.features.whoToBuild.adapter
+package com.revolution.robotics.views.carousel
 
 import android.view.View
 import androidx.viewpager.widget.ViewPager
 
-class RobotsPageTransformer(private val viewPager: ViewPager) : ViewPager.PageTransformer {
+class CarouselPageTransformer(private val viewPager: ViewPager) : ViewPager.PageTransformer {
 
     companion object {
         private const val ITEM_SCALE_BASE = 0.75f

@@ -3,7 +3,7 @@ package com.revolution.robotics.features.whoToBuild
 import com.revolution.robotics.core.extensions.isEmptyOrNull
 import com.revolution.robotics.core.interactor.RobotInteractor
 import com.revolution.robotics.core.utils.Navigator
-import com.revolution.robotics.features.whoToBuild.adapter.RobotItem
+import com.revolution.robotics.features.whoToBuild.adapter.RobotsItem
 import kotlin.math.max
 
 class WhoToBuildPresenter(
@@ -24,7 +24,7 @@ class WhoToBuildPresenter(
             onResponse = { response ->
                 model?.apply {
                     robotsList.value = response.map { robot ->
-                        val robotItem = RobotItem(
+                        val robotItem = RobotsItem(
                             robot.id,
                             robot.name ?: "",
                             robot.buildTime ?: "",

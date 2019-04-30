@@ -16,4 +16,6 @@
 
     <color name="pressed_button">#11FFFFFF</color>
     <color name="robotics_red">#e60312</color>
+
+    <color name="transparent">#00000000</color>
 </resources>

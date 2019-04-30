@@ -56,6 +56,27 @@
     <!-- SCREEN: MY ROBOTS -->
     <dimen name="my_robots_placeholder_width">285dp</dimen>
     <dimen name="my_robots_placeholder_height">165dp</dimen>
+    <dimen name="my_robots_content_horizontal_margin">12dp</dimen>
+    <dimen name="my_robots_robot_name_margin_top">24dp</dimen>
+    <dimen name="my_robots_robot_image_vertical_margin">12dp</dimen>
+    <dimen name="my_robots_robot_icon_margin_start">12dp</dimen>
+    <dimen name="my_robots_robot_icon_margin_end">8dp</dimen>
+    <dimen name="my_robots_robot_icon_margin_top">10dp</dimen>
+    <dimen name="my_robots_robot_icon_margin_bottom">10dp</dimen>
+    <dimen name="my_robots_robot_icon_width">16dp</dimen>
+    <dimen name="my_robots_robot_description_margin_end">12dp</dimen>
+    <dimen name="my_robots_robot_play_margin_start">2dp</dimen>
+    <dimen name="my_robots_robot_edit_margin_start">2dp</dimen>
+    <dimen name="my_robots_robot_delete_margin_start">2dp</dimen>
+    <dimen name="my_robots_robot_delete_margin_end">2dp</dimen>
+    <dimen name="my_robots_robot_name_text_size">16sp</dimen>
+    <dimen name="my_robots_robot_description_text_size">12sp</dimen>
+    <dimen name="my_robots_robot_icon_description_text_size">12sp</dimen>
+    <dimen name="my_robots_robot_play_text_size">14sp</dimen>
+    <dimen name="my_robots_robot_icon_bottom_guide">0.825</dimen>
+    <dimen name="my_robots_robot_buttons_top_guide">0.835</dimen>
+    <dimen name="my_robots_robot_buttons_bottom_guide">0.992</dimen>
+
 
     <!-- SCREEN: WHO_TO_BUILD -->
     <dimen name="robots_header_background_percentage">0.1281</dimen>
@@ -70,7 +91,7 @@
     <dimen name="robots_card_image_bottom_guide_percentage">0.7054</dimen>
     <dimen name="robots_card_time_top_guide_percentage">0.8088</dimen>
     <dimen name="robots_card_clock_icon_height_percentage">0.0536</dimen>
-    <dimen name="robots_card_dimen_ratio">0.9508</dimen>
+    <dimen name="robots_card_dimen_ratio">0.9509</dimen>
     <dimen name="robots_card_title_text_size">16sp</dimen>
     <dimen name="robots_card_time_text_size">16sp</dimen>
 
