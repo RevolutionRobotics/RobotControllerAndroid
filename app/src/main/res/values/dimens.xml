@@ -119,4 +119,14 @@
     <!-- SCREEN: BUILD ROBOT -->
     <dimen name="build_robot_parts_size">112dp</dimen>
 
+    <!-- VIEW: CHIPPED EDIT TEXT -->
+    <dimen name="chipped_edit_text_title_horizontal_padding">6dp</dimen>
+    <dimen name="chipped_edit_text_title_margin_start">10dp</dimen>
+    <dimen name="chipped_edit_text_content_horizontal_margin">16dp</dimen>
+    <dimen name="chipped_edit_text_content_margin_top">5dp</dimen>
+    <dimen name="chipped_edit_text_content_margin_bottom">16dp</dimen>
+
+    <dimen name="chipped_edit_text_title_text_size">12sp</dimen>
+
+
 </resources>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ChippedEditText">
+        <attr name="cetTitle" format="reference" />
+        <attr name="cetText" format="reference" />
+        <attr name="cetHint" format="reference" />
+        <attr name="cetTitleColor" format="reference" />
+        <attr name="cetTextColor" format="reference" />
+        <attr name="cetHintColor" format="reference" />
+        <attr name="cetBorderColor" format="reference" />
+        <attr name="cetBackgroundColor" format="reference" />
+        <attr name="cetMaxLines" format="integer" />
+        <attr name="cetMaxLength" format="integer" />
+    </declare-styleable>
+</resources>
