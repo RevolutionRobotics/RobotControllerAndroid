@@ -1,7 +1,6 @@
 package com.revolution.robotics.features.mainmenu
 
 import com.revolution.robotics.core.utils.Navigator
-import com.revolution.robotics.features.build.connect.ConnectDialog
 
 class MainMenuPresenter(private val navigator: Navigator) : MainMenuMvp.Presenter {
 
