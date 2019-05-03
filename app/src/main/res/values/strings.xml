@@ -20,7 +20,9 @@
 
     <!-- Bluetooth permission -->
     <string name="permission_bluetooth_title">Bluetooth permissions</string>
-    <string name="permission_bluetooth_description">We need your location permissions to search for bluetooth devices. We can explain here how is this exactly working</string>
+    <string name="permission_bluetooth_description">We need your location permissions to search for bluetooth devices.
+        We can explain here how is this exactly working
+    </string>
     <string name="permission_bluetooth_agree">Agree and continue</string>
 
     <!-- Connect to robot -->
@@ -44,5 +46,20 @@
     <string name="build_chapter_finish_dialog_button_home">Home</string>
     <string name="build_chapter_finish_dialog_button_next_chapter">Next chapter</string>
     <string name="build_chapter_finish_dialog_button_test">Test</string>
+
+    <!-- Tips -->
+    <string name="tips_dialog_title">Tips</string>
+    <string name="tips_dialog_sub_title">Try to…</string>
+    <string name="tips_dialog_button_reconfigure">Reconfigure</string>
+    <string name="tips_dialog_button_community">Community</string>
+    <string name="tips_dialog_button_try_again">Try again</string>
+    <string name="tips_dialog_sensor_tip_1">Lorem ipsum dolor sit amet, eu commodo numquam comprehensam vel. Quo cu alia
+        placerat.
+    </string>
+    <string name="tips_dialog_sensor_tip_2">Per graece denique invidunt ei. Case ullum euripidis duo eu.</string>
+    <string name="tips_dialog_sensor_tip_3">Eos meis quidam omnesque et. Essent blandit ius ut, no ius melius
+        sanctus.
+    </string>
+    <string name="tips_dialog_sensor_tip_4">Get help from the Community!</string>
 
 </resources>
