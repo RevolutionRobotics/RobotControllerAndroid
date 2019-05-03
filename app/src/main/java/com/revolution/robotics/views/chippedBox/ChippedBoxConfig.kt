@@ -46,16 +46,26 @@ data class ChippedBoxConfig(
         private var dashResources: IntArray? = null
 
         fun chipSize(@DimenRes size: Int) = apply { chipSizeResource = size }
+
         fun chipTopLeft(chip: Boolean = true) = apply { chipTopLeft = chip }
+
         fun chipTopRight(chip: Boolean = true) = apply { chipTopRight = chip }
+
         fun chipBottomRight(chip: Boolean = true) = apply { chipBottomRight = chip }
+
         fun chipBottomLeft(chip: Boolean = true) = apply { chipBottomLeft = chip }
+
         fun clipLeftSide(clip: Boolean = true) = apply { clipLeftSide = clip }
+
         fun clipRightSide(clip: Boolean = true) = apply { clipRightSide = clip }
+
         fun borderSize(@DimenRes size: Int) = apply { chipBorderSize = size }
+
         fun backgroundColorResource(@ColorRes colorRes: Int) = apply { chipBackgroundColorResource = colorRes }
+
         fun isDashed(dash: Boolean = true) =
-            apply { dashResources = intArrayOf(R.dimen.dimen_16dp, R.dimen.dimen_8dp) }
+            apply { dashResources = if (dash) intArrayOf(R.dimen.dimen_16dp, R.dimen.dimen_8dp) else null }
+
         fun borderColorResource(@ColorRes colorRes: Int) = apply {
             chipBorderColorResource = colorRes
             if (chipBorderSize == 0) {
