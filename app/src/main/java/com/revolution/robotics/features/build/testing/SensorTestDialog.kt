@@ -18,4 +18,3 @@ class SensorTestDialog : TestDialog() {
         override val textResource: Int = R.string.build_robot_testing_sensor_test_text
     }
 }
-

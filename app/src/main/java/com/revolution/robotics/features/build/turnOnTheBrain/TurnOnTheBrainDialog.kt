@@ -7,7 +7,6 @@ import com.revolution.robotics.databinding.DialogTurnOnTheBrainBinding
 import com.revolution.robotics.views.dialogs.DialogButton
 import com.revolution.robotics.views.dialogs.DialogFace
 import com.revolution.robotics.views.dialogs.RoboticsDialog
-import org.kodein.di.erased.instance
 
 class TurnOnTheBrainDialog : RoboticsDialog() {
 
