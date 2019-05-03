@@ -9,10 +9,10 @@ import com.revolution.robotics.features.controller.LiveControllerPresenter
 import com.revolution.robotics.core.db.RoboticsDatabase
 import com.revolution.robotics.core.domain.local.UserConfigurationDao
 import com.revolution.robotics.core.domain.local.UserRobotDao
-import com.revolution.robotics.core.interactor.BuildStepInteractor
-import com.revolution.robotics.core.interactor.ConfigurationInteractor
-import com.revolution.robotics.core.interactor.RobotInteractor
-import com.revolution.robotics.core.interactor.TestCodeInteractor
+import com.revolution.robotics.core.interactor.firebase.BuildStepInteractor
+import com.revolution.robotics.core.interactor.firebase.ConfigurationInteractor
+import com.revolution.robotics.core.interactor.firebase.RobotInteractor
+import com.revolution.robotics.core.interactor.firebase.TestCodeInteractor
 import com.revolution.robotics.features.build.BuildRobotMvp
 import com.revolution.robotics.features.build.BuildRobotPresenter
 import com.revolution.robotics.features.build.connect.availableRobotsFace.ConnectMvp

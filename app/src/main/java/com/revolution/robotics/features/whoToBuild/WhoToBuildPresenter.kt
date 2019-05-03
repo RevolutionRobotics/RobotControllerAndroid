@@ -1,7 +1,7 @@
 package com.revolution.robotics.features.whoToBuild
 
 import com.revolution.robotics.core.extensions.isEmptyOrNull
-import com.revolution.robotics.core.interactor.RobotInteractor
+import com.revolution.robotics.core.interactor.firebase.RobotInteractor
 import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.features.whoToBuild.adapter.RobotsItem
 import kotlin.math.max

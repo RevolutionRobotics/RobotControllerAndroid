@@ -1,6 +1,6 @@
 package com.revolution.robotics.features.build
 
-import com.revolution.robotics.core.interactor.BuildStepInteractor
+import com.revolution.robotics.core.interactor.firebase.BuildStepInteractor
 
 class BuildRobotPresenter(private val buildStepInteractor: BuildStepInteractor) : BuildRobotMvp.Presenter {
 

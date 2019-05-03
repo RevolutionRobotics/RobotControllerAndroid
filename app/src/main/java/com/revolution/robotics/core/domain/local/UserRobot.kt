@@ -9,7 +9,8 @@ import java.util.Date
 
 @Entity
 data class UserRobot(
-    @PrimaryKey var id: String = "",
+    @PrimaryKey(autoGenerate = true) var id: Int = 0,
+    var robotId: String? = null,
     var buildStatus: BuildStatus? = null,
     var actualBuildStep: Int = 0,
     var lastModified: Date? = null,
@@ -25,12 +26,12 @@ interface UserRobotDao {
     @Query("SELECT * FROM UserRobot")
     fun getAllRobot(): List<UserRobot>
 
-    @Query("SELECT * FROM UserRobot WHERE id=:id")
-    fun getRobot(id: String): UserRobot
+    @Query("SELECT * FROM UserRobot WHERE id=:robotId")
+    fun getRobot(robotId: String): UserRobot
 
     @Insert
     fun saveUserRobot(userRobot: UserRobot)
 
-    @Query("DELETE FROM UserRobot WHERE id=:id")
-    fun deleteUserRobot(id: String)
+    @Query("DELETE FROM UserRobot WHERE id=:robotId")
+    fun deleteUserRobot(robotId: String)
 }
