@@ -1,11 +1,17 @@
 package com.revolution.robotics.views.chippedBox
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.ColorFilter
+import android.graphics.DashPathEffect
+import android.graphics.Matrix
 import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.PixelFormat
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffXfermode
 import android.graphics.drawable.Drawable
 import androidx.annotation.ColorInt
 import com.revolution.robotics.core.extensions.color
@@ -23,6 +29,8 @@ class ChippedBoxDrawable(context: Context, private val config: ChippedBoxConfig)
         val CORRECTION_MULTIPLIER = 1f / sqrt(2f)
     }
 
+    private var helperBitmap: Bitmap? = null
+    private var helperCanvas: Canvas? = null
     private val contentPaint = Paint().also { it.style = Paint.Style.FILL }
     private val chipBorderSize =
         if (config.chipBorderSizeResource == 0) {
@@ -56,12 +64,32 @@ class ChippedBoxDrawable(context: Context, private val config: ChippedBoxConfig)
         }
     )
 
+    private val dashParams: FloatArray? =
+        config.dashedBorderResources?.map { context.dimension(it).toFloat() }?.toFloatArray()
+
     override fun draw(canvas: Canvas) {
-        canvas.drawChippedBox(config, true)
-        canvas.drawChippedBox(config)
+        if (config.dashedBorderResources == null) {
+            canvas.drawChippedBox(config, true)
+            canvas.drawChippedBox(config)
+        } else {
+            if (helperBitmap == null) helperBitmap =
+                Bitmap.createBitmap(bounds.width(), bounds.height(), Bitmap.Config.ARGB_8888)
+            if (helperCanvas == null) helperBitmap?.let { helperCanvas = Canvas(it) }
+
+            helperCanvas?.let { helperCanvas ->
+                helperCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR)
+                helperCanvas.drawChippedBox(config, isBorder = true, isDashedBackground = true)
+                helperCanvas.overlayDashedLine(config)
+                helperBitmap?.let { canvas.drawBitmap(it, Matrix(), Paint()) }
+            }
+        }
     }
 
-    private fun Canvas.drawChippedBox(config: ChippedBoxConfig, isBorder: Boolean = false) {
+    private fun Canvas.drawChippedBox(
+        config: ChippedBoxConfig,
+        isBorder: Boolean = false,
+        isDashedBackground: Boolean = false
+    ) {
         val pathData = ChippedBoxPathData(
             config = config,
             isBorder = isBorder,
@@ -70,8 +98,31 @@ class ChippedBoxDrawable(context: Context, private val config: ChippedBoxConfig)
         )
 
         pathData.init()
-        contentPaint.color = if (isBorder) borderColor else backgroundColor
+        contentPaint.color = if (isBorder && !isDashedBackground) borderColor else backgroundColor
         drawPath(pathData.buildPath(), contentPaint)
+    }
+
+    private fun Canvas.overlayDashedLine(
+        config: ChippedBoxConfig
+    ) {
+        val pathData = ChippedBoxPathData(
+            config = config,
+            isBorder = true,
+            width = width.toFloat(),
+            height = height.toFloat()
+        )
+        pathData.init()
+        contentPaint.color = borderColor
+        contentPaint.style = Paint.Style.STROKE
+        contentPaint.strokeWidth = chipBorderSize.toFloat() * 2f
+        contentPaint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_ATOP)
+        contentPaint.pathEffect = DashPathEffect(dashParams, 0f)
+
+        drawPath(pathData.buildPath(), contentPaint)
+
+        contentPaint.pathEffect = null
+        contentPaint.xfermode = null
+        contentPaint.style = Paint.Style.FILL
     }
 
     override fun setAlpha(alpha: Int) {
@@ -121,6 +172,7 @@ class ChippedBoxDrawable(context: Context, private val config: ChippedBoxConfig)
                 applyTopRightCorner()
                 applyBottomRightCorner()
                 applyEndingBottomLeftCorner()
+                close()
             }
 
         private fun Path.applyStartingTopLeftCorner() {

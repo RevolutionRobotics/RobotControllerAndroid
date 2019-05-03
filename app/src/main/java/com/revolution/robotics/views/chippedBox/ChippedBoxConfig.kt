@@ -18,7 +18,8 @@ data class ChippedBoxConfig(
     val chipBottomRight: Boolean,
     val chipBottomLeft: Boolean,
     val clipLeftSide: Boolean,
-    val clipRightSide: Boolean
+    val clipRightSide: Boolean,
+    val dashedBorderResources: IntArray? = null
 ) {
 
     val chipArray = arrayListOf(0, 0, 0, 0)
@@ -42,6 +43,7 @@ data class ChippedBoxConfig(
         private var chipBottomLeft = true
         private var clipLeftSide = false
         private var clipRightSide = false
+        private var dashResources: IntArray? = null
 
         fun chipSize(@DimenRes size: Int) = apply { chipSizeResource = size }
         fun chipTopLeft(chip: Boolean = true) = apply { chipTopLeft = chip }
@@ -52,6 +54,8 @@ data class ChippedBoxConfig(
         fun clipRightSide(clip: Boolean = true) = apply { clipRightSide = clip }
         fun borderSize(@DimenRes size: Int) = apply { chipBorderSize = size }
         fun backgroundColorResource(@ColorRes colorRes: Int) = apply { chipBackgroundColorResource = colorRes }
+        fun isDashed(dash: Boolean = true) =
+            apply { dashResources = intArrayOf(R.dimen.dimen_16dp, R.dimen.dimen_8dp) }
         fun borderColorResource(@ColorRes colorRes: Int) = apply {
             chipBorderColorResource = colorRes
             if (chipBorderSize == 0) {
@@ -70,7 +74,8 @@ data class ChippedBoxConfig(
                 chipBottomRight,
                 chipBottomLeft,
                 clipLeftSide,
-                clipRightSide
+                clipRightSide,
+                dashResources
             )
     }
 }
