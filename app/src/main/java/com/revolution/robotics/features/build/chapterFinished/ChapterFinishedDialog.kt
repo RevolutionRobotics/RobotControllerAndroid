@@ -17,6 +17,8 @@ import org.kodein.di.erased.instance
 class ChapterFinishedDialog : RoboticsDialog(), ChapterFinishedMvp.View {
 
     companion object {
+        const val KEY_TEST_CODE_ID = "test-code-id"
+
         private var Bundle.milestone by BundleArgumentDelegate.Parcelable<Milestone>("milestone")
 
         fun newInstance(milestone: Milestone): ChapterFinishedDialog = ChapterFinishedDialog().withArguments {
@@ -25,7 +27,6 @@ class ChapterFinishedDialog : RoboticsDialog(), ChapterFinishedMvp.View {
     }
 
     private val presenter: ChapterFinishedMvp.Presenter by kodein.instance()
-    private val dialogEventBus: DialogEventBus by kodein.instance()
 
     override val hasCloseButton = true
     override val dialogFaces: List<DialogFace<*>> = listOf(
@@ -66,7 +67,9 @@ class ChapterFinishedDialog : RoboticsDialog(), ChapterFinishedMvp.View {
 
     override fun onTestUploaded() {
         dismissAllowingStateLoss()
-        dialogEventBus.publish(DialogId.CHAPTER_FINISHED, DialogEventBus.Event.POSITIVE)
+        dialogEventBus.publish(DialogId.CHAPTER_FINISHED, DialogEventBus.Event.POSITIVE.apply {
+            arguments?.milestone?.let { extras.putInt(KEY_TEST_CODE_ID, it.testCodeId) }
+        })
     }
 
     class ChapterFinishedDialogFace : DialogFace<DialogChapterFinishedBinding>(R.layout.dialog_chapter_finished)

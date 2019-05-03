@@ -3,7 +3,6 @@ package com.revolution.robotics.features.build
 import android.Manifest
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.remote.BuildStep
@@ -17,6 +16,9 @@ import com.revolution.robotics.features.build.connectionResult.ConnectionFailedD
 import com.revolution.robotics.features.build.connectionResult.ConnectionSuccessDialog
 import com.revolution.robotics.features.build.chapterFinished.ChapterFinishedDialog
 import com.revolution.robotics.features.build.permission.BluetoothPermissionDialog
+import com.revolution.robotics.features.build.testing.MotorTestDialog
+import com.revolution.robotics.features.build.testing.MovementTestDialog
+import com.revolution.robotics.features.build.testing.SensorTestDialog
 import com.revolution.robotics.features.build.turnOnTheBrain.TurnOnTheBrainDialog
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 import com.revolution.robotics.views.slider.BuildStepSliderView
@@ -78,14 +80,19 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
             ConnectionSuccessDialog.newInstance().show(fragmentManager)
         } else if (dialog == DialogId.CONNECT && event == DialogEventBus.Event.NEGATIVE) {
             ConnectionFailedDialog.newInstance().show(fragmentManager)
-        } else if (dialog == DialogId.CONNECTION_FAILED && event == DialogEventBus.Event.OTHER) {
-            // TODO show connection failed tips dialog here
         } else if (dialog == DialogId.CONNECTION_FAILED && event == DialogEventBus.Event.POSITIVE) {
             ConnectDialog.newInstance().show(fragmentManager)
         } else if (dialog == DialogId.CHAPTER_FINISHED && event == DialogEventBus.Event.POSITIVE) {
-            // TODO show testing dialog here
+            getTestingDialog(event.extras.getInt(ChapterFinishedDialog.KEY_TEST_CODE_ID)).show(fragmentManager)
         }
     }
+
+    private fun getTestingDialog(testCodeId: Int) =
+        when (testCodeId) {
+            1 -> SensorTestDialog.newInstance()
+            2 -> MotorTestDialog.newInstance()
+            else -> MovementTestDialog.newInstance()
+        }
 
     override fun onDestroyView() {
         dialogEventBus.unregister(this)

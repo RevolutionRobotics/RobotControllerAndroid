@@ -19,6 +19,8 @@ open class DialogFace<B : ViewDataBinding>(
 
     protected var binding: B? = null
 
+    open val dialogFaceButtons = emptyList<DialogButton>()
+
     open fun activate(fragment: Fragment, inflater: LayoutInflater, container: ViewGroup): View? {
         activeFace?.releaseFace()
         binding = DataBindingUtil.inflate(inflater, layoutResourceId, container, true)

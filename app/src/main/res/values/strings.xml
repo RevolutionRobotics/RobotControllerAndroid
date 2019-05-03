@@ -53,14 +53,14 @@
     <string name="tips_dialog_button_reconfigure">Reconfigure</string>
     <string name="tips_dialog_button_community">Community</string>
     <string name="tips_dialog_button_try_again">Try again</string>
-    <string name="tips_dialog_sensor_tip_1">Lorem ipsum dolor sit amet, eu commodo numquam comprehensam vel. Quo cu alia
+    <string name="tips_dialog_placeholder_1">Lorem ipsum dolor sit amet, eu commodo numquam comprehensam vel. Quo cu alia
         placerat.
     </string>
-    <string name="tips_dialog_sensor_tip_2">Per graece denique invidunt ei. Case ullum euripidis duo eu.</string>
-    <string name="tips_dialog_sensor_tip_3">Eos meis quidam omnesque et. Essent blandit ius ut, no ius melius
+    <string name="tips_dialog_placeholder_2">Per graece denique invidunt ei. Case ullum euripidis duo eu.</string>
+    <string name="tips_dialog_placeholder_3">Eos meis quidam omnesque et. Essent blandit ius ut, no ius melius
         sanctus.
     </string>
-    <string name="tips_dialog_sensor_tip_4">Get help from the Community!</string>
+    <string name="tips_dialog_placeholder_4">Get help from the Community!</string>
 
     <!-- Build Robots Testing Dialog -->
     <string name="build_robot_testing_negative_button_title">Not really</string>

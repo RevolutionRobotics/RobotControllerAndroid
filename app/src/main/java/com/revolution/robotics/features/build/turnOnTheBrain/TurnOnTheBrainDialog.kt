@@ -15,10 +15,11 @@ class TurnOnTheBrainDialog : RoboticsDialog() {
         fun newInstance() = TurnOnTheBrainDialog()
     }
 
-    private val dialogEventBus: DialogEventBus by kodein.instance()
-
     override val hasCloseButton = true
-    override val dialogFaces: List<DialogFace<*>> = listOf(TurnOnTheBrainDialogFace())
+    override val dialogFaces: List<DialogFace<*>> = listOf(
+        TurnOnTheBrainDialogFace()
+    )
+
     override val dialogButtons = listOf(
         DialogButton(R.string.build_robot_later, R.drawable.ic_clock) {
             dialog.dismiss()

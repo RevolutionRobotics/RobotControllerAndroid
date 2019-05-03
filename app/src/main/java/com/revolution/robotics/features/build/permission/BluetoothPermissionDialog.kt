@@ -19,7 +19,6 @@ class BluetoothPermissionDialog : RoboticsDialog(), DynamicPermissionListener {
     }
 
     private val dynamicPermissionHandler: DynamicPermissionHandler by kodein.instance()
-    private val dialogEventBus: DialogEventBus by kodein.instance()
 
     override val hasCloseButton = false
     override val dialogFaces: List<DialogFace<*>> = listOf(PermissionDialogFace())
