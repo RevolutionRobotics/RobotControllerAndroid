@@ -7,7 +7,6 @@ import com.revolution.robotics.databinding.DialogTurnOnTheBrainBinding
 import com.revolution.robotics.views.dialogs.DialogButton
 import com.revolution.robotics.views.dialogs.DialogFace
 import com.revolution.robotics.views.dialogs.RoboticsDialog
-import org.kodein.di.erased.instance
 
 class TurnOnTheBrainDialog : RoboticsDialog() {
 
@@ -15,10 +14,11 @@ class TurnOnTheBrainDialog : RoboticsDialog() {
         fun newInstance() = TurnOnTheBrainDialog()
     }
 
-    private val dialogEventBus: DialogEventBus by kodein.instance()
-
     override val hasCloseButton = true
-    override val dialogFaces: List<DialogFace<*>> = listOf(TurnOnTheBrainDialogFace())
+    override val dialogFaces: List<DialogFace<*>> = listOf(
+        TurnOnTheBrainDialogFace()
+    )
+
     override val dialogButtons = listOf(
         DialogButton(R.string.build_robot_later, R.drawable.ic_clock) {
             dialog.dismiss()

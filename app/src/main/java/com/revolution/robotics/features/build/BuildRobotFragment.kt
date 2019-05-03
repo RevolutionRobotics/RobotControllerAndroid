@@ -10,10 +10,15 @@ import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
 import com.revolution.robotics.core.eventBus.dialog.DialogId
 import com.revolution.robotics.core.utils.dynamicPermissions.DynamicPermissionHandler
 import com.revolution.robotics.databinding.FragmentBuildRobotBinding
+import com.revolution.robotics.features.build.buildFinished.BuildFinishedDialog
 import com.revolution.robotics.features.build.connect.ConnectDialog
 import com.revolution.robotics.features.build.connectionResult.ConnectionFailedDialog
 import com.revolution.robotics.features.build.connectionResult.ConnectionSuccessDialog
+import com.revolution.robotics.features.build.chapterFinished.ChapterFinishedDialog
 import com.revolution.robotics.features.build.permission.BluetoothPermissionDialog
+import com.revolution.robotics.features.build.testing.MotorTestDialog
+import com.revolution.robotics.features.build.testing.MovementTestDialog
+import com.revolution.robotics.features.build.testing.SensorTestDialog
 import com.revolution.robotics.features.build.turnOnTheBrain.TurnOnTheBrainDialog
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 import com.revolution.robotics.views.slider.BuildStepSliderView
@@ -36,7 +41,9 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
     private val presenter: BuildRobotMvp.Presenter by kodein.instance()
     private val dynamicPermissionHandler: DynamicPermissionHandler by kodein.instance()
     private val dialogEventBus: DialogEventBus by kodein.instance()
+
     private var buildStepCount = 0
+    private var currentBuildStep: BuildStep? = null
 
     // TODO remove this suppress
     @Suppress("MagicNumber")
@@ -73,12 +80,19 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
             ConnectionSuccessDialog.newInstance().show(fragmentManager)
         } else if (dialog == DialogId.CONNECT && event == DialogEventBus.Event.NEGATIVE) {
             ConnectionFailedDialog.newInstance().show(fragmentManager)
-        } else if (dialog == DialogId.CONNECTION_FAILED && event == DialogEventBus.Event.OTHER) {
-            // TODO show tips dialog here
         } else if (dialog == DialogId.CONNECTION_FAILED && event == DialogEventBus.Event.POSITIVE) {
             ConnectDialog.newInstance().show(fragmentManager)
+        } else if (dialog == DialogId.CHAPTER_FINISHED && event == DialogEventBus.Event.POSITIVE) {
+            getTestingDialog(event.extras.getInt(ChapterFinishedDialog.KEY_TEST_CODE_ID)).show(fragmentManager)
         }
     }
+
+    private fun getTestingDialog(testCodeId: Int) =
+        when (testCodeId) {
+            1 -> SensorTestDialog.newInstance()
+            2 -> MotorTestDialog.newInstance()
+            else -> MovementTestDialog.newInstance()
+        }
 
     override fun onDestroyView() {
         dialogEventBus.unregister(this)
@@ -88,10 +102,20 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
     override fun onBuildStepsLoaded(steps: List<BuildStep>) {
         binding?.seekbar?.setBuildSteps(steps, this)
         buildStepCount = steps.size
-        onBuildStepSelected(steps.first(), false)
+        onBuildStepSelected(steps.first(), true)
     }
 
     override fun onBuildStepSelected(buildStep: BuildStep, fromUser: Boolean) {
+        currentBuildStep?.let { currentBuildStep ->
+            if (currentBuildStep.stepNumber < buildStep.stepNumber && !fromUser) {
+                currentBuildStep.milestone?.let { ChapterFinishedDialog.newInstance(it).show(fragmentManager) }
+            }
+        }
         viewModel?.setBuildStep(buildStep, buildStepCount)
+        currentBuildStep = buildStep
+    }
+
+    override fun onBuildFinished() {
+        BuildFinishedDialog.newInstance().show(fragmentManager)
     }
 }

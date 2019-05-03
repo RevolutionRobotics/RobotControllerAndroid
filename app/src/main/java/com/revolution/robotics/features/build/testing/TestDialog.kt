@@ -1,10 +1,10 @@
-package com.revolution.robotics.features.testing
+package com.revolution.robotics.features.build.testing
 
 import com.revolution.robotics.R
 import com.revolution.robotics.views.dialogs.DialogButton
 import com.revolution.robotics.views.dialogs.RoboticsDialog
 
-abstract class TestingDialog : RoboticsDialog() {
+abstract class TestDialog : RoboticsDialog() {
 
     override val hasCloseButton = true
     override val dialogButtons = listOf(

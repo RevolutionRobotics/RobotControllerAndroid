@@ -1,10 +1,10 @@
-package com.revolution.robotics.features.testing.face.base
+package com.revolution.robotics.features.build.testing
 
 import com.revolution.robotics.R
 import com.revolution.robotics.databinding.DialogTestingBinding
 import com.revolution.robotics.views.dialogs.DialogFace
 
-abstract class TestingDialogFace : DialogFace<DialogTestingBinding>(R.layout.dialog_testing) {
+abstract class TestDialogFace : DialogFace<DialogTestingBinding>(R.layout.dialog_testing) {
     abstract val imageResource: Int
     abstract val textResource: Int
 

@@ -1,4 +1,4 @@
-package com.revolution.robotics.features.build.milestoneFinished
+package com.revolution.robotics.features.build.chapterFinished
 
 import android.os.Bundle
 import android.view.View
@@ -6,33 +6,38 @@ import com.revolution.robotics.R
 import com.revolution.robotics.views.dialogs.DialogButton
 import com.revolution.robotics.views.dialogs.RoboticsDialog
 import com.revolution.robotics.core.domain.remote.Milestone
+import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
+import com.revolution.robotics.core.eventBus.dialog.DialogId
 import com.revolution.robotics.core.extensions.withArguments
 import com.revolution.robotics.core.utils.BundleArgumentDelegate
-import com.revolution.robotics.databinding.DialogMilestoneFinishedBinding
+import com.revolution.robotics.databinding.DialogChapterFinishedBinding
 import com.revolution.robotics.views.dialogs.DialogFace
 import org.kodein.di.erased.instance
 
-class MilestoneFinishedDialog : RoboticsDialog(), MilestoneFinishedMvp.View {
+class ChapterFinishedDialog : RoboticsDialog(), ChapterFinishedMvp.View {
 
     companion object {
+        const val KEY_TEST_CODE_ID = "test-code-id"
+
         private var Bundle.milestone by BundleArgumentDelegate.Parcelable<Milestone>("milestone")
 
-        fun newInstance(milestone: Milestone): MilestoneFinishedDialog = MilestoneFinishedDialog().withArguments {
+        fun newInstance(milestone: Milestone): ChapterFinishedDialog = ChapterFinishedDialog().withArguments {
             it.milestone = milestone
         }
     }
 
-    override val hasCloseButton = false
+    private val presenter: ChapterFinishedMvp.Presenter by kodein.instance()
+
+    override val hasCloseButton = true
     override val dialogFaces: List<DialogFace<*>> = listOf(
-        MilestoneFinishedDialogFace()
+        ChapterFinishedDialogFace()
     )
     override val dialogButtons: List<DialogButton> = listOf(
         DialogButton(
             R.string.build_chapter_finish_dialog_button_home,
             R.drawable.ic_home
         ) {
-            requireActivity().onBackPressed()
-            dismissAllowingStateLoss()
+            // TODO navigate user home
         },
         DialogButton(
             R.string.build_chapter_finish_dialog_button_next_chapter,
@@ -49,8 +54,6 @@ class MilestoneFinishedDialog : RoboticsDialog(), MilestoneFinishedMvp.View {
         }
     )
 
-    private val presenter: MilestoneFinishedMvp.Presenter by kodein.instance()
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         presenter.milestone = arguments?.milestone
@@ -62,5 +65,12 @@ class MilestoneFinishedDialog : RoboticsDialog(), MilestoneFinishedMvp.View {
         super.onDestroyView()
     }
 
-    class MilestoneFinishedDialogFace : DialogFace<DialogMilestoneFinishedBinding>(R.layout.dialog_milestone_finished)
+    override fun onTestUploaded() {
+        dismissAllowingStateLoss()
+        dialogEventBus.publish(DialogId.CHAPTER_FINISHED, DialogEventBus.Event.POSITIVE.apply {
+            arguments?.milestone?.let { extras.putInt(KEY_TEST_CODE_ID, it.testCodeId) }
+        })
+    }
+
+    class ChapterFinishedDialogFace : DialogFace<DialogChapterFinishedBinding>(R.layout.dialog_chapter_finished)
 }
