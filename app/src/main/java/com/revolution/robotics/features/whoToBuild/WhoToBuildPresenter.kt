@@ -68,4 +68,8 @@ class WhoToBuildPresenter(
     override fun onRobotSelected(robot: Robot) {
         navigator.navigate(WhoToBuildFragmentDirections.toBuildRobot(robot))
     }
+
+    override fun onBuildYourOwnSelected() {
+        navigator.navigate(WhoToBuildFragmentDirections.toConfigure())
+    }
 }

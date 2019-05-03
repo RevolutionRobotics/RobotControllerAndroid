@@ -21,6 +21,10 @@ import com.revolution.robotics.features.build.BuildRobotMvp
 import com.revolution.robotics.features.build.BuildRobotPresenter
 import com.revolution.robotics.features.build.connect.availableRobotsFace.ConnectMvp
 import com.revolution.robotics.features.build.connect.availableRobotsFace.ConnectPresenter
+import com.revolution.robotics.features.configure.ConfigureMvp
+import com.revolution.robotics.features.configure.ConfigurePresenter
+import com.revolution.robotics.features.configure.connections.ConfigureConnectionsMvp
+import com.revolution.robotics.features.configure.connections.ConfigureConnectionsPresenter
 import com.revolution.robotics.features.mainmenu.MainMenuMvp
 import com.revolution.robotics.features.mainmenu.MainMenuPresenter
 import com.revolution.robotics.features.myRobots.MyRobotsMvp
@@ -54,6 +58,8 @@ fun createPresenterModule() =
         bind<ChapterFinishedMvp.Presenter>() with singleton { ChapterFinishedPresenter() }
         bind<BuildRobotMvp.Presenter>() with singleton { BuildRobotPresenter(instance(), instance(), instance()) }
         bind<ConnectMvp.Presenter>() with singleton { ConnectPresenter(instance()) }
+        bind<ConfigureMvp.Presenter>() with singleton { ConfigurePresenter() }
+        bind<ConfigureConnectionsMvp.Presenter>() with singleton { ConfigureConnectionsPresenter() }
     }
 
 fun createDbModule(context: Context) =

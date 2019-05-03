@@ -33,7 +33,7 @@ data class MyRobotsItem(
     }
 
     fun onEditClicked() {
-        presenter.onEditSelected(id)
+        if (!isUnderConstruction) presenter.onEditSelected(id)
     }
 
     fun onDeleteClicked() {

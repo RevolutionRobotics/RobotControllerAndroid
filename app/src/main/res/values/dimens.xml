@@ -139,4 +139,33 @@
     <dimen name="chipped_edit_text_title_text_size">12sp</dimen>
 
 
+    <!-- SCREEN: CONFIGURE -->
+    <dimen name="configure_screen_nav_guide_height">10dp</dimen>
+    <dimen name="configure_button_vertical_padding">9dp</dimen>
+    <dimen name="configure_button_horizontal_padding">15dp</dimen>
+    <dimen name="configure_button_text_size">14sp</dimen>
+    <dimen name="configure_fragment_frame_vertical_padding">16dp</dimen>
+
+    <!-- SCREEN: CONFIGURE CONNECTIONS -->
+    <dimen name="configure_connections_button_width">80dp</dimen>
+    <dimen name="configure_connections_button_height">40dp</dimen>
+    <dimen name="configure_connections_brain_width">122dp</dimen>
+    <dimen name="configure_connections_brain_height">80dp</dimen>
+    <dimen name="configure_connections_brain_horizontal_margin">14dp</dimen>
+    <dimen name="configure_connections_button_elevation">2dp</dimen>
+    <dimen name="configure_connections_buttons_horizontal_margin">16dp</dimen>
+    <dimen name="configure_connections_side_buttons_margin_start">50dp</dimen>
+    <dimen name="configure_connections_icons_overflow_size">2dp</dimen>
+    <dimen name="configure_connections_icons_size">12dp</dimen>
+    <dimen name="configure_connections_line_to_icon_correction">11dp</dimen>
+    <dimen name="configure_connections_icons_horizontal_margin">16dp</dimen>
+    <dimen name="configure_connections_line_view_width">3dp</dimen>
+    <dimen name="configure_connections_line_M1_button_margin">2dp</dimen>
+    <dimen name="configure_connections_line_M4_helper_margin">8dp</dimen>
+    <dimen name="configure_connections_line_M3_button_margin">2dp</dimen>
+    <dimen name="configure_connections_line_button_inset_margin">3dp</dimen>
+    <dimen name="configure_connections_line_button_center_margin">40dp</dimen>
+    <dimen name="configure_connections_line_width">1dp</dimen>
+    <dimen name="configure_connections_line_dash_width">8dp</dimen>
+    <dimen name="configure_connections_line_gap_width">5dp</dimen>
 </resources>
