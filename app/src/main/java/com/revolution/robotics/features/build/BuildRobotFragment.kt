@@ -33,6 +33,8 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
     BuildRobotMvp.View, BuildStepSliderView.BuildStepSelectedListener, DialogEventBus.Listener {
 
     companion object {
+        private const val ARGUMENT_KEY = "robot"
+
         const val DEFAULT_STARTING_INDEX = 1
 
         val REQUIRED_PERMISSIONS = listOf(
@@ -93,7 +95,7 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
     }
 
     private fun getRobot(): Robot? =
-        arguments?.getParcelable("robot")
+        arguments?.getParcelable(ARGUMENT_KEY)
 
     @Suppress("ComplexMethod")
     override fun onDialogEvent(dialog: DialogId, event: DialogEventBus.Event) {
