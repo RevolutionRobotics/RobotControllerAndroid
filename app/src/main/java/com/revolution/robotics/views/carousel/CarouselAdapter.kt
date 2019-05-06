@@ -1,18 +1,20 @@
-package com.revolution.robotics.features.whoToBuild.adapter
+package com.revolution.robotics.views.carousel
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.ViewDataBinding
 import androidx.viewpager.widget.PagerAdapter
-import com.revolution.robotics.databinding.ItemRobotsBinding
 
-class RobotsPagerAdapter : PagerAdapter() {
+abstract class CarouselAdapter<T> : PagerAdapter() {
     private val mViews: ArrayList<View?> = ArrayList()
-    private val mData: MutableList<RobotItem> = mutableListOf()
+    private val mData: MutableList<T> = mutableListOf()
+
+    abstract fun bindItem(inflater: LayoutInflater, parent: ViewGroup, data: T): ViewDataBinding
 
     override fun isViewFromObject(view: View, `object`: Any): Boolean = view == `object`
 
-    fun setItems(itemList: List<RobotItem>) {
+    fun setItems(itemList: List<T>) {
         mViews.clear()
         mData.clear()
         itemList.forEach { item ->
@@ -23,9 +25,8 @@ class RobotsPagerAdapter : PagerAdapter() {
     }
 
     override fun instantiateItem(collection: ViewGroup, position: Int): Any {
-        val binding = ItemRobotsBinding.inflate(LayoutInflater.from(collection.context), collection, false)
+        val binding = bindItem(LayoutInflater.from(collection.context), collection, mData[position])
         collection.addView(binding.root)
-        binding.viewModel = mData[position]
         mViews[position] = binding.root
         return binding.root
     }

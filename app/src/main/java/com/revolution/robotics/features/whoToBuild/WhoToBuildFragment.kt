@@ -9,38 +9,27 @@ import com.revolution.robotics.core.extensions.forceApplyTransformer
 import com.revolution.robotics.core.extensions.waitForLayout
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.databinding.FragmentWhoToBuildBinding
-import com.revolution.robotics.features.whoToBuild.adapter.RobotsPageTransformer
-import com.revolution.robotics.features.whoToBuild.adapter.RobotsPagerAdapter
+import com.revolution.robotics.features.whoToBuild.adapter.RobotsCarouselAdapter
+import com.revolution.robotics.views.carousel.initCarouselPadding
+import com.revolution.robotics.views.carousel.initCarouselVariables
 import org.kodein.di.erased.instance
-import kotlin.math.floor
 
 @Suppress("UnnecessaryApply")
 class WhoToBuildFragment : BaseFragment<FragmentWhoToBuildBinding, WhoToBuildViewModel>(R.layout.fragment_who_to_build),
     WhoToBuildMvp.View, ViewPager.OnPageChangeListener {
 
-    companion object {
-        private const val ROBOTS_PAGER_OFFSCREEN_PAGE_LIMIT = 3
-        private const val VIEWPAGER_PADDING_MULTIPLIER = 0.3125
-    }
-
     override val viewModelClass: Class<WhoToBuildViewModel> = WhoToBuildViewModel::class.java
-    private val adapter = RobotsPagerAdapter()
+    private val adapter = RobotsCarouselAdapter()
     private val presenter: WhoToBuildMvp.Presenter by kodein.instance()
     private val resourceResolver: ResourceResolver by kodein.instance()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         presenter.register(this, viewModel)
-        binding?.apply {
-            toolbarViewModel = WhoToBuildToolbarViewModel(resourceResolver)
-            robotsViewpager.adapter = adapter
-            robotsViewpager.offscreenPageLimit = ROBOTS_PAGER_OFFSCREEN_PAGE_LIMIT
-            robotsViewpager.setPageTransformer(false, RobotsPageTransformer(robotsViewpager))
-            robotsViewpager.addOnPageChangeListener(this@WhoToBuildFragment)
-        }
+        binding?.toolbarViewModel = WhoToBuildToolbarViewModel(resourceResolver)
+        binding?.robotsViewpager?.initCarouselVariables(this@WhoToBuildFragment, adapter)
         view.waitForLayout {
-            val viewPagePadding = floor(view.width * VIEWPAGER_PADDING_MULTIPLIER).toInt()
-            binding?.robotsViewpager?.setPaddingRelative(viewPagePadding, 0, viewPagePadding, 0)
+            binding?.robotsViewpager?.initCarouselPadding(view.width)
         }
     }
 

@@ -40,6 +40,9 @@
     <string name="build_robot_tips">Tips</string>
     <string name="build_robot_start">Start</string>
 
+    <!-- My robots -->
+    <string name="my_robots_play_button_text">Play</string>
+
     <!-- Chapter finished -->
     <string name="build_chapter_finish_dialog_title">Chapter finished</string>
     <string name="build_chapter_finish_dialog_description">Well done!</string>

@@ -11,8 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 import com.revolution.robotics.views.chippedBox.ChippedBoxDrawable
-import com.revolution.robotics.features.whoToBuild.adapter.RobotItem
-import com.revolution.robotics.features.whoToBuild.adapter.RobotsPagerAdapter
+import com.revolution.robotics.views.carousel.CarouselAdapter
 import com.revolution.robotics.features.build.connect.adapter.ConnectAdapter
 import com.revolution.robotics.features.build.connect.adapter.ConnectRobotItem
 
@@ -33,10 +32,10 @@ fun setImageDrawable(imageView: ImageView, @DrawableRes drawableRes: Int) {
     imageView.setImageResource(drawableRes)
 }
 
-@BindingAdapter("robots")
-fun setRobotsViewPagerItems(viewPager: ViewPager, itemList: List<RobotItem>?) {
+@BindingAdapter("carouselItems")
+fun setRobotsViewPagerItems(viewPager: ViewPager, itemList: List<Any>?) {
     if (itemList != null && itemList.isNotEmpty()) {
-        (viewPager.adapter as? RobotsPagerAdapter)?.setItems(itemList)
+        (viewPager.adapter as? CarouselAdapter<Any>)?.setItems(itemList)
         viewPager.currentItem = 0
     }
 }

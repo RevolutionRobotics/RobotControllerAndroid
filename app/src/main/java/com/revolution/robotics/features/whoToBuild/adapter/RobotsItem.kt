@@ -5,7 +5,7 @@ import com.revolution.robotics.R
 import com.revolution.robotics.features.whoToBuild.WhoToBuildMvp
 
 @Suppress("DataClassContainsFunctions")
-data class RobotItem(
+data class RobotsItem(
     private val id: Int,
     val name: String,
     val time: String,

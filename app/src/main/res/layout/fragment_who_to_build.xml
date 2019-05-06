@@ -82,7 +82,7 @@
                 android:id="@+id/robots_viewpager"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:robots="@{viewModel.robotsList}"
+                app:carouselItems="@{viewModel.robotsList}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/robots_viewpager_top_guide"
