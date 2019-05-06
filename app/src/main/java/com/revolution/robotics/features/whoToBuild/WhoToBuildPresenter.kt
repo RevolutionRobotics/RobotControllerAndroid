@@ -23,6 +23,7 @@ class WhoToBuildPresenter(
         robotsInteractor.execute(
             onResponse = { response ->
                 model?.apply {
+                    currentPosition.set(0)
                     robotsList.value = response.map { robot ->
                         val robotItem = RobotsItem(
                             robot.id,

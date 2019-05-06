@@ -5,13 +5,13 @@ import android.view.View
 import androidx.viewpager.widget.ViewPager
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
-import com.revolution.robotics.core.extensions.forceApplyTransformer
 import com.revolution.robotics.core.extensions.waitForLayout
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.databinding.FragmentMyRobotsBinding
 import com.revolution.robotics.features.myRobots.adapter.MyRobotsCarouselAdapter
 import com.revolution.robotics.views.carousel.initCarouselPadding
 import com.revolution.robotics.views.carousel.initCarouselVariables
+import com.revolution.robotics.views.carousel.initTransformerWithDelay
 import org.kodein.di.erased.instance
 
 class MyRobotsFragment : BaseFragment<FragmentMyRobotsBinding, MyRobotsViewModel>(R.layout.fragment_my_robots),
@@ -32,7 +32,7 @@ class MyRobotsFragment : BaseFragment<FragmentMyRobotsBinding, MyRobotsViewModel
     }
 
     override fun onRobotsLoaded() {
-        binding?.myRobotsViewpager?.forceApplyTransformer()
+        binding?.myRobotsViewpager?.initTransformerWithDelay()
     }
 
     override fun showNextRobot() {

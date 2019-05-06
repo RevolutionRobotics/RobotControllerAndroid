@@ -3,7 +3,6 @@ package com.revolution.robotics.features.myRobots
 import com.revolution.robotics.core.extensions.isEmptyOrNull
 import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.features.myRobots.adapter.MyRobotsItem
-import com.revolution.robotics.features.whoToBuild.WhoToBuildFragmentDirections
 import kotlin.math.max
 
 const val EXAMPLE_MY_ROBOTS_RANGE = 5
@@ -62,7 +61,7 @@ class MyRobotsPresenter(private val navigator: Navigator) : MyRobotsMvp.Presente
     }
 
     override fun navigateToWhoToBuild() {
-        navigator.navigate(WhoToBuildFragmentDirections.toBuildRobot())
+        navigator.navigate(MyRobotsFragmentDirections.toWhoToBuild())
     }
 
     override fun onPlaySelected(id: Int) {

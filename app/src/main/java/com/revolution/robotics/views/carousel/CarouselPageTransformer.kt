@@ -6,7 +6,7 @@ import androidx.viewpager.widget.ViewPager
 class CarouselPageTransformer(private val viewPager: ViewPager) : ViewPager.PageTransformer {
 
     companion object {
-        private const val ITEM_SCALE_BASE = 0.75f
+        const val ITEM_SCALE_BASE = 0.75f
         private const val ITEM_SCALE_DYNAMIC = 0.25f
     }
 

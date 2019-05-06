@@ -1,10 +1,12 @@
 package com.revolution.robotics.views.carousel
 
+import androidx.core.view.postDelayed
 import androidx.viewpager.widget.ViewPager
 import kotlin.math.floor
 
 const val CAROUSEL_OFFSCREEN_PAGE_LIMIT = 3
 const val CAROUSEL_PADDING_MULTIPLIER = 0.3125
+const val PAGE_TRANSFORM_INIT_DELAY = 150L
 
 fun <T : CarouselAdapter<*>> ViewPager.initCarouselVariables(
     onPageChangeListener: ViewPager.OnPageChangeListener,
@@ -12,8 +14,13 @@ fun <T : CarouselAdapter<*>> ViewPager.initCarouselVariables(
 ) {
     this.adapter = adapter
     offscreenPageLimit = CAROUSEL_OFFSCREEN_PAGE_LIMIT
-    setPageTransformer(false, CarouselPageTransformer(this))
     addOnPageChangeListener(onPageChangeListener)
+}
+
+fun ViewPager.initTransformerWithDelay() {
+    postDelayed(PAGE_TRANSFORM_INIT_DELAY) {
+        setPageTransformer(false, CarouselPageTransformer(this))
+    }
 }
 
 fun ViewPager.initCarouselPadding(
