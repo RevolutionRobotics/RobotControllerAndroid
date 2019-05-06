@@ -14,8 +14,8 @@ interface MyRobotsMvp : Mvp {
         fun nextButtonClick()
         fun previousButtonClick()
         fun navigateToWhoToBuild()
-        fun onPlaySelected(id: Int)
-        fun onEditSelected(id: Int)
-        fun onDeleteSelected(id: Int)
+        fun onPlaySelected(robotId: Int)
+        fun onEditSelected(robotId: Int)
+        fun onDeleteSelected(robotId: Int)
     }
 }

@@ -1,11 +1,13 @@
 package com.revolution.robotics.features.build
 
-import android.util.Log
 import com.revolution.robotics.core.domain.local.BuildStatus
 import com.revolution.robotics.core.domain.local.UserRobot
+import com.revolution.robotics.core.domain.remote.BuildStep
+import com.revolution.robotics.core.domain.remote.Robot
 import com.revolution.robotics.core.interactor.GetUserRobotInteractor
 import com.revolution.robotics.core.interactor.SaveUserRobotInteractor
 import com.revolution.robotics.core.interactor.firebase.BuildStepInteractor
+import java.util.Date
 
 class BuildRobotPresenter(
     private val buildStepInteractor: BuildStepInteractor,
@@ -38,6 +40,22 @@ class BuildRobotPresenter(
                 // TODO add error handling
                 error.printStackTrace()
             }
+        )
+    }
+
+    override fun createNewRobot(robot: Robot?, currentBuildStep: BuildStep?) {
+        saveUserRobot(
+            UserRobot(
+                0,
+                robot?.id ?: 0,
+                BuildStatus.IN_PROGRESS,
+                currentBuildStep?.stepNumber ?: BuildRobotFragment.DEFAULT_STARTING_INDEX,
+                Date(System.currentTimeMillis()),
+                null,
+                robot?.name,
+                robot?.coverImage,
+                robot?.description
+            )
         )
     }
 

@@ -27,7 +27,10 @@
               android:name="com.revolution.robotics.features.whoToBuild.WhoToBuildFragment"
               android:label="WhoToBuildFragment">
         <action android:id="@+id/toBuildRobot"
-                app:destination="@id/buildRobotFragment"/>
+                app:destination="@id/buildRobotFragment">
+            <argument app:argType="com.revolution.robotics.core.domain.remote.Robot"
+                      android:name="robot"/>
+        </action>
     </fragment>
 
     <fragment android:id="@+id/buildRobotFragment"

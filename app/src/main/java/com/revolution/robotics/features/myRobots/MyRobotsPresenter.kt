@@ -1,13 +1,17 @@
 package com.revolution.robotics.features.myRobots
 
+import com.revolution.robotics.core.domain.local.BuildStatus
 import com.revolution.robotics.core.extensions.isEmptyOrNull
+import com.revolution.robotics.core.interactor.GetAllUserRobotsInteractor
+import com.revolution.robotics.core.utils.DateFormatters
 import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.features.myRobots.adapter.MyRobotsItem
 import kotlin.math.max
 
-const val EXAMPLE_MY_ROBOTS_RANGE = 5
-
-class MyRobotsPresenter(private val navigator: Navigator) : MyRobotsMvp.Presenter {
+class MyRobotsPresenter(
+    private val getAllUserRobotsInteractor: GetAllUserRobotsInteractor,
+    private val navigator: Navigator
+) : MyRobotsMvp.Presenter {
     override var view: MyRobotsMvp.View? = null
     override var model: MyRobotsViewModel? = null
 
@@ -17,18 +21,27 @@ class MyRobotsPresenter(private val navigator: Navigator) : MyRobotsMvp.Presente
     }
 
     private fun loadRobots() {
-        model?.robotsList?.value = (0..EXAMPLE_MY_ROBOTS_RANGE).map { idNumber ->
-            MyRobotsItem(
-                id = idNumber,
-                name = "My Robot #$idNumber",
-                description = "This text is here because i was not allowed to use the cat placeholder...",
-                iconDescription = "2019/04/30",
-                imageUrl = "gs://revolutionrobotics-afeb5.appspot.com/tobbie-diy-robot-build-your-own-gadget.png",
-                isUnderConstruction = idNumber % 2 == 0,
-                presenter = this@MyRobotsPresenter
-            )
-        }
-        view?.onRobotsLoaded()
+        getAllUserRobotsInteractor.execute(
+            onResponse = { robots ->
+                model?.robotsList?.value = robots.map { robot ->
+                    // TODO add valid default values
+                    MyRobotsItem(
+                        robot.robotId,
+                        robot.customName ?: "",
+                        robot.customDescription ?: "",
+                        DateFormatters.yearMonthDay(robot.lastModified),
+                        robot.customImage ?: "",
+                        robot.buildStatus != BuildStatus.COMPLETED,
+                        this
+                    )
+                }
+                view?.onRobotsLoaded()
+            },
+            onError = { error ->
+                // TODO add error handling
+                error.printStackTrace()
+            }
+        )
     }
 
     override fun onPageSelected(position: Int) {
@@ -64,15 +77,15 @@ class MyRobotsPresenter(private val navigator: Navigator) : MyRobotsMvp.Presente
         navigator.navigate(MyRobotsFragmentDirections.toWhoToBuild())
     }
 
-    override fun onPlaySelected(id: Int) {
-        // TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun onPlaySelected(robotId: Int) {
+        // Nothing here yet
     }
 
-    override fun onEditSelected(id: Int) {
-        // TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun onEditSelected(robotId: Int) {
+        // Nothing here yet
     }
 
-    override fun onDeleteSelected(id: Int) {
-        // TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun onDeleteSelected(robotId: Int) {
+        // Nothing here yet
     }
 }

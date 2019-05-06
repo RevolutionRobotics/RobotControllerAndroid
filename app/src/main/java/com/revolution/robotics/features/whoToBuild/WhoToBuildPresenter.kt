@@ -1,5 +1,6 @@
 package com.revolution.robotics.features.whoToBuild
 
+import com.revolution.robotics.core.domain.remote.Robot
 import com.revolution.robotics.core.extensions.isEmptyOrNull
 import com.revolution.robotics.core.interactor.firebase.RobotInteractor
 import com.revolution.robotics.core.utils.Navigator
@@ -24,16 +25,7 @@ class WhoToBuildPresenter(
             onResponse = { response ->
                 model?.apply {
                     currentPosition.set(0)
-                    robotsList.value = response.map { robot ->
-                        val robotItem = RobotsItem(
-                            robot.id,
-                            robot.name ?: "",
-                            robot.buildTime ?: "",
-                            robot.coverImage ?: "",
-                            this@WhoToBuildPresenter
-                        )
-                        robotItem
-                    }
+                    robotsList.value = response.map { robot -> RobotsItem(robot, this@WhoToBuildPresenter) }
                     robotsList.value?.firstOrNull()?.isSelected?.set(true)
                     updateButtonsVisibility(0)
                     view?.onRobotsLoaded()
@@ -73,7 +65,7 @@ class WhoToBuildPresenter(
         view?.showPreviousRobot()
     }
 
-    override fun onRobotSelected(id: Int) {
-        navigator.navigate(WhoToBuildFragmentDirections.toBuildRobot())
+    override fun onRobotSelected(robot: Robot) {
+        navigator.navigate(WhoToBuildFragmentDirections.toBuildRobot(robot))
     }
 }

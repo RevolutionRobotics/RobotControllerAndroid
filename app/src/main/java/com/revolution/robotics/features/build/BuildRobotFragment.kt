@@ -8,6 +8,7 @@ import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.local.BuildStatus
 import com.revolution.robotics.core.domain.local.UserRobot
 import com.revolution.robotics.core.domain.remote.BuildStep
+import com.revolution.robotics.core.domain.remote.Robot
 import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
 import com.revolution.robotics.core.eventBus.dialog.DialogId
 import com.revolution.robotics.core.utils.dynamicPermissions.DynamicPermissionHandler
@@ -32,7 +33,7 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
     BuildRobotMvp.View, BuildStepSliderView.BuildStepSelectedListener, DialogEventBus.Listener {
 
     companion object {
-        const val CUSTOM_ROBOT_ID = -1
+        const val DEFAULT_STARTING_INDEX = 1
 
         val REQUIRED_PERMISSIONS = listOf(
             Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -61,7 +62,7 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
         }
 
         presenter.register(this, viewModel)
-        presenter.loadUserRobot(getRobotId())
+        presenter.loadUserRobot(getRobot()?.id ?: 0)
         dialogEventBus.register(this)
 
         if (dynamicPermissionHandler.hasPermissions(REQUIRED_PERMISSIONS, requireActivity())) {
@@ -71,26 +72,19 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
         }
     }
 
-    override fun onPause() {
+    override fun onStop() {
         if (!wasRobotFinished) {
-            val robotReference = userRobot
-            presenter.saveUserRobot(
-                if (robotReference == null) {
-                    UserRobot(
-                        0,
-                        getRobotId(),
-                        BuildStatus.IN_PROGRESS,
-                        currentBuildStep?.stepNumber ?: 0,
-                        Date(System.currentTimeMillis())
-                    )
-                } else {
-                    robotReference.actualBuildStep = currentBuildStep?.stepNumber ?: 0
-                    robotReference.lastModified = Date(System.currentTimeMillis())
-                    robotReference
+            if (userRobot == null) {
+                presenter.createNewRobot(getRobot(), currentBuildStep)
+            } else {
+                userRobot?.apply {
+                    actualBuildStep = currentBuildStep?.stepNumber ?: DEFAULT_STARTING_INDEX
+                    lastModified = Date(System.currentTimeMillis())
+                    presenter.saveUserRobot(this)
                 }
-            )
+            }
         }
-        super.onPause()
+        super.onStop()
     }
 
     override fun onDestroyView() {
@@ -98,9 +92,8 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
         super.onDestroyView()
     }
 
-    // TODO rework this so we get robotID from arguments
-    @Suppress("MagicNumber", "FunctionOnlyReturningConstant")
-    private fun getRobotId() = 110
+    private fun getRobot(): Robot? =
+        arguments?.getParcelable("robot")
 
     @Suppress("ComplexMethod")
     override fun onDialogEvent(dialog: DialogId, event: DialogEventBus.Event) {
@@ -129,11 +122,11 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
 
     override fun onUserRobotLoaded(userRobot: UserRobot?) {
         this.userRobot = userRobot
-        presenter.loadBuildSteps(getRobotId())
+        presenter.loadBuildSteps(getRobot()?.id ?: 0)
     }
 
     override fun onBuildStepsLoaded(steps: List<BuildStep>) {
-        val startIndex = (userRobot?.actualBuildStep ?: 1) - 1
+        val startIndex = (userRobot?.actualBuildStep ?: DEFAULT_STARTING_INDEX) - 1
         binding?.seekbar?.setBuildSteps(steps, this, startIndex)
         buildStepCount = steps.size
         onBuildStepSelected(steps[startIndex], true)
@@ -150,12 +143,12 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
     }
 
     override fun onBuildFinished() {
+        wasRobotFinished = true
         userRobot?.apply {
             buildStatus = BuildStatus.COMPLETED
             lastModified = Date(System.currentTimeMillis())
             presenter.saveUserRobot(this)
         }
-        wasRobotFinished = true
         BuildFinishedDialog.newInstance().show(fragmentManager)
     }
 }

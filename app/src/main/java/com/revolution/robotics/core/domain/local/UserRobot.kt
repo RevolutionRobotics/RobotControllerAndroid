@@ -25,6 +25,9 @@ data class UserRobot(
 @Dao
 interface UserRobotDao {
 
+    @Query("SELECT * FROM UserRobot")
+    fun getAllRobots(): List<UserRobot>
+
     @Query("SELECT * FROM UserRobot WHERE robotId=:robotId AND buildStatus=:buildStatus")
     fun getRobotByStatus(robotId: Int, buildStatus: BuildStatus): UserRobot?
 

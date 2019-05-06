@@ -1,5 +1,6 @@
 package com.revolution.robotics.core.interactor
 
+import com.revolution.bluetooth.threading.moveToUIThread
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
@@ -25,20 +26,23 @@ abstract class Interactor<T> {
         runningJob = GlobalScope.launch {
             withContext(Dispatchers.Default) {
                 try {
-                    InteractorResponse(getData())
+                    getData()
                 } catch (exception: Exception) {
-                    InteractorResponse<T>(null, exception)
+                    exception
                 }
             }.let { result ->
-                result.data?.let { onResponse.invoke(it) }
-                result.throwable?.let { onError.invoke(it) }
+                moveToUIThread {
+                    if (result is Throwable) {
+                        onError.invoke(result)
+                    } else {
+                        onResponse.invoke(result as T)
+                    }
+                }
             }
         }
     }
 
     abstract fun getData(): T
-
-    data class InteractorResponse<T>(val data: T?, val throwable: Throwable? = null)
 
     interface InteractorCallback<T> {
         fun onResponse(result: T)
