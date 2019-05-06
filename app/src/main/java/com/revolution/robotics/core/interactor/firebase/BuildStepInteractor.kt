@@ -12,8 +12,7 @@ class BuildStepInteractor : FirebaseListInteractor<BuildStep>() {
     override val genericTypeIndicator: GenericTypeIndicator<ArrayList<BuildStep>> =
         object : GenericTypeIndicator<ArrayList<BuildStep>>() {}
 
-    override fun getDatabaseReference(database: FirebaseDatabase): Query =
-        database.getReference("buildStep")
-            .orderByChild("robotId")
-            .equalTo(robotId.toDouble())
+    override fun getDatabaseReference(database: FirebaseDatabase): Query = database.getReference("buildStep")
+
+    override fun filter(item: BuildStep) = item.robotId == robotId
 }

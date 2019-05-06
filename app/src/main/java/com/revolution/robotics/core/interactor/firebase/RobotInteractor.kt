@@ -11,4 +11,6 @@ class RobotInteractor : FirebaseListInteractor<Robot>() {
         object : GenericTypeIndicator<ArrayList<Robot>>() {}
 
     override fun getDatabaseReference(database: FirebaseDatabase): Query = database.getReference("robot")
+
+    override fun filter(item: Robot) = true
 }
