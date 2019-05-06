@@ -22,6 +22,7 @@ class MotorConfigurationFragment :
         }
     }
 
+    override val viewModelClass: Class<MotorConfigurationViewModel> = MotorConfigurationViewModel::class.java
     private val presenter: MotorConfigurationMvp.Presenter by kodein.instance()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -36,8 +37,4 @@ class MotorConfigurationFragment :
         presenter.unregister()
         super.onDestroyView()
     }
-
-    override val viewModelClass: Class<MotorConfigurationViewModel> = MotorConfigurationViewModel::class.java
-
-
 }
