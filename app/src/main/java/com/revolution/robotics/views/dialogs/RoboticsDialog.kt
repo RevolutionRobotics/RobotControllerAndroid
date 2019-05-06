@@ -1,5 +1,6 @@
 package com.revolution.robotics.views.dialogs
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import com.revolution.robotics.R
 import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
 import com.revolution.robotics.core.extensions.dimension
 import com.revolution.robotics.core.extensions.gone
+import com.revolution.robotics.core.extensions.hideSystemUI
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 import com.revolution.robotics.databinding.DialogRoboticsCoreBinding
 import com.revolution.robotics.databinding.DialogRoboticsCoreButtonBinding
@@ -62,6 +64,11 @@ abstract class RoboticsDialog : DialogFragment() {
             setLayout(context.dimension(R.dimen.dialog_width), context.dimension(R.dimen.dialog_height))
             setBackgroundDrawable(null)
         }
+    }
+
+    override fun onDismiss(dialog: DialogInterface?) {
+        super.onDismiss(dialog)
+        requireActivity().window.hideSystemUI()
     }
 
     open fun onDialogCloseButtonClicked() = Unit
