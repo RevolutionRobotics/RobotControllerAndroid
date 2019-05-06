@@ -1,11 +1,11 @@
 package com.revolution.robotics
 
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
+import com.revolution.robotics.core.extensions.hideSystemUI
 import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.core.utils.dynamicPermissions.DynamicPermissionHandler
 import org.kodein.di.KodeinAware
@@ -24,7 +24,11 @@ class MainActivity : AppCompatActivity(), KodeinAware, Navigator.NavigationEvent
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         navigator.registerListener(this)
-        hideSystemUI()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        window.hideSystemUI()
     }
 
     override fun onDestroy() {
@@ -38,13 +42,4 @@ class MainActivity : AppCompatActivity(), KodeinAware, Navigator.NavigationEvent
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) =
         dynamicPermissionHandler.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
-    private fun hideSystemUI() {
-        window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                or View.SYSTEM_UI_FLAG_FULLSCREEN)
-    }
 }
