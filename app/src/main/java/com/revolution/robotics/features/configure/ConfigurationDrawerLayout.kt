@@ -23,7 +23,7 @@ class ConfigurationDrawerLayout @JvmOverloads constructor(context: Context, attr
 
     fun setMotor(motor: Motor) {
         (context as FragmentActivity).supportFragmentManager.beginTransaction()
-            .replace(R.id.container_motor_configuration, MotorConfigurationFragment.newInstance(motor))
+            .replace(R.id.container_motor_configuration, MotorConfigurationFragment.newInstance(motor, "M1"))
             .commitAllowingStateLoss()
         openDrawer(GravityCompat.END, true)
     }

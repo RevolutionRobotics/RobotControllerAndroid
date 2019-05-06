@@ -107,4 +107,6 @@
         Quo cu alia placerat. Per graece denique invidunt ei.
     </string>
 
+    <!--- Configuration Slider Motor-->
+    <string name="config_name_edit_title"> - Name</string>
 </resources>

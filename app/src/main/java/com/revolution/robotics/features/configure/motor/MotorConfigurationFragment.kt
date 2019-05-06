@@ -16,9 +16,11 @@ class MotorConfigurationFragment :
 
     companion object {
         private var Bundle.motor by BundleArgumentDelegate.Parcelable<Motor>("motor")
+        private var Bundle.portName by BundleArgumentDelegate.String("portName")
 
-        fun newInstance(motor: Motor) = MotorConfigurationFragment().withArguments {
-            it.motor = motor
+        fun newInstance(motor: Motor, portName: String) = MotorConfigurationFragment().withArguments { bundle ->
+            bundle.motor = motor
+            bundle.portName = portName
         }
     }
 
@@ -29,7 +31,10 @@ class MotorConfigurationFragment :
         super.onViewCreated(view, savedInstanceState)
         presenter.register(this, viewModel)
         arguments?.let {
-            presenter.setMotor(it.motor)
+            presenter.setMotor(it.motor, it.portName)
+        }
+        binding?.icEngine?.setOnClickListener {
+            viewModel?.isMotor?.value = viewModel?.isMotor?.value != true
         }
     }
 

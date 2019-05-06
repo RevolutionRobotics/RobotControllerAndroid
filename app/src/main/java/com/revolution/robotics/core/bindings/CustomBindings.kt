@@ -10,6 +10,8 @@ import androidx.annotation.DrawableRes
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
+import com.revolution.robotics.R
+import com.revolution.robotics.core.extensions.color
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 import com.revolution.robotics.views.chippedBox.ChippedBoxDrawable
 import com.revolution.robotics.views.carousel.CarouselAdapter
@@ -63,4 +65,25 @@ fun setAvailableRobotsItems(recyclerView: RecyclerView, itemList: List<ConnectRo
 @BindingAdapter("image")
 fun setImageBitmap(imageView: ImageView, image: Bitmap?) {
     image?.let { imageView.setImageBitmap(it) }
+}
+
+@BindingAdapter("configButtonSelected")
+fun setConfigButtonBackground(button: ImageView, configButtonSelected: Boolean) {
+    button.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+    if (configButtonSelected) {
+        button.setColorFilter(button.context.color(R.color.grey_28), android.graphics.PorterDuff.Mode.SRC_IN)
+        button.setBackgroundResource(R.drawable.bg_control_button_selected)
+    } else {
+        setChippedBoxConfig(
+            button, ChippedBoxConfig.Builder()
+                .chipBottomLeft(true)
+                .chipTopRight(true)
+                .isDashed(true)
+                .borderColorResource(R.color.white)
+                .borderSize(R.dimen.dimen_2dp)
+                .chipSize(R.dimen.dimen_4dp)
+                .create()
+        )
+        button.setColorFilter(button.context.color(R.color.white), android.graphics.PorterDuff.Mode.SRC_IN)
+    }
 }

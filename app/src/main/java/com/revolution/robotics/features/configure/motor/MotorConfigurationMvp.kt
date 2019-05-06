@@ -8,6 +8,13 @@ interface MotorConfigurationMvp : Mvp {
     interface View : Mvp.View
 
     interface Presenter : Mvp.Presenter<View, MotorConfigurationViewModel> {
-        fun setMotor(motor: Motor)
+        fun setMotor(motor: Motor, portName: String)
+        fun onEmptyButtonClicked()
+        fun onDrivetrainButtonClicked()
+        fun onMotorClicked()
+        fun onLeftDirectionClicked()
+        fun onRightDirectionClicked()
+        fun onCounterClockwiseClicked()
+        fun onClockwiseClicked()
     }
 }
