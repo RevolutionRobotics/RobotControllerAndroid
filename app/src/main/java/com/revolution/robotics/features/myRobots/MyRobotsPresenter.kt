@@ -62,7 +62,7 @@ class MyRobotsPresenter(private val navigator: Navigator) : MyRobotsMvp.Presente
     }
 
     override fun navigateToWhoToBuild() {
-        navigator.navigate(WhoToBuildFragmentDirections.toBuildRobot())
+        navigator.navigate(MyRobotsFragmentDirections.toWhoToBuild())
     }
 
     override fun onPlaySelected(id: Int) {

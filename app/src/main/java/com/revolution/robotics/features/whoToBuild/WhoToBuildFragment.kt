@@ -5,13 +5,13 @@ import android.view.View
 import androidx.viewpager.widget.ViewPager
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
-import com.revolution.robotics.core.extensions.forceApplyTransformer
 import com.revolution.robotics.core.extensions.waitForLayout
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.databinding.FragmentWhoToBuildBinding
 import com.revolution.robotics.features.whoToBuild.adapter.RobotsCarouselAdapter
 import com.revolution.robotics.views.carousel.initCarouselPadding
 import com.revolution.robotics.views.carousel.initCarouselVariables
+import com.revolution.robotics.views.carousel.initTransformerWithDelay
 import org.kodein.di.erased.instance
 
 @Suppress("UnnecessaryApply")
@@ -19,15 +19,18 @@ class WhoToBuildFragment : BaseFragment<FragmentWhoToBuildBinding, WhoToBuildVie
     WhoToBuildMvp.View, ViewPager.OnPageChangeListener {
 
     override val viewModelClass: Class<WhoToBuildViewModel> = WhoToBuildViewModel::class.java
-    private val adapter = RobotsCarouselAdapter()
+    private var adapter: RobotsCarouselAdapter? = null
     private val presenter: WhoToBuildMvp.Presenter by kodein.instance()
     private val resourceResolver: ResourceResolver by kodein.instance()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         presenter.register(this, viewModel)
+        adapter = RobotsCarouselAdapter().apply {
+            binding?.robotsViewpager?.initCarouselVariables(this@WhoToBuildFragment, this)
+        }
         binding?.toolbarViewModel = WhoToBuildToolbarViewModel(resourceResolver)
-        binding?.robotsViewpager?.initCarouselVariables(this@WhoToBuildFragment, adapter)
+
         view.waitForLayout {
             binding?.robotsViewpager?.initCarouselPadding(view.width)
         }
@@ -35,11 +38,16 @@ class WhoToBuildFragment : BaseFragment<FragmentWhoToBuildBinding, WhoToBuildVie
 
     override fun onDestroyView() {
         presenter.unregister()
+        binding?.robotsViewpager?.apply {
+            clearOnPageChangeListeners()
+            setPageTransformer(false, null)
+            adapter = null
+        }
         super.onDestroyView()
     }
 
     override fun onRobotsLoaded() {
-        binding?.robotsViewpager?.forceApplyTransformer()
+        binding?.robotsViewpager?.initTransformerWithDelay()
     }
 
     override fun showNextRobot() {
@@ -55,6 +63,7 @@ class WhoToBuildFragment : BaseFragment<FragmentWhoToBuildBinding, WhoToBuildVie
     override fun onPageScrollStateChanged(state: Int) = Unit
 
     override fun onPageSelected(position: Int) {
+        adapter?.selectedPosition = position
         presenter.onPageSelected(position)
     }
 }
