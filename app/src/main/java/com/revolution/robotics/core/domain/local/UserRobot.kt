@@ -1,6 +1,7 @@
 package com.revolution.robotics.core.domain.local
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Entity
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -33,4 +34,7 @@ interface UserRobotDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveUserRobot(userRobot: UserRobot)
+
+    @Query("DELETE FROM UserRobot WHERE id = :id")
+    fun deleteRobotById(id: Int)
 }

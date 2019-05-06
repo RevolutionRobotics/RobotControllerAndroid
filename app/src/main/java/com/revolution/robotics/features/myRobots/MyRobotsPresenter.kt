@@ -2,6 +2,7 @@ package com.revolution.robotics.features.myRobots
 
 import com.revolution.robotics.core.domain.local.BuildStatus
 import com.revolution.robotics.core.extensions.isEmptyOrNull
+import com.revolution.robotics.core.interactor.DeleteRobotInteractor
 import com.revolution.robotics.core.interactor.GetAllUserRobotsInteractor
 import com.revolution.robotics.core.utils.DateFormatters
 import com.revolution.robotics.core.utils.Navigator
@@ -10,6 +11,7 @@ import kotlin.math.max
 
 class MyRobotsPresenter(
     private val getAllUserRobotsInteractor: GetAllUserRobotsInteractor,
+    private val deleteRobotInteractor: DeleteRobotInteractor,
     private val navigator: Navigator
 ) : MyRobotsMvp.Presenter {
     override var view: MyRobotsMvp.View? = null
@@ -24,9 +26,8 @@ class MyRobotsPresenter(
         getAllUserRobotsInteractor.execute(
             onResponse = { robots ->
                 model?.robotsList?.value = robots.map { robot ->
-                    // TODO add valid default values
                     MyRobotsItem(
-                        robot.robotId,
+                        robot.id,
                         robot.customName ?: "",
                         robot.customDescription ?: "",
                         DateFormatters.yearMonthDay(robot.lastModified),
@@ -34,8 +35,8 @@ class MyRobotsPresenter(
                         robot.buildStatus != BuildStatus.COMPLETED,
                         this
                     )
-                }
-                view?.onRobotsLoaded()
+                }.toMutableList()
+                view?.onRobotsChanged()
             },
             onError = { error ->
                 // TODO add error handling
@@ -46,7 +47,9 @@ class MyRobotsPresenter(
 
     override fun onPageSelected(position: Int) {
         model?.run {
-            robotsList.value?.get(currentPosition.get())?.isSelected?.set(false)
+            if (currentPosition.get() < robotsList.value?.size ?: 0) {
+                robotsList.value?.get(currentPosition.get())?.isSelected?.set(false)
+            }
             robotsList.value?.get(position)?.isSelected?.set(true)
             currentPosition.set(position)
             updateButtonsVisibility(position)
@@ -86,6 +89,13 @@ class MyRobotsPresenter(
     }
 
     override fun onDeleteSelected(robotId: Int) {
-        // Nothing here yet
+        view?.deleteRobot(robotId)
+    }
+
+    override fun deleteRobot(robotId: Int) {
+        deleteRobotInteractor.id = robotId
+        deleteRobotInteractor.execute()
+        model?.robotsList?.value?.removeAll { it.id == robotId }
+        view?.onRobotsChanged()
     }
 }

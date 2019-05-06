@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModel
 import com.revolution.robotics.features.myRobots.adapter.MyRobotsItem
 
 class MyRobotsViewModel(private val presenter: MyRobotsMvp.Presenter) : ViewModel() {
-    val robotsList: MutableLiveData<List<MyRobotsItem>?> = MutableLiveData()
+    val robotsList: MutableLiveData<MutableList<MyRobotsItem>?> = MutableLiveData()
     val currentPosition: ObservableInt = ObservableInt()
     val isNextButtonVisible: ObservableBoolean = ObservableBoolean(false)
     val isPreviousButtonVisible: ObservableBoolean = ObservableBoolean(false)

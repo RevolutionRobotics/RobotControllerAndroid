@@ -7,7 +7,7 @@ import com.revolution.robotics.features.myRobots.MyRobotsMvp
 
 @Suppress("DataClassContainsFunctions")
 data class MyRobotsItem(
-    private val id: Int,
+    val id: Int,
     val name: String,
     val description: String,
     val iconDescription: String,

@@ -43,6 +43,10 @@
     <string name="my_robots_under_construction_button">Continue building</string>
     <string name="my_robots_under_construction">under construction</string>
 
+    <!-- Delete robot -->
+    <string name="delete_robot_description">Are you sure you want to delete this robot?</string>
+    <string name="delete_robot_confirm">Delete</string>
+
     <!-- Chapter finished -->
     <string name="build_chapter_finish_dialog_title">Chapter finished</string>
     <string name="build_chapter_finish_dialog_description">Well done!</string>

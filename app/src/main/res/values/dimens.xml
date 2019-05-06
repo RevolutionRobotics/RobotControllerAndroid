@@ -75,6 +75,10 @@
     <dimen name="camera_placeholder_height">104dp</dimen>
     <dimen name="camera_placeholder_padding">22dp</dimen>
 
+    <!-- DIALOG: DELETE ROBOT -->
+    <dimen name="delete_robot_image_width">46dp</dimen>
+    <dimen name="delete_robot_image_height">62dp</dimen>
+
     <!-- SCREEN: MAIN MENU -->
     <dimen name="main_menu_header_border_size">30dp</dimen>
     <dimen name="main_menu_footer_height">28dp</dimen>

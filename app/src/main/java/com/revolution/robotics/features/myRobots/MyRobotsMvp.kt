@@ -4,9 +4,10 @@ import com.revolution.robotics.core.Mvp
 
 interface MyRobotsMvp : Mvp {
     interface View : Mvp.View {
-        fun onRobotsLoaded()
+        fun onRobotsChanged()
         fun showNextRobot()
         fun showPreviousRobot()
+        fun deleteRobot(robotId: Int)
     }
 
     interface Presenter : Mvp.Presenter<View, MyRobotsViewModel> {
@@ -17,5 +18,6 @@ interface MyRobotsMvp : Mvp {
         fun onPlaySelected(robotId: Int)
         fun onEditSelected(robotId: Int)
         fun onDeleteSelected(robotId: Int)
+        fun deleteRobot(robotId: Int)
     }
 }
