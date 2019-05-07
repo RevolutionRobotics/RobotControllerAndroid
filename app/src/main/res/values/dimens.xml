@@ -4,6 +4,7 @@
     <dimen name="dimen_1dp">1dp</dimen>
     <dimen name="dimen_2dp">2dp</dimen>
     <dimen name="dimen_4dp">4dp</dimen>
+    <dimen name="dimen_6dp">6dp</dimen>
     <dimen name="dimen_8dp">8dp</dimen>
     <dimen name="dimen_10dp">10dp</dimen>
     <dimen name="dimen_12dp">12dp</dimen>
@@ -24,7 +25,7 @@
     <dimen name="toolbar_header_height">42dp</dimen>
     <dimen name="toolbar_header_border_size">30dp</dimen>
     <dimen name="toolbar_logo_size">38dp</dimen>
-    <dimen name="toolbar_back_size">24dp</dimen>
+    <dimen name="toolbar_back_size">40dp</dimen>
     <dimen name="toolbar_box_size">66dp</dimen>
     <dimen name="toolbar_icon_size">40dp</dimen>
 
