@@ -7,6 +7,7 @@ interface MotorConfigurationMvp : Mvp {
 
     interface View : Mvp.View
 
+    @Suppress("ComplexInterface")
     interface Presenter : Mvp.Presenter<View, MotorConfigurationViewModel> {
         fun setMotor(motor: Motor, portName: String)
         fun onEmptyButtonClicked()
@@ -16,5 +17,7 @@ interface MotorConfigurationMvp : Mvp {
         fun onRightSideClicked()
         fun onCounterClockwiseClicked()
         fun onClockwiseClicked()
+        fun onTestButtonClcked()
+        fun onDoneButtonClicked()
     }
 }
