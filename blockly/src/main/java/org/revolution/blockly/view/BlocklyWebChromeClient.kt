@@ -3,6 +3,7 @@ package org.revolution.blockly.view
 import android.webkit.JsPromptResult
 import android.webkit.WebChromeClient
 import android.webkit.WebView
+import org.json.JSONException
 import org.json.JSONObject
 
 class BlocklyWebChromeClient(private val dialogFactory: DialogFactory) : WebChromeClient() {
@@ -13,6 +14,7 @@ class BlocklyWebChromeClient(private val dialogFactory: DialogFactory) : WebChro
         const val DEFAULT_SLIDER_MAX_VALUE = 100
     }
 
+    @Suppress("SwallowedException")
     override fun onJsPrompt(
         view: WebView,
         url: String,
@@ -22,18 +24,23 @@ class BlocklyWebChromeClient(private val dialogFactory: DialogFactory) : WebChro
     ) =
         if (message != null) {
             // we didn't want to add the GSON dependency to a library module, so we're left with JSONObject
-            val json = JSONObject(message)
-            val options: JSONObject? = json.optJSONObject("options")
-            var wasDialogCreated = true
-            when (json["type"]) {
-                "text" -> dialogFactory.showTextInputDialog(result, options.toTextOptions())
-                "slider" -> dialogFactory.showSliderDialog(result, options.toSliderOptions())
-                else -> {
-                    super.onJsPrompt(view, url, message, defaultValue, result)
-                    wasDialogCreated = false
+            try {
+                val json = JSONObject(message)
+                val options: JSONObject? = json.optJSONObject("options")
+                var wasDialogCreated = true
+                when (json["type"]) {
+                    "text" -> dialogFactory.showTextInputDialog(result, options.toTextOptions())
+                    "slider" -> dialogFactory.showSliderDialog(result, options.toSliderOptions())
+                    else -> {
+                        super.onJsPrompt(view, url, message, defaultValue, result)
+                        wasDialogCreated = false
+                    }
                 }
+                wasDialogCreated
+            } catch (ex: JSONException) {
+                super.onJsPrompt(view, url, message, defaultValue, result)
+                false
             }
-            wasDialogCreated
         } else {
             super.onJsPrompt(view, url, message, defaultValue, result)
         }
