@@ -1,6 +1,8 @@
 package com.revolution.robotics.core.interactor
 
+import com.crashlytics.android.Crashlytics
 import com.revolution.bluetooth.threading.moveToUIThread
+import com.revolution.robotics.BuildConfig
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
@@ -33,6 +35,9 @@ abstract class Interactor<T> {
             }.let { result ->
                 moveToUIThread {
                     if (result is Throwable) {
+                        if (!BuildConfig.DEBUG) {
+                            Crashlytics.logException(result)
+                        }
                         onError.invoke(result)
                     } else {
                         onResponse.invoke(result as T)
