@@ -70,6 +70,11 @@
     <dimen name="testing_dialog_image_margin_end">24dp</dimen>
     <dimen name="testing_dialog_text_margin_end">32sp</dimen>
 
+    <!-- DIALOG: CAMERA -->
+    <dimen name="camera_placeholder_width">190dp</dimen>
+    <dimen name="camera_placeholder_height">104dp</dimen>
+    <dimen name="camera_placeholder_padding">22dp</dimen>
+
     <!-- SCREEN: MAIN MENU -->
     <dimen name="main_menu_header_border_size">30dp</dimen>
     <dimen name="main_menu_footer_height">28dp</dimen>

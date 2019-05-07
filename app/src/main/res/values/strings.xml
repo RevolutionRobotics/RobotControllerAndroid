@@ -50,6 +50,11 @@
     <string name="build_chapter_finish_dialog_button_next_chapter">Next chapter</string>
     <string name="build_chapter_finish_dialog_button_test">Test</string>
 
+    <!-- Robot picture -->
+    <string name="camera_dialog_title">Robot\'s profile picture</string>
+    <string name="camera_dialog_delete_title">Delete</string>
+    <string name="camera_dialog_new_photo_title">Take new photo</string>
+
     <!-- Tips -->
     <string name="tips_dialog_title">Tips</string>
     <string name="tips_dialog_sub_title">Try to…</string>

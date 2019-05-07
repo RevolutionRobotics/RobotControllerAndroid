@@ -1,5 +1,6 @@
 package com.revolution.robotics.views.dialogs
 
+import android.app.Activity
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -68,7 +69,7 @@ abstract class RoboticsDialog : DialogFragment() {
 
     override fun onDismiss(dialog: DialogInterface?) {
         super.onDismiss(dialog)
-        requireActivity().window.hideSystemUI()
+        (context as? Activity)?.window?.hideSystemUI()
     }
 
     open fun onDialogCloseButtonClicked() = Unit
