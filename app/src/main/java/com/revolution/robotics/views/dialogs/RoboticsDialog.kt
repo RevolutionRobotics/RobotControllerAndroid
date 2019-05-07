@@ -1,5 +1,6 @@
 package com.revolution.robotics.views.dialogs
 
+import android.app.Activity
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -20,6 +21,7 @@ import com.revolution.robotics.databinding.DialogRoboticsCoreButtonBinding
 import org.kodein.di.KodeinAware
 import org.kodein.di.LateInitKodein
 import org.kodein.di.erased.instance
+import java.lang.IllegalStateException
 
 @Suppress("OptionalUnit")
 abstract class RoboticsDialog : DialogFragment() {
@@ -68,7 +70,7 @@ abstract class RoboticsDialog : DialogFragment() {
 
     override fun onDismiss(dialog: DialogInterface?) {
         super.onDismiss(dialog)
-        requireActivity().window.hideSystemUI()
+        (context as? Activity)?.window?.hideSystemUI()
     }
 
     open fun onDialogCloseButtonClicked() = Unit

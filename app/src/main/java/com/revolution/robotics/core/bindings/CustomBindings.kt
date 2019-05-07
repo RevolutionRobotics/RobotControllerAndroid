@@ -1,5 +1,6 @@
 package com.revolution.robotics.core.bindings
 
+import android.graphics.Bitmap
 import android.graphics.ColorMatrix
 import android.graphics.ColorMatrixColorFilter
 import android.view.View
@@ -57,4 +58,9 @@ fun setAvailableRobotsItems(recyclerView: RecyclerView, itemList: List<ConnectRo
     if (itemList != null) {
         (recyclerView.adapter as? ConnectAdapter)?.setItems(itemList)
     }
+}
+
+@BindingAdapter("image")
+fun setImageBitmap(imageView: ImageView, image: Bitmap?) {
+    image?.let { imageView.setImageBitmap(it) }
 }
