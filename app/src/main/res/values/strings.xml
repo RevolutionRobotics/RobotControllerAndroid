@@ -116,5 +116,6 @@
     <string name="configuration_right">Right</string>
     <string name="configuration_counter_clockwise">Counter clockwise</string>
     <string name="configuration_clockwise">Clockwise</string>
-    
+    <string name="configuration_done">Done</string>
+
 </resources>

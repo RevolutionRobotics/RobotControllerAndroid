@@ -10,7 +10,12 @@
             xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="@dimen/dimen_16dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:paddingTop="@dimen/dimen_16dp"
+            android:paddingBottom="@dimen/dimen_16dp"
+            android:paddingLeft="@dimen/dimen_4dp"
+            android:paddingRight="@dimen/dimen_4dp"
             android:background="@color/grey_28"
             tools:layout_width="@dimen/drawer_config_width">
 
@@ -19,6 +24,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginStart="@dimen/dimen_12dp"
+                android:layout_marginEnd="@dimen/dimen_12dp"
                 android:text="@{viewModel.editTextTitle}"/>
 
 
@@ -83,6 +90,28 @@
         <include
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/button_direction_motor_left"
+                layout="@layout/layout_config_button"
+                app:viewModel="@{viewModel.motorCounterClockwiseButton}"
+                android:layout_marginTop="@dimen/dimen_12dp"
+                app:layout_constraintTop_toBottomOf="@id/button_drivetrain"
+                app:layout_constraintStart_toStartOf="@id/button_drivetrain"
+                app:layout_constraintEnd_toEndOf="@id/button_drivetrain"/>
+
+        <include
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/button_direction_motor_right"
+                layout="@layout/layout_config_button"
+                app:viewModel="@{viewModel.motorClockwiseButton}"
+                android:layout_marginTop="@dimen/dimen_12dp"
+                app:layout_constraintTop_toBottomOf="@id/button_engine"
+                app:layout_constraintStart_toStartOf="@id/button_engine"
+                app:layout_constraintEnd_toEndOf="@id/button_engine"/>
+
+        <include
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:id="@+id/button_counter_clockwise"
                 layout="@layout/layout_config_button"
                 app:viewModel="@{viewModel.counterClockwiseButton}"
@@ -102,6 +131,62 @@
                 app:layout_constraintStart_toStartOf="@id/button_side_right"
                 app:layout_constraintEnd_toEndOf="@id/button_side_right"/>
 
+
+        <LinearLayout
+                android:id="@+id/button_test"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dialog_button_height"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:chippedBoxConfig="@{viewModel.testButtonChippedBoxConfig}"
+                app:layout_constraintEnd_toStartOf="@id/button_done"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+            <ImageView
+                    android:layout_width="@dimen/dimen_16dp"
+                    android:layout_height="@dimen/dimen_16dp"
+                    android:layout_marginEnd="8dp"
+                    android:src="@drawable/ic_test"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/barlow_regular"
+                    android:includeFontPadding="false"
+                    android:textSize="14sp"
+                    android:text="@string/build_chapter_finish_dialog_button_test"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/button_done"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dialog_button_height"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:chippedBoxConfig="@{viewModel.doneButtonChippedBoxConfig}"
+                app:layout_constraintStart_toEndOf="@id/button_test"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+            <ImageView
+                    android:layout_width="@dimen/dimen_16dp"
+                    android:layout_height="@dimen/dimen_16dp"
+                    android:layout_marginEnd="8dp"
+                    android:src="@drawable/ic_check"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/barlow_regular"
+                    android:includeFontPadding="false"
+                    android:textSize="14sp"
+                    android:text="@string/configuration_done"/>
+
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

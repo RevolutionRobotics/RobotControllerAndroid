@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.revolution.robotics.R
 import com.revolution.robotics.features.configure.ConfigButtonViewModel
+import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 
 class MotorConfigurationViewModel(
     private val presenter: MotorConfigurationMvp.Presenter
@@ -25,8 +26,18 @@ class MotorConfigurationViewModel(
         )
     val clockwiseButton =
         ConfigButtonViewModel(R.string.configuration_clockwise, R.drawable.ic_rotation_right_grey, ::onClockwiseClicked)
+    val motorCounterClockwiseButton =
+        ConfigButtonViewModel(
+            R.string.configuration_counter_clockwise,
+            R.drawable.ic_rotation_left,
+            ::onCounterClockwiseClicked
+        )
+    val motorClockwiseButton =
+        ConfigButtonViewModel(R.string.configuration_clockwise, R.drawable.ic_rotation_right_grey, ::onClockwiseClicked)
 
     val editTextTitle = MutableLiveData<String>()
+    val testButtonChippedBoxConfig = MutableLiveData<ChippedBoxConfig>()
+    val doneButtonChippedBoxConfig = MutableLiveData<ChippedBoxConfig>()
 
     fun onEmptyButtonClicked() {
         presenter.onEmptyButtonClicked()
