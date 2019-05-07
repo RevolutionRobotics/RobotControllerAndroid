@@ -28,5 +28,5 @@ fun createViewModelModule() =
         bind<BuildRobotViewModel>() with provider { BuildRobotViewModel(instance()) }
         bind<ConfigureViewModel>() with provider { ConfigureViewModel(instance()) }
         bind<ConfigureConnectionsViewModel>() with provider { ConfigureConnectionsViewModel() }
-        bind<MotorConfigurationViewModel>() with provider { MotorConfigurationViewModel(instance(), instance()) }
+        bind<MotorConfigurationViewModel>() with provider { MotorConfigurationViewModel(instance()) }
     }

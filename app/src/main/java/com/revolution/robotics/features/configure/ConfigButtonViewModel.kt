@@ -4,7 +4,11 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.databinding.ObservableBoolean
 
-data class ConfigButtonViewModel(@StringRes val name: Int, @DrawableRes val iconResource: Int) {
+data class ConfigButtonViewModel(
+    @StringRes val name: Int,
+    @DrawableRes val iconResource: Int,
+    val onClick: () -> Unit
+) {
     val isSelected = ObservableBoolean(false)
     val isVisible = ObservableBoolean(true)
 }

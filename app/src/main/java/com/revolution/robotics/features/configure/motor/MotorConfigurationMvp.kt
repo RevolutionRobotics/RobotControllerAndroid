@@ -12,8 +12,8 @@ interface MotorConfigurationMvp : Mvp {
         fun onEmptyButtonClicked()
         fun onDrivetrainButtonClicked()
         fun onMotorClicked()
-        fun onLeftDirectionClicked()
-        fun onRightDirectionClicked()
+        fun onLeftSideClicked()
+        fun onRightSideClicked()
         fun onCounterClockwiseClicked()
         fun onClockwiseClicked()
     }
