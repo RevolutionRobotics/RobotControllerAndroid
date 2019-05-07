@@ -59,11 +59,9 @@ fun createPresenterModule() =
 fun createDbModule(context: Context) =
     Kodein.Module("DbModule") {
         bind<RoboticsDatabase>() with singleton {
-            Room.databaseBuilder(
-                context,
-                RoboticsDatabase::class.java,
-                "robotics-database"
-            ).build()
+            Room.databaseBuilder(context, RoboticsDatabase::class.java, "robotics-database")
+                .fallbackToDestructiveMigration()
+                .build()
         }
         bind<UserRobotDao>() with provider { instance<RoboticsDatabase>().userRobotDao() }
         bind<UserConfigurationDao>() with provider { instance<RoboticsDatabase>().userConfigurationDao() }

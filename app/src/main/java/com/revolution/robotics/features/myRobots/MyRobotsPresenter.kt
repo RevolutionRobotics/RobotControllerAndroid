@@ -1,10 +1,11 @@
 package com.revolution.robotics.features.myRobots
 
 import com.revolution.robotics.core.domain.local.BuildStatus
+import com.revolution.robotics.core.domain.shared.RobotDescriptor
+import com.revolution.robotics.core.extensions.formatYearMonthDay
 import com.revolution.robotics.core.extensions.isEmptyOrNull
 import com.revolution.robotics.core.interactor.DeleteRobotInteractor
 import com.revolution.robotics.core.interactor.GetAllUserRobotsInteractor
-import com.revolution.robotics.core.utils.DateFormatters
 import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.features.myRobots.adapter.MyRobotsItem
 import kotlin.math.max
@@ -28,10 +29,8 @@ class MyRobotsPresenter(
                 model?.robotsList?.set(robots.map { robot ->
                     MyRobotsItem(
                         robot.id,
-                        robot.customName ?: "",
-                        robot.customDescription ?: "",
-                        DateFormatters.yearMonthDay(robot.lastModified),
-                        robot.customImage ?: "",
+                        robot,
+                        robot.lastModified?.formatYearMonthDay() ?: "",
                         robot.buildStatus != BuildStatus.COMPLETED,
                         this
                     )
@@ -82,6 +81,10 @@ class MyRobotsPresenter(
 
     override fun onPlaySelected(robotId: Int) {
         // Nothing here yet
+    }
+
+    override fun onContinueBuildingSelected(robot: RobotDescriptor) {
+        navigator.navigate(MyRobotsFragmentDirections.toBuildRobot(robot))
     }
 
     override fun onEditSelected(robotId: Int) {

@@ -21,6 +21,11 @@
               android:label="MyRobotsFragment">
         <action android:id="@+id/toWhoToBuild"
                 app:destination="@id/whoToBuildFragment"/>
+        <action android:id="@+id/toBuildRobot"
+                app:destination="@id/buildRobotFragment">
+            <argument app:argType="com.revolution.robotics.core.domain.shared.RobotDescriptor"
+                      android:name="robot"/>
+        </action>
     </fragment>
 
     <fragment android:id="@+id/whoToBuildFragment"
@@ -28,7 +33,7 @@
               android:label="WhoToBuildFragment">
         <action android:id="@+id/toBuildRobot"
                 app:destination="@id/buildRobotFragment">
-            <argument app:argType="com.revolution.robotics.core.domain.remote.Robot"
+            <argument app:argType="com.revolution.robotics.core.domain.shared.RobotDescriptor"
                       android:name="robot"/>
         </action>
     </fragment>

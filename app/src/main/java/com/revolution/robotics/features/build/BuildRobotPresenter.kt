@@ -3,7 +3,7 @@ package com.revolution.robotics.features.build
 import com.revolution.robotics.core.domain.local.BuildStatus
 import com.revolution.robotics.core.domain.local.UserRobot
 import com.revolution.robotics.core.domain.remote.BuildStep
-import com.revolution.robotics.core.domain.remote.Robot
+import com.revolution.robotics.core.domain.shared.RobotDescriptor
 import com.revolution.robotics.core.interactor.GetUserRobotInteractor
 import com.revolution.robotics.core.interactor.SaveUserRobotInteractor
 import com.revolution.robotics.core.interactor.firebase.BuildStepInteractor
@@ -43,7 +43,7 @@ class BuildRobotPresenter(
         )
     }
 
-    override fun createNewRobot(robot: Robot?, currentBuildStep: BuildStep?) {
+    override fun createNewRobot(robot: RobotDescriptor?, currentBuildStep: BuildStep?) {
         saveUserRobot(
             UserRobot(
                 0,
