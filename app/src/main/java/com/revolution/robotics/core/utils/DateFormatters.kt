@@ -7,8 +7,9 @@ import java.util.Locale
 class DateFormatters private constructor() {
 
     companion object {
-        private val YEAR_MONTH_DAY = SimpleDateFormat("yyyy/MM/dd", Locale.getDefault())
+        private const val YEAR_MONTH_DAY = "yyyy/MM/dd"
 
-        fun yearMonthDay(date: Date?): String = YEAR_MONTH_DAY.format(date)
+        fun yearMonthDay(date: Date?, locale: Locale = Locale.getDefault()): String =
+            SimpleDateFormat(YEAR_MONTH_DAY, locale).format(date)
     }
 }
