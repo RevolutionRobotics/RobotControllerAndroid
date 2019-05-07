@@ -25,7 +25,7 @@ class MyRobotsPresenter(
     private fun loadRobots() {
         getAllUserRobotsInteractor.execute(
             onResponse = { robots ->
-                model?.robotsList?.value = robots.map { robot ->
+                model?.robotsList?.set(robots.map { robot ->
                     MyRobotsItem(
                         robot.id,
                         robot.customName ?: "",
@@ -35,7 +35,7 @@ class MyRobotsPresenter(
                         robot.buildStatus != BuildStatus.COMPLETED,
                         this
                     )
-                }.toMutableList()
+                }.toMutableList())
                 view?.onRobotsChanged()
             },
             onError = { error ->
@@ -47,10 +47,10 @@ class MyRobotsPresenter(
 
     override fun onPageSelected(position: Int) {
         model?.run {
-            if (currentPosition.get() < robotsList.value?.size ?: 0) {
-                robotsList.value?.get(currentPosition.get())?.isSelected?.set(false)
+            if (currentPosition.get() < robotsList.get()?.size ?: 0) {
+                robotsList.get()?.get(currentPosition.get())?.isSelected?.set(false)
             }
-            robotsList.value?.get(position)?.isSelected?.set(true)
+            robotsList.get()?.get(position)?.isSelected?.set(true)
             currentPosition.set(position)
             updateButtonsVisibility(position)
         }
@@ -58,12 +58,12 @@ class MyRobotsPresenter(
 
     private fun updateButtonsVisibility(position: Int) {
         model?.run {
-            if (robotsList.value.isEmptyOrNull()) {
+            if (robotsList.get().isEmptyOrNull()) {
                 isPreviousButtonVisible.set(false)
                 isNextButtonVisible.set(false)
             } else {
                 isPreviousButtonVisible.set(position != 0)
-                isNextButtonVisible.set(position != max((robotsList.value?.size ?: 0) - 1, 0))
+                isNextButtonVisible.set(position != max((robotsList.get()?.size ?: 0) - 1, 0))
             }
         }
     }
@@ -95,7 +95,10 @@ class MyRobotsPresenter(
     override fun deleteRobot(robotId: Int) {
         deleteRobotInteractor.id = robotId
         deleteRobotInteractor.execute()
-        model?.robotsList?.value?.removeAll { it.id == robotId }
+        model?.robotsList?.apply {
+            get()?.removeAll { it.id == robotId }
+            notifyChange()
+        }
         view?.onRobotsChanged()
     }
 }

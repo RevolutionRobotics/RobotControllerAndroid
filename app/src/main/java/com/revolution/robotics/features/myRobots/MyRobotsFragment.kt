@@ -7,7 +7,6 @@ import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
 import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
 import com.revolution.robotics.core.eventBus.dialog.DialogId
-import com.revolution.robotics.core.extensions.forceApplyTransformer
 import com.revolution.robotics.core.extensions.waitForLayout
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.databinding.FragmentMyRobotsBinding
