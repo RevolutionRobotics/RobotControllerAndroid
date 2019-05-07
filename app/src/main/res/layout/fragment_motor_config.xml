@@ -188,7 +188,8 @@
                     android:fontFamily="@font/barlow_regular"
                     android:includeFontPadding="false"
                     android:textSize="14sp"
-                    android:text="@string/configuration_done"/>
+                    app:textColorResource="@{viewModel.doneTextColor}"
+                    android:text="@string/configure_motor_done_button_title"/>
 
         </LinearLayout>
 

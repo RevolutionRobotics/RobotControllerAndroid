@@ -20,7 +20,8 @@ class MotorConfigurationPresenter(private val resourceResolver: ResourceResolver
     }
 
     override fun setMotor(motor: Motor, portName: String) {
-        model?.editTextTitle?.value = "$portName ${resourceResolver.string(R.string.config_name_edit_title)}"
+        model?.editTextTitle?.value =
+            "$portName - ${resourceResolver.string(R.string.configure_motor_name_inputfield_title)}"
         when (motor.type) {
             Motor.TYPE_MOTOR -> buttonHandler?.initMotor(motor)
             Motor.TYPE_DRIVETRAIN -> buttonHandler?.initDrivetrain(motor)

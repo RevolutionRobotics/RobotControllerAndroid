@@ -108,14 +108,14 @@
     </string>
 
     <!--- Configuration Slider Motor-->
-    <string name="config_name_edit_title"> - Name</string>
-    <string name="configuration_empty">Empty</string>
-    <string name="configuration_drivetrain">Drivetrain</string>
-    <string name="configuration_motor">Motor</string>
-    <string name="configuration_left">Left</string>
-    <string name="configuration_right">Right</string>
-    <string name="configuration_counter_clockwise">Counter clockwise</string>
-    <string name="configuration_clockwise">Clockwise</string>
-    <string name="configuration_done">Done</string>
+    <string name="configure_motor_name_inputfield_title">Name</string>
+    <string name="configure_motor_empty_button_title">Empty</string>
+    <string name="configure_motor_drivetrain_button_title">Drivetrain</string>
+    <string name="configure_motor_motor_button_title">Motor</string>
+    <string name="configure_motor_left_button_title">Left</string>
+    <string name="configure_motor_right_button_title">Right</string>
+    <string name="configure_motor_counterclockwise_button_title">Counter clockwise</string>
+    <string name="configure_motor_clockwise_button_title">Clockwise</string>
+    <string name="configure_motor_done_button_title">Done</string>
 
 </resources>
