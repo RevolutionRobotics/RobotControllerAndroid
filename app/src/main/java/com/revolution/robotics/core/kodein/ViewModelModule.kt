@@ -6,6 +6,7 @@ import com.revolution.robotics.features.challenges.ChallengesViewModel
 import com.revolution.robotics.features.coding.CodingViewModel
 import com.revolution.robotics.features.configure.ConfigureViewModel
 import com.revolution.robotics.features.configure.motor.MotorConfigurationViewModel
+import com.revolution.robotics.features.configure.sensor.SensorConfigurationViewModel
 import com.revolution.robotics.features.controller.LiveControllerViewModel
 import com.revolution.robotics.features.mainmenu.MainMenuViewModel
 import com.revolution.robotics.features.myRobots.MyRobotsViewModel
@@ -29,4 +30,5 @@ fun createViewModelModule() =
         bind<ConfigureViewModel>() with provider { ConfigureViewModel(instance()) }
         bind<ConfigureConnectionsViewModel>() with provider { ConfigureConnectionsViewModel() }
         bind<MotorConfigurationViewModel>() with provider { MotorConfigurationViewModel(instance()) }
+        bind<SensorConfigurationViewModel>() with provider { SensorConfigurationViewModel(instance()) }
     }

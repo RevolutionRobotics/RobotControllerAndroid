@@ -6,6 +6,8 @@ import android.graphics.ColorMatrixColorFilter
 import android.view.View
 import android.widget.ImageView
 import android.widget.SeekBar
+import android.widget.TextView
+import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -65,6 +67,20 @@ fun setAvailableRobotsItems(recyclerView: RecyclerView, itemList: List<ConnectRo
 @BindingAdapter("image")
 fun setImageBitmap(imageView: ImageView, image: Bitmap?) {
     image?.let { imageView.setImageBitmap(it) }
+}
+
+@BindingAdapter("tintColorResource")
+fun setTintColor(imageView: ImageView, @ColorRes color: Int) {
+    if (color != 0) {
+        imageView.setColorFilter(imageView.context.color(color), android.graphics.PorterDuff.Mode.SRC_IN)
+    }
+}
+
+@BindingAdapter("textColorResource")
+fun setTextColor(textView: TextView, @ColorRes color: Int) {
+    if (color != 0) {
+        textView.setTextColor(textView.context.color(color))
+    }
 }
 
 @BindingAdapter("configButtonSelected")

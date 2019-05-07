@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable name="viewModel"
+                  type="com.revolution.robotics.features.configure.sensor.SensorConfigurationViewModel"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:focusable="true"
+            android:paddingTop="@dimen/dimen_16dp"
+            android:paddingBottom="@dimen/dimen_4dp"
+            android:paddingLeft="@dimen/dimen_4dp"
+            android:paddingRight="@dimen/dimen_4dp"
+            android:background="@color/grey_28"
+            tools:layout_width="@dimen/drawer_config_width">
+
+        <EditText
+                android:id="@+id/edit_sensor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginStart="@dimen/dimen_12dp"
+                android:layout_marginEnd="@dimen/dimen_12dp"
+                android:text="@{viewModel.editTextTitle}"/>
+
+        <include
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/button_empty"
+                layout="@layout/layout_config_button"
+                app:viewModel="@{viewModel.emptyButton}"
+                android:layout_marginTop="@dimen/dimen_12dp"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                app:layout_constraintTop_toBottomOf="@id/edit_sensor"
+                app:layout_constraintEnd_toStartOf="@id/button_bumper"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+        <include
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/button_bumper"
+                layout="@layout/layout_config_button"
+                app:viewModel="@{viewModel.bumperButton}"
+                android:layout_marginTop="@dimen/dimen_12dp"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                app:layout_constraintTop_toBottomOf="@id/edit_sensor"
+                app:layout_constraintStart_toEndOf="@id/button_empty"
+                app:layout_constraintEnd_toStartOf="@id/button_ultrasound"/>
+
+        <include
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/button_ultrasound"
+                layout="@layout/layout_config_button"
+                app:viewModel="@{viewModel.ultrasoundButton}"
+                android:layout_marginTop="@dimen/dimen_12dp"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                app:layout_constraintTop_toBottomOf="@id/edit_sensor"
+                app:layout_constraintStart_toEndOf="@id/button_bumper"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+        <LinearLayout
+                android:id="@+id/button_test"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dialog_button_height"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:clickable="@{viewModel.testButtonEnabled}"
+                android:onClick="@{() -> viewModel.onTestButtonClicked()}"
+                app:chippedBoxConfig="@{viewModel.testButtonChippedBoxConfig}"
+                app:layout_constraintEnd_toStartOf="@id/button_done"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+            <ImageView
+                    android:layout_width="@dimen/dimen_16dp"
+                    android:layout_height="@dimen/dimen_16dp"
+                    android:layout_marginEnd="8dp"
+                    app:tintColorResource="@{viewModel.testTextColor}"
+                    android:src="@drawable/ic_test"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/barlow_regular"
+                    android:includeFontPadding="false"
+                    app:textColorResource="@{viewModel.testTextColor}"
+                    android:textSize="14sp"
+                    android:text="@string/configure_motor_test_button_title"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/button_done"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dialog_button_height"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:clickable="@{viewModel.doneButtonEnabled}"
+                android:onClick="@{() -> viewModel.onDoneButtonClicked()}"
+                app:chippedBoxConfig="@{viewModel.doneButtonChippedBoxConfig}"
+                app:layout_constraintStart_toEndOf="@id/button_test"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+            <ImageView
+                    android:layout_width="@dimen/dimen_16dp"
+                    android:layout_height="@dimen/dimen_16dp"
+                    android:layout_marginEnd="8dp"
+                    app:tintColorResource="@{viewModel.doneTextColor}"
+                    android:src="@drawable/ic_check"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/barlow_regular"
+                    android:includeFontPadding="false"
+                    android:textSize="14sp"
+                    app:textColorResource="@{viewModel.doneTextColor}"
+                    android:text="@string/configure_motor_done_button_title"/>
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

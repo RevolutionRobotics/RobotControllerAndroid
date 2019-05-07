@@ -11,6 +11,7 @@ import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.remote.Motor
 import com.revolution.robotics.core.domain.remote.Sensor
 import com.revolution.robotics.features.configure.motor.MotorConfigurationFragment
+import com.revolution.robotics.features.configure.sensor.SensorConfigurationFragment
 
 class ConfigurationDrawerLayout @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) :
     DrawerLayout(context, attrs), DrawerLayout.DrawerListener {
@@ -33,7 +34,10 @@ class ConfigurationDrawerLayout @JvmOverloads constructor(context: Context, attr
     }
 
     fun setSensor(sensor: Sensor) {
-        // TODO load sensor fragment
+        (context as FragmentActivity).supportFragmentManager.beginTransaction()
+            .replace(R.id.container_sensor_configuration, SensorConfigurationFragment.newInstance(sensor, "S1"))
+            .commitAllowingStateLoss()
+        openDrawer(GravityCompat.START, true)
     }
 
     override fun onDrawerClosed(drawerView: View) {

@@ -27,6 +27,8 @@ import com.revolution.robotics.features.configure.connections.ConfigureConnectio
 import com.revolution.robotics.features.configure.connections.ConfigureConnectionsPresenter
 import com.revolution.robotics.features.configure.motor.MotorConfigurationMvp
 import com.revolution.robotics.features.configure.motor.MotorConfigurationPresenter
+import com.revolution.robotics.features.configure.sensor.SensorConfigurationMvp
+import com.revolution.robotics.features.configure.sensor.SensorConfigurationPresenter
 import com.revolution.robotics.features.mainmenu.MainMenuMvp
 import com.revolution.robotics.features.mainmenu.MainMenuPresenter
 import com.revolution.robotics.features.myRobots.MyRobotsMvp
@@ -63,6 +65,7 @@ fun createPresenterModule() =
         bind<ConfigureMvp.Presenter>() with singleton { ConfigurePresenter() }
         bind<ConfigureConnectionsMvp.Presenter>() with singleton { ConfigureConnectionsPresenter() }
         bind<MotorConfigurationMvp.Presenter>() with singleton { MotorConfigurationPresenter(instance()) }
+        bind<SensorConfigurationMvp.Presenter>() with singleton { SensorConfigurationPresenter() }
     }
 
 fun createDbModule(context: Context) =
