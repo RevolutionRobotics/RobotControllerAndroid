@@ -19,16 +19,14 @@ class WhoToBuildFragment : BaseFragment<FragmentWhoToBuildBinding, WhoToBuildVie
     WhoToBuildMvp.View, ViewPager.OnPageChangeListener {
 
     override val viewModelClass: Class<WhoToBuildViewModel> = WhoToBuildViewModel::class.java
-    private var adapter: RobotsCarouselAdapter? = null
+    private var adapter = RobotsCarouselAdapter()
     private val presenter: WhoToBuildMvp.Presenter by kodein.instance()
     private val resourceResolver: ResourceResolver by kodein.instance()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         presenter.register(this, viewModel)
-        adapter = RobotsCarouselAdapter().apply {
-            binding?.robotsViewpager?.initCarouselVariables(this@WhoToBuildFragment, this)
-        }
+        binding?.robotsViewpager?.initCarouselVariables(this@WhoToBuildFragment, adapter)
         binding?.toolbarViewModel = WhoToBuildToolbarViewModel(resourceResolver)
 
         view.waitForLayout {
@@ -63,7 +61,7 @@ class WhoToBuildFragment : BaseFragment<FragmentWhoToBuildBinding, WhoToBuildVie
     override fun onPageScrollStateChanged(state: Int) = Unit
 
     override fun onPageSelected(position: Int) {
-        adapter?.selectedPosition = position
+        adapter.selectedPosition = position
         presenter.onPageSelected(position)
     }
 }

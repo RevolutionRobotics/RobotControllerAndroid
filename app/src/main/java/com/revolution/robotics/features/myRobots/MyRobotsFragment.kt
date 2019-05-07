@@ -7,6 +7,7 @@ import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
 import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
 import com.revolution.robotics.core.eventBus.dialog.DialogId
+import com.revolution.robotics.core.extensions.forceApplyTransformer
 import com.revolution.robotics.core.extensions.waitForLayout
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.databinding.FragmentMyRobotsBinding
@@ -15,6 +16,7 @@ import com.revolution.robotics.features.myRobots.delete.DeleteRobotDialog
 import com.revolution.robotics.views.carousel.initCarouselPadding
 import com.revolution.robotics.views.carousel.initCarouselVariables
 import com.revolution.robotics.views.carousel.initTransformerWithDelay
+import com.revolution.robotics.views.carousel.reInitTransformerWithDelay
 import org.kodein.di.erased.instance
 
 class MyRobotsFragment : BaseFragment<FragmentMyRobotsBinding, MyRobotsViewModel>(R.layout.fragment_my_robots),
@@ -61,6 +63,7 @@ class MyRobotsFragment : BaseFragment<FragmentMyRobotsBinding, MyRobotsViewModel
     override fun onPageScrollStateChanged(state: Int) = Unit
 
     override fun onPageSelected(position: Int) {
+        adapter.selectedPosition = position
         presenter.onPageSelected(position)
     }
 
@@ -71,6 +74,10 @@ class MyRobotsFragment : BaseFragment<FragmentMyRobotsBinding, MyRobotsViewModel
 
     override fun onDialogEvent(dialog: DialogId, event: DialogEventBus.Event) {
         if (dialog == DialogId.DELETE_ROBOT && event == DialogEventBus.Event.POSITIVE && robotToDeleteId != -1) {
+            if (adapter.selectedPosition == adapter.count - 1) {
+                adapter.selectedPosition--
+            }
+            binding?.myRobotsViewpager?.reInitTransformerWithDelay()
             presenter.deleteRobot(robotToDeleteId)
             adapter.removeItems { it.id == robotToDeleteId }
             robotToDeleteId = -1

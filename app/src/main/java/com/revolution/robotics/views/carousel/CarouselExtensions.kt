@@ -23,6 +23,12 @@ fun ViewPager.initTransformerWithDelay() {
     }
 }
 
+@Suppress("OptionalUnit")
+fun ViewPager.reInitTransformerWithDelay() {
+    setPageTransformer(false, { _, _ -> Unit })
+    initTransformerWithDelay()
+}
+
 fun ViewPager.initCarouselPadding(
     viewWidth: Int
 ) {
