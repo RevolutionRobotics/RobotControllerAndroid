@@ -4,7 +4,6 @@ import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableInt
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.revolution.robotics.features.build.BuildRobotFragment
 import com.revolution.robotics.features.whoToBuild.adapter.RobotsItem
 
 class WhoToBuildViewModel(private val presenter: WhoToBuildMvp.Presenter) : ViewModel() {

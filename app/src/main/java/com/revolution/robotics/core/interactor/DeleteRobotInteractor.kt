@@ -7,6 +7,6 @@ class DeleteRobotInteractor(private val userRobotDao: UserRobotDao) : Interactor
     var id: Int = -1
 
     override fun getData() {
-        // userRobotDao.deleteRobotById(id)
+        userRobotDao.deleteRobotById(id)
     }
 }

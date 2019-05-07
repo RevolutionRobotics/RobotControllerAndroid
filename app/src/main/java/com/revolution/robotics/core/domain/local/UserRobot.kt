@@ -1,13 +1,11 @@
 package com.revolution.robotics.core.domain.local
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Entity
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.PrimaryKey
 import androidx.room.Query
-import androidx.room.Update
 import java.util.Date
 
 @Entity
