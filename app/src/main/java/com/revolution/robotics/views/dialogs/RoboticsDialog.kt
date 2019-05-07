@@ -21,7 +21,6 @@ import com.revolution.robotics.databinding.DialogRoboticsCoreButtonBinding
 import org.kodein.di.KodeinAware
 import org.kodein.di.LateInitKodein
 import org.kodein.di.erased.instance
-import java.lang.IllegalStateException
 
 @Suppress("OptionalUnit")
 abstract class RoboticsDialog : DialogFragment() {
