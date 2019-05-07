@@ -22,15 +22,85 @@
                 android:text="@{viewModel.editTextTitle}"/>
 
 
-        <ImageView
-                android:id="@+id/ic_engine"
-                android:layout_width="42dp"
-                android:layout_height="40dp"
-                android:padding="10dp"
+        <include
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/button_empty"
+                layout="@layout/layout_config_button"
+                app:viewModel="@{viewModel.emptyButton}"
+                android:layout_marginTop="@dimen/dimen_12dp"
+                app:layout_constraintHorizontal_chainStyle="spread"
                 app:layout_constraintTop_toBottomOf="@id/edit_motor"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:configButtonSelected="@{viewModel.isMotor}"
-                android:src="@drawable/ic_engine"/>
+                app:layout_constraintEnd_toStartOf="@id/button_drivetrain"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+        <include
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/button_drivetrain"
+                layout="@layout/layout_config_button"
+                app:viewModel="@{viewModel.driveTrainButton}"
+                android:layout_marginTop="@dimen/dimen_12dp"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                app:layout_constraintTop_toBottomOf="@id/edit_motor"
+                app:layout_constraintStart_toEndOf="@id/button_empty"
+                app:layout_constraintEnd_toStartOf="@id/button_engine"/>
+
+        <include
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/button_engine"
+                layout="@layout/layout_config_button"
+                app:viewModel="@{viewModel.motorButton}"
+                android:layout_marginTop="@dimen/dimen_12dp"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                app:layout_constraintTop_toBottomOf="@id/edit_motor"
+                app:layout_constraintStart_toEndOf="@id/button_drivetrain"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+        <include
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/button_side_left"
+                layout="@layout/layout_config_button"
+                app:viewModel="@{viewModel.sideLeftButton}"
+                android:layout_marginTop="@dimen/dimen_12dp"
+                app:layout_constraintTop_toBottomOf="@id/button_drivetrain"
+                app:layout_constraintStart_toStartOf="@id/button_drivetrain"
+                app:layout_constraintEnd_toEndOf="@id/button_drivetrain"/>
+
+        <include
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/button_side_right"
+                layout="@layout/layout_config_button"
+                app:viewModel="@{viewModel.sideRightButton}"
+                android:layout_marginTop="@dimen/dimen_12dp"
+                app:layout_constraintTop_toBottomOf="@id/button_engine"
+                app:layout_constraintStart_toStartOf="@id/button_engine"
+                app:layout_constraintEnd_toEndOf="@id/button_engine"/>
+
+        <include
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/button_counter_clockwise"
+                layout="@layout/layout_config_button"
+                app:viewModel="@{viewModel.counterClockwiseButton}"
+                android:layout_marginTop="@dimen/dimen_12dp"
+                app:layout_constraintTop_toBottomOf="@id/button_side_left"
+                app:layout_constraintStart_toStartOf="@id/button_side_left"
+                app:layout_constraintEnd_toEndOf="@id/button_side_left"/>
+
+        <include
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/button_clockwise"
+                layout="@layout/layout_config_button"
+                app:viewModel="@{viewModel.clockwiseButton}"
+                android:layout_marginTop="@dimen/dimen_12dp"
+                app:layout_constraintTop_toBottomOf="@id/button_side_right"
+                app:layout_constraintStart_toStartOf="@id/button_side_right"
+                app:layout_constraintEnd_toEndOf="@id/button_side_right"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

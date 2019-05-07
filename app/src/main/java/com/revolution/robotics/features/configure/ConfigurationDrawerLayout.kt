@@ -17,7 +17,6 @@ class ConfigurationDrawerLayout @JvmOverloads constructor(context: Context, attr
 
     init {
         setDrawerLockMode(LOCK_MODE_LOCKED_CLOSED)
-        LayoutInflater.from(context).inflate(R.layout.drawer_sliding_layout, this)
         addDrawerListener(this)
     }
 
@@ -26,6 +25,11 @@ class ConfigurationDrawerLayout @JvmOverloads constructor(context: Context, attr
             .replace(R.id.container_motor_configuration, MotorConfigurationFragment.newInstance(motor, "M1"))
             .commitAllowingStateLoss()
         openDrawer(GravityCompat.END, true)
+    }
+
+    override fun onFinishInflate() {
+        super.onFinishInflate()
+        LayoutInflater.from(context).inflate(R.layout.drawer_sliding_layout, this)
     }
 
     fun setSensor(sensor: Sensor) {

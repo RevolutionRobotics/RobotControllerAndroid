@@ -33,9 +33,6 @@ class MotorConfigurationFragment :
         arguments?.let {
             presenter.setMotor(it.motor, it.portName)
         }
-        binding?.icEngine?.setOnClickListener {
-            viewModel?.isMotor?.value = viewModel?.isMotor?.value != true
-        }
     }
 
     override fun onDestroyView() {

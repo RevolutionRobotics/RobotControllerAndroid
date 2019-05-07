@@ -69,19 +69,19 @@ fun setImageBitmap(imageView: ImageView, image: Bitmap?) {
 
 @BindingAdapter("configButtonSelected")
 fun setConfigButtonBackground(button: ImageView, configButtonSelected: Boolean) {
-    button.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
     if (configButtonSelected) {
         button.setColorFilter(button.context.color(R.color.grey_28), android.graphics.PorterDuff.Mode.SRC_IN)
         button.setBackgroundResource(R.drawable.bg_control_button_selected)
     } else {
         setChippedBoxConfig(
             button, ChippedBoxConfig.Builder()
+                .backgroundColorResource(R.color.grey_28)
                 .chipBottomLeft(true)
                 .chipTopRight(true)
-                .isDashed(true)
-                .borderColorResource(R.color.white)
-                .borderSize(R.dimen.dimen_2dp)
-                .chipSize(R.dimen.dimen_4dp)
+                .borderColorResource(R.color.grey_6d)
+                .borderSize(R.dimen.dimen_1dp)
+                .chipSize(R.dimen.dimen_8dp)
+                .customDashed(R.dimen.dimen_6dp, R.dimen.dimen_6dp)
                 .create()
         )
         button.setColorFilter(button.context.color(R.color.white), android.graphics.PorterDuff.Mode.SRC_IN)

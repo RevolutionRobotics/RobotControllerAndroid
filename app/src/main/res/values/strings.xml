@@ -109,4 +109,12 @@
 
     <!--- Configuration Slider Motor-->
     <string name="config_name_edit_title"> - Name</string>
+    <string name="configuration_empty">Empty</string>
+    <string name="configuration_drivetrain">Drivetrain</string>
+    <string name="configuration_motor">Motor</string>
+    <string name="configuration_left">Left</string>
+    <string name="configuration_right">Right</string>
+    <string name="configuration_counter_clockwise">Counter clockwise</string>
+    <string name="configuration_clockwise">Clockwise</string>
+    
 </resources>
