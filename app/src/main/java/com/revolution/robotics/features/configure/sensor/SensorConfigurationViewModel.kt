@@ -5,6 +5,7 @@ import androidx.databinding.ObservableInt
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.revolution.robotics.R
+import com.revolution.robotics.features.configure.ActionButtonsViewModel
 import com.revolution.robotics.features.configure.ConfigButtonViewModel
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 
@@ -43,6 +44,8 @@ class SensorConfigurationViewModel(private val presenter: SensorConfigurationMvp
     val testButtonEnabled = ObservableBoolean()
 
     val doneButtonChippedBoxConfig = MutableLiveData<ChippedBoxConfig>()
+    val actionButtonsViewModel =
+        ActionButtonsViewModel({ presenter.onDoneButtonClicked() }, { presenter.onTestButtonClcked() })
 
     private fun onEmptyButtonClicked() {
         presenter.onEmptyButtonClicked()
@@ -54,13 +57,5 @@ class SensorConfigurationViewModel(private val presenter: SensorConfigurationMvp
 
     private fun onUltrasoundButtonClicked() {
         presenter.onUltarsoundButtonClicked()
-    }
-
-    fun onTestButtonClicked() {
-        presenter.onTestButtonClcked()
-    }
-
-    fun onDoneButtonClicked() {
-        presenter.onDoneButtonClicked()
     }
 }

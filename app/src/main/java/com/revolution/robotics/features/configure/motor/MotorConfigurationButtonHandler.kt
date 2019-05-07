@@ -185,21 +185,21 @@ class MotorConfigurationButtonHandler(private val model: MotorConfigurationViewM
 
     private fun setDoneButton(enabled: Boolean) {
         model.apply {
-            doneButtonEnabled.set(enabled)
+            actionButtonsViewModel.doneButtonEnabled.set(enabled)
             if (enabled) {
-                doneButtonChippedBoxConfig.value = chippedConfigDoneEnabled
-                doneTextColor.set(R.color.white)
+                actionButtonsViewModel.doneButtonChippedBoxConfig.value = chippedConfigDoneEnabled
+                actionButtonsViewModel.doneTextColor.set(R.color.white)
             } else {
-                doneButtonChippedBoxConfig.value = chippedConfigDoneDisabled
-                doneTextColor.set(R.color.grey_8e)
+                actionButtonsViewModel. doneButtonChippedBoxConfig.value = chippedConfigDoneDisabled
+                actionButtonsViewModel.doneTextColor.set(R.color.grey_8e)
             }
         }
     }
 
     private fun setTestButton(enabled: Boolean) {
         model.apply {
-            testButtonEnabled.set(enabled)
-            testTextColor.set(if (enabled) R.color.white else R.color.grey_8e)
+            actionButtonsViewModel.testButtonEnabled.set(enabled)
+            actionButtonsViewModel.testTextColor.set(if (enabled) R.color.white else R.color.grey_8e)
         }
     }
 }

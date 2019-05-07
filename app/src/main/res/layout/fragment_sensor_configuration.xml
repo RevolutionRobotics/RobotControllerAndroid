@@ -65,69 +65,12 @@
                 app:layout_constraintStart_toEndOf="@id/button_bumper"
                 app:layout_constraintEnd_toEndOf="parent"/>
 
-        <LinearLayout
-                android:id="@+id/button_test"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/dialog_button_height"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:clickable="@{viewModel.testButtonEnabled}"
-                android:onClick="@{() -> viewModel.onTestButtonClicked()}"
-                app:chippedBoxConfig="@{viewModel.testButtonChippedBoxConfig}"
-                app:layout_constraintEnd_toStartOf="@id/button_done"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent">
+        <include layout="@layout/layout_configuration_action_buttons"
+                 app:viewModel="@{viewModel.actionButtonsViewModel}"
+                 android:id="@+id/action_buttons"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"/>
 
-            <ImageView
-                    android:layout_width="@dimen/dimen_16dp"
-                    android:layout_height="@dimen/dimen_16dp"
-                    android:layout_marginEnd="8dp"
-                    app:tintColorResource="@{viewModel.testTextColor}"
-                    android:src="@drawable/ic_test"/>
-
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/white"
-                    android:fontFamily="@font/barlow_regular"
-                    android:includeFontPadding="false"
-                    app:textColorResource="@{viewModel.testTextColor}"
-                    android:textSize="14sp"
-                    android:text="@string/configure_motor_test_button_title"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-                android:id="@+id/button_done"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/dialog_button_height"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:clickable="@{viewModel.doneButtonEnabled}"
-                android:onClick="@{() -> viewModel.onDoneButtonClicked()}"
-                app:chippedBoxConfig="@{viewModel.doneButtonChippedBoxConfig}"
-                app:layout_constraintStart_toEndOf="@id/button_test"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent">
-
-            <ImageView
-                    android:layout_width="@dimen/dimen_16dp"
-                    android:layout_height="@dimen/dimen_16dp"
-                    android:layout_marginEnd="8dp"
-                    app:tintColorResource="@{viewModel.doneTextColor}"
-                    android:src="@drawable/ic_check"/>
-
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/white"
-                    android:fontFamily="@font/barlow_regular"
-                    android:includeFontPadding="false"
-                    android:textSize="14sp"
-                    app:textColorResource="@{viewModel.doneTextColor}"
-                    android:text="@string/configure_motor_done_button_title"/>
-
-        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

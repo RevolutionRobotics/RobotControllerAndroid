@@ -1,12 +1,10 @@
 package com.revolution.robotics.features.configure.motor
 
-import androidx.databinding.ObservableBoolean
-import androidx.databinding.ObservableInt
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.revolution.robotics.R
+import com.revolution.robotics.features.configure.ActionButtonsViewModel
 import com.revolution.robotics.features.configure.ConfigButtonViewModel
-import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 
 class MotorConfigurationViewModel(
     private val presenter: MotorConfigurationMvp.Presenter
@@ -60,22 +58,8 @@ class MotorConfigurationViewModel(
         )
 
     val editTextTitle = MutableLiveData<String>()
-    val testButtonChippedBoxConfig = ChippedBoxConfig.Builder()
-        .backgroundColorResource(R.color.grey_1e)
-        .borderColorResource(R.color.grey_1e)
-        .chipBottomLeft(true)
-        .chipTopRight(false)
-        .chipBottomRight(false)
-        .chipTopLeft(false)
-        .chipSize(R.dimen.dimen_8dp)
-        .borderSize(R.dimen.dimen_1dp)
-        .create()
-    val doneTextColor = ObservableInt()
-    val doneButtonEnabled = ObservableBoolean()
-    val testTextColor = ObservableInt()
-    val testButtonEnabled = ObservableBoolean()
-
-    val doneButtonChippedBoxConfig = MutableLiveData<ChippedBoxConfig>()
+    val actionButtonsViewModel =
+        ActionButtonsViewModel({ presenter.onDoneButtonClicked() }, { presenter.onTestButtonClcked() })
 
     fun onEmptyButtonClicked() {
         presenter.onEmptyButtonClicked()
@@ -103,13 +87,5 @@ class MotorConfigurationViewModel(
 
     fun onClockwiseClicked() {
         presenter.onClockwiseClicked()
-    }
-
-    fun onTestButtonClicked() {
-        presenter.onTestButtonClcked()
-    }
-
-    fun onDoneButtonClicked() {
-        presenter.onDoneButtonClicked()
     }
 }

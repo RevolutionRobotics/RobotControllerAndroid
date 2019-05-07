@@ -65,7 +65,7 @@ fun createPresenterModule() =
         bind<ConfigureMvp.Presenter>() with singleton { ConfigurePresenter() }
         bind<ConfigureConnectionsMvp.Presenter>() with singleton { ConfigureConnectionsPresenter() }
         bind<MotorConfigurationMvp.Presenter>() with singleton { MotorConfigurationPresenter(instance()) }
-        bind<SensorConfigurationMvp.Presenter>() with singleton { SensorConfigurationPresenter() }
+        bind<SensorConfigurationMvp.Presenter>() with singleton { SensorConfigurationPresenter(instance()) }
     }
 
 fun createDbModule(context: Context) =

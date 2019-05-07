@@ -58,6 +58,7 @@ class MotorConfigurationPresenter(private val resourceResolver: ResourceResolver
     }
 
     override fun onTestButtonClcked() {
+        // TODO Handle test button
     }
 
     override fun onDoneButtonClicked() {

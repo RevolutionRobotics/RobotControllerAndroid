@@ -8,4 +8,9 @@ data class Sensor(
     var testCodeId: Int = 0,
     var type: String? = null,
     var variableName: String? = null
-) : Parcelable
+) : Parcelable {
+    companion object {
+        const val TYPE_BUMPER = "bumper"
+        const val TYPE_ULTRASOUND = "ultrasound"
+    }
+}
