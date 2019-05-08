@@ -36,7 +36,8 @@ class ChapterFinishedDialog : RoboticsDialog(), ChapterFinishedMvp.View {
             R.string.build_chapter_finish_dialog_button_home,
             R.drawable.ic_home
         ) {
-            // TODO navigate user home
+            dismissAllowingStateLoss()
+            presenter.navigateHome()
         },
         DialogButton(
             R.string.build_chapter_finish_dialog_button_next_chapter,

@@ -19,6 +19,8 @@ import com.revolution.robotics.core.interactor.firebase.RobotInteractor
 import com.revolution.robotics.core.interactor.firebase.TestCodeInteractor
 import com.revolution.robotics.features.build.BuildRobotMvp
 import com.revolution.robotics.features.build.BuildRobotPresenter
+import com.revolution.robotics.features.build.buildFinished.BuildFinishedMvp
+import com.revolution.robotics.features.build.buildFinished.BuildFinishedPresenter
 import com.revolution.robotics.features.build.connect.availableRobotsFace.ConnectMvp
 import com.revolution.robotics.features.build.connect.availableRobotsFace.ConnectPresenter
 import com.revolution.robotics.features.configure.ConfigureMvp
@@ -59,13 +61,14 @@ fun createPresenterModule() =
         bind<WhoToBuildMvp.Presenter>() with singleton { WhoToBuildPresenter(instance(), instance()) }
         bind<LiveControllerMvp.Presenter>() with singleton { LiveControllerPresenter(instance()) }
         bind<MyRobotsMvp.Presenter>() with singleton { MyRobotsPresenter(instance(), instance(), instance()) }
-        bind<ChapterFinishedMvp.Presenter>() with singleton { ChapterFinishedPresenter() }
+        bind<ChapterFinishedMvp.Presenter>() with singleton { ChapterFinishedPresenter(instance()) }
         bind<BuildRobotMvp.Presenter>() with singleton { BuildRobotPresenter(instance(), instance(), instance()) }
         bind<ConnectMvp.Presenter>() with singleton { ConnectPresenter(instance()) }
         bind<ConfigureMvp.Presenter>() with singleton { ConfigurePresenter() }
         bind<ConfigureConnectionsMvp.Presenter>() with singleton { ConfigureConnectionsPresenter() }
         bind<MotorConfigurationMvp.Presenter>() with singleton { MotorConfigurationPresenter(instance()) }
         bind<SensorConfigurationMvp.Presenter>() with singleton { SensorConfigurationPresenter(instance()) }
+        bind<BuildFinishedMvp.Presenter>() with singleton { BuildFinishedPresenter(instance()) }
     }
 
 fun createDbModule(context: Context) =

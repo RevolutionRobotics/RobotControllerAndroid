@@ -1,20 +1,13 @@
-package com.revolution.robotics.features.build.chapterFinished
+package com.revolution.robotics.features.build.buildFinished
 
 import androidx.lifecycle.ViewModel
 import com.revolution.robotics.core.Mvp
 import com.revolution.robotics.core.domain.remote.Milestone
 
-interface ChapterFinishedMvp : Mvp {
+interface BuildFinishedMvp : Mvp {
 
-    interface View : Mvp.View {
-        fun onTestUploaded()
-    }
-
+    interface View : Mvp.View
     interface Presenter : Mvp.Presenter<View, ViewModel> {
-
-        var milestone: Milestone?
-
-        fun uploadTest()
         fun navigateHome()
     }
 }
