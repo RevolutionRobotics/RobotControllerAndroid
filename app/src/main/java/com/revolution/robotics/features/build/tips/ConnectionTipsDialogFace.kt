@@ -2,7 +2,7 @@ package com.revolution.robotics.features.build.tips
 
 import com.revolution.robotics.R
 import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
-import com.revolution.robotics.core.eventBus.dialog.DialogId
+import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.views.dialogs.DialogButton
 import com.revolution.robotics.views.dialogs.RoboticsDialog
 
@@ -21,7 +21,7 @@ class ConnectionTipsDialogFace(dialog: RoboticsDialog) : TipsDialogFace(dialog) 
         },
         DialogButton(R.string.connection_failed_try_again_button_title, R.drawable.ic_retry, true) {
             dialog.dismiss()
-            dialog.dialogEventBus.publish(DialogId.CONNECTION_FAILED, DialogEventBus.Event.POSITIVE)
+            dialog.dialogEventBus.publish(DialogEvent.ROBOT_RECONNECT)
         }
     )
 }

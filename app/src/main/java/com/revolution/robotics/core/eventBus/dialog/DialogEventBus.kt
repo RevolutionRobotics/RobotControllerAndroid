@@ -1,14 +1,6 @@
 package com.revolution.robotics.core.eventBus.dialog
 
-import android.os.Bundle
-
 class DialogEventBus {
-
-    enum class Event {
-        NEGATIVE, POSITIVE, OTHER;
-
-        val extras = Bundle()
-    }
 
     private val listeners = ArrayList<Listener>()
 
@@ -20,13 +12,13 @@ class DialogEventBus {
         listeners.remove(listener)
     }
 
-    fun publish(dialog: DialogId, event: Event) {
+    fun publish(event: DialogEvent) {
         listeners.forEach { listener ->
-            listener.onDialogEvent(dialog, event)
+            listener.onDialogEvent(event)
         }
     }
 
     interface Listener {
-        fun onDialogEvent(dialog: DialogId, event: Event)
+        fun onDialogEvent(event: DialogEvent)
     }
 }

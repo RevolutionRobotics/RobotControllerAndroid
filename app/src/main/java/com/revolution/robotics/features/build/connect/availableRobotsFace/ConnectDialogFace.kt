@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.revolution.robotics.R
 import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
-import com.revolution.robotics.core.eventBus.dialog.DialogId
+import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.databinding.DialogConnectBinding
 import com.revolution.robotics.features.build.connect.adapter.ConnectAdapter
 import com.revolution.robotics.views.dialogs.MvpDialogFace
@@ -32,11 +32,11 @@ class ConnectDialogFace(dialog: RoboticsDialog) :
 
     override fun onConnectionSuccess() {
         dialog?.dismissAllowingStateLoss()
-        dialogEventBus.publish(DialogId.CONNECT, DialogEventBus.Event.POSITIVE)
+        dialogEventBus.publish(DialogEvent.ROBOT_CONNECTED)
     }
 
     override fun onConnectionError() {
         dialog?.dismissAllowingStateLoss()
-        dialogEventBus.publish(DialogId.CONNECT, DialogEventBus.Event.NEGATIVE)
+        dialogEventBus.publish(DialogEvent.ROBOT_CONNECTION_FAILED)
     }
 }

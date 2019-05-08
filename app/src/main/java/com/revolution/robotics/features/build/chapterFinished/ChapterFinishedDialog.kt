@@ -7,7 +7,7 @@ import com.revolution.robotics.views.dialogs.DialogButton
 import com.revolution.robotics.views.dialogs.RoboticsDialog
 import com.revolution.robotics.core.domain.remote.Milestone
 import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
-import com.revolution.robotics.core.eventBus.dialog.DialogId
+import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.core.extensions.withArguments
 import com.revolution.robotics.core.utils.BundleArgumentDelegate
 import com.revolution.robotics.databinding.DialogChapterFinishedBinding
@@ -67,7 +67,7 @@ class ChapterFinishedDialog : RoboticsDialog(), ChapterFinishedMvp.View {
 
     override fun onTestUploaded() {
         dismissAllowingStateLoss()
-        dialogEventBus.publish(DialogId.CHAPTER_FINISHED, DialogEventBus.Event.POSITIVE.apply {
+        dialogEventBus.publish(DialogEvent.CHAPTER_FINISHED.apply {
             arguments?.milestone?.let { extras.putInt(KEY_TEST_CODE_ID, it.testCodeId) }
         })
     }
