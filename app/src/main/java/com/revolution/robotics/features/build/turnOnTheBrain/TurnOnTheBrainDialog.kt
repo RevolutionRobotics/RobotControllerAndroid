@@ -1,7 +1,6 @@
 package com.revolution.robotics.features.build.turnOnTheBrain
 
 import com.revolution.robotics.R
-import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
 import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.databinding.DialogTurnOnTheBrainBinding
 import com.revolution.robotics.views.dialogs.DialogButton

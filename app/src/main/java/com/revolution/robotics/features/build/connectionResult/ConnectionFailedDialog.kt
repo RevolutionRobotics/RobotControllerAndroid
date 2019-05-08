@@ -1,7 +1,6 @@
 package com.revolution.robotics.features.build.connectionResult
 
 import com.revolution.robotics.R
-import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
 import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.databinding.DialogConnectionFailedBinding
 import com.revolution.robotics.features.build.tips.ConnectionTipsDialogFace
