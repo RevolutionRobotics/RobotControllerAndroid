@@ -49,7 +49,7 @@
                     android:layout_width="@dimen/dimen_24dp"
                     android:layout_height="@dimen/dimen_24dp"
                     android:scaleType="centerInside"
-                    android:src="@drawable/ic_add"/>
+                    android:src="@drawable/ic_add_framed"/>
 
             <TextView
                     android:layout_width="wrap_content"

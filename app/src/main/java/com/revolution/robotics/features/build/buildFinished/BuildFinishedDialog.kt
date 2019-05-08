@@ -2,7 +2,6 @@ package com.revolution.robotics.features.build.buildFinished
 
 import com.revolution.robotics.R
 import com.revolution.robotics.databinding.DialogBuildFinishedBinding
-import com.revolution.robotics.features.build.chapterFinished.ChapterFinishedMvp
 import com.revolution.robotics.views.dialogs.DialogButton
 import com.revolution.robotics.views.dialogs.DialogFace
 import com.revolution.robotics.views.dialogs.RoboticsDialog

@@ -2,7 +2,6 @@ package com.revolution.robotics.features.build.buildFinished
 
 import androidx.lifecycle.ViewModel
 import com.revolution.robotics.core.Mvp
-import com.revolution.robotics.core.domain.remote.Milestone
 
 interface BuildFinishedMvp : Mvp {
 
