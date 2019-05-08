@@ -3,6 +3,7 @@ package com.revolution.robotics.features.build
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import androidx.core.text.toSpannable
+import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.revolution.robotics.R
@@ -13,13 +14,9 @@ import com.revolution.robotics.core.utils.CustomTypefaceSpan
 class BuildRobotViewModel(private val resourceResolver: ResourceResolver) : ViewModel() {
     val imageUrl: MutableLiveData<String?> = MutableLiveData()
     val step: MutableLiveData<Spannable?> = MutableLiveData()
-    val isBluetoothConnected: MutableLiveData<Boolean> = MutableLiveData()
+    val isBluetoothConnected = ObservableBoolean(false)
     val partsImage: MutableLiveData<String?> = MutableLiveData()
     val partsQuantity: MutableLiveData<String?> = MutableLiveData()
-
-    init {
-        isBluetoothConnected.value = false
-    }
 
     // TODO remove this suppress
     @Suppress("MagicNumber")

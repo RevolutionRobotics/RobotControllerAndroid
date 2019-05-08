@@ -21,7 +21,7 @@ class ConnectPresenter(private val applicationContextProvider: ApplicationContex
 
         bleDeviceDiscoverer.discoverRobots(applicationContextProvider.applicationContext) { devices ->
             model?.availableRobots?.value = devices.map { device -> ConnectRobotItem(device, this) }
-            model?.isDiscovering?.value = false
+            model?.isDiscovering?.set(false)
         }
     }
 

@@ -107,4 +107,18 @@
         Quo cu alia placerat. Per graece denique invidunt ei.
     </string>
 
+    <!--- Configuration Slider Motor-->
+    <string name="configure_motor_name_inputfield_title">Name</string>
+    <string name="configure_motor_empty_button_title">Empty</string>
+    <string name="configure_motor_drivetrain_button_title">Drivetrain</string>
+    <string name="configure_motor_motor_button_title">Motor</string>
+    <string name="configure_motor_left_button_title">Left</string>
+    <string name="configure_motor_right_button_title">Right</string>
+    <string name="configure_motor_counterclockwise_button_title">Counter clockwise</string>
+    <string name="configure_motor_clockwise_button_title">Clockwise</string>
+    <string name="configure_motor_done_button_title">Done</string>
+    <string name="configure_sensor_bumper_button_title">Bumper</string>
+    <string name="configure_sensor_ultrasound_button_title">Ultrasound</string>
+    <string name="configure_motor_test_button_title">Test</string>
+
 </resources>

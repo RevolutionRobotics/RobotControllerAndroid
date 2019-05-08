@@ -4,17 +4,24 @@ import android.graphics.Bitmap
 import android.graphics.ColorMatrix
 import android.graphics.ColorMatrixColorFilter
 import android.view.View
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.SeekBar
+import android.widget.TextView
+import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
+import com.revolution.robotics.R
+import com.revolution.robotics.core.extensions.color
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 import com.revolution.robotics.views.chippedBox.ChippedBoxDrawable
 import com.revolution.robotics.views.carousel.CarouselAdapter
 import com.revolution.robotics.features.build.connect.adapter.ConnectAdapter
 import com.revolution.robotics.features.build.connect.adapter.ConnectRobotItem
+import com.revolution.robotics.views.ChippedEditText
+import com.revolution.robotics.views.ChippedEditTextViewModel
 
 @BindingAdapter("listener")
 fun setSeekbarListener(seekBar: SeekBar, listener: SeekBar.OnSeekBarChangeListener) {
@@ -63,4 +70,53 @@ fun setAvailableRobotsItems(recyclerView: RecyclerView, itemList: List<ConnectRo
 @BindingAdapter("image")
 fun setImageBitmap(imageView: ImageView, image: Bitmap?) {
     image?.let { imageView.setImageBitmap(it) }
+}
+
+@BindingAdapter("tintColorResource")
+fun setTintColor(imageView: ImageView, @ColorRes color: Int) {
+    if (color != 0) {
+        imageView.setColorFilter(imageView.context.color(color), android.graphics.PorterDuff.Mode.SRC_IN)
+    }
+}
+
+@BindingAdapter("textColorResource")
+fun setTextColor(textView: TextView, @ColorRes color: Int) {
+    if (color != 0) {
+        textView.setTextColor(textView.context.color(color))
+    }
+}
+
+@BindingAdapter("textColorHintResource")
+fun setTextColorHintResource(editText: EditText, @ColorRes hintColor: Int) {
+    if (hintColor != 0) {
+        editText.setHintTextColor(editText.context.color(hintColor))
+    }
+}
+
+@BindingAdapter("chippedEditModel")
+fun setChippedEditViewModel(edit: ChippedEditText, model: ChippedEditTextViewModel?) {
+    model?.let {
+        edit.setViewModel(it)
+    }
+}
+
+@BindingAdapter("configButtonSelected")
+fun setConfigButtonBackground(button: ImageView, configButtonSelected: Boolean) {
+    if (configButtonSelected) {
+        button.setColorFilter(button.context.color(R.color.grey_28), android.graphics.PorterDuff.Mode.SRC_IN)
+        button.setBackgroundResource(R.drawable.bg_control_button_selected)
+    } else {
+        setChippedBoxConfig(
+            button, ChippedBoxConfig.Builder()
+                .backgroundColorResource(R.color.grey_28)
+                .chipBottomLeft(true)
+                .chipTopRight(true)
+                .borderColorResource(R.color.grey_6d)
+                .borderSize(R.dimen.dimen_1dp)
+                .chipSize(R.dimen.dimen_8dp)
+                .customDashed(R.dimen.dimen_6dp, R.dimen.dimen_6dp)
+                .create()
+        )
+        button.setColorFilter(button.context.color(R.color.white), android.graphics.PorterDuff.Mode.SRC_IN)
+    }
 }

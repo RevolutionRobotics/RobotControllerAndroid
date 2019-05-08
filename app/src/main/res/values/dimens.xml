@@ -128,6 +128,7 @@
 
     <!-- SCREEN: BUILD ROBOT -->
     <dimen name="build_robot_parts_size">112dp</dimen>
+    <dimen name="drawer_config_width">214dp</dimen>
 
     <!-- VIEW: CHIPPED EDIT TEXT -->
     <dimen name="chipped_edit_text_title_horizontal_padding">6dp</dimen>
