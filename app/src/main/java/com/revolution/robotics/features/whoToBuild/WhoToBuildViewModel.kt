@@ -14,7 +14,5 @@ class WhoToBuildViewModel(private val presenter: WhoToBuildMvp.Presenter) : View
 
     fun nextButtonClick() = presenter.nextButtonClick()
     fun previousButtonClick() = presenter.previousButtonClick()
-    fun onCustomBuildClick() {
-        // Nothing here yet
-    }
+    fun onBuildYourOwnClick() = presenter.onBuildYourOwnSelected()
 }

@@ -3,7 +3,6 @@ package com.revolution.robotics.features.mainmenu
 import com.revolution.robotics.core.utils.Navigator
 
 class MainMenuPresenter(private val navigator: Navigator) : MainMenuMvp.Presenter {
-
     override var view: MainMenuMvp.View? = null
     override var model: MainMenuViewModel? = null
 

@@ -66,6 +66,9 @@ data class ChippedBoxConfig(
         fun isDashed(dash: Boolean = true) =
             apply { dashResources = if (dash) intArrayOf(R.dimen.dimen_16dp, R.dimen.dimen_8dp) else null }
 
+        fun customDashed(@DimenRes dashDimen: Int, @DimenRes gapDimen: Int) =
+            apply { dashResources = intArrayOf(dashDimen, gapDimen) }
+
         fun borderColorResource(@ColorRes colorRes: Int) = apply {
             chipBorderColorResource = colorRes
             if (chipBorderSize == 0) {

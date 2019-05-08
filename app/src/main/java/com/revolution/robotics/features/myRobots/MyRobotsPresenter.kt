@@ -10,6 +10,7 @@ import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.features.myRobots.adapter.MyRobotsItem
 import kotlin.math.max
 
+@Suppress("TooManyFunctions")
 class MyRobotsPresenter(
     private val getAllUserRobotsInteractor: GetAllUserRobotsInteractor,
     private val deleteRobotInteractor: DeleteRobotInteractor,
@@ -87,8 +88,8 @@ class MyRobotsPresenter(
         navigator.navigate(MyRobotsFragmentDirections.toBuildRobot(robot))
     }
 
-    override fun onEditSelected(robotId: Int) {
-        // Nothing here yet
+    override fun onEditSelected(id: Int) {
+        navigator.navigate(MyRobotsFragmentDirections.toConfigure())
     }
 
     override fun onDeleteSelected(robotId: Int) {

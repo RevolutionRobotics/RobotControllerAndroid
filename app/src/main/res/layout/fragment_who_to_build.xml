@@ -40,7 +40,7 @@
                 android:paddingEnd="@dimen/dimen_12dp"
                 android:paddingStart="@dimen/dimen_12dp"
                 android:layout_marginEnd="@dimen/dimen_12dp"
-                android:onClick="@{() -> viewModel.onCustomBuildClick()}"
+                android:onClick="@{() -> viewModel.onBuildYourOwnClick()}"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="@id/toolbar_body_bottom"
                 app:layout_constraintEnd_toEndOf="parent">

@@ -15,5 +15,6 @@ interface WhoToBuildMvp : Mvp {
         fun nextButtonClick()
         fun previousButtonClick()
         fun onRobotSelected(robot: Robot)
+        fun onBuildYourOwnSelected()
     }
 }

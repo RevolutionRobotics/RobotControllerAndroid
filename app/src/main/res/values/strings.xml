@@ -83,5 +83,22 @@
     <string name="build_robot_finished_title">All set!</string>
     <string name="build_robot_finished_description">Your robot is ready to drive!</string>
     <string name="build_robot_finished_button">Let\'s drive</string>
-    
+
+    <!-- Configure -->
+    <string name="configure_connections_button_text">Connections</string>
+    <string name="configure_controller_button_text">Controller</string>
+
+    <!-- Configure Connections -->
+    <string name="configure_connections_missing_part_name">MS</string>
+    <string name="configure_connections_button_M1">M1</string>
+    <string name="configure_connections_button_M2">M2</string>
+    <string name="configure_connections_button_M3">M3</string>
+    <string name="configure_connections_button_M4">M4</string>
+    <string name="configure_connections_button_M5">M5</string>
+    <string name="configure_connections_button_M6">M6</string>
+    <string name="configure_connections_button_S1">S1</string>
+    <string name="configure_connections_button_S2">S2</string>
+    <string name="configure_connections_button_S3">S3</string>
+    <string name="configure_connections_button_S4">S4</string>
+
 </resources>
