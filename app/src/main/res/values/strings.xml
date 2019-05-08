@@ -101,4 +101,10 @@
     <string name="configure_connections_button_S3">S3</string>
     <string name="configure_connections_button_S4">S4</string>
 
+    <!-- Controller Info dialog-->
+    <string name="controller_info_dialog_button_text">Got it</string>
+    <string name="controller_info_dialog_description">Lorem ipsum dolor sit amet, eu commodo numquam comprehensam vel.
+        Quo cu alia placerat. Per graece denique invidunt ei.
+    </string>
+
 </resources>
