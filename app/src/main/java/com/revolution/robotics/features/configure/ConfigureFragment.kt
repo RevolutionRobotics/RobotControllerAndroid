@@ -19,7 +19,7 @@ class ConfigureFragment : BaseFragment<FragmentConfigureBinding, ConfigureViewMo
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         presenter.register(this, viewModel)
-        binding?.toolbarViewModel = ConfigureToolbarViewModel()
+        binding?.toolbarViewModel = ConfigureToolbarViewModel(presenter)
     }
 
     override fun showConnectionsScreen() {

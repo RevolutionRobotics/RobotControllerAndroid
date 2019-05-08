@@ -66,7 +66,9 @@ class ConfigureViewModel(private val presenter: ConfigureMvp.Presenter) : ViewMo
         borderColorResource(inactiveButtonBorder)
     }
 
-    fun onConnectionsSelected() = presenter.onConnectionsSelected()
+    fun onConnectionsSelected() = presenter.onConnectionsTabSelected()
 
-    fun onControllerSelected() = presenter.onControllerSelected()
+    fun onControllerSelected() = presenter.onControllerTabSelected()
+
+    fun onBluetoothClicked() = presenter.onBluetoothClicked()
 }
