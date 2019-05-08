@@ -32,6 +32,7 @@
                 android:layout_marginStart="@dimen/chipped_edit_text_title_margin_start"
                 android:textAlignment="center"
                 android:gravity="center"
+                app:backgroundResource="@{viewModel.backgroundColor}"
                 android:text="@{viewModel.title}"
                 app:textColorResource="@{viewModel.titleColor}"
                 android:textSize="@dimen/chipped_edit_text_title_text_size"

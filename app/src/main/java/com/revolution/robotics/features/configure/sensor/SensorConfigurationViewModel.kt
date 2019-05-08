@@ -1,17 +1,15 @@
 package com.revolution.robotics.features.configure.sensor
 
-import androidx.databinding.ObservableBoolean
-import androidx.databinding.ObservableInt
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.revolution.robotics.R
 import com.revolution.robotics.features.configure.ActionButtonsViewModel
 import com.revolution.robotics.features.configure.ConfigButtonViewModel
-import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
+import com.revolution.robotics.views.ChippedEditTextViewModel
 
 class SensorConfigurationViewModel(private val presenter: SensorConfigurationMvp.Presenter) : ViewModel() {
 
-    val editTextTitle = MutableLiveData<String>()
+    val editTextModel = MutableLiveData<ChippedEditTextViewModel>()
 
     val emptyButton =
         ConfigButtonViewModel(R.string.configure_motor_empty_button_title, R.drawable.ic_empty, ::onEmptyButtonClicked)
@@ -28,22 +26,6 @@ class SensorConfigurationViewModel(private val presenter: SensorConfigurationMvp
             ::onUltrasoundButtonClicked
         )
 
-    val testButtonChippedBoxConfig = ChippedBoxConfig.Builder()
-        .backgroundColorResource(R.color.grey_1e)
-        .borderColorResource(R.color.grey_1e)
-        .chipBottomLeft(true)
-        .chipTopRight(false)
-        .chipBottomRight(false)
-        .chipTopLeft(false)
-        .chipSize(R.dimen.dimen_8dp)
-        .borderSize(R.dimen.dimen_1dp)
-        .create()
-    val doneTextColor = ObservableInt()
-    val doneButtonEnabled = ObservableBoolean()
-    val testTextColor = ObservableInt()
-    val testButtonEnabled = ObservableBoolean()
-
-    val doneButtonChippedBoxConfig = MutableLiveData<ChippedBoxConfig>()
     val actionButtonsViewModel =
         ActionButtonsViewModel({ presenter.onDoneButtonClicked() }, { presenter.onTestButtonClcked() })
 

@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.revolution.robotics.R
 import com.revolution.robotics.features.configure.ActionButtonsViewModel
 import com.revolution.robotics.features.configure.ConfigButtonViewModel
+import com.revolution.robotics.views.ChippedEditTextViewModel
 
 class MotorConfigurationViewModel(
     private val presenter: MotorConfigurationMvp.Presenter
@@ -57,35 +58,36 @@ class MotorConfigurationViewModel(
             ::onClockwiseClicked
         )
 
-    val editTextTitle = MutableLiveData<String>()
+    val editTextModel = MutableLiveData<ChippedEditTextViewModel>()
+
     val actionButtonsViewModel =
         ActionButtonsViewModel({ presenter.onDoneButtonClicked() }, { presenter.onTestButtonClcked() })
 
-    fun onEmptyButtonClicked() {
+    private fun onEmptyButtonClicked() {
         presenter.onEmptyButtonClicked()
     }
 
-    fun onDrivetrainButtonClicked() {
+    private fun onDrivetrainButtonClicked() {
         presenter.onDrivetrainButtonClicked()
     }
 
-    fun onMotorClicked() {
+    private fun onMotorClicked() {
         presenter.onMotorClicked()
     }
 
-    fun onLeftSideClicked() {
+    private fun onLeftSideClicked() {
         presenter.onLeftSideClicked()
     }
 
-    fun onRightSideClicked() {
+    private fun onRightSideClicked() {
         presenter.onRightSideClicked()
     }
 
-    fun onCounterClockwiseClicked() {
+    private fun onCounterClockwiseClicked() {
         presenter.onCounterClockwiseClicked()
     }
 
-    fun onClockwiseClicked() {
+    private fun onClockwiseClicked() {
         presenter.onClockwiseClicked()
     }
 }

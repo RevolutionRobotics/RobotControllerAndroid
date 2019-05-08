@@ -13,7 +13,7 @@
             android:clickable="true"
             android:focusable="true"
             android:paddingTop="@dimen/dimen_16dp"
-            android:paddingBottom="@dimen/dimen_16dp"
+            android:paddingBottom="@dimen/dimen_4dp"
             android:paddingLeft="@dimen/dimen_4dp"
             android:paddingRight="@dimen/dimen_4dp"
             android:background="@color/grey_28"
@@ -25,8 +25,8 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginStart="@dimen/dimen_12dp"
+                app:chippedEditModel="@{viewModel.editTextModel}"
                 android:layout_marginEnd="@dimen/dimen_12dp"/>
-
 
         <include
                 android:layout_width="wrap_content"
@@ -129,7 +129,7 @@
                 app:layout_constraintTop_toBottomOf="@id/button_side_right"
                 app:layout_constraintStart_toStartOf="@id/button_side_right"
                 app:layout_constraintEnd_toEndOf="@id/button_side_right"/>
-        
+
         <include layout="@layout/layout_configuration_action_buttons"
                  app:viewModel="@{viewModel.actionButtonsViewModel}"
                  android:id="@+id/action_buttons"

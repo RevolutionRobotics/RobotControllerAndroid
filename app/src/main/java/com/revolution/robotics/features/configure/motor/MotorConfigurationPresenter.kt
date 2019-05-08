@@ -3,6 +3,7 @@ package com.revolution.robotics.features.configure.motor
 import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.remote.Motor
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
+import com.revolution.robotics.views.ChippedEditTextViewModel
 
 @Suppress("ComplexInterface")
 class MotorConfigurationPresenter(private val resourceResolver: ResourceResolver) : MotorConfigurationMvp.Presenter {
@@ -20,8 +21,15 @@ class MotorConfigurationPresenter(private val resourceResolver: ResourceResolver
     }
 
     override fun setMotor(motor: Motor, portName: String) {
-        model?.editTextTitle?.value =
-            "$portName - ${resourceResolver.string(R.string.configure_motor_name_inputfield_title)}"
+        model?.editTextModel?.value = ChippedEditTextViewModel(
+            title = "$portName - ${resourceResolver.string(R.string.configure_motor_name_inputfield_title)}",
+            text = motor.variableName,
+            borderColor = R.color.grey_8e,
+            backgroundColor = R.color.grey_28,
+            textColor = R.color.white,
+            titleColor = R.color.white
+        )
+
         when (motor.type) {
             Motor.TYPE_MOTOR -> buttonHandler?.initMotor(motor)
             Motor.TYPE_DRIVETRAIN -> buttonHandler?.initDrivetrain(motor)

@@ -3,6 +3,7 @@ package com.revolution.robotics.features.configure.sensor
 import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.remote.Sensor
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
+import com.revolution.robotics.views.ChippedEditTextViewModel
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 
 class SensorConfigurationPresenter(private val resourceResolver: ResourceResolver) : SensorConfigurationMvp.Presenter {
@@ -22,9 +23,16 @@ class SensorConfigurationPresenter(private val resourceResolver: ResourceResolve
         .create()
 
     override fun setSensor(sensor: Sensor, portName: String) {
-        model?.editTextTitle?.value =
-            "$portName - ${resourceResolver.string(R.string.configure_motor_name_inputfield_title)}"
         model?.apply {
+            editTextModel.value = ChippedEditTextViewModel(
+                title = "$portName - ${resourceResolver.string(R.string.configure_motor_name_inputfield_title)}",
+                text = sensor.variableName,
+                borderColor = R.color.grey_8e,
+                backgroundColor = R.color.grey_28,
+                textColor = R.color.white,
+                titleColor = R.color.white
+            )
+
             actionButtonsViewModel.doneButtonEnabled.set(true)
             actionButtonsViewModel.doneButtonChippedBoxConfig.value = chippedConfigDoneEnabled
             actionButtonsViewModel.doneTextColor.set(R.color.white)
