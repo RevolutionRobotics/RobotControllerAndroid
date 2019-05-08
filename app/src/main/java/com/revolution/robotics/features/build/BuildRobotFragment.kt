@@ -10,7 +10,7 @@ import com.revolution.robotics.core.domain.local.UserRobot
 import com.revolution.robotics.core.domain.remote.BuildStep
 import com.revolution.robotics.core.domain.shared.RobotDescriptor
 import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
-import com.revolution.robotics.core.eventBus.dialog.DialogId
+import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.core.utils.BundleArgumentDelegate
 import com.revolution.robotics.core.utils.dynamicPermissions.DynamicPermissionHandler
 import com.revolution.robotics.databinding.FragmentBuildRobotBinding
@@ -95,21 +95,20 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
         super.onDestroyView()
     }
 
-    @Suppress("ComplexMethod")
-    override fun onDialogEvent(dialog: DialogId, event: DialogEventBus.Event) {
-        if (dialog == DialogId.PERMISSION && event == DialogEventBus.Event.POSITIVE) {
-            TurnOnTheBrainDialog.newInstance().show(fragmentManager)
-        } else if (dialog == DialogId.TURN_ON_THE_BRAIN && event == DialogEventBus.Event.POSITIVE) {
-            ConnectDialog.newInstance().show(fragmentManager)
-        } else if (dialog == DialogId.CONNECT && event == DialogEventBus.Event.POSITIVE) {
-            viewModel?.isBluetoothConnected?.value = true
-            ConnectionSuccessDialog.newInstance().show(fragmentManager)
-        } else if (dialog == DialogId.CONNECT && event == DialogEventBus.Event.NEGATIVE) {
-            ConnectionFailedDialog.newInstance().show(fragmentManager)
-        } else if (dialog == DialogId.CONNECTION_FAILED && event == DialogEventBus.Event.POSITIVE) {
-            ConnectDialog.newInstance().show(fragmentManager)
-        } else if (dialog == DialogId.CHAPTER_FINISHED && event == DialogEventBus.Event.POSITIVE) {
-            getTestingDialog(event.extras.getInt(ChapterFinishedDialog.KEY_TEST_CODE_ID)).show(fragmentManager)
+    override fun onDialogEvent(event: DialogEvent) {
+        when (event) {
+            DialogEvent.PERMISSION_GRANTED -> TurnOnTheBrainDialog.newInstance().show(fragmentManager)
+            DialogEvent.BRAIN_TURNED_ON -> ConnectDialog.newInstance().show(fragmentManager)
+            DialogEvent.ROBOT_CONNECTED -> {
+                viewModel?.isBluetoothConnected?.value = true
+                ConnectionSuccessDialog.newInstance().show(fragmentManager)
+            }
+            DialogEvent.ROBOT_CONNECTION_FAILED -> ConnectionFailedDialog.newInstance().show(fragmentManager)
+            DialogEvent.ROBOT_RECONNECT -> ConnectDialog.newInstance().show(fragmentManager)
+            DialogEvent.CHAPTER_FINISHED ->
+                getTestingDialog(event.extras.getInt(ChapterFinishedDialog.KEY_TEST_CODE_ID))
+                    .show(fragmentManager)
+            else -> Unit
         }
     }
 

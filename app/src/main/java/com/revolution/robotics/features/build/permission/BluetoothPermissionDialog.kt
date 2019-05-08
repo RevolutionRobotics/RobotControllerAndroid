@@ -1,8 +1,7 @@
 package com.revolution.robotics.features.build.permission
 
 import com.revolution.robotics.R
-import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
-import com.revolution.robotics.core.eventBus.dialog.DialogId
+import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.core.utils.dynamicPermissions.DynamicPermissionHandler
 import com.revolution.robotics.core.utils.dynamicPermissions.DynamicPermissionListener
 import com.revolution.robotics.databinding.DialogBluetoothPermissionBinding
@@ -33,7 +32,7 @@ class BluetoothPermissionDialog : RoboticsDialog(), DynamicPermissionListener {
 
     override fun onAllPermissionsGranted() {
         dialog.dismiss()
-        dialogEventBus.publish(DialogId.PERMISSION, DialogEventBus.Event.POSITIVE)
+        dialogEventBus.publish(DialogEvent.PERMISSION_GRANTED)
     }
 
     override fun onPermissionDenied(deniedPermissions: List<String>) = Unit

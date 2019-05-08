@@ -1,8 +1,7 @@
 package com.revolution.robotics.features.build.connectionResult
 
 import com.revolution.robotics.R
-import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
-import com.revolution.robotics.core.eventBus.dialog.DialogId
+import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.databinding.DialogConnectionFailedBinding
 import com.revolution.robotics.features.build.tips.ConnectionTipsDialogFace
 import com.revolution.robotics.views.dialogs.DialogButton
@@ -34,7 +33,7 @@ class ConnectionFailedDialog : RoboticsDialog() {
             },
             DialogButton(R.string.connection_failed_try_again_button_title, R.drawable.ic_retry, true) {
                 dialog.dismiss()
-                dialog.dialogEventBus.publish(DialogId.CONNECTION_FAILED, DialogEventBus.Event.POSITIVE)
+                dialog.dialogEventBus.publish(DialogEvent.ROBOT_RECONNECT)
             }
         )
     }

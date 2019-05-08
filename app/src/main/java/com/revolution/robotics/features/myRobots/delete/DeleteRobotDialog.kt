@@ -1,8 +1,7 @@
 package com.revolution.robotics.features.myRobots.delete
 
 import com.revolution.robotics.R
-import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
-import com.revolution.robotics.core.eventBus.dialog.DialogId
+import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.databinding.DialogDeleteRobotBinding
 import com.revolution.robotics.views.dialogs.DialogButton
 import com.revolution.robotics.views.dialogs.DialogFace
@@ -23,7 +22,7 @@ class DeleteRobotDialog : RoboticsDialog() {
             dialog.dismiss()
         },
         DialogButton(R.string.delete_robot_confirm, R.drawable.ic_delete, true) {
-            dialogEventBus.publish(DialogId.DELETE_ROBOT, DialogEventBus.Event.POSITIVE)
+            dialogEventBus.publish(DialogEvent.DELETE_ROBOT)
             dialog.dismiss()
         }
     )

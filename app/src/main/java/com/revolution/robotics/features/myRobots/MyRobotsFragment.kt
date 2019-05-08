@@ -6,7 +6,7 @@ import androidx.viewpager.widget.ViewPager
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
 import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
-import com.revolution.robotics.core.eventBus.dialog.DialogId
+import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.core.extensions.waitForLayout
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.databinding.FragmentMyRobotsBinding
@@ -71,8 +71,8 @@ class MyRobotsFragment : BaseFragment<FragmentMyRobotsBinding, MyRobotsViewModel
         DeleteRobotDialog.newInstance().show(fragmentManager)
     }
 
-    override fun onDialogEvent(dialog: DialogId, event: DialogEventBus.Event) {
-        if (dialog == DialogId.DELETE_ROBOT && event == DialogEventBus.Event.POSITIVE && robotToDeleteId != -1) {
+    override fun onDialogEvent(event: DialogEvent) {
+        if (event == DialogEvent.DELETE_ROBOT && robotToDeleteId != -1) {
             if (adapter.selectedPosition == adapter.count - 1) {
                 adapter.selectedPosition--
             }
