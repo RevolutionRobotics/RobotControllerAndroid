@@ -7,7 +7,6 @@ import com.revolution.robotics.R
 import com.revolution.robotics.databinding.FragmentConfigureConnectionsBinding
 import org.kodein.di.erased.instance
 
-@Suppress("UnnecessaryApply")
 class ConfigureConnectionsFragment :
     BaseFragment<FragmentConfigureConnectionsBinding, ConfigureConnectionsViewModel>(
         R.layout.fragment_configure_connections

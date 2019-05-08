@@ -168,6 +168,7 @@
                     app:layout_constraintHorizontal_chainStyle="spread"
                     app:layout_constraintHorizontal_weight="1"
                     android:onClick="@{()-> viewModel.onPlayClicked()}"
+                    android:enabled="@{viewModel.isSelected}"
                     app:layout_constraintTop_toTopOf="@id/buttons_top_guide"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/edit_button"
@@ -181,7 +182,7 @@
                     app:layout_constraintDimensionRatio="1.0"
                     android:layout_marginStart="@dimen/my_robots_robot_edit_margin_start"
                     android:onClick="@{()-> viewModel.onEditClicked()}"
-                    android:enabled="@{!viewModel.isUnderConstruction}"
+                    android:enabled="@{viewModel.isSelected &amp;&amp; !viewModel.isUnderConstruction}"
                     android:stateListAnimator="@null"
                     app:layout_constraintHorizontal_chainStyle="spread"
                     app:layout_constraintTop_toTopOf="@id/buttons_top_guide"
@@ -198,6 +199,7 @@
                     android:layout_marginStart="@dimen/my_robots_robot_delete_margin_start"
                     android:layout_marginEnd="@dimen/my_robots_robot_delete_margin_end"
                     android:onClick="@{()-> viewModel.onDeleteClicked()}"
+                    android:enabled="@{viewModel.isSelected}"
                     android:stateListAnimator="@null"
                     app:layout_constraintHorizontal_chainStyle="spread"
                     app:layout_constraintTop_toTopOf="@id/buttons_top_guide"
@@ -206,8 +208,8 @@
                     app:layout_constraintBottom_toBottomOf="@id/buttons_bottom_guide"/>
 
             <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="@dimen/my_robots_robot_button_icon_size"
+                    android:layout_height="@dimen/my_robots_robot_button_icon_size"
                     android:src="@drawable/ic_edit"
                     android:scaleType="fitCenter"
                     android:tint="@{viewModel.isUnderConstruction ? @color/grey_6d : @color/white}"
@@ -218,8 +220,8 @@
                     app:layout_constraintBottom_toBottomOf="@id/edit_button"/>
 
             <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="@dimen/my_robots_robot_button_icon_size"
+                    android:layout_height="@dimen/my_robots_robot_button_icon_size"
                     android:src="@drawable/ic_delete"
                     android:scaleType="fitCenter"
                     android:tint="@color/white"

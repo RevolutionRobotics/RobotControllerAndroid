@@ -47,6 +47,7 @@ class MyRobotsFragment : BaseFragment<FragmentMyRobotsBinding, MyRobotsViewModel
     override fun onRobotsChanged() {
         adapter.notifyDataSetChanged()
         binding?.myRobotsViewpager?.initTransformerWithDelay()
+        presenter.onPageSelected(0)
     }
 
     override fun showNextRobot() {

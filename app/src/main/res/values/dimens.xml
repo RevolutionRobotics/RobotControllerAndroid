@@ -106,6 +106,7 @@
     <dimen name="my_robots_robot_edit_margin_start">2dp</dimen>
     <dimen name="my_robots_robot_delete_margin_start">2dp</dimen>
     <dimen name="my_robots_robot_delete_margin_end">2dp</dimen>
+    <dimen name="my_robots_robot_button_icon_size">20dp</dimen>
     <dimen name="my_robots_robot_name_text_size">16sp</dimen>
     <dimen name="my_robots_robot_description_text_size">12sp</dimen>
     <dimen name="my_robots_robot_icon_description_text_size">12sp</dimen>
@@ -175,4 +176,25 @@
     <dimen name="configure_connections_line_width">1dp</dimen>
     <dimen name="configure_connections_line_dash_width">8dp</dimen>
     <dimen name="configure_connections_line_gap_width">5dp</dimen>
+
+    <!-- SCREEN: CONFIGURE CONTROLLERS -->
+    <dimen name="configure_controllers_card_dimen_ratio">1.121</dimen>
+    <dimen name="configure_controllers_buttons_guide_percentage">0.4895</dimen>
+    <dimen name="configure_controllers_button_height_percentage">0.2632</dimen>
+    <dimen name="configure_controllers_button_width_percentage">0.0405</dimen>
+    <dimen name="configure_controllers_controller_icon_width">16dp</dimen>
+    <dimen name="configure_controllers_controller_icon_margin_bottom">12dp</dimen>
+    <dimen name="configure_controllers_controller_description_horizontal_margin">8dp</dimen>
+    <dimen name="configure_controllers_controller_content_horizontal_margin">12dp</dimen>
+    <dimen name="configure_controllers_controller_name_margin_top">24dp</dimen>
+    <dimen name="configure_controllers_controller_image_horizontal_margin">46dp</dimen>
+    <dimen name="configure_controllers_controller_image_vertical_margin">15dp</dimen>
+    <dimen name="configure_controllers_controller_card_border_margin">4dp</dimen>
+    <dimen name="configure_controllers_controller_button_icon_size">20dp</dimen>
+    <dimen name="configure_controllers_controller_icon_bottom_guide">0.7895</dimen>
+    <dimen name="configure_controllers_controller_buttons_top_guide">0.8</dimen>
+    <dimen name="configure_controllers_controller_buttons_bottom_guide">0.9895</dimen>
+    <dimen name="configure_controllers_name_text_size">16sp</dimen>
+    <dimen name="configure_controllers_icon_description_text_size">13sp</dimen>
+    <dimen name="configure_controllers_select_text_size">16sp</dimen>
 </resources>

@@ -23,7 +23,7 @@
     <string name="permission_bluetooth_description">We need your location permissions to search for bluetooth devices. We can explain here how is this exactly working</string>
     <string name="permission_bluetooth_agree">Agree and continue</string>
 
-    <!-- Connect to robot -->
+    <!-- Connect to controller -->
     <string name="connection_successful_message">Connection has been established</string>
     <string name="connection_failed_message">Connection failed</string>
     <string name="connection_failed_subtitle">What to do?</string>
@@ -85,21 +85,26 @@
     <string name="build_robot_finished_button">Let\'s drive</string>
 
     <!-- Configure -->
-    <string name="configure_connections_button_text">Connections</string>
-    <string name="configure_controller_button_text">Controller</string>
+    <string name="configure_connection_tab_title">Connections</string>
+    <string name="configure_controller_tab_title">Controllers</string>
 
     <!-- Configure Connections -->
-    <string name="configure_connections_missing_part_name">MS</string>
-    <string name="configure_connections_button_M1">M1</string>
-    <string name="configure_connections_button_M2">M2</string>
-    <string name="configure_connections_button_M3">M3</string>
-    <string name="configure_connections_button_M4">M4</string>
-    <string name="configure_connections_button_M5">M5</string>
-    <string name="configure_connections_button_M6">M6</string>
-    <string name="configure_connections_button_S1">S1</string>
-    <string name="configure_connections_button_S2">S2</string>
-    <string name="configure_connections_button_S3">S3</string>
-    <string name="configure_connections_button_S4">S4</string>
+    <string name="configure_connections_missing_part_name" translatable="false">MS</string>
+    <string name="configure_connections_button_M1" translatable="false">M1</string>
+    <string name="configure_connections_button_M2" translatable="false">M2</string>
+    <string name="configure_connections_button_M3" translatable="false">M3</string>
+    <string name="configure_connections_button_M4" translatable="false">M4</string>
+    <string name="configure_connections_button_M5" translatable="false">M5</string>
+    <string name="configure_connections_button_M6" translatable="false">M6</string>
+    <string name="configure_connections_button_S1" translatable="false">S1</string>
+    <string name="configure_connections_button_S2" translatable="false" >S2</string>
+    <string name="configure_connections_button_S3" translatable="false">S3</string>
+    <string name="configure_connections_button_S4" translatable="false">S4</string>
+
+    <!-- Configure Controllers -->
+    <string name="controller_selected">Selected</string>
+    <string name="controller_choose_this">Choose this!</string>
+    <string name="controller_create_new">create new</string>
 
     <!-- Controller Info dialog-->
     <string name="controller_info_dialog_button_text">Got it</string>
