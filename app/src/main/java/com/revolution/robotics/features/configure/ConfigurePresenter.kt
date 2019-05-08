@@ -7,16 +7,30 @@ class ConfigurePresenter : ConfigureMvp.Presenter {
 
     override fun register(view: ConfigureMvp.View, model: ConfigureViewModel?) {
         super.register(view, model)
-        onConnectionsSelected()
+        onConnectionsTabSelected()
     }
 
-    override fun onConnectionsSelected() {
+    override fun onConnectionsTabSelected() {
         model?.setScreen(ConfigurationTabs.CONNECTIONS)
         view?.showConnectionsScreen()
     }
 
-    override fun onControllerSelected() {
+    override fun onControllerTabSelected() {
         model?.setScreen(ConfigurationTabs.CONTROLLERS)
         view?.showControllerScreen()
+    }
+
+    // TODO add robot ID here
+    @Suppress("MagicNumber")
+    override fun onRobotImageClicked() {
+        view?.showDialog(RobotPictureDialog.newInstance(110))
+    }
+
+    override fun saveConfiguration() {
+        // TODO save configuration
+    }
+
+    override fun onBluetoothClicked() {
+        view?.startConnectionFlow()
     }
 }

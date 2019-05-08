@@ -2,10 +2,10 @@ package com.revolution.robotics.features.build.permission
 
 import com.revolution.robotics.R
 import com.revolution.robotics.core.eventBus.dialog.DialogEvent
+import com.revolution.robotics.core.utils.dynamicPermissions.BluetoothConnectionFlowHelper
 import com.revolution.robotics.core.utils.dynamicPermissions.DynamicPermissionHandler
 import com.revolution.robotics.core.utils.dynamicPermissions.DynamicPermissionListener
 import com.revolution.robotics.databinding.DialogBluetoothPermissionBinding
-import com.revolution.robotics.features.build.BuildRobotFragment
 import com.revolution.robotics.views.dialogs.DialogButton
 import com.revolution.robotics.views.dialogs.DialogFace
 import com.revolution.robotics.views.dialogs.RoboticsDialog
@@ -24,7 +24,7 @@ class BluetoothPermissionDialog : RoboticsDialog(), DynamicPermissionListener {
     override val dialogButtons = listOf(
         DialogButton(R.string.permission_bluetooth_agree, R.drawable.ic_check, true) {
             dynamicPermissionHandler
-                .permissions(BuildRobotFragment.REQUIRED_PERMISSIONS)
+                .permissions(BluetoothConnectionFlowHelper.REQUIRED_PERMISSIONS)
                 .listener(this)
                 .request(requireActivity())
         }

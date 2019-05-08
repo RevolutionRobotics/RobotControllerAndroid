@@ -28,9 +28,10 @@ class RoboticsToolbar @JvmOverloads constructor(context: Context, attrs: Attribu
                 logo.invisible = !value.isLogoVisible
                 back.invisible = !value.hasBackOption
                 title.text = value.title
-                value.options.reversed().forEach { createOption(it) }
+                value.options.reversed().forEachIndexed { index, option -> createOption(option, index == 0) }
             }
         }
+    var hasFakeIcon = false
     private var lastIconAddedId = 0
 
     init {
@@ -84,7 +85,7 @@ class RoboticsToolbar @JvmOverloads constructor(context: Context, attrs: Attribu
         }
     }
 
-    private fun createOption(option: ToolbarOption) = AppCompatImageView(context).apply {
+    private fun createOption(option: ToolbarOption, isFirst: Boolean) = AppCompatImageView(context).apply {
         id = View.generateViewId()
         setImageResource(option.icon)
         setBackgroundResource(R.drawable.bg_button_default)
@@ -100,7 +101,7 @@ class RoboticsToolbar @JvmOverloads constructor(context: Context, attrs: Attribu
             connections.connect(id, ConstraintSet.BOTTOM, R.id.header_background, ConstraintSet.BOTTOM)
         }
         layoutParams = (layoutParams as MarginLayoutParams).apply {
-            marginEnd = R.dimen.dimen_24dp.toDimension()
+            marginEnd = (if (isFirst && hasFakeIcon) R.dimen.dimen_64dp else R.dimen.dimen_24dp).toDimension()
             setPadding(
                 R.dimen.dimen_8dp.toDimension(),
                 R.dimen.dimen_8dp.toDimension(),

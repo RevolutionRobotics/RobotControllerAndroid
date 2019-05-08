@@ -25,7 +25,7 @@ class RobotPictureDialog : RoboticsDialog() {
         }
     }
 
-    private val dialogFace = RobotImageDialogFace()
+    private val dialogFace = RobotPictureDialogFace()
     private lateinit var cameraHelper: CameraHelper
 
     override val hasCloseButton = true
@@ -53,7 +53,7 @@ class RobotPictureDialog : RoboticsDialog() {
         }
     }
 
-    inner class RobotImageDialogFace : DialogFace<DialogRobotPictureBinding>(R.layout.dialog_robot_picture) {
+    inner class RobotPictureDialogFace : DialogFace<DialogRobotPictureBinding>(R.layout.dialog_robot_picture) {
 
         override fun onActivated() {
             onCameraCaptured()
