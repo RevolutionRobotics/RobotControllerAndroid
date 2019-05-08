@@ -1,6 +1,5 @@
 package com.revolution.robotics.features.build
 
-import android.Manifest
 import android.os.Bundle
 import android.view.View
 import com.revolution.robotics.BaseFragment
@@ -12,18 +11,13 @@ import com.revolution.robotics.core.domain.shared.RobotDescriptor
 import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
 import com.revolution.robotics.core.utils.BundleArgumentDelegate
-import com.revolution.robotics.core.utils.dynamicPermissions.DynamicPermissionHandler
+import com.revolution.robotics.core.utils.dynamicPermissions.BluetoothConnectionFlowHelper
 import com.revolution.robotics.databinding.FragmentBuildRobotBinding
 import com.revolution.robotics.features.build.buildFinished.BuildFinishedDialog
 import com.revolution.robotics.features.build.chapterFinished.ChapterFinishedDialog
-import com.revolution.robotics.features.build.connect.ConnectDialog
-import com.revolution.robotics.features.build.connectionResult.ConnectionFailedDialog
-import com.revolution.robotics.features.build.connectionResult.ConnectionSuccessDialog
-import com.revolution.robotics.features.build.permission.BluetoothPermissionDialog
 import com.revolution.robotics.features.build.testing.MotorTestDialog
 import com.revolution.robotics.features.build.testing.MovementTestDialog
 import com.revolution.robotics.features.build.testing.SensorTestDialog
-import com.revolution.robotics.features.build.turnOnTheBrain.TurnOnTheBrainDialog
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 import com.revolution.robotics.views.slider.BuildStepSliderView
 import org.kodein.di.erased.instance
@@ -31,23 +25,18 @@ import java.util.Date
 
 @Suppress("UnnecessaryApply")
 class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotViewModel>(R.layout.fragment_build_robot),
-    BuildRobotMvp.View, BuildStepSliderView.BuildStepSelectedListener, DialogEventBus.Listener {
+    BuildRobotMvp.View, BuildStepSliderView.BuildStepSelectedListener, DialogEventBus.Listener,
+    BluetoothConnectionFlowHelper.Listener {
 
     companion object {
         private var Bundle.robot by BundleArgumentDelegate.Parcelable<RobotDescriptor>("robot")
-
         const val DEFAULT_STARTING_INDEX = 1
-
-        val REQUIRED_PERMISSIONS = listOf(
-            Manifest.permission.ACCESS_COARSE_LOCATION,
-            Manifest.permission.ACCESS_FINE_LOCATION
-        )
     }
 
     override val viewModelClass = BuildRobotViewModel::class.java
     private val presenter: BuildRobotMvp.Presenter by kodein.instance()
-    private val dynamicPermissionHandler: DynamicPermissionHandler by kodein.instance()
     private val dialogEventBus: DialogEventBus by kodein.instance()
+    private val connectionFlowHelper = BluetoothConnectionFlowHelper(kodein)
 
     private var userRobot: UserRobot? = null
     private var buildStepCount = 0
@@ -66,13 +55,10 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
 
         presenter.register(this, viewModel)
         presenter.loadUserRobot(arguments?.robot?.id ?: 0)
-        dialogEventBus.register(this)
 
-        if (dynamicPermissionHandler.hasPermissions(REQUIRED_PERMISSIONS, requireActivity())) {
-            TurnOnTheBrainDialog.newInstance().show(fragmentManager)
-        } else {
-            BluetoothPermissionDialog.newInstance().show(fragmentManager)
-        }
+        dialogEventBus.register(this)
+        connectionFlowHelper.init(fragmentManager, this)
+        connectionFlowHelper.startConnectionFlow(requireActivity())
     }
 
     override fun onStop() {
@@ -91,24 +77,18 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
     }
 
     override fun onDestroyView() {
+        connectionFlowHelper.shutdown()
         dialogEventBus.unregister(this)
         super.onDestroyView()
     }
 
+    override fun onBluetoothConnected() {
+        viewModel?.isBluetoothConnected?.set(true)
+    }
+
     override fun onDialogEvent(event: DialogEvent) {
-        when (event) {
-            DialogEvent.PERMISSION_GRANTED -> TurnOnTheBrainDialog.newInstance().show(fragmentManager)
-            DialogEvent.BRAIN_TURNED_ON -> ConnectDialog.newInstance().show(fragmentManager)
-            DialogEvent.ROBOT_CONNECTED -> {
-                viewModel?.isBluetoothConnected?.set(true)
-                ConnectionSuccessDialog.newInstance().show(fragmentManager)
-            }
-            DialogEvent.ROBOT_CONNECTION_FAILED -> ConnectionFailedDialog.newInstance().show(fragmentManager)
-            DialogEvent.ROBOT_RECONNECT -> ConnectDialog.newInstance().show(fragmentManager)
-            DialogEvent.CHAPTER_FINISHED ->
-                getTestingDialog(event.extras.getInt(ChapterFinishedDialog.KEY_TEST_CODE_ID))
-                    .show(fragmentManager)
-            else -> Unit
+        if (event == DialogEvent.CHAPTER_FINISHED) {
+            getTestingDialog(event.extras.getInt(ChapterFinishedDialog.KEY_TEST_CODE_ID)).show(fragmentManager)
         }
     }
 

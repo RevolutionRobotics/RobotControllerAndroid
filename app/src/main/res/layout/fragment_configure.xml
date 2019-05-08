@@ -5,7 +5,8 @@
         xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <variable name="viewModel" type="com.revolution.robotics.features.configure.ConfigureViewModel"/>
+        <variable name="viewModel"
+                  type="com.revolution.robotics.features.configure.ConfigureViewModel"/>
         <variable name="toolbarViewModel"
                   type="com.revolution.robotics.features.configure.ConfigureToolbarViewModel"/>
     </data>
@@ -48,13 +49,13 @@
                     app:layout_constraintBottom_toBottomOf="@id/toolbar_body_bottom"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:layout_marginEnd="@dimen/dimen_8dp"
-                    app:greyscale="@{false}"/>
+                    app:greyscale="@{!viewModel.isBluetoothConnected}"/>
 
             <View
                     android:id="@+id/configureScreenNavGuide"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/configure_screen_nav_guide_height"
-                    app:layout_constraintBottom_toBottomOf="@id/toolbar" />
+                    app:layout_constraintBottom_toBottomOf="@id/toolbar"/>
 
             <Button
                     android:id="@+id/connectionsButton"

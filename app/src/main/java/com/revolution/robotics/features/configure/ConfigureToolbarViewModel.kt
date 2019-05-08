@@ -10,11 +10,7 @@ class ConfigureToolbarViewModel(presenter: ConfigureMvp.Presenter) : ToolbarView
     override val hasBackOption = true
     override val title = "Todo: Name Of Robot"
     override val options = listOf(
-        ToolbarOption(R.drawable.ic_camera) {
-            presenter.onRobotImageClicked()
-        },
-        ToolbarOption(R.drawable.ic_save) {
-            presenter.saveConfiguration()
-        }
+        ToolbarOption(R.drawable.ic_camera, presenter::onRobotImageClicked),
+        ToolbarOption(R.drawable.ic_save, presenter::saveConfiguration)
     )
 }

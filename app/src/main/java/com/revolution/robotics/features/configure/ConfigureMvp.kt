@@ -6,6 +6,7 @@ import com.revolution.robotics.views.dialogs.RoboticsDialog
 interface ConfigureMvp : Mvp {
     interface View : Mvp.View {
         fun showDialog(roboticsDialog: RoboticsDialog)
+        fun startConnectionFlow()
         fun showConnectionsScreen()
         fun showControllerScreen()
     }

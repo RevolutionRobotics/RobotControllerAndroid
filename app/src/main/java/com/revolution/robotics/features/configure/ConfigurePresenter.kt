@@ -20,8 +20,9 @@ class ConfigurePresenter : ConfigureMvp.Presenter {
         view?.showControllerScreen()
     }
 
+    // TODO add robot ID here
+    @Suppress("MagicNumber")
     override fun onRobotImageClicked() {
-        // TODO add robot ID here
         view?.showDialog(RobotPictureDialog.newInstance(110))
     }
 
@@ -30,6 +31,6 @@ class ConfigurePresenter : ConfigureMvp.Presenter {
     }
 
     override fun onBluetoothClicked() {
-        // TODO start connection flow
+        view?.startConnectionFlow()
     }
 }
