@@ -108,6 +108,7 @@
                     android:scaleType="centerInside"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:firebaseImageUrl="@{viewModel.partsImage}"
+                    app:errorDrawable="@{@drawable/ic_image_not_found_dark}"
                     app:layout_constraintBottom_toTopOf="@+id/parts_quantity"
                     app:layout_constraintTop_toTopOf="parent"/>
 
