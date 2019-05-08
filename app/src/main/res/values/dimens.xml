@@ -4,6 +4,7 @@
     <dimen name="dimen_1dp">1dp</dimen>
     <dimen name="dimen_2dp">2dp</dimen>
     <dimen name="dimen_4dp">4dp</dimen>
+    <dimen name="dimen_6dp">6dp</dimen>
     <dimen name="dimen_8dp">8dp</dimen>
     <dimen name="dimen_10dp">10dp</dimen>
     <dimen name="dimen_12dp">12dp</dimen>
@@ -24,7 +25,7 @@
     <dimen name="toolbar_header_height">42dp</dimen>
     <dimen name="toolbar_header_border_size">30dp</dimen>
     <dimen name="toolbar_logo_size">38dp</dimen>
-    <dimen name="toolbar_back_size">24dp</dimen>
+    <dimen name="toolbar_back_size">40dp</dimen>
     <dimen name="toolbar_box_size">66dp</dimen>
     <dimen name="toolbar_icon_size">40dp</dimen>
 
@@ -74,6 +75,10 @@
     <dimen name="camera_placeholder_width">190dp</dimen>
     <dimen name="camera_placeholder_height">104dp</dimen>
     <dimen name="camera_placeholder_padding">22dp</dimen>
+
+    <!-- DIALOG: DELETE ROBOT -->
+    <dimen name="delete_robot_image_width">46dp</dimen>
+    <dimen name="delete_robot_image_height">62dp</dimen>
 
     <!-- SCREEN: MAIN MENU -->
     <dimen name="main_menu_header_border_size">30dp</dimen>

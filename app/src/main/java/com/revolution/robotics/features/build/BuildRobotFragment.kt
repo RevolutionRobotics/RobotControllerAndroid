@@ -5,9 +5,13 @@ import android.os.Bundle
 import android.view.View
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
+import com.revolution.robotics.core.domain.local.BuildStatus
+import com.revolution.robotics.core.domain.local.UserRobot
 import com.revolution.robotics.core.domain.remote.BuildStep
+import com.revolution.robotics.core.domain.shared.RobotDescriptor
 import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
 import com.revolution.robotics.core.eventBus.dialog.DialogId
+import com.revolution.robotics.core.utils.BundleArgumentDelegate
 import com.revolution.robotics.core.utils.dynamicPermissions.DynamicPermissionHandler
 import com.revolution.robotics.databinding.FragmentBuildRobotBinding
 import com.revolution.robotics.features.build.buildFinished.BuildFinishedDialog
@@ -23,13 +27,16 @@ import com.revolution.robotics.features.build.turnOnTheBrain.TurnOnTheBrainDialo
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 import com.revolution.robotics.views.slider.BuildStepSliderView
 import org.kodein.di.erased.instance
+import java.util.Date
 
 @Suppress("UnnecessaryApply")
 class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotViewModel>(R.layout.fragment_build_robot),
     BuildRobotMvp.View, BuildStepSliderView.BuildStepSelectedListener, DialogEventBus.Listener {
 
     companion object {
-        const val CUSTOM_ROBOT_ID = -1
+        private var Bundle.robot by BundleArgumentDelegate.Parcelable<RobotDescriptor>("robot")
+
+        const val DEFAULT_STARTING_INDEX = 1
 
         val REQUIRED_PERMISSIONS = listOf(
             Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -42,13 +49,12 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
     private val dynamicPermissionHandler: DynamicPermissionHandler by kodein.instance()
     private val dialogEventBus: DialogEventBus by kodein.instance()
 
+    private var userRobot: UserRobot? = null
     private var buildStepCount = 0
     private var currentBuildStep: BuildStep? = null
+    private var wasRobotFinished = false
 
-    // TODO remove this suppress
-    @Suppress("MagicNumber")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        presenter.register(this, viewModel)
         binding?.apply {
             toolbarViewModel = BuildRobotToolbarViewModel()
             background = ChippedBoxConfig.Builder()
@@ -58,8 +64,8 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
                 .create()
         }
 
-        // TODO set robotID as an argument parameter
-        presenter.loadBuildSteps(110)
+        presenter.register(this, viewModel)
+        presenter.loadUserRobot(arguments?.robot?.id ?: 0)
         dialogEventBus.register(this)
 
         if (dynamicPermissionHandler.hasPermissions(REQUIRED_PERMISSIONS, requireActivity())) {
@@ -67,6 +73,26 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
         } else {
             BluetoothPermissionDialog.newInstance().show(fragmentManager)
         }
+    }
+
+    override fun onStop() {
+        if (!wasRobotFinished) {
+            if (userRobot == null) {
+                presenter.createNewRobot(arguments?.robot, currentBuildStep)
+            } else {
+                userRobot?.apply {
+                    actualBuildStep = currentBuildStep?.stepNumber ?: DEFAULT_STARTING_INDEX
+                    lastModified = Date(System.currentTimeMillis())
+                    presenter.saveUserRobot(this)
+                }
+            }
+        }
+        super.onStop()
+    }
+
+    override fun onDestroyView() {
+        dialogEventBus.unregister(this)
+        super.onDestroyView()
     }
 
     @Suppress("ComplexMethod")
@@ -94,15 +120,16 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
             else -> MovementTestDialog.newInstance()
         }
 
-    override fun onDestroyView() {
-        dialogEventBus.unregister(this)
-        super.onDestroyView()
+    override fun onUserRobotLoaded(userRobot: UserRobot?) {
+        this.userRobot = userRobot
+        presenter.loadBuildSteps(arguments?.robot?.id ?: 0)
     }
 
     override fun onBuildStepsLoaded(steps: List<BuildStep>) {
-        binding?.seekbar?.setBuildSteps(steps, this)
+        val startIndex = (userRobot?.actualBuildStep ?: DEFAULT_STARTING_INDEX) - 1
+        binding?.seekbar?.setBuildSteps(steps, this, startIndex)
         buildStepCount = steps.size
-        onBuildStepSelected(steps.first(), true)
+        onBuildStepSelected(steps[startIndex], true)
     }
 
     override fun onBuildStepSelected(buildStep: BuildStep, fromUser: Boolean) {
@@ -116,6 +143,12 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
     }
 
     override fun onBuildFinished() {
+        wasRobotFinished = true
+        userRobot?.apply {
+            buildStatus = BuildStatus.COMPLETED
+            lastModified = Date(System.currentTimeMillis())
+            presenter.saveUserRobot(this)
+        }
         BuildFinishedDialog.newInstance().show(fragmentManager)
     }
 }

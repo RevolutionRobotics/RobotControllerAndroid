@@ -2,6 +2,6 @@ package com.revolution.robotics.core.domain.local
 
 enum class BuildStatus {
     INITIAL,
-    INPROGRESS,
+    IN_PROGRESS,
     COMPLETED
 }

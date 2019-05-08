@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable name="viewModel" type="com.revolution.robotics.features.myRobots.adapter.MyRobotsItem"/>
@@ -67,7 +69,6 @@
                     android:maxLines="2"
                     android:ellipsize="end"
                     android:text="@{viewModel.description}"
-                    app:gone="@{!viewModel.isSelected}"
                     android:textColor="@color/white"
                     android:fontFamily="@font/barlow_regular"
                     android:textSize="@dimen/my_robots_robot_description_text_size"
@@ -82,7 +83,7 @@
                     android:layout_marginBottom="@dimen/my_robots_robot_icon_margin_bottom"
                     android:layout_marginStart="@dimen/my_robots_robot_icon_margin_start"
                     android:layout_marginEnd="@dimen/my_robots_robot_icon_margin_end"
-                    android:src="@drawable/ic_calendar"
+                    android:src="@{viewModel.isUnderConstruction ? @drawable/ic_build : @drawable/ic_calendar }"
                     android:layout_width="@dimen/my_robots_robot_icon_width"
                     android:layout_height="0dp"
                     android:scaleType="fitCenter"
@@ -101,9 +102,27 @@
                     android:textSize="@dimen/my_robots_robot_icon_description_text_size"
                     android:fontFamily="@font/barlow_medium"
                     android:layout_marginEnd="@dimen/my_robots_robot_description_margin_end"
+                    android:layout_marginStart="@dimen/dimen_4dp"
+                    app:layout_constraintTop_toTopOf="@id/robot_icon"
+                    app:visible="@{!viewModel.isUnderConstruction}"
+                    app:layout_constraintBottom_toBottomOf="@id/robot_icon"
+                    app:layout_constraintStart_toEndOf="@id/robot_icon"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+            <TextView
+                    android:id="@+id/robot_icon_description_2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/my_robots_under_construction"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/my_robots_robot_icon_description_text_size"
+                    android:fontFamily="@font/barlow_medium"
+                    android:layout_marginEnd="@dimen/my_robots_robot_description_margin_end"
+                    app:visible="@{viewModel.isUnderConstruction}"
                     app:layout_constraintTop_toTopOf="@id/robot_icon"
                     app:layout_constraintBottom_toBottomOf="@id/robot_icon"
                     app:layout_constraintStart_toEndOf="@id/robot_icon"
+                    android:layout_marginStart="@dimen/dimen_4dp"
                     app:layout_constraintEnd_toEndOf="parent"/>
 
             <androidx.constraintlayout.widget.Guideline
@@ -111,24 +130,21 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     app:layout_constraintGuide_percent="@dimen/my_robots_robot_icon_bottom_guide"
-                    android:orientation="horizontal"
-            />
+                    android:orientation="horizontal"/>
 
             <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/buttons_top_guide"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     app:layout_constraintGuide_percent="@dimen/my_robots_robot_buttons_top_guide"
-                    android:orientation="horizontal"
-            />
+                    android:orientation="horizontal"/>
 
             <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/buttons_bottom_guide"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     app:layout_constraintGuide_percent="@dimen/my_robots_robot_buttons_bottom_guide"
-                    android:orientation="horizontal"
-            />
+                    android:orientation="horizontal"/>
 
             <TextView
                     android:layout_width="0dp"
@@ -141,8 +157,7 @@
                     android:textColor="@color/white"
                     android:fontFamily="@font/barlow_medium"
                     android:textSize="@dimen/my_robots_robot_play_text_size"
-                    android:text="@string/my_robots_play_button_text"
-            />
+                    android:text="@{viewModel.isUnderConstruction ? @string/my_robots_under_construction_button : @string/my_robots_play_button}"/>
 
             <Button
                     android:id="@+id/play_button"
@@ -156,8 +171,7 @@
                     app:layout_constraintTop_toTopOf="@id/buttons_top_guide"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/edit_button"
-                    app:layout_constraintBottom_toBottomOf="@id/buttons_bottom_guide"
-            />
+                    app:layout_constraintBottom_toBottomOf="@id/buttons_bottom_guide"/>
 
             <Button
                     android:id="@+id/edit_button"
@@ -173,8 +187,7 @@
                     app:layout_constraintTop_toTopOf="@id/buttons_top_guide"
                     app:layout_constraintStart_toEndOf="@id/play_button"
                     app:layout_constraintEnd_toStartOf="@id/delete_button"
-                    app:layout_constraintBottom_toBottomOf="@id/buttons_bottom_guide"
-            />
+                    app:layout_constraintBottom_toBottomOf="@id/buttons_bottom_guide"/>
 
             <Button
                     android:id="@+id/delete_button"
@@ -190,21 +203,19 @@
                     app:layout_constraintTop_toTopOf="@id/buttons_top_guide"
                     app:layout_constraintStart_toEndOf="@id/edit_button"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toBottomOf="@id/buttons_bottom_guide"
-            />
+                    app:layout_constraintBottom_toBottomOf="@id/buttons_bottom_guide"/>
 
             <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:src="@drawable/ic_edit"
                     android:scaleType="fitCenter"
-                    android:tint="@{viewModel.isUnderConstruction? @color/grey_6d : @color/white}"
+                    android:tint="@{viewModel.isUnderConstruction ? @color/grey_6d : @color/white}"
                     android:elevation="3dp"
                     app:layout_constraintStart_toStartOf="@id/edit_button"
                     app:layout_constraintEnd_toEndOf="@id/edit_button"
                     app:layout_constraintTop_toTopOf="@id/edit_button"
-                    app:layout_constraintBottom_toBottomOf="@id/edit_button"
-            />
+                    app:layout_constraintBottom_toBottomOf="@id/edit_button"/>
 
             <ImageView
                     android:layout_width="20dp"
@@ -216,8 +227,7 @@
                     app:layout_constraintStart_toStartOf="@id/delete_button"
                     app:layout_constraintEnd_toEndOf="@id/delete_button"
                     app:layout_constraintTop_toTopOf="@id/delete_button"
-                    app:layout_constraintBottom_toBottomOf="@id/delete_button"
-            />
+                    app:layout_constraintBottom_toBottomOf="@id/delete_button"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -3,34 +3,39 @@ package com.revolution.robotics.core.domain.local
 import androidx.room.Dao
 import androidx.room.Entity
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.PrimaryKey
 import androidx.room.Query
+import com.revolution.robotics.core.domain.shared.RobotDescriptor
+import kotlinx.android.parcel.Parcelize
 import java.util.Date
 
 @Entity
+@Parcelize
 data class UserRobot(
-    @PrimaryKey var id: String = "",
+    @PrimaryKey(autoGenerate = true) var instanceId: Int = 0,
+    override var id: Int = 0,
     var buildStatus: BuildStatus? = null,
     var actualBuildStep: Int = 0,
     var lastModified: Date? = null,
     var configId: String? = null,
-    var customName: String? = null,
-    var customImage: String? = null,
-    var customDescription: String? = null
-)
+    override val name: String? = null,
+    override var coverImage: String?,
+    override var description: String?
+) : RobotDescriptor
 
 @Dao
 interface UserRobotDao {
 
     @Query("SELECT * FROM UserRobot")
-    fun getAllRobot(): List<UserRobot>
+    fun getAllRobots(): List<UserRobot>
 
-    @Query("SELECT * FROM UserRobot WHERE id=:id")
-    fun getRobot(id: String): UserRobot
+    @Query("SELECT * FROM UserRobot WHERE id=:robotId AND buildStatus=:buildStatus")
+    fun getRobotByStatus(robotId: Int, buildStatus: BuildStatus): UserRobot?
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveUserRobot(userRobot: UserRobot)
 
-    @Query("DELETE FROM UserRobot WHERE id=:id")
-    fun deleteUserRobot(id: String)
+    @Query("DELETE FROM UserRobot WHERE instanceId = :id")
+    fun deleteRobotById(id: Int)
 }

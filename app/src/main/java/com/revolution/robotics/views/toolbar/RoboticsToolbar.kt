@@ -65,7 +65,7 @@ class RoboticsToolbar @JvmOverloads constructor(context: Context, attrs: Attribu
         }
         layoutParams = (layoutParams as MarginLayoutParams).apply {
             setMargins(0, 0, 0, R.dimen.dimen_12dp.toDimension())
-            marginStart = R.dimen.dimen_16dp.toDimension()
+            marginStart = R.dimen.dimen_6dp.toDimension()
         }
         setOnClickListener { (context as? Activity)?.onBackPressed() }
     }

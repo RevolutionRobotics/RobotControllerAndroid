@@ -1,15 +1,15 @@
-package com.revolution.robotics.core.interactor
+package com.revolution.robotics.core.interactor.firebase
 
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.GenericTypeIndicator
 import com.revolution.robotics.core.domain.remote.FirebaseException
 
-abstract class FirebaseListInteractor<T> : FirebaseInteractor<ArrayList<T>>() {
+abstract class FirebaseSingleObjectInteractor<T> : FirebaseInteractor<T>() {
 
     abstract val genericTypeIndicator: GenericTypeIndicator<ArrayList<T>>
 
     override fun onDataChange(snapShot: DataSnapshot) {
-        val response = snapShot.getValue(genericTypeIndicator)
+        val response = snapShot.getValue(genericTypeIndicator)?.firstOrNull()
         if (response != null) {
             onResponse?.invoke(response)
         } else {

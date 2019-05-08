@@ -1,4 +1,4 @@
-package com.revolution.robotics.core.interactor
+package com.revolution.robotics.core.interactor.firebase
 
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.GenericTypeIndicator
@@ -11,4 +11,6 @@ class RobotInteractor : FirebaseListInteractor<Robot>() {
         object : GenericTypeIndicator<ArrayList<Robot>>() {}
 
     override fun getDatabaseReference(database: FirebaseDatabase): Query = database.getReference("robot")
+
+    override fun filter(item: Robot) = true
 }

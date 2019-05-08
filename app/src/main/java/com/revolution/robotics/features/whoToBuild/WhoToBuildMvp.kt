@@ -1,6 +1,7 @@
 package com.revolution.robotics.features.whoToBuild
 
 import com.revolution.robotics.core.Mvp
+import com.revolution.robotics.core.domain.remote.Robot
 
 interface WhoToBuildMvp : Mvp {
     interface View : Mvp.View {
@@ -13,6 +14,6 @@ interface WhoToBuildMvp : Mvp {
         fun onPageSelected(position: Int)
         fun nextButtonClick()
         fun previousButtonClick()
-        fun onRobotSelected(id: Int)
+        fun onRobotSelected(robot: Robot)
     }
 }

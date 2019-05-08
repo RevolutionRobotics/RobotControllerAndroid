@@ -23,11 +23,21 @@
                 android:layout_width="@dimen/my_robots_placeholder_width"
                 android:layout_height="@dimen/my_robots_placeholder_height"
                 android:src="@drawable/my_robots_empty_placeholder"
+                app:visible="@{viewModel.isEmpty}"
                 app:layout_constraintTop_toBottomOf="@id/toolbar"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
 
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/bg_glow"
+                app:visible="@{!viewModel.isEmpty}"
+                app:layout_constraintTop_toBottomOf="@id/toolbar"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
 
         <androidx.viewpager.widget.ViewPager
                 android:id="@+id/my_robots_viewpager"
@@ -38,8 +48,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:paddingBottom="22dp"
                 android:clipToPadding="false"
-                android:overScrollMode="never"
-        />
+                android:overScrollMode="never"/>
 
         <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/robots_buttons_center_guide"

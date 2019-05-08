@@ -10,9 +10,11 @@ import com.revolution.robotics.views.RemoteImageView
 
 @BindingAdapter("android:src")
 fun loadImage(imageView: ImageView, url: String?) {
-    GlideApp.with(imageView)
-        .load(url)
-        .into(imageView)
+    if (!url.isNullOrEmpty()) {
+        GlideApp.with(imageView)
+            .load(url)
+            .into(imageView)
+    }
 }
 
 @BindingAdapter("localResource")
@@ -31,9 +33,9 @@ fun loadFirebaseImage(imageView: ImageView, reference: StorageReference) {
 
 @BindingAdapter("firebaseImageUrl")
 fun loadFirebaseImage(imageView: ImageView, gsUrl: String?) {
-    gsUrl?.let { url ->
+    if (!gsUrl.isNullOrEmpty()) {
         GlideApp.with(imageView)
-            .load(FirebaseStorage.getInstance().getReferenceFromUrl(url))
+            .load(FirebaseStorage.getInstance().getReferenceFromUrl(gsUrl))
             .into(imageView)
     }
 }

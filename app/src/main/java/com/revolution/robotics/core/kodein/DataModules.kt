@@ -9,10 +9,14 @@ import com.revolution.robotics.features.controller.LiveControllerPresenter
 import com.revolution.robotics.core.db.RoboticsDatabase
 import com.revolution.robotics.core.domain.local.UserConfigurationDao
 import com.revolution.robotics.core.domain.local.UserRobotDao
-import com.revolution.robotics.core.interactor.BuildStepInteractor
-import com.revolution.robotics.core.interactor.ConfigurationInteractor
-import com.revolution.robotics.core.interactor.RobotInteractor
-import com.revolution.robotics.core.interactor.TestCodeInteractor
+import com.revolution.robotics.core.interactor.DeleteRobotInteractor
+import com.revolution.robotics.core.interactor.GetAllUserRobotsInteractor
+import com.revolution.robotics.core.interactor.GetUserRobotInteractor
+import com.revolution.robotics.core.interactor.SaveUserRobotInteractor
+import com.revolution.robotics.core.interactor.firebase.BuildStepInteractor
+import com.revolution.robotics.core.interactor.firebase.ConfigurationInteractor
+import com.revolution.robotics.core.interactor.firebase.RobotInteractor
+import com.revolution.robotics.core.interactor.firebase.TestCodeInteractor
 import com.revolution.robotics.features.build.BuildRobotMvp
 import com.revolution.robotics.features.build.BuildRobotPresenter
 import com.revolution.robotics.features.build.connect.availableRobotsFace.ConnectMvp
@@ -35,6 +39,10 @@ fun createInteractorModule() =
         bind<BuildStepInteractor>() with provider { BuildStepInteractor() }
         bind<ConfigurationInteractor>() with provider { ConfigurationInteractor() }
         bind<TestCodeInteractor>() with provider { TestCodeInteractor() }
+        bind<GetUserRobotInteractor>() with provider { GetUserRobotInteractor(instance()) }
+        bind<SaveUserRobotInteractor>() with provider { SaveUserRobotInteractor(instance()) }
+        bind<GetAllUserRobotsInteractor>() with provider { GetAllUserRobotsInteractor(instance()) }
+        bind<DeleteRobotInteractor>() with provider { DeleteRobotInteractor(instance()) }
     }
 
 fun createPresenterModule() =
@@ -42,20 +50,18 @@ fun createPresenterModule() =
         bind<MainMenuMvp.Presenter>() with singleton { MainMenuPresenter(instance()) }
         bind<WhoToBuildMvp.Presenter>() with singleton { WhoToBuildPresenter(instance(), instance()) }
         bind<LiveControllerMvp.Presenter>() with singleton { LiveControllerPresenter(instance()) }
-        bind<MyRobotsMvp.Presenter>() with singleton { MyRobotsPresenter(instance()) }
+        bind<MyRobotsMvp.Presenter>() with singleton { MyRobotsPresenter(instance(), instance(), instance()) }
         bind<ChapterFinishedMvp.Presenter>() with singleton { ChapterFinishedPresenter() }
-        bind<BuildRobotMvp.Presenter>() with singleton { BuildRobotPresenter(instance()) }
+        bind<BuildRobotMvp.Presenter>() with singleton { BuildRobotPresenter(instance(), instance(), instance()) }
         bind<ConnectMvp.Presenter>() with singleton { ConnectPresenter(instance()) }
     }
 
 fun createDbModule(context: Context) =
     Kodein.Module("DbModule") {
         bind<RoboticsDatabase>() with singleton {
-            Room.databaseBuilder(
-                context,
-                RoboticsDatabase::class.java,
-                "robotics-database"
-            ).build()
+            Room.databaseBuilder(context, RoboticsDatabase::class.java, "robotics-database")
+                .fallbackToDestructiveMigration()
+                .build()
         }
         bind<UserRobotDao>() with provider { instance<RoboticsDatabase>().userRobotDao() }
         bind<UserConfigurationDao>() with provider { instance<RoboticsDatabase>().userConfigurationDao() }
