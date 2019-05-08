@@ -9,16 +9,16 @@ import com.revolution.robotics.core.domain.local.BuildStatus
 import com.revolution.robotics.core.domain.local.UserRobot
 import com.revolution.robotics.core.domain.remote.BuildStep
 import com.revolution.robotics.core.domain.shared.RobotDescriptor
-import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
 import com.revolution.robotics.core.eventBus.dialog.DialogEvent
+import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
 import com.revolution.robotics.core.utils.BundleArgumentDelegate
 import com.revolution.robotics.core.utils.dynamicPermissions.DynamicPermissionHandler
 import com.revolution.robotics.databinding.FragmentBuildRobotBinding
 import com.revolution.robotics.features.build.buildFinished.BuildFinishedDialog
+import com.revolution.robotics.features.build.chapterFinished.ChapterFinishedDialog
 import com.revolution.robotics.features.build.connect.ConnectDialog
 import com.revolution.robotics.features.build.connectionResult.ConnectionFailedDialog
 import com.revolution.robotics.features.build.connectionResult.ConnectionSuccessDialog
-import com.revolution.robotics.features.build.chapterFinished.ChapterFinishedDialog
 import com.revolution.robotics.features.build.permission.BluetoothPermissionDialog
 import com.revolution.robotics.features.build.testing.MotorTestDialog
 import com.revolution.robotics.features.build.testing.MovementTestDialog
@@ -100,7 +100,7 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
             DialogEvent.PERMISSION_GRANTED -> TurnOnTheBrainDialog.newInstance().show(fragmentManager)
             DialogEvent.BRAIN_TURNED_ON -> ConnectDialog.newInstance().show(fragmentManager)
             DialogEvent.ROBOT_CONNECTED -> {
-                viewModel?.isBluetoothConnected?.value = true
+                viewModel?.isBluetoothConnected?.set(true)
                 ConnectionSuccessDialog.newInstance().show(fragmentManager)
             }
             DialogEvent.ROBOT_CONNECTION_FAILED -> ConnectionFailedDialog.newInstance().show(fragmentManager)

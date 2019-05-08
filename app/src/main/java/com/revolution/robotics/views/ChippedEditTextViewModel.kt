@@ -36,5 +36,4 @@ data class ChippedEditTextViewModel(
         .chipBottomLeft(true)
         .chipSize(R.dimen.dimen_8dp)
         .create()
-
 }
