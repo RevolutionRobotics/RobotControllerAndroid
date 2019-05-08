@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import android.graphics.ColorMatrix
 import android.graphics.ColorMatrixColorFilter
 import android.view.View
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.SeekBar
 import android.widget.TextView
@@ -19,6 +20,8 @@ import com.revolution.robotics.views.chippedBox.ChippedBoxDrawable
 import com.revolution.robotics.views.carousel.CarouselAdapter
 import com.revolution.robotics.features.build.connect.adapter.ConnectAdapter
 import com.revolution.robotics.features.build.connect.adapter.ConnectRobotItem
+import com.revolution.robotics.views.ChippedEditText
+import com.revolution.robotics.views.ChippedEditTextViewModel
 
 @BindingAdapter("listener")
 fun setSeekbarListener(seekBar: SeekBar, listener: SeekBar.OnSeekBarChangeListener) {
@@ -80,6 +83,20 @@ fun setTintColor(imageView: ImageView, @ColorRes color: Int) {
 fun setTextColor(textView: TextView, @ColorRes color: Int) {
     if (color != 0) {
         textView.setTextColor(textView.context.color(color))
+    }
+}
+
+@BindingAdapter("textColorHintResource")
+fun setTextColorHintResource(editText: EditText, @ColorRes hintColor: Int) {
+    if (hintColor != 0) {
+        editText.setHintTextColor(editText.context.color(hintColor))
+    }
+}
+
+@BindingAdapter("chippedEditModel")
+fun setChippedEditViewModel(edit: ChippedEditText, model: ChippedEditTextViewModel?) {
+    model?.let {
+        edit.setViewModel(it)
     }
 }
 
