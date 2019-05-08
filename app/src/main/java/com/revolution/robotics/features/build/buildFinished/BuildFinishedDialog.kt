@@ -5,6 +5,7 @@ import com.revolution.robotics.databinding.DialogBuildFinishedBinding
 import com.revolution.robotics.views.dialogs.DialogButton
 import com.revolution.robotics.views.dialogs.DialogFace
 import com.revolution.robotics.views.dialogs.RoboticsDialog
+import org.kodein.di.erased.instance
 
 class BuildFinishedDialog : RoboticsDialog() {
 
@@ -12,13 +13,16 @@ class BuildFinishedDialog : RoboticsDialog() {
         fun newInstance() = BuildFinishedDialog()
     }
 
+    private val presenter: BuildFinishedMvp.Presenter by kodein.instance()
+
     override val hasCloseButton = false
     override val dialogFaces: List<DialogFace<*>> = listOf(
         BuildFinishedDialogFace()
     )
     override val dialogButtons = listOf(
         DialogButton(R.string.build_chapter_finish_dialog_button_home, R.drawable.ic_home) {
-            // TODO navigate user home
+            dismissAllowingStateLoss()
+            presenter.navigateHome()
         },
         DialogButton(R.string.build_robot_finished_button, R.drawable.ic_play, true) {
             // TODO let's drive!

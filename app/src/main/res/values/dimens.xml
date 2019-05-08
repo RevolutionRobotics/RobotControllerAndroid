@@ -29,6 +29,11 @@
     <dimen name="toolbar_box_size">66dp</dimen>
     <dimen name="toolbar_icon_size">40dp</dimen>
 
+    <!-- CUSTOM VIEW: FLOATING BUTTON -->
+    <dimen name="floating_button_width">110dp</dimen>
+    <dimen name="floating_button_height">54dp</dimen>
+    <dimen name="floating_button_icon_width">30dp</dimen>
+
     <!-- CUSTOM DIALOG -->
     <dimen name="dialog_width">460dp</dimen>
     <dimen name="dialog_height">240dp</dimen>

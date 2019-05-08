@@ -17,7 +17,6 @@ class MainActivity : AppCompatActivity(), KodeinAware, Navigator.NavigationEvent
     override val kodein by kodein()
     private val dynamicPermissionHandler: DynamicPermissionHandler by instance()
     private val navigator: Navigator by instance()
-
     private val navController: NavController by lazy { findNavController(R.id.nav_host_fragment) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,6 +37,12 @@ class MainActivity : AppCompatActivity(), KodeinAware, Navigator.NavigationEvent
 
     override fun onNavigationEvent(navDirections: NavDirections) {
         navController.navigate(navDirections)
+    }
+
+    override fun popUntil(fragmentId: Int) {
+        while (navController.currentDestination?.id != fragmentId) {
+            navController.popBackStack()
+        }
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) =

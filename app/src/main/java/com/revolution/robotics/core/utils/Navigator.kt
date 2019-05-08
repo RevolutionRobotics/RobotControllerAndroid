@@ -20,7 +20,12 @@ class Navigator {
         listener?.onNavigationEvent(navDirections)
     }
 
+    fun popUntil(fragmentId: Int) {
+        listener?.popUntil(fragmentId)
+    }
+
     interface NavigationEventListener {
         fun onNavigationEvent(navDirections: NavDirections)
+        fun popUntil(fragmentId: Int)
     }
 }

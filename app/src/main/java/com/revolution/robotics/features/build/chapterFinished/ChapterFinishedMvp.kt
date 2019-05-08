@@ -15,5 +15,6 @@ interface ChapterFinishedMvp : Mvp {
         var milestone: Milestone?
 
         fun uploadTest()
+        fun navigateHome()
     }
 }
