@@ -3,6 +3,8 @@ package com.revolution.robotics.features.configure.motor
 import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.remote.Motor
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
+import com.revolution.robotics.features.build.testing.DrivetrainTestDialog
+import com.revolution.robotics.features.build.testing.MotorTestDialog
 import com.revolution.robotics.views.ChippedEditTextViewModel
 
 @Suppress("ComplexInterface", "TooManyFunctions")
@@ -65,8 +67,14 @@ class MotorConfigurationPresenter(private val resourceResolver: ResourceResolver
         buttonHandler?.onClockwiseClicked()
     }
 
-    override fun onTestButtonClcked() {
-        // TODO Handle test button
+    override fun onTestButtonClicked() {
+        if (model?.driveTrainButton?.isSelected?.get() == true) {
+            view?.showDialog(DrivetrainTestDialog.newInstance())
+        }
+
+        if (model?.motorButton?.isSelected?.get() == true) {
+            view?.showDialog(MotorTestDialog.newInstance())
+        }
     }
 
     override fun onDoneButtonClicked() {

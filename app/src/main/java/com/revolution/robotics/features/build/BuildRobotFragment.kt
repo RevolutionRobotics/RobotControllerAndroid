@@ -16,8 +16,8 @@ import com.revolution.robotics.databinding.FragmentBuildRobotBinding
 import com.revolution.robotics.features.build.buildFinished.BuildFinishedDialog
 import com.revolution.robotics.features.build.chapterFinished.ChapterFinishedDialog
 import com.revolution.robotics.features.build.testing.MotorTestDialog
-import com.revolution.robotics.features.build.testing.MovementTestDialog
-import com.revolution.robotics.features.build.testing.SensorTestDialog
+import com.revolution.robotics.features.build.testing.DrivetrainTestDialog
+import com.revolution.robotics.features.build.testing.BumperTestDialog
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 import com.revolution.robotics.views.slider.BuildStepSliderView
 import org.kodein.di.erased.instance
@@ -94,9 +94,9 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
 
     private fun getTestingDialog(testCodeId: Int) =
         when (testCodeId) {
-            1 -> SensorTestDialog.newInstance()
+            1 -> BumperTestDialog.newInstance()
             2 -> MotorTestDialog.newInstance()
-            else -> MovementTestDialog.newInstance()
+            else -> DrivetrainTestDialog.newInstance()
         }
 
     override fun onUserRobotLoaded(userRobot: UserRobot?) {

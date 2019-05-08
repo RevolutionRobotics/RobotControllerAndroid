@@ -3,6 +3,10 @@ package com.revolution.robotics.features.configure.sensor
 import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.remote.Sensor
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
+import com.revolution.robotics.features.build.testing.BumperTestDialog
+import com.revolution.robotics.features.build.testing.DrivetrainTestDialog
+import com.revolution.robotics.features.build.testing.MotorTestDialog
+import com.revolution.robotics.features.build.testing.UltrasonicTestDialog
 import com.revolution.robotics.views.ChippedEditTextViewModel
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 
@@ -51,7 +55,7 @@ class SensorConfigurationPresenter(private val resourceResolver: ResourceResolve
         }
     }
 
-    override fun onBumberButtonClicked() {
+    override fun onBumperButtonClicked() {
         model?.apply {
             bumperButton.isSelected.set(true)
             ultrasoundButton.isSelected.set(false)
@@ -60,7 +64,7 @@ class SensorConfigurationPresenter(private val resourceResolver: ResourceResolve
         }
     }
 
-    override fun onUltarsoundButtonClicked() {
+    override fun onUltrasoundButtonClicked() {
         model?.apply {
             bumperButton.isSelected.set(false)
             ultrasoundButton.isSelected.set(true)
@@ -76,8 +80,14 @@ class SensorConfigurationPresenter(private val resourceResolver: ResourceResolve
         }
     }
 
-    override fun onTestButtonClcked() {
-        // TODO Handle test button
+    override fun onTestButtonClicked() {
+        if (model?.bumperButton?.isSelected?.get() == true) {
+            view?.showDialog(BumperTestDialog.newInstance())
+        }
+
+        if (model?.ultrasoundButton?.isSelected?.get() == true) {
+            view?.showDialog(UltrasonicTestDialog.newInstance())
+        }
     }
 
     override fun onDoneButtonClicked() {

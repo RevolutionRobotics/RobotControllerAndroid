@@ -9,12 +9,10 @@ class MotorTestDialog : TestDialog() {
         fun newInstance() = MotorTestDialog()
     }
 
-    override val dialogFaces: List<DialogFace<*>> = listOf(
-        MotorTestDialogFace()
-    )
+    override val dialogFaces: List<DialogFace<*>> = listOf(MotorTestDialogFace())
 
     class MotorTestDialogFace : TestDialogFace() {
-        override val imageResource: Int = R.drawable.motor_test
-        override val textResource: Int = R.string.build_robot_testing_motor_test_text
+        override val imageResource: Int = R.drawable.test_motor
+        override val textResource: Int = R.string.testing_motor_test
     }
 }
