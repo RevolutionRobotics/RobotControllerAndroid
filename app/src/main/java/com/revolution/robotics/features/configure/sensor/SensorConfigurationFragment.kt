@@ -1,6 +1,8 @@
 package com.revolution.robotics.features.configure.sensor
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
@@ -33,6 +35,14 @@ class SensorConfigurationFragment :
         arguments?.let {
             presenter.setSensor(it.sensor, it.portName)
         }
+        binding?.editSensor?.binding?.content?.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) = Unit
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
+
+            override fun onTextChanged(text: CharSequence?, start: Int, before: Int, count: Int) {
+                presenter.onVariableNameChanged(text?.toString() ?: "")
+            }
+        })
     }
 
     override fun onDestroyView() {

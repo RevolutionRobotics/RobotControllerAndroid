@@ -7,6 +7,7 @@ import com.revolution.robotics.core.kodein.utils.ApplicationContextProvider
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.core.utils.dynamicPermissions.DynamicPermissionHandler
+import com.revolution.robotics.features.configure.ConfigurationEventBus
 import org.kodein.di.Kodein
 import org.kodein.di.erased.bind
 import org.kodein.di.erased.singleton
@@ -18,6 +19,7 @@ fun createMainModule() =
         bind<Navigator>() with singleton { Navigator() }
         bind<JavascriptResultHandler>() with singleton { JavascriptResultHandler() }
         bind<DialogEventBus>() with singleton { DialogEventBus() }
+        bind<ConfigurationEventBus>() with singleton { ConfigurationEventBus() }
     }
 
 fun createAppModule(context: Context) =

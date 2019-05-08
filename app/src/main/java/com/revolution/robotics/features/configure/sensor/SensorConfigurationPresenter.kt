@@ -5,13 +5,21 @@ import com.revolution.robotics.core.domain.remote.Sensor
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.features.build.testing.BumperTestDialog
 import com.revolution.robotics.features.build.testing.UltrasonicTestDialog
+import com.revolution.robotics.features.configure.ConfigurationEventBus
+import com.revolution.robotics.features.configure.SensorUpdateEvent
 import com.revolution.robotics.views.ChippedEditTextViewModel
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 
-class SensorConfigurationPresenter(private val resourceResolver: ResourceResolver) : SensorConfigurationMvp.Presenter {
+class SensorConfigurationPresenter(
+    private val resourceResolver: ResourceResolver,
+    private val configurationEventBus: ConfigurationEventBus
+) : SensorConfigurationMvp.Presenter {
 
     override var view: SensorConfigurationMvp.View? = null
     override var model: SensorConfigurationViewModel? = null
+
+    private var portName: String? = null
+    private var sensor: Sensor? = null
 
     private val chippedConfigDoneEnabled = ChippedBoxConfig.Builder()
         .backgroundColorResource(R.color.grey_28)
@@ -25,6 +33,9 @@ class SensorConfigurationPresenter(private val resourceResolver: ResourceResolve
         .create()
 
     override fun setSensor(sensor: Sensor, portName: String) {
+        this.portName = portName
+        this.sensor = sensor
+
         model?.apply {
             editTextModel.value = ChippedEditTextViewModel(
                 title = "$portName - ${resourceResolver.string(R.string.configure_motor_name_inputfield_title)}",
@@ -42,6 +53,10 @@ class SensorConfigurationPresenter(private val resourceResolver: ResourceResolve
             ultrasoundButton.isSelected.set(sensor.type == Sensor.TYPE_ULTRASOUND)
             emptyButton.isSelected.set(sensor.type.isNullOrEmpty())
         }
+    }
+
+    override fun onVariableNameChanged(name: String?) {
+        sensor?.variableName = name
     }
 
     override fun onEmptyButtonClicked() {
@@ -89,6 +104,15 @@ class SensorConfigurationPresenter(private val resourceResolver: ResourceResolve
     }
 
     override fun onDoneButtonClicked() {
-        // TODO Handle done button
+        sensor?.apply {
+            if (model?.bumperButton?.isSelected?.get() == true) {
+                type = Sensor.TYPE_BUMPER
+            } else if (model?.ultrasoundButton?.isSelected?.get() == true) {
+                type = Sensor.TYPE_ULTRASOUND
+            } else {
+                type = null
+            }
+            configurationEventBus.publishSensorUpdateEvent(SensorUpdateEvent(this, portName))
+        }
     }
 }

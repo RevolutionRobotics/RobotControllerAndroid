@@ -2,10 +2,6 @@ package com.revolution.robotics.core.kodein
 
 import android.content.Context
 import androidx.room.Room
-import com.revolution.robotics.features.build.chapterFinished.ChapterFinishedMvp
-import com.revolution.robotics.features.build.chapterFinished.ChapterFinishedPresenter
-import com.revolution.robotics.features.controller.LiveControllerMvp
-import com.revolution.robotics.features.controller.LiveControllerPresenter
 import com.revolution.robotics.core.db.RoboticsDatabase
 import com.revolution.robotics.core.domain.local.UserConfigurationDao
 import com.revolution.robotics.core.domain.local.UserRobotDao
@@ -21,6 +17,8 @@ import com.revolution.robotics.features.build.BuildRobotMvp
 import com.revolution.robotics.features.build.BuildRobotPresenter
 import com.revolution.robotics.features.build.buildFinished.BuildFinishedMvp
 import com.revolution.robotics.features.build.buildFinished.BuildFinishedPresenter
+import com.revolution.robotics.features.build.chapterFinished.ChapterFinishedMvp
+import com.revolution.robotics.features.build.chapterFinished.ChapterFinishedPresenter
 import com.revolution.robotics.features.build.connect.availableRobotsFace.ConnectMvp
 import com.revolution.robotics.features.build.connect.availableRobotsFace.ConnectPresenter
 import com.revolution.robotics.features.configure.ConfigureMvp
@@ -33,6 +31,8 @@ import com.revolution.robotics.features.configure.sensor.SensorConfigurationMvp
 import com.revolution.robotics.features.configure.sensor.SensorConfigurationPresenter
 import com.revolution.robotics.features.configure.controllers.ConfigureControllersMvp
 import com.revolution.robotics.features.configure.controllers.ConfigureControllersPresenter
+import com.revolution.robotics.features.controller.LiveControllerMvp
+import com.revolution.robotics.features.controller.LiveControllerPresenter
 import com.revolution.robotics.features.mainmenu.MainMenuMvp
 import com.revolution.robotics.features.mainmenu.MainMenuPresenter
 import com.revolution.robotics.features.myRobots.MyRobotsMvp
@@ -68,8 +68,8 @@ fun createPresenterModule() =
         bind<ConnectMvp.Presenter>() with singleton { ConnectPresenter(instance()) }
         bind<ConfigureMvp.Presenter>() with singleton { ConfigurePresenter() }
         bind<ConfigureConnectionsMvp.Presenter>() with singleton { ConfigureConnectionsPresenter() }
-        bind<MotorConfigurationMvp.Presenter>() with singleton { MotorConfigurationPresenter(instance()) }
-        bind<SensorConfigurationMvp.Presenter>() with singleton { SensorConfigurationPresenter(instance()) }
+        bind<MotorConfigurationMvp.Presenter>() with singleton { MotorConfigurationPresenter(instance(), instance()) }
+        bind<SensorConfigurationMvp.Presenter>() with singleton { SensorConfigurationPresenter(instance(), instance()) }
         bind<BuildFinishedMvp.Presenter>() with singleton { BuildFinishedPresenter(instance()) }
         bind<ConfigureControllersMvp.Presenter>() with singleton { ConfigureControllersPresenter() }
     }
