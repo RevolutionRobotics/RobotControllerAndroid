@@ -34,6 +34,7 @@
                 android:layout_marginStart="@dimen/dimen_32dp"
                 android:layout_marginEnd="@dimen/dimen_32dp"
                 android:textSize="12sp"
+                android:textColor="@color/white"
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/barlow_regular"
                 android:text="@string/controller_info_dialog_description"/>
@@ -58,6 +59,7 @@
                 android:layout_marginEnd="@dimen/dimen_32dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginStart="@dimen/dimen_8dp"
+                android:textColor="@color/white"
                 android:gravity="center_vertical"
                 android:text="@{infoViewModel.date}"
                 android:fontFamily="@font/barlow_medium"
