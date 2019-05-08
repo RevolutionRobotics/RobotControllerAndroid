@@ -12,82 +12,62 @@ class MotorConfigurationViewModel(
 ) : ViewModel() {
 
     val emptyButton =
-        ConfigButtonViewModel(R.string.configure_motor_empty_button_title, R.drawable.ic_empty, ::onEmptyButtonClicked)
+        ConfigButtonViewModel(
+            R.string.configure_motor_empty_button_title,
+            R.drawable.ic_empty,
+            presenter::onEmptyButtonClicked
+        )
     val driveTrainButton =
         ConfigButtonViewModel(
             R.string.configure_motor_drivetrain_button_title,
             R.drawable.ic_wheel_grey,
-            ::onDrivetrainButtonClicked
+            presenter::onDrivetrainButtonClicked
         )
     val motorButton =
-        ConfigButtonViewModel(R.string.configure_motor_motor_button_title, R.drawable.ic_engine, ::onMotorClicked)
+        ConfigButtonViewModel(
+            R.string.configure_motor_motor_button_title,
+            R.drawable.ic_engine,
+            presenter::onMotorClicked
+        )
     val sideLeftButton =
         ConfigButtonViewModel(
             R.string.configure_motor_left_button_title,
             R.drawable.ic_wheel_left_grey,
-            ::onLeftSideClicked
+            presenter::onLeftSideClicked
         )
     val sideRightButton =
         ConfigButtonViewModel(
             R.string.configure_motor_right_button_title,
             R.drawable.ic_wheel_right,
-            ::onRightSideClicked
+            presenter::onRightSideClicked
         )
     val counterClockwiseButton =
         ConfigButtonViewModel(
             R.string.configure_motor_counterclockwise_button_title,
             R.drawable.ic_rotation_left,
-            ::onCounterClockwiseClicked
+            presenter::onCounterClockwiseClicked
         )
     val clockwiseButton =
         ConfigButtonViewModel(
             R.string.configure_motor_clockwise_button_title,
             R.drawable.ic_rotation_right_grey,
-            ::onClockwiseClicked
+            presenter::onClockwiseClicked
         )
     val motorCounterClockwiseButton =
         ConfigButtonViewModel(
             R.string.configure_motor_counterclockwise_button_title,
             R.drawable.ic_rotation_left,
-            ::onCounterClockwiseClicked
+            presenter::onCounterClockwiseClicked
         )
     val motorClockwiseButton =
         ConfigButtonViewModel(
             R.string.configure_motor_clockwise_button_title,
             R.drawable.ic_rotation_right_grey,
-            ::onClockwiseClicked
+            presenter::onClockwiseClicked
         )
 
     val editTextModel = MutableLiveData<ChippedEditTextViewModel>()
 
     val actionButtonsViewModel =
         ActionButtonsViewModel({ presenter.onDoneButtonClicked() }, { presenter.onTestButtonClcked() })
-
-    private fun onEmptyButtonClicked() {
-        presenter.onEmptyButtonClicked()
-    }
-
-    private fun onDrivetrainButtonClicked() {
-        presenter.onDrivetrainButtonClicked()
-    }
-
-    private fun onMotorClicked() {
-        presenter.onMotorClicked()
-    }
-
-    private fun onLeftSideClicked() {
-        presenter.onLeftSideClicked()
-    }
-
-    private fun onRightSideClicked() {
-        presenter.onRightSideClicked()
-    }
-
-    private fun onCounterClockwiseClicked() {
-        presenter.onCounterClockwiseClicked()
-    }
-
-    private fun onClockwiseClicked() {
-        presenter.onClockwiseClicked()
-    }
 }

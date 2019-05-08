@@ -4,6 +4,7 @@ import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.remote.Motor
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 
+@Suppress("TooManyFunctions")
 class MotorConfigurationButtonHandler(private val model: MotorConfigurationViewModel) {
     private val chippedConfigDoneEnabled = ChippedBoxConfig.Builder()
         .backgroundColorResource(R.color.grey_28)

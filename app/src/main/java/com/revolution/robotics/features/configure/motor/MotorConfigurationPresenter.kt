@@ -5,7 +5,7 @@ import com.revolution.robotics.core.domain.remote.Motor
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.views.ChippedEditTextViewModel
 
-@Suppress("ComplexInterface")
+@Suppress("ComplexInterface", "TooManyFunctions")
 class MotorConfigurationPresenter(private val resourceResolver: ResourceResolver) : MotorConfigurationMvp.Presenter {
 
     override var view: MotorConfigurationMvp.View? = null

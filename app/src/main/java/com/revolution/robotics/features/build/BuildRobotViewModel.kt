@@ -14,13 +14,9 @@ import com.revolution.robotics.core.utils.CustomTypefaceSpan
 class BuildRobotViewModel(private val resourceResolver: ResourceResolver) : ViewModel() {
     val imageUrl: MutableLiveData<String?> = MutableLiveData()
     val step: MutableLiveData<Spannable?> = MutableLiveData()
-    val isBluetoothConnected = ObservableBoolean()
+    val isBluetoothConnected = ObservableBoolean(false)
     val partsImage: MutableLiveData<String?> = MutableLiveData()
     val partsQuantity: MutableLiveData<String?> = MutableLiveData()
-
-    init {
-        isBluetoothConnected.set(false)
-    }
 
     // TODO remove this suppress
     @Suppress("MagicNumber")
