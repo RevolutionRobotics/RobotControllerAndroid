@@ -9,6 +9,7 @@ import org.kodein.di.erased.instance
 import androidx.fragment.app.Fragment
 import com.revolution.robotics.core.utils.dynamicPermissions.BluetoothConnectionFlowHelper
 import com.revolution.robotics.features.configure.connections.ConfigureConnectionsFragment
+import com.revolution.robotics.features.configure.controllers.ConfigureControllersFragment
 
 @Suppress("UnnecessaryApply")
 class ConfigureFragment : BaseFragment<FragmentConfigureBinding, ConfigureViewModel>(R.layout.fragment_configure),
@@ -43,7 +44,7 @@ class ConfigureFragment : BaseFragment<FragmentConfigureBinding, ConfigureViewMo
     }
 
     override fun showControllerScreen() {
-        // TODO show controller screen here
+        commitFragmentToFrame(ConfigureControllersFragment())
     }
 
     private fun commitFragmentToFrame(fragment: Fragment) {

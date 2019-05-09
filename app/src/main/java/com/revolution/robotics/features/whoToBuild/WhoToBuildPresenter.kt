@@ -38,10 +38,15 @@ class WhoToBuildPresenter(
 
     override fun onPageSelected(position: Int) {
         model?.run {
-            robotsList.value?.get(currentPosition.get())?.isSelected?.set(false)
-            robotsList.value?.get(position)?.isSelected?.set(true)
-            currentPosition.set(position)
-            updateButtonsVisibility(position)
+            val list = robotsList.value ?: return
+            if (list.isNotEmpty()) {
+                if (currentPosition.get() < list.size) {
+                    list[currentPosition.get()].isSelected.set(false)
+                }
+                list[position].isSelected.set(true)
+                currentPosition.set(position)
+                updateButtonsVisibility(position)
+            }
         }
     }
 

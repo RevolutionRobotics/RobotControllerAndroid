@@ -47,12 +47,15 @@ class MyRobotsPresenter(
 
     override fun onPageSelected(position: Int) {
         model?.run {
-            if (currentPosition.get() < robotsList.get()?.size ?: 0) {
-                robotsList.get()?.get(currentPosition.get())?.isSelected?.set(false)
+            val list = robotsList.get() ?: return
+            if (list.isNotEmpty()) {
+                if (currentPosition.get() < list.size) {
+                    list[currentPosition.get()].isSelected.set(false)
+                }
+                list[position].isSelected.set(true)
+                currentPosition.set(position)
+                updateButtonsVisibility(position)
             }
-            robotsList.get()?.get(position)?.isSelected?.set(true)
-            currentPosition.set(position)
-            updateButtonsVisibility(position)
         }
     }
 

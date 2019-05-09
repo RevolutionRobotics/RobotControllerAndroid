@@ -2,58 +2,27 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <variable name="viewModel" type="com.revolution.robotics.features.myRobots.MyRobotsViewModel"/>
-        <variable name="toolbarViewModel" type="com.revolution.robotics.features.myRobots.MyRobotsToolbarViewModel"/>
+        <variable name="viewModel" type="com.revolution.robotics.features.configure.controllers.ConfigureControllersViewModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        <com.revolution.robotics.views.toolbar.RoboticsToolbar
-                android:id="@+id/toolbar"
-                app:viewModel="@{toolbarViewModel}"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/toolbar_height"/>
-
-        <ImageView
-                android:layout_width="@dimen/my_robots_placeholder_width"
-                android:layout_height="@dimen/my_robots_placeholder_height"
-                android:src="@drawable/my_robots_empty_placeholder"
-                app:visible="@{viewModel.isEmpty}"
-                app:layout_constraintTop_toBottomOf="@id/toolbar"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
-
-        <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/bg_glow"
-                app:visible="@{!viewModel.isEmpty}"
-                app:layout_constraintTop_toBottomOf="@id/toolbar"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
-
         <androidx.viewpager.widget.ViewPager
-                android:id="@+id/my_robots_viewpager"
+                android:id="@+id/controllers_viewpager"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                app:carouselItems="@{viewModel.robotsList}"
-                app:layout_constraintTop_toBottomOf="@id/toolbar"
+                app:carouselItems="@{viewModel.controllersList}"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:paddingBottom="22dp"
                 android:clipToPadding="false"
                 android:overScrollMode="never"/>
 
         <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/robots_buttons_center_guide"
+                android:id="@+id/controller_buttons_center_guide"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_percent="@dimen/robots_buttons_center_guide_percentage"
+                app:layout_constraintGuide_percent="@dimen/configure_controllers_buttons_guide_percentage"
                 android:layout_width="0dp"
                 android:layout_height="0dp"/>
 
@@ -64,10 +33,10 @@
                 android:onClick="@{()->viewModel.previousButtonClick()}"
                 app:visible="@{viewModel.previousButtonVisible}"
                 android:background="@drawable/robots_left_arrow"
-                app:layout_constraintWidth_percent="@dimen/robots_pager_button_width_percentage"
-                app:layout_constraintHeight_percent="@dimen/robots_pager_button_height_percentage"
-                app:layout_constraintTop_toTopOf="@id/robots_buttons_center_guide"
-                app:layout_constraintBottom_toBottomOf="@id/robots_buttons_center_guide"
+                app:layout_constraintWidth_percent="@dimen/configure_controllers_button_width_percentage"
+                app:layout_constraintHeight_percent="@dimen/configure_controllers_button_height_percentage"
+                app:layout_constraintTop_toTopOf="@id/controller_buttons_center_guide"
+                app:layout_constraintBottom_toBottomOf="@id/controller_buttons_center_guide"
                 app:layout_constraintStart_toStartOf="parent"/>
 
         <Button
@@ -77,17 +46,17 @@
                 android:onClick="@{()->viewModel.nextButtonClick()}"
                 app:visible="@{viewModel.nextButtonVisible}"
                 android:background="@drawable/robots_right_arrow"
-                app:layout_constraintWidth_percent="@dimen/robots_pager_button_width_percentage"
-                app:layout_constraintHeight_percent="@dimen/robots_pager_button_height_percentage"
-                app:layout_constraintTop_toTopOf="@id/robots_buttons_center_guide"
-                app:layout_constraintBottom_toBottomOf="@id/robots_buttons_center_guide"
+                app:layout_constraintWidth_percent="@dimen/configure_controllers_button_width_percentage"
+                app:layout_constraintHeight_percent="@dimen/configure_controllers_button_height_percentage"
+                app:layout_constraintTop_toTopOf="@id/controller_buttons_center_guide"
+                app:layout_constraintBottom_toBottomOf="@id/controller_buttons_center_guide"
                 app:layout_constraintEnd_toEndOf="parent"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/floating_button"
                 android:layout_width="@dimen/floating_button_width"
                 android:layout_height="@dimen/floating_button_height"
-                android:onClick="@{() -> viewModel.onBuildNewClicked()}"
+                android:onClick="@{() -> viewModel.onCreateNewClick()}"
                 android:layout_marginBottom="@dimen/dimen_8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent">
@@ -117,7 +86,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    android:background="@drawable/bg_floating_button" android:id="@+id/view"/>
+                    android:background="@drawable/bg_floating_button"/>
 
             <ImageView
                     android:id="@+id/floating_button_icon"
@@ -135,16 +104,16 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="@+id/view"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@id/floating_button_icon"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:gravity="center_vertical"
                     android:includeFontPadding="false"
                     android:padding="@dimen/dimen_8dp"
-                    android:text="@string/my_robots_build_new"
+                    android:text="@string/controller_create_new"
                     android:textSize="15sp"
                     android:textColor="@color/white"
-                    android:fontFamily="@font/barlow_regular" android:layout_marginBottom="8dp"/>
+                    android:fontFamily="@font/barlow_regular"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
