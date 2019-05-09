@@ -50,7 +50,7 @@ class SensorConfigurationPresenter(
             actionButtonsViewModel.doneButtonChippedBoxConfig.value = chippedConfigDoneEnabled
             actionButtonsViewModel.doneTextColor.set(R.color.white)
             bumperButton.isSelected.set(sensor.type == Sensor.TYPE_BUMPER)
-            ultrasoundButton.isSelected.set(sensor.type == Sensor.TYPE_ULTRASOUND)
+            ultrasoundButton.isSelected.set(sensor.type == Sensor.TYPE_ULTRASONIC)
             emptyButton.isSelected.set(sensor.type.isNullOrEmpty())
         }
     }
@@ -108,7 +108,7 @@ class SensorConfigurationPresenter(
             if (model?.bumperButton?.isSelected?.get() == true) {
                 type = Sensor.TYPE_BUMPER
             } else if (model?.ultrasoundButton?.isSelected?.get() == true) {
-                type = Sensor.TYPE_ULTRASOUND
+                type = Sensor.TYPE_ULTRASONIC
             } else {
                 type = null
             }

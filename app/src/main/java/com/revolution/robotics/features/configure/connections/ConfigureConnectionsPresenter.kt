@@ -176,7 +176,7 @@ class ConfigureConnectionsPresenter(
 
     @DrawableRes
     private fun getSensorDrawable(sensor: Sensor?): Int = when (sensor?.type) {
-        Sensor.TYPE_ULTRASOUND -> R.drawable.ic_ultrasound
+        Sensor.TYPE_ULTRASONIC -> R.drawable.ic_ultrasound
         Sensor.TYPE_BUMPER -> R.drawable.ic_bumper
         else -> R.drawable.ic_config_add
     }
