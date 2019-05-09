@@ -16,8 +16,9 @@ import com.revolution.robotics.databinding.FragmentBuildRobotBinding
 import com.revolution.robotics.features.build.buildFinished.BuildFinishedDialog
 import com.revolution.robotics.features.build.chapterFinished.ChapterFinishedDialog
 import com.revolution.robotics.features.build.testing.MotorTestDialog
-import com.revolution.robotics.features.build.testing.MovementTestDialog
-import com.revolution.robotics.features.build.testing.SensorTestDialog
+import com.revolution.robotics.features.build.testing.DrivetrainTestDialog
+import com.revolution.robotics.features.build.testing.BumperTestDialog
+import com.revolution.robotics.features.build.testing.UltrasonicTestDialog
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 import com.revolution.robotics.views.slider.BuildStepSliderView
 import org.kodein.di.erased.instance
@@ -29,6 +30,11 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
     BluetoothConnectionFlowHelper.Listener {
 
     companion object {
+        private const val TEST_TYPE_BUMPER = 1
+        private const val TEST_TYPE_ULTRASONIC = 2
+        private const val TEST_TYPE_DRIVETRAIN = 3
+        private const val TEST_TYPE_MOTOR = 4
+
         private var Bundle.robot by BundleArgumentDelegate.Parcelable<RobotDescriptor>("robot")
         const val DEFAULT_STARTING_INDEX = 1
     }
@@ -88,15 +94,17 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
 
     override fun onDialogEvent(event: DialogEvent) {
         if (event == DialogEvent.CHAPTER_FINISHED) {
-            getTestingDialog(event.extras.getInt(ChapterFinishedDialog.KEY_TEST_CODE_ID)).show(fragmentManager)
+            getTestingDialog(event.extras.getInt(ChapterFinishedDialog.KEY_TEST_CODE_ID))?.show(fragmentManager)
         }
     }
 
     private fun getTestingDialog(testCodeId: Int) =
         when (testCodeId) {
-            1 -> SensorTestDialog.newInstance()
-            2 -> MotorTestDialog.newInstance()
-            else -> MovementTestDialog.newInstance()
+            TEST_TYPE_BUMPER -> BumperTestDialog.Build()
+            TEST_TYPE_ULTRASONIC -> UltrasonicTestDialog.Build()
+            TEST_TYPE_DRIVETRAIN -> DrivetrainTestDialog.Build()
+            TEST_TYPE_MOTOR -> MotorTestDialog.Build()
+            else -> null
         }
 
     override fun onUserRobotLoaded(userRobot: UserRobot?) {

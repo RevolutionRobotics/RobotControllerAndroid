@@ -17,17 +17,17 @@ class SensorConfigurationViewModel(private val presenter: SensorConfigurationMvp
         ConfigButtonViewModel(
             R.string.configure_sensor_bumper_button_title,
             R.drawable.ic_bumper,
-            presenter::onBumberButtonClicked
+            presenter::onBumperButtonClicked
         )
     val ultrasoundButton =
         ConfigButtonViewModel(
             R.string.configure_sensor_ultrasound_button_title,
             R.drawable.ic_ultrasound,
-            presenter::onUltarsoundButtonClicked
+            presenter::onUltrasoundButtonClicked
         )
 
     val actionButtonsViewModel =
-        ActionButtonsViewModel({ presenter.onDoneButtonClicked() }, { presenter.onTestButtonClcked() })
+        ActionButtonsViewModel({ presenter.onDoneButtonClicked() }, { presenter.onTestButtonClicked() })
 
     private fun onEmptyButtonClicked() {
         presenter.onEmptyButtonClicked()

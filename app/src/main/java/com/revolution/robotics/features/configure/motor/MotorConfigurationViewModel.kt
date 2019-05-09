@@ -69,5 +69,5 @@ class MotorConfigurationViewModel(
     val editTextModel = MutableLiveData<ChippedEditTextViewModel>()
 
     val actionButtonsViewModel =
-        ActionButtonsViewModel({ presenter.onDoneButtonClicked() }, { presenter.onTestButtonClcked() })
+        ActionButtonsViewModel({ presenter.onDoneButtonClicked() }, { presenter.onTestButtonClicked() })
 }

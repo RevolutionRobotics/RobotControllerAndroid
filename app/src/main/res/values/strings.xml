@@ -63,6 +63,7 @@
     <string name="tips_dialog_title">Tips</string>
     <string name="tips_dialog_sub_title">Try to…</string>
     <string name="tips_dialog_button_reconfigure">Reconfigure</string>
+    <string name="tips_dialog_button_skip_testing">Skip testing</string>
     <string name="tips_dialog_button_community">Community</string>
     <string name="tips_dialog_button_try_again">Try again</string>
     <string name="tips_dialog_placeholder_1">Lorem ipsum dolor sit amet, eu commodo numquam comprehensam vel. Quo cu alia placerat.</string>
@@ -70,14 +71,15 @@
     <string name="tips_dialog_placeholder_3">Eos meis quidam omnesque et. Essent blandit ius ut, no ius melius sanctus.</string>
     <string name="tips_dialog_placeholder_4">Get help from the Community!</string>
 
-    <!-- Build Robots Testing Dialog -->
-    <string name="build_robot_testing_negative_button_title">Not really</string>
-    <string name="build_robot_testing_positive_button_title">Works fine!</string>
-    <string name="build_robot_testing_title">Testing</string>
-    <string name="build_robot_testing_question">Looking good?</string>
-    <string name="build_robot_testing_movement_test_text">Robot moves back and forth and reaches initial position.</string>
-    <string name="build_robot_testing_motor_test_text">The attached motor does a half rotation back and forth and reaches initial position.</string>
-    <string name="build_robot_testing_sensor_test_text">Move your hand in front of the robot and gently push it. If the sensor detects it, the LED lights of the robot will turn green, otherwise turn red.</string>
+    <!-- Testing Dialog -->
+    <string name="testing_negative_button_title">Not really</string>
+    <string name="testing_positive_button_title">Works fine!</string>
+    <string name="testing_title">Testing</string>
+    <string name="testing_question">Looking good?</string>
+    <string name="testing_drivetrain_test">Robot moves back and forth and reaches initial position.</string>
+    <string name="testing_motor_test">The attached motor does a half rotation back and forth and reaches initial position.</string>
+    <string name="testing_bumper_test">Move your hand in front of the robot and gently push it. If the sensor detects it, the LED lights of the robot will turn green, otherwise turn red.</string>
+    <string name="testing_ultrasonic_test">Move your hand in front of the robot. If the sensor detects it, the LED lights of the robot will turn green, otherwise turn red.</string>
 
     <!-- Build finished -->
     <string name="build_robot_finished_title">All set!</string>
