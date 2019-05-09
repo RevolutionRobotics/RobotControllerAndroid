@@ -14,7 +14,7 @@ class ChippedEditText @JvmOverloads constructor(context: Context, attrs: Attribu
     FrameLayout(context, attrs) {
 
     private var viewModel = ChippedEditTextViewModel()
-    private val binding: ViewChippedEditTextBinding
+    val binding: ViewChippedEditTextBinding
 
     init {
         attrs?.let {

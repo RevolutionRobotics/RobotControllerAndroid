@@ -1,12 +1,12 @@
 package com.revolution.robotics.core.domain.local
 
+import android.os.Parcelable
 import androidx.room.Dao
 import androidx.room.Entity
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.PrimaryKey
 import androidx.room.Query
-import com.revolution.robotics.core.domain.shared.RobotDescriptor
 import kotlinx.android.parcel.Parcelize
 import java.util.Date
 
@@ -14,15 +14,15 @@ import java.util.Date
 @Parcelize
 data class UserRobot(
     @PrimaryKey(autoGenerate = true) var instanceId: Int = 0,
-    override var id: Int = 0,
+    var id: Int = 0,
     var buildStatus: BuildStatus? = null,
     var actualBuildStep: Int = 0,
     var lastModified: Date? = null,
-    var configId: String? = null,
-    override val name: String? = null,
-    override var coverImage: String?,
-    override var description: String?
-) : RobotDescriptor
+    var configurationId: Int = 0,
+    val name: String? = null,
+    var coverImage: String? = null,
+    var description: String? = null
+) : Parcelable
 
 @Dao
 interface UserRobotDao {

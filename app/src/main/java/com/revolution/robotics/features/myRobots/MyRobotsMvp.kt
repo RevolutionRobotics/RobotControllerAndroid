@@ -1,7 +1,7 @@
 package com.revolution.robotics.features.myRobots
 
 import com.revolution.robotics.core.Mvp
-import com.revolution.robotics.core.domain.shared.RobotDescriptor
+import com.revolution.robotics.core.domain.local.UserRobot
 
 interface MyRobotsMvp : Mvp {
     interface View : Mvp.View {
@@ -17,8 +17,8 @@ interface MyRobotsMvp : Mvp {
         fun previousButtonClick()
         fun navigateToWhoToBuild()
         fun onPlaySelected(robotId: Int)
-        fun onContinueBuildingSelected(robot: RobotDescriptor)
-        fun onEditSelected(robotId: Int)
+        fun onContinueBuildingSelected(robot: UserRobot)
+        fun onEditSelected(userRobot: UserRobot)
         fun onDeleteSelected(robotId: Int)
         fun deleteRobot(robotId: Int)
     }

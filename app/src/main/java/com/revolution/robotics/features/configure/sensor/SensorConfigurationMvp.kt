@@ -17,5 +17,6 @@ interface SensorConfigurationMvp : Mvp {
         fun onUltrasoundButtonClicked()
         fun onTestButtonClicked()
         fun onDoneButtonClicked()
+        fun onVariableNameChanged(name: String?)
     }
 }

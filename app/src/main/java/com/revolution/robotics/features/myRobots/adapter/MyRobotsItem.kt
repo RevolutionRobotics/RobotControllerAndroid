@@ -3,13 +3,13 @@ package com.revolution.robotics.features.myRobots.adapter
 import androidx.annotation.DrawableRes
 import androidx.databinding.ObservableBoolean
 import com.revolution.robotics.R
-import com.revolution.robotics.core.domain.shared.RobotDescriptor
+import com.revolution.robotics.core.domain.local.UserRobot
 import com.revolution.robotics.features.myRobots.MyRobotsMvp
 
 @Suppress("DataClassContainsFunctions")
 data class MyRobotsItem(
     val id: Int,
-    val robot: RobotDescriptor,
+    val robot: UserRobot,
     val iconDescription: String,
     val isUnderConstruction: Boolean,
     private val presenter: MyRobotsMvp.Presenter
@@ -33,7 +33,7 @@ data class MyRobotsItem(
     }
 
     fun onEditClicked() {
-        if (!isUnderConstruction) presenter.onEditSelected(id)
+        if (!isUnderConstruction) presenter.onEditSelected(robot)
     }
 
     fun onDeleteClicked() {

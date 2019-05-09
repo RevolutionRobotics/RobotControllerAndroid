@@ -13,6 +13,7 @@ interface MotorConfigurationMvp : Mvp {
     @Suppress("ComplexInterface")
     interface Presenter : Mvp.Presenter<View, MotorConfigurationViewModel> {
         fun setMotor(motor: Motor, portName: String)
+        fun onVariableNameChanged(name: String?)
         fun onEmptyButtonClicked()
         fun onDrivetrainButtonClicked()
         fun onMotorClicked()

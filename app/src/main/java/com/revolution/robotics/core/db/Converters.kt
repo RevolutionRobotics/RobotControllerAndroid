@@ -11,17 +11,17 @@ class Converters {
 
     // Sensor
     @TypeConverter
-    fun toSensor(sensor: String): Sensor = Gson().fromJson(sensor, Sensor::class.java)
+    fun toSensor(sensor: String): Sensor? = Gson().fromJson(sensor, Sensor::class.java)
 
     @TypeConverter
-    fun fromSensor(sensor: Sensor): String = Gson().toJson(sensor)
+    fun fromSensor(sensor: Sensor?): String = Gson().toJson(sensor)
 
     // Motor
     @TypeConverter
-    fun toMotor(motor: String): Motor = Gson().fromJson(motor, Motor::class.java)
+    fun toMotor(motor: String?): Motor? = Gson().fromJson(motor, Motor::class.java)
 
     @TypeConverter
-    fun fromMotor(motor: Motor): String = Gson().toJson(motor)
+    fun fromMotor(motor: Motor?): String = Gson().toJson(motor)
 
     // Date
     @TypeConverter

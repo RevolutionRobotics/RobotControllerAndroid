@@ -1,14 +1,22 @@
 package com.revolution.robotics.features.whoToBuild
 
+import com.revolution.robotics.core.domain.local.BuildStatus
+import com.revolution.robotics.core.domain.local.UserConfiguration
+import com.revolution.robotics.core.domain.local.UserMapping
+import com.revolution.robotics.core.domain.local.UserRobot
 import com.revolution.robotics.core.domain.remote.Robot
 import com.revolution.robotics.core.extensions.isEmptyOrNull
+import com.revolution.robotics.core.interactor.SaveUserRobotInteractor
 import com.revolution.robotics.core.interactor.firebase.RobotInteractor
 import com.revolution.robotics.core.utils.Navigator
+import com.revolution.robotics.features.build.BuildRobotFragment
 import com.revolution.robotics.features.whoToBuild.adapter.RobotsItem
+import java.util.Date
 import kotlin.math.max
 
 class WhoToBuildPresenter(
     private val robotsInteractor: RobotInteractor,
+    private val saveUserRobotInteractor: SaveUserRobotInteractor,
     private val navigator: Navigator
 ) : WhoToBuildMvp.Presenter {
 
@@ -30,7 +38,8 @@ class WhoToBuildPresenter(
                     updateButtonsVisibility(0)
                     view?.onRobotsLoaded()
                 }
-            }, onError = { error ->
+            },
+            onError = { error ->
                 // TODO add error handling
                 error.printStackTrace()
             })
@@ -71,10 +80,34 @@ class WhoToBuildPresenter(
     }
 
     override fun onRobotSelected(robot: Robot) {
-        navigator.navigate(WhoToBuildFragmentDirections.toBuildRobot(robot))
+        val userRobot = UserRobot(
+            0,
+            robot.id,
+            BuildStatus.IN_PROGRESS,
+            BuildRobotFragment.DEFAULT_STARTING_INDEX,
+            Date(System.currentTimeMillis()),
+            robot.configurationId,
+            robot.name,
+            robot.coverImage,
+            robot.description
+        )
+        navigator.navigate(WhoToBuildFragmentDirections.toBuildRobot(userRobot))
     }
 
     override fun onBuildYourOwnSelected() {
-        navigator.navigate(WhoToBuildFragmentDirections.toConfigure())
+        val userRobot = UserRobot(
+            buildStatus = BuildStatus.COMPLETED,
+            lastModified = Date(System.currentTimeMillis()),
+            name = "Name #"
+        )
+        saveUserRobotInteractor.userConfiguration = UserConfiguration(mappingId = UserMapping())
+        saveUserRobotInteractor.userRobot = userRobot
+        saveUserRobotInteractor.execute(
+            onResponse = {
+                navigator.navigate(WhoToBuildFragmentDirections.toConfigure(userRobot))
+            },
+            onError = { error ->
+                // TODO Error handling
+            })
     }
 }

@@ -8,7 +8,6 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.lang.Exception
 
 abstract class Interactor<T> {
 
@@ -38,6 +37,7 @@ abstract class Interactor<T> {
                         if (!BuildConfig.DEBUG) {
                             Crashlytics.logException(result)
                         }
+                        result.printStackTrace()
                         onError.invoke(result)
                     } else {
                         onResponse.invoke(result as T)

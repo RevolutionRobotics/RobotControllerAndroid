@@ -7,7 +7,6 @@ import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.local.BuildStatus
 import com.revolution.robotics.core.domain.local.UserRobot
 import com.revolution.robotics.core.domain.remote.BuildStep
-import com.revolution.robotics.core.domain.shared.RobotDescriptor
 import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
 import com.revolution.robotics.core.utils.BundleArgumentDelegate
@@ -35,8 +34,9 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
         private const val TEST_TYPE_DRIVETRAIN = 3
         private const val TEST_TYPE_MOTOR = 4
 
-        private var Bundle.robot by BundleArgumentDelegate.Parcelable<RobotDescriptor>("robot")
         const val DEFAULT_STARTING_INDEX = 1
+
+        private var Bundle.robot by BundleArgumentDelegate.Parcelable<UserRobot>("robot")
     }
 
     override val viewModelClass = BuildRobotViewModel::class.java
@@ -44,7 +44,6 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
     private val dialogEventBus: DialogEventBus by kodein.instance()
     private val connectionFlowHelper = BluetoothConnectionFlowHelper(kodein)
 
-    private var userRobot: UserRobot? = null
     private var buildStepCount = 0
     private var currentBuildStep: BuildStep? = null
     private var wasRobotFinished = false
@@ -60,7 +59,7 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
         }
 
         presenter.register(this, viewModel)
-        presenter.loadUserRobot(arguments?.robot?.id ?: 0)
+        presenter.loadBuildSteps(arguments?.robot?.id ?: 0)
 
         dialogEventBus.register(this)
         connectionFlowHelper.init(fragmentManager, this)
@@ -69,14 +68,10 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
 
     override fun onStop() {
         if (!wasRobotFinished) {
-            if (userRobot == null) {
-                presenter.createNewRobot(arguments?.robot, currentBuildStep)
-            } else {
-                userRobot?.apply {
-                    actualBuildStep = currentBuildStep?.stepNumber ?: DEFAULT_STARTING_INDEX
-                    lastModified = Date(System.currentTimeMillis())
-                    presenter.saveUserRobot(this)
-                }
+            arguments?.robot?.apply {
+                actualBuildStep = currentBuildStep?.stepNumber ?: DEFAULT_STARTING_INDEX
+                lastModified = Date(System.currentTimeMillis())
+                presenter.saveUserRobot(this, false)
             }
         }
         super.onStop()
@@ -107,13 +102,8 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
             else -> null
         }
 
-    override fun onUserRobotLoaded(userRobot: UserRobot?) {
-        this.userRobot = userRobot
-        presenter.loadBuildSteps(arguments?.robot?.id ?: 0)
-    }
-
     override fun onBuildStepsLoaded(steps: List<BuildStep>) {
-        val startIndex = (userRobot?.actualBuildStep ?: DEFAULT_STARTING_INDEX) - 1
+        val startIndex = (arguments?.robot?.actualBuildStep ?: DEFAULT_STARTING_INDEX) - 1
         binding?.seekbar?.setBuildSteps(steps, this, startIndex)
         buildStepCount = steps.size
         onBuildStepSelected(steps[startIndex], true)
@@ -131,10 +121,10 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
 
     override fun onBuildFinished() {
         wasRobotFinished = true
-        userRobot?.apply {
+        arguments?.robot?.apply {
             buildStatus = BuildStatus.COMPLETED
             lastModified = Date(System.currentTimeMillis())
-            presenter.saveUserRobot(this)
+            presenter.saveUserRobot(this, true)
         }
         BuildFinishedDialog.newInstance().show(fragmentManager)
     }

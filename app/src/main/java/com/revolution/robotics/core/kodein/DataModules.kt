@@ -2,15 +2,12 @@ package com.revolution.robotics.core.kodein
 
 import android.content.Context
 import androidx.room.Room
-import com.revolution.robotics.features.build.chapterFinished.ChapterFinishedMvp
-import com.revolution.robotics.features.build.chapterFinished.ChapterFinishedPresenter
-import com.revolution.robotics.features.controller.LiveControllerMvp
-import com.revolution.robotics.features.controller.LiveControllerPresenter
 import com.revolution.robotics.core.db.RoboticsDatabase
 import com.revolution.robotics.core.domain.local.UserConfigurationDao
 import com.revolution.robotics.core.domain.local.UserRobotDao
 import com.revolution.robotics.core.interactor.DeleteRobotInteractor
 import com.revolution.robotics.core.interactor.GetAllUserRobotsInteractor
+import com.revolution.robotics.core.interactor.GetUserConfigurationInteractor
 import com.revolution.robotics.core.interactor.GetUserRobotInteractor
 import com.revolution.robotics.core.interactor.SaveUserRobotInteractor
 import com.revolution.robotics.core.interactor.firebase.BuildStepInteractor
@@ -21,6 +18,8 @@ import com.revolution.robotics.features.build.BuildRobotMvp
 import com.revolution.robotics.features.build.BuildRobotPresenter
 import com.revolution.robotics.features.build.buildFinished.BuildFinishedMvp
 import com.revolution.robotics.features.build.buildFinished.BuildFinishedPresenter
+import com.revolution.robotics.features.build.chapterFinished.ChapterFinishedMvp
+import com.revolution.robotics.features.build.chapterFinished.ChapterFinishedPresenter
 import com.revolution.robotics.features.build.connect.availableRobotsFace.ConnectMvp
 import com.revolution.robotics.features.build.connect.availableRobotsFace.ConnectPresenter
 import com.revolution.robotics.features.configure.ConfigureMvp
@@ -33,6 +32,8 @@ import com.revolution.robotics.features.configure.sensor.SensorConfigurationMvp
 import com.revolution.robotics.features.configure.sensor.SensorConfigurationPresenter
 import com.revolution.robotics.features.configure.controllers.ConfigureControllersMvp
 import com.revolution.robotics.features.configure.controllers.ConfigureControllersPresenter
+import com.revolution.robotics.features.controller.LiveControllerMvp
+import com.revolution.robotics.features.controller.LiveControllerPresenter
 import com.revolution.robotics.features.mainmenu.MainMenuMvp
 import com.revolution.robotics.features.mainmenu.MainMenuPresenter
 import com.revolution.robotics.features.myRobots.MyRobotsMvp
@@ -52,24 +53,29 @@ fun createInteractorModule() =
         bind<ConfigurationInteractor>() with provider { ConfigurationInteractor() }
         bind<TestCodeInteractor>() with provider { TestCodeInteractor() }
         bind<GetUserRobotInteractor>() with provider { GetUserRobotInteractor(instance()) }
-        bind<SaveUserRobotInteractor>() with provider { SaveUserRobotInteractor(instance()) }
+        bind<SaveUserRobotInteractor>() with provider { SaveUserRobotInteractor(instance(), instance()) }
         bind<GetAllUserRobotsInteractor>() with provider { GetAllUserRobotsInteractor(instance()) }
         bind<DeleteRobotInteractor>() with provider { DeleteRobotInteractor(instance()) }
+        bind<GetUserConfigurationInteractor>() with provider { GetUserConfigurationInteractor(instance()) }
     }
 
 fun createPresenterModule() =
     Kodein.Module("PresenterModule") {
         bind<MainMenuMvp.Presenter>() with singleton { MainMenuPresenter(instance()) }
-        bind<WhoToBuildMvp.Presenter>() with singleton { WhoToBuildPresenter(instance(), instance()) }
+        bind<WhoToBuildMvp.Presenter>() with singleton { WhoToBuildPresenter(instance(), instance(), instance()) }
         bind<LiveControllerMvp.Presenter>() with singleton { LiveControllerPresenter(instance()) }
         bind<MyRobotsMvp.Presenter>() with singleton { MyRobotsPresenter(instance(), instance(), instance()) }
         bind<ChapterFinishedMvp.Presenter>() with singleton { ChapterFinishedPresenter(instance()) }
         bind<BuildRobotMvp.Presenter>() with singleton { BuildRobotPresenter(instance(), instance(), instance()) }
         bind<ConnectMvp.Presenter>() with singleton { ConnectPresenter(instance()) }
-        bind<ConfigureMvp.Presenter>() with singleton { ConfigurePresenter() }
-        bind<ConfigureConnectionsMvp.Presenter>() with singleton { ConfigureConnectionsPresenter() }
-        bind<MotorConfigurationMvp.Presenter>() with singleton { MotorConfigurationPresenter(instance()) }
-        bind<SensorConfigurationMvp.Presenter>() with singleton { SensorConfigurationPresenter(instance()) }
+        bind<ConfigureMvp.Presenter>() with singleton { ConfigurePresenter(instance(), instance()) }
+        bind<ConfigureConnectionsMvp.Presenter>() with singleton {
+            ConfigureConnectionsPresenter(
+                instance(),
+                instance())
+        }
+        bind<MotorConfigurationMvp.Presenter>() with singleton { MotorConfigurationPresenter(instance(), instance()) }
+        bind<SensorConfigurationMvp.Presenter>() with singleton { SensorConfigurationPresenter(instance(), instance()) }
         bind<BuildFinishedMvp.Presenter>() with singleton { BuildFinishedPresenter(instance()) }
         bind<ConfigureControllersMvp.Presenter>() with singleton { ConfigureControllersPresenter() }
     }
