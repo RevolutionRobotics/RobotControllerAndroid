@@ -13,10 +13,16 @@ fun createTipsDialogButtons(source: TestDialog.Source, dialogController: DialogC
         }
 
     return listOf(
-        DialogButton(text, icon, false, dialogController::onCancelClicked),
+        DialogButton(text, icon, false, true, dialogController::onCancelClicked),
         DialogButton(R.string.tips_dialog_button_community, R.drawable.ic_community) {
             // TODO open community here
         },
-        DialogButton(R.string.tips_dialog_button_try_again, R.drawable.ic_retry, true, dialogController::onRetryClicked)
+        DialogButton(
+            R.string.tips_dialog_button_try_again,
+            R.drawable.ic_retry,
+            true,
+            true,
+            dialogController::onRetryClicked
+        )
     )
 }

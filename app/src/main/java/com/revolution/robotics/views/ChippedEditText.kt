@@ -1,6 +1,8 @@
 package com.revolution.robotics.views
 
 import android.content.Context
+import android.text.InputFilter
+import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
@@ -9,6 +11,7 @@ import com.revolution.robotics.core.extensions.string
 import com.revolution.robotics.databinding.ViewChippedEditTextBinding
 import com.revolution.robotics.views.ChippedEditTextViewModel.Companion.CHIPPED_EDIT_TEXT_DEFAULT_MAX_LENGTH
 import com.revolution.robotics.views.ChippedEditTextViewModel.Companion.CHIPPED_EDIT_TEXT_DEFAULT_MAX_LINES
+import com.revolution.robotics.views.ChippedEditTextViewModel.Companion.CHIPPED_EDIT_TEXT_DEFAULT_MIN_LINES
 
 class ChippedEditText @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) :
     FrameLayout(context, attrs) {
@@ -45,6 +48,7 @@ class ChippedEditText @JvmOverloads constructor(context: Context, attrs: Attribu
                 backgroundColor = a.getResourceId(R.styleable.ChippedEditText_cetBackgroundColor, R.color.grey_28)
 
                 textMaxLines = a.getInt(R.styleable.ChippedEditText_cetMaxLines, CHIPPED_EDIT_TEXT_DEFAULT_MAX_LINES)
+                textMinLines = a.getInt(R.styleable.ChippedEditText_cetMinLines, CHIPPED_EDIT_TEXT_DEFAULT_MIN_LINES)
                 textMaxLength = a.getInt(R.styleable.ChippedEditText_cetMaxLength, CHIPPED_EDIT_TEXT_DEFAULT_MAX_LENGTH)
             }
         } finally {
@@ -55,8 +59,20 @@ class ChippedEditText @JvmOverloads constructor(context: Context, attrs: Attribu
     fun setViewModel(viewModel: ChippedEditTextViewModel) {
         this.viewModel = viewModel
         binding.viewModel = viewModel
+
+        binding.content.let { content ->
+            content.filters = arrayOf(InputFilter.LengthFilter(viewModel.textMaxLength))
+            if (viewModel.textMaxLines == 1 && viewModel.textMaxLines == 1) {
+                content.setSingleLine()
+            } else content.setSingleLine(false)
+        }
+
         binding.executePendingBindings()
     }
 
     fun getContent() = binding.content.text?.toString() ?: ""
+
+    fun addTextChangedListener(textWatcher: TextWatcher) {
+        binding.content.addTextChangedListener(textWatcher)
+    }
 }

@@ -90,6 +90,7 @@ abstract class RoboticsDialog : DialogFragment() {
             val buttonBinding = DialogRoboticsCoreButtonBinding.inflate(inflater, binding.buttonContainer, false)
             buttonBinding.viewModel = DialogButtonViewModel(button, index == 0, index == buttons.size - 1)
             binding.buttonContainer.addView(buttonBinding.root)
+            button.viewModel = buttonBinding.viewModel
         }
         binding.buttonContainer.gone = buttons.isEmpty()
         updateButtonWeights()

@@ -8,7 +8,7 @@
 
     <LinearLayout
             app:chippedBoxConfig="@{viewModel.background}"
-            android:onClick="@{() -> viewModel.onClick.invoke()}"
+            android:onClick="@{()-> viewModel.onClick()}"
             android:gravity="center"
             android:orientation="horizontal"
             android:layout_width="0dp"
@@ -19,13 +19,14 @@
                 android:layout_width="@dimen/dialog_icon_size"
                 android:layout_height="@dimen/dialog_icon_size"
                 app:drawable="@{viewModel.icon}"
+                app:tintColorResource="@{viewModel.contentColorRes}"
                 android:scaleType="centerInside"/>
 
         <TextView
                 android:id="@+id/text"
                 android:text="@{viewModel.text}"
                 android:layout_marginStart="@dimen/dimen_8dp"
-                android:textColor="@color/white"
+                app:textColorResource="@{viewModel.contentColorRes}"
                 android:fontFamily="@font/barlow_medium"
                 android:textSize="14sp"
                 android:layout_width="wrap_content"
