@@ -9,6 +9,7 @@ interface ConfigureMvp : Mvp {
         fun startConnectionFlow()
         fun showConnectionsScreen()
         fun showControllerScreen()
+        fun hideDrawer()
     }
 
     interface Presenter : Mvp.Presenter<View, ConfigureViewModel> {

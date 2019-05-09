@@ -7,6 +7,7 @@ import com.revolution.robotics.core.domain.local.UserConfigurationDao
 import com.revolution.robotics.core.domain.local.UserRobotDao
 import com.revolution.robotics.core.interactor.DeleteRobotInteractor
 import com.revolution.robotics.core.interactor.GetAllUserRobotsInteractor
+import com.revolution.robotics.core.interactor.GetUserConfigurationInteractor
 import com.revolution.robotics.core.interactor.GetUserRobotInteractor
 import com.revolution.robotics.core.interactor.SaveUserRobotInteractor
 import com.revolution.robotics.core.interactor.firebase.BuildStepInteractor
@@ -55,6 +56,7 @@ fun createInteractorModule() =
         bind<SaveUserRobotInteractor>() with provider { SaveUserRobotInteractor(instance()) }
         bind<GetAllUserRobotsInteractor>() with provider { GetAllUserRobotsInteractor(instance()) }
         bind<DeleteRobotInteractor>() with provider { DeleteRobotInteractor(instance()) }
+        bind<GetUserConfigurationInteractor>() with provider { GetUserConfigurationInteractor(instance()) }
     }
 
 fun createPresenterModule() =
@@ -66,8 +68,8 @@ fun createPresenterModule() =
         bind<ChapterFinishedMvp.Presenter>() with singleton { ChapterFinishedPresenter(instance()) }
         bind<BuildRobotMvp.Presenter>() with singleton { BuildRobotPresenter(instance(), instance(), instance()) }
         bind<ConnectMvp.Presenter>() with singleton { ConnectPresenter(instance()) }
-        bind<ConfigureMvp.Presenter>() with singleton { ConfigurePresenter() }
-        bind<ConfigureConnectionsMvp.Presenter>() with singleton { ConfigureConnectionsPresenter() }
+        bind<ConfigureMvp.Presenter>() with singleton { ConfigurePresenter(instance()) }
+        bind<ConfigureConnectionsMvp.Presenter>() with singleton { ConfigureConnectionsPresenter(instance()) }
         bind<MotorConfigurationMvp.Presenter>() with singleton { MotorConfigurationPresenter(instance(), instance()) }
         bind<SensorConfigurationMvp.Presenter>() with singleton { SensorConfigurationPresenter(instance(), instance()) }
         bind<BuildFinishedMvp.Presenter>() with singleton { BuildFinishedPresenter(instance()) }

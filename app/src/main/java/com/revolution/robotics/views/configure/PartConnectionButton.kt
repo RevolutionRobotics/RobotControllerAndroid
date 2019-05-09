@@ -22,7 +22,7 @@ class PartConnectionButton @JvmOverloads constructor(
     FrameLayout(context, attrs, defStyleAttr) {
     private var isActive: Boolean = false
     @ColorRes
-    private var activeColorRes: Int = R.color.grey_6d
+    private var colorRes: Int = R.color.grey_6d
 
     private var inactiveChippedBoxDrawable: ChippedBoxDrawable? = null
     private var activeChippedBoxDrawable: ChippedBoxDrawable? = null
@@ -33,7 +33,7 @@ class PartConnectionButton @JvmOverloads constructor(
     private var inactiveNameRes: Int = R.string.configure_connections_missing_part_name
 
     @DrawableRes
-    private var activeIconRes: Int = inactiveIconRes
+    private var iconRes: Int = inactiveIconRes
     @StringRes
     private var activeNameRes: Int = inactiveNameRes
 
@@ -83,7 +83,7 @@ class PartConnectionButton @JvmOverloads constructor(
     private fun initVariables() {
         setLayerType(ImageView.LAYER_TYPE_SOFTWARE, null)
         inactiveChippedBoxDrawable = ChippedBoxDrawable(context, INACTIVE_CHIPPED_BOX_CONFIG)
-        initActiveChippedBoxConfig(activeColorRes)
+        initActiveChippedBoxConfig(colorRes)
         updateButton()
     }
 
@@ -102,14 +102,14 @@ class PartConnectionButton @JvmOverloads constructor(
         )
     }
 
-    fun setActiveColor(@ColorRes color: Int) {
-        activeColorRes = color
-        initActiveChippedBoxConfig(activeColorRes)
+    fun setColor(@ColorRes color: Int) {
+        colorRes = color
+        initActiveChippedBoxConfig(colorRes)
         updateButton()
     }
 
     fun setActiveIcon(@DrawableRes icon: Int) {
-        activeIconRes = icon
+        iconRes = icon
         updateButton()
     }
 
@@ -125,18 +125,13 @@ class PartConnectionButton @JvmOverloads constructor(
         }
     }
 
-    fun setOnClick(onClick: () -> Unit) {
-        setOnClickListener { onClick() }
-    }
-
     private fun updateButton() {
+        icon.setImageResource(iconRes)
         if (isActive) {
             background = activeChippedBoxDrawable
-            icon.setImageResource(activeIconRes)
             name.setText(activeNameRes)
         } else {
             background = inactiveChippedBoxDrawable
-            icon.setImageResource(inactiveIconRes)
             name.setText(inactiveNameRes)
         }
 

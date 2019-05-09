@@ -20,7 +20,7 @@ data class UserConfiguration(
 interface UserConfigurationDao {
 
     @Query("SELECT * FROM UserConfiguration WHERE id=:id")
-    fun getUserConfiguration(id: Int): UserConfiguration
+    fun getUserConfiguration(id: Int): UserConfiguration?
 
     @Insert
     fun saveUserConfiguration(userConfiguration: UserConfiguration)

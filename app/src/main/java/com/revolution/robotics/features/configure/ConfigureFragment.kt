@@ -2,14 +2,14 @@ package com.revolution.robotics.features.configure
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.Fragment
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
-import com.revolution.robotics.databinding.FragmentConfigureBinding
-import org.kodein.di.erased.instance
-import androidx.fragment.app.Fragment
 import com.revolution.robotics.core.utils.dynamicPermissions.BluetoothConnectionFlowHelper
+import com.revolution.robotics.databinding.FragmentConfigureBinding
 import com.revolution.robotics.features.configure.connections.ConfigureConnectionsFragment
 import com.revolution.robotics.features.configure.controllers.ConfigureControllersFragment
+import org.kodein.di.erased.instance
 
 @Suppress("UnnecessaryApply")
 class ConfigureFragment : BaseFragment<FragmentConfigureBinding, ConfigureViewModel>(R.layout.fragment_configure),
@@ -23,6 +23,10 @@ class ConfigureFragment : BaseFragment<FragmentConfigureBinding, ConfigureViewMo
         presenter.register(this, viewModel)
         connectionFlowHelper.init(fragmentManager, this)
         binding?.toolbarViewModel = ConfigureToolbarViewModel(presenter)
+    }
+
+    override fun hideDrawer() {
+        binding?.drawerConfiguration?.closeDrawers()
     }
 
     override fun onDestroyView() {
@@ -40,7 +44,7 @@ class ConfigureFragment : BaseFragment<FragmentConfigureBinding, ConfigureViewMo
     }
 
     override fun showConnectionsScreen() {
-        commitFragmentToFrame(ConfigureConnectionsFragment())
+        commitFragmentToFrame(ConfigureConnectionsFragment.newInstance(1))
     }
 
     override fun showControllerScreen() {

@@ -11,7 +11,7 @@ import com.revolution.robotics.views.configure.PartConnectionLineView
 
 @BindingAdapter("bindRobotPartModel")
 fun setPartConnectionLineViewRobotPart(lineView: PartConnectionLineView, robotPartModel: RobotPartModel?) {
-    lineView.setIsDashed(robotPartModel == null)
+    lineView.setIsDashed(robotPartModel?.isActive != true)
     if (robotPartModel != null) lineView.setLineColor(robotPartModel.color)
 }
 
@@ -20,15 +20,15 @@ fun setPartConnectionIconViewRobotPart(
     partConnectionIconView: PartConnectionIconView,
     robotPartModel: RobotPartModel?
 ) {
-    partConnectionIconView.setIsPartActive(robotPartModel != null)
+    partConnectionIconView.setIsPartActive(robotPartModel?.isActive == true)
     if (robotPartModel != null) partConnectionIconView.setActiveColor(robotPartModel.color)
 }
 
 @BindingAdapter("bindRobotPartModel")
 fun setPartConnectionButtonRobotPart(partConnectionButton: PartConnectionButton, robotPartModel: RobotPartModel?) {
-    partConnectionButton.setIsPartActive(robotPartModel != null)
+    partConnectionButton.setIsPartActive(robotPartModel?.isActive == true)
     robotPartModel?.let { model ->
-        partConnectionButton.setActiveColor(model.color)
+        partConnectionButton.setColor(model.color)
         partConnectionButton.setActiveName(model.name)
         partConnectionButton.setActiveIcon(model.icon)
     }
