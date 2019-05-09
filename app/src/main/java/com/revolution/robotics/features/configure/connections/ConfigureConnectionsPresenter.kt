@@ -137,7 +137,7 @@ class ConfigureConnectionsPresenter(
                 handlePortSelection(port)
                 openSensorDrawer(sensor, resourceResolver.string(portName))
             }
-            sensor?.type?.isNotEmpty() == true -> RobotPartModel(
+            sensor == null || sensor.type.isNullOrEmpty() -> RobotPartModel(
                 portName,
                 R.color.grey_6d,
                 getSensorDrawable(null),
@@ -163,7 +163,7 @@ class ConfigureConnectionsPresenter(
                 handlePortSelection(port)
                 openMotorDrawer(motor, resourceResolver.string(portName))
             }
-            motor?.type?.isNotEmpty() == true -> RobotPartModel(
+            motor == null || motor.type.isNullOrEmpty() -> RobotPartModel(
                 portName,
                 R.color.grey_6d,
                 getMotorDrawable(null),
