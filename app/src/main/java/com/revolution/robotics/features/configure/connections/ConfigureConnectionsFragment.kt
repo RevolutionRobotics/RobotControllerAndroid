@@ -43,4 +43,8 @@ class ConfigureConnectionsFragment :
     fun updateConfiguration(userConfiguration: UserConfiguration) {
         presenter.updateConfiguration(userConfiguration)
     }
+
+    fun clearSelection() {
+        presenter.clearSelection()
+    }
 }

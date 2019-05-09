@@ -1,6 +1,8 @@
 package com.revolution.robotics.features.configure
 
-class ConfigurePresenter(private val configurationEventBus: ConfigurationEventBus) : ConfigureMvp.Presenter,
+class ConfigurePresenter(
+    private val configurationEventBus: ConfigurationEventBus
+) : ConfigureMvp.Presenter,
     ConfigurationEventBus.Listener {
 
     override var model: ConfigureViewModel? = null
@@ -17,6 +19,14 @@ class ConfigurePresenter(private val configurationEventBus: ConfigurationEventBu
         super.unregister()
     }
 
+    override fun onOpenMotorConfigEvent(event: MotorPort) {
+        view?.openMotorConfig(event)
+    }
+
+    override fun onOpenSensorConfigEvent(event: SensorPort) {
+        view?.openSensorConfig(event)
+    }
+
     override fun onConnectionsTabSelected() {
         model?.setScreen(ConfigurationTabs.CONNECTIONS)
         view?.showConnectionsScreen()
@@ -27,12 +37,12 @@ class ConfigurePresenter(private val configurationEventBus: ConfigurationEventBu
         view?.showControllerScreen()
     }
 
-    override fun onMotorConfigChangedEvent(event: MotorUpdateEvent) {
+    override fun onMotorConfigChangedEvent(event: MotorPort) {
         // TODO Deselect and update motor
         view?.hideDrawer()
     }
 
-    override fun onSensorConfigChangedEvent(event: SensorUpdateEvent) {
+    override fun onSensorConfigChangedEvent(event: SensorPort) {
         // TODO Deselect and update sensor
         view?.hideDrawer()
     }

@@ -2,9 +2,12 @@ package com.revolution.robotics.features.configure
 
 import android.os.Bundle
 import android.view.View
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
+import com.revolution.robotics.core.domain.remote.Motor
+import com.revolution.robotics.core.domain.remote.Sensor
 import com.revolution.robotics.core.utils.dynamicPermissions.BluetoothConnectionFlowHelper
 import com.revolution.robotics.databinding.FragmentConfigureBinding
 import com.revolution.robotics.features.configure.connections.ConfigureConnectionsFragment
@@ -13,7 +16,7 @@ import org.kodein.di.erased.instance
 
 @Suppress("UnnecessaryApply")
 class ConfigureFragment : BaseFragment<FragmentConfigureBinding, ConfigureViewModel>(R.layout.fragment_configure),
-    ConfigureMvp.View, BluetoothConnectionFlowHelper.Listener {
+    ConfigureMvp.View, BluetoothConnectionFlowHelper.Listener, DrawerLayout.DrawerListener {
 
     override val viewModelClass: Class<ConfigureViewModel> = ConfigureViewModel::class.java
     private val presenter: ConfigureMvp.Presenter by kodein.instance()
@@ -23,6 +26,7 @@ class ConfigureFragment : BaseFragment<FragmentConfigureBinding, ConfigureViewMo
         presenter.register(this, viewModel)
         connectionFlowHelper.init(fragmentManager, this)
         binding?.toolbarViewModel = ConfigureToolbarViewModel(presenter)
+        binding?.drawerConfiguration?.addDrawerListener(this)
     }
 
     override fun hideDrawer() {
@@ -32,7 +36,16 @@ class ConfigureFragment : BaseFragment<FragmentConfigureBinding, ConfigureViewMo
     override fun onDestroyView() {
         presenter.unregister()
         connectionFlowHelper.shutdown()
+        binding?.drawerConfiguration?.removeDrawerListener(this)
         super.onDestroyView()
+    }
+
+    override fun openMotorConfig(motorPort: MotorPort) {
+        binding?.drawerConfiguration?.setMotor(motorPort.motor ?: Motor(), motorPort.portName ?: "")
+    }
+
+    override fun openSensorConfig(sensorPort: SensorPort) {
+        binding?.drawerConfiguration?.setSensor(sensorPort.sensor ?: Sensor(), sensorPort.portName ?: "")
     }
 
     override fun startConnectionFlow() {
@@ -56,4 +69,14 @@ class ConfigureFragment : BaseFragment<FragmentConfigureBinding, ConfigureViewMo
             replace(R.id.configureFragmentFrame, fragment).commit()
         }
     }
+
+    override fun onDrawerClosed(drawerView: View) {
+        (fragmentManager?.findFragmentById(R.id.configureFragmentFrame) as? ConfigureConnectionsFragment)?.apply {
+            clearSelection()
+        }
+    }
+
+    override fun onDrawerSlide(drawerView: View, slideOffset: Float) = Unit
+    override fun onDrawerStateChanged(newState: Int)  = Unit
+    override fun onDrawerOpened(drawerView: View) = Unit
 }

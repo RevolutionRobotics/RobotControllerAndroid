@@ -7,6 +7,7 @@ interface ConfigureConnectionsMvp : Mvp {
     interface View : Mvp.View
     interface Presenter : Mvp.Presenter<View, ConfigureConnectionsViewModel> {
         fun updateConfiguration(userConfiguration: UserConfiguration)
+        fun clearSelection()
         fun setConfigurationId(id: Int)
     }
 }

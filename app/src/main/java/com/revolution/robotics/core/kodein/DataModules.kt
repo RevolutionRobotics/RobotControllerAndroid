@@ -69,7 +69,12 @@ fun createPresenterModule() =
         bind<BuildRobotMvp.Presenter>() with singleton { BuildRobotPresenter(instance(), instance(), instance()) }
         bind<ConnectMvp.Presenter>() with singleton { ConnectPresenter(instance()) }
         bind<ConfigureMvp.Presenter>() with singleton { ConfigurePresenter(instance()) }
-        bind<ConfigureConnectionsMvp.Presenter>() with singleton { ConfigureConnectionsPresenter(instance()) }
+        bind<ConfigureConnectionsMvp.Presenter>() with singleton {
+            ConfigureConnectionsPresenter(
+                instance(),
+                instance(),
+                instance())
+        }
         bind<MotorConfigurationMvp.Presenter>() with singleton { MotorConfigurationPresenter(instance(), instance()) }
         bind<SensorConfigurationMvp.Presenter>() with singleton { SensorConfigurationPresenter(instance(), instance()) }
         bind<BuildFinishedMvp.Presenter>() with singleton { BuildFinishedPresenter(instance()) }

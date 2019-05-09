@@ -12,20 +12,34 @@ class ConfigurationEventBus {
         listeners.remove(listener)
     }
 
-    fun publishMotorUpdateEvent(event: MotorUpdateEvent) {
+    fun publishMotorUpdateEvent(event: MotorPort) {
         listeners.forEach { listener ->
             listener.onMotorConfigChangedEvent(event)
         }
     }
 
-    fun publishSensorUpdateEvent(event: SensorUpdateEvent) {
+    fun publishSensorUpdateEvent(event: SensorPort) {
         listeners.forEach { listener ->
             listener.onSensorConfigChangedEvent(event)
         }
     }
 
+    fun publishOpenMotorConfiguration(event: MotorPort) {
+        listeners.forEach { listener ->
+            listener.onOpenMotorConfigEvent(event)
+        }
+    }
+
+    fun publishOpenSensorConfiguration(event: SensorPort) {
+        listeners.forEach { listener ->
+            listener.onOpenSensorConfigEvent(event)
+        }
+    }
+
     interface Listener {
-        fun onMotorConfigChangedEvent(event: MotorUpdateEvent)
-        fun onSensorConfigChangedEvent(event: SensorUpdateEvent)
+        fun onMotorConfigChangedEvent(event: MotorPort)
+        fun onSensorConfigChangedEvent(event: SensorPort)
+        fun onOpenMotorConfigEvent(event: MotorPort)
+        fun onOpenSensorConfigEvent(event: SensorPort)
     }
 }

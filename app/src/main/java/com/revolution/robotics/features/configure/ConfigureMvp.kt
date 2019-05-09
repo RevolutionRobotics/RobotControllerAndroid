@@ -9,6 +9,8 @@ interface ConfigureMvp : Mvp {
         fun startConnectionFlow()
         fun showConnectionsScreen()
         fun showControllerScreen()
+        fun openMotorConfig(motorPort: MotorPort)
+        fun openSensorConfig(sensorPort: SensorPort)
         fun hideDrawer()
     }
 

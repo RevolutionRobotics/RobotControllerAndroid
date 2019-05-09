@@ -6,7 +6,7 @@ import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.features.build.testing.BumperTestDialog
 import com.revolution.robotics.features.build.testing.UltrasonicTestDialog
 import com.revolution.robotics.features.configure.ConfigurationEventBus
-import com.revolution.robotics.features.configure.SensorUpdateEvent
+import com.revolution.robotics.features.configure.SensorPort
 import com.revolution.robotics.views.ChippedEditTextViewModel
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 
@@ -112,7 +112,7 @@ class SensorConfigurationPresenter(
             } else {
                 type = null
             }
-            configurationEventBus.publishSensorUpdateEvent(SensorUpdateEvent(this, portName))
+            configurationEventBus.publishSensorUpdateEvent(SensorPort(this, portName))
         }
     }
 }

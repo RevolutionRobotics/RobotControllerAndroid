@@ -6,7 +6,7 @@ import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.features.build.testing.DrivetrainTestDialog
 import com.revolution.robotics.features.build.testing.MotorTestDialog
 import com.revolution.robotics.features.configure.ConfigurationEventBus
-import com.revolution.robotics.features.configure.MotorUpdateEvent
+import com.revolution.robotics.features.configure.MotorPort
 import com.revolution.robotics.views.ChippedEditTextViewModel
 
 @Suppress("ComplexInterface", "TooManyFunctions")
@@ -133,7 +133,7 @@ class MotorConfigurationPresenter(
                 model?.motorButton?.isSelected?.get() == true -> setMotorValues(this)
                 else -> setEmptyValues(this)
             }
-            configurationEventBus.publishMotorUpdateEvent(MotorUpdateEvent(this, portName))
+            configurationEventBus.publishMotorUpdateEvent(MotorPort(this, portName))
         }
     }
 }
