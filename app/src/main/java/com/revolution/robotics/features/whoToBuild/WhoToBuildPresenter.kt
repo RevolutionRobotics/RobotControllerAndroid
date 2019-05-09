@@ -9,6 +9,7 @@ import com.revolution.robotics.core.extensions.isEmptyOrNull
 import com.revolution.robotics.core.interactor.SaveUserRobotInteractor
 import com.revolution.robotics.core.interactor.firebase.RobotInteractor
 import com.revolution.robotics.core.utils.Navigator
+import com.revolution.robotics.features.build.BuildRobotFragment
 import com.revolution.robotics.features.whoToBuild.adapter.RobotsItem
 import java.util.Date
 import kotlin.math.max
@@ -78,27 +79,33 @@ class WhoToBuildPresenter(
     }
 
     override fun onRobotSelected(robot: Robot) {
-        navigator.navigate(WhoToBuildFragmentDirections.toBuildRobot(robot))
+        val userRobot = UserRobot(
+            0,
+            robot.id,
+            BuildStatus.IN_PROGRESS,
+            BuildRobotFragment.DEFAULT_STARTING_INDEX,
+            Date(System.currentTimeMillis()),
+            robot.configurationId,
+            robot.name,
+            robot.coverImage,
+            robot.description
+        )
+        navigator.navigate(WhoToBuildFragmentDirections.toBuildRobot(userRobot))
     }
 
     override fun onBuildYourOwnSelected() {
         val userRobot = UserRobot(
-            0,
-            0,
-            BuildStatus.COMPLETED,
-            0,
-            Date(System.currentTimeMillis()),
-            1,
-            "Name #",
-            null,
-            ""
+            buildStatus = BuildStatus.COMPLETED,
+            lastModified = Date(System.currentTimeMillis()),
+            name = "Name #"
         )
         saveUserRobotInteractor.userConfiguration = UserConfiguration(mappingId = UserMapping())
         saveUserRobotInteractor.userRobot = userRobot
-        saveUserRobotInteractor.execute({
-            navigator.navigate(WhoToBuildFragmentDirections.toConfigure(userRobot))
-        }, {
-            // TODO Error hanlding
-        })
+        saveUserRobotInteractor.execute(
+            onResponse = {
+                navigator.navigate(WhoToBuildFragmentDirections.toConfigure(userRobot))
+            }, onError = {
+                // TODO Error handling
+            })
     }
 }

@@ -22,10 +22,7 @@
         <action android:id="@+id/toWhoToBuild"
                 app:destination="@id/whoToBuildFragment"/>
         <action android:id="@+id/toBuildRobot"
-                app:destination="@id/buildRobotFragment">
-            <argument app:argType="com.revolution.robotics.core.domain.shared.RobotDescriptor"
-                      android:name="robot"/>
-        </action>
+                app:destination="@id/buildRobotFragment"/>
         <action android:id="@+id/toConfigure"
                 app:destination="@id/configureFragment"/>
     </fragment>
@@ -34,17 +31,17 @@
               android:name="com.revolution.robotics.features.whoToBuild.WhoToBuildFragment"
               android:label="WhoToBuildFragment">
         <action android:id="@+id/toBuildRobot"
-                app:destination="@id/buildRobotFragment">
-            <argument app:argType="com.revolution.robotics.core.domain.shared.RobotDescriptor"
-                      android:name="robot"/>
-        </action>
+                app:destination="@id/buildRobotFragment"/>
         <action android:id="@+id/toConfigure"
                 app:destination="@id/configureFragment"/>
     </fragment>
 
     <fragment android:id="@+id/buildRobotFragment"
               android:name="com.revolution.robotics.features.build.BuildRobotFragment"
-              android:label="BuildRobotFragment"/>
+              android:label="BuildRobotFragment">
+        <argument app:argType="com.revolution.robotics.core.domain.local.UserRobot"
+                  android:name="robot"/>
+    </fragment>
 
     <fragment android:id="@+id/codingFragment"
               android:name="com.revolution.robotics.features.coding.CodingFragment"

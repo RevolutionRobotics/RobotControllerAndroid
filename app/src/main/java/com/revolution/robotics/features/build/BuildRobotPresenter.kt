@@ -1,39 +1,21 @@
 package com.revolution.robotics.features.build
 
-import com.revolution.robotics.core.domain.local.BuildStatus
 import com.revolution.robotics.core.domain.local.UserConfiguration
 import com.revolution.robotics.core.domain.local.UserMapping
 import com.revolution.robotics.core.domain.local.UserRobot
-import com.revolution.robotics.core.domain.remote.BuildStep
 import com.revolution.robotics.core.domain.remote.Configuration
-import com.revolution.robotics.core.domain.shared.RobotDescriptor
-import com.revolution.robotics.core.interactor.GetUserRobotInteractor
 import com.revolution.robotics.core.interactor.SaveUserRobotInteractor
 import com.revolution.robotics.core.interactor.firebase.BuildStepInteractor
 import com.revolution.robotics.core.interactor.firebase.ConfigurationInteractor
-import java.util.Date
 
 class BuildRobotPresenter(
     private val buildStepInteractor: BuildStepInteractor,
-    private val getUserRobotInteractor: GetUserRobotInteractor,
     private val saveUserRobotInteractor: SaveUserRobotInteractor,
     private val configurationInteractor: ConfigurationInteractor
 ) : BuildRobotMvp.Presenter {
 
     override var view: BuildRobotMvp.View? = null
     override var model: BuildRobotViewModel? = null
-
-    override fun loadUserRobot(robotId: Int) {
-        getUserRobotInteractor.robotId = robotId
-        getUserRobotInteractor.buildStatus = BuildStatus.IN_PROGRESS
-        getUserRobotInteractor.execute(
-            onResponse = { result -> view?.onUserRobotLoaded(result) },
-            onError = { error ->
-                // TODO add error handling
-                error.printStackTrace()
-            }
-        )
-    }
 
     override fun loadBuildSteps(robotId: Int) {
         buildStepInteractor.robotId = robotId
@@ -48,6 +30,7 @@ class BuildRobotPresenter(
         )
     }
 
+    /*
     override fun createNewRobot(robot: RobotDescriptor?, currentBuildStep: BuildStep?) {
         saveUserRobot(
             UserRobot(
@@ -64,6 +47,7 @@ class BuildRobotPresenter(
             false
         )
     }
+    */
 
     private fun createUserConfiguration(configuration: Configuration) =
         UserConfiguration(0, controller = configuration.controller, mappingId = UserMapping().apply {

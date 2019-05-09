@@ -2,7 +2,6 @@ package com.revolution.robotics.features.myRobots
 
 import com.revolution.robotics.core.domain.local.BuildStatus
 import com.revolution.robotics.core.domain.local.UserRobot
-import com.revolution.robotics.core.domain.shared.RobotDescriptor
 import com.revolution.robotics.core.extensions.formatYearMonthDay
 import com.revolution.robotics.core.extensions.isEmptyOrNull
 import com.revolution.robotics.core.interactor.DeleteRobotInteractor
@@ -88,7 +87,7 @@ class MyRobotsPresenter(
         // Nothing here yet
     }
 
-    override fun onContinueBuildingSelected(robot: RobotDescriptor) {
+    override fun onContinueBuildingSelected(robot: UserRobot) {
         navigator.navigate(MyRobotsFragmentDirections.toBuildRobot(robot))
     }
 
