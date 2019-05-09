@@ -30,27 +30,8 @@ class BuildRobotPresenter(
         )
     }
 
-    /*
-    override fun createNewRobot(robot: RobotDescriptor?, currentBuildStep: BuildStep?) {
-        saveUserRobot(
-            UserRobot(
-                0,
-                robot?.id ?: 0,
-                BuildStatus.IN_PROGRESS,
-                currentBuildStep?.stepNumber ?: BuildRobotFragment.DEFAULT_STARTING_INDEX,
-                Date(System.currentTimeMillis()),
-                robot?.configurationId ?: 0,
-                robot?.name,
-                robot?.coverImage,
-                robot?.description
-            ),
-            false
-        )
-    }
-    */
-
     private fun createUserConfiguration(configuration: Configuration) =
-        UserConfiguration(0, controller = configuration.controller, mappingId = UserMapping().apply {
+        UserConfiguration(0, configuration.controller, UserMapping().apply {
             M1 = configuration.mapping?.M1
             M2 = configuration.mapping?.M2
             M3 = configuration.mapping?.M3
@@ -67,13 +48,15 @@ class BuildRobotPresenter(
     override fun saveUserRobot(userRobot: UserRobot, createDefaultConfig: Boolean) {
         if (createDefaultConfig) {
             configurationInteractor.configId = userRobot.configurationId
-            configurationInteractor.execute({ config ->
-                saveUserRobotInteractor.userConfiguration = createUserConfiguration(config)
-                saveUserRobotInteractor.userRobot = userRobot
-                saveUserRobotInteractor.execute()
-            }, {
-                // TODO Error handling
-            })
+            configurationInteractor.execute(
+                onResponse = { config ->
+                    saveUserRobotInteractor.userConfiguration = createUserConfiguration(config)
+                    saveUserRobotInteractor.userRobot = userRobot
+                    saveUserRobotInteractor.execute()
+                },
+                onError = { error ->
+                    // TODO Error handling
+                })
         } else {
             saveUserRobotInteractor.userRobot = userRobot
             saveUserRobotInteractor.execute()

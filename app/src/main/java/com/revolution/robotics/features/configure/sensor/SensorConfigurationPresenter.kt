@@ -105,13 +105,14 @@ class SensorConfigurationPresenter(
 
     override fun onDoneButtonClicked() {
         sensor?.apply {
-            if (model?.bumperButton?.isSelected?.get() == true) {
-                type = Sensor.TYPE_BUMPER
-            } else if (model?.ultrasoundButton?.isSelected?.get() == true) {
-                type = Sensor.TYPE_ULTRASONIC
-            } else {
-                type = null
-            }
+            type =
+                if (model?.bumperButton?.isSelected?.get() == true) {
+                    Sensor.TYPE_BUMPER
+                } else if (model?.ultrasoundButton?.isSelected?.get() == true) {
+                    Sensor.TYPE_ULTRASONIC
+                } else {
+                    null
+                }
             configurationEventBus.publishSensorUpdateEvent(SensorPort(this, portName))
         }
     }

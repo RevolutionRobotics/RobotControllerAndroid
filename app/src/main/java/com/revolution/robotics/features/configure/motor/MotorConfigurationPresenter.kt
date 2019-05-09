@@ -93,28 +93,31 @@ class MotorConfigurationPresenter(
     private fun setDrivetrainValues(motor: Motor) {
         motor.apply {
             type = Motor.TYPE_DRIVETRAIN
-            if (model?.clockwiseButton?.isSelected?.get() == true) {
-                rotation = Motor.ROTATION_CLOCKWISE
-            } else {
-                rotation = Motor.ROTATION_COUNTER_CLOCKWISE
-            }
+            rotation =
+                if (model?.clockwiseButton?.isSelected?.get() == true) {
+                    Motor.ROTATION_CLOCKWISE
+                } else {
+                    Motor.ROTATION_COUNTER_CLOCKWISE
+                }
 
-            if (model?.sideLeftButton?.isSelected?.get() == true) {
-                side = Motor.SIDE_LEFT
-            } else {
-                side = Motor.SIDE_RIGHT
-            }
+            side =
+                if (model?.sideLeftButton?.isSelected?.get() == true) {
+                    Motor.SIDE_LEFT
+                } else {
+                    Motor.SIDE_RIGHT
+                }
         }
     }
 
     private fun setMotorValues(motor: Motor) {
         motor.apply {
             type = Motor.TYPE_MOTOR
-            if (model?.motorClockwiseButton?.isSelected?.get() == true) {
-                rotation = Motor.ROTATION_CLOCKWISE
-            } else {
-                rotation = Motor.ROTATION_COUNTER_CLOCKWISE
-            }
+            rotation =
+                if (model?.motorClockwiseButton?.isSelected?.get() == true) {
+                    Motor.ROTATION_CLOCKWISE
+                } else {
+                    Motor.ROTATION_COUNTER_CLOCKWISE
+                }
             side = null
         }
     }

@@ -38,7 +38,8 @@ class WhoToBuildPresenter(
                     updateButtonsVisibility(0)
                     view?.onRobotsLoaded()
                 }
-            }, onError = { error ->
+            },
+            onError = { error ->
                 // TODO add error handling
                 error.printStackTrace()
             })
@@ -104,7 +105,8 @@ class WhoToBuildPresenter(
         saveUserRobotInteractor.execute(
             onResponse = {
                 navigator.navigate(WhoToBuildFragmentDirections.toConfigure(userRobot))
-            }, onError = {
+            },
+            onError = { error ->
                 // TODO Error handling
             })
     }

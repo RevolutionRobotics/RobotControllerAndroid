@@ -25,15 +25,17 @@ class ConfigurePresenter(
     override fun initRobot(userRobot: UserRobot) {
         this.userRobot = userRobot
         getUserConfigurationInteractor.userConfigId = userRobot.configurationId
-        getUserConfigurationInteractor.execute({ config ->
-            userConfiguration = config
-            userConfiguration?.apply {
-                model?.setScreen(ConfigurationTabs.CONNECTIONS)
-                view?.showConnectionsScreen(this)
-            }
-        }, {
-            // TODO Error handling
-        })
+        getUserConfigurationInteractor.execute(
+            onResponse = { config ->
+                userConfiguration = config
+                userConfiguration?.apply {
+                    model?.setScreen(ConfigurationTabs.CONNECTIONS)
+                    view?.showConnectionsScreen(this)
+                }
+            },
+            onError = { error ->
+                // TODO Error handling
+            })
     }
 
     override fun unregister() {
