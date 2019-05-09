@@ -17,7 +17,8 @@ import com.revolution.robotics.features.configure.connections.ConfigureConnectio
 import com.revolution.robotics.features.configure.controllers.ConfigureControllersFragment
 import org.kodein.di.erased.instance
 
-@Suppress("UnnecessaryApply")
+// There are 3 Unit empty functions so this can be ignored
+@Suppress("TooManyFunctions")
 class ConfigureFragment : BaseFragment<FragmentConfigureBinding, ConfigureViewModel>(R.layout.fragment_configure),
     ConfigureMvp.View, BluetoothConnectionFlowHelper.Listener, DrawerLayout.DrawerListener {
 
@@ -31,9 +32,9 @@ class ConfigureFragment : BaseFragment<FragmentConfigureBinding, ConfigureViewMo
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         presenter.register(this, viewModel)
-        arguments?.let {
-            presenter.initRobot(it.userRobot)
-            binding?.toolbarViewModel = ConfigureToolbarViewModel(it.userRobot.name ?: "", presenter)
+        arguments?.let { arguments ->
+            presenter.initRobot(arguments.userRobot)
+            binding?.toolbarViewModel = ConfigureToolbarViewModel(arguments.userRobot.name ?: "", presenter)
         }
 
         connectionFlowHelper.init(fragmentManager, this)

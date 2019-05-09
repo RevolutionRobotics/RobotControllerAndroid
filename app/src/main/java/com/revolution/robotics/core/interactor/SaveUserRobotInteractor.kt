@@ -14,7 +14,7 @@ class SaveUserRobotInteractor(
     var userConfiguration: UserConfiguration? = null
 
     override fun getData() {
-        userConfiguration?.let {userConfig ->
+        userConfiguration?.let { userConfig ->
             val id = userConfigurationDao.saveUserConfiguration(userConfig)
             userRobot.configurationId = id.toInt()
         }

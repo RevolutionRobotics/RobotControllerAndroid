@@ -27,8 +27,10 @@ class ConfigurePresenter(
         getUserConfigurationInteractor.userConfigId = userRobot.configurationId
         getUserConfigurationInteractor.execute({ config ->
             userConfiguration = config
-            model?.setScreen(ConfigurationTabs.CONNECTIONS)
-            view?.showConnectionsScreen(config)
+            userConfiguration?.apply {
+                model?.setScreen(ConfigurationTabs.CONNECTIONS)
+                view?.showConnectionsScreen(this)
+            }
         }, {
             // TODO Error handling
         })
