@@ -9,7 +9,7 @@ data class Robot(
     override var name: String? = null,
     override var description: String? = null,
     override var coverImage: String? = null,
+    override var configurationId: Int = 0,
     var defaultProgram: String? = null,
-    var buildTime: String? = null,
-    var configurationId: Int = 0
+    var buildTime: String? = null
 ) : RobotDescriptor

@@ -1,6 +1,7 @@
 package com.revolution.robotics.views.configure
 
 import android.content.Context
+import android.graphics.Color
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
@@ -9,6 +10,7 @@ import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import com.revolution.robotics.R
+import com.revolution.robotics.core.extensions.color
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 import com.revolution.robotics.views.chippedBox.ChippedBoxDrawable
 import kotlinx.android.synthetic.main.view_part_connection_button.view.icon
@@ -21,11 +23,14 @@ class PartConnectionButton @JvmOverloads constructor(
 ) :
     FrameLayout(context, attrs, defStyleAttr) {
     private var isActive: Boolean = false
+    private var isPortSelected: Boolean = false
+
     @ColorRes
     private var colorRes: Int = R.color.grey_6d
 
     private var inactiveChippedBoxDrawable: ChippedBoxDrawable? = null
     private var activeChippedBoxDrawable: ChippedBoxDrawable? = null
+    private var selectedChippedBoxDrawable: ChippedBoxDrawable? = null
 
     @DrawableRes
     private var inactiveIconRes: Int = R.drawable.ic_config_add
@@ -83,14 +88,27 @@ class PartConnectionButton @JvmOverloads constructor(
     private fun initVariables() {
         setLayerType(ImageView.LAYER_TYPE_SOFTWARE, null)
         inactiveChippedBoxDrawable = ChippedBoxDrawable(context, INACTIVE_CHIPPED_BOX_CONFIG)
-        initActiveChippedBoxConfig(colorRes)
+        initChippedBoxConfigs(colorRes)
         updateButton()
     }
 
-    private fun initActiveChippedBoxConfig(@ColorRes color: Int) {
+    private fun initChippedBoxConfigs(@ColorRes color: Int) {
         activeChippedBoxDrawable = ChippedBoxDrawable(
             context, ChippedBoxConfig.Builder()
                 .backgroundColorResource(R.color.grey_28)
+                .borderColorResource(color)
+                .borderSize(R.dimen.dimen_1dp)
+                .chipSize(R.dimen.dimen_10dp)
+                .chipTopRight(true)
+                .chipBottomLeft(true)
+                .clipLeftSide(true)
+                .isDashed(false)
+                .create()
+        )
+
+        selectedChippedBoxDrawable = ChippedBoxDrawable(
+            context, ChippedBoxConfig.Builder()
+                .backgroundColorResource(R.color.white)
                 .borderColorResource(color)
                 .borderSize(R.dimen.dimen_1dp)
                 .chipSize(R.dimen.dimen_10dp)
@@ -104,7 +122,7 @@ class PartConnectionButton @JvmOverloads constructor(
 
     fun setColor(@ColorRes color: Int) {
         colorRes = color
-        initActiveChippedBoxConfig(colorRes)
+        initChippedBoxConfigs(colorRes)
         updateButton()
     }
 
@@ -125,14 +143,36 @@ class PartConnectionButton @JvmOverloads constructor(
         }
     }
 
+    fun setPortSelected(isSelected: Boolean) {
+        if (this.isPortSelected != isSelected) {
+            this.isPortSelected = isSelected
+            updateButton()
+        }
+    }
+
     private fun updateButton() {
         icon.setImageResource(iconRes)
-        if (isActive) {
-            background = activeChippedBoxDrawable
-            name.setText(activeNameRes)
+        when {
+            isPortSelected -> {
+                background = selectedChippedBoxDrawable
+                name.setText(activeNameRes)
+            }
+            isActive -> {
+                background = activeChippedBoxDrawable
+                name.setText(activeNameRes)
+            }
+            else -> {
+                background = inactiveChippedBoxDrawable
+                name.setText(inactiveNameRes)
+            }
+        }
+
+        if (isPortSelected) {
+            name.setTextColor(context.color(R.color.grey_28))
+            icon.setColorFilter(context.color(R.color.grey_28), android.graphics.PorterDuff.Mode.MULTIPLY)
         } else {
-            background = inactiveChippedBoxDrawable
-            name.setText(inactiveNameRes)
+            name.setTextColor(Color.WHITE)
+            icon.setColorFilter(Color.WHITE, android.graphics.PorterDuff.Mode.MULTIPLY)
         }
 
         invalidate()

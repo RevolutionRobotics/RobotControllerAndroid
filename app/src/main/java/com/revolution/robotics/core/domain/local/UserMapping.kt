@@ -1,18 +1,10 @@
 package com.revolution.robotics.core.domain.local
 
+import android.os.Parcelable
 import androidx.room.Entity
 import com.revolution.robotics.core.domain.PortMapping
+import kotlinx.android.parcel.Parcelize
 
 @Entity
-class UserMapping : PortMapping {
-    var userConfigId: Int = 0
-
-    constructor() : super()
-
-    constructor(
-        userConfigId: Int = 0,
-        portMapping: PortMapping
-    ) : super(portMapping) {
-        this.userConfigId = userConfigId
-    }
-}
+@Parcelize
+class UserMapping(var userConfigId: Int = 0) : PortMapping(), Parcelable

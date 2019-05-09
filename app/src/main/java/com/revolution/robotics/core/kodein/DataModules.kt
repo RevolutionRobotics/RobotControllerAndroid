@@ -53,7 +53,7 @@ fun createInteractorModule() =
         bind<ConfigurationInteractor>() with provider { ConfigurationInteractor() }
         bind<TestCodeInteractor>() with provider { TestCodeInteractor() }
         bind<GetUserRobotInteractor>() with provider { GetUserRobotInteractor(instance()) }
-        bind<SaveUserRobotInteractor>() with provider { SaveUserRobotInteractor(instance()) }
+        bind<SaveUserRobotInteractor>() with provider { SaveUserRobotInteractor(instance(), instance()) }
         bind<GetAllUserRobotsInteractor>() with provider { GetAllUserRobotsInteractor(instance()) }
         bind<DeleteRobotInteractor>() with provider { DeleteRobotInteractor(instance()) }
         bind<GetUserConfigurationInteractor>() with provider { GetUserConfigurationInteractor(instance()) }
@@ -62,16 +62,15 @@ fun createInteractorModule() =
 fun createPresenterModule() =
     Kodein.Module("PresenterModule") {
         bind<MainMenuMvp.Presenter>() with singleton { MainMenuPresenter(instance()) }
-        bind<WhoToBuildMvp.Presenter>() with singleton { WhoToBuildPresenter(instance(), instance()) }
+        bind<WhoToBuildMvp.Presenter>() with singleton { WhoToBuildPresenter(instance(), instance(), instance()) }
         bind<LiveControllerMvp.Presenter>() with singleton { LiveControllerPresenter(instance()) }
         bind<MyRobotsMvp.Presenter>() with singleton { MyRobotsPresenter(instance(), instance(), instance()) }
         bind<ChapterFinishedMvp.Presenter>() with singleton { ChapterFinishedPresenter(instance()) }
-        bind<BuildRobotMvp.Presenter>() with singleton { BuildRobotPresenter(instance(), instance(), instance()) }
+        bind<BuildRobotMvp.Presenter>() with singleton { BuildRobotPresenter(instance(), instance(), instance(), instance()) }
         bind<ConnectMvp.Presenter>() with singleton { ConnectPresenter(instance()) }
-        bind<ConfigureMvp.Presenter>() with singleton { ConfigurePresenter(instance()) }
+        bind<ConfigureMvp.Presenter>() with singleton { ConfigurePresenter(instance(), instance()) }
         bind<ConfigureConnectionsMvp.Presenter>() with singleton {
             ConfigureConnectionsPresenter(
-                instance(),
                 instance(),
                 instance())
         }

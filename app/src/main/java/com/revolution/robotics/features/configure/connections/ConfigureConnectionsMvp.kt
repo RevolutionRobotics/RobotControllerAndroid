@@ -6,8 +6,7 @@ import com.revolution.robotics.core.domain.local.UserConfiguration
 interface ConfigureConnectionsMvp : Mvp {
     interface View : Mvp.View
     interface Presenter : Mvp.Presenter<View, ConfigureConnectionsViewModel> {
-        fun updateConfiguration(userConfiguration: UserConfiguration)
+        fun setConfiguration(userConfiguration: UserConfiguration)
         fun clearSelection()
-        fun setConfigurationId(id: Int)
     }
 }

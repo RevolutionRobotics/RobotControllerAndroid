@@ -1,14 +1,21 @@
 package com.revolution.robotics.features.whoToBuild
 
+import com.revolution.robotics.core.domain.local.BuildStatus
+import com.revolution.robotics.core.domain.local.UserConfiguration
+import com.revolution.robotics.core.domain.local.UserMapping
+import com.revolution.robotics.core.domain.local.UserRobot
 import com.revolution.robotics.core.domain.remote.Robot
 import com.revolution.robotics.core.extensions.isEmptyOrNull
+import com.revolution.robotics.core.interactor.SaveUserRobotInteractor
 import com.revolution.robotics.core.interactor.firebase.RobotInteractor
 import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.features.whoToBuild.adapter.RobotsItem
+import java.util.Date
 import kotlin.math.max
 
 class WhoToBuildPresenter(
     private val robotsInteractor: RobotInteractor,
+    private val saveUserRobotInteractor: SaveUserRobotInteractor,
     private val navigator: Navigator
 ) : WhoToBuildMvp.Presenter {
 
@@ -75,6 +82,23 @@ class WhoToBuildPresenter(
     }
 
     override fun onBuildYourOwnSelected() {
-        navigator.navigate(WhoToBuildFragmentDirections.toConfigure())
+        val userRobot = UserRobot(
+            0,
+            0,
+            BuildStatus.COMPLETED,
+            0,
+            Date(System.currentTimeMillis()),
+            1,
+            "Name #",
+            null,
+            ""
+        )
+        saveUserRobotInteractor.userConfiguration = UserConfiguration(mappingId = UserMapping())
+        saveUserRobotInteractor.userRobot = userRobot
+        saveUserRobotInteractor.execute({
+            navigator.navigate(WhoToBuildFragmentDirections.toConfigure(userRobot))
+        }, {
+            // TODO Error hanlding
+        })
     }
 }

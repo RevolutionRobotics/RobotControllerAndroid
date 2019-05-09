@@ -10,5 +10,6 @@ data class RobotPartModel(
     @ColorRes val color: Int = R.color.grey_6d,
     @DrawableRes val icon: Int = R.drawable.ic_config_add,
     val isActive: Boolean,
+    val isSelected: Boolean,
     val onClick: () -> Unit
 )

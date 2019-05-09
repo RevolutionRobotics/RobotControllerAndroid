@@ -18,10 +18,10 @@ data class UserRobot(
     var buildStatus: BuildStatus? = null,
     var actualBuildStep: Int = 0,
     var lastModified: Date? = null,
-    var configId: String? = null,
+    override var configurationId: Int = 0,
     override val name: String? = null,
-    override var coverImage: String?,
-    override var description: String?
+    override var coverImage: String? = null,
+    override var description: String? = null
 ) : RobotDescriptor
 
 @Dao

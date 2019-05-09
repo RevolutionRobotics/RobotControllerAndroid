@@ -27,6 +27,7 @@ fun setPartConnectionIconViewRobotPart(
 @BindingAdapter("bindRobotPartModel")
 fun setPartConnectionButtonRobotPart(partConnectionButton: PartConnectionButton, robotPartModel: RobotPartModel?) {
     partConnectionButton.setIsPartActive(robotPartModel?.isActive == true)
+    partConnectionButton.setPortSelected(robotPartModel?.isSelected == true)
     robotPartModel?.let { model ->
         partConnectionButton.setColor(model.color)
         partConnectionButton.setActiveName(model.name)

@@ -17,10 +17,10 @@ class ConfigureConnectionsFragment :
 
     companion object {
 
-        private var Bundle.userConfigurationId: Int by BundleArgumentDelegate.Int("userConfigId")
+        private var Bundle.userConfiguration: UserConfiguration by BundleArgumentDelegate.Parcelable("userConfig")
 
-        fun newInstance(userConfigurationId: Int) = ConfigureConnectionsFragment().withArguments {
-            it.userConfigurationId = userConfigurationId
+        fun newInstance(userConfiguration: UserConfiguration) = ConfigureConnectionsFragment().withArguments {
+            it.userConfiguration = userConfiguration
         }
     }
 
@@ -31,7 +31,7 @@ class ConfigureConnectionsFragment :
         super.onViewCreated(view, savedInstanceState)
         presenter.register(this, viewModel)
         arguments?.let {
-            presenter.setConfigurationId(it.userConfigurationId)
+            presenter.setConfiguration(it.userConfiguration)
         }
     }
 
@@ -41,7 +41,7 @@ class ConfigureConnectionsFragment :
     }
 
     fun updateConfiguration(userConfiguration: UserConfiguration) {
-        presenter.updateConfiguration(userConfiguration)
+        presenter.setConfiguration(userConfiguration)
     }
 
     fun clearSelection() {

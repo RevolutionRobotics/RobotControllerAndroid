@@ -4,19 +4,15 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.lifecycle.MutableLiveData
 import com.revolution.robotics.R
-import com.revolution.robotics.core.domain.PortMapping
 import com.revolution.robotics.core.domain.local.UserConfiguration
-import com.revolution.robotics.core.domain.local.UserMapping
 import com.revolution.robotics.core.domain.remote.Motor
 import com.revolution.robotics.core.domain.remote.Sensor
-import com.revolution.robotics.core.interactor.GetUserConfigurationInteractor
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.features.configure.ConfigurationEventBus
 import com.revolution.robotics.features.configure.MotorPort
 import com.revolution.robotics.features.configure.SensorPort
 
 class ConfigureConnectionsPresenter(
-    private val getUserConfigurationInteractor: GetUserConfigurationInteractor,
     private val openConfigurationEventBus: ConfigurationEventBus,
     private val resourceResolver: ResourceResolver
 ) :
@@ -27,31 +23,14 @@ class ConfigureConnectionsPresenter(
     private var selectedPort: MutableLiveData<RobotPartModel>? = null
     private var userConfiguration: UserConfiguration? = null
 
-    override fun setConfigurationId(id: Int) {
-        getUserConfigurationInteractor.userConfigId = id
-        getUserConfigurationInteractor.execute({ userConfig ->
-            userConfiguration = userConfig
-            updateConfiguration(userConfig)
-        }, { error ->
-            error.printStackTrace()
-            userConfiguration = UserConfiguration(1, null, null).apply {
-                mappingId = UserMapping(1, PortMapping().apply {
-                    S1 = Sensor(1, Sensor.TYPE_ULTRASOUND, "sensor_1")
-                })
-            }
-            userConfiguration?.let {
-                updateConfiguration(it)
-            }
-        })
-    }
-
     override fun unregister() {
         super.unregister()
         selectedPort = null
         userConfiguration = null
     }
 
-    override fun updateConfiguration(userConfiguration: UserConfiguration) {
+    override fun setConfiguration(userConfiguration: UserConfiguration) {
+        this.userConfiguration = userConfiguration
         model?.apply {
             setupMotors(this)
             setupSensors(this)
@@ -61,7 +40,7 @@ class ConfigureConnectionsPresenter(
     override fun clearSelection() {
         selectedPort = null
         userConfiguration?.let {
-            updateConfiguration(it)
+            setConfiguration(it)
         }
     }
 
@@ -137,7 +116,7 @@ class ConfigureConnectionsPresenter(
 
     private fun handlePortSelection(selectedPort: MutableLiveData<RobotPartModel>) {
         this.selectedPort = selectedPort
-        userConfiguration?.let { updateConfiguration(it) }
+        userConfiguration?.let { setConfiguration(it) }
     }
 
     private fun openMotorDrawer(motor: Motor?, portName: String?) {
@@ -154,15 +133,15 @@ class ConfigureConnectionsPresenter(
         port: MutableLiveData<RobotPartModel>
     ): RobotPartModel? =
         when {
-            selectedPort == port -> RobotPartModel(portName, R.color.golden_rod, getSensorDrawable(sensor), true) {
+            selectedPort == port -> RobotPartModel(portName, R.color.white, getSensorDrawable(sensor), true, true) {
                 handlePortSelection(port)
                 openSensorDrawer(sensor, resourceResolver.string(portName))
             }
-            sensor == null -> RobotPartModel(portName, R.color.grey_6d, getSensorDrawable(null), false) {
+            sensor == null -> RobotPartModel(portName, R.color.grey_6d, getSensorDrawable(null), false, false) {
                 handlePortSelection(port)
                 openSensorDrawer(sensor, resourceResolver.string(portName))
             }
-            else -> RobotPartModel(portName, R.color.robotics_red, getSensorDrawable(sensor), true) {
+            else -> RobotPartModel(portName, R.color.golden_rod, getSensorDrawable(sensor), true, false) {
                 handlePortSelection(port)
                 openSensorDrawer(sensor, resourceResolver.string(portName))
             }
@@ -174,15 +153,15 @@ class ConfigureConnectionsPresenter(
         port: MutableLiveData<RobotPartModel>
     ): RobotPartModel? =
         when {
-            selectedPort == port -> RobotPartModel(portName, R.color.golden_rod, getMotorDrawable(motor), true) {
+            selectedPort == port -> RobotPartModel(portName, R.color.white, getMotorDrawable(motor), true, true) {
                 handlePortSelection(port)
                 openMotorDrawer(motor, resourceResolver.string(portName))
             }
-            motor == null -> RobotPartModel(portName, R.color.grey_6d, getMotorDrawable(null), false) {
+            motor == null -> RobotPartModel(portName, R.color.grey_6d, getMotorDrawable(null), false, false) {
                 handlePortSelection(port)
                 openMotorDrawer(motor, resourceResolver.string(portName))
             }
-            else -> RobotPartModel(portName, R.color.robotics_red, getMotorDrawable(motor), true) {
+            else -> RobotPartModel(portName, R.color.robotics_red, getMotorDrawable(motor), true, false) {
                 handlePortSelection(port)
                 openMotorDrawer(motor, resourceResolver.string(portName))
             }

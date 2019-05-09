@@ -6,8 +6,11 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
+import com.revolution.robotics.core.domain.local.UserConfiguration
+import com.revolution.robotics.core.domain.local.UserRobot
 import com.revolution.robotics.core.domain.remote.Motor
 import com.revolution.robotics.core.domain.remote.Sensor
+import com.revolution.robotics.core.utils.BundleArgumentDelegate
 import com.revolution.robotics.core.utils.dynamicPermissions.BluetoothConnectionFlowHelper
 import com.revolution.robotics.databinding.FragmentConfigureBinding
 import com.revolution.robotics.features.configure.connections.ConfigureConnectionsFragment
@@ -18,14 +21,22 @@ import org.kodein.di.erased.instance
 class ConfigureFragment : BaseFragment<FragmentConfigureBinding, ConfigureViewModel>(R.layout.fragment_configure),
     ConfigureMvp.View, BluetoothConnectionFlowHelper.Listener, DrawerLayout.DrawerListener {
 
+    companion object {
+        val Bundle.userRobot: UserRobot by BundleArgumentDelegate.Parcelable("userRobot")
+    }
+
     override val viewModelClass: Class<ConfigureViewModel> = ConfigureViewModel::class.java
     private val presenter: ConfigureMvp.Presenter by kodein.instance()
     private val connectionFlowHelper = BluetoothConnectionFlowHelper(kodein)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         presenter.register(this, viewModel)
+        arguments?.let {
+            presenter.initRobot(it.userRobot)
+            binding?.toolbarViewModel = ConfigureToolbarViewModel(it.userRobot.name ?: "", presenter)
+        }
+
         connectionFlowHelper.init(fragmentManager, this)
-        binding?.toolbarViewModel = ConfigureToolbarViewModel(presenter)
         binding?.drawerConfiguration?.addDrawerListener(this)
     }
 
@@ -56,8 +67,8 @@ class ConfigureFragment : BaseFragment<FragmentConfigureBinding, ConfigureViewMo
         viewModel?.isBluetoothConnected?.set(true)
     }
 
-    override fun showConnectionsScreen() {
-        commitFragmentToFrame(ConfigureConnectionsFragment.newInstance(1))
+    override fun showConnectionsScreen(userConfiguration: UserConfiguration) {
+        commitFragmentToFrame(ConfigureConnectionsFragment.newInstance(userConfiguration))
     }
 
     override fun showControllerScreen() {
@@ -70,6 +81,12 @@ class ConfigureFragment : BaseFragment<FragmentConfigureBinding, ConfigureViewMo
         }
     }
 
+    override fun updateConfig(userConfiguration: UserConfiguration) {
+        (fragmentManager?.findFragmentById(R.id.configureFragmentFrame) as? ConfigureConnectionsFragment)?.apply {
+            updateConfiguration(userConfiguration)
+        }
+    }
+
     override fun onDrawerClosed(drawerView: View) {
         (fragmentManager?.findFragmentById(R.id.configureFragmentFrame) as? ConfigureConnectionsFragment)?.apply {
             clearSelection()
@@ -77,6 +94,6 @@ class ConfigureFragment : BaseFragment<FragmentConfigureBinding, ConfigureViewMo
     }
 
     override fun onDrawerSlide(drawerView: View, slideOffset: Float) = Unit
-    override fun onDrawerStateChanged(newState: Int)  = Unit
+    override fun onDrawerStateChanged(newState: Int) = Unit
     override fun onDrawerOpened(drawerView: View) = Unit
 }

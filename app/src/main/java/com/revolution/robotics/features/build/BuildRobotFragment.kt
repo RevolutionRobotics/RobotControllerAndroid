@@ -75,7 +75,7 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
                 userRobot?.apply {
                     actualBuildStep = currentBuildStep?.stepNumber ?: DEFAULT_STARTING_INDEX
                     lastModified = Date(System.currentTimeMillis())
-                    presenter.saveUserRobot(this)
+                    presenter.saveUserRobot(this, false)
                 }
             }
         }
@@ -134,8 +134,8 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
         userRobot?.apply {
             buildStatus = BuildStatus.COMPLETED
             lastModified = Date(System.currentTimeMillis())
-            presenter.saveUserRobot(this)
-        }
+            presenter.saveUserRobot(this, true)
+        } ?: presenter.createNewRobot()
         BuildFinishedDialog.newInstance().show(fragmentManager)
     }
 }

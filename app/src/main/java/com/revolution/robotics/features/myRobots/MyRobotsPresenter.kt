@@ -1,6 +1,7 @@
 package com.revolution.robotics.features.myRobots
 
 import com.revolution.robotics.core.domain.local.BuildStatus
+import com.revolution.robotics.core.domain.local.UserRobot
 import com.revolution.robotics.core.domain.shared.RobotDescriptor
 import com.revolution.robotics.core.extensions.formatYearMonthDay
 import com.revolution.robotics.core.extensions.isEmptyOrNull
@@ -29,7 +30,7 @@ class MyRobotsPresenter(
             onResponse = { robots ->
                 model?.robotsList?.set(robots.map { robot ->
                     MyRobotsItem(
-                        robot.id,
+                        robot.instanceId,
                         robot,
                         robot.lastModified?.formatYearMonthDay() ?: "",
                         robot.buildStatus != BuildStatus.COMPLETED,
@@ -91,8 +92,8 @@ class MyRobotsPresenter(
         navigator.navigate(MyRobotsFragmentDirections.toBuildRobot(robot))
     }
 
-    override fun onEditSelected(id: Int) {
-        navigator.navigate(MyRobotsFragmentDirections.toConfigure())
+    override fun onEditSelected(userRobot: UserRobot) {
+        navigator.navigate(MyRobotsFragmentDirections.toConfigure(userRobot))
     }
 
     override fun onDeleteSelected(robotId: Int) {

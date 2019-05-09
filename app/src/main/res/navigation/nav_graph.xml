@@ -38,7 +38,6 @@
             <argument app:argType="com.revolution.robotics.core.domain.shared.RobotDescriptor"
                       android:name="robot"/>
         </action>
-                app:destination="@id/buildRobotFragment"/>
         <action android:id="@+id/toConfigure"
                 app:destination="@id/configureFragment"/>
     </fragment>
@@ -61,7 +60,9 @@
 
     <fragment android:id="@+id/configureFragment"
               android:name="com.revolution.robotics.features.configure.ConfigureFragment"
-              android:label="ConfigureFragment"/>
+              android:label="ConfigureFragment">
+        <argument android:name="userRobot" app:argType="com.revolution.robotics.core.domain.local.UserRobot"/>
+    </fragment>
 
     <fragment android:id="@+id/placeholder_robotics"/>
     <fragment android:id="@+id/placeholder_community"/>
