@@ -4,8 +4,6 @@ import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.remote.Sensor
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.features.build.testing.BumperTestDialog
-import com.revolution.robotics.features.build.testing.DrivetrainTestDialog
-import com.revolution.robotics.features.build.testing.MotorTestDialog
 import com.revolution.robotics.features.build.testing.UltrasonicTestDialog
 import com.revolution.robotics.views.ChippedEditTextViewModel
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
@@ -82,11 +80,11 @@ class SensorConfigurationPresenter(private val resourceResolver: ResourceResolve
 
     override fun onTestButtonClicked() {
         if (model?.bumperButton?.isSelected?.get() == true) {
-            view?.showDialog(BumperTestDialog.newInstance())
+            view?.showDialog(BumperTestDialog.Configure())
         }
 
         if (model?.ultrasoundButton?.isSelected?.get() == true) {
-            view?.showDialog(UltrasonicTestDialog.newInstance())
+            view?.showDialog(UltrasonicTestDialog.Configure())
         }
     }
 

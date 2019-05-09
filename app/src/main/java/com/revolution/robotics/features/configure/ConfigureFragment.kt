@@ -7,8 +7,6 @@ import com.revolution.robotics.R
 import com.revolution.robotics.databinding.FragmentConfigureBinding
 import org.kodein.di.erased.instance
 import androidx.fragment.app.Fragment
-import com.revolution.robotics.core.domain.remote.Motor
-import com.revolution.robotics.core.domain.remote.Sensor
 import com.revolution.robotics.core.utils.dynamicPermissions.BluetoothConnectionFlowHelper
 import com.revolution.robotics.features.configure.connections.ConfigureConnectionsFragment
 

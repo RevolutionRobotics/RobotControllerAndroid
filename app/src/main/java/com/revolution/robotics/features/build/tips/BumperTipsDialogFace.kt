@@ -1,8 +1,9 @@
 package com.revolution.robotics.features.build.tips
 
 import com.revolution.robotics.R
+import com.revolution.robotics.features.build.testing.TestDialog
 
-class SensorTipsDialogFace : TipsDialogFace() {
+class BumperTipsDialogFace(source: TestDialog.Source, dialogController: DialogController) : TipsDialogFace() {
 
     override val bulletCharacter: Char = '-'
     override val tipsList: List<Int> = listOf(
@@ -11,4 +12,6 @@ class SensorTipsDialogFace : TipsDialogFace() {
         R.string.tips_dialog_placeholder_3,
         R.string.tips_dialog_placeholder_4
     )
+    override val dialogFaceButtons =
+        createTipsDialogButtons(source, dialogController)
 }

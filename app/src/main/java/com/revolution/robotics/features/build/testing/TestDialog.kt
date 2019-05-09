@@ -1,24 +1,23 @@
 package com.revolution.robotics.features.build.testing
 
-import com.revolution.robotics.R
+import com.revolution.robotics.features.build.tips.DialogController
 import com.revolution.robotics.views.dialogs.DialogButton
 import com.revolution.robotics.views.dialogs.RoboticsDialog
 
-abstract class TestDialog : RoboticsDialog() {
+abstract class TestDialog : RoboticsDialog(), DialogController {
+
+    enum class Source {
+        BUILD, CONFIGURE
+    }
+
+    override fun onCancelClicked() {
+        dismissAllowingStateLoss()
+    }
+
+    override fun onRetryClicked() {
+        activateFace(dialogFaces.first())
+    }
 
     override val hasCloseButton = true
-    override val dialogButtons = listOf(
-        DialogButton(
-            text = R.string.testing_negative_button_title,
-            icon = R.drawable.ic_close,
-            isHighlighted = false,
-            onClick = { dismiss() }
-        ),
-        DialogButton(
-            text = R.string.testing_positive_button_title,
-            icon = R.drawable.ic_check,
-            isHighlighted = true,
-            onClick = { dismiss() }
-        )
-    )
+    override val dialogButtons = emptyList<DialogButton>()
 }

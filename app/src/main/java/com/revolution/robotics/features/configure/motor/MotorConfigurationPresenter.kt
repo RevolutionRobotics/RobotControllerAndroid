@@ -69,11 +69,11 @@ class MotorConfigurationPresenter(private val resourceResolver: ResourceResolver
 
     override fun onTestButtonClicked() {
         if (model?.driveTrainButton?.isSelected?.get() == true) {
-            view?.showDialog(DrivetrainTestDialog.newInstance())
+            view?.showDialog(DrivetrainTestDialog.Configure())
         }
 
         if (model?.motorButton?.isSelected?.get() == true) {
-            view?.showDialog(MotorTestDialog.newInstance())
+            view?.showDialog(MotorTestDialog.Configure())
         }
     }
 

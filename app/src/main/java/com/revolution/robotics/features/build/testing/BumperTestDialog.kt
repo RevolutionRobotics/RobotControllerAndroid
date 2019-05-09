@@ -1,18 +1,26 @@
 package com.revolution.robotics.features.build.testing
 
 import com.revolution.robotics.R
+import com.revolution.robotics.features.build.tips.BumperTipsDialogFace
 import com.revolution.robotics.views.dialogs.DialogFace
+import com.revolution.robotics.views.dialogs.RoboticsDialog
 
-class BumperTestDialog : TestDialog() {
+sealed class BumperTestDialog(source: Source) : TestDialog() {
 
-    companion object {
-        fun newInstance() = BumperTestDialog()
-    }
+    override val dialogFaces: List<DialogFace<*>> = listOf(
+        BumperTestDialogFace(this),
+        BumperTipsDialogFace(source, this)
+    )
 
-    override val dialogFaces: List<DialogFace<*>> = listOf(BumperTestDialogFace())
-
-    class BumperTestDialogFace : TestDialogFace() {
+    inner class BumperTestDialogFace(dialog: RoboticsDialog) : TestDialogFace(dialog) {
         override val imageResource: Int = R.drawable.test_bumper
         override val textResource: Int = R.string.testing_bumper_test
+
+        override fun showTipsFace() {
+            activateFace(dialogFaces.first { it is BumperTipsDialogFace })
+        }
     }
+
+    class Build : BumperTestDialog(Source.BUILD)
+    class Configure : BumperTestDialog(Source.CONFIGURE)
 }
