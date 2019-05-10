@@ -1,18 +1,24 @@
 package com.revolution.robotics.features.configure
 
 import com.revolution.robotics.core.domain.local.UserConfiguration
-import com.revolution.robotics.core.domain.local.UserMapping
 import com.revolution.robotics.core.domain.local.UserRobot
+import com.revolution.robotics.core.eventBus.dialog.DialogEvent
+import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
 import com.revolution.robotics.core.interactor.GetUserConfigurationInteractor
+import com.revolution.robotics.core.interactor.SaveUserRobotInteractor
 
 class ConfigurePresenter(
     private val configurationEventBus: ConfigurationEventBus,
-    private val getUserConfigurationInteractor: GetUserConfigurationInteractor
+    private val getUserConfigurationInteractor: GetUserConfigurationInteractor,
+    private val saveUserRobotInteractor: SaveUserRobotInteractor,
+    private val dialogEventBus: DialogEventBus
 ) : ConfigureMvp.Presenter,
-    ConfigurationEventBus.Listener {
+    ConfigurationEventBus.Listener, DialogEventBus.Listener {
 
     override var model: ConfigureViewModel? = null
     override var view: ConfigureMvp.View? = null
+
+    private var toolbarViewModel: ConfigureToolbarViewModel? = null
 
     var userConfiguration: UserConfiguration? = null
     var userRobot: UserRobot? = null
@@ -20,10 +26,13 @@ class ConfigurePresenter(
     override fun register(view: ConfigureMvp.View, model: ConfigureViewModel?) {
         super.register(view, model)
         configurationEventBus.register(this)
+        dialogEventBus.register(this)
     }
 
-    override fun initRobot(userRobot: UserRobot) {
+    override fun initUI(userRobot: UserRobot, toolbarViewModel: ConfigureToolbarViewModel) {
         this.userRobot = userRobot
+        this.toolbarViewModel = toolbarViewModel
+        toolbarViewModel.title.set(userRobot.name)
         getUserConfigurationInteractor.userConfigId = userRobot.configurationId
         getUserConfigurationInteractor.execute(
             onResponse = { config ->
@@ -40,7 +49,24 @@ class ConfigurePresenter(
 
     override fun unregister() {
         configurationEventBus.unregister(this)
+        dialogEventBus.unregister(this)
         super.unregister()
+    }
+
+    override fun onDialogEvent(event: DialogEvent) {
+        if (event == DialogEvent.SAVE_ROBOT) {
+            userRobot?.let { robot ->
+                robot.name = event.extras.getString("name")
+                robot.description = event.extras.getString("description")
+                saveUserRobotInteractor.userConfiguration = userConfiguration
+                saveUserRobotInteractor.userRobot = robot
+                toolbarViewModel?.title?.set(robot.name)
+                saveUserRobotInteractor.execute(onResponse = {},
+                    onError = {
+                        // TODO error handling
+                    })
+            }
+        }
     }
 
     override fun onOpenMotorConfigEvent(event: MotorPort) {
@@ -63,7 +89,7 @@ class ConfigurePresenter(
 
     override fun onMotorConfigChangedEvent(event: MotorPort) {
         userConfiguration?.let { config ->
-            config.mappingId?.let { mapping -> setupMotorBasedOnName(event, mapping) }
+            config.mappingId?.updateMotorPort(event)
             view?.updateConfig(config)
         }
         view?.hideDrawer()
@@ -71,32 +97,10 @@ class ConfigurePresenter(
 
     override fun onSensorConfigChangedEvent(event: SensorPort) {
         userConfiguration?.let { config ->
-            config.mappingId?.let { mapping ->
-                setupSensorBasedOnName(event, mapping)
-            }
+            config.mappingId?.updateSensorPort(event)
             view?.updateConfig(config)
         }
         view?.hideDrawer()
-    }
-
-    private fun setupMotorBasedOnName(event: MotorPort, userMapping: UserMapping) {
-        when (event.portName) {
-            "M1" -> userMapping.M1 = event.motor
-            "M2" -> userMapping.M2 = event.motor
-            "M3" -> userMapping.M3 = event.motor
-            "M4" -> userMapping.M4 = event.motor
-            "M5" -> userMapping.M5 = event.motor
-            "M6" -> userMapping.M6 = event.motor
-        }
-    }
-
-    private fun setupSensorBasedOnName(event: SensorPort, userMapping: UserMapping) {
-        when (event.portName) {
-            "S1" -> userMapping.S1 = event.sensor
-            "S2" -> userMapping.S2 = event.sensor
-            "S3" -> userMapping.S3 = event.sensor
-            "S4" -> userMapping.S4 = event.sensor
-        }
     }
 
     override fun onRobotImageClicked() {
@@ -104,7 +108,9 @@ class ConfigurePresenter(
     }
 
     override fun saveConfiguration() {
-        // TODO save configuration
+        userRobot?.let { robot ->
+            view?.showSaveDialog(robot.name ?: "", robot.description ?: "")
+        }
     }
 
     override fun onBluetoothClicked() {

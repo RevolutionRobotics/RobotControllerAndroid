@@ -25,7 +25,6 @@ open class DialogFace<B : ViewDataBinding>(
         activeFace?.releaseFace()
         binding = DataBindingUtil.inflate(inflater, layoutResourceId, container, true)
         activeFace = this
-        onActivated()
         return binding?.root
     }
 

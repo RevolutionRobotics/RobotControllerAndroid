@@ -1,12 +1,12 @@
 package com.revolution.robotics.features.configure.save
 
 import android.content.Context
+import android.text.Editable
 import android.text.TextWatcher
+import com.revolution.robotics.R
 import com.revolution.robotics.databinding.DialogSaveBinding
 import com.revolution.robotics.views.ChippedEditTextViewModel
 import com.revolution.robotics.views.dialogs.DialogFace
-import android.text.Editable
-import com.revolution.robotics.R
 
 abstract class SaveDialogFace : DialogFace<DialogSaveBinding>(R.layout.dialog_save) {
     abstract val titleResource: Int
@@ -14,6 +14,10 @@ abstract class SaveDialogFace : DialogFace<DialogSaveBinding>(R.layout.dialog_sa
     abstract val nameHintResource: Int
     abstract val descriptionTitleResource: Int
     abstract val descriptionHintResource: Int
+
+    var currentName = ""
+    var currentDescription = ""
+
     open val onNameChangedCallbacks: (() -> Unit)? = null
     open val onDescriptionChangedCallbacks: (() -> Unit)? = null
 

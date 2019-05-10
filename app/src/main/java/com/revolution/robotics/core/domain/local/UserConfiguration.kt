@@ -5,6 +5,7 @@ import androidx.room.Dao
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.PrimaryKey
 import androidx.room.Query
 import kotlinx.android.parcel.Parcelize
@@ -25,6 +26,6 @@ interface UserConfigurationDao {
     @Query("SELECT * FROM UserConfiguration WHERE id=:id")
     fun getUserConfiguration(id: Int): UserConfiguration?
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveUserConfiguration(userConfiguration: UserConfiguration): Long
 }

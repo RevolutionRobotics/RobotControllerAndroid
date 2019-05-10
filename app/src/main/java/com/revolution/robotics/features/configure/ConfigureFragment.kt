@@ -15,6 +15,7 @@ import com.revolution.robotics.core.utils.dynamicPermissions.BluetoothConnection
 import com.revolution.robotics.databinding.FragmentConfigureBinding
 import com.revolution.robotics.features.configure.connections.ConfigureConnectionsFragment
 import com.revolution.robotics.features.configure.controllers.ConfigureControllersFragment
+import com.revolution.robotics.features.configure.save.SaveRobotDialog
 import org.kodein.di.erased.instance
 
 // There are 3 Unit empty functions so this can be ignored
@@ -33,8 +34,9 @@ class ConfigureFragment : BaseFragment<FragmentConfigureBinding, ConfigureViewMo
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         presenter.register(this, viewModel)
         arguments?.let { arguments ->
-            presenter.initRobot(arguments.userRobot)
-            binding?.toolbarViewModel = ConfigureToolbarViewModel(arguments.userRobot.name ?: "", presenter)
+            binding?.toolbarViewModel = ConfigureToolbarViewModel(presenter).apply {
+                presenter.initUI(arguments.userRobot, this)
+            }
         }
 
         connectionFlowHelper.init(fragmentManager, this)
@@ -93,6 +95,10 @@ class ConfigureFragment : BaseFragment<FragmentConfigureBinding, ConfigureViewMo
         (fragmentManager?.findFragmentById(R.id.configureFragmentFrame) as? ConfigureConnectionsFragment)?.apply {
             clearSelection()
         }
+    }
+
+    override fun showSaveDialog(name: String, description: String) {
+        SaveRobotDialog.newInstance(name, description).show(fragmentManager)
     }
 
     override fun onDrawerSlide(drawerView: View, slideOffset: Float) = Unit

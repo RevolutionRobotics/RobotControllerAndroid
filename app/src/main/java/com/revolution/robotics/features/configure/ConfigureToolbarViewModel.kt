@@ -4,7 +4,7 @@ import com.revolution.robotics.R
 import com.revolution.robotics.views.toolbar.ToolbarOption
 import com.revolution.robotics.views.toolbar.ToolbarViewModel
 
-class ConfigureToolbarViewModel(override val title: String, presenter: ConfigureMvp.Presenter) : ToolbarViewModel {
+class ConfigureToolbarViewModel(presenter: ConfigureMvp.Presenter) : ToolbarViewModel() {
 
     override val isLogoVisible = false
     override val hasBackOption = true

@@ -1,9 +1,12 @@
 package com.revolution.robotics.views.toolbar
 
-interface ToolbarViewModel {
+import androidx.databinding.ObservableField
 
-    val isLogoVisible: Boolean
-    val hasBackOption: Boolean
-    val title: String?
-    val options: List<ToolbarOption>
+abstract class ToolbarViewModel {
+
+    val title = ObservableField<String?>()
+
+    abstract val isLogoVisible: Boolean
+    abstract val hasBackOption: Boolean
+    abstract val options: List<ToolbarOption>
 }

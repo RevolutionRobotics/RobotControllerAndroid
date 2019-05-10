@@ -14,11 +14,12 @@ interface ConfigureMvp : Mvp {
         fun openMotorConfig(motorPort: MotorPort)
         fun openSensorConfig(sensorPort: SensorPort)
         fun updateConfig(userConfiguration: UserConfiguration)
+        fun showSaveDialog(name: String, description: String)
         fun hideDrawer()
     }
 
     interface Presenter : Mvp.Presenter<View, ConfigureViewModel> {
-        fun initRobot(userRobot: UserRobot)
+        fun initUI(userRobot: UserRobot, toolbarViewModel: ConfigureToolbarViewModel)
         fun onRobotImageClicked()
         fun saveConfiguration()
         fun onBluetoothClicked()

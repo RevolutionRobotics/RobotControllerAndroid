@@ -10,7 +10,8 @@ enum class DialogEvent {
     ROBOT_CONNECTION_FAILED,
     ROBOT_RECONNECT,
     CHAPTER_FINISHED,
-    DELETE_ROBOT;
+    DELETE_ROBOT,
+    SAVE_ROBOT;
 
     val extras = Bundle()
 }
