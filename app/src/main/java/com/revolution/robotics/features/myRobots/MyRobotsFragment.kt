@@ -5,8 +5,8 @@ import android.view.View
 import androidx.viewpager.widget.ViewPager
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
-import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
 import com.revolution.robotics.core.eventBus.dialog.DialogEvent
+import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
 import com.revolution.robotics.core.extensions.waitForLayout
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.databinding.FragmentMyRobotsBinding
@@ -47,7 +47,6 @@ class MyRobotsFragment : BaseFragment<FragmentMyRobotsBinding, MyRobotsViewModel
     override fun onRobotsChanged() {
         adapter.notifyDataSetChanged()
         binding?.myRobotsViewpager?.initTransformerWithDelay()
-        presenter.onPageSelected(0)
     }
 
     override fun showNextRobot() {
@@ -77,9 +76,9 @@ class MyRobotsFragment : BaseFragment<FragmentMyRobotsBinding, MyRobotsViewModel
             if (adapter.selectedPosition == adapter.count - 1) {
                 adapter.selectedPosition--
             }
-            binding?.myRobotsViewpager?.reInitTransformerWithDelay()
-            presenter.deleteRobot(robotToDeleteId)
             adapter.removeItems { it.id == robotToDeleteId }
+            presenter.deleteRobot(robotToDeleteId, adapter.selectedPosition)
+            binding?.myRobotsViewpager?.reInitTransformerWithDelay()
             robotToDeleteId = -1
         }
     }

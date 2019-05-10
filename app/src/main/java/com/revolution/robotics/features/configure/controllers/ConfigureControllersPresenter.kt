@@ -1,11 +1,46 @@
 package com.revolution.robotics.features.configure.controllers
 
+import com.revolution.robotics.R
 import com.revolution.robotics.core.extensions.isEmptyOrNull
+import com.revolution.robotics.features.configure.controllers.adapter.ControllersItem
 import kotlin.math.max
 
 class ConfigureControllersPresenter : ConfigureControllersMvp.Presenter {
     override var view: ConfigureControllersMvp.View? = null
     override var model: ConfigureControllersViewModel? = null
+
+    override fun register(view: ConfigureControllersMvp.View, model: ConfigureControllersViewModel?) {
+        super.register(view, model)
+        model?.controllersList?.set(
+            mutableListOf(
+                ControllersItem(
+                    1,
+                    "controller 1",
+                    R.drawable.ic_configure_controller1,
+                    "Desc",
+                    true,
+                    this
+                ),
+                ControllersItem(
+                    1,
+                    "controller 2",
+                    R.drawable.ic_configure_controller2,
+                    "Desc",
+                    true,
+                    this
+                ),
+                ControllersItem(
+                    1,
+                    "controller 3",
+                    R.drawable.ic_configure_controller3,
+                    "Desc",
+                    true,
+                    this
+                )
+            )
+        )
+        view.onRobotsChanged()
+    }
 
     override fun onPageSelected(position: Int) {
         model?.run {

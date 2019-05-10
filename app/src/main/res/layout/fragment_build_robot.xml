@@ -84,6 +84,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/seekbar"
                 android:scaleType="centerInside"
+                app:animate="@{true}"
                 app:firebaseImageUrl="@{viewModel.imageUrl}"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout

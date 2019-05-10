@@ -4,6 +4,7 @@ import android.graphics.drawable.Drawable
 import android.widget.ImageView
 import androidx.annotation.DrawableRes
 import androidx.databinding.BindingAdapter
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.revolution.robotics.R
@@ -23,6 +24,8 @@ fun loadImage(imageView: ImageView, url: String?, errorDrawable: Drawable?) {
                 }
             }
             .into(imageView)
+    } else {
+        setErrorDrawable(imageView, errorDrawable)
     }
 }
 
@@ -54,8 +57,8 @@ fun loadFirebaseImage(imageView: ImageView, reference: StorageReference, errorDr
         .into(imageView)
 }
 
-@BindingAdapter("firebaseImageUrl", "errorDrawable", requireAll = false)
-fun loadFirebaseImage(imageView: ImageView, gsUrl: String?, errorDrawable: Drawable?) {
+@BindingAdapter("firebaseImageUrl", "errorDrawable", "animate", requireAll = false)
+fun loadFirebaseImage(imageView: ImageView, gsUrl: String?, errorDrawable: Drawable?, animate: Boolean?) {
     if (!gsUrl.isNullOrEmpty()) {
         GlideApp.with(imageView)
             .load(FirebaseStorage.getInstance().getReferenceFromUrl(gsUrl))
@@ -65,11 +68,35 @@ fun loadFirebaseImage(imageView: ImageView, gsUrl: String?, errorDrawable: Drawa
                 } else {
                     error(errorDrawable)
                 }
+
+                if (animate == true) {
+                    transition(DrawableTransitionOptions.withCrossFade())
+                }
             }
             .into(imageView)
+    } else {
+        setErrorDrawable(imageView, errorDrawable)
     }
 }
 
-@BindingAdapter("firebaseImageUrl", "errorDrawable", requireAll = false)
-fun loadFirebaseImage(remoteImageView: RemoteImageView, gsUrl: String?, errorDrawable: Drawable?) =
-    loadFirebaseImage(remoteImageView.image, gsUrl, errorDrawable)
+private fun setErrorDrawable(imageView: ImageView, errorDrawable: Drawable?) {
+    imageView.scaleType = ImageView.ScaleType.CENTER_INSIDE
+    if (errorDrawable == null) {
+        imageView.setImageResource(R.drawable.ic_image_not_found)
+    } else {
+        imageView.setImageDrawable(errorDrawable)
+    }
+}
+
+@BindingAdapter("firebaseImageUrl", "errorDrawable", "animate", requireAll = false)
+fun loadFirebaseImage(remoteImageView: RemoteImageView, gsUrl: String?, errorDrawable: Drawable?, animate: Boolean?) {
+    if (!gsUrl.isNullOrEmpty()) {
+        loadFirebaseImage(remoteImageView.image, gsUrl, errorDrawable, animate)
+    } else {
+        if (errorDrawable == null) {
+            remoteImageView.empty.setImageResource(R.drawable.ic_image_not_found)
+        } else {
+            remoteImageView.empty.setImageDrawable(errorDrawable)
+        }
+    }
+}

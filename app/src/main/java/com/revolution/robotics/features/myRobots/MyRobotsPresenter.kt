@@ -99,13 +99,14 @@ class MyRobotsPresenter(
         view?.deleteRobot(robotId)
     }
 
-    override fun deleteRobot(robotId: Int) {
+    override fun deleteRobot(robotId: Int, selectedPosition: Int) {
         deleteRobotInteractor.id = robotId
         deleteRobotInteractor.execute()
         model?.robotsList?.apply {
             get()?.removeAll { it.id == robotId }
             notifyChange()
         }
+        updateButtonsVisibility(selectedPosition)
         view?.onRobotsChanged()
     }
 }

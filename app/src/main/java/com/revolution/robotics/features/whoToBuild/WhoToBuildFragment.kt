@@ -47,7 +47,6 @@ class WhoToBuildFragment : BaseFragment<FragmentWhoToBuildBinding, WhoToBuildVie
     override fun onRobotsLoaded() {
         adapter.notifyDataSetChanged()
         binding?.robotsViewpager?.initTransformerWithDelay()
-        presenter.onPageSelected(0)
     }
 
     override fun showNextRobot() {
