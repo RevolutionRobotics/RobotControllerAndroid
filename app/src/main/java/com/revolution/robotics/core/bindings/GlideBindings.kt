@@ -1,5 +1,6 @@
 package com.revolution.robotics.core.bindings
 
+import android.graphics.BitmapFactory
 import android.graphics.drawable.Drawable
 import android.widget.ImageView
 import androidx.annotation.DrawableRes
@@ -9,6 +10,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.revolution.robotics.R
 import com.revolution.robotics.core.glide.GlideApp
+import com.revolution.robotics.core.utils.CameraHelper
 import com.revolution.robotics.views.RemoteImageView
 
 @BindingAdapter("android:src", "errorDrawable", requireAll = false)
@@ -88,9 +90,19 @@ private fun setErrorDrawable(imageView: ImageView, errorDrawable: Drawable?) {
     }
 }
 
-@BindingAdapter("firebaseImageUrl", "errorDrawable", "animate", requireAll = false)
-fun loadFirebaseImage(remoteImageView: RemoteImageView, gsUrl: String?, errorDrawable: Drawable?, animate: Boolean?) {
-    if (!gsUrl.isNullOrEmpty()) {
+@BindingAdapter("firebaseImageUrl", "robotId", "errorDrawable", "animate", requireAll = false)
+fun loadFirebaseImage(
+    remoteImageView: RemoteImageView,
+    gsUrl: String?,
+    robotId: Int?,
+    errorDrawable: Drawable?,
+    animate: Boolean?
+) {
+    val imageFile =
+        CameraHelper.getImageFile(remoteImageView.context, CameraHelper.generateFilenameForRobot(robotId ?: -1))
+    if (imageFile.exists()) {
+        remoteImageView.image.setImageBitmap(BitmapFactory.decodeStream(imageFile.inputStream()))
+    } else if (!gsUrl.isNullOrEmpty()) {
         loadFirebaseImage(remoteImageView.image, gsUrl, errorDrawable, animate)
     } else {
         if (errorDrawable == null) {

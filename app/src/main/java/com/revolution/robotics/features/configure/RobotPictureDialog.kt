@@ -42,7 +42,7 @@ class RobotPictureDialog : RoboticsDialog() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        cameraHelper = CameraHelper("robot-${arguments?.robotId ?: 0}.jpg")
+        cameraHelper = CameraHelper(arguments?.robotId ?: 0)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

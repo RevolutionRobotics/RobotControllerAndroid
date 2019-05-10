@@ -14,13 +14,23 @@ import java.io.File
 
 class CameraHelper(private val destinationFileName: String) {
 
-    fun getImageFile(context: Context): File {
-        val temporaryImages = File(context.filesDir, "images")
-        if (!temporaryImages.exists()) {
-            temporaryImages.mkdir()
+    constructor(robotId: Int) : this(generateFilenameForRobot(robotId))
+
+    companion object {
+        fun getImageFile(context: Context, destinationFileName: String): File {
+            val temporaryImages = File(context.filesDir, "images")
+            if (!temporaryImages.exists()) {
+                temporaryImages.mkdir()
+            }
+            return File(temporaryImages, destinationFileName)
         }
-        return File(temporaryImages, destinationFileName)
+
+        fun generateFilenameForRobot(robotId: Int) =
+            "robot-$robotId.jpg"
     }
+
+    fun getImageFile(context: Context) =
+        getImageFile(context, destinationFileName)
 
     fun startCameraActivity(fragment: Fragment, requestCode: Int) {
         val activity = fragment.requireActivity()
