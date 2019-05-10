@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable
 import android.widget.ImageView
 import androidx.annotation.DrawableRes
 import androidx.databinding.BindingAdapter
+import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
@@ -12,6 +13,7 @@ import com.revolution.robotics.R
 import com.revolution.robotics.core.glide.GlideApp
 import com.revolution.robotics.core.utils.CameraHelper
 import com.revolution.robotics.views.RemoteImageView
+import java.io.File
 
 @BindingAdapter("android:src", "errorDrawable", requireAll = false)
 fun loadImage(imageView: ImageView, url: String?, errorDrawable: Drawable?) {
@@ -101,7 +103,7 @@ fun loadFirebaseImage(
     val imageFile =
         CameraHelper.getImageFile(remoteImageView.context, CameraHelper.generateFilenameForRobot(robotId ?: -1))
     if (imageFile.exists()) {
-        remoteImageView.image.setImageBitmap(BitmapFactory.decodeStream(imageFile.inputStream()))
+        loadFileFromImage(remoteImageView.image, imageFile)
     } else if (!gsUrl.isNullOrEmpty()) {
         loadFirebaseImage(remoteImageView.image, gsUrl, errorDrawable, animate)
     } else {
@@ -110,5 +112,14 @@ fun loadFirebaseImage(
         } else {
             remoteImageView.empty.setImageDrawable(errorDrawable)
         }
+    }
+}
+
+@BindingAdapter("imageFile")
+fun loadFileFromImage(imageView: ImageView, file: File?) {
+    if (file != null && file.exists()) {
+        Glide.with(imageView)
+            .load(file)
+            .into(imageView)
     }
 }

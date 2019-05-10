@@ -2,7 +2,6 @@ package com.revolution.robotics.features.configure
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import com.revolution.robotics.R
 import com.revolution.robotics.core.extensions.withArguments
@@ -71,10 +70,10 @@ class RobotPictureDialog : RoboticsDialog() {
         }
 
         fun onCameraCaptured(openCameraIfImageDoesNotExist: Boolean) {
-            val file = cameraHelper.getImageFile(requireContext())
-            if (file.exists()) {
+            val imageFile = cameraHelper.getImageFile(requireContext())
+            if (imageFile.exists()) {
                 binding?.apply {
-                    image = BitmapFactory.decodeStream(file.inputStream())
+                    image = imageFile
                     executePendingBindings()
                 }
             } else if (openCameraIfImageDoesNotExist) {

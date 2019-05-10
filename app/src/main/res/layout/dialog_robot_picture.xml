@@ -2,9 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <variable
-                name="image"
-                type="android.graphics.Bitmap"/>
+        <variable name="image" type="java.io.File"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -51,7 +49,7 @@
                 app:layout_constraintTop_toTopOf="@id/image_placeholder"
                 app:layout_constraintBottom_toBottomOf="@id/image_placeholder"
                 app:visible="@{image != null}"
-                app:image="@{image}"
+                app:imageFile="@{image}"
                 android:scaleType="centerCrop"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
