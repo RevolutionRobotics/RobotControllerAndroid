@@ -20,8 +20,8 @@ class RobotPictureDialog : RoboticsDialog() {
 
         private var Bundle.robotId by BundleArgumentDelegate.Int("robotId")
 
-        fun newInstance(robotId: Int) = RobotPictureDialog().withArguments { bundle ->
-            bundle.robotId = robotId
+        fun newInstance(id: Int) = RobotPictureDialog().withArguments { bundle ->
+            bundle.robotId = id
         }
     }
 
@@ -36,7 +36,7 @@ class RobotPictureDialog : RoboticsDialog() {
             dialogFace.onImageDeleted()
         },
         DialogButton(R.string.camera_dialog_new_photo_title, R.drawable.ic_camera, true) {
-            cameraHelper.startCameraActivity(this, REQUEST_CODE_CAMERA)
+            startCamera()
         }
     )
 
@@ -47,16 +47,20 @@ class RobotPictureDialog : RoboticsDialog() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_CODE_CAMERA && resultCode == Activity.RESULT_OK) {
-            dialogFace.onCameraCaptured()
+            dialogFace.onCameraCaptured(false)
         } else {
             super.onActivityResult(requestCode, resultCode, data)
         }
     }
 
+    private fun startCamera() {
+        cameraHelper.startCameraActivity(this, REQUEST_CODE_CAMERA)
+    }
+
     inner class RobotPictureDialogFace : DialogFace<DialogRobotPictureBinding>(R.layout.dialog_robot_picture) {
 
         override fun onActivated() {
-            onCameraCaptured()
+            onCameraCaptured(true)
         }
 
         fun onImageDeleted() {
@@ -66,14 +70,15 @@ class RobotPictureDialog : RoboticsDialog() {
             }
         }
 
-        fun onCameraCaptured() {
-            cameraHelper.getImageFile(requireContext()).let { file ->
-                if (file.exists()) {
-                    binding?.apply {
-                        image = BitmapFactory.decodeStream(file.inputStream())
-                        executePendingBindings()
-                    }
+        fun onCameraCaptured(openCameraIfImageDoesNotExist: Boolean) {
+            val file = cameraHelper.getImageFile(requireContext())
+            if (file.exists()) {
+                binding?.apply {
+                    image = BitmapFactory.decodeStream(file.inputStream())
+                    executePendingBindings()
                 }
+            } else if (openCameraIfImageDoesNotExist) {
+                startCamera()
             }
         }
     }
