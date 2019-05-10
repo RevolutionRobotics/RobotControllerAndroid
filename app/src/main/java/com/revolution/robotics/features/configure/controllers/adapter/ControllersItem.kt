@@ -10,8 +10,6 @@ class ControllersItem(
     val name: String,
     @DrawableRes
     val normalImageRes: Int,
-    @DrawableRes
-    val smallImageRes: Int,
     val iconDescription: String,
     val isCurrentlyActive: Boolean,
     private val presenter: ConfigureControllersMvp.Presenter
