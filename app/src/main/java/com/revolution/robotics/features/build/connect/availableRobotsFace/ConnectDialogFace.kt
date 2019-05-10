@@ -31,8 +31,8 @@ class ConnectDialogFace(dialog: RoboticsDialog) :
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         presenter.unregister()
+        super.onDestroyView()
     }
 
     override fun onConnectionSuccess() {

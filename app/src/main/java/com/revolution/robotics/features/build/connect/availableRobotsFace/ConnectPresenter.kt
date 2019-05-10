@@ -26,8 +26,8 @@ class ConnectPresenter(private val applicationContextProvider: ApplicationContex
     }
 
     override fun unregister() {
-        super.unregister()
         bleDeviceDiscoverer.stopDiscovering()
+        super.unregister()
     }
 
     override fun onItemClicked(robot: ConnectRobotItem) {
