@@ -100,4 +100,3 @@ fun loadFirebaseImage(remoteImageView: RemoteImageView, gsUrl: String?, errorDra
         }
     }
 }
-
