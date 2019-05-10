@@ -21,14 +21,20 @@ class ConnectPresenter(private val applicationContextProvider: ApplicationContex
 
         bleDeviceDiscoverer.discoverRobots(applicationContextProvider.applicationContext) { devices ->
             model?.availableRobots?.value = devices.map { device -> ConnectRobotItem(device, this) }
-            model?.isDiscovering?.set(false)
+            model?.isDiscovering?.set(devices.isEmpty())
         }
+    }
+
+    override fun unregister() {
+        bleDeviceDiscoverer.stopDiscovering()
+        super.unregister()
     }
 
     override fun onItemClicked(robot: ConnectRobotItem) {
         if (!isConnectionInProgress) {
             isConnectionInProgress = true
             robot.setSelected(true)
+            bleDeviceDiscoverer.stopDiscovering()
             bleHandler.connect(applicationContextProvider.applicationContext, robot.device,
                 onConnected = { view?.onConnectionSuccess() },
                 onDisconnected = { view?.onConnectionError() },

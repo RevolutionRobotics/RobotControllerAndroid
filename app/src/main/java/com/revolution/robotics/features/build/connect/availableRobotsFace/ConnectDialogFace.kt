@@ -4,8 +4,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.revolution.robotics.R
-import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
 import com.revolution.robotics.core.eventBus.dialog.DialogEvent
+import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
 import com.revolution.robotics.databinding.DialogConnectBinding
 import com.revolution.robotics.features.build.connect.adapter.ConnectAdapter
 import com.revolution.robotics.views.dialogs.MvpDialogFace
@@ -28,6 +28,11 @@ class ConnectDialogFace(dialog: RoboticsDialog) :
                 recycler.adapter = ConnectAdapter(fragment.viewLifecycleOwner)
             }
         }
+    }
+
+    override fun onDestroyView() {
+        presenter.unregister()
+        super.onDestroyView()
     }
 
     override fun onConnectionSuccess() {

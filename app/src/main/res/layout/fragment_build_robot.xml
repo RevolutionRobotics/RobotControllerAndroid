@@ -41,6 +41,7 @@
                 app:layout_constraintBottom_toBottomOf="@id/toolbar_body_bottom"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginEnd="@dimen/dimen_8dp"
+                android:onClick="@{() -> viewModel.onBluetoothIconClicked()}"
                 app:greyscale="@{!viewModel.isBluetoothConnected}"/>
 
         <TextView
