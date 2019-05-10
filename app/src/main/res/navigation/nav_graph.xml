@@ -9,8 +9,8 @@
               android:label="MainMenuFragment">
         <action android:id="@+id/toCoding"
                 app:destination="@id/codingFragment"/>
-        <action android:id="@+id/toChallenges"
-                app:destination="@id/challengesFragment"/>
+        <action android:id="@+id/toChallengeList"
+                app:destination="@id/challengeListFragment"/>
         <action android:id="@+id/toMyRobots"
                 app:destination="@id/myRobotsFragment"/>
         <action android:id="@+id/toCommunity"
@@ -71,9 +71,9 @@
               android:label="PlayDriverFragment"/>
 
     <!-- Challenges -->
-    <fragment android:id="@+id/challengesFragment"
-              android:name="com.revolution.robotics.features.challenges.ChallengesFragment"
-              android:label="ChallengesFragment"/>
+    <fragment android:id="@+id/challengeListFragment"
+              android:name="com.revolution.robotics.features.challenges.challengeList.ChallengeListFragment"
+              android:label="ChallengeListFragment"/>
 
     <!-- Configure -->
     <fragment android:id="@+id/configureFragment"

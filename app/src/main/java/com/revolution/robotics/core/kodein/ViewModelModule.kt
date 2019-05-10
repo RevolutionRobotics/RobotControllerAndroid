@@ -2,7 +2,7 @@ package com.revolution.robotics.core.kodein
 
 import com.revolution.robotics.features.build.BuildRobotViewModel
 import com.revolution.robotics.features.build.connect.availableRobotsFace.ConnectViewModel
-import com.revolution.robotics.features.challenges.ChallengesViewModel
+import com.revolution.robotics.features.challenges.challengeList.ChallengeListViewModel
 import com.revolution.robotics.features.coding.CodingViewModel
 import com.revolution.robotics.features.configure.ConfigureViewModel
 import com.revolution.robotics.features.configure.connections.ConfigureConnectionsViewModel
@@ -30,7 +30,7 @@ fun createViewModelModule() =
     Kodein.Module("ViewModelModule") {
         bind<MainMenuViewModel>() with provider { MainMenuViewModel(instance()) }
         bind<CodingViewModel>() with provider { CodingViewModel() }
-        bind<ChallengesViewModel>() with provider { ChallengesViewModel() }
+        bind<ChallengeListViewModel>() with provider { ChallengeListViewModel() }
         bind<WhoToBuildViewModel>() with provider { WhoToBuildViewModel(instance()) }
         bind<MyRobotsViewModel>() with provider { MyRobotsViewModel(instance()) }
         bind<ConnectViewModel>() with provider { ConnectViewModel() }
