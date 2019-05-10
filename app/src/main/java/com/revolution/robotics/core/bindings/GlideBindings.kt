@@ -1,6 +1,5 @@
 package com.revolution.robotics.core.bindings
 
-import android.graphics.BitmapFactory
 import android.graphics.drawable.Drawable
 import android.widget.ImageView
 import androidx.annotation.DrawableRes
