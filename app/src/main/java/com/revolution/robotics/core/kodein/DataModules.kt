@@ -36,6 +36,8 @@ import com.revolution.robotics.features.controller.LiveControllerMvp
 import com.revolution.robotics.features.controller.LiveControllerPresenter
 import com.revolution.robotics.features.mainmenu.MainMenuMvp
 import com.revolution.robotics.features.mainmenu.MainMenuPresenter
+import com.revolution.robotics.features.mainmenu.settings.SettingsMvp
+import com.revolution.robotics.features.mainmenu.settings.SettingsPresenter
 import com.revolution.robotics.features.myRobots.MyRobotsMvp
 import com.revolution.robotics.features.myRobots.MyRobotsPresenter
 import com.revolution.robotics.features.whoToBuild.WhoToBuildMvp
@@ -78,6 +80,7 @@ fun createPresenterModule() =
         bind<SensorConfigurationMvp.Presenter>() with singleton { SensorConfigurationPresenter(instance(), instance()) }
         bind<BuildFinishedMvp.Presenter>() with singleton { BuildFinishedPresenter(instance()) }
         bind<ConfigureControllersMvp.Presenter>() with singleton { ConfigureControllersPresenter() }
+        bind<SettingsMvp.Presenter>() with singleton { SettingsPresenter(instance()) }
     }
 
 fun createDbModule(context: Context) =

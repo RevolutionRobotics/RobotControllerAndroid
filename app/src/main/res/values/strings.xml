@@ -141,4 +141,10 @@
     <string name="save_dialog_done">Done</string>
     <string name="save_dialog_description_title">Description</string>
 
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_reset_tutorial">Reset tutorial</string>
+    <string name="settings_firmware_update">Firmware update</string>
+    <string name="settings_about_applications">About application</string>
+
 </resources>

@@ -14,6 +14,8 @@
                 app:destination="@id/myRobotsFragment"/>
         <action android:id="@+id/toCommunity"
                 app:destination="@id/placeholder_community"/>
+        <action android:id="@+id/toSettings"
+                app:destination="@id/settingFragment"/>
     </fragment>
 
     <fragment android:id="@+id/myRobotsFragment"
@@ -60,6 +62,15 @@
               android:label="ConfigureFragment">
         <argument android:name="userRobot" app:argType="com.revolution.robotics.core.domain.local.UserRobot"/>
     </fragment>
+
+    <fragment android:id="@+id/settingFragment"
+              android:name="com.revolution.robotics.features.mainmenu.settings.SettingsFragment"
+              android:label="SettingsFragment">
+        <action android:id="@+id/toAbout"
+                app:destination="@id/placeholder_aboutFragment"/>
+    </fragment>
+
+    <fragment android:id="@+id/placeholder_aboutFragment"/>
 
     <fragment android:id="@+id/placeholder_robotics"/>
     <fragment android:id="@+id/placeholder_community"/>
