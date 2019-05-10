@@ -53,6 +53,9 @@ class ConfigurePresenter(
 
     override fun onConnectionsTabSelected() {
         model?.setScreen(ConfigurationTabs.CONNECTIONS)
+        userConfiguration?.let {
+            view?.showConnectionsScreen(it)
+        }
     }
 
     override fun onControllerTabSelected() {
