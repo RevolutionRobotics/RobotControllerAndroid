@@ -1,5 +1,10 @@
 package com.revolution.robotics.features.build.turnOnTheBrain
 
+import android.bluetooth.BluetoothManager
+import android.content.Context
+import android.content.Intent
+import android.provider.Settings
+import androidx.core.content.ContextCompat
 import com.revolution.robotics.R
 import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.databinding.DialogTurnOnTheBrainBinding
@@ -27,8 +32,16 @@ class TurnOnTheBrainDialog : RoboticsDialog() {
             // TODO show tips
         },
         DialogButton(R.string.build_robot_start, R.drawable.ic_play, true) {
-            dialog.dismiss()
-            dialogEventBus.publish(DialogEvent.BRAIN_TURNED_ON)
+            val bluetoothManager = requireContext().getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
+            if (bluetoothManager.adapter.isEnabled) {
+                dialog.dismiss()
+                dialogEventBus.publish(DialogEvent.BRAIN_TURNED_ON)
+            } else {
+                ContextCompat.startActivity(requireContext(), Intent().apply {
+                    action = Settings.ACTION_BLUETOOTH_SETTINGS
+                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                }, null)
+            }
         }
     )
 
