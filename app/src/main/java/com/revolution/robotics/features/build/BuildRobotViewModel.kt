@@ -11,7 +11,10 @@ import com.revolution.robotics.core.domain.remote.BuildStep
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.core.utils.CustomTypefaceSpan
 
-class BuildRobotViewModel(private val resourceResolver: ResourceResolver) : ViewModel() {
+class BuildRobotViewModel(
+    private val resourceResolver: ResourceResolver,
+    private val presenter: BuildRobotMvp.Presenter
+) : ViewModel() {
     val imageUrl: MutableLiveData<String?> = MutableLiveData()
     val step: MutableLiveData<Spannable?> = MutableLiveData()
     val isBluetoothConnected = ObservableBoolean(false)
@@ -33,4 +36,8 @@ class BuildRobotViewModel(private val resourceResolver: ResourceResolver) : View
             append("$actualStep", CustomTypefaceSpan(resourceResolver.font(R.font.barlow_bold)), 0)
             append(" / $totalSteps", CustomTypefaceSpan(resourceResolver.font(R.font.barlow_regular)), 0)
         }.toSpannable()
+
+    fun onBluetoothIconClicked() {
+        presenter.onBluetoothIconClicked()
+    }
 }

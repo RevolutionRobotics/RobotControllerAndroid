@@ -14,9 +14,9 @@ import com.revolution.robotics.core.utils.dynamicPermissions.BluetoothConnection
 import com.revolution.robotics.databinding.FragmentBuildRobotBinding
 import com.revolution.robotics.features.build.buildFinished.BuildFinishedDialog
 import com.revolution.robotics.features.build.chapterFinished.ChapterFinishedDialog
-import com.revolution.robotics.features.build.testing.MotorTestDialog
-import com.revolution.robotics.features.build.testing.DrivetrainTestDialog
 import com.revolution.robotics.features.build.testing.BumperTestDialog
+import com.revolution.robotics.features.build.testing.DrivetrainTestDialog
+import com.revolution.robotics.features.build.testing.MotorTestDialog
 import com.revolution.robotics.features.build.testing.UltrasonicTestDialog
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 import com.revolution.robotics.views.slider.BuildStepSliderView
@@ -127,5 +127,9 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
             presenter.saveUserRobot(this, true)
         }
         BuildFinishedDialog.newInstance().show(fragmentManager)
+    }
+
+    override fun startBluetoothConnectionFlow() {
+        connectionFlowHelper.startConnectionFlow(requireActivity())
     }
 }

@@ -8,10 +8,12 @@ interface BuildRobotMvp : Mvp {
 
     interface View : Mvp.View {
         fun onBuildStepsLoaded(steps: List<BuildStep>)
+        fun startBluetoothConnectionFlow()
     }
 
     interface Presenter : Mvp.Presenter<View, BuildRobotViewModel> {
         fun saveUserRobot(userRobot: UserRobot, createDefaultConfig: Boolean)
         fun loadBuildSteps(robotId: Int)
+        fun onBluetoothIconClicked()
     }
 }
