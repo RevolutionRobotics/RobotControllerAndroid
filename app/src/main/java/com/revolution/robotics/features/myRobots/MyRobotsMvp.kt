@@ -20,6 +20,6 @@ interface MyRobotsMvp : Mvp {
         fun onContinueBuildingSelected(robot: UserRobot)
         fun onEditSelected(userRobot: UserRobot)
         fun onDeleteSelected(robotId: Int)
-        fun deleteRobot(robotId: Int)
+        fun deleteRobot(robotId: Int, selectedPosition: Int)
     }
 }

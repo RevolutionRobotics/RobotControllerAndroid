@@ -76,9 +76,9 @@ class MyRobotsFragment : BaseFragment<FragmentMyRobotsBinding, MyRobotsViewModel
             if (adapter.selectedPosition == adapter.count - 1) {
                 adapter.selectedPosition--
             }
-            binding?.myRobotsViewpager?.reInitTransformerWithDelay()
-            presenter.deleteRobot(robotToDeleteId)
             adapter.removeItems { it.id == robotToDeleteId }
+            presenter.deleteRobot(robotToDeleteId, adapter.selectedPosition)
+            binding?.myRobotsViewpager?.reInitTransformerWithDelay()
             robotToDeleteId = -1
         }
     }
