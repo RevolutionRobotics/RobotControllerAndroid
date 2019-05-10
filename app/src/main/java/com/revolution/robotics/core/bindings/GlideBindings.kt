@@ -23,6 +23,8 @@ fun loadImage(imageView: ImageView, url: String?, errorDrawable: Drawable?) {
                 }
             }
             .into(imageView)
+    } else {
+        setErrorDrawable(imageView, errorDrawable)
     }
 }
 
@@ -67,9 +69,30 @@ fun loadFirebaseImage(imageView: ImageView, gsUrl: String?, errorDrawable: Drawa
                 }
             }
             .into(imageView)
+    } else {
+        setErrorDrawable(imageView, errorDrawable)
+    }
+}
+
+private fun setErrorDrawable(imageView: ImageView, errorDrawable: Drawable?) {
+    imageView.scaleType = ImageView.ScaleType.CENTER_INSIDE
+    if (errorDrawable == null) {
+        imageView.setImageResource(R.drawable.ic_image_not_found)
+    } else {
+        imageView.setImageDrawable(errorDrawable)
     }
 }
 
 @BindingAdapter("firebaseImageUrl", "errorDrawable", requireAll = false)
-fun loadFirebaseImage(remoteImageView: RemoteImageView, gsUrl: String?, errorDrawable: Drawable?) =
-    loadFirebaseImage(remoteImageView.image, gsUrl, errorDrawable)
+fun loadFirebaseImage(remoteImageView: RemoteImageView, gsUrl: String?, errorDrawable: Drawable?) {
+    if (!gsUrl.isNullOrEmpty()) {
+        loadFirebaseImage(remoteImageView.image, gsUrl, errorDrawable)
+    } else {
+        if (errorDrawable == null) {
+            remoteImageView.empty.setImageResource(R.drawable.ic_image_not_found)
+        } else {
+            remoteImageView.empty.setImageDrawable(errorDrawable)
+        }
+    }
+}
+
