@@ -4,6 +4,7 @@ import android.graphics.drawable.Drawable
 import android.widget.ImageView
 import androidx.annotation.DrawableRes
 import androidx.databinding.BindingAdapter
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.revolution.robotics.R
@@ -56,8 +57,8 @@ fun loadFirebaseImage(imageView: ImageView, reference: StorageReference, errorDr
         .into(imageView)
 }
 
-@BindingAdapter("firebaseImageUrl", "errorDrawable", requireAll = false)
-fun loadFirebaseImage(imageView: ImageView, gsUrl: String?, errorDrawable: Drawable?) {
+@BindingAdapter("firebaseImageUrl", "errorDrawable", "animate", requireAll = false)
+fun loadFirebaseImage(imageView: ImageView, gsUrl: String?, errorDrawable: Drawable?, animate: Boolean?) {
     if (!gsUrl.isNullOrEmpty()) {
         GlideApp.with(imageView)
             .load(FirebaseStorage.getInstance().getReferenceFromUrl(gsUrl))
@@ -66,6 +67,10 @@ fun loadFirebaseImage(imageView: ImageView, gsUrl: String?, errorDrawable: Drawa
                     error(R.drawable.ic_image_not_found)
                 } else {
                     error(errorDrawable)
+                }
+
+                if (animate == true) {
+                    transition(DrawableTransitionOptions.withCrossFade())
                 }
             }
             .into(imageView)
@@ -83,10 +88,10 @@ private fun setErrorDrawable(imageView: ImageView, errorDrawable: Drawable?) {
     }
 }
 
-@BindingAdapter("firebaseImageUrl", "errorDrawable", requireAll = false)
-fun loadFirebaseImage(remoteImageView: RemoteImageView, gsUrl: String?, errorDrawable: Drawable?) {
+@BindingAdapter("firebaseImageUrl", "errorDrawable", "animate", requireAll = false)
+fun loadFirebaseImage(remoteImageView: RemoteImageView, gsUrl: String?, errorDrawable: Drawable?, animate: Boolean?) {
     if (!gsUrl.isNullOrEmpty()) {
-        loadFirebaseImage(remoteImageView.image, gsUrl, errorDrawable)
+        loadFirebaseImage(remoteImageView.image, gsUrl, errorDrawable, animate)
     } else {
         if (errorDrawable == null) {
             remoteImageView.empty.setImageResource(R.drawable.ic_image_not_found)
