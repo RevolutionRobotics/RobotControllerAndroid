@@ -85,6 +85,7 @@ class ConfigureFragment : BaseFragment<FragmentConfigureBinding, ConfigureViewMo
     override fun updateConfig(userConfiguration: UserConfiguration) {
         (fragmentManager?.findFragmentById(R.id.configureFragmentFrame) as? ConfigureConnectionsFragment)?.apply {
             updateConfiguration(userConfiguration)
+            clearSelection()
         }
     }
 
