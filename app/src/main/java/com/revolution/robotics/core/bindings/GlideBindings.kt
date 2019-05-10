@@ -102,7 +102,7 @@ fun loadFirebaseImage(
     val imageFile =
         CameraHelper.getImageFile(remoteImageView.context, CameraHelper.generateFilenameForRobot(robotId ?: -1))
     if (imageFile.exists()) {
-        loadFileFromImage(remoteImageView.image, imageFile)
+        loadImageFromFile(remoteImageView.image, imageFile)
     } else if (!gsUrl.isNullOrEmpty()) {
         loadFirebaseImage(remoteImageView.image, gsUrl, errorDrawable, animate)
     } else {
@@ -115,7 +115,7 @@ fun loadFirebaseImage(
 }
 
 @BindingAdapter("imageFile")
-fun loadFileFromImage(imageView: ImageView, file: File?) {
+fun loadImageFromFile(imageView: ImageView, file: File?) {
     if (file != null && file.exists()) {
         Glide.with(imageView)
             .load(file)
