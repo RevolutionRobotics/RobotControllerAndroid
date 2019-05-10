@@ -34,7 +34,6 @@ class ConfigureControllersFragment :
     override fun onRobotsChanged() {
         adapter.notifyDataSetChanged()
         binding?.controllersViewpager?.initTransformerWithDelay()
-        presenter.onPageSelected(0)
     }
 
     override fun showNextRobot() {

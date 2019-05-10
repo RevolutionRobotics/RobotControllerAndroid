@@ -15,13 +15,13 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.revolution.robotics.R
 import com.revolution.robotics.core.extensions.color
-import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
-import com.revolution.robotics.views.chippedBox.ChippedBoxDrawable
-import com.revolution.robotics.views.carousel.CarouselAdapter
 import com.revolution.robotics.features.build.connect.adapter.ConnectAdapter
 import com.revolution.robotics.features.build.connect.adapter.ConnectRobotItem
 import com.revolution.robotics.views.ChippedEditText
 import com.revolution.robotics.views.ChippedEditTextViewModel
+import com.revolution.robotics.views.carousel.CarouselAdapter
+import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
+import com.revolution.robotics.views.chippedBox.ChippedBoxDrawable
 
 @BindingAdapter("listener")
 fun setSeekbarListener(seekBar: SeekBar, listener: SeekBar.OnSeekBarChangeListener) {
@@ -44,7 +44,6 @@ fun setImageDrawable(imageView: ImageView, @DrawableRes drawableRes: Int) {
 fun setRobotsViewPagerItems(viewPager: ViewPager, itemList: List<Any>?) {
     if (itemList != null && itemList.isNotEmpty()) {
         (viewPager.adapter as? CarouselAdapter<Any>)?.setItems(itemList)
-        viewPager.currentItem = 0
     }
 }
 

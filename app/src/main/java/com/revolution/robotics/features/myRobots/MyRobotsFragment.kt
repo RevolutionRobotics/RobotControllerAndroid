@@ -5,8 +5,8 @@ import android.view.View
 import androidx.viewpager.widget.ViewPager
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
-import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
 import com.revolution.robotics.core.eventBus.dialog.DialogEvent
+import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
 import com.revolution.robotics.core.extensions.waitForLayout
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.databinding.FragmentMyRobotsBinding
@@ -47,7 +47,6 @@ class MyRobotsFragment : BaseFragment<FragmentMyRobotsBinding, MyRobotsViewModel
     override fun onRobotsChanged() {
         adapter.notifyDataSetChanged()
         binding?.myRobotsViewpager?.initTransformerWithDelay()
-        presenter.onPageSelected(0)
     }
 
     override fun showNextRobot() {
