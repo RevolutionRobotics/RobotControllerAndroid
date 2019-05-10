@@ -9,6 +9,7 @@
         <attr name="cetHintColor" format="reference" />
         <attr name="cetBorderColor" format="reference" />
         <attr name="cetBackgroundColor" format="reference" />
+        <attr name="cetMinLines" format="integer" />
         <attr name="cetMaxLines" format="integer" />
         <attr name="cetMaxLength" format="integer" />
     </declare-styleable>
