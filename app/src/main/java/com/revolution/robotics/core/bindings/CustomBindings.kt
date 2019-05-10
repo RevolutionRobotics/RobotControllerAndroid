@@ -1,21 +1,16 @@
 package com.revolution.robotics.core.bindings
 
-import android.graphics.Bitmap
-import android.graphics.ColorMatrix
-import android.graphics.ColorMatrixColorFilter
 import android.graphics.drawable.Drawable
 import android.text.InputFilter
 import android.text.Spanned
 import android.view.View
 import android.widget.EditText
-import android.widget.ImageView
 import android.widget.SeekBar
 import android.widget.TextView
 import androidx.annotation.ColorRes
-import androidx.annotation.DrawableRes
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
 import androidx.viewpager.widget.ViewPager
-import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.local.UserProgram
 import com.revolution.robotics.core.extensions.color
 import com.revolution.robotics.views.ChippedEditText
@@ -37,40 +32,11 @@ fun setChippedBoxConfig(view: View, config: ChippedBoxConfig?) {
     }
 }
 
-@BindingAdapter("drawable")
-fun setImageDrawable(imageView: ImageView, @DrawableRes drawableRes: Int) {
-    imageView.setImageResource(drawableRes)
-}
-
 @Suppress("UNCHECKED_CAST")
 @BindingAdapter("carouselItems")
 fun setRobotsViewPagerItems(viewPager: ViewPager, itemList: List<Any>?) {
     if (itemList != null && itemList.isNotEmpty()) {
         (viewPager.adapter as? CarouselAdapter<Any>)?.setItems(itemList)
-    }
-}
-
-@BindingAdapter("greyscale")
-fun setGreyscale(imageView: ImageView, greyscale: Boolean) {
-    imageView.colorFilter =
-        if (greyscale) {
-            val matrix = ColorMatrix()
-            matrix.setSaturation(0.0f)
-            ColorMatrixColorFilter(matrix)
-        } else {
-            null
-        }
-}
-
-@BindingAdapter("image")
-fun setImageBitmap(imageView: ImageView, image: Bitmap?) {
-    image?.let { imageView.setImageBitmap(it) }
-}
-
-@BindingAdapter("tintColorResource")
-fun setTintColor(imageView: ImageView, @ColorRes color: Int) {
-    if (color != 0) {
-        imageView.setColorFilter(imageView.context.color(color), android.graphics.PorterDuff.Mode.SRC_IN)
     }
 }
 
@@ -92,27 +58,6 @@ fun setTextColorHintResource(editText: EditText, @ColorRes hintColor: Int) {
 fun setChippedEditViewModel(edit: ChippedEditText, model: ChippedEditTextViewModel?) {
     model?.let {
         edit.setViewModel(it)
-    }
-}
-
-@BindingAdapter("configButtonSelected")
-fun setConfigButtonBackground(button: ImageView, configButtonSelected: Boolean) {
-    if (configButtonSelected) {
-        button.setColorFilter(button.context.color(R.color.grey_28), android.graphics.PorterDuff.Mode.SRC_IN)
-        button.setBackgroundResource(R.drawable.bg_control_button_selected)
-    } else {
-        setChippedBoxConfig(
-            button, ChippedBoxConfig.Builder()
-                .backgroundColorResource(R.color.grey_28)
-                .chipBottomLeft(true)
-                .chipTopRight(true)
-                .borderColorResource(R.color.grey_6d)
-                .borderSize(R.dimen.dimen_1dp)
-                .chipSize(R.dimen.dimen_8dp)
-                .customDashed(R.dimen.dimen_6dp, R.dimen.dimen_6dp)
-                .create()
-        )
-        button.setColorFilter(button.context.color(R.color.white), android.graphics.PorterDuff.Mode.SRC_IN)
     }
 }
 
@@ -150,4 +95,13 @@ fun setupRoboticsButton(button: RoboticsButton, text: String, image: Drawable) {
 @BindingAdapter("program")
 fun setProgram(textView: TextView, program: UserProgram?) {
     program?.let { textView.text = it.name }
+}
+
+@BindingAdapter("widthPercent")
+fun setWidthPercent(view: View, widthPercent: Float) {
+    val layoutParams = view.layoutParams
+    if (layoutParams is ConstraintLayout.LayoutParams) {
+        layoutParams.matchConstraintPercentWidth = widthPercent
+        view.layoutParams = layoutParams
+    }
 }
