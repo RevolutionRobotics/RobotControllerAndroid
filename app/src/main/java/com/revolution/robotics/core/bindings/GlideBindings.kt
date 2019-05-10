@@ -4,12 +4,15 @@ import android.graphics.drawable.Drawable
 import android.widget.ImageView
 import androidx.annotation.DrawableRes
 import androidx.databinding.BindingAdapter
+import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.revolution.robotics.R
 import com.revolution.robotics.core.glide.GlideApp
+import com.revolution.robotics.core.utils.CameraHelper
 import com.revolution.robotics.views.RemoteImageView
+import java.io.File
 
 @BindingAdapter("android:src", "errorDrawable", requireAll = false)
 fun loadImage(imageView: ImageView, url: String?, errorDrawable: Drawable?) {
@@ -88,9 +91,19 @@ private fun setErrorDrawable(imageView: ImageView, errorDrawable: Drawable?) {
     }
 }
 
-@BindingAdapter("firebaseImageUrl", "errorDrawable", "animate", requireAll = false)
-fun loadFirebaseImage(remoteImageView: RemoteImageView, gsUrl: String?, errorDrawable: Drawable?, animate: Boolean?) {
-    if (!gsUrl.isNullOrEmpty()) {
+@BindingAdapter("firebaseImageUrl", "robotId", "errorDrawable", "animate", requireAll = false)
+fun loadFirebaseImage(
+    remoteImageView: RemoteImageView,
+    gsUrl: String?,
+    robotId: Int?,
+    errorDrawable: Drawable?,
+    animate: Boolean?
+) {
+    val imageFile =
+        CameraHelper.getImageFile(remoteImageView.context, CameraHelper.generateFilenameForRobot(robotId ?: -1))
+    if (imageFile.exists()) {
+        loadImageFromFile(remoteImageView.image, imageFile)
+    } else if (!gsUrl.isNullOrEmpty()) {
         loadFirebaseImage(remoteImageView.image, gsUrl, errorDrawable, animate)
     } else {
         if (errorDrawable == null) {
@@ -98,5 +111,14 @@ fun loadFirebaseImage(remoteImageView: RemoteImageView, gsUrl: String?, errorDra
         } else {
             remoteImageView.empty.setImageDrawable(errorDrawable)
         }
+    }
+}
+
+@BindingAdapter("imageFile")
+fun loadImageFromFile(imageView: ImageView, file: File?) {
+    if (file != null && file.exists()) {
+        Glide.with(imageView)
+            .load(file)
+            .into(imageView)
     }
 }

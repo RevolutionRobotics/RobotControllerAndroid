@@ -2,7 +2,6 @@ package com.revolution.robotics.features.configure
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import com.revolution.robotics.R
 import com.revolution.robotics.core.extensions.withArguments
@@ -20,8 +19,8 @@ class RobotPictureDialog : RoboticsDialog() {
 
         private var Bundle.robotId by BundleArgumentDelegate.Int("robotId")
 
-        fun newInstance(robotId: Int) = RobotPictureDialog().withArguments { bundle ->
-            bundle.robotId = robotId
+        fun newInstance(id: Int) = RobotPictureDialog().withArguments { bundle ->
+            bundle.robotId = id
         }
     }
 
@@ -36,27 +35,31 @@ class RobotPictureDialog : RoboticsDialog() {
             dialogFace.onImageDeleted()
         },
         DialogButton(R.string.camera_dialog_new_photo_title, R.drawable.ic_camera, true) {
-            cameraHelper.startCameraActivity(this, REQUEST_CODE_CAMERA)
+            startCamera()
         }
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        cameraHelper = CameraHelper("robot-${arguments?.robotId ?: 0}.jpg")
+        cameraHelper = CameraHelper(arguments?.robotId ?: 0)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_CODE_CAMERA && resultCode == Activity.RESULT_OK) {
-            dialogFace.onCameraCaptured()
+            dialogFace.onCameraCaptured(false)
         } else {
             super.onActivityResult(requestCode, resultCode, data)
         }
     }
 
+    private fun startCamera() {
+        cameraHelper.startCameraActivity(this, REQUEST_CODE_CAMERA)
+    }
+
     inner class RobotPictureDialogFace : DialogFace<DialogRobotPictureBinding>(R.layout.dialog_robot_picture) {
 
         override fun onActivated() {
-            onCameraCaptured()
+            onCameraCaptured(true)
         }
 
         fun onImageDeleted() {
@@ -66,14 +69,15 @@ class RobotPictureDialog : RoboticsDialog() {
             }
         }
 
-        fun onCameraCaptured() {
-            cameraHelper.getImageFile(requireContext()).let { file ->
-                if (file.exists()) {
-                    binding?.apply {
-                        image = BitmapFactory.decodeStream(file.inputStream())
-                        executePendingBindings()
-                    }
+        fun onCameraCaptured(openCameraIfImageDoesNotExist: Boolean) {
+            val imageFile = cameraHelper.getImageFile(requireContext())
+            if (imageFile.exists()) {
+                binding?.apply {
+                    image = imageFile
+                    executePendingBindings()
                 }
+            } else if (openCameraIfImageDoesNotExist) {
+                startCamera()
             }
         }
     }
