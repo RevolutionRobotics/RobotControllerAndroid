@@ -53,6 +53,7 @@ class ConfigurePresenter(
 
     override fun onConnectionsTabSelected() {
         model?.setScreen(ConfigurationTabs.CONNECTIONS)
+        userConfiguration?.let { view?.showConnectionsScreen(it) }
     }
 
     override fun onControllerTabSelected() {
@@ -62,9 +63,7 @@ class ConfigurePresenter(
 
     override fun onMotorConfigChangedEvent(event: MotorPort) {
         userConfiguration?.let { config ->
-            config.mappingId?.let { mapping ->
-                setupMotorBasedOnName(event, mapping)
-            }
+            config.mappingId?.let { mapping -> setupMotorBasedOnName(event, mapping) }
             view?.updateConfig(config)
         }
         view?.hideDrawer()
@@ -101,9 +100,7 @@ class ConfigurePresenter(
     }
 
     override fun onRobotImageClicked() {
-        userRobot?.id?.let {
-            view?.showDialog(RobotPictureDialog.newInstance(it))
-        }
+        userRobot?.id?.let { view?.showDialog(RobotPictureDialog.newInstance(it)) }
     }
 
     override fun saveConfiguration() {
