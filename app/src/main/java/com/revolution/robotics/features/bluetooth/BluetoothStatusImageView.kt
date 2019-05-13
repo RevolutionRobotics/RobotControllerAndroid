@@ -26,8 +26,8 @@ class BluetoothStatusImageView @JvmOverloads constructor(
     }
 
     override fun onDetachedFromWindow() {
-        super.onDetachedFromWindow()
         bluetoothManager.unregisterListener(this)
+        super.onDetachedFromWindow()
     }
 
     override fun onBluetoothConnectaionStateChanged(connected: Boolean) {

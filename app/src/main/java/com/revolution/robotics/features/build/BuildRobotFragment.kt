@@ -60,8 +60,8 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
         presenter.register(this, viewModel)
         presenter.loadBuildSteps(arguments?.robot?.id ?: 0)
 
-        bluetoothManager.startConnectionFlow()
         dialogEventBus.register(this)
+        bluetoothManager.startConnectionFlow()
     }
 
     override fun onStop() {

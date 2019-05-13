@@ -43,7 +43,7 @@ class ConnectPresenter(
                     isConnectionInProgress = false
                 },
                 onDisconnected = {
-                    view?.onConnectionError()
+                    robot.setSelected(false)
                     isConnectionInProgress = false
                 },
                 onError = {
