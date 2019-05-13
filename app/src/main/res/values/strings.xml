@@ -167,6 +167,12 @@
     <!-- Play -->
     <string name="play_screen_title">Play!</string>
 
+    <!-- Challenges -->
+    <string name="challenges_screen_title">Challenges</string>
+
+    <!-- Program selector -->
+    <string name="program_selector_title">Choose a program!</string>
+
     <!-- Settings -->
     <string name="settings_screen_title">Settings</string>
     <string name="settings_reset_tutorial">Reset tutorial</string>
