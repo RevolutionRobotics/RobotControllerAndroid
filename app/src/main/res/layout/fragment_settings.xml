@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable name="viewModel" type="com.revolution.robotics.features.mainmenu.settings.SettingsViewModel"/>
+        <variable name="toolbarViewModel"
+                  type="com.revolution.robotics.features.mainmenu.settings.SettingsToolbarViewModel"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <com.revolution.robotics.views.toolbar.RoboticsToolbar
+                android:id="@+id/toolbar"
+                app:viewModel="@{toolbarViewModel}"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/toolbar_height"/>
+
+        <LinearLayout
+                android:id="@+id/button_reset_tutorial"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="58dp"
+                android:layout_marginEnd="58dp"
+                android:padding="16dp"
+                android:onClick="@{()->viewModel.onResetTutorialClick()}"
+                app:chippedBoxConfig="@{viewModel.buttonBackground}"
+                app:layout_constraintTop_toBottomOf="@id/toolbar"
+                app:layout_constraintBottom_toTopOf="@id/button_firmware_update"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:orientation="horizontal"
+                app:layout_constraintVertical_chainStyle="packed">
+
+
+            <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:src="@drawable/ic_reset"/>
+
+            <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:includeFontPadding="false"
+                    android:fontFamily="@font/barlow_medium"
+                    android:text="@string/settings_reset_tutorial"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/button_firmware_update"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginStart="58dp"
+                android:layout_marginEnd="58dp"
+                android:padding="16dp"
+                android:onClick="@{()->viewModel.onFirmwareUpdateClick()}"
+                app:chippedBoxConfig="@{viewModel.buttonBackground}"
+                app:layout_constraintTop_toBottomOf="@id/button_reset_tutorial"
+                app:layout_constraintBottom_toTopOf="@id/button_about_application"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:orientation="horizontal"
+                app:layout_constraintVertical_chainStyle="packed">
+
+            <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:src="@drawable/ic_retry"/>
+
+            <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:includeFontPadding="false"
+                    android:fontFamily="@font/barlow_medium"
+                    android:text="@string/settings_firmware_update"/>
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/button_about_application"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginStart="58dp"
+                android:layout_marginEnd="58dp"
+                android:padding="16dp"
+                android:onClick="@{()->viewModel.onAboutApplicationClick()}"
+                app:chippedBoxConfig="@{viewModel.buttonBackground}"
+                app:layout_constraintTop_toBottomOf="@id/button_firmware_update"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:orientation="horizontal"
+                app:layout_constraintVertical_chainStyle="packed">
+
+
+            <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:src="@drawable/ic_about"/>
+
+            <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:includeFontPadding="false"
+                    android:fontFamily="@font/barlow_medium"
+                    android:text="@string/settings_about_applications"
+            />
+
+        </LinearLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

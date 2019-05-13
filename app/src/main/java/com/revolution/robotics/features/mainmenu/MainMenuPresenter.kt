@@ -20,5 +20,7 @@ class MainMenuPresenter(private val navigator: Navigator) : MainMenuMvp.Presente
 
     override fun onCommunityClicked() = Unit
 
-    override fun onSettingsClicked() = Unit
+    override fun onSettingsClicked() {
+        navigator.navigate(MainMenuFragmentDirections.toSettings())
+    }
 }
