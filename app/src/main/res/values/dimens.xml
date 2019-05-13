@@ -16,6 +16,7 @@
     <dimen name="dimen_44dp">44dp</dimen>
     <dimen name="dimen_48dp">48dp</dimen>
     <dimen name="dimen_64dp">64dp</dimen>
+    <dimen name="dimen_128dp">128dp</dimen>
 
     <!-- CUSTOM VIEW: SEEKBAR -->
     <dimen name="seekbar_progress_height">14dp</dimen>

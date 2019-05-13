@@ -46,5 +46,5 @@ fun createViewModelModule() =
         bind<PlayViewModel>() with provider { PlayViewModel(instance()) }
         bind<TypeSelectorViewModel>() with provider { TypeSelectorViewModel(instance()) }
         bind<SetupViewModel>() with provider { SetupViewModel(instance()) }
-        bind<ProgramSelectorViewModel>() with provider { ProgramSelectorViewModel() }
+        bind<ProgramSelectorViewModel>() with provider { ProgramSelectorViewModel(instance()) }
     }
