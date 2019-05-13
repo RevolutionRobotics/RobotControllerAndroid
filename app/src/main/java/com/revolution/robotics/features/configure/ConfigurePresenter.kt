@@ -7,6 +7,7 @@ import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
 import com.revolution.robotics.core.interactor.GetUserConfigurationInteractor
 import com.revolution.robotics.core.interactor.SaveUserRobotInteractor
 
+@Suppress("TooManyFunctions")
 class ConfigurePresenter(
     private val configurationEventBus: ConfigurationEventBus,
     private val getUserConfigurationInteractor: GetUserConfigurationInteractor,
