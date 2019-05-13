@@ -30,7 +30,7 @@
                 app:layout_constraintGuide_begin="@dimen/toolbar_header_height"
                 android:orientation="horizontal"/>
 
-        <ImageView
+        <com.revolution.robotics.features.bluetooth.BluetoothStatusImageView
                 android:id="@+id/bluetooth_icon"
                 android:layout_width="@dimen/dimen_40dp"
                 android:layout_height="@dimen/dimen_40dp"
@@ -40,9 +40,7 @@
                 app:layout_constraintTop_toTopOf="@id/toolbar"
                 app:layout_constraintBottom_toBottomOf="@id/toolbar_body_bottom"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginEnd="@dimen/dimen_8dp"
-                android:onClick="@{() -> viewModel.onBluetoothIconClicked()}"
-                app:greyscale="@{!viewModel.isBluetoothConnected}"/>
+                android:layout_marginEnd="@dimen/dimen_8dp"/>
 
         <TextView
                 android:id="@+id/steps"

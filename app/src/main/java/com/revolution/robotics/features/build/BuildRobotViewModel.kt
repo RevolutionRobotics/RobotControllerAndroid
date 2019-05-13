@@ -3,7 +3,6 @@ package com.revolution.robotics.features.build
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import androidx.core.text.toSpannable
-import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.revolution.robotics.R
@@ -12,12 +11,10 @@ import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.core.utils.CustomTypefaceSpan
 
 class BuildRobotViewModel(
-    private val resourceResolver: ResourceResolver,
-    private val presenter: BuildRobotMvp.Presenter
+    private val resourceResolver: ResourceResolver
 ) : ViewModel() {
     val imageUrl: MutableLiveData<String?> = MutableLiveData()
     val step: MutableLiveData<Spannable?> = MutableLiveData()
-    val isBluetoothConnected = ObservableBoolean(false)
     val partsImage: MutableLiveData<String?> = MutableLiveData()
     val partsQuantity: MutableLiveData<String?> = MutableLiveData()
 
@@ -36,8 +33,4 @@ class BuildRobotViewModel(
             append("$actualStep", CustomTypefaceSpan(resourceResolver.font(R.font.barlow_bold)), 0)
             append(" / $totalSteps", CustomTypefaceSpan(resourceResolver.font(R.font.barlow_regular)), 0)
         }.toSpannable()
-
-    fun onBluetoothIconClicked() {
-        presenter.onBluetoothIconClicked()
-    }
 }

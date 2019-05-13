@@ -8,6 +8,7 @@ import androidx.navigation.findNavController
 import com.revolution.robotics.core.extensions.hideSystemUI
 import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.core.utils.dynamicPermissions.DynamicPermissionHandler
+import com.revolution.robotics.features.bluetooth.BluetoothManager
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.erased.instance
@@ -18,6 +19,7 @@ class MainActivity : AppCompatActivity(), KodeinAware, Navigator.NavigationEvent
     private val dynamicPermissionHandler: DynamicPermissionHandler by instance()
     private val navigator: Navigator by instance()
     private val navController: NavController by lazy { findNavController(R.id.nav_host_fragment) }
+    private val bluetoothManager: BluetoothManager by instance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,9 +27,19 @@ class MainActivity : AppCompatActivity(), KodeinAware, Navigator.NavigationEvent
         navigator.registerListener(this)
     }
 
+    override fun onStart() {
+        super.onStart()
+        bluetoothManager.init(this)
+    }
+
     override fun onResume() {
         super.onResume()
         window.hideSystemUI()
+    }
+
+    override fun onStop() {
+        bluetoothManager.shutDown()
+        super.onStop()
     }
 
     override fun onDestroy() {

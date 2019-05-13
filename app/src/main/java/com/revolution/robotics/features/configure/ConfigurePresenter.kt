@@ -8,7 +8,6 @@ import com.revolution.robotics.core.interactor.GetUserConfigurationInteractor
 import com.revolution.robotics.core.interactor.SaveUserRobotInteractor
 import com.revolution.robotics.features.configure.save.SaveRobotDialog
 
-@Suppress("TooManyFunctions")
 class ConfigurePresenter(
     private val configurationEventBus: ConfigurationEventBus,
     private val getUserConfigurationInteractor: GetUserConfigurationInteractor,
@@ -113,9 +112,5 @@ class ConfigurePresenter(
         userRobot?.let { robot ->
             view?.showSaveDialog(robot.name ?: "", robot.description ?: "")
         }
-    }
-
-    override fun onBluetoothClicked() {
-        view?.startConnectionFlow()
     }
 }

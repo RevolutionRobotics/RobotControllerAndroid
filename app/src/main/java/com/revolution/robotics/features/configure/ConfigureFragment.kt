@@ -11,7 +11,6 @@ import com.revolution.robotics.core.domain.local.UserRobot
 import com.revolution.robotics.core.domain.remote.Motor
 import com.revolution.robotics.core.domain.remote.Sensor
 import com.revolution.robotics.core.utils.BundleArgumentDelegate
-import com.revolution.robotics.core.utils.dynamicPermissions.BluetoothConnectionFlowHelper
 import com.revolution.robotics.databinding.FragmentConfigureBinding
 import com.revolution.robotics.features.configure.connections.ConfigureConnectionsFragment
 import com.revolution.robotics.features.configure.controllers.ConfigureControllersFragment
@@ -21,7 +20,7 @@ import org.kodein.di.erased.instance
 // There are 3 Unit empty functions so this can be ignored
 @Suppress("TooManyFunctions")
 class ConfigureFragment : BaseFragment<FragmentConfigureBinding, ConfigureViewModel>(R.layout.fragment_configure),
-    ConfigureMvp.View, BluetoothConnectionFlowHelper.Listener, DrawerLayout.DrawerListener {
+    ConfigureMvp.View, DrawerLayout.DrawerListener {
 
     companion object {
         val Bundle.userRobot: UserRobot by BundleArgumentDelegate.Parcelable("userRobot")
@@ -29,7 +28,6 @@ class ConfigureFragment : BaseFragment<FragmentConfigureBinding, ConfigureViewMo
 
     override val viewModelClass: Class<ConfigureViewModel> = ConfigureViewModel::class.java
     private val presenter: ConfigureMvp.Presenter by kodein.instance()
-    private val connectionFlowHelper = BluetoothConnectionFlowHelper(kodein)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         presenter.register(this, viewModel)
@@ -39,7 +37,6 @@ class ConfigureFragment : BaseFragment<FragmentConfigureBinding, ConfigureViewMo
             }
         }
 
-        connectionFlowHelper.init(fragmentManager, this)
         binding?.drawerConfiguration?.addDrawerListener(this)
     }
 
@@ -49,7 +46,6 @@ class ConfigureFragment : BaseFragment<FragmentConfigureBinding, ConfigureViewMo
 
     override fun onDestroyView() {
         presenter.unregister()
-        connectionFlowHelper.shutdown()
         binding?.drawerConfiguration?.removeDrawerListener(this)
         super.onDestroyView()
     }
@@ -60,14 +56,6 @@ class ConfigureFragment : BaseFragment<FragmentConfigureBinding, ConfigureViewMo
 
     override fun openSensorConfig(sensorPort: SensorPort) {
         binding?.drawerConfiguration?.setSensor(sensorPort.sensor ?: Sensor(), sensorPort.portName ?: "")
-    }
-
-    override fun startConnectionFlow() {
-        connectionFlowHelper.startConnectionFlow(requireActivity())
-    }
-
-    override fun onBluetoothConnected() {
-        viewModel?.isBluetoothConnected?.set(true)
     }
 
     override fun showConnectionsScreen(userConfiguration: UserConfiguration) {
