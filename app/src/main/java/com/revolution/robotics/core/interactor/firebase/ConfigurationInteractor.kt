@@ -1,15 +1,22 @@
 package com.revolution.robotics.core.interactor.firebase
 
+import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.GenericTypeIndicator
 import com.google.firebase.database.Query
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.revolution.robotics.core.domain.remote.Configuration
 
-class ConfigurationInteractor : FirebaseSingleObjectInteractor<Configuration>() {
-    override val genericTypeIndicator: GenericTypeIndicator<ArrayList<Configuration>> =
-        object : GenericTypeIndicator<ArrayList<Configuration>>() {}
+class ConfigurationInteractor : FirebaseCustomObjectReadInteractor<Configuration>() {
 
     var configId = 0
+
+    override fun convert(snapShot: DataSnapshot) = Configuration().apply {
+        val gson = Gson()
+        val json = gson.toJson(snapShot.value)
+        val list: List<Configuration> = gson.fromJson(json, object : TypeToken<List<Configuration>>() {}.type)
+        return list.first()
+    }
 
     override fun getDatabaseReference(database: FirebaseDatabase): Query =
         database.getReference("configuration").orderByChild("id").equalTo(configId.toDouble()).limitToFirst(1)
