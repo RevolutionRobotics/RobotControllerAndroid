@@ -6,6 +6,7 @@ import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
 import com.revolution.robotics.core.interactor.GetUserConfigurationInteractor
 import com.revolution.robotics.core.interactor.SaveUserRobotInteractor
+import com.revolution.robotics.features.configure.save.SaveRobotDialog
 
 @Suppress("TooManyFunctions")
 class ConfigurePresenter(
@@ -57,8 +58,8 @@ class ConfigurePresenter(
     override fun onDialogEvent(event: DialogEvent) {
         if (event == DialogEvent.SAVE_ROBOT) {
             userRobot?.let { robot ->
-                robot.name = event.extras.getString("name")
-                robot.description = event.extras.getString("description")
+                robot.name = event.extras.getString(SaveRobotDialog.KEY_NAME)
+                robot.description = event.extras.getString(SaveRobotDialog.KEY_DESCRIPTION)
                 saveUserRobotInteractor.userConfiguration = userConfiguration
                 saveUserRobotInteractor.userRobot = robot
                 toolbarViewModel?.title?.set(robot.name)
