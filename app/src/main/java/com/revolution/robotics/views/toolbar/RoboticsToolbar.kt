@@ -10,6 +10,7 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
+import androidx.databinding.Observable
 import com.revolution.robotics.R
 import com.revolution.robotics.core.extensions.dimension
 import com.revolution.robotics.core.extensions.invisible
@@ -27,7 +28,12 @@ class RoboticsToolbar @JvmOverloads constructor(context: Context, attrs: Attribu
             if (value != null) {
                 logo.invisible = !value.isLogoVisible
                 back.invisible = !value.hasBackOption
-                title.text = value.title
+                title.text = value.title.get()
+                value.title.addOnPropertyChangedCallback(object : Observable.OnPropertyChangedCallback() {
+                    override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
+                        title.text = value.title.get()
+                    }
+                })
                 value.options.reversed().forEachIndexed { index, option -> createOption(option, index == 0) }
             }
         }

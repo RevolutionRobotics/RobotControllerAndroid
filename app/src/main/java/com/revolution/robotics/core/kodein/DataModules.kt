@@ -26,12 +26,12 @@ import com.revolution.robotics.features.configure.ConfigureMvp
 import com.revolution.robotics.features.configure.ConfigurePresenter
 import com.revolution.robotics.features.configure.connections.ConfigureConnectionsMvp
 import com.revolution.robotics.features.configure.connections.ConfigureConnectionsPresenter
+import com.revolution.robotics.features.configure.controllers.ConfigureControllersMvp
+import com.revolution.robotics.features.configure.controllers.ConfigureControllersPresenter
 import com.revolution.robotics.features.configure.motor.MotorConfigurationMvp
 import com.revolution.robotics.features.configure.motor.MotorConfigurationPresenter
 import com.revolution.robotics.features.configure.sensor.SensorConfigurationMvp
 import com.revolution.robotics.features.configure.sensor.SensorConfigurationPresenter
-import com.revolution.robotics.features.configure.controllers.ConfigureControllersMvp
-import com.revolution.robotics.features.configure.controllers.ConfigureControllersPresenter
 import com.revolution.robotics.features.controller.LiveControllerMvp
 import com.revolution.robotics.features.controller.LiveControllerPresenter
 import com.revolution.robotics.features.mainmenu.MainMenuMvp
@@ -70,11 +70,19 @@ fun createPresenterModule() =
         bind<ChapterFinishedMvp.Presenter>() with singleton { ChapterFinishedPresenter(instance()) }
         bind<BuildRobotMvp.Presenter>() with singleton { BuildRobotPresenter(instance(), instance(), instance()) }
         bind<ConnectMvp.Presenter>() with singleton { ConnectPresenter(instance()) }
-        bind<ConfigureMvp.Presenter>() with singleton { ConfigurePresenter(instance(), instance()) }
+        bind<ConfigureMvp.Presenter>() with singleton {
+            ConfigurePresenter(
+                instance(),
+                instance(),
+                instance(),
+                instance()
+            )
+        }
         bind<ConfigureConnectionsMvp.Presenter>() with singleton {
             ConfigureConnectionsPresenter(
                 instance(),
-                instance())
+                instance()
+            )
         }
         bind<MotorConfigurationMvp.Presenter>() with singleton { MotorConfigurationPresenter(instance(), instance()) }
         bind<SensorConfigurationMvp.Presenter>() with singleton { SensorConfigurationPresenter(instance(), instance()) }

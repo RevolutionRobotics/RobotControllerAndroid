@@ -8,7 +8,7 @@ import com.revolution.robotics.core.domain.local.UserConfigurationDao
 import com.revolution.robotics.core.domain.local.UserRobot
 import com.revolution.robotics.core.domain.local.UserRobotDao
 
-@Database(entities = [UserRobot::class, UserConfiguration::class], version = 4, exportSchema = false)
+@Database(entities = [UserRobot::class, UserConfiguration::class], version = 5, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class RoboticsDatabase : RoomDatabase() {
     abstract fun userRobotDao(): UserRobotDao

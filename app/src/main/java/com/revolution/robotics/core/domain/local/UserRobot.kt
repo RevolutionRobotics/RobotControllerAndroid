@@ -19,7 +19,7 @@ data class UserRobot(
     var actualBuildStep: Int = 0,
     var lastModified: Date? = null,
     var configurationId: Int = 0,
-    val name: String? = null,
+    var name: String? = null,
     var coverImage: String? = null,
     var description: String? = null
 ) : Parcelable

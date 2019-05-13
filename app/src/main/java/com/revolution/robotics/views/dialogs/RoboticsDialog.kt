@@ -15,9 +15,9 @@ import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
 import com.revolution.robotics.core.extensions.dimension
 import com.revolution.robotics.core.extensions.gone
 import com.revolution.robotics.core.extensions.hideSystemUI
-import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 import com.revolution.robotics.databinding.DialogRoboticsCoreBinding
 import com.revolution.robotics.databinding.DialogRoboticsCoreButtonBinding
+import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 import org.kodein.di.KodeinAware
 import org.kodein.di.LateInitKodein
 import org.kodein.di.erased.instance
@@ -46,7 +46,7 @@ abstract class RoboticsDialog : DialogFragment() {
 
         binding.background = ChippedBoxConfig.Builder()
             .chipSize(R.dimen.dialog_chip_size)
-            .backgroundColorResource(R.color.grey_1e)
+            .backgroundColorResource(R.color.grey_28)
             .create()
         binding.viewModel = RoboticsDialogViewModel(hasCloseButton) {
             dialog.dismiss()
@@ -79,6 +79,7 @@ abstract class RoboticsDialog : DialogFragment() {
         context?.let { context -> dialogFace.activate(this, LayoutInflater.from(context), binding.container) }
         activeFace = dialogFace
         createButtons()
+        activeFace.onActivated()
     }
 
     private fun createButtons() {
