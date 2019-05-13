@@ -34,7 +34,7 @@ interface UserRobotDao {
     fun getRobotByStatus(robotId: Int, buildStatus: BuildStatus): UserRobot?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun saveUserRobot(userRobot: UserRobot)
+    fun saveUserRobot(userRobot: UserRobot): Long
 
     @Query("DELETE FROM UserRobot WHERE instanceId = :id")
     fun deleteRobotById(id: Int)

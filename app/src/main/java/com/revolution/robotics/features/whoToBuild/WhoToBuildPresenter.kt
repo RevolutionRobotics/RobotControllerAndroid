@@ -103,7 +103,8 @@ class WhoToBuildPresenter(
         saveUserRobotInteractor.userConfiguration = UserConfiguration(mappingId = UserMapping())
         saveUserRobotInteractor.userRobot = userRobot
         saveUserRobotInteractor.execute(
-            onResponse = {
+            onResponse = {instanceId ->
+                userRobot.instanceId = instanceId.toInt()
                 navigator.navigate(WhoToBuildFragmentDirections.toConfigure(userRobot))
             },
             onError = { error ->
