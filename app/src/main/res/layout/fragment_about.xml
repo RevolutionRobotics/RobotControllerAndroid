@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable name="viewModel" type="com.revolution.robotics.features.mainmenu.settings.about.AboutViewModel"/>
+        <variable name="toolbarViewModel"
+                  type="com.revolution.robotics.features.mainmenu.settings.about.AboutToolbarViewModel"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <com.revolution.robotics.views.toolbar.RoboticsToolbar
+                android:id="@+id/toolbar"
+                app:viewModel="@{toolbarViewModel}"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/toolbar_height"/>
+
+        <TextView
+                android:id="@+id/txt_version"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/toolbar"
+                android:text="@{viewModel.versionText}"/>
+
+        <ImageView
+                android:id="@+id/img_facebook"
+                android:layout_width="@dimen/about_social_icon_size"
+                android:layout_height="@dimen/about_social_icon_size"
+                android:layout_marginEnd="@dimen/dimen_24dp"
+                android:src="@drawable/ic_facebook"
+                android:onClick="@{() ->viewModel.onFacebookClicked()}"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/img_website"
+                app:layout_constraintTop_toBottomOf="@id/txt_version"/>
+
+        <ImageView
+                android:id="@+id/img_website"
+                android:layout_width="@dimen/about_social_icon_size"
+                android:layout_height="@dimen/about_social_icon_size"
+                android:layout_marginEnd="@dimen/dimen_24dp"
+                android:src="@drawable/ic_website"
+                android:onClick="@{() ->viewModel.onWebsiteClicked()}"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toEndOf="@id/img_facebook"
+                app:layout_constraintEnd_toStartOf="@id/img_instagram"
+                app:layout_constraintTop_toBottomOf="@id/txt_version"/>
+
+        <ImageView
+                android:id="@+id/img_instagram"
+                android:layout_width="@dimen/about_social_icon_size"
+                android:layout_height="@dimen/about_social_icon_size"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                android:src="@drawable/ic_instagram"
+                android:onClick="@{() ->viewModel.onInstagramClicked()}"
+                app:layout_constraintStart_toEndOf="@id/img_website"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txt_version"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

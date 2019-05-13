@@ -146,5 +146,6 @@
     <string name="settings_reset_tutorial">Reset tutorial</string>
     <string name="settings_firmware_update">Firmware update</string>
     <string name="settings_about_applications">About application</string>
+    <string name="about_toolbar_title">About application</string>
 
 </resources>
