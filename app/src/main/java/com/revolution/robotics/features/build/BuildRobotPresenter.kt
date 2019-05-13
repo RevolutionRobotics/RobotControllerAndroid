@@ -62,8 +62,4 @@ class BuildRobotPresenter(
             saveUserRobotInteractor.execute()
         }
     }
-
-    override fun onBluetoothIconClicked() {
-        view?.startBluetoothConnectionFlow()
-    }
 }

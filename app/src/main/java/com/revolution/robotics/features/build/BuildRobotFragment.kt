@@ -10,8 +10,8 @@ import com.revolution.robotics.core.domain.remote.BuildStep
 import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
 import com.revolution.robotics.core.utils.BundleArgumentDelegate
-import com.revolution.robotics.core.utils.dynamicPermissions.BluetoothConnectionFlowHelper
 import com.revolution.robotics.databinding.FragmentBuildRobotBinding
+import com.revolution.robotics.features.bluetooth.BluetoothManager
 import com.revolution.robotics.features.build.buildFinished.BuildFinishedDialog
 import com.revolution.robotics.features.build.chapterFinished.ChapterFinishedDialog
 import com.revolution.robotics.features.build.testing.BumperTestDialog
@@ -25,8 +25,7 @@ import java.util.Date
 
 @Suppress("UnnecessaryApply")
 class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotViewModel>(R.layout.fragment_build_robot),
-    BuildRobotMvp.View, BuildStepSliderView.BuildStepSelectedListener, DialogEventBus.Listener,
-    BluetoothConnectionFlowHelper.Listener {
+    BuildRobotMvp.View, BuildStepSliderView.BuildStepSelectedListener, DialogEventBus.Listener {
 
     companion object {
         private const val TEST_TYPE_BUMPER = 1
@@ -42,7 +41,7 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
     override val viewModelClass = BuildRobotViewModel::class.java
     private val presenter: BuildRobotMvp.Presenter by kodein.instance()
     private val dialogEventBus: DialogEventBus by kodein.instance()
-    private val connectionFlowHelper = BluetoothConnectionFlowHelper(kodein)
+    private val bluetoothManager: BluetoothManager by kodein.instance()
 
     private var buildStepCount = 0
     private var currentBuildStep: BuildStep? = null
@@ -62,8 +61,7 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
         presenter.loadBuildSteps(arguments?.robot?.id ?: 0)
 
         dialogEventBus.register(this)
-        connectionFlowHelper.init(fragmentManager, this)
-        connectionFlowHelper.startConnectionFlow(requireActivity())
+        bluetoothManager.startConnectionFlow()
     }
 
     override fun onStop() {
@@ -78,13 +76,8 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
     }
 
     override fun onDestroyView() {
-        connectionFlowHelper.shutdown()
         dialogEventBus.unregister(this)
         super.onDestroyView()
-    }
-
-    override fun onBluetoothConnected() {
-        viewModel?.isBluetoothConnected?.set(true)
     }
 
     override fun onDialogEvent(event: DialogEvent) {
@@ -127,9 +120,5 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
             presenter.saveUserRobot(this, true)
         }
         BuildFinishedDialog.newInstance().show(fragmentManager)
-    }
-
-    override fun startBluetoothConnectionFlow() {
-        connectionFlowHelper.startConnectionFlow(requireActivity())
     }
 }

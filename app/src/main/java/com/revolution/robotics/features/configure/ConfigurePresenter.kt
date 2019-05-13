@@ -114,8 +114,4 @@ class ConfigurePresenter(
             view?.showSaveDialog(robot.name ?: "", robot.description ?: "")
         }
     }
-
-    override fun onBluetoothClicked() {
-        view?.startConnectionFlow()
-    }
 }

@@ -26,18 +26,14 @@ class BluetoothConnectionFlowHelper(kodein: Kodein) : DialogEventBus.Listener {
     private val dialogEventBus: DialogEventBus by kodein.instance()
     private var fragmentManager: FragmentManager? = null
 
-    var listener: Listener? = null
-
-    fun init(fragmentManager: FragmentManager?, listener: Listener? = null) {
+    fun init(fragmentManager: FragmentManager?) {
         this.fragmentManager = fragmentManager
-        this.listener = listener
         dialogEventBus.register(this)
     }
 
     fun shutdown() {
         dialogEventBus.unregister(this)
         fragmentManager = null
-        listener = null
     }
 
     fun startConnectionFlow(activity: Activity) {
@@ -52,17 +48,10 @@ class BluetoothConnectionFlowHelper(kodein: Kodein) : DialogEventBus.Listener {
         when (event) {
             DialogEvent.PERMISSION_GRANTED -> TurnOnTheBrainDialog.newInstance().show(fragmentManager)
             DialogEvent.BRAIN_TURNED_ON -> ConnectDialog.newInstance().show(fragmentManager)
-            DialogEvent.ROBOT_CONNECTED -> {
-                listener?.onBluetoothConnected()
-                ConnectionSuccessDialog.newInstance().show(fragmentManager)
-            }
+            DialogEvent.ROBOT_CONNECTED -> ConnectionSuccessDialog.newInstance().show(fragmentManager)
             DialogEvent.ROBOT_CONNECTION_FAILED -> ConnectionFailedDialog.newInstance().show(fragmentManager)
             DialogEvent.ROBOT_RECONNECT -> ConnectDialog.newInstance().show(fragmentManager)
             else -> Unit
         }
-    }
-
-    interface Listener {
-        fun onBluetoothConnected()
     }
 }

@@ -1,7 +1,6 @@
 package com.revolution.robotics.features.configure
 
 import androidx.annotation.ColorRes
-import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.revolution.robotics.R
@@ -13,7 +12,6 @@ class ConfigureViewModel(private val presenter: ConfigureMvp.Presenter) : ViewMo
     var controllerTextColorRes: MutableLiveData<Int> = MutableLiveData()
     var connectionBackgroundConfig: MutableLiveData<ChippedBoxConfig> = MutableLiveData()
     var controllerBackgroundConfig: MutableLiveData<ChippedBoxConfig> = MutableLiveData()
-    var isBluetoothConnected = ObservableBoolean(false)
 
     companion object {
         @ColorRes
@@ -71,6 +69,4 @@ class ConfigureViewModel(private val presenter: ConfigureMvp.Presenter) : ViewMo
     fun onConnectionsSelected() = presenter.onConnectionsTabSelected()
 
     fun onControllerSelected() = presenter.onControllerTabSelected()
-
-    fun onBluetoothClicked() = presenter.onBluetoothClicked()
 }

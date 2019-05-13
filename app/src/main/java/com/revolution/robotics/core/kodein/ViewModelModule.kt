@@ -28,7 +28,7 @@ fun createViewModelModule() =
         bind<LiveControllerViewModel>() with provider { LiveControllerViewModel(instance()) }
         bind<MyRobotsViewModel>() with provider { MyRobotsViewModel(instance()) }
         bind<ConnectViewModel>() with provider { ConnectViewModel() }
-        bind<BuildRobotViewModel>() with provider { BuildRobotViewModel(instance(), instance()) }
+        bind<BuildRobotViewModel>() with provider { BuildRobotViewModel(instance()) }
         bind<ConfigureViewModel>() with provider { ConfigureViewModel(instance()) }
         bind<ConfigureConnectionsViewModel>() with provider { ConfigureConnectionsViewModel() }
         bind<ConfigureControllersViewModel>() with provider { ConfigureControllersViewModel(instance()) }

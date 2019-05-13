@@ -25,6 +25,9 @@ class RoboticsDeviceConnector : BluetoothGattCallback() {
     private var onDisconnected: (() -> Unit)? = null
     private var onError: ((exception: BLEException) -> Unit)? = null
 
+    private var connectionListeners = mutableSetOf<RoboticsConnectionStatusListener>()
+    private var isConnected = false
+
     private val services = setOf(
         RoboticsDeviceService(),
         RoboticsLiveControllerService(),
@@ -46,7 +49,20 @@ class RoboticsDeviceConnector : BluetoothGattCallback() {
         this.device?.connectGatt(context, true, this)
     }
 
+    fun registerConnectionListener(listener: RoboticsConnectionStatusListener) {
+        listener.onConnectionStateChanged(isConnected)
+        connectionListeners.add(listener)
+    }
+
+    fun unregisterConnectionListener(listener: RoboticsConnectionStatusListener) {
+        connectionListeners.remove(listener)
+    }
+
     fun disconnect() {
+        isConnected = false
+        connectionListeners.forEach {
+            it.onConnectionStateChanged(false)
+        }
         services.forEach {
             it.disconnect()
         }
@@ -58,15 +74,28 @@ class RoboticsDeviceConnector : BluetoothGattCallback() {
 
     override fun onConnectionStateChange(gatt: BluetoothGatt?, status: Int, newState: Int) {
         moveToUIThread {
-            if (status == BluetoothGatt.GATT_SUCCESS) {
-                when (ConnectionState.parseConnectionId(newState)) {
-                    ConnectionState.CONNECTED -> onConnected?.invoke()
-                    ConnectionState.DISCONNECTED -> onDisconnected?.invoke()
-                    ConnectionState.DISCONNECTING, ConnectionState.CONNECTING -> Unit
+            when (ConnectionState.parseConnectionId(newState)) {
+                ConnectionState.CONNECTED -> {
+                    isConnected = true
+                    onConnected?.invoke()
+                    connectionListeners.forEach {
+                        it.onConnectionStateChanged(true)
+                    }
+
+                    if (status == BluetoothGatt.GATT_SUCCESS) {
+                        gatt?.discoverServices()
+                    } else {
+                        onError?.invoke(BLEConnectionException(status))
+                    }
                 }
-                gatt?.discoverServices()
-            } else {
-                onError?.invoke(BLEConnectionException(status))
+                ConnectionState.DISCONNECTED -> {
+                    onDisconnected?.invoke()
+                    isConnected = false
+                    connectionListeners.forEach {
+                        it.onConnectionStateChanged(false)
+                    }
+                }
+                ConnectionState.DISCONNECTING, ConnectionState.CONNECTING -> Unit
             }
         }
     }

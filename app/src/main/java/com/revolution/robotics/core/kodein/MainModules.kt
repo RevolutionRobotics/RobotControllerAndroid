@@ -1,12 +1,14 @@
 package com.revolution.robotics.core.kodein
 
 import android.content.Context
+import com.revolution.bluetooth.communication.RoboticsDeviceConnector
 import com.revolution.robotics.blockly.utils.JavascriptResultHandler
 import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
 import com.revolution.robotics.core.kodein.utils.ApplicationContextProvider
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.core.utils.dynamicPermissions.DynamicPermissionHandler
+import com.revolution.robotics.features.bluetooth.BluetoothManager
 import com.revolution.robotics.features.configure.ConfigurationEventBus
 import org.kodein.di.Kodein
 import org.kodein.di.erased.bind
@@ -20,6 +22,8 @@ fun createMainModule() =
         bind<JavascriptResultHandler>() with singleton { JavascriptResultHandler() }
         bind<DialogEventBus>() with singleton { DialogEventBus() }
         bind<ConfigurationEventBus>() with singleton { ConfigurationEventBus() }
+        bind<BluetoothManager>() with singleton { BluetoothManager(kodein) }
+        bind<RoboticsDeviceConnector>() with singleton { RoboticsDeviceConnector() }
     }
 
 fun createAppModule(context: Context) =
