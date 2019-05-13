@@ -11,8 +11,11 @@ class SaveRobotDialog : SaveDialog() {
 
     companion object {
 
-        private var Bundle.name: String by BundleArgumentDelegate.String("name")
-        private var Bundle.description: String by BundleArgumentDelegate.String("description")
+        const val KEY_NAME = "name"
+        const val KEY_DESCRIPTION = "description"
+
+        private var Bundle.name: String by BundleArgumentDelegate.String(KEY_NAME)
+        private var Bundle.description: String by BundleArgumentDelegate.String(KEY_DESCRIPTION)
 
         fun newInstance(name: String, description: String) = SaveRobotDialog().withArguments { bundle ->
             bundle.name = name
