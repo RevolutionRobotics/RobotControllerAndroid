@@ -54,8 +54,12 @@
               android:label="ChallengesFragment"/>
 
     <fragment android:id="@+id/liveControllerFragment"
-              android:name="com.revolution.robotics.features.controller.LiveControllerFragment"
+              android:name="com.revolution.robotics.features.play.liveController.LiveControllerFragment"
               android:label="LiveControllerFragment"/>
+
+    <fragment android:id="@+id/playGamerFragment"
+              android:name="com.revolution.robotics.features.play.playGamer.PlayGamerFragment"
+              android:label="PlayGamerFragment"/>
 
     <fragment android:id="@+id/configureFragment"
               android:name="com.revolution.robotics.features.configure.ConfigureFragment"
@@ -70,12 +74,13 @@
         <action android:id="@+id/toFirmwareFragment" app:destination="@id/firmwareFragment"/>
     </fragment>
 
-    <fragment android:id="@+id/placeholder_robotics"/>
-    <fragment android:id="@+id/placeholder_community"/>
     <fragment android:id="@+id/aboutFragment"
               android:name="com.revolution.robotics.features.mainmenu.settings.about.AboutFragment"
               android:label="AboutFragment"/>
     <fragment android:id="@+id/firmwareFragment"
               android:name="com.revolution.robotics.features.mainmenu.settings.firmware.FirmwareFragment"
               android:label="FirmwareFragment"/>
+
+    <fragment android:id="@+id/placeholder_robotics"/>
+    <fragment android:id="@+id/placeholder_community"/>
 </navigation>

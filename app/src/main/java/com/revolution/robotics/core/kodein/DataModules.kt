@@ -32,8 +32,8 @@ import com.revolution.robotics.features.configure.motor.MotorConfigurationMvp
 import com.revolution.robotics.features.configure.motor.MotorConfigurationPresenter
 import com.revolution.robotics.features.configure.sensor.SensorConfigurationMvp
 import com.revolution.robotics.features.configure.sensor.SensorConfigurationPresenter
-import com.revolution.robotics.features.play.LiveControllerMvp
-import com.revolution.robotics.features.play.LiveControllerPresenter
+import com.revolution.robotics.features.play.liveController.LiveControllerMvp
+import com.revolution.robotics.features.play.liveController.LiveControllerPresenter
 import com.revolution.robotics.features.mainmenu.MainMenuMvp
 import com.revolution.robotics.features.mainmenu.MainMenuPresenter
 import com.revolution.robotics.features.mainmenu.settings.SettingsMvp
@@ -44,6 +44,8 @@ import com.revolution.robotics.features.mainmenu.settings.firmware.FirmwareMvp
 import com.revolution.robotics.features.mainmenu.settings.firmware.FirmwareUpdatePresenter
 import com.revolution.robotics.features.myRobots.MyRobotsMvp
 import com.revolution.robotics.features.myRobots.MyRobotsPresenter
+import com.revolution.robotics.features.play.PlayMvp
+import com.revolution.robotics.features.play.PlayPresenter
 import com.revolution.robotics.features.whoToBuild.WhoToBuildMvp
 import com.revolution.robotics.features.whoToBuild.WhoToBuildPresenter
 import org.kodein.di.Kodein
@@ -95,6 +97,7 @@ fun createPresenterModule() =
         bind<SettingsMvp.Presenter>() with singleton { SettingsPresenter(instance()) }
         bind<AboutMvp.Presenter>() with singleton { AboutPresenter(instance(), instance()) }
         bind<FirmwareMvp.Presenter>() with singleton { FirmwareUpdatePresenter(instance()) }
+        bind<PlayMvp.Presenter>() with singleton { PlayPresenter() }
     }
 
 fun createDbModule(context: Context) =

@@ -9,12 +9,13 @@ import com.revolution.robotics.features.configure.connections.ConfigureConnectio
 import com.revolution.robotics.features.configure.controllers.ConfigureControllersViewModel
 import com.revolution.robotics.features.configure.motor.MotorConfigurationViewModel
 import com.revolution.robotics.features.configure.sensor.SensorConfigurationViewModel
-import com.revolution.robotics.features.controller.LiveControllerViewModel
+import com.revolution.robotics.features.play.liveController.LiveControllerViewModel
 import com.revolution.robotics.features.mainmenu.MainMenuViewModel
 import com.revolution.robotics.features.mainmenu.settings.SettingsViewModel
 import com.revolution.robotics.features.mainmenu.settings.about.AboutViewModel
 import com.revolution.robotics.features.mainmenu.settings.firmware.FirmwareUpdateViewModel
 import com.revolution.robotics.features.myRobots.MyRobotsViewModel
+import com.revolution.robotics.features.play.PlayViewModel
 import com.revolution.robotics.features.whoToBuild.WhoToBuildViewModel
 import org.kodein.di.Kodein
 import org.kodein.di.erased.bind
@@ -39,4 +40,5 @@ fun createViewModelModule() =
         bind<SettingsViewModel>() with provider { SettingsViewModel(instance()) }
         bind<AboutViewModel>() with provider { AboutViewModel(instance()) }
         bind<FirmwareUpdateViewModel>() with provider { FirmwareUpdateViewModel(instance()) }
+        bind<PlayViewModel>() with provider { PlayViewModel(instance()) }
     }
