@@ -40,6 +40,8 @@ import com.revolution.robotics.features.mainmenu.settings.SettingsMvp
 import com.revolution.robotics.features.mainmenu.settings.SettingsPresenter
 import com.revolution.robotics.features.mainmenu.settings.about.AboutMvp
 import com.revolution.robotics.features.mainmenu.settings.about.AboutPresenter
+import com.revolution.robotics.features.mainmenu.settings.firmware.FirmwareMvp
+import com.revolution.robotics.features.mainmenu.settings.firmware.FirmwareUpdatePresenter
 import com.revolution.robotics.features.myRobots.MyRobotsMvp
 import com.revolution.robotics.features.myRobots.MyRobotsPresenter
 import com.revolution.robotics.features.whoToBuild.WhoToBuildMvp
@@ -92,6 +94,7 @@ fun createPresenterModule() =
         bind<ConfigureControllersMvp.Presenter>() with singleton { ConfigureControllersPresenter() }
         bind<SettingsMvp.Presenter>() with singleton { SettingsPresenter(instance()) }
         bind<AboutMvp.Presenter>() with singleton { AboutPresenter(instance(), instance()) }
+        bind<FirmwareMvp.Presenter>() with singleton { FirmwareUpdatePresenter() }
     }
 
 fun createDbModule(context: Context) =
