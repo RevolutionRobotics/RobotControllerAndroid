@@ -18,6 +18,10 @@ class RoboticsEventSerializer {
         }
     }
 
+    fun clear() {
+        events.clear()
+    }
+
     private fun startSerializationThread() {
         runBlocking {
             delay(DEFAULT_DELAY)

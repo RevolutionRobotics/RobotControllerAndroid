@@ -9,10 +9,10 @@ import com.revolution.bluetooth.domain.ConnectionState
 import com.revolution.bluetooth.domain.Device
 import com.revolution.bluetooth.exception.BLEConnectionException
 import com.revolution.bluetooth.exception.BLEException
-import com.revolution.bluetooth.service.RoboticsEventSerializer
 import com.revolution.bluetooth.service.RoboticsBatteryService
 import com.revolution.bluetooth.service.RoboticsConfigurationService
 import com.revolution.bluetooth.service.RoboticsDeviceService
+import com.revolution.bluetooth.service.RoboticsEventSerializer
 import com.revolution.bluetooth.service.RoboticsLiveControllerService
 import com.revolution.bluetooth.threading.moveToUIThread
 
@@ -63,6 +63,7 @@ class RoboticsDeviceConnector : BluetoothGattCallback() {
 
     fun disconnect() {
         isConnected = false
+        roboticEventSerializer.clear()
         connectionListeners.forEach {
             it.onConnectionStateChanged(false)
         }
