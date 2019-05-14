@@ -3,7 +3,6 @@ package com.revolution.robotics.features.mainmenu.settings.about
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
@@ -27,16 +26,16 @@ class AboutFragment :
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         presenter.unregister()
+        super.onDestroyView()
     }
 
+    @Suppress("SwallowedException")
     override fun openIntent(intent: Intent) {
         try {
             requireActivity().startActivity(intent)
         } catch (exception: ActivityNotFoundException) {
             // TODO Error handling
-            Log.d("Activity not found", exception.message)
         }
     }
 }
