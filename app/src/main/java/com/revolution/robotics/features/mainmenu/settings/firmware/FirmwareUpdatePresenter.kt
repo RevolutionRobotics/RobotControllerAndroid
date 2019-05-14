@@ -12,8 +12,6 @@ class FirmwareUpdatePresenter(private val bluetoothManager: BluetoothManager) : 
     override fun register(view: FirmwareMvp.View, model: FirmwareUpdateViewModel?) {
         super.register(view, model)
         bluetoothManager.registerListener(this)
-
-        onBluetoothConnectaionStateChanged(true)
     }
 
     override fun unregister() {
@@ -21,10 +19,14 @@ class FirmwareUpdatePresenter(private val bluetoothManager: BluetoothManager) : 
         super.unregister()
     }
 
-    override fun onBluetoothConnectaionStateChanged(connected: Boolean) {
-        model?.hasConnectedRobot?.value = connected
-        if (connected) {
-            // TODO (Read robot name)
+    override fun onBluetoothConnectionStateChanged(connected: Boolean, serviceDiscovered: Boolean) {
+        model?.hasConnectedRobot?.value = connected && serviceDiscovered
+        if (connected && serviceDiscovered) {
+            bluetoothManager.getDeviceInfoService().getSystemId({
+                model?.robotName?.value = it
+            }, {
+                it.printStackTrace()
+            })
         }
     }
 
