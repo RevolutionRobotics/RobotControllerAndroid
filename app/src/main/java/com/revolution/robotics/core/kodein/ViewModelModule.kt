@@ -12,6 +12,7 @@ import com.revolution.robotics.features.configure.sensor.SensorConfigurationView
 import com.revolution.robotics.features.controller.LiveControllerViewModel
 import com.revolution.robotics.features.mainmenu.MainMenuViewModel
 import com.revolution.robotics.features.mainmenu.settings.SettingsViewModel
+import com.revolution.robotics.features.mainmenu.settings.about.AboutViewModel
 import com.revolution.robotics.features.myRobots.MyRobotsViewModel
 import com.revolution.robotics.features.whoToBuild.WhoToBuildViewModel
 import org.kodein.di.Kodein
@@ -35,4 +36,5 @@ fun createViewModelModule() =
         bind<MotorConfigurationViewModel>() with provider { MotorConfigurationViewModel(instance()) }
         bind<SensorConfigurationViewModel>() with provider { SensorConfigurationViewModel(instance()) }
         bind<SettingsViewModel>() with provider { SettingsViewModel(instance()) }
+        bind<AboutViewModel>() with provider { AboutViewModel(instance()) }
     }

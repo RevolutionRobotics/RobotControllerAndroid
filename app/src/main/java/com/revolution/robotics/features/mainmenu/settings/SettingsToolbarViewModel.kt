@@ -11,6 +11,6 @@ class SettingsToolbarViewModel(resourceResolver: ResourceResolver) : ToolbarView
     override val options = emptyList<ToolbarOption>()
 
     init {
-        title.set(resourceResolver.string(R.string.settings_title))
+        title.set(resourceResolver.string(R.string.settings_screen_title))
     }
 }
