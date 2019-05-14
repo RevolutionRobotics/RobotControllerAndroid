@@ -12,8 +12,11 @@ abstract class RoboticsBLEService {
     protected var service: BluetoothGattService? = null
     protected var bluetoothGatt: BluetoothGatt? = null
 
-    open fun init(bluetoothGatt: BluetoothGatt) {
+    protected var eventSerializer: RoboticsEventSerializer? = null
+
+    open fun init(bluetoothGatt: BluetoothGatt, roboticsEventSerializer: RoboticsEventSerializer) {
         this.bluetoothGatt = bluetoothGatt
+        eventSerializer = roboticsEventSerializer
         service = bluetoothGatt.getService(serviceId)
     }
 

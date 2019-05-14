@@ -57,4 +57,12 @@ class BluetoothManager(private var kodein: Kodein) : RoboticsConnectionStatusLis
         connectionFlowHelper?.shutdown()
         connectionFlowHelper = null
     }
+
+    fun getDeviceInfoService() = bleConnectionHandler.getDeviceService()
+
+    fun getBatteryInfoService() = bleConnectionHandler.getBatteryService()
+
+    fun getConfigurationService() = bleConnectionHandler.getConfigurationService()
+
+    fun getLiveControllerService() = bleConnectionHandler.getLiveControllerService()
 }

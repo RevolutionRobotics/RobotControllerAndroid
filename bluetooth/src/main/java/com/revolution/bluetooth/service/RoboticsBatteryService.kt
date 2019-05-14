@@ -26,16 +26,17 @@ class RoboticsBatteryService : RoboticsBLEService() {
 
     override fun onCharacteristicRead(gatt: BluetoothGatt?, characteristic: BluetoothGattCharacteristic, status: Int) {
         if (status == BluetoothGatt.GATT_SUCCESS) {
-            successCallbackMap[characteristic.uuid]?.invoke(
-                characteristic.getIntValue(
-                    BluetoothGattCharacteristic.FORMAT_SINT32,
-                    0
-                )
-            )
-            errorCallbackMap.remove(characteristic.uuid)
+            successCallbackMap[characteristic.uuid]?.let { callback ->
+                callback.invoke(characteristic.value[0].toInt())
+                errorCallbackMap.remove(characteristic.uuid)
+                successCallbackMap.remove(characteristic.uuid)
+            }
         } else {
-            errorCallbackMap[characteristic.uuid]?.invoke(BLEConnectionException(status))
-            successCallbackMap.remove(characteristic.uuid)
+            errorCallbackMap[characteristic.uuid]?.let { callback ->
+                callback.invoke(BLEConnectionException(status))
+                successCallbackMap.remove(characteristic.uuid)
+                errorCallbackMap.remove(characteristic.uuid)
+            }
         }
     }
 
@@ -44,7 +45,10 @@ class RoboticsBatteryService : RoboticsBLEService() {
             bluetoothGatt?.let { bluetoothGatt ->
                 successCallbackMap[CHARACTERISTIC_PRIMARY_BATTERY] = onComplete
                 errorCallbackMap[CHARACTERISTIC_PRIMARY_BATTERY] = onError
-                bluetoothGatt.readCharacteristic(characteristic)
+
+                eventSerializer?.registerEvent {
+                    bluetoothGatt.readCharacteristic(characteristic)
+                }
             }
         }
     }
@@ -54,7 +58,10 @@ class RoboticsBatteryService : RoboticsBLEService() {
             bluetoothGatt?.let { bluetoothGatt ->
                 successCallbackMap[CHARACTERISTIC_MOTOR_BATTERY] = onComplete
                 errorCallbackMap[CHARACTERISTIC_MOTOR_BATTERY] = onError
-                bluetoothGatt.readCharacteristic(characteristic)
+
+                eventSerializer?.registerEvent {
+                    bluetoothGatt.readCharacteristic(characteristic)
+                }
             }
         }
     }

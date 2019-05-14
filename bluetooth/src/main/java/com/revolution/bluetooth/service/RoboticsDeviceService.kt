@@ -33,11 +33,17 @@ class RoboticsDeviceService : RoboticsBLEService() {
 
     override fun onCharacteristicRead(gatt: BluetoothGatt?, characteristic: BluetoothGattCharacteristic, status: Int) {
         if (status == BluetoothGatt.GATT_SUCCESS) {
-            successCallbackMap[characteristic.uuid]?.invoke(characteristic.getStringValue(0))
-            errorCallbackMap.remove(characteristic.uuid)
+            successCallbackMap[characteristic.uuid]?.let { callback ->
+                callback.invoke(characteristic.getStringValue(0))
+                successCallbackMap.remove(characteristic.uuid)
+                errorCallbackMap.remove(characteristic.uuid)
+            }
         } else {
-            errorCallbackMap[characteristic.uuid]?.invoke(BLEConnectionException(status))
-            successCallbackMap.remove(characteristic.uuid)
+            errorCallbackMap[characteristic.uuid]?.let { callback ->
+                callback.invoke(BLEConnectionException(status))
+                successCallbackMap.remove(characteristic.uuid)
+                errorCallbackMap.remove(characteristic.uuid)
+            }
         }
     }
 
@@ -86,7 +92,9 @@ class RoboticsDeviceService : RoboticsBLEService() {
         errorCallbackMap[uuid] = onError
         bluetoothGatt?.let { gatt ->
             service?.let { service ->
-                gatt.readCharacteristic(service.getCharacteristic(uuid))
+                eventSerializer?.registerEvent {
+                    gatt.readCharacteristic(service.getCharacteristic(uuid))
+                }
             }
         }
     }
