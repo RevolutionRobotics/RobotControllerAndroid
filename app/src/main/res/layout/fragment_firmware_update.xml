@@ -33,6 +33,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginBottom="@dimen/dimen_16dp"
                 android:scaleType="fitXY"
+                android:onClick="@{() -> viewModel.onRobotClicked()}"
                 app:visible="@{viewModel.hasConnectedRobot}"
                 android:src="@drawable/configure_controllers_card_bg_red"/>
 
