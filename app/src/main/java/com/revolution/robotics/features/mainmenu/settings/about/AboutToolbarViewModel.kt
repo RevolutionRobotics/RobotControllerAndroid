@@ -11,6 +11,6 @@ class AboutToolbarViewModel(private val resourceResolver: ResourceResolver) : To
     override val options: List<ToolbarOption> = emptyList()
 
     init {
-        title.set(resourceResolver.string(R.string.about_toolbar_title))
+        title.set(resourceResolver.string(R.string.about_screen_title))
     }
 }

@@ -142,14 +142,18 @@
     <string name="save_dialog_description_title">Description</string>
 
     <!-- Settings -->
-    <string name="settings_title">Settings</string>
+    <string name="settings_screen_title">Settings</string>
     <string name="settings_reset_tutorial">Reset tutorial</string>
     <string name="settings_firmware_update">Firmware update</string>
     <string name="settings_about_applications">About application</string>
-    <string name="about_toolbar_title">About application</string>
+
+    <!-- About -->
+    <string name="about_screen_title">About application</string>
     <string name="revolution_webpage">revolutionrobotics.org</string>
     <string name="about_permissions_title">Permissions</string>
-    <string name="about_permission_description">To modify them, please open the main Settings app on your device.
-    </string>
+    <string name="about_permissions_instruction">To modify them, please open the main Settings app on your device.</string>
+    <string name="about_privacy_policy_button_title">Privacy policy</string>
+    <string name="about_terms_conditions_button_title"><![CDATA[Terms & conditions]]></string>
+    <string name="about_version">Version</string>
 
 </resources>

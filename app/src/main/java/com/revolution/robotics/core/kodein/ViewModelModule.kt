@@ -36,5 +36,5 @@ fun createViewModelModule() =
         bind<MotorConfigurationViewModel>() with provider { MotorConfigurationViewModel(instance()) }
         bind<SensorConfigurationViewModel>() with provider { SensorConfigurationViewModel(instance()) }
         bind<SettingsViewModel>() with provider { SettingsViewModel(instance()) }
-        bind<AboutViewModel>() with provider { AboutViewModel() }
+        bind<AboutViewModel>() with provider { AboutViewModel(instance()) }
     }

@@ -1,5 +1,8 @@
 package com.revolution.robotics.features.mainmenu.settings.about
 
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import com.revolution.robotics.BaseFragment
@@ -25,4 +28,11 @@ class AboutFragment :
         presenter.unregister()
     }
 
+    override fun openUrl(url: String) {
+        try {
+            requireActivity().startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+        } catch (exception: ActivityNotFoundException) {
+            // TODO Error handling
+        }
+    }
 }
