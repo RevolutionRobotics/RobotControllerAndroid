@@ -25,7 +25,7 @@ class FirmwareUpdatePresenter(private val bluetoothManager: BluetoothManager) : 
             bluetoothManager.getDeviceInfoService().getSystemId({
                 model?.robotName?.value = it
             }, {
-                it.printStackTrace()
+                // TODO Error handling
             })
         }
     }
