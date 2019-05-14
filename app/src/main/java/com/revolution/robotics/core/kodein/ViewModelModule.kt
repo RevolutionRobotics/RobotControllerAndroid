@@ -38,5 +38,5 @@ fun createViewModelModule() =
         bind<SensorConfigurationViewModel>() with provider { SensorConfigurationViewModel(instance()) }
         bind<SettingsViewModel>() with provider { SettingsViewModel(instance()) }
         bind<AboutViewModel>() with provider { AboutViewModel(instance()) }
-        bind<FirmwareUpdateViewModel>() with provider { FirmwareUpdateViewModel() }
+        bind<FirmwareUpdateViewModel>() with provider { FirmwareUpdateViewModel(instance()) }
     }

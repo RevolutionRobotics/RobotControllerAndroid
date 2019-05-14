@@ -8,7 +8,7 @@ class SettingsPresenter(private val navigator: Navigator) : SettingsMvp.Presente
 
     override fun navigateToResetTutorial() = Unit
 
-    override fun navigateToFirmwareUpdate() = Unit
+    override fun navigateToFirmwareUpdate() = navigator.navigate(SettingsFragmentDirections.toFirmwareFragment())
 
     override fun navigateToAboutApplication() = navigator.navigate(SettingsFragmentDirections.toAboutFragment())
 }

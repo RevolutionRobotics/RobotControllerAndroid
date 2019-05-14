@@ -6,5 +6,8 @@ interface FirmwareMvp : Mvp {
 
     interface View : Mvp.View
 
-    interface Presenter : Mvp.Presenter<View, FirmwareUpdateViewModel>
+    interface Presenter : Mvp.Presenter<View, FirmwareUpdateViewModel> {
+        fun onConnectClicked()
+        fun onRobotClicked()
+    }
 }

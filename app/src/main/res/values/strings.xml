@@ -155,5 +155,8 @@
     <string name="about_privacy_policy_button_title">Privacy policy</string>
     <string name="about_terms_conditions_button_title"><![CDATA[Terms & conditions]]></string>
     <string name="about_version">Version</string>
+    <string name="firmware_new_connection_button">Connect to new brain</string>
+    <string name="firmware_check_for_updates">Check for updates</string>
+    <string name="firmware_screen_title">Firmware update</string>
 
 </resources>

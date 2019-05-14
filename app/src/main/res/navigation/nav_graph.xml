@@ -67,6 +67,7 @@
               android:name="com.revolution.robotics.features.mainmenu.settings.SettingsFragment"
               android:label="SettingsFragment">
         <action android:id="@+id/toAboutFragment" app:destination="@id/aboutFragment"/>
+        <action android:id="@+id/toFirmwareFragment" app:destination="@id/firmwareFragment"/>
     </fragment>
 
     <fragment android:id="@+id/placeholder_robotics"/>
@@ -74,4 +75,7 @@
     <fragment android:id="@+id/aboutFragment"
               android:name="com.revolution.robotics.features.mainmenu.settings.about.AboutFragment"
               android:label="AboutFragment"/>
+    <fragment android:id="@+id/firmwareFragment"
+              android:name="com.revolution.robotics.features.mainmenu.settings.firmware.FirmwareFragment"
+              android:label="FirmwareFragment"/>
 </navigation>
