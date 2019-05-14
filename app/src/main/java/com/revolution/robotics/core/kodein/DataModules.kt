@@ -91,7 +91,7 @@ fun createPresenterModule() =
         bind<BuildFinishedMvp.Presenter>() with singleton { BuildFinishedPresenter(instance()) }
         bind<ConfigureControllersMvp.Presenter>() with singleton { ConfigureControllersPresenter() }
         bind<SettingsMvp.Presenter>() with singleton { SettingsPresenter(instance()) }
-        bind<AboutMvp.Presenter>() with singleton { AboutPresenter(instance()) }
+        bind<AboutMvp.Presenter>() with singleton { AboutPresenter(instance(), instance()) }
     }
 
 fun createDbModule(context: Context) =

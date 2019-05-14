@@ -53,6 +53,10 @@ class AboutViewModel(private val presenter: AboutMvp.Presenter) : ViewModel() {
         presenter.onInstagramClicked()
     }
 
+    fun onPermissionLayoutClicked() {
+        presenter.onPermissionLayoutClicked()
+    }
+
     fun onPrivacyPolicyClicked() {
         // TODO Open privacy policy
     }
