@@ -28,6 +28,7 @@ class RoboticsDeviceConnector : BluetoothGattCallback() {
 
     private var connectionListeners = mutableSetOf<RoboticsConnectionStatusListener>()
     private var isConnected = false
+    private var isServiceDiscovered = false
 
     private val roboticEventSerializer = RoboticsEventSerializer()
 
@@ -53,7 +54,7 @@ class RoboticsDeviceConnector : BluetoothGattCallback() {
     }
 
     fun registerConnectionListener(listener: RoboticsConnectionStatusListener) {
-        listener.onConnectionStateChanged(isConnected)
+        listener.onConnectionStateChanged(isConnected, isServiceDiscovered)
         connectionListeners.add(listener)
     }
 
@@ -65,7 +66,7 @@ class RoboticsDeviceConnector : BluetoothGattCallback() {
         isConnected = false
         roboticEventSerializer.clear()
         connectionListeners.forEach {
-            it.onConnectionStateChanged(false)
+            it.onConnectionStateChanged(false, false)
         }
         services.forEach {
             it.disconnect()
@@ -83,7 +84,7 @@ class RoboticsDeviceConnector : BluetoothGattCallback() {
                     isConnected = true
                     onConnected?.invoke()
                     connectionListeners.forEach {
-                        it.onConnectionStateChanged(true)
+                        it.onConnectionStateChanged(true, isServiceDiscovered)
                     }
 
                     if (status == BluetoothGatt.GATT_SUCCESS) {
@@ -95,8 +96,9 @@ class RoboticsDeviceConnector : BluetoothGattCallback() {
                 ConnectionState.DISCONNECTED -> {
                     onDisconnected?.invoke()
                     isConnected = false
+                    isServiceDiscovered = false
                     connectionListeners.forEach {
-                        it.onConnectionStateChanged(false)
+                        it.onConnectionStateChanged(false, false)
                     }
                 }
                 ConnectionState.DISCONNECTING, ConnectionState.CONNECTING -> Unit
@@ -108,6 +110,12 @@ class RoboticsDeviceConnector : BluetoothGattCallback() {
         gattConnection = gatt
         services.forEach {
             it.init(gatt, roboticEventSerializer)
+        }
+        isServiceDiscovered = true
+        moveToUIThread {
+            connectionListeners.forEach {
+                it.onConnectionStateChanged(isConnected, true)
+            }
         }
     }
 
