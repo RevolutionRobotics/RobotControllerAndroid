@@ -32,8 +32,8 @@ import com.revolution.robotics.features.configure.motor.MotorConfigurationMvp
 import com.revolution.robotics.features.configure.motor.MotorConfigurationPresenter
 import com.revolution.robotics.features.configure.sensor.SensorConfigurationMvp
 import com.revolution.robotics.features.configure.sensor.SensorConfigurationPresenter
-import com.revolution.robotics.features.controller.LiveControllerMvp
-import com.revolution.robotics.features.controller.LiveControllerPresenter
+import com.revolution.robotics.features.play.LiveControllerMvp
+import com.revolution.robotics.features.play.LiveControllerPresenter
 import com.revolution.robotics.features.mainmenu.MainMenuMvp
 import com.revolution.robotics.features.mainmenu.MainMenuPresenter
 import com.revolution.robotics.features.mainmenu.settings.SettingsMvp

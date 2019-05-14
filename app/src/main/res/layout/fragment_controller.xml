@@ -3,7 +3,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <variable name="viewModel" type="com.revolution.robotics.features.controller.LiveControllerViewModel"/>
+        <variable name="viewModel" type="com.revolution.robotics.features.play.LiveControllerViewModel"/>
     </data>
 
 
