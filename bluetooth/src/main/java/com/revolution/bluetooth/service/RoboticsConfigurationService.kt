@@ -16,6 +16,16 @@ class RoboticsConfigurationService : RoboticsBLEService() {
 
     override val serviceId: UUID = UUID.fromString(SERVICE_ID)
 
+    /* Notify characteristic example
+    eventSerializer?.registerEvent {
+                    val uuid = UUID.fromString("00002902-0000-1000-8000-00805f9b34fb")
+                    val descriptor = characteristic.getDescriptor(uuid)
+                    descriptor.value = BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE
+                    bluetoothGatt.writeDescriptor(descriptor)
+                    bluetoothGatt.setCharacteristicNotification(characteristic, true)
+                }
+     */
+
     override fun onCharacteristicRead(gatt: BluetoothGatt?, characteristic: BluetoothGattCharacteristic, status: Int) =
         Unit
 

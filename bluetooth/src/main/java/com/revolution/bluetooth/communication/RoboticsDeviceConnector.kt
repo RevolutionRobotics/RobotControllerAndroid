@@ -9,6 +9,7 @@ import com.revolution.bluetooth.domain.ConnectionState
 import com.revolution.bluetooth.domain.Device
 import com.revolution.bluetooth.exception.BLEConnectionException
 import com.revolution.bluetooth.exception.BLEException
+import com.revolution.bluetooth.service.RoboticsEventSerializer
 import com.revolution.bluetooth.service.RoboticsBatteryService
 import com.revolution.bluetooth.service.RoboticsConfigurationService
 import com.revolution.bluetooth.service.RoboticsDeviceService
@@ -27,6 +28,8 @@ class RoboticsDeviceConnector : BluetoothGattCallback() {
 
     private var connectionListeners = mutableSetOf<RoboticsConnectionStatusListener>()
     private var isConnected = false
+
+    private val roboticEventSerializer = RoboticsEventSerializer()
 
     private val services = setOf(
         RoboticsDeviceService(),
@@ -103,7 +106,7 @@ class RoboticsDeviceConnector : BluetoothGattCallback() {
     override fun onServicesDiscovered(gatt: BluetoothGatt, status: Int) {
         gattConnection = gatt
         services.forEach {
-            it.init(gatt)
+            it.init(gatt, roboticEventSerializer)
         }
     }
 
