@@ -17,6 +17,8 @@ class BluetoothManager(private var kodein: Kodein) : RoboticsConnectionStatusLis
 
     var isConnected = false
         private set
+    var isServiceDiscovered = false
+        private set
 
     fun init(activity: FragmentActivity) {
         this.activity = activity
@@ -36,21 +38,22 @@ class BluetoothManager(private var kodein: Kodein) : RoboticsConnectionStatusLis
         if (!listeners.contains(listener)) {
             listeners.add(listener)
         }
-        listener.onBluetoothConnectaionStateChanged(isConnected)
+        listener.onBluetoothConnectionStateChanged(isConnected, isServiceDiscovered)
     }
 
     fun unregisterListener(listener: BluetoothConnectionListener) {
         listeners.remove(listener)
     }
 
-    override fun onConnectionStateChanged(connected: Boolean) {
+    override fun onConnectionStateChanged(connected: Boolean, serviceDiscovered: Boolean) {
         isConnected = connected
-        listeners.forEach { it.onBluetoothConnectaionStateChanged(connected) }
+        isServiceDiscovered = serviceDiscovered
+        listeners.forEach { it.onBluetoothConnectionStateChanged(connected, serviceDiscovered) }
     }
 
     fun shutDown() {
         activity = null
-        listeners.forEach { it.onBluetoothConnectaionStateChanged(false) }
+        listeners.forEach { it.onBluetoothConnectionStateChanged(false, false) }
         bleConnectionHandler.disconnect()
         bleConnectionHandler.unregisterConnectionListener(this)
         isConnected = false

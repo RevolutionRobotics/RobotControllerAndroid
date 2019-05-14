@@ -117,7 +117,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    android:background="@drawable/bg_floating_button" android:id="@+id/view"/>
+                    android:background="@drawable/bg_floating_button"
+                    android:id="@+id/view"/>
 
             <ImageView
                     android:id="@+id/floating_button_icon"
@@ -144,7 +145,8 @@
                     android:text="@string/my_robots_build_new"
                     android:textSize="15sp"
                     android:textColor="@color/white"
-                    android:fontFamily="@font/barlow_regular" android:layout_marginBottom="8dp"/>
+                    android:fontFamily="@font/barlow_regular"
+                    android:layout_marginBottom="8dp"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
