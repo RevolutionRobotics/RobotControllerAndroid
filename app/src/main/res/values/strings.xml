@@ -54,7 +54,7 @@
     <string name="build_chapter_finish_dialog_title">Chapter finished</string>
     <string name="build_chapter_finish_dialog_description">Well done!</string>
     <string name="build_chapter_finish_dialog_button_home">Home</string>
-    <string name="build_chapter_finish_dialog_button_next_chapter">Next chapter</string>
+    <string name="build_chapter_finish_dialog_button_next_chapter">Test later</string>
     <string name="build_chapter_finish_dialog_button_test">Test</string>
 
     <!-- Robot picture -->

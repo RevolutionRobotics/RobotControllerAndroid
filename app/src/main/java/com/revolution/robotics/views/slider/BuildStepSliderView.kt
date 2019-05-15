@@ -8,6 +8,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.revolution.robotics.core.domain.remote.BuildStep
 import com.revolution.robotics.core.extensions.visible
 import com.revolution.robotics.databinding.SliderBuildStepBinding
+import kotlinx.android.synthetic.main.dialog_connect.view.progress
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
@@ -19,12 +20,28 @@ class BuildStepSliderView @JvmOverloads constructor(context: Context, attrs: Att
     private val binding = SliderBuildStepBinding.inflate(LayoutInflater.from(context), this, true).apply {
         seekbarBuildSteps.setOnSeekBarChangeListener(this@BuildStepSliderView)
         imgBack.setOnClickListener { seekbarBuildSteps.selectPrevious() }
-        imgNext.setOnClickListener { seekbarBuildSteps.selectNext() }
+        imgNext.setOnClickListener { onNextClicked() }
         imgFinish.setOnClickListener { buildStepSelectedListener?.onBuildFinished() }
     }
 
     private var buildStepSelectedListener: BuildStepSelectedListener? = null
     private var buildSteps: List<BuildStep>? = null
+
+    private fun onNextClicked() {
+        val currentBuildStep = buildSteps?.get(binding.seekbarBuildSteps.progress)
+        val listener = buildStepSelectedListener
+        if (currentBuildStep != null && listener != null) {
+            if (listener.shouldShowNext(currentBuildStep)) {
+                next()
+            }
+        } else {
+            next()
+        }
+    }
+
+    fun next() {
+        binding.seekbarBuildSteps.selectNext()
+    }
 
     fun setBuildSteps(steps: List<BuildStep>, listener: BuildStepSelectedListener, startIndex: Int = 0) {
         buildSteps = steps
@@ -47,6 +64,7 @@ class BuildStepSliderView @JvmOverloads constructor(context: Context, attrs: Att
     override fun onStopTrackingTouch(p0: SeekBar?) = Unit
 
     interface BuildStepSelectedListener {
+        fun shouldShowNext(buildStep: BuildStep): Boolean
         fun onBuildStepSelected(buildStep: BuildStep, fromUser: Boolean)
         fun onBuildFinished()
     }

@@ -1,6 +1,7 @@
 package com.revolution.robotics.features.build.testing
 
 import com.revolution.robotics.R
+import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.databinding.DialogTestingBinding
 import com.revolution.robotics.views.dialogs.DialogButton
 import com.revolution.robotics.views.dialogs.DialogFace
@@ -13,7 +14,10 @@ abstract class TestDialogFace(dialog: RoboticsDialog) :
     abstract val textResource: Int
     override val dialogFaceButtons = mutableListOf(
         DialogButton(R.string.testing_negative_button_title, R.drawable.ic_close, false, true, ::showTipsFace),
-        DialogButton(R.string.testing_positive_button_title, R.drawable.ic_check, true, true, dialog::dismiss)
+        DialogButton(R.string.testing_positive_button_title, R.drawable.ic_check, true, true) {
+            dialog.dialogEventBus.publish(DialogEvent.TEST_WORKS)
+            dialog.dismiss()
+        }
     )
 
     override fun onActivated() {
