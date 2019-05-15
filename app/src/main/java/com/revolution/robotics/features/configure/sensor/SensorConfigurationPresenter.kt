@@ -20,6 +20,7 @@ class SensorConfigurationPresenter(
 
     private var portName: String? = null
     private var sensor: Sensor? = null
+    private var variableName: String? = null
 
     private val chippedConfigDoneEnabled = ChippedBoxConfig.Builder()
         .backgroundColorResource(R.color.grey_28)
@@ -57,7 +58,8 @@ class SensorConfigurationPresenter(
     }
 
     override fun onVariableNameChanged(name: String?) {
-        sensor?.variableName = name
+        variableName = name
+        model?.actionButtonsViewModel?.doneButtonEnabled?.set(!name.isNullOrEmpty())
     }
 
     override fun onEmptyButtonClicked() {
@@ -114,6 +116,7 @@ class SensorConfigurationPresenter(
                 } else {
                     null
                 }
+            variableName = this@SensorConfigurationPresenter.variableName
             configurationEventBus.publishSensorUpdateEvent(SensorPort(this, portName))
         }
     }

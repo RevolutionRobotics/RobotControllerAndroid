@@ -21,6 +21,7 @@ class MotorConfigurationPresenter(
     private var buttonHandler: MotorConfigurationButtonHandler? = null
     private var motor: Motor? = null
     private var portName: String? = null
+    private var variableName: String? = null
 
     override fun register(view: MotorConfigurationMvp.View, model: MotorConfigurationViewModel?) {
         super.register(view, model)
@@ -30,7 +31,7 @@ class MotorConfigurationPresenter(
     }
 
     override fun onVariableNameChanged(name: String?) {
-        motor?.variableName = name
+        variableName = name
     }
 
     override fun setMotor(motor: Motor, portName: String) {
@@ -106,6 +107,7 @@ class MotorConfigurationPresenter(
                 } else {
                     Motor.SIDE_RIGHT
                 }
+            variableName = this@MotorConfigurationPresenter.variableName
         }
     }
 
