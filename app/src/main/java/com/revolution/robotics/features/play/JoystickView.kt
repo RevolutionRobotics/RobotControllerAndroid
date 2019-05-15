@@ -13,8 +13,12 @@ import com.revolution.robotics.core.extensions.dimension
 class JoystickView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
     View(context, attrs, defStyleAttr) {
 
+    companion object {
+        private const val JOYSTICK_AXIS_CENTER = 128
+    }
+
     private val joystickButtonSize = context.dimension(R.dimen.dimen_48dp)
-    private val joystickPadding = joystickButtonSize / 2;
+    private val joystickPadding = joystickButtonSize / 2
     private val innerPadding = context.dimension(R.dimen.dimen_2dp)
     private val redPaint = Paint().apply { color = context.color(R.color.robotics_red) }
     private val darkRedPaint = Paint().apply { color = context.color(R.color.robotics_red_dark) }
@@ -22,7 +26,10 @@ class JoystickView @JvmOverloads constructor(context: Context, attrs: AttributeS
 
     private var center: Pair<Float, Float>? = null
     private var joystickPosition = Vector()
+    private var joystickPositionMax = -1
     private var isTouched = false
+
+    var listener: JoystickEventListener? = null
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
         if (event.action == MotionEvent.ACTION_CANCEL ||
@@ -38,6 +45,11 @@ class JoystickView @JvmOverloads constructor(context: Context, attrs: AttributeS
                 joystickPosition.calculateDistance(center.first, center.second, event.x, event.y)
             }
         }
+
+        listener?.onJoystickPositionChanged(
+            joystickPosition.getX().normalizeForController(),
+            joystickPosition.getY().normalizeForController()
+        )
         invalidate()
         return true
     }
@@ -54,16 +66,12 @@ class JoystickView @JvmOverloads constructor(context: Context, attrs: AttributeS
                 measuredWidth - joystickPadding,
                 measuredHeight - joystickPadding
             )
+            joystickPositionMax = measuredWidth / 2 - joystickButtonSize / 2 - innerPadding
         }
 
         backgroundDrawable?.draw(canvas)
         center?.let { center ->
-            val (x, y) =
-                if (joystickPosition.mirrored) {
-                    center.first - joystickPosition.getX() to center.second - joystickPosition.getY()
-                } else {
-                    center.first + joystickPosition.getX() to center.second + joystickPosition.getY()
-                }
+            val (x, y) = center.first + joystickPosition.getX() to center.second + joystickPosition.getY()
             canvas.drawCircle(x, y, joystickButtonSize.toFloat() / 2, if (isTouched) darkRedPaint else redPaint)
         }
     }
@@ -82,7 +90,7 @@ class JoystickView @JvmOverloads constructor(context: Context, attrs: AttributeS
             center?.let { center ->
                 distance = Math.min(
                     Math.sqrt(((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1)).toDouble()),
-                    (center.first - joystickButtonSize / 2 - innerPadding).toDouble()
+                    joystickPositionMax.toDouble()
                 )
             }
         }
@@ -93,7 +101,14 @@ class JoystickView @JvmOverloads constructor(context: Context, attrs: AttributeS
             mirrored = false
         }
 
-        fun getX() = (distance * Math.cos(angle)).toFloat()
-        fun getY() = (distance * Math.sin(angle)).toFloat()
+        fun getX() = ((if (mirrored) -distance else distance) * Math.cos(angle)).toFloat()
+        fun getY() = ((if (mirrored) -distance else distance) * Math.sin(angle)).toFloat()
+    }
+
+    private fun Float.normalizeForController() =
+        JOYSTICK_AXIS_CENTER + (this / joystickPositionMax * JOYSTICK_AXIS_CENTER).toInt()
+
+    interface JoystickEventListener {
+        fun onJoystickPositionChanged(x: Int, y: Int)
     }
 }

@@ -13,7 +13,7 @@ class BluetoothManager(private var kodein: Kodein) : RoboticsConnectionStatusLis
     private var listeners = mutableListOf<BluetoothConnectionListener>()
     private var connectionFlowHelper: BluetoothConnectionFlowHelper? = null
 
-    private val bleConnectionHandler: RoboticsDeviceConnector by kodein.instance()
+    val bleConnectionHandler: RoboticsDeviceConnector by kodein.instance()
 
     var isConnected = false
         private set
@@ -38,7 +38,7 @@ class BluetoothManager(private var kodein: Kodein) : RoboticsConnectionStatusLis
         if (!listeners.contains(listener)) {
             listeners.add(listener)
         }
-        listener.onBluetoothConnectionStateChanged(isConnected, isServiceDiscovered)
+        listener.onBluetoothConnectionStateChanged(isConnected, isServiceDiscovered, this)
     }
 
     fun unregisterListener(listener: BluetoothConnectionListener) {
@@ -48,12 +48,12 @@ class BluetoothManager(private var kodein: Kodein) : RoboticsConnectionStatusLis
     override fun onConnectionStateChanged(connected: Boolean, serviceDiscovered: Boolean) {
         isConnected = connected
         isServiceDiscovered = serviceDiscovered
-        listeners.forEach { it.onBluetoothConnectionStateChanged(connected, serviceDiscovered) }
+        listeners.forEach { it.onBluetoothConnectionStateChanged(connected, serviceDiscovered, this) }
     }
 
     fun shutDown() {
         activity = null
-        listeners.forEach { it.onBluetoothConnectionStateChanged(false, false) }
+        listeners.forEach { it.onBluetoothConnectionStateChanged(false, false, this) }
         bleConnectionHandler.disconnect()
         bleConnectionHandler.unregisterConnectionListener(this)
         isConnected = false
