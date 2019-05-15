@@ -205,7 +205,7 @@
     <!-- SCREEN: PLAY -->
     <dimen name="play_background_width">305dp</dimen>
     <dimen name="play_background_height">288dp</dimen>
-    <dimen name="play_joystick_size">145dp</dimen>
+    <dimen name="play_joystick_size">193dp</dimen>
     <dimen name="play_button_size_big">58dp</dimen>
     <dimen name="play_button_size_normal">40dp</dimen>
 

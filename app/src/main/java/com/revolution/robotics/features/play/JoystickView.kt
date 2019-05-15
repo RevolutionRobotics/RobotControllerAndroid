@@ -14,26 +14,26 @@ class JoystickView @JvmOverloads constructor(context: Context, attrs: AttributeS
     View(context, attrs, defStyleAttr) {
 
     private val joystickButtonSize = context.dimension(R.dimen.dimen_48dp)
+    private val joystickPadding = joystickButtonSize / 2;
     private val innerPadding = context.dimension(R.dimen.dimen_2dp)
-    private val redPaint = Paint().apply {
-        color = context.color(R.color.robotics_red)
-    }
+    private val redPaint = Paint().apply { color = context.color(R.color.robotics_red) }
+    private val darkRedPaint = Paint().apply { color = context.color(R.color.robotics_red_dark) }
+    private val backgroundDrawable = context.getDrawable(R.drawable.bg_joystick)
 
     private var center: Pair<Float, Float>? = null
     private var joystickPosition = Vector()
-
-    init {
-        setBackgroundResource(R.drawable.bg_joystick)
-    }
+    private var isTouched = false
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
         if (event.action == MotionEvent.ACTION_CANCEL ||
             event.action == MotionEvent.ACTION_POINTER_UP ||
             event.action == MotionEvent.ACTION_UP
         ) {
+            isTouched = false
             joystickPosition.reset()
         } else {
             center?.let { center ->
+                isTouched = true
                 joystickPosition.calculateAngle(center.first, center.second, event.x, event.y)
                 joystickPosition.calculateDistance(center.first, center.second, event.x, event.y)
             }
@@ -43,13 +43,20 @@ class JoystickView @JvmOverloads constructor(context: Context, attrs: AttributeS
     }
 
     override fun onDraw(canvas: Canvas) {
-        if (background.intrinsicWidth == 0 || background.intrinsicHeight == 0) {
+        if (measuredWidth == 0 || measuredHeight == 0) {
             return
         }
         if (center == null) {
-            center = background.intrinsicWidth / 2.0f to background.intrinsicHeight / 2.0f
+            center = measuredWidth / 2.0f to measuredHeight / 2.0f
+            backgroundDrawable?.setBounds(
+                joystickPadding,
+                joystickPadding,
+                measuredWidth - joystickPadding,
+                measuredHeight - joystickPadding
+            )
         }
 
+        backgroundDrawable?.draw(canvas)
         center?.let { center ->
             val (x, y) =
                 if (joystickPosition.mirrored) {
@@ -57,7 +64,7 @@ class JoystickView @JvmOverloads constructor(context: Context, attrs: AttributeS
                 } else {
                     center.first + joystickPosition.getX() to center.second + joystickPosition.getY()
                 }
-            canvas.drawCircle(x, y, joystickButtonSize.toFloat() / 2, redPaint)
+            canvas.drawCircle(x, y, joystickButtonSize.toFloat() / 2, if (isTouched) darkRedPaint else redPaint)
         }
     }
 
