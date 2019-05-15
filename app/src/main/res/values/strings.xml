@@ -189,6 +189,7 @@
     <string name="firmware_please_wait">Please wait</string>
     <string name="firmware_successful_update">Successfull update</string>
     <string name="firmware_done_button">Done</string>
+    <string name="tutorial_reset_success">Successfull tutorial reset</string>
 
 
 </resources>

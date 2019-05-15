@@ -19,4 +19,8 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
         presenter.register(this, viewModel)
         binding?.toolbarViewModel = SettingsToolbarViewModel(resourceResolver)
     }
+
+    override fun showTutorialResetSuccessDialog() {
+        TutorialResetDialog().show(fragmentManager)
+    }
 }
