@@ -10,7 +10,12 @@ import org.kodein.di.erased.instance
 class FirmwareUpdateDialog : RoboticsDialog(), FirmwareUpdateMvp.View {
     override val hasCloseButton: Boolean = true
 
-    override val dialogFaces: List<DialogFace<*>> = listOf(FirmwareUpdateInfoFace(this))
+    override val dialogFaces: List<DialogFace<*>> =
+        listOf(
+            FirmwareUpdateInfoFace(this),
+            FirmwareUpdateLoadingDialogFace(this),
+            FirmwareUpdateSuccessDialogFace(this)
+        )
     override val dialogButtons: List<DialogButton> = listOf()
 
     private val presenter: FirmwareUpdateMvp.Presenter by kodein.instance()

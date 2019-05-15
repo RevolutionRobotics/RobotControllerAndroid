@@ -62,11 +62,12 @@ class FirmwareUpdateDialogPresenter(
     }
 
     override fun onCheckForUpdatesClicked() {
+        // TODO Load latest firmware version and add progress
         infoViewModel?.updateTextVisible?.value = true
         infoViewModel?.updateText?.value = resourceResolver.string(R.string.firmware_update_download_ready, "1.5.6")
-        view?.activateInfoFace(DialogButton(R.string.firmware_download_info, R.drawable.ic_download_update, true) {
+        view?.activateInfoFace(DialogButton(R.string.firmware_update_download, R.drawable.ic_download_update, true) {
             // TODO Start update
-            view?.activateSuccessFace()
+            view?.activateLoadingFace()
         })
     }
 
