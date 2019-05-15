@@ -52,9 +52,9 @@ class FirmwareUpdateDialogPresenter(
                 getPrimaryBattery({
                     viewModel.batteryMain.value = resourceResolver.string(R.string.firmware_main_battery, it.toString())
                 }, ::readError)
-                getMotorBattery({
+                getMotorBattery({ percentage ->
                     viewModel.batteryMotor.value =
-                        resourceResolver.string(R.string.firmware_motor_battery, it.toString())
+                        resourceResolver.string(R.string.firmware_motor_battery, percentage.toString())
                     viewModel.updateTextVisible.value = false
                 }, ::readError)
             }
