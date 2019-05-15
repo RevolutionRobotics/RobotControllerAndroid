@@ -27,6 +27,8 @@
                 app:destination="@id/buildRobotFragment"/>
         <action android:id="@+id/toConfigure"
                 app:destination="@id/configureFragment"/>
+        <action android:id="@+id/toPlayGamer"
+                app:destination="@id/playGamerFragment"/>
     </fragment>
 
     <fragment android:id="@+id/whoToBuildFragment"
