@@ -93,7 +93,7 @@
 
         <View
                 android:id="@+id/view_permission_background"
-                android:layout_width="@dimen/permission_layout_width"
+                android:layout_width="@dimen/about_permission_layout_width"
                 android:layout_height="64dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

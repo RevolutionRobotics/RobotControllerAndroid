@@ -84,7 +84,8 @@ class MyRobotsPresenter(
     }
 
     override fun onPlaySelected(robotId: Int) {
-        // Nothing here yet
+        // TODO select adequate controller from configuration
+        navigator.navigate(MyRobotsFragmentDirections.toPlayGamer())
     }
 
     override fun onContinueBuildingSelected(robot: UserRobot) {

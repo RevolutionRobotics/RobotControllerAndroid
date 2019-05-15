@@ -13,7 +13,7 @@ class BluetoothManager(private var kodein: Kodein) : RoboticsConnectionStatusLis
     private var listeners = mutableListOf<BluetoothConnectionListener>()
     private var connectionFlowHelper: BluetoothConnectionFlowHelper? = null
 
-    private val bleConnectionHandler: RoboticsDeviceConnector by kodein.instance()
+    val bleConnectionHandler: RoboticsDeviceConnector by kodein.instance()
 
     var isConnected = false
         private set

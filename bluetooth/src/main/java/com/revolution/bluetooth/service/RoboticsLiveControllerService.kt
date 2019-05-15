@@ -29,7 +29,7 @@ class RoboticsLiveControllerService : RoboticsBLEService() {
 
         const val MESSAGE_LENGTH = 20
         const val MAX_BYTE_MASK = 255.toByte()
-        const val DEFAULT_COORDINATE = 127.toByte()
+        const val DEFAULT_COORDINATE = 128.toByte()
     }
 
     override val serviceId: UUID = UUID.fromString(SERVICE_ID)

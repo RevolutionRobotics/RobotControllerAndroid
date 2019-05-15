@@ -141,6 +141,9 @@
     <string name="save_dialog_done">Done</string>
     <string name="save_dialog_description_title">Description</string>
 
+    <!-- Play -->
+    <string name="play_screen_title">Play!</string>
+
     <!-- Settings -->
     <string name="settings_screen_title">Settings</string>
     <string name="settings_reset_tutorial">Reset tutorial</string>
