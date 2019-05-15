@@ -22,9 +22,12 @@ class FirmwareUpdateDialogPresenter(
             view.setInfoViewModel(this)
         }
         infoViewModel?.let { viewModel ->
-            viewModel.robotName.value = resourceResolver.string(R.string.firmware_loading)
+            viewModel.updateTextVisible.value = true
+            viewModel.updateText.value = resourceResolver.string(R.string.firmware_loading)
             bluetoothManager.getDeviceInfoService().apply {
-                getSystemId({ viewModel.robotName.value = it }, ::readError)
+                getSystemId({
+                    viewModel.robotName.value = it
+                }, ::readError)
                 getFirmwareRevision({
                     viewModel.firmwareVersion.value = resourceResolver.string(R.string.firmware_current_version, it)
                 }, ::readError)
@@ -52,6 +55,7 @@ class FirmwareUpdateDialogPresenter(
                 getMotorBattery({
                     viewModel.batteryMotor.value =
                         resourceResolver.string(R.string.firmware_motor_battery, it.toString())
+                    viewModel.updateTextVisible.value = false
                 }, ::readError)
             }
         }
