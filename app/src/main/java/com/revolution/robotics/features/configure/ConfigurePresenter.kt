@@ -6,6 +6,7 @@ import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
 import com.revolution.robotics.core.interactor.GetUserConfigurationInteractor
 import com.revolution.robotics.core.interactor.SaveUserRobotInteractor
+import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.features.configure.save.SaveRobotDialog
 
 @Suppress("TooManyFunctions")
@@ -13,7 +14,8 @@ class ConfigurePresenter(
     private val configurationEventBus: ConfigurationEventBus,
     private val getUserConfigurationInteractor: GetUserConfigurationInteractor,
     private val saveUserRobotInteractor: SaveUserRobotInteractor,
-    private val dialogEventBus: DialogEventBus
+    private val dialogEventBus: DialogEventBus,
+    private val navigator: Navigator
 ) : ConfigureMvp.Presenter,
     ConfigurationEventBus.Listener, DialogEventBus.Listener {
 
@@ -71,7 +73,10 @@ class ConfigurePresenter(
                 saveUserRobotInteractor.userConfiguration = userConfiguration
                 saveUserRobotInteractor.userRobot = robot
                 toolbarViewModel?.title?.set(robot.name)
-                saveUserRobotInteractor.execute(onResponse = {},
+                saveUserRobotInteractor.execute(
+                    onResponse = {
+                        navigator.back(2)
+                    },
                     onError = {
                         // TODO error handling
                     })
