@@ -46,6 +46,7 @@ class SensorConfigurationPresenter(
                 titleColor = R.color.white
             )
 
+            actionButtonsViewModel.testButtonEnabled.set(sensor.isTestable())
             actionButtonsViewModel.doneButtonEnabled.set(true)
             actionButtonsViewModel.doneButtonChippedBoxConfig.value = chippedConfigDoneEnabled
             actionButtonsViewModel.doneTextColor.set(R.color.white)
@@ -116,4 +117,7 @@ class SensorConfigurationPresenter(
             configurationEventBus.publishSensorUpdateEvent(SensorPort(this, portName))
         }
     }
+
+    private fun Sensor?.isTestable() =
+        this?.type == Sensor.TYPE_BUMPER || this?.type == Sensor.TYPE_ULTRASONIC
 }
