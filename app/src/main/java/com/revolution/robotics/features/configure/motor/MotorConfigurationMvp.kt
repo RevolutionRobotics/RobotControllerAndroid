@@ -10,7 +10,7 @@ interface MotorConfigurationMvp : Mvp {
         fun showDialog(roboticsDialog: RoboticsDialog)
     }
 
-    @Suppress("ComplexInterface")
+    @Suppress("ComplexInterface", "TooManyFunctions")
     interface Presenter : Mvp.Presenter<View, MotorConfigurationViewModel> {
         fun setMotor(motor: Motor, portName: String)
         fun onVariableNameChanged(name: String?)

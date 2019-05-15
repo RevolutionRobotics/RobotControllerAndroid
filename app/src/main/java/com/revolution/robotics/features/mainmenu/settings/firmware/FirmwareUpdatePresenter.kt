@@ -19,11 +19,7 @@ class FirmwareUpdatePresenter(private val bluetoothManager: BluetoothManager) : 
         super.unregister()
     }
 
-    override fun onBluetoothConnectionStateChanged(
-        connected: Boolean,
-        serviceDiscovered: Boolean,
-        manager: BluetoothManager
-    ) {
+    override fun onBluetoothConnectionStateChanged(connected: Boolean, serviceDiscovered: Boolean) {
         model?.hasConnectedRobot?.value = connected && serviceDiscovered
         if (connected && serviceDiscovered) {
             bluetoothManager.getDeviceInfoService().getSystemId({

@@ -30,11 +30,7 @@ class BluetoothStatusImageView @JvmOverloads constructor(
         super.onDetachedFromWindow()
     }
 
-    override fun onBluetoothConnectionStateChanged(
-        connected: Boolean,
-        serviceDiscovered: Boolean,
-        manager: BluetoothManager
-    ) {
+    override fun onBluetoothConnectionStateChanged(connected: Boolean, serviceDiscovered: Boolean) {
         setGreyscale(this, !connected)
     }
 }

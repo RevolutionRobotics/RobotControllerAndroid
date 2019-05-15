@@ -42,13 +42,9 @@ class PlayGamerFragment : BaseFragment<FragmentPlayGamerBinding, PlayViewModel>(
         super.onDestroyView()
     }
 
-    override fun onBluetoothConnectionStateChanged(
-        connected: Boolean,
-        serviceDiscovered: Boolean,
-        manager: BluetoothManager
-    ) {
+    override fun onBluetoothConnectionStateChanged(connected: Boolean, serviceDiscovered: Boolean) {
         if (connected) {
-            presenter.onDeviceConnected(manager.bleConnectionHandler)
+            presenter.onDeviceConnected(bluetoothManager.bleConnectionHandler)
         } else {
             presenter.onDeviceDisconnected()
         }

@@ -12,6 +12,7 @@ import com.revolution.robotics.R
 import com.revolution.robotics.core.extensions.color
 import com.revolution.robotics.core.extensions.dimension
 
+@Suppress("ClickableViewAccessibility")
 class JoystickView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
     View(context, attrs, defStyleAttr) {
 
@@ -103,7 +104,7 @@ class JoystickView @JvmOverloads constructor(context: Context, attrs: AttributeS
         }
 
         fun calculateDistance(x1: Float, y1: Float, x2: Float, y2: Float) {
-            center?.let { center ->
+            center?.let {
                 distance = Math.min(
                     Math.sqrt(((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1)).toDouble()),
                     joystickPositionMax.toDouble()

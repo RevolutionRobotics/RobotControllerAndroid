@@ -12,6 +12,7 @@ import com.revolution.robotics.features.configure.ConfigurationEventBus
 import com.revolution.robotics.features.configure.MotorPort
 import com.revolution.robotics.features.configure.SensorPort
 
+@Suppress("TooManyFunctions")
 class ConfigureConnectionsPresenter(
     private val openConfigurationEventBus: ConfigurationEventBus,
     private val resourceResolver: ResourceResolver
