@@ -1,5 +1,6 @@
 package com.revolution.robotics.features.configure
 
+import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.local.UserConfiguration
 import com.revolution.robotics.core.domain.local.UserRobot
 import com.revolution.robotics.core.eventBus.dialog.DialogEvent
@@ -75,7 +76,7 @@ class ConfigurePresenter(
                 toolbarViewModel?.title?.set(robot.name)
                 saveUserRobotInteractor.execute(
                     onResponse = {
-                        navigator.back(2)
+                        navigator.popUntil(R.id.myRobotsFragment)
                     },
                     onError = {
                         // TODO error handling

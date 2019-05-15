@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import com.revolution.robotics.core.extensions.hideSystemUI
 import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.core.utils.dynamicPermissions.DynamicPermissionHandler
@@ -47,14 +48,16 @@ class MainActivity : AppCompatActivity(), KodeinAware, Navigator.NavigationEvent
         super.onDestroy()
     }
 
-    override fun onNavigationEvent(navDirections: NavDirections) {
-        navController.navigate(navDirections)
+    override fun onBackPressed() {
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment)
+        val currentFragment = (navHostFragment as NavHostFragment).childFragmentManager.primaryNavigationFragment
+        if ((currentFragment as? BaseFragment<*, *>)?.onBackPressed() != true) {
+            super.onBackPressed()
+        }
     }
 
-    override fun back(count: Int) {
-        repeat(count) {
-            navController.navigateUp()
-        }
+    override fun onNavigationEvent(navDirections: NavDirections) {
+        navController.navigate(navDirections)
     }
 
     override fun popUntil(fragmentId: Int) {
