@@ -6,6 +6,7 @@ import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.databinding.FragmentFirmwareUpdateBinding
+import com.revolution.robotics.features.mainmenu.settings.firmware.update.FirmwareUpdateDialog
 import org.kodein.di.erased.instance
 
 class FirmwareFragment :
@@ -26,5 +27,9 @@ class FirmwareFragment :
     override fun onDestroyView() {
         presenter.unregister()
         super.onDestroyView()
+    }
+
+    override fun showFirmwareUpdateDialog() {
+        FirmwareUpdateDialog().show(fragmentManager)
     }
 }

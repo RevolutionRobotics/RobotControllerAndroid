@@ -20,7 +20,9 @@
 
     <!-- Bluetooth permission -->
     <string name="permission_bluetooth_title">Bluetooth permissions</string>
-    <string name="permission_bluetooth_description">We need your location permissions to search for bluetooth devices. We can explain here how is this exactly working</string>
+    <string name="permission_bluetooth_description">We need your location permissions to search for bluetooth devices.
+        We can explain here how is this exactly working
+    </string>
     <string name="permission_bluetooth_agree">Agree and continue</string>
 
     <!-- Connect to controller -->
@@ -66,9 +68,13 @@
     <string name="tips_dialog_button_skip_testing">Skip testing</string>
     <string name="tips_dialog_button_community">Community</string>
     <string name="tips_dialog_button_try_again">Try again</string>
-    <string name="tips_dialog_placeholder_1">Lorem ipsum dolor sit amet, eu commodo numquam comprehensam vel. Quo cu alia placerat.</string>
+    <string name="tips_dialog_placeholder_1">Lorem ipsum dolor sit amet, eu commodo numquam comprehensam vel. Quo cu
+        alia placerat.
+    </string>
     <string name="tips_dialog_placeholder_2">Per graece denique invidunt ei. Case ullum euripidis duo eu.</string>
-    <string name="tips_dialog_placeholder_3">Eos meis quidam omnesque et. Essent blandit ius ut, no ius melius sanctus.</string>
+    <string name="tips_dialog_placeholder_3">Eos meis quidam omnesque et. Essent blandit ius ut, no ius melius
+        sanctus.
+    </string>
     <string name="tips_dialog_placeholder_4">Get help from the Community!</string>
 
     <!-- Testing Dialog -->
@@ -77,9 +83,15 @@
     <string name="testing_title">Testing</string>
     <string name="testing_question">Looking good?</string>
     <string name="testing_drivetrain_test">Robot moves back and forth and reaches initial position.</string>
-    <string name="testing_motor_test">The attached motor does a half rotation back and forth and reaches initial position.</string>
-    <string name="testing_bumper_test">Move your hand in front of the robot and gently push it. If the sensor detects it, the LED lights of the robot will turn green, otherwise turn red.</string>
-    <string name="testing_ultrasonic_test">Move your hand in front of the robot. If the sensor detects it, the LED lights of the robot will turn green, otherwise turn red.</string>
+    <string name="testing_motor_test">The attached motor does a half rotation back and forth and reaches initial
+        position.
+    </string>
+    <string name="testing_bumper_test">Move your hand in front of the robot and gently push it. If the sensor detects
+        it, the LED lights of the robot will turn green, otherwise turn red.
+    </string>
+    <string name="testing_ultrasonic_test">Move your hand in front of the robot. If the sensor detects it, the LED
+        lights of the robot will turn green, otherwise turn red.
+    </string>
 
     <!-- Build finished -->
     <string name="build_robot_finished_title">All set!</string>
@@ -99,7 +111,7 @@
     <string name="configure_connections_button_M5" translatable="false">M5</string>
     <string name="configure_connections_button_M6" translatable="false">M6</string>
     <string name="configure_connections_button_S1" translatable="false">S1</string>
-    <string name="configure_connections_button_S2" translatable="false" >S2</string>
+    <string name="configure_connections_button_S2" translatable="false">S2</string>
     <string name="configure_connections_button_S3" translatable="false">S3</string>
     <string name="configure_connections_button_S4" translatable="false">S4</string>
 
@@ -154,12 +166,25 @@
     <string name="about_screen_title">About application</string>
     <string name="revolution_webpage">revolutionrobotics.org</string>
     <string name="about_permissions_title">Permissions</string>
-    <string name="about_permissions_instruction">To modify them, please open the main Settings app on your device.</string>
+    <string name="about_permissions_instruction">To modify them, please open the main Settings app on your device.
+    </string>
     <string name="about_privacy_policy_button_title">Privacy policy</string>
     <string name="about_terms_conditions_button_title"><![CDATA[Terms & conditions]]></string>
     <string name="about_version">Version</string>
     <string name="firmware_new_connection_button">Connect to new brain</string>
     <string name="firmware_check_for_updates">Check for updates</string>
     <string name="firmware_screen_title">Firmware update</string>
+    <string name="firmware_loading">Loading…</string>
+    <string name="firmware_hardware_version">Hardware version: %1$s</string>
+    <string name="firmware_model_number">Model number: %1$s</string>
+    <string name="firmware_software_version">Software version: %1$s</string>
+    <string name="firmware_serial_number">Serial number: %1$s</string>
+    <string name="firmware_manufacturer_name">Manufacturer name: %1$s</string>
+    <string name="firmware_main_battery">Main battery: %1$s %%</string>
+    <string name="firmware_motor_battery">Motor battery: %1$s %%</string>
+    <string name="firmware_current_version">Current firmware version %1$s</string>
+    <string name="firmware_update_download_ready">New update (%1$s) is available to download</string>
+    <string name="firmware_download_info">Download &amp; update</string>
+
 
 </resources>

@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable name="viewModel"
+                  type="com.revolution.robotics.features.mainmenu.settings.firmware.update.FirmwareUpdateInfoViewModel"/>
+
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <TextView
+                android:id="@+id/txt_robot_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:fontFamily="@font/jura_bold"
+                android:layout_marginTop="@dimen/dimen_32dp"
+                android:layout_marginStart="@dimen/dimen_32dp"
+                android:layout_marginEnd="@dimen/dimen_32dp"
+                android:text="@{viewModel.robotName}"
+                android:gravity="center_horizontal"
+                tools:text="BRAN ID 121231313"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+                android:id="@+id/txt_firmware"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                tools:text="Firmware version: 12131"
+                android:text="@{viewModel.firmwareVersion}"
+                android:layout_marginTop="@dimen/dimen_16dp"
+                app:layout_constraintTop_toBottomOf="@id/txt_robot_name"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:gravity="center_horizontal"
+                android:fontFamily="@font/barlow_regular"/>
+
+        <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guide_center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="parent"/>
+
+        <TextView
+                android:id="@+id/txt_hardware"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                tools:text="Firmware version: 12131"
+                android:layout_marginTop="@dimen/dimen_16dp"
+                android:layout_marginStart="@dimen/dimen_8dp"
+                android:text="@{viewModel.hardwareVersion}"
+                app:layout_constraintTop_toBottomOf="@id/txt_firmware"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/guide_center"
+                android:fontFamily="@font/barlow_regular"/>
+
+        <TextView
+                android:id="@+id/txt_software_version"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                tools:text="Firmware version: 12131"
+                android:layout_marginStart="@dimen/dimen_8dp"
+                android:text="@{viewModel.softwareVersion}"
+                android:layout_marginTop="@dimen/dimen_4dp"
+                app:layout_constraintTop_toBottomOf="@id/txt_hardware"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/guide_center"
+                android:fontFamily="@font/barlow_regular"/>
+
+        <TextView
+                android:id="@+id/txt_serial_number"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                tools:text="Firmware version: 12131"
+                android:layout_marginStart="@dimen/dimen_8dp"
+                android:text="@{viewModel.serialNumber}"
+                android:layout_marginTop="@dimen/dimen_4dp"
+                app:layout_constraintTop_toBottomOf="@id/txt_software_version"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/guide_center"
+                android:fontFamily="@font/barlow_regular"/>
+
+        <TextView
+                android:id="@+id/txt_manufacturer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                tools:text="Firmware version: 12131"
+                android:layout_marginStart="@dimen/dimen_8dp"
+                android:text="@{viewModel.manufacturer}"
+                android:layout_marginTop="@dimen/dimen_4dp"
+                app:layout_constraintTop_toBottomOf="@id/txt_serial_number"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/guide_center"
+                android:fontFamily="@font/barlow_regular"/>
+
+        <TextView
+                android:id="@+id/txt_model_number"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                tools:text="Firmware version: 12131"
+                android:layout_marginStart="@dimen/dimen_8dp"
+                android:text="@{viewModel.modelNumber}"
+                android:layout_marginTop="@dimen/dimen_16dp"
+                app:layout_constraintTop_toBottomOf="@id/txt_firmware"
+                app:layout_constraintStart_toEndOf="@id/guide_center"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:fontFamily="@font/barlow_regular"/>
+
+        <TextView
+                android:id="@+id/txt_battery_1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                tools:text="Firmware version: 12131"
+                android:layout_marginStart="@dimen/dimen_8dp"
+                android:text="@{viewModel.batteryMain}"
+                android:layout_marginTop="@dimen/dimen_4dp"
+                app:layout_constraintTop_toBottomOf="@id/txt_hardware"
+                app:layout_constraintStart_toEndOf="@id/guide_center"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:fontFamily="@font/barlow_regular"/>
+
+        <TextView
+                android:id="@+id/txt_battery_2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                tools:text="Firmware version: 12131"
+                android:layout_marginStart="@dimen/dimen_8dp"
+                android:text="@{viewModel.batteryMotor}"
+                android:layout_marginTop="@dimen/dimen_4dp"
+                app:layout_constraintTop_toBottomOf="@id/txt_software_version"
+                app:layout_constraintStart_toEndOf="@id/guide_center"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:fontFamily="@font/barlow_regular"/>
+
+        <TextView
+                app:layout_constraintTop_toBottomOf="@id/txt_manufacturer"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:fontFamily="@font/barlow_bold"
+                android:layout_marginStart="@dimen/dimen_8dp"
+                android:drawablePadding="@dimen/dimen_8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_16dp"
+                android:text="@{viewModel.updateText}"
+                app:visible="@{viewModel.updateTextVisible}"
+                tools:text="New update (3.2.0.0) is available to download"
+                android:drawableStart="@drawable/ic_check"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -19,7 +19,7 @@ open class DialogFace<B : ViewDataBinding>(
 
     protected var binding: B? = null
 
-    open val dialogFaceButtons = emptyList<DialogButton>()
+    open val dialogFaceButtons = mutableListOf<DialogButton>()
 
     open fun activate(fragment: Fragment, inflater: LayoutInflater, container: ViewGroup): View? {
         activeFace?.releaseFace()
