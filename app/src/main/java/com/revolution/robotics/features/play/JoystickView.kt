@@ -2,7 +2,9 @@ package com.revolution.robotics.features.play
 
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.LinearGradient
 import android.graphics.Paint
+import android.graphics.Shader
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
@@ -20,8 +22,18 @@ class JoystickView @JvmOverloads constructor(context: Context, attrs: AttributeS
     private val joystickButtonSize = context.dimension(R.dimen.dimen_48dp)
     private val joystickPadding = joystickButtonSize / 2
     private val innerPadding = context.dimension(R.dimen.dimen_2dp)
-    private val redPaint = Paint().apply { color = context.color(R.color.robotics_red) }
-    private val darkRedPaint = Paint().apply { color = context.color(R.color.robotics_red_dark) }
+    private val gradientPaint = Paint().apply {
+        shader = LinearGradient(
+            0.0f,
+            -joystickPadding.toFloat() - 1,
+            0.0f,
+            joystickPadding.toFloat(),
+            context.color(R.color.robotics_orange),
+            context.color(R.color.robotics_red),
+            Shader.TileMode.REPEAT
+        )
+    }
+    private val darkRedPaint = Paint().apply { color = context.color(R.color.robotics_red) }
     private val backgroundDrawable = context.getDrawable(R.drawable.bg_joystick)
 
     private var center: Pair<Float, Float>? = null
@@ -54,25 +66,29 @@ class JoystickView @JvmOverloads constructor(context: Context, attrs: AttributeS
         return true
     }
 
+    private fun init() {
+        center = measuredWidth / 2.0f to measuredHeight / 2.0f
+        backgroundDrawable?.setBounds(
+            joystickPadding,
+            joystickPadding,
+            measuredWidth - joystickPadding,
+            measuredHeight - joystickPadding
+        )
+        joystickPositionMax = measuredWidth / 2 - joystickButtonSize / 2 - innerPadding
+    }
+
     override fun onDraw(canvas: Canvas) {
         if (measuredWidth == 0 || measuredHeight == 0) {
             return
         }
         if (center == null) {
-            center = measuredWidth / 2.0f to measuredHeight / 2.0f
-            backgroundDrawable?.setBounds(
-                joystickPadding,
-                joystickPadding,
-                measuredWidth - joystickPadding,
-                measuredHeight - joystickPadding
-            )
-            joystickPositionMax = measuredWidth / 2 - joystickButtonSize / 2 - innerPadding
+            init()
         }
 
         backgroundDrawable?.draw(canvas)
         center?.let { center ->
             val (x, y) = center.first + joystickPosition.getX() to center.second + joystickPosition.getY()
-            canvas.drawCircle(x, y, joystickButtonSize.toFloat() / 2, if (isTouched) darkRedPaint else redPaint)
+            canvas.drawCircle(x, y, joystickButtonSize.toFloat() / 2, if (isTouched) darkRedPaint else gradientPaint)
         }
     }
 

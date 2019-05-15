@@ -3,13 +3,16 @@
 
     <item android:state_pressed="true">
         <shape android:shape="oval">
-            <solid android:color="@color/robotics_red_dark"/>
+            <solid android:color="@color/robotics_red"/>
         </shape>
     </item>
 
     <item>
         <shape android:shape="oval">
-            <solid android:color="@color/robotics_red"/>
+            <gradient
+                    android:startColor="@color/robotics_red"
+                    android:endColor="@color/robotics_orange"
+                    android:angle="90"/>
         </shape>
     </item>
 
