@@ -14,7 +14,7 @@
     <string name="my_robots_build_new">build new</string>
 
     <!-- Who to build -->
-    <string name="who_to_build_title">Who to build?</string>
+    <string name="who_to_build_title">Choose your robot to build!</string>
     <string name="who_to_build_build_your_own">build your own</string>
     <string name="who_to_build_searching_title">Searching for robots in the area</string>
 
@@ -39,6 +39,7 @@
     <string name="build_robot_later">Later</string>
     <string name="build_robot_tips">Tips</string>
     <string name="build_robot_start">Start</string>
+    <string name="untitled_robot_name">Untitled robot</string>
 
     <!-- My robots -->
     <string name="my_robots_play_button">Play!</string>

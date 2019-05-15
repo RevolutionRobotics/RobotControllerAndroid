@@ -35,18 +35,26 @@ class ConfigurePresenter(
         this.userRobot = userRobot
         this.toolbarViewModel = toolbarViewModel
         toolbarViewModel.title.set(userRobot.name)
-        getUserConfigurationInteractor.userConfigId = userRobot.configurationId
-        getUserConfigurationInteractor.execute(
-            onResponse = { config ->
-                userConfiguration = config
-                userConfiguration?.apply {
-                    model?.setScreen(ConfigurationTabs.CONNECTIONS)
-                    view?.showConnectionsScreen(this)
-                }
-            },
-            onError = { error ->
-                // TODO Error handling
-            })
+        if (userRobot.configurationId == ConfigureFragment.CONFIG_ID_EMPTY) {
+            onConfigurationLoaded(UserConfiguration())
+        } else {
+            getUserConfigurationInteractor.userConfigId = userRobot.configurationId
+            getUserConfigurationInteractor.execute(
+                onResponse = { config ->
+                    onConfigurationLoaded(config)
+                },
+                onError = { error ->
+                    // TODO Error handling
+                })
+        }
+    }
+
+    private fun onConfigurationLoaded(config: UserConfiguration?) {
+        userConfiguration = config
+        userConfiguration?.apply {
+            model?.setScreen(ConfigurationTabs.CONNECTIONS)
+            view?.showConnectionsScreen(this)
+        }
     }
 
     override fun unregister() {
