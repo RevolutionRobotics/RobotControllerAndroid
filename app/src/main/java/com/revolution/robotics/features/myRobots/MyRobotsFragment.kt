@@ -1,7 +1,9 @@
 package com.revolution.robotics.features.myRobots
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.viewpager.widget.ViewPager
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
@@ -24,10 +26,17 @@ class MyRobotsFragment : BaseFragment<FragmentMyRobotsBinding, MyRobotsViewModel
     override val viewModelClass: Class<MyRobotsViewModel> = MyRobotsViewModel::class.java
     private val resourceResolver: ResourceResolver by kodein.instance()
     private val presenter: MyRobotsMvp.Presenter by kodein.instance()
-    private val adapter = MyRobotsCarouselAdapter()
     private val dialogEventBus: DialogEventBus by kodein.instance()
 
+    private lateinit var adapter: MyRobotsCarouselAdapter
+
     private var robotToDeleteId = -1
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val view = super.onCreateView(inflater, container, savedInstanceState)
+        adapter = MyRobotsCarouselAdapter()
+        return view
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         presenter.register(this, viewModel)
@@ -41,6 +50,7 @@ class MyRobotsFragment : BaseFragment<FragmentMyRobotsBinding, MyRobotsViewModel
 
     override fun onDestroyView() {
         dialogEventBus.unregister(this)
+        presenter.unregister()
         super.onDestroyView()
     }
 

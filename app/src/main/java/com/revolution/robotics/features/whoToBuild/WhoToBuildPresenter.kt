@@ -1,23 +1,23 @@
 package com.revolution.robotics.features.whoToBuild
 
+import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.local.BuildStatus
-import com.revolution.robotics.core.domain.local.UserConfiguration
-import com.revolution.robotics.core.domain.local.UserMapping
 import com.revolution.robotics.core.domain.local.UserRobot
 import com.revolution.robotics.core.domain.remote.Robot
 import com.revolution.robotics.core.extensions.isEmptyOrNull
-import com.revolution.robotics.core.interactor.SaveUserRobotInteractor
 import com.revolution.robotics.core.interactor.firebase.RobotInteractor
+import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.features.build.BuildRobotFragment
+import com.revolution.robotics.features.configure.ConfigureFragment
 import com.revolution.robotics.features.whoToBuild.adapter.RobotsItem
 import java.util.Date
 import kotlin.math.max
 
 class WhoToBuildPresenter(
     private val robotsInteractor: RobotInteractor,
-    private val saveUserRobotInteractor: SaveUserRobotInteractor,
-    private val navigator: Navigator
+    private val navigator: Navigator,
+    private val resourceResolver: ResourceResolver
 ) : WhoToBuildMvp.Presenter {
 
     override var model: WhoToBuildViewModel? = null
@@ -98,17 +98,9 @@ class WhoToBuildPresenter(
         val userRobot = UserRobot(
             buildStatus = BuildStatus.COMPLETED,
             lastModified = Date(System.currentTimeMillis()),
-            name = "Name #"
+            name = resourceResolver.string(R.string.untitled_robot_name),
+            configurationId = ConfigureFragment.CONFIG_ID_EMPTY
         )
-        saveUserRobotInteractor.userConfiguration = UserConfiguration(mappingId = UserMapping())
-        saveUserRobotInteractor.userRobot = userRobot
-        saveUserRobotInteractor.execute(
-            onResponse = { instanceId ->
-                userRobot.instanceId = instanceId.toInt()
-                navigator.navigate(WhoToBuildFragmentDirections.toConfigure(userRobot))
-            },
-            onError = { error ->
-                // TODO Error handling
-            })
+        navigator.navigate(WhoToBuildFragmentDirections.toConfigure(userRobot))
     }
 }

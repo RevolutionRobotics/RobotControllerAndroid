@@ -2,7 +2,8 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <variable name="image" type="java.io.File"/>
+        <variable name="viewModel"
+                  type="com.revolution.robotics.features.configure.robotPicture.RobotPictureViewModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -34,13 +35,13 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 android:src="@drawable/robot_placeholder"
                 android:scaleType="centerInside"
-                app:invisible="@{image != null}"
+                app:invisible="@{!viewModel.showPlaceholder}"
                 android:layout_marginTop="@dimen/dimen_16dp"
                 app:layout_constraintTop_toBottomOf="@id/title"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:background="@drawable/bg_camera_placeholder"/>
 
-        <ImageView
+        <com.revolution.robotics.views.RemoteImageView
                 android:id="@+id/image_photo"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
@@ -48,8 +49,9 @@
                 app:layout_constraintEnd_toEndOf="@id/image_placeholder"
                 app:layout_constraintTop_toTopOf="@id/image_placeholder"
                 app:layout_constraintBottom_toBottomOf="@id/image_placeholder"
-                app:visible="@{image != null}"
-                app:imageFile="@{image}"
+                app:visible="@{!viewModel.showPlaceholder}"
+                app:firebaseImageUrl="@{viewModel.defaultCoverImage}"
+                app:imageFile="@{viewModel.image}"
                 android:scaleType="centerCrop"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

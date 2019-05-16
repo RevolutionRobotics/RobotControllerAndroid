@@ -2,6 +2,7 @@ package com.revolution.robotics.features.configure
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.revolution.robotics.BaseFragment
@@ -23,6 +24,8 @@ class ConfigureFragment : BaseFragment<FragmentConfigureBinding, ConfigureViewMo
     ConfigureMvp.View, DrawerLayout.DrawerListener {
 
     companion object {
+        const val CONFIG_ID_EMPTY = -1
+
         val Bundle.userRobot: UserRobot by BundleArgumentDelegate.Parcelable("userRobot")
     }
 
@@ -43,6 +46,16 @@ class ConfigureFragment : BaseFragment<FragmentConfigureBinding, ConfigureViewMo
     override fun hideDrawer() {
         binding?.drawerConfiguration?.closeDrawers()
     }
+
+    override fun onBackPressed() =
+        if (binding?.drawerConfiguration?.isDrawerOpen(GravityCompat.END) == true ||
+            binding?.drawerConfiguration?.isDrawerOpen(GravityCompat.START) == true
+        ) {
+            hideDrawer()
+            true
+        } else {
+            false
+        }
 
     override fun onDestroyView() {
         presenter.unregister()

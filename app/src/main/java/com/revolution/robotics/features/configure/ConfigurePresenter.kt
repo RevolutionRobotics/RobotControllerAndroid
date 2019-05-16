@@ -1,11 +1,14 @@
 package com.revolution.robotics.features.configure
 
+import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.local.UserConfiguration
 import com.revolution.robotics.core.domain.local.UserRobot
 import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
 import com.revolution.robotics.core.interactor.GetUserConfigurationInteractor
 import com.revolution.robotics.core.interactor.SaveUserRobotInteractor
+import com.revolution.robotics.core.utils.Navigator
+import com.revolution.robotics.features.configure.robotPicture.RobotPictureDialog
 import com.revolution.robotics.features.configure.save.SaveRobotDialog
 
 @Suppress("TooManyFunctions")
@@ -13,7 +16,9 @@ class ConfigurePresenter(
     private val configurationEventBus: ConfigurationEventBus,
     private val getUserConfigurationInteractor: GetUserConfigurationInteractor,
     private val saveUserRobotInteractor: SaveUserRobotInteractor,
-    private val dialogEventBus: DialogEventBus
+    private val dialogEventBus: DialogEventBus,
+    private val navigator: Navigator,
+    private val userConfigurationStorage: UserConfigurationStorage
 ) : ConfigureMvp.Presenter,
     ConfigurationEventBus.Listener, DialogEventBus.Listener {
 
@@ -22,7 +27,6 @@ class ConfigurePresenter(
 
     private var toolbarViewModel: ConfigureToolbarViewModel? = null
 
-    var userConfiguration: UserConfiguration? = null
     var userRobot: UserRobot? = null
 
     override fun register(view: ConfigureMvp.View, model: ConfigureViewModel?) {
@@ -35,23 +39,32 @@ class ConfigurePresenter(
         this.userRobot = userRobot
         this.toolbarViewModel = toolbarViewModel
         toolbarViewModel.title.set(userRobot.name)
-        getUserConfigurationInteractor.userConfigId = userRobot.configurationId
-        getUserConfigurationInteractor.execute(
-            onResponse = { config ->
-                userConfiguration = config
-                userConfiguration?.apply {
-                    model?.setScreen(ConfigurationTabs.CONNECTIONS)
-                    view?.showConnectionsScreen(this)
-                }
-            },
-            onError = { error ->
-                // TODO Error handling
-            })
+        if (userRobot.configurationId == ConfigureFragment.CONFIG_ID_EMPTY) {
+            onConfigurationLoaded(UserConfiguration())
+        } else {
+            getUserConfigurationInteractor.userConfigId = userRobot.configurationId
+            getUserConfigurationInteractor.execute(
+                onResponse = { config ->
+                    onConfigurationLoaded(config)
+                },
+                onError = { error ->
+                    // TODO Error handling
+                })
+        }
+    }
+
+    private fun onConfigurationLoaded(config: UserConfiguration?) {
+        userConfigurationStorage.userConfiguration = config
+        config?.apply {
+            model?.setScreen(ConfigurationTabs.CONNECTIONS)
+            view?.showConnectionsScreen(this)
+        }
     }
 
     override fun unregister() {
         configurationEventBus.unregister(this)
         dialogEventBus.unregister(this)
+        userConfigurationStorage.userConfiguration = null
         super.unregister()
     }
 
@@ -60,10 +73,13 @@ class ConfigurePresenter(
             userRobot?.let { robot ->
                 robot.name = event.extras.getString(SaveRobotDialog.KEY_NAME)
                 robot.description = event.extras.getString(SaveRobotDialog.KEY_DESCRIPTION)
-                saveUserRobotInteractor.userConfiguration = userConfiguration
+                saveUserRobotInteractor.userConfiguration = userConfigurationStorage.userConfiguration
                 saveUserRobotInteractor.userRobot = robot
                 toolbarViewModel?.title?.set(robot.name)
-                saveUserRobotInteractor.execute(onResponse = {},
+                saveUserRobotInteractor.execute(
+                    onResponse = {
+                        navigator.popUntil(R.id.myRobotsFragment)
+                    },
                     onError = {
                         // TODO error handling
                     })
@@ -81,7 +97,7 @@ class ConfigurePresenter(
 
     override fun onConnectionsTabSelected() {
         model?.setScreen(ConfigurationTabs.CONNECTIONS)
-        userConfiguration?.let { view?.showConnectionsScreen(it) }
+        userConfigurationStorage.userConfiguration?.let { view?.showConnectionsScreen(it) }
     }
 
     override fun onControllerTabSelected() {
@@ -90,7 +106,7 @@ class ConfigurePresenter(
     }
 
     override fun onMotorConfigChangedEvent(event: MotorPort) {
-        userConfiguration?.let { config ->
+        userConfigurationStorage.userConfiguration?.let { config ->
             config.mappingId?.updateMotorPort(event)
             view?.updateConfig(config)
         }
@@ -98,7 +114,7 @@ class ConfigurePresenter(
     }
 
     override fun onSensorConfigChangedEvent(event: SensorPort) {
-        userConfiguration?.let { config ->
+        userConfigurationStorage.userConfiguration?.let { config ->
             config.mappingId?.updateSensorPort(event)
             view?.updateConfig(config)
         }
@@ -106,7 +122,7 @@ class ConfigurePresenter(
     }
 
     override fun onRobotImageClicked() {
-        userRobot?.instanceId?.let { view?.showDialog(RobotPictureDialog.newInstance(it)) }
+        userRobot?.let { view?.showDialog(RobotPictureDialog.newInstance(it.instanceId, it.coverImage)) }
     }
 
     override fun saveConfiguration() {

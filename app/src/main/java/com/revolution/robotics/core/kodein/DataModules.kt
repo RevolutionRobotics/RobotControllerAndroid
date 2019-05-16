@@ -32,8 +32,6 @@ import com.revolution.robotics.features.configure.motor.MotorConfigurationMvp
 import com.revolution.robotics.features.configure.motor.MotorConfigurationPresenter
 import com.revolution.robotics.features.configure.sensor.SensorConfigurationMvp
 import com.revolution.robotics.features.configure.sensor.SensorConfigurationPresenter
-import com.revolution.robotics.features.play.liveController.LiveControllerMvp
-import com.revolution.robotics.features.play.liveController.LiveControllerPresenter
 import com.revolution.robotics.features.mainmenu.MainMenuMvp
 import com.revolution.robotics.features.mainmenu.MainMenuPresenter
 import com.revolution.robotics.features.mainmenu.settings.SettingsMvp
@@ -48,6 +46,8 @@ import com.revolution.robotics.features.myRobots.MyRobotsMvp
 import com.revolution.robotics.features.myRobots.MyRobotsPresenter
 import com.revolution.robotics.features.play.PlayMvp
 import com.revolution.robotics.features.play.PlayPresenter
+import com.revolution.robotics.features.play.liveController.LiveControllerMvp
+import com.revolution.robotics.features.play.liveController.LiveControllerPresenter
 import com.revolution.robotics.features.whoToBuild.WhoToBuildMvp
 import com.revolution.robotics.features.whoToBuild.WhoToBuildPresenter
 import org.kodein.di.Kodein
@@ -83,6 +83,8 @@ fun createPresenterModule() =
                 instance(),
                 instance(),
                 instance(),
+                instance(),
+                instance(),
                 instance()
             )
         }
@@ -92,8 +94,20 @@ fun createPresenterModule() =
                 instance()
             )
         }
-        bind<MotorConfigurationMvp.Presenter>() with singleton { MotorConfigurationPresenter(instance(), instance()) }
-        bind<SensorConfigurationMvp.Presenter>() with singleton { SensorConfigurationPresenter(instance(), instance()) }
+        bind<MotorConfigurationMvp.Presenter>() with singleton {
+            MotorConfigurationPresenter(
+                instance(),
+                instance(),
+                instance()
+            )
+        }
+        bind<SensorConfigurationMvp.Presenter>() with singleton {
+            SensorConfigurationPresenter(
+                instance(),
+                instance(),
+                instance()
+            )
+        }
         bind<BuildFinishedMvp.Presenter>() with singleton { BuildFinishedPresenter(instance()) }
         bind<ConfigureControllersMvp.Presenter>() with singleton { ConfigureControllersPresenter() }
         bind<SettingsMvp.Presenter>() with singleton { SettingsPresenter(instance()) }

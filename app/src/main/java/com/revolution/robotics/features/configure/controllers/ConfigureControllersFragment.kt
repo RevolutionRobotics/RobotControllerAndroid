@@ -31,6 +31,11 @@ class ConfigureControllersFragment :
         }
     }
 
+    override fun onDestroyView() {
+        presenter.unregister()
+        super.onDestroyView()
+    }
+
     override fun onRobotsChanged() {
         adapter.notifyDataSetChanged()
         binding?.controllersViewpager?.initTransformerWithDelay()

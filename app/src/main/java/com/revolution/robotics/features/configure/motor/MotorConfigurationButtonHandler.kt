@@ -28,8 +28,16 @@ class MotorConfigurationButtonHandler(private val model: MotorConfigurationViewM
         .borderSize(R.dimen.dimen_1dp)
         .create()
 
+    private var variableName: String? = null
+
+    fun setVariableName(name: String?) {
+        variableName = name
+        setDoneButton()
+    }
+
     fun initDrivetrain(motor: Motor) {
         model.apply {
+            variableName = motor.variableName
             clearVisibilitiesAndSelections()
             driveTrainButton.isSelected.set(true)
 
@@ -43,13 +51,14 @@ class MotorConfigurationButtonHandler(private val model: MotorConfigurationViewM
             clockwiseButton.isSelected.set(motor.rotation == Motor.ROTATION_CLOCKWISE)
             counterClockwiseButton.isSelected.set(motor.rotation != Motor.ROTATION_CLOCKWISE)
 
-            setDoneButton(true)
+            setDoneButton()
             setTestButton(true)
         }
     }
 
     fun initMotor(motor: Motor) {
         model.apply {
+            variableName = motor.variableName
             clearVisibilitiesAndSelections()
             motorButton.isSelected.set(true)
 
@@ -58,7 +67,7 @@ class MotorConfigurationButtonHandler(private val model: MotorConfigurationViewM
             motorCounterClockwiseButton.isVisible.set(true)
             motorCounterClockwiseButton.isSelected.set(motor.rotation != Motor.ROTATION_CLOCKWISE)
 
-            setDoneButton(true)
+            setDoneButton()
             setTestButton(true)
         }
     }
@@ -67,7 +76,7 @@ class MotorConfigurationButtonHandler(private val model: MotorConfigurationViewM
         model.apply {
             clearVisibilitiesAndSelections()
             emptyButton.isSelected.set(true)
-            setDoneButton(true)
+            setDoneButton()
             setTestButton(false)
         }
     }
@@ -82,7 +91,7 @@ class MotorConfigurationButtonHandler(private val model: MotorConfigurationViewM
             sideRightButton.isSelected.set(false)
             sideRightButton.isVisible.set(true)
 
-            setDoneButton(false)
+            setDoneButton()
             setTestButton(false)
         }
     }
@@ -97,7 +106,7 @@ class MotorConfigurationButtonHandler(private val model: MotorConfigurationViewM
             motorCounterClockwiseButton.isSelected.set(false)
             motorCounterClockwiseButton.isVisible.set(true)
 
-            setDoneButton(false)
+            setDoneButton()
             setTestButton(false)
         }
     }
@@ -113,7 +122,7 @@ class MotorConfigurationButtonHandler(private val model: MotorConfigurationViewM
             clockwiseButton.isVisible.set(true)
             clockwiseButton.isSelected.set(false)
 
-            setDoneButton(true)
+            setDoneButton()
             setTestButton(true)
         }
     }
@@ -129,7 +138,7 @@ class MotorConfigurationButtonHandler(private val model: MotorConfigurationViewM
             clockwiseButton.isVisible.set(true)
             clockwiseButton.isSelected.set(true)
 
-            setDoneButton(true)
+            setDoneButton()
             setTestButton(true)
         }
     }
@@ -140,7 +149,7 @@ class MotorConfigurationButtonHandler(private val model: MotorConfigurationViewM
                 motorClockwiseButton.isSelected.set(false)
                 motorCounterClockwiseButton.isSelected.set(true)
 
-                setDoneButton(true)
+                setDoneButton()
                 setTestButton(true)
             } else {
                 counterClockwiseButton.isSelected.set(true)
@@ -155,7 +164,7 @@ class MotorConfigurationButtonHandler(private val model: MotorConfigurationViewM
                 motorClockwiseButton.isSelected.set(true)
                 motorCounterClockwiseButton.isSelected.set(false)
 
-                setDoneButton(true)
+                setDoneButton()
                 setTestButton(true)
             } else {
                 counterClockwiseButton.isSelected.set(false)
@@ -184,18 +193,30 @@ class MotorConfigurationButtonHandler(private val model: MotorConfigurationViewM
         }
     }
 
-    private fun setDoneButton(enabled: Boolean) {
+    private fun setDoneButton() {
         model.apply {
-            actionButtonsViewModel.doneButtonEnabled.set(enabled)
-            if (enabled) {
+            if (emptyStateValid() || motorStateValid() || drivetrainStateValid()) {
+                actionButtonsViewModel.doneButtonEnabled.set(true)
                 actionButtonsViewModel.doneButtonChippedBoxConfig.value = chippedConfigDoneEnabled
                 actionButtonsViewModel.doneTextColor.set(R.color.white)
             } else {
-                actionButtonsViewModel. doneButtonChippedBoxConfig.value = chippedConfigDoneDisabled
+                actionButtonsViewModel.doneButtonEnabled.set(false)
+                actionButtonsViewModel.doneButtonChippedBoxConfig.value = chippedConfigDoneDisabled
                 actionButtonsViewModel.doneTextColor.set(R.color.grey_8e)
             }
         }
     }
+
+    private fun drivetrainStateValid() = model.driveTrainButton.isSelected.get() &&
+            (model.sideLeftButton.isSelected.get() || model.sideRightButton.isSelected.get()) &&
+            (model.clockwiseButton.isSelected.get() || model.counterClockwiseButton.isSelected.get()) &&
+            !variableName.isNullOrEmpty()
+
+    private fun motorStateValid() = model.motorButton.isSelected.get() &&
+            (model.motorClockwiseButton.isSelected.get() || model.motorCounterClockwiseButton.isSelected.get()) &&
+            !variableName.isNullOrEmpty()
+
+    private fun emptyStateValid() = model.emptyButton.isSelected.get()
 
     private fun setTestButton(enabled: Boolean) {
         model.apply {

@@ -1,4 +1,4 @@
-package com.revolution.robotics.features.configure
+package com.revolution.robotics.features.configure.robotPicture
 
 import android.app.Activity
 import android.content.Intent
@@ -18,14 +18,17 @@ class RobotPictureDialog : RoboticsDialog() {
         private const val REQUEST_CODE_CAMERA = 10001
 
         private var Bundle.robotId by BundleArgumentDelegate.Int("robotId")
+        private var Bundle.defaultCoverImage by BundleArgumentDelegate.StringNullable("defaultCoverImage")
 
-        fun newInstance(id: Int) = RobotPictureDialog().withArguments { bundle ->
+        fun newInstance(id: Int, defaultCoverImage: String? = null) = RobotPictureDialog().withArguments { bundle ->
             bundle.robotId = id
+            bundle.defaultCoverImage = defaultCoverImage
         }
     }
 
     private val dialogFace = RobotPictureDialogFace()
     private lateinit var cameraHelper: CameraHelper
+    private var defaultCoverImage: String? = null
 
     override val hasCloseButton = true
     override val dialogFaces: List<DialogFace<*>> = listOf(dialogFace)
@@ -42,11 +45,12 @@ class RobotPictureDialog : RoboticsDialog() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         cameraHelper = CameraHelper(arguments?.robotId ?: 0)
+        defaultCoverImage = arguments?.defaultCoverImage
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_CODE_CAMERA && resultCode == Activity.RESULT_OK) {
-            dialogFace.onCameraCaptured(false)
+            dialogFace.onCameraCaptured()
         } else {
             super.onActivityResult(requestCode, resultCode, data)
         }
@@ -59,26 +63,19 @@ class RobotPictureDialog : RoboticsDialog() {
     inner class RobotPictureDialogFace : DialogFace<DialogRobotPictureBinding>(R.layout.dialog_robot_picture) {
 
         override fun onActivated() {
-            onCameraCaptured(true)
+            binding?.viewModel = RobotPictureViewModel().apply {
+                defaultCoverImage.set(this@RobotPictureDialog.defaultCoverImage)
+            }
+            onCameraCaptured()
         }
 
         fun onImageDeleted() {
-            binding?.apply {
-                image = null
-                executePendingBindings()
-            }
+            binding?.viewModel?.image?.set(null)
         }
 
-        fun onCameraCaptured(openCameraIfImageDoesNotExist: Boolean) {
+        fun onCameraCaptured() {
             val imageFile = cameraHelper.getImageFile(requireContext())
-            if (imageFile.exists()) {
-                binding?.apply {
-                    image = imageFile
-                    executePendingBindings()
-                }
-            } else if (openCameraIfImageDoesNotExist) {
-                startCamera()
-            }
+            binding?.viewModel?.image?.set(imageFile)
         }
     }
 }

@@ -15,7 +15,8 @@ data class ChippedEditTextViewModel(
     var backgroundColor: Int = R.color.white,
     var textMinLines: Int = CHIPPED_EDIT_TEXT_DEFAULT_MIN_LINES,
     var textMaxLines: Int = CHIPPED_EDIT_TEXT_DEFAULT_MAX_LINES,
-    var textMaxLength: Int = CHIPPED_EDIT_TEXT_DEFAULT_MAX_LENGTH
+    var textMaxLength: Int = CHIPPED_EDIT_TEXT_DEFAULT_MAX_LENGTH,
+    var digits: String? = null
 ) {
     companion object {
         const val CHIPPED_EDIT_TEXT_DEFAULT_MIN_LINES = 1

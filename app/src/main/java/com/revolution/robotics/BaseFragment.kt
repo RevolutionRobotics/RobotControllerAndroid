@@ -52,6 +52,8 @@ abstract class BaseFragment<B : ViewDataBinding, V : ViewModel>(@LayoutRes priva
         roboticsDialog.show(fragmentManager)
     }
 
+    open fun onBackPressed() = false
+
     // Override if you have a custom ViewModelFactory
     open fun getViewModelFactory(): ViewModelProvider.Factory? = KodeinViewModelFactory(kodein)
 

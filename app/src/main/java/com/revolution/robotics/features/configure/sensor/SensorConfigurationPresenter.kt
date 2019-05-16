@@ -7,12 +7,14 @@ import com.revolution.robotics.features.build.testing.BumperTestDialog
 import com.revolution.robotics.features.build.testing.UltrasonicTestDialog
 import com.revolution.robotics.features.configure.ConfigurationEventBus
 import com.revolution.robotics.features.configure.SensorPort
+import com.revolution.robotics.features.configure.UserConfigurationStorage
 import com.revolution.robotics.views.ChippedEditTextViewModel
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 
 class SensorConfigurationPresenter(
     private val resourceResolver: ResourceResolver,
-    private val configurationEventBus: ConfigurationEventBus
+    private val configurationEventBus: ConfigurationEventBus,
+    private val userConfigurationStorage: UserConfigurationStorage
 ) : SensorConfigurationMvp.Presenter {
 
     override var view: SensorConfigurationMvp.View? = null
@@ -20,10 +22,22 @@ class SensorConfigurationPresenter(
 
     private var portName: String? = null
     private var sensor: Sensor? = null
+    private var variableName: String? = null
 
     private val chippedConfigDoneEnabled = ChippedBoxConfig.Builder()
         .backgroundColorResource(R.color.grey_28)
         .borderColorResource(R.color.white)
+        .chipTopRight(true)
+        .chipBottomLeft(false)
+        .chipBottomRight(false)
+        .chipTopLeft(false)
+        .chipSize(R.dimen.dimen_8dp)
+        .borderSize(R.dimen.dimen_1dp)
+        .create()
+
+    private val chippedConfigDoneDisabled = ChippedBoxConfig.Builder()
+        .backgroundColorResource(R.color.grey_28)
+        .borderColorResource(R.color.grey_1e)
         .chipTopRight(true)
         .chipBottomLeft(false)
         .chipBottomRight(false)
@@ -43,20 +57,29 @@ class SensorConfigurationPresenter(
                 borderColor = R.color.grey_8e,
                 backgroundColor = R.color.grey_28,
                 textColor = R.color.white,
-                titleColor = R.color.white
+                titleColor = R.color.white,
+                digits = UserConfigurationStorage.ALLOWED_DIGITS_REGEXP
             )
 
-            actionButtonsViewModel.doneButtonEnabled.set(true)
-            actionButtonsViewModel.doneButtonChippedBoxConfig.value = chippedConfigDoneEnabled
-            actionButtonsViewModel.doneTextColor.set(R.color.white)
+            actionButtonsViewModel.testButtonEnabled.set(sensor.isTestable())
             bumperButton.isSelected.set(sensor.type == Sensor.TYPE_BUMPER)
             ultrasoundButton.isSelected.set(sensor.type == Sensor.TYPE_ULTRASONIC)
             emptyButton.isSelected.set(sensor.type.isNullOrEmpty())
+            onVariableNameChanged(sensor.variableName)
         }
     }
 
     override fun onVariableNameChanged(name: String?) {
-        sensor?.variableName = name
+        variableName = name
+        if (!name.isNullOrEmpty() || model?.emptyButton?.isSelected?.get() == true) {
+            model?.actionButtonsViewModel?.doneButtonChippedBoxConfig?.value = chippedConfigDoneEnabled
+            model?.actionButtonsViewModel?.doneTextColor?.set(R.color.white)
+            model?.actionButtonsViewModel?.doneButtonEnabled?.set(true)
+        } else {
+            model?.actionButtonsViewModel?.doneButtonChippedBoxConfig?.value = chippedConfigDoneDisabled
+            model?.actionButtonsViewModel?.doneTextColor?.set(R.color.grey_8e)
+            model?.actionButtonsViewModel?.doneButtonEnabled?.set(false)
+        }
     }
 
     override fun onEmptyButtonClicked() {
@@ -65,6 +88,7 @@ class SensorConfigurationPresenter(
             ultrasoundButton.isSelected.set(false)
             emptyButton.isSelected.set(true)
             setTestButton(false)
+            onVariableNameChanged(this@SensorConfigurationPresenter.variableName)
         }
     }
 
@@ -74,6 +98,7 @@ class SensorConfigurationPresenter(
             ultrasoundButton.isSelected.set(false)
             emptyButton.isSelected.set(false)
             setTestButton(true)
+            onVariableNameChanged(this@SensorConfigurationPresenter.variableName)
         }
     }
 
@@ -83,6 +108,7 @@ class SensorConfigurationPresenter(
             ultrasoundButton.isSelected.set(true)
             emptyButton.isSelected.set(false)
             setTestButton(true)
+            onVariableNameChanged(this@SensorConfigurationPresenter.variableName)
         }
     }
 
@@ -105,15 +131,29 @@ class SensorConfigurationPresenter(
 
     override fun onDoneButtonClicked() {
         sensor?.apply {
-            type =
-                if (model?.bumperButton?.isSelected?.get() == true) {
-                    Sensor.TYPE_BUMPER
-                } else if (model?.ultrasoundButton?.isSelected?.get() == true) {
-                    Sensor.TYPE_ULTRASONIC
+            if (userConfigurationStorage.isUsedVariableName(
+                    this@SensorConfigurationPresenter.variableName ?: "",
+                    portName ?: ""
+                )
+            ) {
+                view?.showError(resourceResolver.string(R.string.error_variable_already_in_use) ?: "")
+            } else {
+                type =
+                    when {
+                        model?.bumperButton?.isSelected?.get() == true -> Sensor.TYPE_BUMPER
+                        model?.ultrasoundButton?.isSelected?.get() == true -> Sensor.TYPE_ULTRASONIC
+                        else -> null
+                    }
+                variableName = if (model?.emptyButton?.isSelected?.get() == true) {
+                    ""
                 } else {
-                    null
+                    this@SensorConfigurationPresenter.variableName
                 }
-            configurationEventBus.publishSensorUpdateEvent(SensorPort(this, portName))
+                configurationEventBus.publishSensorUpdateEvent(SensorPort(this, portName))
+            }
         }
     }
+
+    private fun Sensor?.isTestable() =
+        this?.type == Sensor.TYPE_BUMPER || this?.type == Sensor.TYPE_ULTRASONIC
 }

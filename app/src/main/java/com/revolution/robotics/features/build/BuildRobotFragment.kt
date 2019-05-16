@@ -77,12 +77,15 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
 
     override fun onDestroyView() {
         dialogEventBus.unregister(this)
+        presenter.unregister()
         super.onDestroyView()
     }
 
     override fun onDialogEvent(event: DialogEvent) {
         if (event == DialogEvent.CHAPTER_FINISHED) {
             getTestingDialog(event.extras.getInt(ChapterFinishedDialog.KEY_TEST_CODE_ID))?.show(fragmentManager)
+        } else if (event == DialogEvent.SKIP_TESTING || event == DialogEvent.TEST_WORKS) {
+            binding?.seekbar?.next()
         }
     }
 
@@ -102,12 +105,12 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
         onBuildStepSelected(steps[startIndex], true)
     }
 
+    override fun shouldShowNext(buildStep: BuildStep): Boolean {
+        buildStep.milestone?.let { ChapterFinishedDialog.newInstance(it).show(fragmentManager) }
+        return buildStep.milestone == null
+    }
+
     override fun onBuildStepSelected(buildStep: BuildStep, fromUser: Boolean) {
-        currentBuildStep?.let { currentBuildStep ->
-            if (currentBuildStep.stepNumber < buildStep.stepNumber && !fromUser) {
-                currentBuildStep.milestone?.let { ChapterFinishedDialog.newInstance(it).show(fragmentManager) }
-            }
-        }
         viewModel?.setBuildStep(buildStep, buildStepCount)
         currentBuildStep = buildStep
     }
