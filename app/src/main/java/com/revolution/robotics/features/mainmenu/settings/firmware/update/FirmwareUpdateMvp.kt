@@ -11,9 +11,11 @@ interface FirmwareUpdateMvp : Mvp {
         fun setInfoViewModel(viewModel: FirmwareUpdateInfoViewModel)
         fun activateLoadingFace()
         fun activateSuccessFace()
+        fun activateErrorFace()
     }
 
     interface Presenter : Mvp.Presenter<View, ViewModel> {
         fun onCheckForUpdatesClicked()
+        fun retryFirmwareUpdate()
     }
 }

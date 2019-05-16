@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.constraintlayout.widget.ConstraintLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:paddingStart="@dimen/dimen_32dp"
+            android:paddingEnd="@dimen/dimen_32dp"
+            android:layout_height="match_parent">
+
+        <TextView
+                android:id="@+id/title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:fontFamily="@font/jura_bold"
+                android:gravity="center_horizontal"
+                android:textSize="18sp"
+                android:textColor="@color/white"
+                android:textAllCaps="true"
+                android:text="@string/firmware_update_failed_title"
+                android:layout_marginTop="@dimen/dimen_24dp"/>
+
+        <TextView
+                android:id="@+id/tips_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/barlow_bold"
+                android:textSize="14sp"
+                android:textColor="@color/white"
+                android:layout_marginTop="@dimen/dimen_8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/title"
+                android:text="@string/firmware_update_failed_tips_title"/>
+
+        <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tips_title"
+                android:layout_marginTop="@dimen/dimen_8dp"
+                android:text="@string/firmware_update_failed_tips"
+                android:textSize="12sp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/barlow_regular"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
