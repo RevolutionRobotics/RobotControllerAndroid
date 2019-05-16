@@ -187,9 +187,9 @@
     <string name="firmware_update_download">Download and update</string>
     <string name="firmware_download_info">Downloading &amp; updating</string>
     <string name="firmware_please_wait">Please wait</string>
-    <string name="firmware_successful_update">Successfull update</string>
+    <string name="firmware_successful_update">Successful update</string>
     <string name="firmware_done_button">Done</string>
-    <string name="tutorial_reset_success">Successfull tutorial reset</string>
+    <string name="tutorial_reset_success">Successful tutorial reset</string>
 
 
 </resources>
