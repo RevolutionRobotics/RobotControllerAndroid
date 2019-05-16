@@ -50,6 +50,7 @@ class MyRobotsFragment : BaseFragment<FragmentMyRobotsBinding, MyRobotsViewModel
 
     override fun onDestroyView() {
         dialogEventBus.unregister(this)
+        presenter.unregister()
         super.onDestroyView()
     }
 

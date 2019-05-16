@@ -23,4 +23,9 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
     override fun showTutorialResetSuccessDialog() {
         TutorialResetDialog().show(fragmentManager)
     }
+
+    override fun onDestroyView() {
+        presenter.unregister()
+        super.onDestroyView()
+    }
 }

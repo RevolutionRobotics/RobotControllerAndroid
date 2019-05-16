@@ -17,4 +17,9 @@ class MainMenuFragment : BaseFragment<FragmentMainMenuBinding, MainMenuViewModel
         presenter.register(this, viewModel)
         binding?.toolbarViewModel = MainMenuToolbarViewModel(presenter)
     }
+
+    override fun onDestroyView() {
+        presenter.unregister()
+        super.onDestroyView()
+    }
 }

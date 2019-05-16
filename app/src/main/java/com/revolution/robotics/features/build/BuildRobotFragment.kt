@@ -77,6 +77,7 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
 
     override fun onDestroyView() {
         dialogEventBus.unregister(this)
+        presenter.unregister()
         super.onDestroyView()
     }
 
