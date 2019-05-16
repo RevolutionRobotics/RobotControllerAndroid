@@ -3,6 +3,7 @@ package com.revolution.robotics.core.db
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.revolution.robotics.core.domain.local.BuildStatus
+import com.revolution.robotics.core.domain.local.UserProgramBinding
 import com.revolution.robotics.core.domain.remote.Motor
 import com.revolution.robotics.core.domain.remote.Sensor
 import java.util.Date
@@ -23,6 +24,14 @@ class Converters {
     @TypeConverter
     fun fromMotor(motor: Motor?): String = Gson().toJson(motor)
 
+    // UserProgramBinding
+    @TypeConverter
+    fun toUserProgramBinding(userProgramBinding: String?): UserProgramBinding? =
+        Gson().fromJson(userProgramBinding, UserProgramBinding::class.java)
+
+    @TypeConverter
+    fun fromUserProgramBinding(userProgramBinding: UserProgramBinding?): String = Gson().toJson(userProgramBinding)
+
     // Date
     @TypeConverter
     fun toDate(dateLong: Long): Date = Date(dateLong)
@@ -36,4 +45,11 @@ class Converters {
 
     @TypeConverter
     fun fromBuildStatus(buildStatus: BuildStatus): Int = buildStatus.ordinal
+
+    // Variables list
+    @TypeConverter
+    fun toVariables(variables: String): List<String> = variables.split(",")
+
+    @TypeConverter
+    fun fromVariables(variables: List<String>): String = variables.joinToString(separator = ",")
 }
