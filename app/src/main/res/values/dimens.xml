@@ -9,6 +9,7 @@
     <dimen name="dimen_10dp">10dp</dimen>
     <dimen name="dimen_12dp">12dp</dimen>
     <dimen name="dimen_16dp">16dp</dimen>
+    <dimen name="dimen_20dp">20dp</dimen>
     <dimen name="dimen_24dp">24dp</dimen>
     <dimen name="dimen_32dp">32dp</dimen>
     <dimen name="dimen_40dp">40dp</dimen>
@@ -201,6 +202,15 @@
     <dimen name="controller_type_selector_wrapper_height">168dp</dimen>
     <dimen name="controller_type_selector_image_width">121dp</dimen>
     <dimen name="controller_type_selector_image_height">49dp</dimen>
+
+    <!-- SCREEN: SETUP CONTROLLER -->
+    <dimen name="controller_setup_body_width">313dp</dimen>
+    <dimen name="controller_setup_body_height">130dp</dimen>
+    <dimen name="controller_setup_joystick_size">72dp</dimen>
+    <dimen name="controller_setup_button_big_size">24dp</dimen>
+    <dimen name="controller_setup_button_normal_size">20dp</dimen>
+    <dimen name="controller_setup_program_button_width">70dp</dimen>
+    <dimen name="controller_setup_program_button_height">38dp</dimen>
 
     <!-- SCREEN: ABOUT -->
     <dimen name="about_social_icon_size">40dp</dimen>

@@ -12,6 +12,6 @@ class TypeSelectorToolbarViewModel(resourceResolver: ResourceResolver) : Toolbar
     override val options = emptyList<ToolbarOption>()
 
     init {
-        title.set(resourceResolver.string(R.string.controller_type_selector_screen_title))
+        title.set(resourceResolver.string(R.string.controller_selector_title))
     }
 }

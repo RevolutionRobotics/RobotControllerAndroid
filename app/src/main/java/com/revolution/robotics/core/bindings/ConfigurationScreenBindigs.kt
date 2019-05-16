@@ -7,10 +7,10 @@ import com.revolution.robotics.core.extensions.color
 import com.revolution.robotics.features.configure.connections.RobotPartModel
 import com.revolution.robotics.views.configure.PartConnectionButton
 import com.revolution.robotics.views.configure.PartConnectionIconView
-import com.revolution.robotics.views.configure.PartConnectionLineView
+import com.revolution.robotics.views.ConnectionLineView
 
 @BindingAdapter("bindRobotPartModel")
-fun setPartConnectionLineViewRobotPart(lineView: PartConnectionLineView, robotPartModel: RobotPartModel?) {
+fun setPartConnectionLineViewRobotPart(lineView: ConnectionLineView, robotPartModel: RobotPartModel?) {
     lineView.setIsDashed(robotPartModel?.isActive != true)
     if (robotPartModel != null) lineView.setLineColor(robotPartModel.color)
 }

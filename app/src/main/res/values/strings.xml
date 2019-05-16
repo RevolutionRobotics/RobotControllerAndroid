@@ -142,13 +142,14 @@
     <string name="configure_motor_test_button_title">Test</string>
 
     <!-- Controller Type Selector -->
-    <string name="controller_type_selector_screen_title">Choose your controller!</string>
+    <string name="controller_selector_title">Choose your controller!</string>
     <string name="controller_type_gamer">gamer</string>
     <string name="controller_type_multitasker">multi-tasker</string>
     <string name="controller_type_driver">driver</string>
 
     <!-- Controller setup -->
     <string name="controller_setup_screen_title">Assign programs to buttons!</string>
+    <string name="controller_setup_empty">empty</string>
 
     <!-- Save dialog-->
     <string name="save_robot_dialog_title">The robot is ready, name it!</string>

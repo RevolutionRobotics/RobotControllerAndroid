@@ -14,7 +14,7 @@
         <attr name="cetMaxLength" format="integer" />
     </declare-styleable>
 
-    <declare-styleable name="PartConnectionLineView">
+    <declare-styleable name="ConnectionLineView">
         <attr name="isLineVertical" format="boolean" />
     </declare-styleable>
 

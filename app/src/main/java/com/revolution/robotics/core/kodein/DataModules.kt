@@ -128,7 +128,6 @@ fun createPresenterModule() =
         bind<PlayMvp.Presenter>() with singleton { PlayPresenter() }
         bind<FirmwareUpdateMvp.Presenter>() with singleton { FirmwareUpdateDialogPresenter(instance(), instance()) }
         bind<TypeSelectorMvp.Presenter>() with singleton { TypeSelectorPresenter(instance()) }
-        bind<TypeSelectorMvp.Presenter>() with singleton { TypeSelectorPresenter(instance()) }
         bind<SetupMvp.Presenter>() with singleton { SetupPresenter() }
     }
 
