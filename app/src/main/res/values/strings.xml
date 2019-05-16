@@ -193,5 +193,16 @@
     <string name="tutorial_reset_success">Successful tutorial reset</string>
 
     <string name="error_variable_already_in_use">Variable name is already in use</string>
+    <string name="firmware_update_failed_title">Update failed</string>
+    <string name="firmware_update_failed_tips_title">Try to…</string>
+    <string name="firmware_update_failed_tips">- Lorem ipsum dolor sit amet, eu commodo numquam comprehensam vel. Quo cu
+        alia placerat.\n
+        - Per graece denique invidunt ei. Case ullum euripidis duo eu.\n
+        - Eos meis quidam omnesque et. Essent blandit ius ut, no ius melius sanctus.\n
+        - Get help from the Community!
+    </string>
+    <string name="firmware_update_failed_update_later_button">Update later</string>
+    <string name="firmware_update_failed_update_community_button">Community</string>
+    <string name="firmware_update_failed_update_try_again_button">Try again</string>
 
 </resources>

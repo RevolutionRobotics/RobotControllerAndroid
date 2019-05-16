@@ -14,7 +14,8 @@ class FirmwareUpdateDialog : RoboticsDialog(), FirmwareUpdateMvp.View {
         listOf(
             FirmwareUpdateInfoFace(this),
             FirmwareUpdateLoadingDialogFace(this),
-            FirmwareUpdateSuccessDialogFace(this)
+            FirmwareUpdateSuccessDialogFace(this),
+            FirmwareUpdateFailedDialogFace(this)
         )
     override val dialogButtons: List<DialogButton> = listOf()
 
@@ -49,5 +50,13 @@ class FirmwareUpdateDialog : RoboticsDialog(), FirmwareUpdateMvp.View {
 
     override fun activateSuccessFace() {
         activateFace(dialogFaces.first { it is FirmwareUpdateSuccessDialogFace })
+    }
+
+    override fun activateErrorFace() {
+        activateFace(dialogFaces.first { it is FirmwareUpdateFailedDialogFace })
+    }
+
+    fun retryFirmwareUpload() {
+        presenter.retryFirmwareUpdate()
     }
 }

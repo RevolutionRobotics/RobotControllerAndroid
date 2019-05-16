@@ -77,6 +77,11 @@ class FirmwareUpdateDialogPresenter(
         })
     }
 
+    override fun retryFirmwareUpdate() {
+        // TODO restart firmware update
+        view?.activateLoadingFace()
+    }
+
     private fun readError(throwable: Throwable) {
         throwable.printStackTrace()
     }
