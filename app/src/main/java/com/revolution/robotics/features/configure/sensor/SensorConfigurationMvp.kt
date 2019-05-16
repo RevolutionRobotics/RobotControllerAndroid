@@ -8,6 +8,7 @@ interface SensorConfigurationMvp : Mvp {
 
     interface View : Mvp.View {
         fun showDialog(roboticsDialog: RoboticsDialog)
+        fun showError(error: String)
     }
 
     interface Presenter : Mvp.Presenter<View, SensorConfigurationViewModel> {

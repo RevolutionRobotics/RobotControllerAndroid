@@ -17,7 +17,8 @@ class ConfigurePresenter(
     private val getUserConfigurationInteractor: GetUserConfigurationInteractor,
     private val saveUserRobotInteractor: SaveUserRobotInteractor,
     private val dialogEventBus: DialogEventBus,
-    private val navigator: Navigator
+    private val navigator: Navigator,
+    private val userConfigurationStorage: UserConfigurationStorage
 ) : ConfigureMvp.Presenter,
     ConfigurationEventBus.Listener, DialogEventBus.Listener {
 
@@ -26,7 +27,6 @@ class ConfigurePresenter(
 
     private var toolbarViewModel: ConfigureToolbarViewModel? = null
 
-    var userConfiguration: UserConfiguration? = null
     var userRobot: UserRobot? = null
 
     override fun register(view: ConfigureMvp.View, model: ConfigureViewModel?) {
@@ -54,8 +54,8 @@ class ConfigurePresenter(
     }
 
     private fun onConfigurationLoaded(config: UserConfiguration?) {
-        userConfiguration = config
-        userConfiguration?.apply {
+        userConfigurationStorage.userConfiguration = config
+        config?.apply {
             model?.setScreen(ConfigurationTabs.CONNECTIONS)
             view?.showConnectionsScreen(this)
         }
@@ -64,6 +64,7 @@ class ConfigurePresenter(
     override fun unregister() {
         configurationEventBus.unregister(this)
         dialogEventBus.unregister(this)
+        userConfigurationStorage.userConfiguration = null
         super.unregister()
     }
 
@@ -72,7 +73,7 @@ class ConfigurePresenter(
             userRobot?.let { robot ->
                 robot.name = event.extras.getString(SaveRobotDialog.KEY_NAME)
                 robot.description = event.extras.getString(SaveRobotDialog.KEY_DESCRIPTION)
-                saveUserRobotInteractor.userConfiguration = userConfiguration
+                saveUserRobotInteractor.userConfiguration = userConfigurationStorage.userConfiguration
                 saveUserRobotInteractor.userRobot = robot
                 toolbarViewModel?.title?.set(robot.name)
                 saveUserRobotInteractor.execute(
@@ -96,7 +97,7 @@ class ConfigurePresenter(
 
     override fun onConnectionsTabSelected() {
         model?.setScreen(ConfigurationTabs.CONNECTIONS)
-        userConfiguration?.let { view?.showConnectionsScreen(it) }
+        userConfigurationStorage.userConfiguration?.let { view?.showConnectionsScreen(it) }
     }
 
     override fun onControllerTabSelected() {
@@ -105,7 +106,7 @@ class ConfigurePresenter(
     }
 
     override fun onMotorConfigChangedEvent(event: MotorPort) {
-        userConfiguration?.let { config ->
+        userConfigurationStorage.userConfiguration?.let { config ->
             config.mappingId?.updateMotorPort(event)
             view?.updateConfig(config)
         }
@@ -113,7 +114,7 @@ class ConfigurePresenter(
     }
 
     override fun onSensorConfigChangedEvent(event: SensorPort) {
-        userConfiguration?.let { config ->
+        userConfigurationStorage.userConfiguration?.let { config ->
             config.mappingId?.updateSensorPort(event)
             view?.updateConfig(config)
         }

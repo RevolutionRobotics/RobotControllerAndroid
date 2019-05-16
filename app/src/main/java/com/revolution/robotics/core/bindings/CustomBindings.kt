@@ -3,6 +3,8 @@ package com.revolution.robotics.core.bindings
 import android.graphics.Bitmap
 import android.graphics.ColorMatrix
 import android.graphics.ColorMatrixColorFilter
+import android.text.InputFilter
+import android.text.Spanned
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
@@ -117,5 +119,28 @@ fun setConfigButtonBackground(button: ImageView, configButtonSelected: Boolean) 
                 .create()
         )
         button.setColorFilter(button.context.color(R.color.white), android.graphics.PorterDuff.Mode.SRC_IN)
+    }
+}
+
+@BindingAdapter("inputFilter")
+fun setDigits(editText: EditText, regexp: String?) {
+    if (regexp == null) {
+        editText.filters = arrayOf()
+    } else {
+        editText.filters = arrayOf(object : InputFilter {
+            override fun filter(
+                source: CharSequence,
+                start: Int,
+                end: Int,
+                dest: Spanned?,
+                dstart: Int,
+                dend: Int
+            ): CharSequence {
+                if (source == "" || source.toString().matches(Regex(regexp))) {
+                    return source
+                }
+                return ""
+            }
+        })
     }
 }

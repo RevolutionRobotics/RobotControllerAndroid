@@ -7,12 +7,14 @@ import com.revolution.robotics.features.build.testing.DrivetrainTestDialog
 import com.revolution.robotics.features.build.testing.MotorTestDialog
 import com.revolution.robotics.features.configure.ConfigurationEventBus
 import com.revolution.robotics.features.configure.MotorPort
+import com.revolution.robotics.features.configure.UserConfigurationStorage
 import com.revolution.robotics.views.ChippedEditTextViewModel
 
 @Suppress("ComplexInterface", "TooManyFunctions")
 class MotorConfigurationPresenter(
     private val resourceResolver: ResourceResolver,
-    private val configurationEventBus: ConfigurationEventBus
+    private val configurationEventBus: ConfigurationEventBus,
+    private val userConfigurationStorage: UserConfigurationStorage
 ) : MotorConfigurationMvp.Presenter {
 
     override var view: MotorConfigurationMvp.View? = null
@@ -43,7 +45,8 @@ class MotorConfigurationPresenter(
             borderColor = R.color.grey_8e,
             backgroundColor = R.color.grey_28,
             textColor = R.color.white,
-            titleColor = R.color.white
+            titleColor = R.color.white,
+            digits = UserConfigurationStorage.ALLOWED_DIGITS_REGEXP
         )
 
         when (motor.type) {
@@ -121,6 +124,7 @@ class MotorConfigurationPresenter(
                     Motor.ROTATION_COUNTER_CLOCKWISE
                 }
             side = null
+            variableName = this@MotorConfigurationPresenter.variableName
         }
     }
 
@@ -133,12 +137,26 @@ class MotorConfigurationPresenter(
 
     override fun onDoneButtonClicked() {
         motor?.apply {
-            when {
-                model?.driveTrainButton?.isSelected?.get() == true -> setDrivetrainValues(this)
-                model?.motorButton?.isSelected?.get() == true -> setMotorValues(this)
-                else -> setEmptyValues(this)
+            if (userConfigurationStorage.isUsedVariableName(
+                    this@MotorConfigurationPresenter.variableName ?: "",
+                    portName ?: ""
+                )
+            ) {
+                view?.showError(resourceResolver.string(R.string.error_variable_already_in_use) ?: "")
+            } else {
+                when {
+                    model?.driveTrainButton?.isSelected?.get() == true -> setDrivetrainValues(this)
+                    model?.motorButton?.isSelected?.get() == true -> setMotorValues(this)
+                    else -> setEmptyValues(this)
+                }
+
+                variableName = if (model?.emptyButton?.isSelected?.get() == true) {
+                    ""
+                } else {
+                    this@MotorConfigurationPresenter.variableName
+                }
+                configurationEventBus.publishMotorUpdateEvent(MotorPort(this, portName))
             }
-            configurationEventBus.publishMotorUpdateEvent(MotorPort(this, portName))
         }
     }
 }

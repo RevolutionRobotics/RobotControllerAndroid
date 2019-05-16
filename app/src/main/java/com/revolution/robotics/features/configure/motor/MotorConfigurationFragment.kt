@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.widget.Toast
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.remote.Motor
@@ -43,6 +44,10 @@ class MotorConfigurationFragment :
                 presenter.onVariableNameChanged(text?.toString() ?: "")
             }
         })
+    }
+
+    override fun showError(error: String) {
+        Toast.makeText(requireContext(), error, Toast.LENGTH_LONG).show()
     }
 
     override fun onDestroyView() {
