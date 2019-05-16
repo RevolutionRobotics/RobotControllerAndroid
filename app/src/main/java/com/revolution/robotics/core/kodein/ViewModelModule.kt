@@ -9,6 +9,7 @@ import com.revolution.robotics.features.configure.connections.ConfigureConnectio
 import com.revolution.robotics.features.configure.controllers.ConfigureControllersViewModel
 import com.revolution.robotics.features.configure.motor.MotorConfigurationViewModel
 import com.revolution.robotics.features.configure.sensor.SensorConfigurationViewModel
+import com.revolution.robotics.features.controllers.controllerTypeSelector.ControllerTypeSelectorViewModel
 import com.revolution.robotics.features.play.liveController.LiveControllerViewModel
 import com.revolution.robotics.features.mainmenu.MainMenuViewModel
 import com.revolution.robotics.features.mainmenu.settings.SettingsViewModel
@@ -41,4 +42,5 @@ fun createViewModelModule() =
         bind<AboutViewModel>() with provider { AboutViewModel(instance()) }
         bind<FirmwareUpdateViewModel>() with provider { FirmwareUpdateViewModel(instance()) }
         bind<PlayViewModel>() with provider { PlayViewModel(instance()) }
+        bind<ControllerTypeSelectorViewModel>() with provider { ControllerTypeSelectorViewModel(instance()) }
     }

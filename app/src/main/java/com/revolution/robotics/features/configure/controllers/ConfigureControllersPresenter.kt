@@ -2,10 +2,12 @@ package com.revolution.robotics.features.configure.controllers
 
 import com.revolution.robotics.R
 import com.revolution.robotics.core.extensions.isEmptyOrNull
+import com.revolution.robotics.core.utils.Navigator
+import com.revolution.robotics.features.configure.ConfigureFragmentDirections
 import com.revolution.robotics.features.configure.controllers.adapter.ControllersItem
 import kotlin.math.max
 
-class ConfigureControllersPresenter : ConfigureControllersMvp.Presenter {
+class ConfigureControllersPresenter(private val navigator: Navigator) : ConfigureControllersMvp.Presenter {
     override var view: ConfigureControllersMvp.View? = null
     override var model: ConfigureControllersViewModel? = null
 
@@ -76,7 +78,9 @@ class ConfigureControllersPresenter : ConfigureControllersMvp.Presenter {
         view?.showPreviousRobot()
     }
 
-    override fun onCreateNewClick() = Unit
+    override fun onCreateNewClick() {
+        navigator.navigate(ConfigureFragmentDirections.toControllerTypeSelector())
+    }
 
     override fun onItemSelected(controllerId: Int) = Unit
 
