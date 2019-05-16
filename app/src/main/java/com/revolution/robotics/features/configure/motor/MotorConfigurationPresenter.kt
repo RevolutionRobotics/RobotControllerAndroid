@@ -34,6 +34,7 @@ class MotorConfigurationPresenter(
 
     override fun onVariableNameChanged(name: String?) {
         variableName = name
+        buttonHandler?.setVariableName(name)
     }
 
     override fun setMotor(motor: Motor, portName: String) {
