@@ -18,7 +18,7 @@ class ConfigureControllersPresenter(private val navigator: Navigator) : Configur
                 ControllersItem(
                     1,
                     "controller 1",
-                    R.drawable.ic_configure_controller1,
+                    R.drawable.controller_gamer,
                     "Desc",
                     true,
                     this
@@ -26,7 +26,7 @@ class ConfigureControllersPresenter(private val navigator: Navigator) : Configur
                 ControllersItem(
                     1,
                     "controller 2",
-                    R.drawable.ic_configure_controller2,
+                    R.drawable.controller_multitasker,
                     "Desc",
                     true,
                     this
@@ -34,7 +34,7 @@ class ConfigureControllersPresenter(private val navigator: Navigator) : Configur
                 ControllersItem(
                     1,
                     "controller 3",
-                    R.drawable.ic_configure_controller3,
+                    R.drawable.controller_driver,
                     "Desc",
                     true,
                     this

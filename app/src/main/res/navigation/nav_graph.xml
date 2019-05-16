@@ -16,6 +16,8 @@
                 app:destination="@id/placeholder_community"/>
         <action android:id="@+id/toSettings"
                 app:destination="@id/settingFragment"/>
+        <action android:id="@+id/toControllerTypeSelector"
+                app:destination="@id/controllerTypeSelectorFragment"/>
     </fragment>
 
     <fragment android:id="@+id/myRobotsFragment"

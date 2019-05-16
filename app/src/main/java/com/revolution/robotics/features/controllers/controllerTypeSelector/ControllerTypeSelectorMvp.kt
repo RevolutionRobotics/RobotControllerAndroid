@@ -6,5 +6,7 @@ interface ControllerTypeSelectorMvp : Mvp {
 
     interface View : Mvp.View
 
-    interface Presenter : Mvp.Presenter<View, ControllerTypeSelectorViewModel>
+    interface Presenter : Mvp.Presenter<View, ControllerTypeSelectorViewModel> {
+        fun onControllerTypeSelected(type: ControllerType)
+    }
 }

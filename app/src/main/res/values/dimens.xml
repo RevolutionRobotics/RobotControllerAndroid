@@ -196,6 +196,12 @@
     <dimen name="configure_controllers_icon_description_text_size">13sp</dimen>
     <dimen name="configure_controllers_select_text_size">16sp</dimen>
 
+    <!-- SCREEN: CONTROLLER TYPE SELECTOR -->
+    <dimen name="controller_type_selector_wrapper_width">147dp</dimen>
+    <dimen name="controller_type_selector_wrapper_height">168dp</dimen>
+    <dimen name="controller_type_selector_image_width">121dp</dimen>
+    <dimen name="controller_type_selector_image_height">49dp</dimen>
+
     <!-- SCREEN: ABOUT -->
     <dimen name="about_social_icon_size">40dp</dimen>
     <dimen name="about_permission_layout_width">450dp</dimen>
