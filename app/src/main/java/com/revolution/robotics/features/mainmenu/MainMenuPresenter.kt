@@ -18,9 +18,7 @@ class MainMenuPresenter(private val navigator: Navigator) : MainMenuMvp.Presente
         navigator.navigate(MainMenuFragmentDirections.toChallenges())
     }
 
-    override fun onCommunityClicked() {
-        navigator.navigate(MainMenuFragmentDirections.toControllerTypeSelector())
-    }
+    override fun onCommunityClicked() = Unit
 
     override fun onSettingsClicked() {
         navigator.navigate(MainMenuFragmentDirections.toSettings())
