@@ -9,6 +9,8 @@
             android:gravity="center"
             android:fontFamily="@font/jura_bold"
             android:textSize="10sp"
+            android:paddingLeft="@dimen/dimen_8dp"
+            android:paddingRight="@dimen/dimen_2dp"
             android:textColor="@color/white"/>
 
 </merge>

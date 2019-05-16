@@ -4,7 +4,11 @@ import com.revolution.robotics.core.Mvp
 
 interface SetupMvp : Mvp {
 
-    interface View : Mvp.View
+    interface View : Mvp.View {
+        fun onProgramSlotSelected(index: Int, viewModel: SetupViewModel)
+    }
 
-    interface Presenter : Mvp.Presenter<View, SetupViewModel>
+    interface Presenter : Mvp.Presenter<View, SetupViewModel> {
+        fun onProgramSlotSelected(index: Int, viewModel: SetupViewModel)
+    }
 }

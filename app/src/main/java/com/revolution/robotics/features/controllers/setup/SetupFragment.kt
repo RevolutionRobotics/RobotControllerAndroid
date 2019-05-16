@@ -4,14 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.LayoutRes
+import com.revolution.robotics.BR
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.databinding.FragmentControllerSetupCoreBinding
 import org.kodein.di.erased.instance
 
-abstract class SetupFragment(@LayoutRes private val contentLayoutResourceId: Int) :
+abstract class SetupFragment :
     BaseFragment<FragmentControllerSetupCoreBinding, SetupViewModel>(R.layout.fragment_controller_setup_core),
     SetupMvp.View {
 
@@ -22,7 +22,7 @@ abstract class SetupFragment(@LayoutRes private val contentLayoutResourceId: Int
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val core = super.onCreateView(inflater, container, savedInstanceState)
-        inflater.inflate(contentLayoutResourceId, binding?.contentWrapper, true)
+        createContentView(inflater, binding?.contentWrapper)
         return core
     }
 
@@ -35,4 +35,12 @@ abstract class SetupFragment(@LayoutRes private val contentLayoutResourceId: Int
         presenter.unregister()
         super.onDestroyView()
     }
+
+    override fun onProgramSlotSelected(index: Int, viewModel: SetupViewModel) {
+        updateBinding(viewModel)
+        // TODO open program selector
+    }
+
+    abstract fun createContentView(inflater: LayoutInflater, container: ViewGroup?): View
+    abstract fun updateBinding(viewModel: SetupViewModel)
 }

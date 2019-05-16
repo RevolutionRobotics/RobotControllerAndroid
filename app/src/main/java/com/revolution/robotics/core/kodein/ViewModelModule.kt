@@ -44,5 +44,5 @@ fun createViewModelModule() =
         bind<FirmwareUpdateViewModel>() with provider { FirmwareUpdateViewModel(instance()) }
         bind<PlayViewModel>() with provider { PlayViewModel(instance()) }
         bind<TypeSelectorViewModel>() with provider { TypeSelectorViewModel(instance()) }
-        bind<SetupViewModel>() with provider { SetupViewModel() }
+        bind<SetupViewModel>() with provider { SetupViewModel(instance()) }
     }
