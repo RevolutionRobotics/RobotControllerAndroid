@@ -8,6 +8,7 @@ import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
 import com.revolution.robotics.core.interactor.GetUserConfigurationInteractor
 import com.revolution.robotics.core.interactor.SaveUserRobotInteractor
 import com.revolution.robotics.core.utils.Navigator
+import com.revolution.robotics.features.configure.robotPicture.RobotPictureDialog
 import com.revolution.robotics.features.configure.save.SaveRobotDialog
 
 @Suppress("TooManyFunctions")
@@ -120,7 +121,7 @@ class ConfigurePresenter(
     }
 
     override fun onRobotImageClicked() {
-        userRobot?.instanceId?.let { view?.showDialog(RobotPictureDialog.newInstance(it)) }
+        userRobot?.let { view?.showDialog(RobotPictureDialog.newInstance(it.instanceId, it.coverImage)) }
     }
 
     override fun saveConfiguration() {

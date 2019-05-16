@@ -5,6 +5,7 @@ import android.widget.ImageView
 import androidx.annotation.DrawableRes
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
@@ -102,7 +103,7 @@ fun loadFirebaseImage(
     val imageFile =
         CameraHelper.getImageFile(remoteImageView.context, CameraHelper.generateFilenameForRobot(robotId ?: -1))
     if (imageFile.exists()) {
-        loadImageFromFile(remoteImageView.image, imageFile)
+        loadImageFromFile(remoteImageView, imageFile, null)
     } else if (!gsUrl.isNullOrEmpty()) {
         loadFirebaseImage(remoteImageView.image, gsUrl, errorDrawable, animate)
     } else {
@@ -114,11 +115,15 @@ fun loadFirebaseImage(
     }
 }
 
-@BindingAdapter("imageFile")
-fun loadImageFromFile(imageView: ImageView, file: File?) {
+@BindingAdapter("imageFile", "firebaseImageUrl")
+fun loadImageFromFile(imageView: RemoteImageView, file: File?, gsUrl: String?) {
     if (file != null && file.exists()) {
         Glide.with(imageView)
             .load(file)
-            .into(imageView)
+            .diskCacheStrategy(DiskCacheStrategy.NONE)
+            .skipMemoryCache(true)
+            .into(imageView.image)
+    } else if (!gsUrl.isNullOrEmpty()) {
+        loadFirebaseImage(imageView.image, gsUrl, null, false)
     }
 }
