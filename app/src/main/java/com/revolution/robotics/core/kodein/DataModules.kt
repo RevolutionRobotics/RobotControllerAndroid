@@ -11,7 +11,11 @@ import com.revolution.robotics.core.interactor.GetUserConfigurationInteractor
 import com.revolution.robotics.core.interactor.GetUserRobotInteractor
 import com.revolution.robotics.core.interactor.SaveUserRobotInteractor
 import com.revolution.robotics.core.interactor.firebase.BuildStepInteractor
+import com.revolution.robotics.core.interactor.firebase.ChallengeCategoriesInteractor
 import com.revolution.robotics.core.interactor.firebase.ConfigurationInteractor
+import com.revolution.robotics.core.interactor.firebase.ControllerInteractor
+import com.revolution.robotics.core.interactor.firebase.ProgramInteractor
+import com.revolution.robotics.core.interactor.firebase.ProgramsInteractor
 import com.revolution.robotics.core.interactor.firebase.RobotInteractor
 import com.revolution.robotics.core.interactor.firebase.TestCodeInteractor
 import com.revolution.robotics.features.build.BuildRobotMvp
@@ -67,6 +71,10 @@ fun createInteractorModule() =
         bind<GetAllUserRobotsInteractor>() with provider { GetAllUserRobotsInteractor(instance()) }
         bind<DeleteRobotInteractor>() with provider { DeleteRobotInteractor(instance()) }
         bind<GetUserConfigurationInteractor>() with provider { GetUserConfigurationInteractor(instance()) }
+        bind<ControllerInteractor>() with provider { ControllerInteractor() }
+        bind<ProgramInteractor>() with provider { ProgramInteractor() }
+        bind<ProgramsInteractor>() with provider { ProgramsInteractor() }
+        bind<ChallengeCategoriesInteractor>() with provider { ChallengeCategoriesInteractor() }
     }
 
 fun createPresenterModule() =
