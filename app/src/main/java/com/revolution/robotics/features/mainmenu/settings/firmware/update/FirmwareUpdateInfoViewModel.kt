@@ -16,5 +16,7 @@ class FirmwareUpdateInfoViewModel : ViewModel() {
     val batteryMotor = MutableLiveData<String>()
 
     val updateTextVisible = MutableLiveData<Boolean>()
+    val loadingTextVisible = MutableLiveData<Boolean>()
+    val infoTextsVisible = MutableLiveData<Boolean>()
     val updateText = MutableLiveData<String>()
 }

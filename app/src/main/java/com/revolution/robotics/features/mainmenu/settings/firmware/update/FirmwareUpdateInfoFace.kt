@@ -22,12 +22,12 @@ class FirmwareUpdateInfoFace(dialog: FirmwareUpdateDialog) :
         })
 
     override fun onActivated() {
+        super.onActivated()
         binding?.let { binding ->
             kodein.baseKodein = (binding.root.context.applicationContext as KodeinAware).kodein
             binding.viewModel = viewModel
             binding.lifecycleOwner = dialog
         }
-        super.onActivated()
     }
 
     fun setViewModel(viewModel: FirmwareUpdateInfoViewModel) {

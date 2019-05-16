@@ -44,10 +44,10 @@ class FirmwareUpdateDialog : RoboticsDialog(), FirmwareUpdateMvp.View {
     }
 
     override fun activateLoadingFace() {
-        activateFace(dialogFaces[1])
+        activateFace(dialogFaces.first { it is FirmwareUpdateLoadingDialogFace })
     }
 
     override fun activateSuccessFace() {
-        activateFace(dialogFaces[2])
+        activateFace(dialogFaces.first { it is FirmwareUpdateSuccessDialogFace })
     }
 }
