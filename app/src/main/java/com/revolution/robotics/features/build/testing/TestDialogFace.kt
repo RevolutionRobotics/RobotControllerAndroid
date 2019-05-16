@@ -11,7 +11,7 @@ abstract class TestDialogFace(dialog: RoboticsDialog) :
 
     abstract val imageResource: Int
     abstract val textResource: Int
-    override val dialogFaceButtons = listOf(
+    override val dialogFaceButtons = mutableListOf(
         DialogButton(R.string.testing_negative_button_title, R.drawable.ic_close, false, true, ::showTipsFace),
         DialogButton(R.string.testing_positive_button_title, R.drawable.ic_check, true, true, dialog::dismiss)
     )

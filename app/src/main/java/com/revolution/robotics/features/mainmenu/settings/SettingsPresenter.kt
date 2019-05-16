@@ -6,7 +6,10 @@ class SettingsPresenter(private val navigator: Navigator) : SettingsMvp.Presente
     override var view: SettingsMvp.View? = null
     override var model: SettingsViewModel? = null
 
-    override fun navigateToResetTutorial() = Unit
+    override fun navigateToResetTutorial() {
+        // TODO reset tutorial
+        view?.showTutorialResetSuccessDialog()
+    }
 
     override fun navigateToFirmwareUpdate() = navigator.navigate(SettingsFragmentDirections.toFirmwareFragment())
 

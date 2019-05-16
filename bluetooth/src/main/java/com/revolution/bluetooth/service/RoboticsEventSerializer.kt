@@ -1,7 +1,10 @@
 package com.revolution.bluetooth.service
 
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.launch
 
 class RoboticsEventSerializer {
 
@@ -10,24 +13,32 @@ class RoboticsEventSerializer {
     }
 
     private val events = mutableListOf<() -> Boolean>()
+    private val job = Job()
+    private val ioScope = CoroutineScope(Dispatchers.IO + job)
 
     fun registerEvent(f: () -> Boolean) {
-        events.add(f)
-        if (events.size == 1) {
-            startSerializationThread()
+        synchronized(RoboticsEventSerializer::class.java) {
+            events.add(f)
+            if (events.size == 1) {
+                startSerializationThread()
+            }
         }
     }
 
     fun clear() {
-        events.clear()
+        synchronized(RoboticsEventSerializer::class.java) {
+            events.clear()
+        }
     }
 
     private fun startSerializationThread() {
-        runBlocking {
+        ioScope.launch {
             delay(DEFAULT_DELAY)
             while (events.isNotEmpty()) {
-                if (events.first().invoke()) {
-                    events.removeAt(0)
+                synchronized(RoboticsEventSerializer::class.java) {
+                    if (events.first().invoke()) {
+                        events.removeAt(0)
+                    }
                 }
                 delay(DEFAULT_DELAY)
             }

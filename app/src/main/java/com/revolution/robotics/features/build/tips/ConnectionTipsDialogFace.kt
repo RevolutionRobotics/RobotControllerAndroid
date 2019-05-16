@@ -14,7 +14,7 @@ class ConnectionTipsDialogFace(dialog: RoboticsDialog) : TipsDialogFace(dialog) 
         R.string.tips_dialog_placeholder_3,
         R.string.tips_dialog_placeholder_4
     )
-    override val dialogFaceButtons = listOf(
+    override val dialogFaceButtons = mutableListOf(
         DialogButton(R.string.tips_dialog_button_community, R.drawable.ic_community) {
             // TODO open community
         },

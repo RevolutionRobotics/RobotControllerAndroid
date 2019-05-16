@@ -4,7 +4,7 @@ import com.revolution.robotics.R
 import com.revolution.robotics.features.build.testing.TestDialog
 import com.revolution.robotics.views.dialogs.DialogButton
 
-fun createTipsDialogButtons(source: TestDialog.Source, dialogController: DialogController): List<DialogButton> {
+fun createTipsDialogButtons(source: TestDialog.Source, dialogController: DialogController): MutableList<DialogButton> {
     val (text, icon) =
         if (source == TestDialog.Source.BUILD) {
             R.string.tips_dialog_button_skip_testing to R.drawable.ic_skip
@@ -12,7 +12,7 @@ fun createTipsDialogButtons(source: TestDialog.Source, dialogController: DialogC
             R.string.tips_dialog_button_reconfigure to R.drawable.ic_build
         }
 
-    return listOf(
+    return mutableListOf(
         DialogButton(text, icon, false, true, dialogController::onCancelClicked),
         DialogButton(R.string.tips_dialog_button_community, R.drawable.ic_community) {
             // TODO open community here

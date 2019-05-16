@@ -35,6 +35,6 @@ class FirmwareUpdatePresenter(private val bluetoothManager: BluetoothManager) : 
     }
 
     override fun onRobotClicked() {
-        // TODO show firmware update dialog
+        view?.showFirmwareUpdateDialog()
     }
 }

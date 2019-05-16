@@ -27,7 +27,7 @@ class ConnectionFailedDialog : RoboticsDialog() {
 
     class ConnectionFailedDialogFace(dialog: RoboticsDialog) :
         DialogFace<DialogConnectionFailedBinding>(R.layout.dialog_connection_failed, dialog) {
-        override val dialogFaceButtons = listOf(
+        override val dialogFaceButtons = mutableListOf(
             DialogButton(R.string.connection_failed_tips_button_title, R.drawable.ic_tips, true) {
                 dialog.activateFace(dialog.dialogFaces.first { it is ConnectionTipsDialogFace })
             },

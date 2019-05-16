@@ -15,7 +15,8 @@ import com.revolution.robotics.core.extensions.font
 
 class ResourceResolver(val context: Context) {
 
-    fun string(@StringRes stringId: Int, vararg arguments: Any): String? = context.getString(stringId, arguments)
+    @Suppress("SpreadOperator")
+    fun string(@StringRes stringId: Int, vararg arguments: String): String? = context.getString(stringId, *arguments)
 
     fun dimen(@DimenRes dimenId: Int) = context.dimension(dimenId)
 
