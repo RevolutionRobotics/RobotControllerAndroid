@@ -11,6 +11,8 @@ data class Controller(
     var backgroundProgramBindings: List<ProgramBinding> = emptyList(),
     var mapping: ButtonMapping? = null
 ) {
+
+    // TODO @szabolcs.nagy: Use these consts for the enum creation
     companion object {
         const val TYPE_GAMER = "gamer"
         const val TYPE_MULTI_TASKER = "multiTasker"
