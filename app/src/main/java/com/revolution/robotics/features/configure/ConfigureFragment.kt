@@ -1,7 +1,6 @@
 package com.revolution.robotics.features.configure
 
 import android.os.Bundle
-import android.view.Gravity
 import android.view.View
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
