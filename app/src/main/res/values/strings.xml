@@ -147,6 +147,9 @@
     <string name="controller_type_multitasker">multi-tasker</string>
     <string name="controller_type_driver">driver</string>
 
+    <!-- Controller setup -->
+    <string name="controller_setup_screen_title">Assign programs to buttons!</string>
+
     <!-- Save dialog-->
     <string name="save_robot_dialog_title">The robot is ready, name it!</string>
     <string name="save_robot_dialog_name_title">Robot name</string>

@@ -1,4 +1,4 @@
-package com.revolution.robotics.features.controllers.controllerTypeSelector
+package com.revolution.robotics.features.controllers
 
 enum class ControllerType {
     GAMER,

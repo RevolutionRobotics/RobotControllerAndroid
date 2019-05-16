@@ -1,8 +1,9 @@
-package com.revolution.robotics.features.controllers.controllerTypeSelector
+package com.revolution.robotics.features.controllers.typeSelector
 
 import androidx.lifecycle.ViewModel
+import com.revolution.robotics.features.controllers.ControllerType
 
-class ControllerTypeSelectorViewModel(private val presenter: ControllerTypeSelectorMvp.Presenter) : ViewModel() {
+class TypeSelectorViewModel(private val presenter: TypeSelectorMvp.Presenter) : ViewModel() {
 
     fun onGamerControllerSelected() {
         presenter.onControllerTypeSelected(ControllerType.GAMER)

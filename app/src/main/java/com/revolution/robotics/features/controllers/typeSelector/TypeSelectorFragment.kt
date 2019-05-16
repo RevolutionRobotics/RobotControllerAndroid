@@ -1,4 +1,4 @@
-package com.revolution.robotics.features.controllers.controllerTypeSelector
+package com.revolution.robotics.features.controllers.typeSelector
 
 import android.os.Bundle
 import android.view.View
@@ -8,15 +8,15 @@ import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.databinding.FragmentControllerTypeSelectorBinding
 import org.kodein.di.erased.instance
 
-class ControllerTypeSelectorFragment :
-    BaseFragment<FragmentControllerTypeSelectorBinding, ControllerTypeSelectorViewModel>
-        (R.layout.fragment_controller_type_selector), ControllerTypeSelectorMvp.View {
+class TypeSelectorFragment :
+    BaseFragment<FragmentControllerTypeSelectorBinding, TypeSelectorViewModel>
+        (R.layout.fragment_controller_type_selector), TypeSelectorMvp.View {
 
-    override val viewModelClass = ControllerTypeSelectorViewModel::class.java
+    override val viewModelClass = TypeSelectorViewModel::class.java
 
     private val resourceResolver: ResourceResolver by kodein.instance()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding?.toolbarViewModel = ControllerTypeSelectorToolbarViewModel(resourceResolver)
+        binding?.toolbarViewModel = TypeSelectorToolbarViewModel(resourceResolver)
     }
 }

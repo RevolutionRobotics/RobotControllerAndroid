@@ -36,8 +36,10 @@ import com.revolution.robotics.features.configure.motor.MotorConfigurationMvp
 import com.revolution.robotics.features.configure.motor.MotorConfigurationPresenter
 import com.revolution.robotics.features.configure.sensor.SensorConfigurationMvp
 import com.revolution.robotics.features.configure.sensor.SensorConfigurationPresenter
-import com.revolution.robotics.features.controllers.controllerTypeSelector.ControllerTypeSelectorMvp
-import com.revolution.robotics.features.controllers.controllerTypeSelector.ControllerTypeSelectorPresenter
+import com.revolution.robotics.features.controllers.setup.SetupMvp
+import com.revolution.robotics.features.controllers.setup.SetupPresenter
+import com.revolution.robotics.features.controllers.typeSelector.TypeSelectorMvp
+import com.revolution.robotics.features.controllers.typeSelector.TypeSelectorPresenter
 import com.revolution.robotics.features.mainmenu.MainMenuMvp
 import com.revolution.robotics.features.mainmenu.MainMenuPresenter
 import com.revolution.robotics.features.mainmenu.settings.SettingsMvp
@@ -125,7 +127,9 @@ fun createPresenterModule() =
         bind<FirmwareMvp.Presenter>() with singleton { FirmwareUpdatePresenter(instance()) }
         bind<PlayMvp.Presenter>() with singleton { PlayPresenter() }
         bind<FirmwareUpdateMvp.Presenter>() with singleton { FirmwareUpdateDialogPresenter(instance(), instance()) }
-        bind<ControllerTypeSelectorMvp.Presenter>() with singleton { ControllerTypeSelectorPresenter(instance()) }
+        bind<TypeSelectorMvp.Presenter>() with singleton { TypeSelectorPresenter(instance()) }
+        bind<TypeSelectorMvp.Presenter>() with singleton { TypeSelectorPresenter(instance()) }
+        bind<SetupMvp.Presenter>() with singleton { SetupPresenter() }
     }
 
 fun createDbModule(context: Context) =

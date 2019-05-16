@@ -3,7 +3,7 @@
 
     <data>
         <variable name="viewModel"
-                  type="com.revolution.robotics.features.controllers.controllerTypeSelector.ControllerTypeSelectorViewModel"/>
+                  type="com.revolution.robotics.features.controllers.typeSelector.TypeSelectorViewModel"/>
         <variable name="toolbarViewModel"
                   type="com.revolution.robotics.views.toolbar.ToolbarViewModel"/>
     </data>
