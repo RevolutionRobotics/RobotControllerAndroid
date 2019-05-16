@@ -35,6 +35,17 @@ class SensorConfigurationPresenter(
         .borderSize(R.dimen.dimen_1dp)
         .create()
 
+    private val chippedConfigDoneDisabled = ChippedBoxConfig.Builder()
+        .backgroundColorResource(R.color.grey_28)
+        .borderColorResource(R.color.grey_1e)
+        .chipTopRight(true)
+        .chipBottomLeft(false)
+        .chipBottomRight(false)
+        .chipTopLeft(false)
+        .chipSize(R.dimen.dimen_8dp)
+        .borderSize(R.dimen.dimen_1dp)
+        .create()
+
     override fun setSensor(sensor: Sensor, portName: String) {
         this.portName = portName
         this.sensor = sensor
@@ -51,18 +62,24 @@ class SensorConfigurationPresenter(
             )
 
             actionButtonsViewModel.testButtonEnabled.set(sensor.isTestable())
-            actionButtonsViewModel.doneButtonEnabled.set(true)
-            actionButtonsViewModel.doneButtonChippedBoxConfig.value = chippedConfigDoneEnabled
-            actionButtonsViewModel.doneTextColor.set(R.color.white)
             bumperButton.isSelected.set(sensor.type == Sensor.TYPE_BUMPER)
             ultrasoundButton.isSelected.set(sensor.type == Sensor.TYPE_ULTRASONIC)
             emptyButton.isSelected.set(sensor.type.isNullOrEmpty())
+            onVariableNameChanged(sensor.variableName)
         }
     }
 
     override fun onVariableNameChanged(name: String?) {
         variableName = name
-        model?.actionButtonsViewModel?.doneButtonEnabled?.set(!name.isNullOrEmpty())
+        if (!name.isNullOrEmpty() || model?.emptyButton?.isSelected?.get() == true) {
+            model?.actionButtonsViewModel?.doneButtonChippedBoxConfig?.value = chippedConfigDoneEnabled
+            model?.actionButtonsViewModel?.doneTextColor?.set(R.color.white)
+            model?.actionButtonsViewModel?.doneButtonEnabled?.set(true)
+        } else {
+            model?.actionButtonsViewModel?.doneButtonChippedBoxConfig?.value = chippedConfigDoneDisabled
+            model?.actionButtonsViewModel?.doneTextColor?.set(R.color.grey_8e)
+            model?.actionButtonsViewModel?.doneButtonEnabled?.set(false)
+        }
     }
 
     override fun onEmptyButtonClicked() {
@@ -71,6 +88,7 @@ class SensorConfigurationPresenter(
             ultrasoundButton.isSelected.set(false)
             emptyButton.isSelected.set(true)
             setTestButton(false)
+            onVariableNameChanged(this@SensorConfigurationPresenter.variableName)
         }
     }
 
@@ -80,6 +98,7 @@ class SensorConfigurationPresenter(
             ultrasoundButton.isSelected.set(false)
             emptyButton.isSelected.set(false)
             setTestButton(true)
+            onVariableNameChanged(this@SensorConfigurationPresenter.variableName)
         }
     }
 
@@ -89,6 +108,7 @@ class SensorConfigurationPresenter(
             ultrasoundButton.isSelected.set(true)
             emptyButton.isSelected.set(false)
             setTestButton(true)
+            onVariableNameChanged(this@SensorConfigurationPresenter.variableName)
         }
     }
 
