@@ -14,7 +14,8 @@ class ConfigurationInteractor : FirebaseCustomObjectReadInteractor<Configuration
     override fun convert(snapShot: DataSnapshot) = Configuration().apply {
         val gson = Gson()
         val json = gson.toJson(snapShot.value)
-        val list: List<Configuration> = gson.fromJson(json, object : TypeToken<List<Configuration>>() {}.type)
+        val list: List<Configuration> =
+            gson.fromJson(json, object : TypeToken<List<Configuration>>() {}.type) ?: emptyList()
         return list.first()
     }
 

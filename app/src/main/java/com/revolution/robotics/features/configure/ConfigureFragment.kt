@@ -12,6 +12,7 @@ import com.revolution.robotics.core.domain.local.UserRobot
 import com.revolution.robotics.core.domain.remote.Motor
 import com.revolution.robotics.core.domain.remote.Sensor
 import com.revolution.robotics.core.utils.BundleArgumentDelegate
+import com.revolution.robotics.core.utils.CameraHelper
 import com.revolution.robotics.databinding.FragmentConfigureBinding
 import com.revolution.robotics.features.configure.connections.ConfigureConnectionsFragment
 import com.revolution.robotics.features.configure.controllers.ConfigureControllersFragment
@@ -31,6 +32,8 @@ class ConfigureFragment : BaseFragment<FragmentConfigureBinding, ConfigureViewMo
 
     override val viewModelClass: Class<ConfigureViewModel> = ConfigureViewModel::class.java
     private val presenter: ConfigureMvp.Presenter by kodein.instance()
+    private val userConfigurationStorage: UserConfigurationStorage by kodein.instance()
+    private lateinit var cameraHelper: CameraHelper
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         presenter.register(this, viewModel)
@@ -39,6 +42,7 @@ class ConfigureFragment : BaseFragment<FragmentConfigureBinding, ConfigureViewMo
                 presenter.initUI(arguments.userRobot, this)
             }
         }
+        cameraHelper = CameraHelper(arguments?.userRobot?.instanceId ?: 0)
 
         binding?.drawerConfiguration?.addDrawerListener(this)
     }
@@ -60,6 +64,8 @@ class ConfigureFragment : BaseFragment<FragmentConfigureBinding, ConfigureViewMo
     override fun onDestroyView() {
         presenter.unregister()
         binding?.drawerConfiguration?.removeDrawerListener(this)
+        cameraHelper.getDirtyImageFile(requireContext()).delete()
+        userConfigurationStorage.deleteRobotImage = false
         super.onDestroyView()
     }
 

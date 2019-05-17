@@ -74,6 +74,9 @@ class MotorConfigurationButtonHandler(private val model: MotorConfigurationViewM
 
     fun onEmptyButtonClicked() {
         model.apply {
+            editTextModel.value = editTextModel.value?.apply {
+                enabled = false
+            }
             clearVisibilitiesAndSelections()
             emptyButton.isSelected.set(true)
             setDoneButton()
@@ -83,6 +86,9 @@ class MotorConfigurationButtonHandler(private val model: MotorConfigurationViewM
 
     fun onDrivetrainButtonClicked() {
         model.apply {
+            editTextModel.value = editTextModel.value?.apply {
+                enabled = true
+            }
             clearVisibilitiesAndSelections()
             driveTrainButton.isSelected.set(true)
 
@@ -98,6 +104,9 @@ class MotorConfigurationButtonHandler(private val model: MotorConfigurationViewM
 
     fun onMotorClicked() {
         model.apply {
+            editTextModel.value = editTextModel.value?.apply {
+                enabled = true
+            }
             clearVisibilitiesAndSelections()
             motorButton.isSelected.set(true)
 

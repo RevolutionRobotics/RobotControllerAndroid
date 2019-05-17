@@ -48,6 +48,7 @@
                 android:layout_marginBottom="@dimen/chipped_edit_text_content_margin_bottom"
                 android:layout_marginTop="@dimen/chipped_edit_text_content_margin_top"
                 style="@style/RoboticsEditText"
+                android:enabled="@{viewModel.enabled}"
                 app:inputFilter="@{viewModel.digits}"
                 android:text="@{viewModel.text}"
                 android:hint="@{viewModel.hint}"
