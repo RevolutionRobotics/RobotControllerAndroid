@@ -97,6 +97,7 @@ fun createPresenterModule() =
                 instance(),
                 instance(),
                 instance(),
+                instance(),
                 instance()
             )
         }

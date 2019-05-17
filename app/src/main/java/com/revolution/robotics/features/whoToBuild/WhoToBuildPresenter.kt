@@ -1,6 +1,5 @@
 package com.revolution.robotics.features.whoToBuild
 
-import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.local.BuildStatus
 import com.revolution.robotics.core.domain.local.UserRobot
 import com.revolution.robotics.core.domain.remote.Robot
@@ -98,7 +97,7 @@ class WhoToBuildPresenter(
         val userRobot = UserRobot(
             buildStatus = BuildStatus.COMPLETED,
             lastModified = Date(System.currentTimeMillis()),
-            name = resourceResolver.string(R.string.untitled_robot_name),
+            name = "",
             configurationId = ConfigureFragment.CONFIG_ID_EMPTY
         )
         navigator.navigate(WhoToBuildFragmentDirections.toConfigure(userRobot))

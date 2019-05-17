@@ -8,6 +8,7 @@ import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
 import com.revolution.robotics.core.interactor.GetUserConfigurationInteractor
 import com.revolution.robotics.core.interactor.SaveUserRobotInteractor
+import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.features.configure.robotPicture.RobotPictureDialog
 import com.revolution.robotics.features.configure.save.SaveRobotDialog
@@ -19,7 +20,8 @@ class ConfigurePresenter(
     private val saveUserRobotInteractor: SaveUserRobotInteractor,
     private val dialogEventBus: DialogEventBus,
     private val navigator: Navigator,
-    private val userConfigurationStorage: UserConfigurationStorage
+    private val userConfigurationStorage: UserConfigurationStorage,
+    private val resourceResolver: ResourceResolver
 ) : ConfigureMvp.Presenter,
     ConfigurationEventBus.Listener, DialogEventBus.Listener {
 
@@ -39,7 +41,13 @@ class ConfigurePresenter(
     override fun initUI(userRobot: UserRobot, toolbarViewModel: ConfigureToolbarViewModel) {
         this.userRobot = userRobot
         this.toolbarViewModel = toolbarViewModel
-        toolbarViewModel.title.set(userRobot.name)
+        toolbarViewModel.title.set(
+            if (userRobot.name.isNullOrEmpty()) {
+                resourceResolver.string(R.string.untitled_robot_name)
+            } else {
+                userRobot.name
+            }
+        )
         if (userRobot.configurationId == ConfigureFragment.CONFIG_ID_EMPTY) {
             onConfigurationLoaded(UserConfiguration().apply {
                 mappingId = UserMapping()
