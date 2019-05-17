@@ -3,6 +3,7 @@ package com.revolution.robotics.features.configure.robotPicture
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import com.revolution.robotics.R
 import com.revolution.robotics.core.extensions.withArguments
 import com.revolution.robotics.core.utils.BundleArgumentDelegate
@@ -19,11 +20,14 @@ class RobotPictureDialog : RoboticsDialog() {
 
         private var Bundle.robotId by BundleArgumentDelegate.Int("robotId")
         private var Bundle.defaultCoverImage by BundleArgumentDelegate.StringNullable("defaultCoverImage")
+        private var Bundle.startFlowImmediately by BundleArgumentDelegate.Boolean("startFlow")
 
-        fun newInstance(id: Int, defaultCoverImage: String? = null) = RobotPictureDialog().withArguments { bundle ->
-            bundle.robotId = id
-            bundle.defaultCoverImage = defaultCoverImage
-        }
+        fun newInstance(id: Int, defaultCoverImage: String? = null, startFlowImmediately: Boolean) =
+            RobotPictureDialog().withArguments { bundle ->
+                bundle.robotId = id
+                bundle.defaultCoverImage = defaultCoverImage
+                bundle.startFlowImmediately = startFlowImmediately
+            }
     }
 
     private val dialogFace = RobotPictureDialogFace()
@@ -46,6 +50,13 @@ class RobotPictureDialog : RoboticsDialog() {
         super.onCreate(savedInstanceState)
         cameraHelper = CameraHelper(arguments?.robotId ?: 0)
         defaultCoverImage = arguments?.defaultCoverImage
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        if (arguments?.startFlowImmediately == true) {
+            startCamera()
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

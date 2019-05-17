@@ -133,7 +133,15 @@ class ConfigurePresenter(
     }
 
     override fun onRobotImageClicked() {
-        userRobot?.let { view?.showDialog(RobotPictureDialog.newInstance(it.instanceId, it.coverImage)) }
+        userRobot?.let { robot ->
+            view?.showDialog(
+                RobotPictureDialog.newInstance(
+                    robot.instanceId,
+                    robot.coverImage,
+                    robot.coverImage == null
+                )
+            )
+        }
     }
 
     override fun saveConfiguration() {
