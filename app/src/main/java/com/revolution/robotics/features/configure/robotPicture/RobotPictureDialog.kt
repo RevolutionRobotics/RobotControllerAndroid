@@ -3,7 +3,6 @@ package com.revolution.robotics.features.configure.robotPicture
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import com.revolution.robotics.R
 import com.revolution.robotics.core.extensions.withArguments
 import com.revolution.robotics.core.utils.BundleArgumentDelegate
@@ -20,13 +19,11 @@ class RobotPictureDialog : RoboticsDialog() {
 
         private var Bundle.robotId by BundleArgumentDelegate.Int("robotId")
         private var Bundle.defaultCoverImage by BundleArgumentDelegate.StringNullable("defaultCoverImage")
-        private var Bundle.startFlowImmediately by BundleArgumentDelegate.Boolean("startFlow")
 
-        fun newInstance(id: Int, defaultCoverImage: String? = null, startFlowImmediately: Boolean) =
+        fun newInstance(id: Int, defaultCoverImage: String? = null) =
             RobotPictureDialog().withArguments { bundle ->
                 bundle.robotId = id
                 bundle.defaultCoverImage = defaultCoverImage
-                bundle.startFlowImmediately = startFlowImmediately
             }
     }
 
@@ -52,16 +49,9 @@ class RobotPictureDialog : RoboticsDialog() {
         defaultCoverImage = arguments?.defaultCoverImage
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        if (arguments?.startFlowImmediately == true) {
-            startCamera()
-        }
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_CODE_CAMERA && resultCode == Activity.RESULT_OK) {
-            dialogFace.onCameraCaptured()
+            dialogFace.onCameraCaptured(false)
         } else {
             super.onActivityResult(requestCode, resultCode, data)
         }
@@ -77,16 +67,19 @@ class RobotPictureDialog : RoboticsDialog() {
             binding?.viewModel = RobotPictureViewModel().apply {
                 defaultCoverImage.set(this@RobotPictureDialog.defaultCoverImage)
             }
-            onCameraCaptured()
+            onCameraCaptured(true)
         }
 
         fun onImageDeleted() {
             binding?.viewModel?.image?.set(null)
         }
 
-        fun onCameraCaptured() {
+        fun onCameraCaptured(openCameraIfFileDoesNotExist: Boolean) {
             val imageFile = cameraHelper.getImageFile(requireContext())
             binding?.viewModel?.image?.set(imageFile)
+            if (!imageFile.exists() && openCameraIfFileDoesNotExist) {
+                startCamera()
+            }
         }
     }
 }

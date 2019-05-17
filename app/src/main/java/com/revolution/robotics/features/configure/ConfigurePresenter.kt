@@ -58,7 +58,7 @@ class ConfigurePresenter(
                 onResponse = { config ->
                     onConfigurationLoaded(config)
                 },
-                onError = { error ->
+                onError = {
                     // TODO Error handling
                 })
         }
@@ -133,15 +133,7 @@ class ConfigurePresenter(
     }
 
     override fun onRobotImageClicked() {
-        userRobot?.let { robot ->
-            view?.showDialog(
-                RobotPictureDialog.newInstance(
-                    robot.instanceId,
-                    robot.coverImage,
-                    robot.coverImage == null
-                )
-            )
-        }
+        userRobot?.let { robot -> view?.showDialog(RobotPictureDialog.newInstance(robot.instanceId, robot.coverImage)) }
     }
 
     override fun saveConfiguration() {
