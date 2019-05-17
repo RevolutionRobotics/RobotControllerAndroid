@@ -24,22 +24,32 @@ class ProgramPriorityPresenter(private val userConfigurationStorage: UserConfigu
         userConfigurationStorage.controllerHolder?.apply {
             viewModels.clear()
             viewModels.addAll(generateItems(this, programs).mapIndexed { index, userProgramBindingItem ->
-                ProgramPriorityItemViewModel(userProgramBindingItem, index + 1)
+                ProgramPriorityItemViewModel(userProgramBindingItem, index + 1, this@ProgramPriorityPresenter)
             })
             model?.items?.value = viewModels
         }
     }
 
     override fun onDragEnded() {
-        viewModels.forEach {
-            it.positionText.set("${it.position}.")
+        viewModels.forEachIndexed { index, programPriorityItemViewModel ->
+            programPriorityItemViewModel.position = index + 1
         }
     }
 
     override fun onItemMoved(from: Int, to: Int) {
-        viewModels[from].position = to + 1
-        viewModels[to].position = from + 1
-        Collections.swap(viewModels, from, to)
+        if (from < to) {
+            for (i in from until to) {
+                Collections.swap(viewModels, i, i + 1)
+            }
+        } else {
+            for (i in from downTo to + 1) {
+                Collections.swap(viewModels, i, i - 1)
+            }
+        }
+    }
+
+    override fun onInfoButtonClicked(item: ProgramPriorityItemViewModel) {
+        // TODO Show info dialog
     }
 
     private fun generateItems(
@@ -98,14 +108,14 @@ class ProgramPriorityPresenter(private val userConfigurationStorage: UserConfigu
             )
         ),
         backgroundBindings = mutableListOf(
-            UserBackgroundProgramBinding(1, "1", 5, 5),
-            UserBackgroundProgramBinding(1, "1", 5, 5),
-            UserBackgroundProgramBinding(2, "1", 6, 6),
-            UserBackgroundProgramBinding(3, "1", 7, 7),
-            UserBackgroundProgramBinding(4, "1", 8, 8),
-            UserBackgroundProgramBinding(5, "1", 9, 9),
-            UserBackgroundProgramBinding(6, "1", 10, 10),
-            UserBackgroundProgramBinding(7, "1", 11, 11)
+            UserBackgroundProgramBinding(5, "1", 5, 5),
+            UserBackgroundProgramBinding(6, "1", 5, 5),
+            UserBackgroundProgramBinding(7, "1", 6, 6),
+            UserBackgroundProgramBinding(8, "1", 7, 7),
+            UserBackgroundProgramBinding(9, "1", 8, 8),
+            UserBackgroundProgramBinding(10, "1", 9, 9),
+            UserBackgroundProgramBinding(11, "1", 10, 10),
+            UserBackgroundProgramBinding(12, "1", 11, 11)
         ),
         programs = SparseArray<UserProgram>().apply {
             put(1, UserProgram(1, "This is a program #1", System.currentTimeMillis(), "Program name #1"))

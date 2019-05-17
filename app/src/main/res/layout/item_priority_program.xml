@@ -44,7 +44,6 @@
                 app:layout_constraintStart_toStartOf="@id/background"
                 app:layout_constraintTop_toTopOf="@id/background"
                 android:layout_marginStart="@dimen/dimen_16dp"
-                android:onClick="@{() -> viewModel.onOrderingIconClicked()}"
                 app:layout_constraintBottom_toBottomOf="@id/background"/>
 
         <View
@@ -67,8 +66,7 @@
                 app:layout_constraintBottom_toBottomOf="@id/background"
                 android:layout_marginStart="@dimen/dimen_16dp"
                 tools:src="@drawable/ic_controller"
-                app:localResource="@{viewModel.icon}"
-                android:onClick="@{() -> viewModel.onOrderingIconClicked()}"/>
+                app:localResource="@{viewModel.icon}"/>
 
 
         <ImageView

@@ -5,12 +5,12 @@ import android.view.View
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.SimpleItemAnimator
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.databinding.FragmentProgramPriorityBinding
 import org.kodein.di.erased.instance
-
 
 class ProgramPriorityFragment :
     BaseFragment<FragmentProgramPriorityBinding, ProgramPriorityViewModel>(R.layout.fragment_program_priority),
@@ -25,6 +25,7 @@ class ProgramPriorityFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         presenter.register(this, viewModel)
+
         val callback = object : ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP or ItemTouchHelper.DOWN, 0) {
             override fun onMove(
                 recyclerView: RecyclerView,
@@ -32,6 +33,7 @@ class ProgramPriorityFragment :
                 target: RecyclerView.ViewHolder
             ): Boolean {
                 presenter.onItemMoved(viewHolder.adapterPosition, target.adapterPosition)
+                adapter?.swapItems(viewHolder.adapterPosition, target.adapterPosition)
                 adapter?.notifyItemMoved(viewHolder.adapterPosition, target.adapterPosition)
                 return true
             }
@@ -40,18 +42,20 @@ class ProgramPriorityFragment :
             override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
                 super.clearView(recyclerView, viewHolder)
                 presenter.onDragEnded()
+                adapter?.notifyItemRangeChanged(0, adapter?.itemCount ?: 0)
             }
         }
         val touchHelper = ItemTouchHelper(callback)
         adapter = ProgramPriorityAdapter(this, touchHelper)
 
-        binding?.toolbarViewModel = ProgramPriorityToolbarViewModel(resourceResolver)
         binding?.recyclerPriority?.apply {
             layoutManager = LinearLayoutManager(requireContext())
+            (itemAnimator as? SimpleItemAnimator)?.supportsChangeAnimations = false
             adapter = this@ProgramPriorityFragment.adapter
             setHasFixedSize(true)
             touchHelper.attachToRecyclerView(this)
         }
+        binding?.toolbarViewModel = ProgramPriorityToolbarViewModel(resourceResolver)
     }
 
     override fun onDestroyView() {

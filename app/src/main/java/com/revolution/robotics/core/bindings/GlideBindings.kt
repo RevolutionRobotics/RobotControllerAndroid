@@ -35,16 +35,18 @@ fun loadImage(imageView: ImageView, url: String?, errorDrawable: Drawable?) {
 
 @BindingAdapter("localResource", "errorDrawable", requireAll = false)
 fun loadLocalResource(imageView: ImageView, @DrawableRes localResource: Int, errorDrawable: Drawable?) {
-    GlideApp.with(imageView)
-        .load(localResource)
-        .apply {
-            if (errorDrawable == null) {
-                error(R.drawable.ic_image_not_found)
-            } else {
-                error(errorDrawable)
+    if (localResource != 0) {
+        GlideApp.with(imageView)
+            .load(localResource)
+            .apply {
+                if (errorDrawable == null) {
+                    error(R.drawable.ic_image_not_found)
+                } else {
+                    error(errorDrawable)
+                }
             }
-        }
-        .into(imageView)
+            .into(imageView)
+    }
 }
 
 @BindingAdapter("firebaseImage", "errorDrawable", requireAll = false)

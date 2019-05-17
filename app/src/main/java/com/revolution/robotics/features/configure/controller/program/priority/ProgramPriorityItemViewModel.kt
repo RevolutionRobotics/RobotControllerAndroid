@@ -1,12 +1,15 @@
 package com.revolution.robotics.features.configure.controller.program.priority
 
-import androidx.databinding.ObservableField
 import com.revolution.robotics.R
 import com.revolution.robotics.core.extensions.formatYearMonthDay
 import com.revolution.robotics.core.utils.recyclerview.DiffUtilRecyclerAdapter
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 
-class ProgramPriorityItemViewModel(private val userProgramBindingItem: UserProgramBindingItem, var position: Int) :
+class ProgramPriorityItemViewModel(
+    private val userProgramBindingItem: UserProgramBindingItem,
+    var position: Int,
+    private val presenter: ProgramPriorityMvp.Presenter
+) :
     DiffUtilRecyclerAdapter.BaseListViewModel() {
 
     override val idField = userProgramBindingItem.id
@@ -20,7 +23,10 @@ class ProgramPriorityItemViewModel(private val userProgramBindingItem: UserProgr
         .clipLeftSide(true)
         .borderSize(R.dimen.dimen_1dp)
         .create()
-    val positionText = ObservableField<String>("$position.")
+    val positionText: String
+        get() {
+            return "$position."
+        }
     val formattedDate = userProgramBindingItem.lastModified.formatYearMonthDay()
     val name = userProgramBindingItem.name
     val icon = if (userProgramBindingItem.type == ProgramType.BACKGROUND) {
@@ -29,18 +35,13 @@ class ProgramPriorityItemViewModel(private val userProgramBindingItem: UserProgr
         R.drawable.ic_controller
     }
 
-    fun onOrderingIconClicked() {
-
-    }
-
     fun onInfoButtonClicked() {
-
+        presenter.onInfoButtonClicked(this)
     }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
-        if (!super.equals(other)) return false
 
         other as ProgramPriorityItemViewModel
 
@@ -51,11 +52,8 @@ class ProgramPriorityItemViewModel(private val userProgramBindingItem: UserProgr
     }
 
     override fun hashCode(): Int {
-        var result = super.hashCode()
-        result = 31 * result + userProgramBindingItem.hashCode()
+        var result = userProgramBindingItem.hashCode()
         result = 31 * result + position
         return result
     }
-
-
 }
