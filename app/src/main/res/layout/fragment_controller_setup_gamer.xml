@@ -116,7 +116,7 @@
                 android:layout_width="@dimen/configure_connections_line_view_width"
                 android:layout_height="0dp"
                 app:isLineVertical="true"
-                android:layout_marginBottom="1dp"
+                android:layout_marginBottom="@dimen/dimen_1dp"
                 app:layout_constraintBottom_toBottomOf="@id/line_p4"
                 app:layout_constraintTop_toBottomOf="@id/button_4"
                 app:layout_constraintStart_toStartOf="@id/button_4"
