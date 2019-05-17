@@ -348,7 +348,7 @@
 
         <!-- DASHED LINES: M2 -->
 
-        <com.revolution.robotics.views.configure.PartConnectionLineView
+        <com.revolution.robotics.views.ConnectionLineView
                 android:layout_width="@dimen/configure_connections_line_view_width"
                 android:layout_height="0dp"
                 app:isLineVertical="true"
@@ -362,7 +362,7 @@
 
         <!-- DASHED LINES: M5 -->
 
-        <com.revolution.robotics.views.configure.PartConnectionLineView
+        <com.revolution.robotics.views.ConnectionLineView
                 android:layout_width="@dimen/configure_connections_line_view_width"
                 android:layout_height="0dp"
                 app:isLineVertical="true"
@@ -386,7 +386,7 @@
                 android:layout_marginStart="@dimen/configure_connections_line_M1_button_margin"
         />
 
-        <com.revolution.robotics.views.configure.PartConnectionLineView
+        <com.revolution.robotics.views.ConnectionLineView
                 android:layout_width="@dimen/configure_connections_line_view_width"
                 android:layout_height="0dp"
                 app:isLineVertical="true"
@@ -397,7 +397,7 @@
                 app:layout_constraintEnd_toEndOf="@id/dashHelperM1"
         />
 
-        <com.revolution.robotics.views.configure.PartConnectionLineView
+        <com.revolution.robotics.views.ConnectionLineView
                 android:layout_width="0dp"
                 android:layout_height="@dimen/configure_connections_line_view_width"
                 app:isLineVertical="false"
@@ -422,7 +422,7 @@
                 android:layout_marginStart="@dimen/configure_connections_line_M4_helper_margin"
         />
 
-        <com.revolution.robotics.views.configure.PartConnectionLineView
+        <com.revolution.robotics.views.ConnectionLineView
                 android:layout_width="@dimen/configure_connections_line_view_width"
                 android:layout_height="0dp"
                 app:isLineVertical="true"
@@ -433,7 +433,7 @@
                 app:layout_constraintEnd_toEndOf="@id/dashHelperM4"
         />
 
-        <com.revolution.robotics.views.configure.PartConnectionLineView
+        <com.revolution.robotics.views.ConnectionLineView
                 android:layout_width="0dp"
                 android:layout_height="@dimen/configure_connections_line_view_width"
                 app:isLineVertical="false"
@@ -457,7 +457,7 @@
                 android:layout_marginStart="@dimen/configure_connections_line_M3_button_margin"
         />
 
-        <com.revolution.robotics.views.configure.PartConnectionLineView
+        <com.revolution.robotics.views.ConnectionLineView
                 android:layout_width="0dp"
                 android:layout_height="@dimen/configure_connections_line_view_width"
                 app:isLineVertical="false"
@@ -469,7 +469,7 @@
                 app:layout_constraintEnd_toEndOf="@id/dashHelperM3"
         />
 
-        <com.revolution.robotics.views.configure.PartConnectionLineView
+        <com.revolution.robotics.views.ConnectionLineView
                 android:layout_width="@dimen/configure_connections_line_view_width"
                 android:layout_height="0dp"
                 app:isLineVertical="true"
@@ -492,7 +492,7 @@
                 app:layout_constraintEnd_toEndOf="@id/buttonM6"
         />
 
-        <com.revolution.robotics.views.configure.PartConnectionLineView
+        <com.revolution.robotics.views.ConnectionLineView
                 android:layout_width="0dp"
                 android:layout_height="@dimen/configure_connections_line_view_width"
                 app:isLineVertical="false"
@@ -504,7 +504,7 @@
                 app:layout_constraintEnd_toEndOf="@id/dashHelperM6"
         />
 
-        <com.revolution.robotics.views.configure.PartConnectionLineView
+        <com.revolution.robotics.views.ConnectionLineView
                 android:layout_width="@dimen/configure_connections_line_view_width"
                 android:layout_height="0dp"
                 app:isLineVertical="true"
@@ -538,7 +538,7 @@
                 app:layout_constraintEnd_toStartOf="@id/dashHelperS1Upper"
         />
 
-        <com.revolution.robotics.views.configure.PartConnectionLineView
+        <com.revolution.robotics.views.ConnectionLineView
                 android:layout_width="0dp"
                 android:layout_height="@dimen/configure_connections_line_view_width"
                 app:isLineVertical="false"
@@ -550,7 +550,7 @@
                 app:layout_constraintEnd_toEndOf="@id/dashHelperS1Lower"
         />
 
-        <com.revolution.robotics.views.configure.PartConnectionLineView
+        <com.revolution.robotics.views.ConnectionLineView
                 android:layout_width="@dimen/configure_connections_line_view_width"
                 android:layout_height="0dp"
                 app:isLineVertical="true"
@@ -561,7 +561,7 @@
                 app:layout_constraintEnd_toEndOf="@id/dashHelperS1Upper"
         />
 
-        <com.revolution.robotics.views.configure.PartConnectionLineView
+        <com.revolution.robotics.views.ConnectionLineView
                 android:layout_width="0dp"
                 android:layout_height="@dimen/configure_connections_line_view_width"
                 app:isLineVertical="false"
@@ -596,7 +596,7 @@
                 app:layout_constraintEnd_toStartOf="@id/dashHelperS4Lower"
         />
 
-        <com.revolution.robotics.views.configure.PartConnectionLineView
+        <com.revolution.robotics.views.ConnectionLineView
                 android:layout_width="0dp"
                 android:layout_height="@dimen/configure_connections_line_view_width"
                 app:isLineVertical="false"
@@ -608,7 +608,7 @@
                 app:layout_constraintEnd_toEndOf="@id/dashHelperS4Upper"
         />
 
-        <com.revolution.robotics.views.configure.PartConnectionLineView
+        <com.revolution.robotics.views.ConnectionLineView
                 android:layout_width="@dimen/configure_connections_line_view_width"
                 android:layout_height="0dp"
                 app:isLineVertical="true"
@@ -619,7 +619,7 @@
                 app:layout_constraintEnd_toEndOf="@id/dashHelperS4Lower"
         />
 
-        <com.revolution.robotics.views.configure.PartConnectionLineView
+        <com.revolution.robotics.views.ConnectionLineView
                 android:layout_width="0dp"
                 android:layout_height="@dimen/configure_connections_line_view_width"
                 app:isLineVertical="false"
@@ -633,7 +633,7 @@
 
         <!-- DASHED LINES: S3 -->
 
-        <com.revolution.robotics.views.configure.PartConnectionLineView
+        <com.revolution.robotics.views.ConnectionLineView
                 android:layout_width="0dp"
                 android:layout_height="@dimen/configure_connections_line_view_width"
                 app:isLineVertical="false"
@@ -658,7 +658,7 @@
                 android:layout_marginStart="@dimen/configure_connections_line_button_inset_margin"
         />
 
-        <com.revolution.robotics.views.configure.PartConnectionLineView
+        <com.revolution.robotics.views.ConnectionLineView
                 android:layout_width="0dp"
                 android:layout_height="@dimen/configure_connections_line_view_width"
                 app:isLineVertical="false"
@@ -670,7 +670,7 @@
                 app:layout_constraintEnd_toEndOf="@id/dashHelperS2"
         />
 
-        <com.revolution.robotics.views.configure.PartConnectionLineView
+        <com.revolution.robotics.views.ConnectionLineView
                 android:layout_width="@dimen/configure_connections_line_view_width"
                 android:layout_height="0dp"
                 app:isLineVertical="true"

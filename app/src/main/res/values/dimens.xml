@@ -9,6 +9,7 @@
     <dimen name="dimen_10dp">10dp</dimen>
     <dimen name="dimen_12dp">12dp</dimen>
     <dimen name="dimen_16dp">16dp</dimen>
+    <dimen name="dimen_20dp">20dp</dimen>
     <dimen name="dimen_24dp">24dp</dimen>
     <dimen name="dimen_32dp">32dp</dimen>
     <dimen name="dimen_40dp">40dp</dimen>
@@ -34,6 +35,18 @@
     <dimen name="floating_button_width">110dp</dimen>
     <dimen name="floating_button_height">54dp</dimen>
     <dimen name="floating_button_icon_width">30dp</dimen>
+
+    <!-- CUSTOM VIEW: CHIPPED EDIT TEXT -->
+    <dimen name="chipped_edit_text_title_horizontal_padding">6dp</dimen>
+    <dimen name="chipped_edit_text_title_margin_start">10dp</dimen>
+    <dimen name="chipped_edit_text_content_horizontal_margin">16dp</dimen>
+    <dimen name="chipped_edit_text_content_margin_top">5dp</dimen>
+    <dimen name="chipped_edit_text_content_margin_bottom">16dp</dimen>
+    <dimen name="chipped_edit_text_title_text_size">12sp</dimen>
+
+    <!-- CUSTOM VIEW: ROBOTICS BUTTON -->
+    <dimen name="robotics_button_width">103dp</dimen>
+    <dimen name="robotics_button_height">46dp</dimen>
 
     <!-- CUSTOM DIALOG -->
     <dimen name="dialog_width">460dp</dimen>
@@ -137,14 +150,6 @@
     <dimen name="build_robot_parts_size">112dp</dimen>
     <dimen name="drawer_config_width">214dp</dimen>
 
-    <!-- VIEW: CHIPPED EDIT TEXT -->
-    <dimen name="chipped_edit_text_title_horizontal_padding">6dp</dimen>
-    <dimen name="chipped_edit_text_title_margin_start">10dp</dimen>
-    <dimen name="chipped_edit_text_content_horizontal_margin">16dp</dimen>
-    <dimen name="chipped_edit_text_content_margin_top">5dp</dimen>
-    <dimen name="chipped_edit_text_content_margin_bottom">16dp</dimen>
-    <dimen name="chipped_edit_text_title_text_size">12sp</dimen>
-
     <!-- SCREEN: CONFIGURE -->
     <dimen name="configure_screen_nav_guide_height">10dp</dimen>
     <dimen name="configure_button_vertical_padding">9dp</dimen>
@@ -195,6 +200,21 @@
     <dimen name="configure_controllers_name_text_size">16sp</dimen>
     <dimen name="configure_controllers_icon_description_text_size">13sp</dimen>
     <dimen name="configure_controllers_select_text_size">16sp</dimen>
+
+    <!-- SCREEN: CONTROLLER TYPE SELECTOR -->
+    <dimen name="controller_type_selector_wrapper_width">147dp</dimen>
+    <dimen name="controller_type_selector_wrapper_height">168dp</dimen>
+    <dimen name="controller_type_selector_image_width">121dp</dimen>
+    <dimen name="controller_type_selector_image_height">49dp</dimen>
+
+    <!-- SCREEN: SETUP CONTROLLER -->
+    <dimen name="controller_setup_body_width">313dp</dimen>
+    <dimen name="controller_setup_body_height">130dp</dimen>
+    <dimen name="controller_setup_joystick_size">72dp</dimen>
+    <dimen name="controller_setup_button_big_size">24dp</dimen>
+    <dimen name="controller_setup_button_normal_size">20dp</dimen>
+    <dimen name="controller_setup_program_button_width">70dp</dimen>
+    <dimen name="controller_setup_program_button_height">38dp</dimen>
 
     <!-- SCREEN: ABOUT -->
     <dimen name="about_social_icon_size">40dp</dimen>

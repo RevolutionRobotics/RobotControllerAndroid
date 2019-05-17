@@ -3,6 +3,7 @@ package com.revolution.robotics.core.bindings
 import android.graphics.Bitmap
 import android.graphics.ColorMatrix
 import android.graphics.ColorMatrixColorFilter
+import android.graphics.drawable.Drawable
 import android.text.InputFilter
 import android.text.Spanned
 import android.view.View
@@ -21,6 +22,7 @@ import com.revolution.robotics.features.build.connect.adapter.ConnectAdapter
 import com.revolution.robotics.features.build.connect.adapter.ConnectRobotItem
 import com.revolution.robotics.views.ChippedEditText
 import com.revolution.robotics.views.ChippedEditTextViewModel
+import com.revolution.robotics.views.RoboticsButton
 import com.revolution.robotics.views.carousel.CarouselAdapter
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 import com.revolution.robotics.views.chippedBox.ChippedBoxDrawable
@@ -142,5 +144,13 @@ fun setDigits(editText: EditText, regexp: String?) {
                 return ""
             }
         })
+    }
+}
+
+@BindingAdapter("text", "image")
+fun setupRoboticsButton(button: RoboticsButton, text: String, image: Drawable) {
+    button.apply {
+        this.text = text
+        this.image = image
     }
 }

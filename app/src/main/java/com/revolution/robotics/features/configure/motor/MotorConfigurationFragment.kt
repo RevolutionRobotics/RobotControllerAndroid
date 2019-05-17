@@ -47,6 +47,7 @@ class MotorConfigurationFragment :
     }
 
     override fun showError(error: String) {
+        // TODO generalise error handling
         Toast.makeText(requireContext(), error, Toast.LENGTH_LONG).show()
     }
 

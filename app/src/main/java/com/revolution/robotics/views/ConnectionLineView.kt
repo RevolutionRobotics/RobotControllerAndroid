@@ -1,4 +1,4 @@
-package com.revolution.robotics.views.configure
+package com.revolution.robotics.views
 
 import android.content.Context
 import android.graphics.Canvas
@@ -12,7 +12,7 @@ import com.revolution.robotics.R
 import com.revolution.robotics.core.extensions.color
 import com.revolution.robotics.core.extensions.dimension
 
-class PartConnectionLineView @JvmOverloads constructor(
+class ConnectionLineView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
@@ -94,11 +94,11 @@ class PartConnectionLineView @JvmOverloads constructor(
         if (attrs == null) return
         val a = context.theme.obtainStyledAttributes(
             attrs,
-            R.styleable.PartConnectionLineView,
+            R.styleable.ConnectionLineView,
             0, 0
         )
         try {
-            isVertical = a.getBoolean(R.styleable.PartConnectionLineView_isLineVertical, isVertical)
+            isVertical = a.getBoolean(R.styleable.ConnectionLineView_isLineVertical, isVertical)
         } finally {
             a.recycle()
         }

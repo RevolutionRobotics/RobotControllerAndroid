@@ -67,7 +67,22 @@
               android:name="com.revolution.robotics.features.configure.ConfigureFragment"
               android:label="ConfigureFragment">
         <argument android:name="userRobot" app:argType="com.revolution.robotics.core.domain.local.UserRobot"/>
+
+        <action android:id="@+id/toControllerTypeSelector"
+                app:destination="@id/controllerTypeSelectorFragment"/>
     </fragment>
+
+    <fragment android:id="@+id/controllerTypeSelectorFragment"
+              android:name="com.revolution.robotics.features.controllers.typeSelector.TypeSelectorFragment"
+              android:label="ControllerTypeSelectorFragment">
+
+        <action android:id="@+id/toSetupGamer"
+                app:destination="@id/setupGamerFragment"/>
+    </fragment>
+
+    <fragment android:id="@+id/setupGamerFragment"
+              android:name="com.revolution.robotics.features.controllers.setup.instances.SetupGamerFragment"
+              android:label="SetupGamerFragment"/>
 
     <fragment android:id="@+id/settingFragment"
               android:name="com.revolution.robotics.features.mainmenu.settings.SettingsFragment"
