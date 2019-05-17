@@ -59,6 +59,11 @@ class UserConfigurationStorage {
         controllerHolder?.programs?.put(userProgram.id, userProgram)
     }
 
+    fun removeBackgroundProgram(userProgram: UserProgram) {
+        controllerHolder?.backgroundBindings?.removeAll { it.id == userProgram.id }
+        controllerHolder?.programs?.remove(userProgram.id)
+    }
+
     fun setPriority(userProgram: UserProgram, priority: Int) {
         controllerHolder?.backgroundBindings?.find { it.programId == userProgram.id }?.let {
             it.priority = priority
@@ -82,11 +87,6 @@ class UserConfigurationStorage {
         if (controllerHolder?.userController?.mapping?.b6?.programId == userProgram.id) {
             controllerHolder?.userController?.mapping?.b6?.priority = priority
         }
-    }
-
-    fun removeBackgroundProgram(userProgram: UserProgram) {
-        controllerHolder?.backgroundBindings?.removeAll { it.id == userProgram.id }
-        controllerHolder?.programs?.remove(userProgram.id)
     }
 
     private fun removeProgramBinding(currentBinding: UserProgramBinding?) {

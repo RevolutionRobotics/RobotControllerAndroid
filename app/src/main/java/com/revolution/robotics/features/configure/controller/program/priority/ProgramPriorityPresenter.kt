@@ -17,6 +17,55 @@ class ProgramPriorityPresenter(private val userConfigurationStorage: UserConfigu
     override fun register(view: ProgramPriorityMvp.View, model: ProgramPriorityViewModel?) {
         super.register(view, model)
         userConfigurationStorage.controllerHolder = generateDummyUserController()
+        userConfigurationStorage.controllerHolder?.apply {
+            model?.items?.value = generateItems(this, programs).mapIndexed { index, userProgramBindingItem ->
+                ProgramPriorityItemViewModel(userProgramBindingItem, index + 1)
+            }
+        }
+    }
+
+    private fun generateItems(
+        controllerWithPrograms: UserControllerWithPrograms,
+        programs: SparseArray<UserProgram>
+    ): List<UserProgramBindingItem> {
+        val items = mutableListOf<UserProgramBindingItem>()
+        controllerWithPrograms.backgroundBindings.forEach { binding ->
+            items.add(
+                UserProgramBindingItem(
+                    binding.id,
+                    binding.priority,
+                    ProgramType.BACKGROUND,
+                    programs.get(binding.programId).lastModified,
+                    programs.get(binding.programId).name ?: ""
+                )
+            )
+        }
+        addItemFromButtonBinding(controllerWithPrograms.userController.mapping?.b1, items, programs)
+        addItemFromButtonBinding(controllerWithPrograms.userController.mapping?.b2, items, programs)
+        addItemFromButtonBinding(controllerWithPrograms.userController.mapping?.b3, items, programs)
+        addItemFromButtonBinding(controllerWithPrograms.userController.mapping?.b4, items, programs)
+        addItemFromButtonBinding(controllerWithPrograms.userController.mapping?.b5, items, programs)
+        addItemFromButtonBinding(controllerWithPrograms.userController.mapping?.b6, items, programs)
+        items.sortWith(compareBy({ it.priority }, { it.lastModified }))
+        return items
+    }
+
+    private fun addItemFromButtonBinding(
+        binding: UserProgramBinding?,
+        items: MutableList<UserProgramBindingItem>,
+        programs: SparseArray<UserProgram>
+    ) {
+        binding?.let { programBinding ->
+            items.add(
+                UserProgramBindingItem(
+                    programBinding.id,
+                    programBinding.priority,
+                    ProgramType.BUTTON,
+                    programs.get(programBinding.programId).lastModified,
+                    programs.get(programBinding.programId).name ?: ""
+                )
+            )
+        }
     }
 
     // TODO Remove after we have real data

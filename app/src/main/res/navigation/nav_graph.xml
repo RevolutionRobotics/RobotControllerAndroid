@@ -20,6 +20,8 @@
                 app:destination="@id/settingFragment"/>
         <action android:id="@+id/toProgramSelector"
                 app:destination="@+id/program_selector" />
+        <action android:id="@+id/action_mainMenuFragment_to_programPriorityFragment"
+                app:destination="@id/programPriorityFragment"/>
     </fragment>
 
     <!-- My robots -->
@@ -132,4 +134,7 @@
     <fragment android:id="@+id/liveControllerFragment"
               android:name="com.revolution.robotics.features.play.liveController.LiveControllerFragment"
               android:label="LiveControllerFragment"/>
+    <fragment android:id="@+id/programPriorityFragment"
+              android:name="com.revolution.robotics.features.configure.controller.program.priority.ProgramPriorityFragment"
+              android:label="ProgramPriorityFragment"/>
 </navigation>

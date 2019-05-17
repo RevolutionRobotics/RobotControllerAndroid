@@ -162,7 +162,7 @@ fun createPresenterModule() =
         bind<TypeSelectorMvp.Presenter>() with singleton { TypeSelectorPresenter(instance()) }
         bind<SetupMvp.Presenter>() with singleton { SetupPresenter() }
         bind<ProgramSelectorMvp.Presenter>() with singleton { ProgramSelectorPresenter(instance()) }
-        bind<ProgramPriorityMvp.Presenter>() with singleton { ProgramPriorityPresenter() }
+        bind<ProgramPriorityMvp.Presenter>() with singleton { ProgramPriorityPresenter(instance()) }
     }
 
 fun createDbModule(context: Context) =
