@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
+import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.databinding.FragmentProgramPriorityBinding
 import org.kodein.di.erased.instance
 
@@ -13,9 +14,11 @@ class ProgramPriorityFragment :
 
     override val viewModelClass: Class<ProgramPriorityViewModel> = ProgramPriorityViewModel::class.java
     private val presenter: ProgramPriorityMvp.Presenter by kodein.instance()
+    private val resourceResolver: ResourceResolver by kodein.instance()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding?.toolbarViewModel = ProgramPriorityToolbarViewModel(resourceResolver)
         presenter.register(this, viewModel)
     }
 
