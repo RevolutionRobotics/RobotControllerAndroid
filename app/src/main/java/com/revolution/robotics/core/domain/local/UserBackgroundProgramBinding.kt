@@ -2,7 +2,6 @@ package com.revolution.robotics.core.domain.local
 
 import android.os.Parcelable
 import androidx.room.Dao
-import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Insert
@@ -24,8 +23,7 @@ data class UserBackgroundProgramBinding(
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0,
     var controllerId: String,
-    @Embedded
-    var programId: UserProgram? = null,
+    var programId: Int = 0,
     var priority: Int = 0
 ) : Parcelable
 
@@ -36,5 +34,8 @@ interface UserBackgroundProgramBindingDao {
     fun getBackgroundPrograms(controllerId: Int): List<UserBackgroundProgramBinding>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun saveBackgroundProgram(backgroundProgram: UserBackgroundProgramBinding): Long
+    fun saveBackgroundProgram(backgroundProgramBinding: UserBackgroundProgramBinding): Long
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun saveBackgroundPrograms(vararg backgroundProgramBindings: UserBackgroundProgramBinding): List<Long>
 }

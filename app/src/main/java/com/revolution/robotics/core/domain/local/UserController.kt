@@ -40,4 +40,7 @@ interface UserControllerDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveUserController(userController: UserController): Long
+
+    @Query("DELETE FROM UserController WHERE id = :id")
+    fun deleteUserControllerById(id: Int)
 }
