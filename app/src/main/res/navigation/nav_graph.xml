@@ -78,11 +78,17 @@
 
         <action android:id="@+id/toSetupGamer"
                 app:destination="@id/setupGamerFragment"/>
+        <action android:id="@+id/toSetupMultitasker"
+                app:destination="@id/setupMultitaskerFragment"/>
     </fragment>
 
     <fragment android:id="@+id/setupGamerFragment"
               android:name="com.revolution.robotics.features.controllers.setup.instances.SetupGamerFragment"
               android:label="SetupGamerFragment"/>
+
+    <fragment android:id="@+id/setupMultitaskerFragment"
+              android:name="com.revolution.robotics.features.controllers.setup.instances.SetupMultitaskerFragment"
+              android:label="SetupMultitaskerFragment"/>
 
     <fragment android:id="@+id/settingFragment"
               android:name="com.revolution.robotics.features.mainmenu.settings.SettingsFragment"
