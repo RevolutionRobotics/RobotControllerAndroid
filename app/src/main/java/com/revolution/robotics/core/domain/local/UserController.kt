@@ -38,6 +38,9 @@ interface UserControllerDao {
     @Query("SELECT * FROM UserController WHERE id=:id")
     fun getUserController(id: Int): UserController?
 
+    @Query("SELECT * FROM UserController ORDER BY lastModified")
+    fun getUserControllers(): List<UserController>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveUserController(userController: UserController): Long
 

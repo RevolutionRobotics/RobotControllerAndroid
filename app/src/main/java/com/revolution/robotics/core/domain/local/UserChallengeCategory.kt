@@ -17,9 +17,9 @@ data class UserChallengeCategory(
 @Dao
 interface UserChallengeCategoryDao {
 
-    @Query("SELECT * FROM UserConfiguration")
-    fun getUserChallengeCategories(): List<UserConfiguration>
+    @Query("SELECT * FROM UserChallengeCategory")
+    fun getUserChallengeCategories(): List<UserChallengeCategory>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun saveUserChallengeCategory(userChallengeCategory: UserChallengeCategory): Long
+    fun saveUserChallengeCategory(userChallengeCategory: UserChallengeCategory)
 }

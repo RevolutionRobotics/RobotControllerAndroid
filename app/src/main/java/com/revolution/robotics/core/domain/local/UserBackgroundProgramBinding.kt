@@ -34,8 +34,5 @@ interface UserBackgroundProgramBindingDao {
     fun getBackgroundPrograms(controllerId: Int): List<UserBackgroundProgramBinding>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun saveBackgroundProgram(backgroundProgramBinding: UserBackgroundProgramBinding): Long
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun saveBackgroundPrograms(vararg backgroundProgramBindings: UserBackgroundProgramBinding): List<Long>
+    fun saveBackgroundPrograms(backgroundProgramBindings: List<UserBackgroundProgramBinding>): List<Long>
 }

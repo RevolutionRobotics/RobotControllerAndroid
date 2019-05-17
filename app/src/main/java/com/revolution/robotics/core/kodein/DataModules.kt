@@ -3,12 +3,24 @@ package com.revolution.robotics.core.kodein
 import android.content.Context
 import androidx.room.Room
 import com.revolution.robotics.core.db.RoboticsDatabase
+import com.revolution.robotics.core.domain.local.UserBackgroundProgramBindingDao
+import com.revolution.robotics.core.domain.local.UserChallengeCategoryDao
 import com.revolution.robotics.core.domain.local.UserConfigurationDao
+import com.revolution.robotics.core.domain.local.UserControllerDao
+import com.revolution.robotics.core.domain.local.UserProgramDao
 import com.revolution.robotics.core.domain.local.UserRobotDao
 import com.revolution.robotics.core.interactor.DeleteRobotInteractor
 import com.revolution.robotics.core.interactor.GetAllUserRobotsInteractor
+import com.revolution.robotics.core.interactor.GetUserChallengeCategoriesInteractor
 import com.revolution.robotics.core.interactor.GetUserConfigurationInteractor
+import com.revolution.robotics.core.interactor.GetUserControllerInteractor
+import com.revolution.robotics.core.interactor.GetUserControllersInteractor
 import com.revolution.robotics.core.interactor.GetUserRobotInteractor
+import com.revolution.robotics.core.interactor.RemoveUserControllerInteractor
+import com.revolution.robotics.core.interactor.RemoveUserProgramInteractor
+import com.revolution.robotics.core.interactor.SaveUserChallengeCategoryInteractor
+import com.revolution.robotics.core.interactor.SaveUserControllerInteractor
+import com.revolution.robotics.core.interactor.SaveUserProgramInteractor
 import com.revolution.robotics.core.interactor.SaveUserRobotInteractor
 import com.revolution.robotics.core.interactor.firebase.BuildStepInteractor
 import com.revolution.robotics.core.interactor.firebase.ChallengeCategoriesInteractor
@@ -79,6 +91,20 @@ fun createInteractorModule() =
         bind<ProgramInteractor>() with provider { ProgramInteractor() }
         bind<ProgramsInteractor>() with provider { ProgramsInteractor() }
         bind<ChallengeCategoriesInteractor>() with provider { ChallengeCategoriesInteractor() }
+        bind<GetUserControllersInteractor>() with provider { GetUserControllersInteractor(instance()) }
+        bind<GetUserControllerInteractor>() with provider {
+            GetUserControllerInteractor(
+                instance(),
+                instance(),
+                instance()
+            )
+        }
+        bind<RemoveUserControllerInteractor>() with provider { RemoveUserControllerInteractor(instance()) }
+        bind<SaveUserControllerInteractor>() with provider { SaveUserControllerInteractor(instance(), instance()) }
+        bind<SaveUserProgramInteractor>() with provider { SaveUserProgramInteractor(instance()) }
+        bind<RemoveUserProgramInteractor>() with provider { RemoveUserProgramInteractor(instance()) }
+        bind<GetUserChallengeCategoriesInteractor>() with provider { GetUserChallengeCategoriesInteractor(instance()) }
+        bind<SaveUserChallengeCategoryInteractor>() with provider { SaveUserChallengeCategoryInteractor(instance()) }
     }
 
 fun createPresenterModule() =
@@ -140,4 +166,10 @@ fun createDbModule(context: Context) =
         }
         bind<UserRobotDao>() with provider { instance<RoboticsDatabase>().userRobotDao() }
         bind<UserConfigurationDao>() with provider { instance<RoboticsDatabase>().userConfigurationDao() }
+        bind<UserControllerDao>() with provider { instance<RoboticsDatabase>().userControllerDao() }
+        bind<UserBackgroundProgramBindingDao>() with provider {
+            instance<RoboticsDatabase>().userBackgroundProgramBindingDao()
+        }
+        bind<UserProgramDao>() with provider { instance<RoboticsDatabase>().userProgramDao() }
+        bind<UserChallengeCategoryDao>() with provider { instance<RoboticsDatabase>().userChallengeCategoryDao() }
     }
