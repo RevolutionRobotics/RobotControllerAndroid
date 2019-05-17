@@ -8,12 +8,12 @@ class TypeSelectorPresenter(private val navigator: Navigator) : TypeSelectorMvp.
     override var view: TypeSelectorMvp.View? = null
     override var model: TypeSelectorViewModel? = null
 
-    // TODO navigate to adequate controller setup screen
     override fun onControllerTypeSelected(type: ControllerType) {
         navigator.navigate(
             when (type) {
                 ControllerType.GAMER -> TypeSelectorFragmentDirections.toSetupGamer()
-                ControllerType.MULTITASKER -> TypeSelectorFragmentDirections.toSetupGamer()
+                ControllerType.MULTITASKER -> TypeSelectorFragmentDirections.toSetupMultitasker()
+                // TODO navigate to driver controller setup screen
                 ControllerType.DRIVER -> TypeSelectorFragmentDirections.toSetupGamer()
             }
         )

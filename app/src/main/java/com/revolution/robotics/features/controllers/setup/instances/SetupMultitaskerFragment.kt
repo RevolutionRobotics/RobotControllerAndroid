@@ -3,17 +3,17 @@ package com.revolution.robotics.features.controllers.setup.instances
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.revolution.robotics.databinding.FragmentControllerSetupGamerBinding
+import com.revolution.robotics.databinding.FragmentControllerSetupMultitaskerBinding
 import com.revolution.robotics.features.controllers.setup.SetupFragment
 import com.revolution.robotics.features.controllers.setup.SetupViewModel
 
-class SetupGamerFragment : SetupFragment() {
+class SetupMultitaskerFragment : SetupFragment() {
 
-    private lateinit var contentBinding: FragmentControllerSetupGamerBinding
+    private lateinit var contentBinding: FragmentControllerSetupMultitaskerBinding
 
     override fun createContentView(inflater: LayoutInflater, container: ViewGroup?): View {
-        contentBinding = FragmentControllerSetupGamerBinding.inflate(inflater, container, true).apply {
-            viewModel = this@SetupGamerFragment.viewModel
+        contentBinding = FragmentControllerSetupMultitaskerBinding.inflate(inflater, container, true).apply {
+            viewModel = this@SetupMultitaskerFragment.viewModel
         }
         return contentBinding.root
     }
