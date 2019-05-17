@@ -1,9 +1,8 @@
 package com.revolution.robotics.features.controller.programSelector
 
-import com.revolution.robotics.core.domain.local.Program
+import com.revolution.robotics.core.domain.local.UserProgram
 import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.features.controller.programSelector.adapter.ProgramViewModel
-import java.util.Date
 import java.util.Random
 
 class ProgramSelectorPresenter(private val navigator: Navigator) : ProgramSelectorMvp.Presenter {
@@ -11,7 +10,7 @@ class ProgramSelectorPresenter(private val navigator: Navigator) : ProgramSelect
     override var view: ProgramSelectorMvp.View? = null
     override var model: ProgramSelectorViewModel? = null
 
-    private var programs: List<Program> = ArrayList()
+    private var programs: List<UserProgram> = ArrayList()
 
     override fun register(view: ProgramSelectorMvp.View, model: ProgramSelectorViewModel?) {
         super.register(view, model)
@@ -22,9 +21,9 @@ class ProgramSelectorPresenter(private val navigator: Navigator) : ProgramSelect
     private fun loadPrograms() {
         val random = Random(System.currentTimeMillis())
         programs = (0..100).mapIndexed { index, i ->
-            Program(
-                "Program $index",
-                Date(System.currentTimeMillis() - (random.nextFloat() * 8640000000L).toLong())
+            UserProgram(
+                name = "Program $index",
+                lastModified = System.currentTimeMillis() - (random.nextFloat() * 8640000000L).toLong()
             )
         }
         model?.currentOrder = ProgramSelectorViewModel.OrderBy.NAME to ProgramSelectorViewModel.Order.ASCENDING
@@ -41,9 +40,9 @@ class ProgramSelectorPresenter(private val navigator: Navigator) : ProgramSelect
         model?.let { model ->
             val comparator =
                 if (model.currentOrder.first == ProgramSelectorViewModel.OrderBy.NAME) {
-                    compareBy<Program> { it.name }
+                    compareBy<UserProgram> { it.name }
                 } else {
-                    compareBy<Program> { it.modificationDate }
+                    compareBy<UserProgram> { it.lastModified }
                 }
             programs =
                 if (model.currentOrder.second == ProgramSelectorViewModel.Order.ASCENDING) {
@@ -58,6 +57,6 @@ class ProgramSelectorPresenter(private val navigator: Navigator) : ProgramSelect
         navigator.back()
     }
 
-    private fun createViewModels(programs: List<Program>) =
+    private fun createViewModels(programs: List<UserProgram>) =
         programs.map { ProgramViewModel(it) }
 }

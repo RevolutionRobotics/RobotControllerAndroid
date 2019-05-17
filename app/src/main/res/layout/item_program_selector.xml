@@ -25,7 +25,7 @@
                 android:textSize="14sp"
                 android:fontFamily="@font/barlow_medium"
                 android:layout_height="wrap_content"
-                android:text="@{viewModel.program.name}"/>
+                android:text="@{viewModel.programName}"/>
 
         <View
                 android:id="@+id/divider"
