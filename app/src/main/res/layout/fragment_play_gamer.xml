@@ -54,7 +54,7 @@
                 app:layout_constraintTop_toBottomOf="@id/toolbar"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginEnd="@dimen/dimen_40dp"
+                android:layout_marginStart="@dimen/dimen_40dp"
                 android:layout_width="@dimen/play_joystick_size"
                 android:layout_height="@dimen/play_joystick_size"/>
 
