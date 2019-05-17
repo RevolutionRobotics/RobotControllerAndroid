@@ -28,6 +28,7 @@ class ProgramSelectorPresenter(private val navigator: Navigator) : ProgramSelect
             )
         }
         model?.currentOrder = ProgramSelectorViewModel.OrderBy.NAME to ProgramSelectorViewModel.Order.ASCENDING
+        orderPrograms()
         view?.onProgramsChanged(createViewModels(programs))
     }
 

@@ -32,4 +32,9 @@ class ProgramSelectorViewModel(private val presenter: ProgramSelectorMvp.Present
             }
         presenter.updateOrdering()
     }
+
+    fun isOrderedByName() = currentOrder.first == OrderBy.NAME
+    fun isNameAscending() = currentOrder.first == OrderBy.NAME && currentOrder.second == Order.ASCENDING
+    fun isOrderedByDate() = currentOrder.first == OrderBy.DATE
+    fun isDateAscending() = currentOrder.first == OrderBy.DATE && currentOrder.second == Order.ASCENDING
 }

@@ -172,6 +172,8 @@
 
     <!-- Program selector -->
     <string name="program_selector_title">Choose a program!</string>
+    <string name="program_selector_order_by_name">Name</string>
+    <string name="program_selector_order_by_date">Modified</string>
 
     <!-- Settings -->
     <string name="settings_screen_title">Settings</string>
