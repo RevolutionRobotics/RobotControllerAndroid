@@ -8,20 +8,38 @@ import com.revolution.robotics.core.domain.local.UserControllerWithPrograms
 import com.revolution.robotics.core.domain.local.UserProgram
 import com.revolution.robotics.core.domain.local.UserProgramBinding
 import com.revolution.robotics.features.configure.UserConfigurationStorage
+import java.util.Collections
 
 class ProgramPriorityPresenter(private val userConfigurationStorage: UserConfigurationStorage) :
     ProgramPriorityMvp.Presenter {
+
     override var view: ProgramPriorityMvp.View? = null
     override var model: ProgramPriorityViewModel? = null
+
+    private val viewModels = mutableListOf<ProgramPriorityItemViewModel>()
 
     override fun register(view: ProgramPriorityMvp.View, model: ProgramPriorityViewModel?) {
         super.register(view, model)
         userConfigurationStorage.controllerHolder = generateDummyUserController()
         userConfigurationStorage.controllerHolder?.apply {
-            model?.items?.value = generateItems(this, programs).mapIndexed { index, userProgramBindingItem ->
+            viewModels.clear()
+            viewModels.addAll(generateItems(this, programs).mapIndexed { index, userProgramBindingItem ->
                 ProgramPriorityItemViewModel(userProgramBindingItem, index + 1)
-            }
+            })
+            model?.items?.value = viewModels
         }
+    }
+
+    override fun onDragEnded() {
+        viewModels.forEach {
+            it.positionText.set("${it.position}.")
+        }
+    }
+
+    override fun onItemMoved(from: Int, to: Int) {
+        viewModels[from].position = to + 1
+        viewModels[to].position = from + 1
+        Collections.swap(viewModels, from, to)
     }
 
     private fun generateItems(

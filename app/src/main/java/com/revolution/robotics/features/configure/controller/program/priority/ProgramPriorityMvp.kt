@@ -6,5 +6,8 @@ interface ProgramPriorityMvp : Mvp {
 
     interface View : Mvp.View
 
-    interface Presenter : Mvp.Presenter<View, ProgramPriorityViewModel>
+    interface Presenter : Mvp.Presenter<View, ProgramPriorityViewModel> {
+        fun onItemMoved(from: Int, to: Int)
+        fun onDragEnded()
+    }
 }
