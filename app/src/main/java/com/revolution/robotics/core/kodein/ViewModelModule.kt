@@ -12,6 +12,7 @@ import com.revolution.robotics.features.configure.sensor.SensorConfigurationView
 import com.revolution.robotics.features.controllers.setup.SetupViewModel
 import com.revolution.robotics.features.controllers.typeSelector.TypeSelectorViewModel
 import com.revolution.robotics.features.play.liveController.LiveControllerViewModel
+import com.revolution.robotics.features.controller.programSelector.ProgramSelectorViewModel
 import com.revolution.robotics.features.mainmenu.MainMenuViewModel
 import com.revolution.robotics.features.mainmenu.settings.SettingsViewModel
 import com.revolution.robotics.features.mainmenu.settings.about.AboutViewModel
@@ -45,4 +46,5 @@ fun createViewModelModule() =
         bind<PlayViewModel>() with provider { PlayViewModel(instance()) }
         bind<TypeSelectorViewModel>() with provider { TypeSelectorViewModel(instance()) }
         bind<SetupViewModel>() with provider { SetupViewModel(instance()) }
+        bind<ProgramSelectorViewModel>() with provider { ProgramSelectorViewModel(instance()) }
     }

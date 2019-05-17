@@ -52,6 +52,8 @@ import com.revolution.robotics.features.controllers.setup.SetupMvp
 import com.revolution.robotics.features.controllers.setup.SetupPresenter
 import com.revolution.robotics.features.controllers.typeSelector.TypeSelectorMvp
 import com.revolution.robotics.features.controllers.typeSelector.TypeSelectorPresenter
+import com.revolution.robotics.features.controller.programSelector.ProgramSelectorMvp
+import com.revolution.robotics.features.controller.programSelector.ProgramSelectorPresenter
 import com.revolution.robotics.features.mainmenu.MainMenuMvp
 import com.revolution.robotics.features.mainmenu.MainMenuPresenter
 import com.revolution.robotics.features.mainmenu.settings.SettingsMvp
@@ -157,6 +159,7 @@ fun createPresenterModule() =
         bind<FirmwareUpdateMvp.Presenter>() with singleton { FirmwareUpdateDialogPresenter(instance(), instance()) }
         bind<TypeSelectorMvp.Presenter>() with singleton { TypeSelectorPresenter(instance()) }
         bind<SetupMvp.Presenter>() with singleton { SetupPresenter() }
+        bind<ProgramSelectorMvp.Presenter>() with singleton { ProgramSelectorPresenter(instance()) }
     }
 
 fun createDbModule(context: Context) =

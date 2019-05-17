@@ -9,12 +9,13 @@
 
     <color name="overlay_black_42">#42000000</color>
 
-    <color name="grey_97">#FF979797</color>
-    <color name="grey_8e">#FF8e8e8e</color>
-    <color name="grey_28">#FF282828</color>
-    <color name="grey_6d">#FF6D6D6D</color>
-    <color name="grey_1e">#FF1E1E1E</color>
     <color name="grey_1d">#FF1D1D1D</color>
+    <color name="grey_1e">#FF1E1E1E</color>
+    <color name="grey_28">#FF282828</color>
+    <color name="grey_56">#FF565656</color>
+    <color name="grey_6d">#FF6D6D6D</color>
+    <color name="grey_8e">#FF8e8e8e</color>
+    <color name="grey_97">#FF979797</color>
 
     <color name="pressed_button">#11FFFFFF</color>
     <color name="robotics_red">#e60312</color>

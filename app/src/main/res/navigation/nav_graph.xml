@@ -3,6 +3,8 @@
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/nav_graph" app:startDestination="@id/mainMenuFragment">
 
+    <!-- Main menu -->
+
     <fragment android:id="@+id/mainMenuFragment"
               android:name="com.revolution.robotics.features.mainmenu.MainMenuFragment"
               android:label="MainMenuFragment">
@@ -16,7 +18,11 @@
                 app:destination="@id/placeholder_community"/>
         <action android:id="@+id/toSettings"
                 app:destination="@id/settingFragment"/>
+        <action android:id="@+id/toProgramSelector"
+                app:destination="@+id/program_selector" />
     </fragment>
+
+    <!-- My robots -->
 
     <fragment android:id="@+id/myRobotsFragment"
               android:name="com.revolution.robotics.features.myRobots.MyRobotsFragment"
@@ -30,6 +36,8 @@
         <action android:id="@+id/toPlayGamer"
                 app:destination="@id/playGamerFragment"/>
     </fragment>
+
+    <!-- Build -->
 
     <fragment android:id="@+id/whoToBuildFragment"
               android:name="com.revolution.robotics.features.whoToBuild.WhoToBuildFragment"
@@ -47,21 +55,24 @@
                   android:name="robot"/>
     </fragment>
 
+    <!-- Coding -->
+
     <fragment android:id="@+id/codingFragment"
               android:name="com.revolution.robotics.features.coding.CodingFragment"
               android:label="CodingFragment"/>
+
+    <!-- Play -->
+    <fragment android:id="@+id/playGamerFragment"
+              android:name="com.revolution.robotics.features.play.playGamer.PlayGamerFragment"
+              android:label="PlayGamerFragment"/>
+
+    <!-- Challenges -->
 
     <fragment android:id="@+id/challengesFragment"
               android:name="com.revolution.robotics.features.challenges.ChallengesFragment"
               android:label="ChallengesFragment"/>
 
-    <fragment android:id="@+id/liveControllerFragment"
-              android:name="com.revolution.robotics.features.play.liveController.LiveControllerFragment"
-              android:label="LiveControllerFragment"/>
-
-    <fragment android:id="@+id/playGamerFragment"
-              android:name="com.revolution.robotics.features.play.playGamer.PlayGamerFragment"
-              android:label="PlayGamerFragment"/>
+    <!-- Configure -->
 
     <fragment android:id="@+id/configureFragment"
               android:name="com.revolution.robotics.features.configure.ConfigureFragment"
@@ -71,6 +82,8 @@
         <action android:id="@+id/toControllerTypeSelector"
                 app:destination="@id/controllerTypeSelectorFragment"/>
     </fragment>
+
+    <!-- Controller setup -->
 
     <fragment android:id="@+id/controllerTypeSelectorFragment"
               android:name="com.revolution.robotics.features.controllers.typeSelector.TypeSelectorFragment"
@@ -85,6 +98,11 @@
     <fragment android:id="@+id/setupGamerFragment"
               android:name="com.revolution.robotics.features.controllers.setup.instances.SetupGamerFragment"
               android:label="SetupGamerFragment"/>
+    <fragment android:id="@+id/program_selector"
+              android:name="com.revolution.robotics.features.controller.programSelector.ProgramSelectorFragment"
+              android:label="ProgramSelectorFragment " />
+
+    <!-- Settings -->
 
     <fragment android:id="@+id/setupMultitaskerFragment"
               android:name="com.revolution.robotics.features.controllers.setup.instances.SetupMultitaskerFragment"
@@ -96,7 +114,6 @@
         <action android:id="@+id/toAboutFragment" app:destination="@id/aboutFragment"/>
         <action android:id="@+id/toFirmwareFragment" app:destination="@id/firmwareFragment"/>
     </fragment>
-
     <fragment android:id="@+id/aboutFragment"
               android:name="com.revolution.robotics.features.mainmenu.settings.about.AboutFragment"
               android:label="AboutFragment"/>
@@ -104,6 +121,11 @@
               android:name="com.revolution.robotics.features.mainmenu.settings.firmware.FirmwareFragment"
               android:label="FirmwareFragment"/>
 
+    <!-- Other -->
+
     <fragment android:id="@+id/placeholder_robotics"/>
     <fragment android:id="@+id/placeholder_community"/>
+    <fragment android:id="@+id/liveControllerFragment"
+              android:name="com.revolution.robotics.features.play.liveController.LiveControllerFragment"
+              android:label="LiveControllerFragment"/>
 </navigation>
