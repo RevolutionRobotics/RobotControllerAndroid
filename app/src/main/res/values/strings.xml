@@ -155,7 +155,7 @@
     <!-- Save dialog-->
     <string name="save_robot_dialog_title">The robot is ready, name it!</string>
     <string name="save_robot_dialog_name_title">Robot name</string>
-    <string name="save_robot_dialog_description_hint">Click and add a hint to remember when to use the robot!</string>
+    <string name="save_robot_dialog_description_hint">Add a hint to remember when to use the robot!</string>
     <string name="save_robot_dialog_name_hint">Click here and name the robot!</string>
     <string name="save_controller_dialog_title">Name your controller!</string>
     <string name="save_controller_dialog_name_title">Controller name</string>
