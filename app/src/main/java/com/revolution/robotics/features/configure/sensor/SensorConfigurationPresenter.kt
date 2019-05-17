@@ -58,7 +58,8 @@ class SensorConfigurationPresenter(
                 backgroundColor = R.color.grey_28,
                 textColor = R.color.white,
                 titleColor = R.color.white,
-                digits = UserConfigurationStorage.ALLOWED_DIGITS_REGEXP
+                digits = UserConfigurationStorage.ALLOWED_DIGITS_REGEXP,
+                enabled = sensor.type == Sensor.TYPE_BUMPER || sensor.type == Sensor.TYPE_ULTRASONIC
             )
 
             actionButtonsViewModel.testButtonEnabled.set(sensor.isTestable())
@@ -84,6 +85,9 @@ class SensorConfigurationPresenter(
 
     override fun onEmptyButtonClicked() {
         model?.apply {
+            editTextModel.value = editTextModel.value?.apply {
+                enabled = false
+            }
             bumperButton.isSelected.set(false)
             ultrasoundButton.isSelected.set(false)
             emptyButton.isSelected.set(true)
@@ -94,6 +98,9 @@ class SensorConfigurationPresenter(
 
     override fun onBumperButtonClicked() {
         model?.apply {
+            editTextModel.value = editTextModel.value?.apply {
+                enabled = true
+            }
             bumperButton.isSelected.set(true)
             ultrasoundButton.isSelected.set(false)
             emptyButton.isSelected.set(false)
@@ -104,6 +111,9 @@ class SensorConfigurationPresenter(
 
     override fun onUltrasoundButtonClicked() {
         model?.apply {
+            editTextModel.value = editTextModel.value?.apply {
+                enabled = true
+            }
             bumperButton.isSelected.set(false)
             ultrasoundButton.isSelected.set(true)
             emptyButton.isSelected.set(false)
