@@ -8,7 +8,9 @@ import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
 import com.revolution.robotics.core.interactor.GetUserConfigurationInteractor
 import com.revolution.robotics.core.interactor.SaveUserRobotInteractor
+import com.revolution.robotics.core.kodein.utils.ApplicationContextProvider
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
+import com.revolution.robotics.core.utils.CameraHelper
 import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.features.configure.robotPicture.RobotPictureDialog
 import com.revolution.robotics.features.configure.save.SaveRobotDialog
@@ -21,7 +23,8 @@ class ConfigurePresenter(
     private val dialogEventBus: DialogEventBus,
     private val navigator: Navigator,
     private val userConfigurationStorage: UserConfigurationStorage,
-    private val resourceResolver: ResourceResolver
+    private val resourceResolver: ResourceResolver,
+    private val applicationContextProvider: ApplicationContextProvider
 ) : ConfigureMvp.Presenter,
     ConfigurationEventBus.Listener, DialogEventBus.Listener {
 
@@ -88,13 +91,33 @@ class ConfigurePresenter(
                 saveUserRobotInteractor.userRobot = robot
                 toolbarViewModel?.title?.set(robot.name)
                 saveUserRobotInteractor.execute(
-                    onResponse = {
+                    onResponse = { savedRobotId ->
+                        updateRobotImage(robot.instanceId, savedRobotId.toInt())
                         navigator.popUntil(R.id.myRobotsFragment)
                     },
                     onError = {
                         // TODO error handling
                     })
             }
+        }
+    }
+
+    private fun updateRobotImage(robotId: Int, savedRobotId: Int) {
+        val context = applicationContextProvider.applicationContext
+        val cameraHelper = CameraHelper(robotId)
+        val dirtyImage = cameraHelper.getDirtyImageFile(context)
+        val savedImage =
+            if (robotId == 0) {
+                CameraHelper(savedRobotId).getSavedImageFile(context)
+            } else {
+                cameraHelper.getSavedImageFile(context)
+            }
+
+        if (userConfigurationStorage.deleteRobotImage) {
+            savedImage.delete()
+        } else if (dirtyImage.exists()) {
+            savedImage.delete()
+            dirtyImage.renameTo(savedImage)
         }
     }
 

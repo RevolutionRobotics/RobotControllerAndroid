@@ -8,9 +8,11 @@ import com.revolution.robotics.core.extensions.withArguments
 import com.revolution.robotics.core.utils.BundleArgumentDelegate
 import com.revolution.robotics.core.utils.CameraHelper
 import com.revolution.robotics.databinding.DialogRobotPictureBinding
+import com.revolution.robotics.features.configure.UserConfigurationStorage
 import com.revolution.robotics.views.dialogs.DialogButton
 import com.revolution.robotics.views.dialogs.DialogFace
 import com.revolution.robotics.views.dialogs.RoboticsDialog
+import org.kodein.di.erased.instance
 
 class RobotPictureDialog : RoboticsDialog() {
 
@@ -28,6 +30,7 @@ class RobotPictureDialog : RoboticsDialog() {
     }
 
     private val dialogFace = RobotPictureDialogFace()
+    private val userConfigurationStorage: UserConfigurationStorage by kodein.instance()
     private lateinit var cameraHelper: CameraHelper
     private var defaultCoverImage: String? = null
 
@@ -35,7 +38,7 @@ class RobotPictureDialog : RoboticsDialog() {
     override val dialogFaces: List<DialogFace<*>> = listOf(dialogFace)
     override val dialogButtons = listOf(
         DialogButton(R.string.camera_dialog_delete_title, R.drawable.ic_delete) {
-            cameraHelper.getImageFile(requireContext()).delete()
+            userConfigurationStorage.deleteRobotImage = true
             dialogFace.onImageDeleted()
         },
         DialogButton(R.string.camera_dialog_new_photo_title, R.drawable.ic_camera, true) {
@@ -51,6 +54,7 @@ class RobotPictureDialog : RoboticsDialog() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_CODE_CAMERA && resultCode == Activity.RESULT_OK) {
+            userConfigurationStorage.deleteRobotImage = false
             dialogFace.onCameraCaptured(false)
         } else {
             super.onActivityResult(requestCode, resultCode, data)
@@ -67,7 +71,7 @@ class RobotPictureDialog : RoboticsDialog() {
             binding?.viewModel = RobotPictureViewModel().apply {
                 defaultCoverImage.set(this@RobotPictureDialog.defaultCoverImage)
             }
-            onCameraCaptured(true)
+            onCameraCaptured(defaultCoverImage == null)
         }
 
         fun onImageDeleted() {
@@ -75,9 +79,19 @@ class RobotPictureDialog : RoboticsDialog() {
         }
 
         fun onCameraCaptured(openCameraIfFileDoesNotExist: Boolean) {
-            val imageFile = cameraHelper.getImageFile(requireContext())
-            binding?.viewModel?.image?.set(imageFile)
-            if (!imageFile.exists() && openCameraIfFileDoesNotExist) {
+            val imageFile =
+                if (userConfigurationStorage.deleteRobotImage) {
+                    null
+                } else {
+                    val context = requireContext()
+                    val dirtyImage = cameraHelper.getDirtyImageFile(context)
+                    val savedImage = cameraHelper.getSavedImageFile(context)
+                    listOf(dirtyImage, savedImage).firstOrNull { it.exists() }
+                }
+            if (imageFile?.exists() == true) {
+                userConfigurationStorage.deleteRobotImage = false
+                binding?.viewModel?.image?.set(imageFile)
+            } else if (openCameraIfFileDoesNotExist) {
                 startCamera()
             }
         }

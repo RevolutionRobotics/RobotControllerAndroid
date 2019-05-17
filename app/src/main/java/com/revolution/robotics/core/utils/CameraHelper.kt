@@ -12,9 +12,12 @@ import com.revolution.robotics.BuildConfig
 import com.revolution.robotics.R
 import java.io.File
 
-class CameraHelper(private val destinationFileName: String) {
+class CameraHelper(private val savedImage: String, private val dirtyImage: String) {
 
-    constructor(robotId: Int) : this(generateFilenameForRobot(robotId))
+    constructor(robotId: Int) : this(
+        generateFilenameForRobot(robotId, false),
+        generateFilenameForRobot(robotId, true)
+    )
 
     companion object {
         fun getImageFile(context: Context, destinationFileName: String): File {
@@ -25,12 +28,19 @@ class CameraHelper(private val destinationFileName: String) {
             return File(temporaryImages, destinationFileName)
         }
 
-        fun generateFilenameForRobot(robotId: Int) =
-            "robot-$robotId.jpg"
+        fun generateFilenameForRobot(robotId: Int, isDirty: Boolean) =
+            if (isDirty) {
+                "robot-$robotId-dirty.jpg"
+            } else {
+                "robot-$robotId.jpg"
+            }
     }
 
-    fun getImageFile(context: Context) =
-        getImageFile(context, destinationFileName)
+    fun getSavedImageFile(context: Context) =
+        getImageFile(context, savedImage)
+
+    fun getDirtyImageFile(context: Context) =
+        getImageFile(context, dirtyImage)
 
     fun startCameraActivity(fragment: Fragment, requestCode: Int) {
         val activity = fragment.requireActivity()
@@ -49,7 +59,7 @@ class CameraHelper(private val destinationFileName: String) {
     }
 
     private fun getCameraUri(context: Context) =
-        FileProvider.getUriForFile(context, context.getString(R.string.file_provide_author), getImageFile(context))
+        FileProvider.getUriForFile(context, context.getString(R.string.file_provide_author), getDirtyImageFile(context))
 
     private fun Uri.grantUriPermission(packageName: String, activity: Activity) =
         activity.grantUriPermission(
