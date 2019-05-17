@@ -2,6 +2,7 @@ package com.revolution.robotics.features.configure
 
 import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.local.UserConfiguration
+import com.revolution.robotics.core.domain.local.UserMapping
 import com.revolution.robotics.core.domain.local.UserRobot
 import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
@@ -40,7 +41,9 @@ class ConfigurePresenter(
         this.toolbarViewModel = toolbarViewModel
         toolbarViewModel.title.set(userRobot.name)
         if (userRobot.configurationId == ConfigureFragment.CONFIG_ID_EMPTY) {
-            onConfigurationLoaded(UserConfiguration())
+            onConfigurationLoaded(UserConfiguration().apply {
+                mappingId = UserMapping()
+            })
         } else {
             getUserConfigurationInteractor.userConfigId = userRobot.configurationId
             getUserConfigurationInteractor.execute(
