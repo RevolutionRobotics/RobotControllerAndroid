@@ -13,8 +13,7 @@ class TypeSelectorPresenter(private val navigator: Navigator) : TypeSelectorMvp.
             when (type) {
                 ControllerType.GAMER -> TypeSelectorFragmentDirections.toSetupGamer()
                 ControllerType.MULTITASKER -> TypeSelectorFragmentDirections.toSetupMultitasker()
-                // TODO navigate to driver controller setup screen
-                ControllerType.DRIVER -> TypeSelectorFragmentDirections.toSetupGamer()
+                ControllerType.DRIVER -> TypeSelectorFragmentDirections.toSetupDriver()
             }
         )
     }

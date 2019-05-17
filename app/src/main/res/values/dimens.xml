@@ -212,6 +212,8 @@
     <dimen name="controller_setup_body_width">313dp</dimen>
     <dimen name="controller_setup_body_height">130dp</dimen>
     <dimen name="controller_setup_joystick_size">72dp</dimen>
+    <dimen name="controller_setup_lever_width">28dp</dimen>
+    <dimen name="controller_setup_lever_height">98dp</dimen>
     <dimen name="controller_setup_button_big_size">24dp</dimen>
     <dimen name="controller_setup_button_normal_size">20dp</dimen>
     <dimen name="controller_setup_program_button_width">70dp</dimen>
