@@ -8,4 +8,8 @@ class SetupPresenter : SetupMvp.Presenter {
     override fun onProgramSlotSelected(index: Int, viewModel: SetupViewModel) {
         view?.onProgramSlotSelected(index, viewModel)
     }
+
+    override fun onControllerSetupFinished() {
+        // TODO
+    }
 }

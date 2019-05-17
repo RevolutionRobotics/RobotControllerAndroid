@@ -10,5 +10,6 @@ interface SetupMvp : Mvp {
 
     interface Presenter : Mvp.Presenter<View, SetupViewModel> {
         fun onProgramSlotSelected(index: Int, viewModel: SetupViewModel)
+        fun onControllerSetupFinished()
     }
 }

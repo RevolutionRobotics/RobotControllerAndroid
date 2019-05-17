@@ -36,6 +36,18 @@
     <dimen name="floating_button_height">54dp</dimen>
     <dimen name="floating_button_icon_width">30dp</dimen>
 
+    <!-- CUSTOM VIEW: CHIPPED EDIT TEXT -->
+    <dimen name="chipped_edit_text_title_horizontal_padding">6dp</dimen>
+    <dimen name="chipped_edit_text_title_margin_start">10dp</dimen>
+    <dimen name="chipped_edit_text_content_horizontal_margin">16dp</dimen>
+    <dimen name="chipped_edit_text_content_margin_top">5dp</dimen>
+    <dimen name="chipped_edit_text_content_margin_bottom">16dp</dimen>
+    <dimen name="chipped_edit_text_title_text_size">12sp</dimen>
+
+    <!-- CUSTOM VIEW: ROBOTICS BUTTON -->
+    <dimen name="robotics_button_width">103dp</dimen>
+    <dimen name="robotics_button_height">46dp</dimen>
+
     <!-- CUSTOM DIALOG -->
     <dimen name="dialog_width">460dp</dimen>
     <dimen name="dialog_height">240dp</dimen>
@@ -137,14 +149,6 @@
     <!-- SCREEN: BUILD ROBOT -->
     <dimen name="build_robot_parts_size">112dp</dimen>
     <dimen name="drawer_config_width">214dp</dimen>
-
-    <!-- VIEW: CHIPPED EDIT TEXT -->
-    <dimen name="chipped_edit_text_title_horizontal_padding">6dp</dimen>
-    <dimen name="chipped_edit_text_title_margin_start">10dp</dimen>
-    <dimen name="chipped_edit_text_content_horizontal_margin">16dp</dimen>
-    <dimen name="chipped_edit_text_content_margin_top">5dp</dimen>
-    <dimen name="chipped_edit_text_content_margin_bottom">16dp</dimen>
-    <dimen name="chipped_edit_text_title_text_size">12sp</dimen>
 
     <!-- SCREEN: CONFIGURE -->
     <dimen name="configure_screen_nav_guide_height">10dp</dimen>

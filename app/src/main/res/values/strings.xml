@@ -3,6 +3,7 @@
     <string name="app_name">Robotics</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
+    <string name="next">Next</string>
 
     <!-- Main menu -->
     <string name="menu_robots">robots</string>

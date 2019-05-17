@@ -3,8 +3,6 @@ package com.revolution.robotics.features.controllers.typeSelector
 import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.features.controllers.ControllerType
 
-// TODO remove this suppress
-@Suppress("UnusedPrivateMember")
 class TypeSelectorPresenter(private val navigator: Navigator) : TypeSelectorMvp.Presenter {
 
     override var view: TypeSelectorMvp.View? = null
