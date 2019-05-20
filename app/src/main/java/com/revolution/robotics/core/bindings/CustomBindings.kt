@@ -46,6 +46,7 @@ fun setImageDrawable(imageView: ImageView, @DrawableRes drawableRes: Int) {
     imageView.setImageResource(drawableRes)
 }
 
+@Suppress("UNCHECKED_CAST")
 @BindingAdapter("carouselItems")
 fun setRobotsViewPagerItems(viewPager: ViewPager, itemList: List<Any>?) {
     if (itemList != null && itemList.isNotEmpty()) {

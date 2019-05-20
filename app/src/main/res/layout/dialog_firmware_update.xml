@@ -66,7 +66,7 @@
                 app:layout_constraintTop_toBottomOf="@id/txt_firmware"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/guide_center"
-                app:visible="@{viewModel.infoTextsVisible}"
+                app:visible="@{safeUnbox(viewModel.infoTextsVisible)}"
                 android:fontFamily="@font/barlow_regular"/>
 
         <TextView
@@ -82,7 +82,7 @@
                 app:layout_constraintTop_toBottomOf="@id/txt_hardware"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/guide_center"
-                app:visible="@{viewModel.infoTextsVisible}"
+                app:visible="@{safeUnbox(viewModel.infoTextsVisible)}"
                 android:fontFamily="@font/barlow_regular"/>
 
         <TextView
@@ -98,7 +98,7 @@
                 app:layout_constraintTop_toBottomOf="@id/txt_software_version"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/guide_center"
-                app:visible="@{viewModel.infoTextsVisible}"
+                app:visible="@{safeUnbox(viewModel.infoTextsVisible)}"
                 android:fontFamily="@font/barlow_regular"/>
 
         <TextView
@@ -114,7 +114,7 @@
                 app:layout_constraintTop_toBottomOf="@id/txt_serial_number"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/guide_center"
-                app:visible="@{viewModel.infoTextsVisible}"
+                app:visible="@{safeUnbox(viewModel.infoTextsVisible)}"
                 android:fontFamily="@font/barlow_regular"/>
 
         <TextView
@@ -130,7 +130,7 @@
                 app:layout_constraintTop_toBottomOf="@id/txt_firmware"
                 app:layout_constraintStart_toEndOf="@id/guide_center"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:visible="@{viewModel.infoTextsVisible}"
+                app:visible="@{safeUnbox(viewModel.infoTextsVisible)}"
                 android:fontFamily="@font/barlow_regular"/>
 
         <TextView
@@ -146,7 +146,7 @@
                 app:layout_constraintTop_toBottomOf="@id/txt_hardware"
                 app:layout_constraintStart_toEndOf="@id/guide_center"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:visible="@{viewModel.infoTextsVisible}"
+                app:visible="@{safeUnbox(viewModel.infoTextsVisible)}"
                 android:fontFamily="@font/barlow_regular"/>
 
         <TextView
@@ -162,7 +162,7 @@
                 app:layout_constraintTop_toBottomOf="@id/txt_software_version"
                 app:layout_constraintStart_toEndOf="@id/guide_center"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:visible="@{viewModel.infoTextsVisible}"
+                app:visible="@{safeUnbox(viewModel.infoTextsVisible)}"
                 android:fontFamily="@font/barlow_regular"/>
 
         <TextView
@@ -180,7 +180,7 @@
                 android:layout_marginTop="@dimen/dimen_16dp"
                 android:layout_marginBottom="16dp"
                 android:text="@string/firmware_loading"
-                app:visible="@{viewModel.loadingTextVisible}"
+                app:visible="@{safeUnbox(viewModel.loadingTextVisible)}"
                 tools:text="New update (3.2.0.0) is available to download"/>
 
         <TextView
@@ -198,7 +198,7 @@
                 android:layout_marginTop="@dimen/dimen_16dp"
                 android:layout_marginBottom="16dp"
                 android:text="@{viewModel.updateText}"
-                app:visible="@{viewModel.updateTextVisible}"
+                app:visible="@{safeUnbox(viewModel.updateTextVisible)}"
                 tools:text="New update (3.2.0.0) is available to download"
                 android:drawableStart="@drawable/ic_check"/>
 

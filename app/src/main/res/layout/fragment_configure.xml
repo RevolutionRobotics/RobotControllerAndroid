@@ -72,7 +72,7 @@
                     android:paddingStart="@dimen/configure_button_horizontal_padding"
                     android:paddingEnd="@dimen/configure_button_horizontal_padding"
                     app:chippedBoxConfig="@{viewModel.connectionBackgroundConfig}"
-                    app:bindTextColor="@{viewModel.connectionTextColorRes}"
+                    app:bindTextColor="@{safeUnbox(viewModel.connectionTextColorRes)}"
                     android:fontFamily="@font/barlow_medium"/>
 
             <Button
@@ -92,7 +92,7 @@
                     android:paddingStart="@dimen/configure_button_horizontal_padding"
                     android:paddingEnd="@dimen/configure_button_horizontal_padding"
                     app:chippedBoxConfig="@{viewModel.controllerBackgroundConfig}"
-                    app:bindTextColor="@{viewModel.controllerTextColorRes}"
+                    app:bindTextColor="@{safeUnbox(viewModel.controllerTextColorRes)}"
                     android:fontFamily="@font/barlow_medium"/>
 
 
