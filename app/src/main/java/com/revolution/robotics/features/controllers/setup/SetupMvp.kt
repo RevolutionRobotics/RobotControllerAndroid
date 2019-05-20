@@ -2,6 +2,7 @@ package com.revolution.robotics.features.controllers.setup
 
 import com.revolution.robotics.core.Mvp
 import com.revolution.robotics.core.domain.local.UserProgram
+import com.revolution.robotics.features.controllers.setup.mostRecent.MostRecentProgramViewModel
 
 interface SetupMvp : Mvp {
 

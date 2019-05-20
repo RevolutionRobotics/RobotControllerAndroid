@@ -3,6 +3,7 @@ package com.revolution.robotics.features.controllers.programInfo
 import android.os.Bundle
 import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.local.UserProgram
+import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.core.extensions.gone
 import com.revolution.robotics.core.extensions.withArguments
 import com.revolution.robotics.core.utils.BundleArgumentDelegate
@@ -18,6 +19,7 @@ sealed class ProgramInfoDialog(mode: Mode) : RoboticsDialog() {
     }
 
     companion object {
+        const val KEY_PROGRAM = "extra-program"
         protected var Bundle.program by BundleArgumentDelegate.Parcelable<UserProgram>("program")
     }
 
@@ -30,7 +32,10 @@ sealed class ProgramInfoDialog(mode: Mode) : RoboticsDialog() {
         when (mode) {
             Mode.ADD_PROGRAM ->
                 DialogButton(R.string.program_info_add_button, R.drawable.ic_add, true) {
-                    // TODO add program here
+                    dialogEventBus.publish(DialogEvent.ADD_PROGRAM.apply {
+                        extras.putParcelable(KEY_PROGRAM, arguments?.program)
+                    })
+                    dismissAllowingStateLoss()
                 }
             Mode.REMOVE_PROGRAM ->
                 DialogButton(R.string.program_info_remove_button, R.drawable.ic_close, true) {
@@ -38,7 +43,7 @@ sealed class ProgramInfoDialog(mode: Mode) : RoboticsDialog() {
                 }
             Mode.COMPATIBILITY_ISSUE ->
                 DialogButton(R.string.program_info_compatibility_issue_positive_button, R.drawable.ic_check, true) {
-                    dialog.dismiss()
+                    dismissAllowingStateLoss()
                 }
         }
     )

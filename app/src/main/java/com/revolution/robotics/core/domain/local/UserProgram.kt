@@ -33,6 +33,9 @@ interface UserProgramDao {
     @Query("SELECT * FROM UserProgram WHERE id=:id")
     fun getUserProgram(id: Int): UserProgram?
 
+    @Query("SELECT * FROM UserProgram")
+    fun getAllPrograms(): List<UserProgram>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveUserProgram(userProgram: UserProgram): Long
 

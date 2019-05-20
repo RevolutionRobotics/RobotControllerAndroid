@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.databinding.FragmentControllerSetupDriverBinding
 import com.revolution.robotics.features.controllers.setup.SetupFragment
-import com.revolution.robotics.features.controllers.setup.SetupViewModel
 import org.kodein.di.erased.instance
 
 class SetupDriverFragment : SetupFragment() {
@@ -21,7 +20,7 @@ class SetupDriverFragment : SetupFragment() {
         return contentBinding.root
     }
 
-    override fun updateBinding(viewModel: SetupViewModel) {
+    override fun updateBinding() {
         contentBinding.apply {
             this.viewModel = viewModel
             executePendingBindings()

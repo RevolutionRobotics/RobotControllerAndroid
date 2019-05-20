@@ -1,10 +1,10 @@
-package com.revolution.robotics.features.controllers.setup
+package com.revolution.robotics.features.controllers.setup.mostRecent
 
 import com.revolution.robotics.R
-import com.revolution.robotics.core.domain.local.UserProgram
+import com.revolution.robotics.features.controllers.setup.SetupMvp
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 
-class MostRecentProgramViewModel(private val programs: List<UserProgram>, private val presenter: SetupMvp.Presenter) {
+class MostRecentProgramViewModel(private val items: List<MostRecentItem>, private val presenter: SetupMvp.Presenter) {
 
     companion object {
         private val BACKGROUND_BASE = ChippedBoxConfig.Builder()
@@ -15,16 +15,27 @@ class MostRecentProgramViewModel(private val programs: List<UserProgram>, privat
             .chipTopLeft(true)
             .chipBottomRight(true)
             .create()
+        private val BACKGROUND_BOUND = BACKGROUND_BASE
+            .borderColorResource(R.color.robotics_red)
+            .create()
         private val SHOW_MORE_BACKGROUND = BACKGROUND_BASE
             .borderColorResource(R.color.white)
             .create()
     }
 
-    fun getProgram(index: Int) = programs[index - 1]
+    private fun getItem(index: Int) = items[index - 1]
 
-    fun getBackground() = BACKGROUND
+    fun getProgram(index: Int) = getItem(index).program
 
-    fun getShowMoreBackground() = SHOW_MORE_BACKGROUND
+    fun getBackground(index: Int) =
+        if (getItem(index).isBound) {
+            BACKGROUND_BOUND
+        } else {
+            BACKGROUND
+        }
+
+    fun getShowMoreBackground() =
+        SHOW_MORE_BACKGROUND
 
     fun onShowMoreClicked() {
         presenter.showAllPrograms()

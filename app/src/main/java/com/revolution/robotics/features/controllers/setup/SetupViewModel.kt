@@ -1,6 +1,7 @@
 package com.revolution.robotics.features.controllers.setup
 
 import androidx.lifecycle.ViewModel
+import com.revolution.robotics.core.domain.local.UserProgram
 
 class SetupViewModel(private val presenter: SetupMvp.Presenter) : ViewModel() {
 
@@ -8,21 +9,21 @@ class SetupViewModel(private val presenter: SetupMvp.Presenter) : ViewModel() {
         const val NO_PROGRAM_SELECTED = -1
     }
 
-    // TODO finalise program structure & remove test data
-    private val programs = listOf(
-        "Crane lift up",
-        null,
-        null,
-        "Crane lift down",
-        null,
-        null
-    )
-
-    var selectedProgram = NO_PROGRAM_SELECTED
+    private val programs = mutableListOf<UserProgram?>(null, null, null, null, null, null)
+    private var selectedProgram = NO_PROGRAM_SELECTED
 
     fun isProgramSelected(index: Int) = selectedProgram == index
 
-    fun getProgram(index: Int) = programs[index - 1]
+    fun getProgram(index: Int) =
+        if (programs.size >= index && index >= 0) {
+            programs[index - 1]
+        } else {
+            null
+        }
+
+    fun onProgramSet(program: UserProgram?) {
+        programs[selectedProgram - 1] = program
+    }
 
     fun selectProgram(index: Int) {
         selectedProgram = index

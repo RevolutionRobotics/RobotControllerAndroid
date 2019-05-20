@@ -7,7 +7,7 @@
         <variable name="toolbarViewModel"
                   type="com.revolution.robotics.views.toolbar.ToolbarViewModel"/>
         <variable name="mostRecent"
-                  type="com.revolution.robotics.features.controllers.setup.MostRecentProgramViewModel"/>
+                  type="com.revolution.robotics.features.controllers.setup.mostRecent.MostRecentProgramViewModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -79,7 +79,7 @@
                     android:padding="@dimen/dimen_8dp"
                     android:onClick="@{() -> mostRecent.onProgramClicked(1)}"
                     app:program="@{mostRecent.getProgram(1)}"
-                    app:chippedBoxConfig="@{mostRecent.getBackground()}"/>
+                    app:chippedBoxConfig="@{mostRecent.getBackground(1)}"/>
 
             <TextView
                     android:layout_width="0dp"
@@ -93,7 +93,7 @@
                     android:padding="@dimen/dimen_8dp"
                     android:onClick="@{() -> mostRecent.onProgramClicked(2)}"
                     app:program="@{mostRecent.getProgram(2)}"
-                    app:chippedBoxConfig="@{mostRecent.getBackground()}"/>
+                    app:chippedBoxConfig="@{mostRecent.getBackground(2)}"/>
 
             <TextView
                     android:layout_width="0dp"
@@ -107,7 +107,7 @@
                     android:padding="@dimen/dimen_8dp"
                     android:onClick="@{() -> mostRecent.onProgramClicked(3)}"
                     app:program="@{mostRecent.getProgram(3)}"
-                    app:chippedBoxConfig="@{mostRecent.getBackground()}"/>
+                    app:chippedBoxConfig="@{mostRecent.getBackground(3)}"/>
 
             <TextView
                     android:layout_width="0dp"
@@ -121,7 +121,7 @@
                     android:padding="@dimen/dimen_8dp"
                     android:onClick="@{() -> mostRecent.onProgramClicked(4)}"
                     app:program="@{mostRecent.getProgram(4)}"
-                    app:chippedBoxConfig="@{mostRecent.getBackground()}"/>
+                    app:chippedBoxConfig="@{mostRecent.getBackground(4)}"/>
 
             <TextView
                     android:layout_width="0dp"
@@ -135,7 +135,7 @@
                     android:padding="@dimen/dimen_8dp"
                     android:onClick="@{() -> mostRecent.onProgramClicked(5)}"
                     app:program="@{mostRecent.getProgram(5)}"
-                    app:chippedBoxConfig="@{mostRecent.getBackground()}"/>
+                    app:chippedBoxConfig="@{mostRecent.getBackground(5)}"/>
 
             <LinearLayout
                     android:layout_width="0dp"

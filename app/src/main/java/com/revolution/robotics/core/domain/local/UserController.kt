@@ -32,7 +32,7 @@ data class UserController(
     var type: String? = null,
     var configId: Int = 0,
     @Embedded
-    var mapping: UserButtonMapping? = null
+    var mapping: UserButtonMapping? = UserButtonMapping()
 ) : Parcelable {
 
     fun getMappingList() = listOf(mapping?.b1, mapping?.b2, mapping?.b3, mapping?.b4, mapping?.b5, mapping?.b6)

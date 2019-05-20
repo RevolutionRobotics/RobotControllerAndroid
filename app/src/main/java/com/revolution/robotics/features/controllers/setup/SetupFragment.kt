@@ -11,16 +11,19 @@ import androidx.annotation.AnimRes
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.local.UserProgram
+import com.revolution.robotics.core.eventBus.dialog.DialogEvent
+import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
 import com.revolution.robotics.core.extensions.onEnd
 import com.revolution.robotics.core.extensions.onStart
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.databinding.FragmentControllerSetupCoreBinding
 import com.revolution.robotics.features.controllers.programInfo.ProgramInfoDialog
+import com.revolution.robotics.features.controllers.setup.mostRecent.MostRecentProgramViewModel
 import org.kodein.di.erased.instance
 
 abstract class SetupFragment :
     BaseFragment<FragmentControllerSetupCoreBinding, SetupViewModel>(R.layout.fragment_controller_setup_core),
-    SetupMvp.View {
+    SetupMvp.View, DialogEventBus.Listener {
 
     companion object {
         private const val PROGRAM_SELECTOR_ANIMATION_DURATION_MS = 250L
@@ -29,11 +32,12 @@ abstract class SetupFragment :
     override val viewModelClass = SetupViewModel::class.java
 
     private val presenter: SetupMvp.Presenter by kodein.instance()
+    private val dialogEventBus: DialogEventBus by kodein.instance()
     private val resourceResolver: ResourceResolver by kodein.instance()
 
     abstract fun createContentView(inflater: LayoutInflater, container: ViewGroup?): View
 
-    abstract fun updateBinding(viewModel: SetupViewModel)
+    abstract fun updateBinding()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val core = super.onCreateView(inflater, container, savedInstanceState)
@@ -43,6 +47,7 @@ abstract class SetupFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         presenter.register(this, viewModel)
+        dialogEventBus.register(this)
         binding?.apply {
             toolbarViewModel = SetupToolbarViewModel(resourceResolver)
             dimmer.setOnClickListener { hideProgramSelector() }
@@ -51,6 +56,7 @@ abstract class SetupFragment :
 
     override fun onDestroyView() {
         presenter.unregister()
+        dialogEventBus.unregister(this)
         super.onDestroyView()
     }
 
@@ -71,8 +77,7 @@ abstract class SetupFragment :
     }
 
     override fun onProgramSlotSelected(index: Int, mostRecent: MostRecentProgramViewModel) {
-        viewModel?.let { updateBinding(it) }
-
+        viewModel?.let { updateBinding() }
         if (index != SetupViewModel.NO_PROGRAM_SELECTED) {
             binding?.apply {
                 this.mostRecent = mostRecent
@@ -84,6 +89,14 @@ abstract class SetupFragment :
 
     override fun addProgram(program: UserProgram) {
         ProgramInfoDialog.Add.newInstance(program).show(fragmentManager)
+    }
+
+    override fun onDialogEvent(event: DialogEvent) {
+        if (event == DialogEvent.ADD_PROGRAM) {
+            val program = event.extras.getParcelable<UserProgram>(ProgramInfoDialog.KEY_PROGRAM)
+            viewModel?.onProgramSet(program)
+            hideProgramSelector()
+        }
     }
 
     private fun View.appearWithAnimation(@AnimRes animRes: Int) {
