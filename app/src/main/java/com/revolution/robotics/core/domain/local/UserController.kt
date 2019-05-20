@@ -13,7 +13,7 @@ import androidx.room.Query
 import kotlinx.android.parcel.Parcelize
 
 @Entity(
-    indices = [Index(value = ["id", "configId"])],
+    indices = [Index(value = ["configId"])],
     foreignKeys = [ForeignKey(
         entity = UserConfiguration::class,
         parentColumns = arrayOf("id"),

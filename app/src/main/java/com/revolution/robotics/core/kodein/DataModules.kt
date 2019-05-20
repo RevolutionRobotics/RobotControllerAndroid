@@ -18,6 +18,7 @@ import com.revolution.robotics.core.interactor.GetUserControllersInteractor
 import com.revolution.robotics.core.interactor.GetUserRobotInteractor
 import com.revolution.robotics.core.interactor.RemoveUserControllerInteractor
 import com.revolution.robotics.core.interactor.RemoveUserProgramInteractor
+import com.revolution.robotics.core.interactor.SaveNewUserRobotInteractor
 import com.revolution.robotics.core.interactor.SaveUserChallengeCategoryInteractor
 import com.revolution.robotics.core.interactor.SaveUserControllerInteractor
 import com.revolution.robotics.core.interactor.SaveUserProgramInteractor
@@ -87,8 +88,8 @@ fun createInteractorModule() =
         bind<ConfigurationInteractor>() with provider { ConfigurationInteractor() }
         bind<TestCodeInteractor>() with provider { TestCodeInteractor() }
         bind<GetUserRobotInteractor>() with provider { GetUserRobotInteractor(instance()) }
-        bind<SaveUserRobotInteractor>() with provider {
-            SaveUserRobotInteractor(
+        bind<SaveNewUserRobotInteractor>() with provider {
+            SaveNewUserRobotInteractor(
                 instance(),
                 instance(),
                 instance(),
@@ -96,6 +97,7 @@ fun createInteractorModule() =
                 instance()
             )
         }
+        bind<SaveUserRobotInteractor>() with provider { SaveUserRobotInteractor(instance(), instance()) }
         bind<GetAllUserRobotsInteractor>() with provider { GetAllUserRobotsInteractor(instance()) }
         bind<DeleteRobotInteractor>() with provider { DeleteRobotInteractor(instance()) }
         bind<GetUserConfigurationInteractor>() with provider { GetUserConfigurationInteractor(instance()) }

@@ -4,7 +4,7 @@ import com.revolution.robotics.core.domain.local.UserRobot
 import com.revolution.robotics.core.domain.remote.Configuration
 import com.revolution.robotics.core.domain.remote.Controller
 import com.revolution.robotics.core.domain.remote.Program
-import com.revolution.robotics.core.interactor.SaveUserRobotInteractor
+import com.revolution.robotics.core.interactor.SaveNewUserRobotInteractor
 import com.revolution.robotics.core.interactor.firebase.BuildStepInteractor
 import com.revolution.robotics.core.interactor.firebase.ConfigurationInteractor
 import com.revolution.robotics.core.interactor.firebase.ControllerInteractor
@@ -12,7 +12,7 @@ import com.revolution.robotics.core.interactor.firebase.ProgramsInteractor
 
 class BuildRobotPresenter(
     private val buildStepInteractor: BuildStepInteractor,
-    private val saveUserRobotInteractor: SaveUserRobotInteractor,
+    private val saveNewUserRobotInteractor: SaveNewUserRobotInteractor,
     private val configurationInteractor: ConfigurationInteractor,
     private val controllerInteractor: ControllerInteractor,
     private val programsInteractor: ProgramsInteractor
@@ -51,8 +51,8 @@ class BuildRobotPresenter(
                     // TODO Error handling
                 })
         } else {
-            saveUserRobotInteractor.userRobot = userRobot
-            saveUserRobotInteractor.execute()
+            saveNewUserRobotInteractor.userRobot = userRobot
+            saveNewUserRobotInteractor.execute()
         }
     }
 
@@ -76,12 +76,12 @@ class BuildRobotPresenter(
     }
 
     private fun createLocalObjects(configuration: Configuration?, controller: Controller?, programs: List<Program>) {
-        saveUserRobotInteractor.controller = controller
-        saveUserRobotInteractor.configuration = configuration
-        saveUserRobotInteractor.programs = programs
-        userRobot?.let {userRobot ->
-            saveUserRobotInteractor.userRobot = userRobot
-            saveUserRobotInteractor.execute()
+        saveNewUserRobotInteractor.controller = controller
+        saveNewUserRobotInteractor.configuration = configuration
+        saveNewUserRobotInteractor.programs = programs
+        userRobot?.let { userRobot ->
+            saveNewUserRobotInteractor.userRobot = userRobot
+            saveNewUserRobotInteractor.execute()
         }
     }
 }

@@ -4,6 +4,7 @@ import android.os.Parcelable
 import androidx.room.Dao
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.Index
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.PrimaryKey
@@ -11,6 +12,7 @@ import androidx.room.Query
 import kotlinx.android.parcel.Parcelize
 
 @Entity(
+    indices = [Index(value = ["controllerId"])],
     foreignKeys = [ForeignKey(
         entity = UserController::class,
         parentColumns = arrayOf("id"),

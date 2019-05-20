@@ -2,6 +2,7 @@ package com.revolution.robotics.core.domain.remote
 
 import com.revolution.robotics.core.domain.ButtonMapping
 
+@Suppress("DataClassContainsFunctions")
 data class Controller(
     var description: String? = null,
     var id: String? = null,
