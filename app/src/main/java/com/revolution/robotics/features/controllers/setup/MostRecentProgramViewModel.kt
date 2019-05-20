@@ -29,4 +29,8 @@ class MostRecentProgramViewModel(private val programs: List<UserProgram>, privat
     fun onShowMoreClicked() {
         presenter.showAllPrograms()
     }
+
+    fun onProgramClicked(index: Int) {
+        presenter.addProgram(getProgram(index))
+    }
 }

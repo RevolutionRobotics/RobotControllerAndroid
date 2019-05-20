@@ -11,15 +11,19 @@ class SetupPresenter : SetupMvp.Presenter {
         view?.onProgramSlotSelected(
             index, MostRecentProgramViewModel(
                 listOf(
-                    UserProgram(name = "program 1"),
-                    UserProgram(name = "program 2"),
-                    UserProgram(name = "program 3"),
-                    UserProgram(name = "program 4"),
-                    UserProgram(name = "program 5")
+                    UserProgram(name = "program 1", description = "Hello world"),
+                    UserProgram(name = "program 2", description = "Hello world"),
+                    UserProgram(name = "program 3", description = "Hello world"),
+                    UserProgram(name = "program 4", description = "Hello world"),
+                    UserProgram(name = "program 5", description = "Hello world")
                 ),
                 this
             )
         )
+    }
+
+    override fun addProgram(program: UserProgram) {
+        view?.addProgram(program)
     }
 
     override fun showAllPrograms() {

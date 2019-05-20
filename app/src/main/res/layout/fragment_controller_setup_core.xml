@@ -77,6 +77,7 @@
                     android:textColor="@color/white"
                     android:gravity="center"
                     android:padding="@dimen/dimen_8dp"
+                    android:onClick="@{() -> mostRecent.onProgramClicked(1)}"
                     app:program="@{mostRecent.getProgram(1)}"
                     app:chippedBoxConfig="@{mostRecent.getBackground()}"/>
 
@@ -90,6 +91,7 @@
                     android:textColor="@color/white"
                     android:gravity="center"
                     android:padding="@dimen/dimen_8dp"
+                    android:onClick="@{() -> mostRecent.onProgramClicked(2)}"
                     app:program="@{mostRecent.getProgram(2)}"
                     app:chippedBoxConfig="@{mostRecent.getBackground()}"/>
 
@@ -103,6 +105,7 @@
                     android:textColor="@color/white"
                     android:gravity="center"
                     android:padding="@dimen/dimen_8dp"
+                    android:onClick="@{() -> mostRecent.onProgramClicked(3)}"
                     app:program="@{mostRecent.getProgram(3)}"
                     app:chippedBoxConfig="@{mostRecent.getBackground()}"/>
 
@@ -116,6 +119,7 @@
                     android:textColor="@color/white"
                     android:gravity="center"
                     android:padding="@dimen/dimen_8dp"
+                    android:onClick="@{() -> mostRecent.onProgramClicked(4)}"
                     app:program="@{mostRecent.getProgram(4)}"
                     app:chippedBoxConfig="@{mostRecent.getBackground()}"/>
 
@@ -129,6 +133,7 @@
                     android:textColor="@color/white"
                     android:gravity="center"
                     android:padding="@dimen/dimen_8dp"
+                    android:onClick="@{() -> mostRecent.onProgramClicked(5)}"
                     app:program="@{mostRecent.getProgram(5)}"
                     app:chippedBoxConfig="@{mostRecent.getBackground()}"/>
 

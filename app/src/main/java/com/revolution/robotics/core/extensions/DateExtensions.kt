@@ -10,5 +10,8 @@ fun Date.formatYearMonthDaySlashed(locale: Locale = Locale.getDefault()): String
 fun Date.formatYearMonthDayDotted(locale: Locale = Locale.getDefault()): String =
     SimpleDateFormat("yyyy.MM.dd.", locale).format(this)
 
+fun Long.formatYearMonthDaySlashed(locale: Locale = Locale.getDefault()): String =
+    Date(this).formatYearMonthDaySlashed(locale)
+
 fun Long.formatYearMonthDayDotted(locale: Locale = Locale.getDefault()): String =
     Date(this).formatYearMonthDayDotted(locale)

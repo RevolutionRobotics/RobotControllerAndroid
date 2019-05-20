@@ -10,10 +10,12 @@ import android.view.animation.DecelerateInterpolator
 import androidx.annotation.AnimRes
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
+import com.revolution.robotics.core.domain.local.UserProgram
 import com.revolution.robotics.core.extensions.onEnd
 import com.revolution.robotics.core.extensions.onStart
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.databinding.FragmentControllerSetupCoreBinding
+import com.revolution.robotics.features.controllers.programInfo.ProgramInfoDialog
 import org.kodein.di.erased.instance
 
 abstract class SetupFragment :
@@ -78,6 +80,10 @@ abstract class SetupFragment :
                 programSelector.appearWithAnimation(R.anim.program_selector_appear)
             }
         }
+    }
+
+    override fun addProgram(program: UserProgram) {
+        ProgramInfoDialog.Add.newInstance(program).show(fragmentManager)
     }
 
     private fun View.appearWithAnimation(@AnimRes animRes: Int) {

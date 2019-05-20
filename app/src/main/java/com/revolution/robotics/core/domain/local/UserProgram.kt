@@ -7,8 +7,10 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.PrimaryKey
 import androidx.room.Query
+import com.revolution.robotics.core.extensions.formatYearMonthDaySlashed
 import kotlinx.android.parcel.Parcelize
 
+@Suppress("DataClassContainsFunctions")
 @Entity
 @Parcelize
 data class UserProgram(
@@ -21,7 +23,9 @@ data class UserProgram(
     var xml: String? = null,
     var variables: List<String> = emptyList(),
     var remoteId: String? = null
-) : Parcelable
+) : Parcelable {
+    fun getFormattedDate() = lastModified.formatYearMonthDaySlashed()
+}
 
 @Dao
 interface UserProgramDao {
