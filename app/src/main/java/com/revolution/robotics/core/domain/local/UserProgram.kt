@@ -19,7 +19,8 @@ data class UserProgram(
     var name: String? = null,
     var python: String? = null,
     var xml: String? = null,
-    var variables: List<String> = emptyList()
+    var variables: List<String> = emptyList(),
+    var remoteId: String? = null
 ) : Parcelable
 
 @Dao
@@ -33,4 +34,7 @@ interface UserProgramDao {
 
     @Query("DELETE FROM UserProgram WHERE id=:id")
     fun removeUserProgram(id: Int)
+
+    @Query("SELECT * FROM UserProgram WHERE remoteId=:remoteId")
+    fun getUserProgramBasedOnRemoteId(remoteId: String): UserProgram?
 }

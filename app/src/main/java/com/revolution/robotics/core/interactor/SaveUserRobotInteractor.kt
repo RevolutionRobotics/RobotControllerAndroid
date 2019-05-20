@@ -113,15 +113,20 @@ class SaveUserRobotInteractor(
 
     private fun saveUserPrograms() = hashMapOf<String, Int>().apply {
         programs?.forEach { remoteProgram ->
+            val currentProgram = remoteProgram.id?.let {
+                saveProgramDao.getUserProgramBasedOnRemoteId(it)
+            }
+
             this[remoteProgram.id ?: ""] = saveProgramDao.saveUserProgram(
                 UserProgram(
-                    0,
+                    currentProgram?.id ?: 0,
                     remoteProgram.description,
                     remoteProgram.lastModified,
                     remoteProgram.name,
                     remoteProgram.python,
                     remoteProgram.xml,
-                    remoteProgram.variables
+                    remoteProgram.variables,
+                    remoteProgram.id
                 )
             ).toInt()
         }
