@@ -51,8 +51,8 @@ import com.revolution.robotics.features.configure.motor.MotorConfigurationMvp
 import com.revolution.robotics.features.configure.motor.MotorConfigurationPresenter
 import com.revolution.robotics.features.configure.sensor.SensorConfigurationMvp
 import com.revolution.robotics.features.configure.sensor.SensorConfigurationPresenter
-import com.revolution.robotics.features.controller.programSelector.ProgramSelectorMvp
-import com.revolution.robotics.features.controller.programSelector.ProgramSelectorPresenter
+import com.revolution.robotics.features.controllers.programSelector.ProgramSelectorMvp
+import com.revolution.robotics.features.controllers.programSelector.ProgramSelectorPresenter
 import com.revolution.robotics.features.controllers.setup.SetupMvp
 import com.revolution.robotics.features.controllers.setup.SetupPresenter
 import com.revolution.robotics.features.controllers.typeSelector.TypeSelectorMvp

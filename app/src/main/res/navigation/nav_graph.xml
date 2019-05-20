@@ -108,7 +108,7 @@
               android:label="SetupDriverFragment"/>
 
     <fragment android:id="@+id/program_selector"
-              android:name="com.revolution.robotics.features.controller.programSelector.ProgramSelectorFragment"
+              android:name="com.revolution.robotics.features.controllers.programSelector.ProgramSelectorFragment"
               android:label="ProgramSelectorFragment "/>
 
     <!-- Settings -->

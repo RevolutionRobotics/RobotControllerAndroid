@@ -1,4 +1,4 @@
-package com.revolution.robotics.features.controller.programSelector.adapter
+package com.revolution.robotics.features.controllers.programSelector.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

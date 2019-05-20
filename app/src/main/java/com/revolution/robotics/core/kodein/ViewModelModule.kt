@@ -10,7 +10,7 @@ import com.revolution.robotics.features.configure.controller.program.priority.Pr
 import com.revolution.robotics.features.configure.controllers.ConfigureControllersViewModel
 import com.revolution.robotics.features.configure.motor.MotorConfigurationViewModel
 import com.revolution.robotics.features.configure.sensor.SensorConfigurationViewModel
-import com.revolution.robotics.features.controller.programSelector.ProgramSelectorViewModel
+import com.revolution.robotics.features.controllers.programSelector.ProgramSelectorViewModel
 import com.revolution.robotics.features.controllers.setup.SetupViewModel
 import com.revolution.robotics.features.controllers.typeSelector.TypeSelectorViewModel
 import com.revolution.robotics.features.mainmenu.MainMenuViewModel

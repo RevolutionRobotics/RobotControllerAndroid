@@ -1,10 +1,10 @@
-package com.revolution.robotics.features.controller.programSelector
+package com.revolution.robotics.features.controllers.programSelector
 
 import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.local.UserProgram
 import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.features.configure.controller.CompatibleProgramFilterer
-import com.revolution.robotics.features.controller.programSelector.adapter.ProgramViewModel
+import com.revolution.robotics.features.controllers.programSelector.adapter.ProgramViewModel
 import java.util.Random
 
 class ProgramSelectorPresenter(

@@ -1,4 +1,4 @@
-package com.revolution.robotics.features.controller.programSelector
+package com.revolution.robotics.features.controllers.programSelector
 
 import android.os.Bundle
 import android.view.View
@@ -6,8 +6,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
 import com.revolution.robotics.databinding.FragmentProgramSelectorBinding
-import com.revolution.robotics.features.controller.programSelector.adapter.ProgramSelectorAdapter
-import com.revolution.robotics.features.controller.programSelector.adapter.ProgramViewModel
+import com.revolution.robotics.features.controllers.programSelector.adapter.ProgramSelectorAdapter
+import com.revolution.robotics.features.controllers.programSelector.adapter.ProgramViewModel
 import org.kodein.di.erased.instance
 
 class ProgramSelectorFragment :

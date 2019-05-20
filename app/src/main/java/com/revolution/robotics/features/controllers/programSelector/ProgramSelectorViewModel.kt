@@ -1,4 +1,4 @@
-package com.revolution.robotics.features.controller.programSelector
+package com.revolution.robotics.features.controllers.programSelector
 
 import androidx.databinding.ObservableInt
 import androidx.lifecycle.ViewModel

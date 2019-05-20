@@ -3,7 +3,7 @@
 
     <data>
         <variable name="viewModel"
-                  type="com.revolution.robotics.features.controller.programSelector.adapter.ProgramViewModel"/>
+                  type="com.revolution.robotics.features.controllers.programSelector.adapter.ProgramViewModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

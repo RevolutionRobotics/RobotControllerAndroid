@@ -1,7 +1,7 @@
-package com.revolution.robotics.features.controller.programSelector
+package com.revolution.robotics.features.controllers.programSelector
 
 import com.revolution.robotics.core.Mvp
-import com.revolution.robotics.features.controller.programSelector.adapter.ProgramViewModel
+import com.revolution.robotics.features.controllers.programSelector.adapter.ProgramViewModel
 
 interface ProgramSelectorMvp : Mvp {
 
