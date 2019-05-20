@@ -42,6 +42,12 @@ class MostRecentProgramViewModel(private val items: List<MostRecentItem>, privat
     }
 
     fun onProgramClicked(index: Int) {
-        presenter.addProgram(getProgram(index))
+        getItem(index).let { item ->
+            if (item.isBound) {
+                presenter.removeProgram(item.program)
+            } else {
+                presenter.addProgram(item.program)
+            }
+        }
     }
 }

@@ -2,6 +2,7 @@ package com.revolution.robotics.features.controllers.setup
 
 import com.revolution.robotics.core.domain.local.UserProgram
 import com.revolution.robotics.core.interactor.GetUserProgramsInteractor
+import com.revolution.robotics.features.controllers.programInfo.ProgramInfoDialog
 import com.revolution.robotics.features.controllers.setup.mostRecent.MostRecentItem
 import com.revolution.robotics.features.controllers.setup.mostRecent.MostRecentProgramViewModel
 
@@ -41,7 +42,11 @@ class SetupPresenter(private val getProgramsInteractor: GetUserProgramsInteracto
     }
 
     override fun addProgram(program: UserProgram) {
-        view?.addProgram(program)
+        view?.showDialog(ProgramInfoDialog.Add.newInstance(program))
+    }
+
+    override fun removeProgram(program: UserProgram) {
+        view?.showDialog(ProgramInfoDialog.Remove.newInstance(program))
     }
 
     override fun showAllPrograms() {

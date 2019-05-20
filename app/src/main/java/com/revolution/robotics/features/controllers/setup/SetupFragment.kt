@@ -87,14 +87,13 @@ abstract class SetupFragment :
         }
     }
 
-    override fun addProgram(program: UserProgram) {
-        ProgramInfoDialog.Add.newInstance(program).show(fragmentManager)
-    }
-
     override fun onDialogEvent(event: DialogEvent) {
         if (event == DialogEvent.ADD_PROGRAM) {
             val program = event.extras.getParcelable<UserProgram>(ProgramInfoDialog.KEY_PROGRAM)
             viewModel?.onProgramSet(program)
+            hideProgramSelector()
+        } else if (event == DialogEvent.REMOVE_PROGRAM) {
+            viewModel?.onProgramSet(null)
             hideProgramSelector()
         }
     }

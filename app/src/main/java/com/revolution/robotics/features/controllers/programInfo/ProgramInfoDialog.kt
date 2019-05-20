@@ -39,7 +39,8 @@ sealed class ProgramInfoDialog(mode: Mode) : RoboticsDialog() {
                 }
             Mode.REMOVE_PROGRAM ->
                 DialogButton(R.string.program_info_remove_button, R.drawable.ic_close, true) {
-                    // TODO remove program here
+                    dialogEventBus.publish(DialogEvent.REMOVE_PROGRAM)
+                    dismissAllowingStateLoss()
                 }
             Mode.COMPATIBILITY_ISSUE ->
                 DialogButton(R.string.program_info_compatibility_issue_positive_button, R.drawable.ic_check, true) {
