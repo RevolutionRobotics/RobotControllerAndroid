@@ -15,7 +15,7 @@ class MainMenuPresenter(private val navigator: Navigator) : MainMenuMvp.Presente
     }
 
     override fun navigateToChallenges() {
-        navigator.navigate(MainMenuFragmentDirections.actionMainMenuFragmentToProgramPriorityFragment())
+        navigator.navigate(MainMenuFragmentDirections.toChallenges())
     }
 
     override fun onCommunityClicked() {
