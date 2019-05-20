@@ -15,7 +15,7 @@ import kotlinx.android.parcel.Parcelize
 data class UserConfiguration(
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0,
-    var controller: String? = null,
+    var controller: Int? = null,
     @Embedded
     var mappingId: UserMapping? = null
 ) : Parcelable

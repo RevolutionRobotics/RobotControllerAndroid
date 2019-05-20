@@ -7,7 +7,7 @@ import com.revolution.robotics.core.domain.remote.TestCode
 
 class TestCodeInteractor : FirebaseSingleObjectInteractor<TestCode>() {
     override val genericTypeIndicator: GenericTypeIndicator<ArrayList<TestCode>> =
-        object : GenericTypeIndicator<ArrayList<TestCode>>() {}
+        object : GenericTypeIndicator<ArrayList<@JvmSuppressWildcards TestCode>>() {}
 
     var codeId = 0
 

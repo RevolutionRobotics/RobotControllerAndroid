@@ -111,21 +111,21 @@ class ProgramPriorityPresenter(private val userConfigurationStorage: UserConfigu
     private fun generateDummyUserController() = UserControllerWithPrograms(
         userController = UserController(
             mapping = UserButtonMapping(
-                b1 = UserProgramBinding(1, "1", 1, 4),
-                b2 = UserProgramBinding(2, "1", 2, 3),
-                b4 = UserProgramBinding(3, "1", 3, 2),
-                b5 = UserProgramBinding(4, "1", 4, 1)
+                b1 = UserProgramBinding(1, 1, 1, 4),
+                b2 = UserProgramBinding(2, 1, 2, 3),
+                b4 = UserProgramBinding(3, 1, 3, 2),
+                b5 = UserProgramBinding(4, 1, 4, 1)
             )
         ),
         backgroundBindings = mutableListOf(
-            UserBackgroundProgramBinding(5, "1", 5, 5),
-            UserBackgroundProgramBinding(6, "1", 5, 5),
-            UserBackgroundProgramBinding(7, "1", 6, 6),
-            UserBackgroundProgramBinding(8, "1", 7, 7),
-            UserBackgroundProgramBinding(9, "1", 8, 8),
-            UserBackgroundProgramBinding(10, "1", 9, 9),
-            UserBackgroundProgramBinding(11, "1", 10, 10),
-            UserBackgroundProgramBinding(12, "1", 11, 11)
+            UserBackgroundProgramBinding(5, 1, 5, 5),
+            UserBackgroundProgramBinding(6, 1, 5, 5),
+            UserBackgroundProgramBinding(7, 1, 6, 6),
+            UserBackgroundProgramBinding(8, 1, 7, 7),
+            UserBackgroundProgramBinding(9, 1, 8, 8),
+            UserBackgroundProgramBinding(10, 1, 9, 9),
+            UserBackgroundProgramBinding(11, 1, 10, 10),
+            UserBackgroundProgramBinding(12, 1, 11, 11)
         ),
         programs = SparseArray<UserProgram>().apply {
             put(1, UserProgram(1, "This is a program #1", System.currentTimeMillis(), "Program name #1"))
