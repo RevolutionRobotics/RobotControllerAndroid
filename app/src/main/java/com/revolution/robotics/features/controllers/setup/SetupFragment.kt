@@ -10,7 +10,8 @@ import android.view.animation.DecelerateInterpolator
 import androidx.annotation.AnimRes
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
-import com.revolution.robotics.core.extensions.setListener
+import com.revolution.robotics.core.extensions.onEnd
+import com.revolution.robotics.core.extensions.onStart
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.databinding.FragmentControllerSetupCoreBinding
 import org.kodein.di.erased.instance
@@ -79,17 +80,31 @@ abstract class SetupFragment :
         }
     }
 
-    private fun View.appearWithAnimation(@AnimRes animRes: Int) =
+    private fun View.appearWithAnimation(@AnimRes animRes: Int) {
+        clearAnimation()
+        visibility = View.INVISIBLE
+        binding?.dimmer?.apply {
+            isClickable = true
+            isFocusable = true
+        }
         startAnimation(AnimationUtils.loadAnimation(context, animRes).apply {
             duration = PROGRAM_SELECTOR_ANIMATION_DURATION_MS
-            setListener(onStart = { this@appearWithAnimation.visibility = View.VISIBLE })
             interpolator = DecelerateInterpolator()
+            onStart { this@appearWithAnimation.visibility = View.VISIBLE }
         })
+    }
 
-    private fun View.disappearWithAnimation(@AnimRes animRes: Int) =
+    private fun View.disappearWithAnimation(@AnimRes animRes: Int) {
+        clearAnimation()
+        visibility = View.VISIBLE
+        binding?.dimmer?.apply {
+            isClickable = false
+            isFocusable = false
+        }
         startAnimation(AnimationUtils.loadAnimation(context, animRes).apply {
             duration = PROGRAM_SELECTOR_ANIMATION_DURATION_MS
-            setListener(onEnd = { this@disappearWithAnimation.visibility = View.INVISIBLE })
             interpolator = AccelerateInterpolator()
+            onEnd { this@disappearWithAnimation.visibility = View.INVISIBLE }
         })
+    }
 }

@@ -9,3 +9,9 @@ fun Animation.setListener(onStart: () -> Unit = {}, onEnd: () -> Unit = {}, onRe
         override fun onAnimationStart(animation: Animation?) = onStart.invoke()
     })
 }
+
+fun Animation.onStart(onStart: () -> Unit) = setListener(onStart = onStart)
+
+fun Animation.onEnd(onEnd: () -> Unit) = setListener(onEnd = onEnd)
+
+fun Animation.onRepeat(onRepeat: () -> Unit) = setListener(onRepeat = onRepeat)
