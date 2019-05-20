@@ -16,6 +16,7 @@ import androidx.annotation.DrawableRes
 import androidx.databinding.BindingAdapter
 import androidx.viewpager.widget.ViewPager
 import com.revolution.robotics.R
+import com.revolution.robotics.core.domain.local.UserProgram
 import com.revolution.robotics.core.extensions.color
 import com.revolution.robotics.views.ChippedEditText
 import com.revolution.robotics.views.ChippedEditTextViewModel
@@ -144,4 +145,9 @@ fun setupRoboticsButton(button: RoboticsButton, text: String, image: Drawable) {
         this.text = text
         this.image = image
     }
+}
+
+@BindingAdapter("program")
+fun setProgram(textView: TextView, program: UserProgram?) {
+    program?.let { textView.text = it.name }
 }

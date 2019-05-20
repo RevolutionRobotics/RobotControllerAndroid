@@ -67,11 +67,12 @@ abstract class SetupFragment :
         viewModel?.selectProgram(SetupViewModel.NO_PROGRAM_SELECTED)
     }
 
-    override fun onProgramSlotSelected(index: Int) {
+    override fun onProgramSlotSelected(index: Int, mostRecent: MostRecentProgramViewModel) {
         viewModel?.let { updateBinding(it) }
 
         if (index != SetupViewModel.NO_PROGRAM_SELECTED) {
             binding?.apply {
+                this.mostRecent = mostRecent
                 dimmer.appearWithAnimation(R.anim.dim_screen_appear)
                 programSelector.appearWithAnimation(R.anim.program_selector_appear)
             }
