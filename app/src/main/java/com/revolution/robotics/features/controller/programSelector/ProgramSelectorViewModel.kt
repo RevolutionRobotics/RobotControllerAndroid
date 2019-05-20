@@ -1,6 +1,8 @@
 package com.revolution.robotics.features.controller.programSelector
 
+import androidx.databinding.ObservableInt
 import androidx.lifecycle.ViewModel
+import com.revolution.robotics.R
 
 class ProgramSelectorViewModel(private val presenter: ProgramSelectorMvp.Presenter) : ViewModel() {
 
@@ -8,6 +10,9 @@ class ProgramSelectorViewModel(private val presenter: ProgramSelectorMvp.Present
     enum class Order { ASCENDING, DESCENDING }
 
     var currentOrder = OrderBy.NAME to Order.ASCENDING
+
+    val filterDrawable = ObservableInt(R.drawable.ic_compatible)
+    val filterText = ObservableInt(R.string.program_selector_show_compatible_programs)
 
     fun onBackPressed() {
         presenter.back()
@@ -37,4 +42,8 @@ class ProgramSelectorViewModel(private val presenter: ProgramSelectorMvp.Present
     fun isNameAscending() = currentOrder.first == OrderBy.NAME && currentOrder.second == Order.ASCENDING
     fun isOrderedByDate() = currentOrder.first == OrderBy.DATE
     fun isDateAscending() = currentOrder.first == OrderBy.DATE && currentOrder.second == Order.ASCENDING
+
+    fun onShowCompatibleProgramsButtonClicked() {
+        presenter.showCompatibleProgramsClicked()
+    }
 }

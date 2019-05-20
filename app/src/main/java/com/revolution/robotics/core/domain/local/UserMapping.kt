@@ -30,4 +30,18 @@ class UserMapping(var userConfigId: Int = 0) : PortMapping(), Parcelable {
             "M6" -> M6 = motorPort.motor
         }
     }
+
+    fun getVariables() = listOfNotNull(
+        S1?.variableName,
+        S2?.variableName,
+        S3?.variableName,
+        S4?.variableName,
+
+        M1?.variableName,
+        M2?.variableName,
+        M3?.variableName,
+        M4?.variableName,
+        M5?.variableName,
+        M6?.variableName
+    )
 }

@@ -12,5 +12,6 @@ interface ProgramSelectorMvp : Mvp {
     interface Presenter : Mvp.Presenter<View, ProgramSelectorViewModel> {
         fun back()
         fun updateOrdering()
+        fun showCompatibleProgramsClicked()
     }
 }
