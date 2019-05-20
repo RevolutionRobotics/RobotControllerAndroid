@@ -3,7 +3,6 @@ package com.revolution.robotics.core.utils.recyclerview
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.revolution.robotics.core.extensions.swap
-import java.util.Collections
 
 abstract class RecyclerAdapter<T : Any> : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -23,18 +22,6 @@ abstract class RecyclerAdapter<T : Any> : RecyclerView.Adapter<RecyclerView.View
     open fun setItems(newItems: List<T>) {
         items.swap(newItems)
         notifyDataSetChanged()
-    }
-
-    fun swapItems(from: Int, to: Int) {
-        if (from < to) {
-            for (i in from until to) {
-                Collections.swap(items, i, i + 1)
-            }
-        } else {
-            for (i in from downTo to + 1) {
-                Collections.swap(items, i, i - 1)
-            }
-        }
     }
 
     open fun getItem(position: Int): T = items[position]
