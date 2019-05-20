@@ -109,7 +109,7 @@
 
     <fragment android:id="@+id/program_selector"
               android:name="com.revolution.robotics.features.controller.programSelector.ProgramSelectorFragment"
-              android:label="ProgramSelectorFragment " />
+              android:label="ProgramSelectorFragment "/>
 
     <!-- Settings -->
     <fragment android:id="@+id/settingFragment"

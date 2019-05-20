@@ -3,6 +3,11 @@ package com.revolution.robotics.features.controllers.setup
 import androidx.lifecycle.ViewModel
 
 class SetupViewModel(private val presenter: SetupMvp.Presenter) : ViewModel() {
+
+    companion object {
+        const val NO_PROGRAM_SELECTED = -1
+    }
+
     // TODO finalise program structure & remove test data
     private val programs = listOf(
         "Crane lift up",
@@ -13,7 +18,7 @@ class SetupViewModel(private val presenter: SetupMvp.Presenter) : ViewModel() {
         null
     )
 
-    var selectedProgram = 2
+    var selectedProgram = NO_PROGRAM_SELECTED
 
     fun isProgramSelected(index: Int) = selectedProgram == index
 
@@ -21,7 +26,7 @@ class SetupViewModel(private val presenter: SetupMvp.Presenter) : ViewModel() {
 
     fun selectProgram(index: Int) {
         selectedProgram = index
-        presenter.onProgramSlotSelected(index, this)
+        presenter.onProgramSlotSelected(index)
     }
 
     fun onControllerSetupFinished() {
