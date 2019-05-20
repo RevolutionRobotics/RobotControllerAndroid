@@ -8,7 +8,7 @@ import com.revolution.robotics.core.domain.remote.Program
 class ProgramInteractor : FirebaseSingleObjectInteractor<Program>() {
 
     override val genericTypeIndicator: GenericTypeIndicator<ArrayList<Program>> =
-        object : GenericTypeIndicator<ArrayList<Program>>() {}
+        object : GenericTypeIndicator<ArrayList<@JvmSuppressWildcards Program>>() {}
 
     lateinit var programId: String
 

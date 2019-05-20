@@ -70,7 +70,7 @@ class UserConfigurationStorage {
         controllerHolder?.backgroundBindings?.add(
             UserBackgroundProgramBinding(
                 0,
-                controllerHolder?.userController?.id.toString(),
+                controllerHolder?.userController?.id ?: 0,
                 userProgram.id,
                 -1
             )
@@ -103,7 +103,7 @@ class UserConfigurationStorage {
 
     private fun getNewProgramBinding(newProgram: UserProgram, currentBinding: UserProgramBinding?): UserProgramBinding {
         removeUserProgram(currentBinding)
-        return UserProgramBinding(0, controllerHolder?.userController?.id.toString(), newProgram.id, -1)
+        return UserProgramBinding(0, controllerHolder?.userController?.id ?: 0, newProgram.id, -1)
     }
 
     private fun collectVariableNames(excludedPortName: String): List<String> {

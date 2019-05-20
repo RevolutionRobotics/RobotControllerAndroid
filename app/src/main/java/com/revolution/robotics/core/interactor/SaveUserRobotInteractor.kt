@@ -6,18 +6,16 @@ import com.revolution.robotics.core.domain.local.UserRobot
 import com.revolution.robotics.core.domain.local.UserRobotDao
 
 class SaveUserRobotInteractor(
-    private val userRobotDao: UserRobotDao,
-    private val userConfigurationDao: UserConfigurationDao
+    private val saveConfigurationDao: UserConfigurationDao,
+    private val saveUserRobotDao: UserRobotDao
 ) : Interactor<Long>() {
 
+    lateinit var userConfiguration: UserConfiguration
     lateinit var userRobot: UserRobot
-    var userConfiguration: UserConfiguration? = null
 
     override fun getData(): Long {
-        userConfiguration?.let { userConfig ->
-            val id = userConfigurationDao.saveUserConfiguration(userConfig)
-            userRobot.configurationId = id.toInt()
-        }
-        return userRobotDao.saveUserRobot(userRobot)
+        val id = saveConfigurationDao.saveUserConfiguration(userConfiguration)
+        userRobot.configurationId = id.toInt()
+        return saveUserRobotDao.saveUserRobot(userRobot)
     }
 }

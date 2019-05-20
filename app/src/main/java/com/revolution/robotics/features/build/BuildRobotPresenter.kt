@@ -1,21 +1,29 @@
 package com.revolution.robotics.features.build
 
-import com.revolution.robotics.core.domain.local.UserConfiguration
-import com.revolution.robotics.core.domain.local.UserMapping
 import com.revolution.robotics.core.domain.local.UserRobot
 import com.revolution.robotics.core.domain.remote.Configuration
-import com.revolution.robotics.core.interactor.SaveUserRobotInteractor
+import com.revolution.robotics.core.domain.remote.Controller
+import com.revolution.robotics.core.domain.remote.Program
+import com.revolution.robotics.core.interactor.SaveNewUserRobotInteractor
 import com.revolution.robotics.core.interactor.firebase.BuildStepInteractor
 import com.revolution.robotics.core.interactor.firebase.ConfigurationInteractor
+import com.revolution.robotics.core.interactor.firebase.ControllerInteractor
+import com.revolution.robotics.core.interactor.firebase.ProgramsInteractor
 
 class BuildRobotPresenter(
     private val buildStepInteractor: BuildStepInteractor,
-    private val saveUserRobotInteractor: SaveUserRobotInteractor,
-    private val configurationInteractor: ConfigurationInteractor
+    private val saveNewUserRobotInteractor: SaveNewUserRobotInteractor,
+    private val configurationInteractor: ConfigurationInteractor,
+    private val controllerInteractor: ControllerInteractor,
+    private val programsInteractor: ProgramsInteractor
 ) : BuildRobotMvp.Presenter {
 
     override var view: BuildRobotMvp.View? = null
     override var model: BuildRobotViewModel? = null
+
+    private var configuration: Configuration? = null
+    private var controller: Controller? = null
+    private var userRobot: UserRobot? = null
 
     override fun loadBuildSteps(robotId: Int) {
         buildStepInteractor.robotId = robotId
@@ -30,36 +38,50 @@ class BuildRobotPresenter(
         )
     }
 
-    private fun createUserConfiguration(configuration: Configuration) =
-        UserConfiguration(0, configuration.controller, UserMapping().apply {
-            M1 = configuration.mapping?.M1
-            M2 = configuration.mapping?.M2
-            M3 = configuration.mapping?.M3
-            M4 = configuration.mapping?.M4
-            M5 = configuration.mapping?.M5
-            M6 = configuration.mapping?.M6
-
-            S1 = configuration.mapping?.S1
-            S2 = configuration.mapping?.S2
-            S3 = configuration.mapping?.S3
-            S4 = configuration.mapping?.S4
-        })
-
     override fun saveUserRobot(userRobot: UserRobot, createDefaultConfig: Boolean) {
         if (createDefaultConfig) {
+            this.userRobot = userRobot
             configurationInteractor.configId = userRobot.configurationId
             configurationInteractor.execute(
                 onResponse = { config ->
-                    saveUserRobotInteractor.userConfiguration = createUserConfiguration(config)
-                    saveUserRobotInteractor.userRobot = userRobot
-                    saveUserRobotInteractor.execute()
+                    configuration = config
+                    downloadControllerInfo(config.controller)
                 },
                 onError = {
                     // TODO Error handling
                 })
         } else {
-            saveUserRobotInteractor.userRobot = userRobot
-            saveUserRobotInteractor.execute()
+            saveNewUserRobotInteractor.userRobot = userRobot
+            saveNewUserRobotInteractor.execute()
+        }
+    }
+
+    private fun downloadControllerInfo(controllerId: String?) {
+        controllerInteractor.controllerId = controllerId ?: ""
+        controllerInteractor.execute({ controller ->
+            this.controller = controller
+            downloadPrograms(controller.getProgramIds())
+        }, {
+            // TODO Error handling
+        })
+    }
+
+    private fun downloadPrograms(ids: List<String>) {
+        programsInteractor.programIds = ids
+        programsInteractor.execute({ programs ->
+            createLocalObjects(configuration, controller, programs)
+        }, {
+            // TODO Error handling
+        })
+    }
+
+    private fun createLocalObjects(configuration: Configuration?, controller: Controller?, programs: List<Program>) {
+        saveNewUserRobotInteractor.controller = controller
+        saveNewUserRobotInteractor.configuration = configuration
+        saveNewUserRobotInteractor.programs = programs
+        userRobot?.let { userRobot ->
+            saveNewUserRobotInteractor.userRobot = userRobot
+            saveNewUserRobotInteractor.execute()
         }
     }
 }

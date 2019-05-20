@@ -85,19 +85,21 @@ class ConfigurePresenter(
     override fun onDialogEvent(event: DialogEvent) {
         if (event == DialogEvent.SAVE_ROBOT) {
             userRobot?.let { robot ->
-                robot.name = event.extras.getString(SaveRobotDialog.KEY_NAME)
-                robot.description = event.extras.getString(SaveRobotDialog.KEY_DESCRIPTION)
-                saveUserRobotInteractor.userConfiguration = userConfigurationStorage.userConfiguration
-                saveUserRobotInteractor.userRobot = robot
-                toolbarViewModel?.title?.set(robot.name)
-                saveUserRobotInteractor.execute(
-                    onResponse = { savedRobotId ->
-                        updateRobotImage(robot.instanceId, savedRobotId.toInt())
-                        navigator.popUntil(R.id.myRobotsFragment)
-                    },
-                    onError = {
-                        // TODO error handling
-                    })
+                userConfigurationStorage.userConfiguration?.let { config ->
+                    robot.name = event.extras.getString(SaveRobotDialog.KEY_NAME)
+                    robot.description = event.extras.getString(SaveRobotDialog.KEY_DESCRIPTION)
+                    saveUserRobotInteractor.userConfiguration = config
+                    saveUserRobotInteractor.userRobot = robot
+                    toolbarViewModel?.title?.set(robot.name)
+                    saveUserRobotInteractor.execute(
+                        onResponse = { savedRobotId ->
+                            updateRobotImage(robot.instanceId, savedRobotId.toInt())
+                            navigator.popUntil(R.id.myRobotsFragment)
+                        },
+                        onError = {
+                            // TODO error handling
+                        })
+                }
             }
         }
     }

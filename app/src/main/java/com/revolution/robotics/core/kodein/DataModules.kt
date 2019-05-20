@@ -18,6 +18,7 @@ import com.revolution.robotics.core.interactor.GetUserControllersInteractor
 import com.revolution.robotics.core.interactor.GetUserRobotInteractor
 import com.revolution.robotics.core.interactor.RemoveUserControllerInteractor
 import com.revolution.robotics.core.interactor.RemoveUserProgramInteractor
+import com.revolution.robotics.core.interactor.SaveNewUserRobotInteractor
 import com.revolution.robotics.core.interactor.SaveUserChallengeCategoryInteractor
 import com.revolution.robotics.core.interactor.SaveUserControllerInteractor
 import com.revolution.robotics.core.interactor.SaveUserProgramInteractor
@@ -87,6 +88,15 @@ fun createInteractorModule() =
         bind<ConfigurationInteractor>() with provider { ConfigurationInteractor() }
         bind<TestCodeInteractor>() with provider { TestCodeInteractor() }
         bind<GetUserRobotInteractor>() with provider { GetUserRobotInteractor(instance()) }
+        bind<SaveNewUserRobotInteractor>() with provider {
+            SaveNewUserRobotInteractor(
+                instance(),
+                instance(),
+                instance(),
+                instance(),
+                instance()
+            )
+        }
         bind<SaveUserRobotInteractor>() with provider { SaveUserRobotInteractor(instance(), instance()) }
         bind<GetAllUserRobotsInteractor>() with provider { GetAllUserRobotsInteractor(instance()) }
         bind<DeleteRobotInteractor>() with provider { DeleteRobotInteractor(instance()) }
@@ -111,6 +121,7 @@ fun createInteractorModule() =
         bind<SaveUserChallengeCategoryInteractor>() with provider { SaveUserChallengeCategoryInteractor(instance()) }
     }
 
+@Suppress("LongMethod")
 fun createPresenterModule() =
     Kodein.Module("PresenterModule") {
         bind<MainMenuMvp.Presenter>() with singleton { MainMenuPresenter(instance()) }
@@ -118,7 +129,15 @@ fun createPresenterModule() =
         bind<LiveControllerMvp.Presenter>() with singleton { LiveControllerPresenter(instance()) }
         bind<MyRobotsMvp.Presenter>() with singleton { MyRobotsPresenter(instance(), instance(), instance()) }
         bind<ChapterFinishedMvp.Presenter>() with singleton { ChapterFinishedPresenter(instance()) }
-        bind<BuildRobotMvp.Presenter>() with singleton { BuildRobotPresenter(instance(), instance(), instance()) }
+        bind<BuildRobotMvp.Presenter>() with singleton {
+            BuildRobotPresenter(
+                instance(),
+                instance(),
+                instance(),
+                instance(),
+                instance()
+            )
+        }
         bind<ConnectMvp.Presenter>() with singleton { ConnectPresenter(instance(), instance()) }
         bind<ConfigureMvp.Presenter>() with singleton {
             ConfigurePresenter(
