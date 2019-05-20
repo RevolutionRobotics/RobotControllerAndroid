@@ -6,6 +6,7 @@ import com.revolution.robotics.core.domain.local.UserControllerWithPrograms
 import com.revolution.robotics.core.domain.local.UserMapping
 import com.revolution.robotics.core.domain.local.UserProgram
 import com.revolution.robotics.core.domain.local.UserProgramBinding
+import com.revolution.robotics.features.configure.controller.ControllerButton
 
 class UserConfigurationStorage {
 
@@ -19,31 +20,49 @@ class UserConfigurationStorage {
 
     fun isUsedVariableName(name: String, portName: String): Boolean = collectVariableNames(portName).contains(name)
 
-    fun addButtonProgram(userProgram: UserProgram, buttonName: String) {
+    fun addButtonProgram(userProgram: UserProgram, buttonName: ControllerButton) {
         when (buttonName) {
-            "b1" -> controllerHolder?.userController?.mapping?.b1 =
+            ControllerButton.B1 -> controllerHolder?.userController?.mapping?.b1 =
                 getNewProgramBinding(userProgram, controllerHolder?.userController?.mapping?.b1)
-            "b2" -> controllerHolder?.userController?.mapping?.b2 =
+            ControllerButton.B2 -> controllerHolder?.userController?.mapping?.b2 =
                 getNewProgramBinding(userProgram, controllerHolder?.userController?.mapping?.b2)
-            "b3" -> controllerHolder?.userController?.mapping?.b3 =
+            ControllerButton.B3 -> controllerHolder?.userController?.mapping?.b3 =
                 getNewProgramBinding(userProgram, controllerHolder?.userController?.mapping?.b3)
-            "b4" -> controllerHolder?.userController?.mapping?.b4 =
+            ControllerButton.B4 -> controllerHolder?.userController?.mapping?.b4 =
                 getNewProgramBinding(userProgram, controllerHolder?.userController?.mapping?.b4)
-            "b5" -> controllerHolder?.userController?.mapping?.b5 =
+            ControllerButton.B5 -> controllerHolder?.userController?.mapping?.b5 =
                 getNewProgramBinding(userProgram, controllerHolder?.userController?.mapping?.b5)
-            "b6" -> controllerHolder?.userController?.mapping?.b6 =
+            ControllerButton.B6 -> controllerHolder?.userController?.mapping?.b6 =
                 getNewProgramBinding(userProgram, controllerHolder?.userController?.mapping?.b6)
         }
     }
 
-    fun removeButtonProgram(buttonName: String) {
-        when (buttonName) {
-            "b1" -> removeProgramBinding(controllerHolder?.userController?.mapping?.b1)
-            "b2" -> removeProgramBinding(controllerHolder?.userController?.mapping?.b2)
-            "b3" -> removeProgramBinding(controllerHolder?.userController?.mapping?.b3)
-            "b4" -> removeProgramBinding(controllerHolder?.userController?.mapping?.b4)
-            "b5" -> removeProgramBinding(controllerHolder?.userController?.mapping?.b5)
-            "b6" -> removeProgramBinding(controllerHolder?.userController?.mapping?.b6)
+    fun removeButtonProgram(button: ControllerButton) {
+        when (button) {
+            ControllerButton.B1 -> {
+                removeUserProgram(controllerHolder?.userController?.mapping?.b1)
+                controllerHolder?.userController?.mapping?.b1 = null
+            }
+            ControllerButton.B2 -> {
+                removeUserProgram(controllerHolder?.userController?.mapping?.b2)
+                controllerHolder?.userController?.mapping?.b2 = null
+            }
+            ControllerButton.B3 -> {
+                removeUserProgram(controllerHolder?.userController?.mapping?.b3)
+                controllerHolder?.userController?.mapping?.b3 = null
+            }
+            ControllerButton.B4 -> {
+                removeUserProgram(controllerHolder?.userController?.mapping?.b4)
+                controllerHolder?.userController?.mapping?.b4 = null
+            }
+            ControllerButton.B5 -> {
+                removeUserProgram(controllerHolder?.userController?.mapping?.b5)
+                controllerHolder?.userController?.mapping?.b5 = null
+            }
+            ControllerButton.B6 -> {
+                removeUserProgram(controllerHolder?.userController?.mapping?.b6)
+                controllerHolder?.userController?.mapping?.b6 = null
+            }
         }
     }
 
@@ -69,34 +88,21 @@ class UserConfigurationStorage {
             it.priority = priority
         }
 
-        if (controllerHolder?.userController?.mapping?.b1?.programId == userProgram.id) {
-            controllerHolder?.userController?.mapping?.b1?.priority = priority
-        }
-        if (controllerHolder?.userController?.mapping?.b2?.programId == userProgram.id) {
-            controllerHolder?.userController?.mapping?.b2?.priority = priority
-        }
-        if (controllerHolder?.userController?.mapping?.b3?.programId == userProgram.id) {
-            controllerHolder?.userController?.mapping?.b3?.priority = priority
-        }
-        if (controllerHolder?.userController?.mapping?.b4?.programId == userProgram.id) {
-            controllerHolder?.userController?.mapping?.b4?.priority = priority
-        }
-        if (controllerHolder?.userController?.mapping?.b5?.programId == userProgram.id) {
-            controllerHolder?.userController?.mapping?.b5?.priority = priority
-        }
-        if (controllerHolder?.userController?.mapping?.b6?.programId == userProgram.id) {
-            controllerHolder?.userController?.mapping?.b6?.priority = priority
+        controllerHolder?.userController?.getMappingList()?.forEach { binding ->
+            if (binding?.programId == userProgram.id) {
+                binding.priority = priority
+            }
         }
     }
 
-    private fun removeProgramBinding(currentBinding: UserProgramBinding?) {
+    private fun removeUserProgram(currentBinding: UserProgramBinding?) {
         if (currentBinding != null) {
             controllerHolder?.programs?.remove(currentBinding.programId)
         }
     }
 
     private fun getNewProgramBinding(newProgram: UserProgram, currentBinding: UserProgramBinding?): UserProgramBinding {
-        removeProgramBinding(currentBinding)
+        removeUserProgram(currentBinding)
         return UserProgramBinding(0, controllerHolder?.userController?.id.toString(), newProgram.id, -1)
     }
 

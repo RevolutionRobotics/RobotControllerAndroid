@@ -78,12 +78,11 @@ class ProgramPriorityPresenter(private val userConfigurationStorage: UserConfigu
                 )
             )
         }
-        addItemFromButtonBinding(controllerWithPrograms.userController.mapping?.b1, items, programs)
-        addItemFromButtonBinding(controllerWithPrograms.userController.mapping?.b2, items, programs)
-        addItemFromButtonBinding(controllerWithPrograms.userController.mapping?.b3, items, programs)
-        addItemFromButtonBinding(controllerWithPrograms.userController.mapping?.b4, items, programs)
-        addItemFromButtonBinding(controllerWithPrograms.userController.mapping?.b5, items, programs)
-        addItemFromButtonBinding(controllerWithPrograms.userController.mapping?.b6, items, programs)
+
+        controllerWithPrograms.userController.getMappingList().forEach { binding ->
+            addItemFromButtonBinding(binding, items, programs)
+        }
+
         items.sortWith(compareBy({ it.priority }, { it.lastModified }))
         return items
     }
