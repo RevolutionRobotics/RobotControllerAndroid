@@ -34,7 +34,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginEnd="@dimen/dimen_16dp"
                 android:indeterminate="true"
-                app:visible="@{viewModel.isProgressBarVisible}"
+                app:visible="@{safeUnbox(viewModel.isProgressBarVisible)}"
                 android:indeterminateTint="@color/white"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

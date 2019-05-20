@@ -222,5 +222,6 @@
     <string name="firmware_update_failed_update_later_button">Update later</string>
     <string name="firmware_update_failed_update_community_button">Community</string>
     <string name="firmware_update_failed_update_try_again_button">Try again</string>
+    <string name="program_priority_screen_title">Create priority order for the programs</string>
 
 </resources>

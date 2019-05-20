@@ -14,12 +14,9 @@ import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.databinding.BindingAdapter
-import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.revolution.robotics.R
 import com.revolution.robotics.core.extensions.color
-import com.revolution.robotics.features.build.connect.adapter.ConnectAdapter
-import com.revolution.robotics.features.build.connect.adapter.ConnectRobotItem
 import com.revolution.robotics.views.ChippedEditText
 import com.revolution.robotics.views.ChippedEditTextViewModel
 import com.revolution.robotics.views.RoboticsButton
@@ -44,6 +41,7 @@ fun setImageDrawable(imageView: ImageView, @DrawableRes drawableRes: Int) {
     imageView.setImageResource(drawableRes)
 }
 
+@Suppress("UNCHECKED_CAST")
 @BindingAdapter("carouselItems")
 fun setRobotsViewPagerItems(viewPager: ViewPager, itemList: List<Any>?) {
     if (itemList != null && itemList.isNotEmpty()) {
@@ -61,13 +59,6 @@ fun setGreyscale(imageView: ImageView, greyscale: Boolean) {
         } else {
             null
         }
-}
-
-@BindingAdapter("availableRobots")
-fun setAvailableRobotsItems(recyclerView: RecyclerView, itemList: List<ConnectRobotItem>?) {
-    if (itemList != null) {
-        (recyclerView.adapter as? ConnectAdapter)?.setItems(itemList)
-    }
 }
 
 @BindingAdapter("image")

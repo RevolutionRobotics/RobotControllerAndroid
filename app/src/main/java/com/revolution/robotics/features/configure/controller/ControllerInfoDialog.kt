@@ -1,4 +1,4 @@
-package com.revolution.robotics.features.configure.contoller
+package com.revolution.robotics.features.configure.controller
 
 import android.os.Bundle
 import android.os.Parcelable

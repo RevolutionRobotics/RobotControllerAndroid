@@ -42,18 +42,20 @@ import com.revolution.robotics.features.configure.ConfigureMvp
 import com.revolution.robotics.features.configure.ConfigurePresenter
 import com.revolution.robotics.features.configure.connections.ConfigureConnectionsMvp
 import com.revolution.robotics.features.configure.connections.ConfigureConnectionsPresenter
+import com.revolution.robotics.features.configure.controller.program.priority.ProgramPriorityMvp
+import com.revolution.robotics.features.configure.controller.program.priority.ProgramPriorityPresenter
 import com.revolution.robotics.features.configure.controllers.ConfigureControllersMvp
 import com.revolution.robotics.features.configure.controllers.ConfigureControllersPresenter
 import com.revolution.robotics.features.configure.motor.MotorConfigurationMvp
 import com.revolution.robotics.features.configure.motor.MotorConfigurationPresenter
 import com.revolution.robotics.features.configure.sensor.SensorConfigurationMvp
 import com.revolution.robotics.features.configure.sensor.SensorConfigurationPresenter
+import com.revolution.robotics.features.controller.programSelector.ProgramSelectorMvp
+import com.revolution.robotics.features.controller.programSelector.ProgramSelectorPresenter
 import com.revolution.robotics.features.controllers.setup.SetupMvp
 import com.revolution.robotics.features.controllers.setup.SetupPresenter
 import com.revolution.robotics.features.controllers.typeSelector.TypeSelectorMvp
 import com.revolution.robotics.features.controllers.typeSelector.TypeSelectorPresenter
-import com.revolution.robotics.features.controller.programSelector.ProgramSelectorMvp
-import com.revolution.robotics.features.controller.programSelector.ProgramSelectorPresenter
 import com.revolution.robotics.features.mainmenu.MainMenuMvp
 import com.revolution.robotics.features.mainmenu.MainMenuPresenter
 import com.revolution.robotics.features.mainmenu.settings.SettingsMvp
@@ -160,6 +162,7 @@ fun createPresenterModule() =
         bind<TypeSelectorMvp.Presenter>() with singleton { TypeSelectorPresenter(instance()) }
         bind<SetupMvp.Presenter>() with singleton { SetupPresenter() }
         bind<ProgramSelectorMvp.Presenter>() with singleton { ProgramSelectorPresenter(instance()) }
+        bind<ProgramPriorityMvp.Presenter>() with singleton { ProgramPriorityPresenter(instance()) }
     }
 
 fun createDbModule(context: Context) =

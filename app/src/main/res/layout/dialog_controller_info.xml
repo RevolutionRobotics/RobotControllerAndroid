@@ -4,7 +4,7 @@
     <data>
 
         <variable name="infoViewModel"
-                  type="com.revolution.robotics.features.configure.contoller.ControllerInfoDialog.ViewModel"/>
+                  type="com.revolution.robotics.features.configure.controller.ControllerInfoDialog.ViewModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

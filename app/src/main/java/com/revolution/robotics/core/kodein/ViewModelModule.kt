@@ -6,19 +6,20 @@ import com.revolution.robotics.features.challenges.ChallengesViewModel
 import com.revolution.robotics.features.coding.CodingViewModel
 import com.revolution.robotics.features.configure.ConfigureViewModel
 import com.revolution.robotics.features.configure.connections.ConfigureConnectionsViewModel
+import com.revolution.robotics.features.configure.controller.program.priority.ProgramPriorityViewModel
 import com.revolution.robotics.features.configure.controllers.ConfigureControllersViewModel
 import com.revolution.robotics.features.configure.motor.MotorConfigurationViewModel
 import com.revolution.robotics.features.configure.sensor.SensorConfigurationViewModel
+import com.revolution.robotics.features.controller.programSelector.ProgramSelectorViewModel
 import com.revolution.robotics.features.controllers.setup.SetupViewModel
 import com.revolution.robotics.features.controllers.typeSelector.TypeSelectorViewModel
-import com.revolution.robotics.features.play.liveController.LiveControllerViewModel
-import com.revolution.robotics.features.controller.programSelector.ProgramSelectorViewModel
 import com.revolution.robotics.features.mainmenu.MainMenuViewModel
 import com.revolution.robotics.features.mainmenu.settings.SettingsViewModel
 import com.revolution.robotics.features.mainmenu.settings.about.AboutViewModel
 import com.revolution.robotics.features.mainmenu.settings.firmware.FirmwareUpdateViewModel
 import com.revolution.robotics.features.myRobots.MyRobotsViewModel
 import com.revolution.robotics.features.play.PlayViewModel
+import com.revolution.robotics.features.play.liveController.LiveControllerViewModel
 import com.revolution.robotics.features.whoToBuild.WhoToBuildViewModel
 import org.kodein.di.Kodein
 import org.kodein.di.erased.bind
@@ -47,4 +48,5 @@ fun createViewModelModule() =
         bind<TypeSelectorViewModel>() with provider { TypeSelectorViewModel(instance()) }
         bind<SetupViewModel>() with provider { SetupViewModel(instance()) }
         bind<ProgramSelectorViewModel>() with provider { ProgramSelectorViewModel(instance()) }
+        bind<ProgramPriorityViewModel>() with provider { ProgramPriorityViewModel(instance()) }
     }

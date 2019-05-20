@@ -5,6 +5,7 @@ import androidx.room.Dao
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.Index
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.PrimaryKey
@@ -12,6 +13,7 @@ import androidx.room.Query
 import kotlinx.android.parcel.Parcelize
 
 @Entity(
+    indices = [Index(value = ["id", "configId"])],
     foreignKeys = [ForeignKey(
         entity = UserConfiguration::class,
         parentColumns = arrayOf("id"),
@@ -19,6 +21,7 @@ import kotlinx.android.parcel.Parcelize
         onDelete = ForeignKey.CASCADE
     )]
 )
+@Suppress("DataClassContainsFunctions")
 @Parcelize
 data class UserController(
     @PrimaryKey(autoGenerate = true)
@@ -30,7 +33,10 @@ data class UserController(
     var configId: Int = 0,
     @Embedded
     var mapping: UserButtonMapping? = null
-) : Parcelable
+) : Parcelable {
+
+    fun getMappingList() = listOf(mapping?.b1, mapping?.b2, mapping?.b3, mapping?.b4, mapping?.b5, mapping?.b6)
+}
 
 @Dao
 interface UserControllerDao {

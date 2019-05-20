@@ -33,7 +33,7 @@ class GetUserControllerInteractor(
 
         return UserControllerWithPrograms(
             controller,
-            backgroundProgramBindings,
+            backgroundProgramBindings.toMutableList(),
             SparseArray<UserProgram>(programs.size).apply {
                 programs.forEach { put(it.id, it) }
             })

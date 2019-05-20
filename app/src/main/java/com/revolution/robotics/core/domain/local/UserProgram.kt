@@ -14,9 +14,7 @@ import kotlinx.android.parcel.Parcelize
 data class UserProgram(
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0,
-    var bindingId: String? = null,
     var description: String? = null,
-    var programId: String? = null,
     var lastModified: Long = 0,
     var name: String? = null,
     var python: String? = null,

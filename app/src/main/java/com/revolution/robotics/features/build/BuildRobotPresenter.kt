@@ -54,7 +54,7 @@ class BuildRobotPresenter(
                     saveUserRobotInteractor.userRobot = userRobot
                     saveUserRobotInteractor.execute()
                 },
-                onError = { error ->
+                onError = {
                     // TODO Error handling
                 })
         } else {
