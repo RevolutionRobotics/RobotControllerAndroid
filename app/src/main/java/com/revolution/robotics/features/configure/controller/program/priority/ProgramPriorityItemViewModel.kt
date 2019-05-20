@@ -6,7 +6,7 @@ import com.revolution.robotics.core.utils.recyclerview.DiffUtilRecyclerAdapter
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 
 class ProgramPriorityItemViewModel(
-    private val userProgramBindingItem: UserProgramBindingItem,
+    val userProgramBindingItem: UserProgramBindingItem,
     var position: Int,
     private val presenter: ProgramPriorityMvp.Presenter
 ) :

@@ -52,6 +52,15 @@ class ProgramPriorityPresenter(private val userConfigurationStorage: UserConfigu
         // TODO Show info dialog
     }
 
+    override fun onNextButtonClicked() {
+        viewModels.forEach { item ->
+            item.userProgramBindingItem.userProgram?.let {
+                userConfigurationStorage.setPriority(it, item.position)
+            }
+        }
+        // TODO Navigate to the next screen
+    }
+
     private fun generateItems(
         controllerWithPrograms: UserControllerWithPrograms,
         programs: SparseArray<UserProgram>
@@ -64,7 +73,8 @@ class ProgramPriorityPresenter(private val userConfigurationStorage: UserConfigu
                     binding.priority,
                     ProgramType.BACKGROUND,
                     programs.get(binding.programId).lastModified,
-                    programs.get(binding.programId).name ?: ""
+                    programs.get(binding.programId).name ?: "",
+                    programs[binding.programId]
                 )
             )
         }
@@ -90,7 +100,8 @@ class ProgramPriorityPresenter(private val userConfigurationStorage: UserConfigu
                     programBinding.priority,
                     ProgramType.BUTTON,
                     programs.get(programBinding.programId).lastModified,
-                    programs.get(programBinding.programId).name ?: ""
+                    programs.get(programBinding.programId).name ?: "",
+                    programs[programBinding.programId]
                 )
             )
         }

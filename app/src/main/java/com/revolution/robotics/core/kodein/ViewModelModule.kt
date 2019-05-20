@@ -48,5 +48,5 @@ fun createViewModelModule() =
         bind<TypeSelectorViewModel>() with provider { TypeSelectorViewModel(instance()) }
         bind<SetupViewModel>() with provider { SetupViewModel(instance()) }
         bind<ProgramSelectorViewModel>() with provider { ProgramSelectorViewModel(instance()) }
-        bind<ProgramPriorityViewModel>() with provider { ProgramPriorityViewModel() }
+        bind<ProgramPriorityViewModel>() with provider { ProgramPriorityViewModel(instance()) }
     }

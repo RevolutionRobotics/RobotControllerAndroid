@@ -10,5 +10,6 @@ interface ProgramPriorityMvp : Mvp {
         fun onItemMoved(from: Int, to: Int)
         fun onDragEnded()
         fun onInfoButtonClicked(item: ProgramPriorityItemViewModel)
+        fun onNextButtonClicked()
     }
 }
