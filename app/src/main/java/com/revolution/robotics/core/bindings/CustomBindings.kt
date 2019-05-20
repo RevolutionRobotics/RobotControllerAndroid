@@ -14,14 +14,9 @@ import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.databinding.BindingAdapter
-import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.revolution.robotics.R
 import com.revolution.robotics.core.extensions.color
-import com.revolution.robotics.features.build.connect.adapter.ConnectAdapter
-import com.revolution.robotics.features.build.connect.adapter.ConnectRobotItem
-import com.revolution.robotics.features.configure.controller.program.priority.ProgramPriorityAdapter
-import com.revolution.robotics.features.configure.controller.program.priority.ProgramPriorityItemViewModel
 import com.revolution.robotics.views.ChippedEditText
 import com.revolution.robotics.views.ChippedEditTextViewModel
 import com.revolution.robotics.views.RoboticsButton
@@ -64,20 +59,6 @@ fun setGreyscale(imageView: ImageView, greyscale: Boolean) {
         } else {
             null
         }
-}
-
-@BindingAdapter("availableRobots")
-fun setAvailableRobotsItems(recyclerView: RecyclerView, itemList: List<ConnectRobotItem>?) {
-    if (itemList != null) {
-        (recyclerView.adapter as? ConnectAdapter)?.setItems(itemList)
-    }
-}
-
-@BindingAdapter("priorityPrograms")
-fun setPriorityPrograms(recyclerView: RecyclerView, itemList: List<ProgramPriorityItemViewModel>?) {
-    if (itemList != null) {
-        (recyclerView.adapter as? ProgramPriorityAdapter)?.setItems(itemList)
-    }
 }
 
 @BindingAdapter("image")
