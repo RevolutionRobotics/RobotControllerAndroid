@@ -15,7 +15,6 @@ interface ButtonlessProgramSelectorMvp : Mvp {
         fun onSelectAllClicked(checked: Boolean)
         fun onShowCompatibleProgramsButtonClicked()
         fun updateOrderingAndFiltering()
-
         fun onProgramSelected(viewModel: ButtonlessProgramViewModel)
         fun onInfoButtonClicked(userProgram: UserProgram)
     }

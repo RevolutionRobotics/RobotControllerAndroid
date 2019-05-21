@@ -27,19 +27,20 @@ class ProgramOrderingHandler {
             }
     }
 
-    fun getComparator() = if (currentOrder.first == OrderBy.NAME) {
-        if (currentOrder.second == Order.ASCENDING) {
-            compareBy<UserProgram> { it.name }
+    fun getComparator() =
+        if (currentOrder.first == OrderBy.NAME) {
+            if (currentOrder.second == Order.ASCENDING) {
+                compareBy<UserProgram> { it.name }
+            } else {
+                compareByDescending { it.name }
+            }
         } else {
-            compareByDescending { it.name }
+            if (currentOrder.second == Order.ASCENDING) {
+                compareBy<UserProgram> { it.lastModified }
+            } else {
+                compareByDescending { it.lastModified }
+            }
         }
-    } else {
-        if (currentOrder.second == Order.ASCENDING) {
-            compareBy<UserProgram> { it.lastModified }
-        } else {
-            compareByDescending { it.name }
-        }
-    }
 
     fun isOrderedByName() = currentOrder.first == OrderBy.NAME
     fun isNameAscending() = currentOrder.first == OrderBy.NAME && currentOrder.second == Order.ASCENDING
