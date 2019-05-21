@@ -33,7 +33,11 @@ class ButtonlessProgramSelectorPresenter(
     private fun loadPrograms() {
         getUserProgramsInteractor.execute(
             onResponse = { result ->
-                allPrograms = result.map { ButtonlessProgramViewModel(it, this) }.apply {
+                allPrograms = result.map {userProgram ->
+                    ButtonlessProgramViewModel(userProgram, this).apply {
+                        enabled.set(compatibleProgramFilterer.isProgramCompatible(userProgram))
+                    }
+                }.apply {
                     programs.clear()
                     programs.addAll(this)
                 }
@@ -67,24 +71,25 @@ class ButtonlessProgramSelectorPresenter(
     private fun setOrderingIcons() {
         model?.apply {
             if (programOrderingHandler.currentOrder.first == ProgramOrderingHandler.OrderBy.DATE) {
-                // Red color for date
+                nameOrderIconColor.set(R.color.white)
+                dateOrderIconColor.set(R.color.robotics_red)
+
                 if (programOrderingHandler.currentOrder.second == ProgramOrderingHandler.Order.ASCENDING) {
                     dateOrderIcon.set(R.drawable.sort_date_down)
                 } else {
                     dateOrderIcon.set(R.drawable.sort_date_down)
                 }
-
-                // White color for name order
                 alphabeticalOderIcon.set(R.drawable.sort_name_down_red)
             } else {
-                // Red color for name
+                nameOrderIconColor.set(R.color.robotics_red)
+                dateOrderIconColor.set(R.color.white)
+
                 if (programOrderingHandler.currentOrder.second == ProgramOrderingHandler.Order.ASCENDING) {
                     alphabeticalOderIcon.set(R.drawable.sort_name_up)
                 } else {
                     alphabeticalOderIcon.set(R.drawable.sort_name_down_red)
                 }
 
-                // White color for name order
                 dateOrderIcon.set(R.drawable.sort_date_down)
             }
         }
@@ -127,20 +132,21 @@ class ButtonlessProgramSelectorPresenter(
                 }
             }
         }
-        
+
         navigator.navigate(ButtonlessProgramSelectorFragmentDirections.toProgramPriorityFragment())
     }
 
     override fun onSelectAllClicked(checked: Boolean) {
         programs.forEach {
-            it.selected.set(checked)
+            it.selected.set(compatibleProgramFilterer.isProgramCompatible(it.program) && checked)
         }
     }
 
     override fun onProgramSelected(viewModel: ButtonlessProgramViewModel) {
-        viewModel.selected.set(!viewModel.selected.get())
+        if (compatibleProgramFilterer.isProgramCompatible(viewModel.program)) {
+            viewModel.selected.set(!viewModel.selected.get())
+        }
     }
-
 
     override fun onInfoButtonClicked(userProgram: UserProgram) {
         view?.showUserProgramDialog(userProgram)
