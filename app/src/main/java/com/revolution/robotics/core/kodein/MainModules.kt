@@ -11,8 +11,11 @@ import com.revolution.robotics.core.utils.dynamicPermissions.DynamicPermissionHa
 import com.revolution.robotics.features.bluetooth.BluetoothManager
 import com.revolution.robotics.features.configure.ConfigurationEventBus
 import com.revolution.robotics.features.configure.UserConfigurationStorage
+import com.revolution.robotics.features.configure.controller.CompatibleProgramFilterer
 import org.kodein.di.Kodein
 import org.kodein.di.erased.bind
+import org.kodein.di.erased.instance
+import org.kodein.di.erased.provider
 import org.kodein.di.erased.singleton
 
 fun createMainModule() =
@@ -26,6 +29,7 @@ fun createMainModule() =
         bind<BluetoothManager>() with singleton { BluetoothManager(kodein) }
         bind<RoboticsDeviceConnector>() with singleton { RoboticsDeviceConnector() }
         bind<UserConfigurationStorage>() with singleton { UserConfigurationStorage() }
+        bind<CompatibleProgramFilterer>() with provider { CompatibleProgramFilterer(instance()) }
     }
 
 fun createAppModule(context: Context) =

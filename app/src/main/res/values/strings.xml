@@ -223,5 +223,7 @@
     <string name="firmware_update_failed_update_community_button">Community</string>
     <string name="firmware_update_failed_update_try_again_button">Try again</string>
     <string name="program_priority_screen_title">Create priority order for the programs</string>
+    <string name="program_selector_show_compatible_programs">show compatible programs only</string>
+    <string name="program_selector_show_all_programs">show all programs</string>
 
 </resources>
