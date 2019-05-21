@@ -42,6 +42,8 @@ class SetupPresenter(
             mostRecent.removeAll { it.program.id == boundProgram.programId }
         }
         model?.getProgram(index)?.let { boundProgram -> mostRecent.add(0, MostRecentItem(boundProgram, true)) }
+        // TODO what happens if less than 5 programs remain?
+        // TODO what happens if 0 most recent programs remain?
         view?.onProgramSlotSelected(index, MostRecentProgramViewModel(mostRecent, this))
     }
 

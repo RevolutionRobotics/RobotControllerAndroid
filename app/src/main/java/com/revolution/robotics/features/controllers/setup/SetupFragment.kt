@@ -24,6 +24,7 @@ import com.revolution.robotics.features.controllers.programInfo.ProgramInfoDialo
 import com.revolution.robotics.features.controllers.setup.mostRecent.MostRecentProgramViewModel
 import org.kodein.di.erased.instance
 
+@Suppress("TooManyFunctions")
 abstract class SetupFragment :
     BaseFragment<FragmentControllerSetupCoreBinding, SetupViewModel>(R.layout.fragment_controller_setup_core),
     SetupMvp.View, DialogEventBus.Listener {
