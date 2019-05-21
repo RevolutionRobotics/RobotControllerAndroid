@@ -33,7 +33,7 @@ class ButtonlessProgramSelectorPresenter(
     private fun loadPrograms() {
         getUserProgramsInteractor.execute(
             onResponse = { result ->
-                allPrograms = result.map {userProgram ->
+                allPrograms = result.map { userProgram ->
                     ButtonlessProgramViewModel(userProgram, this).apply {
                         enabled.set(compatibleProgramFilterer.isProgramCompatible(userProgram))
                     }
@@ -149,6 +149,6 @@ class ButtonlessProgramSelectorPresenter(
     }
 
     override fun onInfoButtonClicked(userProgram: UserProgram) {
-        view?.showUserProgramDialog(userProgram)
+        view?.showUserProgramDialog(userProgram, compatibleProgramFilterer.isProgramCompatible(userProgram))
     }
 }
