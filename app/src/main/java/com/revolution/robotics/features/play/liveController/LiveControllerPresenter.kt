@@ -8,6 +8,7 @@ import com.revolution.bluetooth.exception.BLEException
 import com.revolution.bluetooth.service.RoboticsLiveControllerService
 import com.revolution.robotics.core.kodein.utils.ApplicationContextProvider
 
+// TODO delete this class
 class LiveControllerPresenter(private val applicationContextProvider: ApplicationContextProvider) :
     LiveControllerMvp.Presenter {
 

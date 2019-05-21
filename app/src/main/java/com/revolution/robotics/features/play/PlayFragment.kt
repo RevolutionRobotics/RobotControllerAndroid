@@ -1,33 +1,36 @@
-package com.revolution.robotics.features.play.playGamer
+package com.revolution.robotics.features.play
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
-import com.revolution.robotics.databinding.FragmentPlayGamerBinding
+import com.revolution.robotics.databinding.FragmentPlayCoreBinding
 import com.revolution.robotics.features.bluetooth.BluetoothConnectionListener
 import com.revolution.robotics.features.bluetooth.BluetoothManager
-import com.revolution.robotics.features.play.JoystickView
-import com.revolution.robotics.features.play.PlayMvp
-import com.revolution.robotics.features.play.PlayViewModel
-import com.revolution.robotics.features.play.PlayToolbarViewModel
 import org.kodein.di.erased.instance
 
-class PlayGamerFragment : BaseFragment<FragmentPlayGamerBinding, PlayViewModel>(R.layout.fragment_play_gamer),
-    PlayMvp.View, JoystickView.JoystickEventListener, BluetoothConnectionListener {
+abstract class PlayFragment : BaseFragment<FragmentPlayCoreBinding, PlayViewModel>(R.layout.fragment_play_core),
+    PlayMvp.View, BluetoothConnectionListener {
 
     override val viewModelClass = PlayViewModel::class.java
 
-    private val presenter: PlayMvp.Presenter by kodein.instance()
+    protected val presenter: PlayMvp.Presenter by kodein.instance()
     private val resourceResolver: ResourceResolver by kodein.instance()
     private val bluetoothManager: BluetoothManager by kodein.instance()
 
+    abstract fun createContentView(inflater: LayoutInflater, container: ViewGroup?)
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val root = super.onCreateView(inflater, container, savedInstanceState)
+        createContentView(inflater, binding?.contentWrapper)
+        return root
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding?.apply {
-            toolbarViewModel = PlayToolbarViewModel(resourceResolver)
-            joystick.listener = this@PlayGamerFragment
-        }
+        binding?.toolbarViewModel = PlayToolbarViewModel(resourceResolver)
 
         bluetoothManager.registerListener(this)
         if (!bluetoothManager.isConnected) {
@@ -48,10 +51,5 @@ class PlayGamerFragment : BaseFragment<FragmentPlayGamerBinding, PlayViewModel>(
         } else {
             presenter.onDeviceDisconnected()
         }
-    }
-
-    override fun onJoystickPositionChanged(x: Int, y: Int) {
-        presenter.onJoystickXAxisChanged(x)
-        presenter.onJoystickYAxisChanged(y)
     }
 }

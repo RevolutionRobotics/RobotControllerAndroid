@@ -8,6 +8,7 @@ import com.revolution.robotics.R
 import com.revolution.robotics.databinding.FragmentControllerBinding
 import org.kodein.di.erased.instance
 
+// TODO delete this class
 class LiveControllerFragment :
     BaseFragment<FragmentControllerBinding, LiveControllerViewModel>(R.layout.fragment_controller),
     LiveControllerMvp.View, SeekBar.OnSeekBarChangeListener {

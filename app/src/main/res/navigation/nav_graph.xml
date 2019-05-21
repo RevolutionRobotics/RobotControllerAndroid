@@ -33,6 +33,10 @@
                 app:destination="@id/configureFragment"/>
         <action android:id="@+id/toPlayGamer"
                 app:destination="@id/playGamerFragment"/>
+        <action android:id="@+id/toPlayMultitasker"
+                app:destination="@id/playMultitaskerFragment"/>
+        <action android:id="@+id/toPlayDriver"
+                app:destination="@id/playDriverFragment"/>
     </fragment>
 
     <!-- Build -->
@@ -59,8 +63,14 @@
 
     <!-- Play -->
     <fragment android:id="@+id/playGamerFragment"
-              android:name="com.revolution.robotics.features.play.playGamer.PlayGamerFragment"
+              android:name="com.revolution.robotics.features.play.instances.PlayGamerFragment"
               android:label="PlayGamerFragment"/>
+    <fragment android:id="@+id/playMultitaskerFragment"
+              android:name="com.revolution.robotics.features.play.instances.PlayMultitaskerFragment"
+              android:label="PlayMultitaskerFragment"/>
+    <fragment android:id="@+id/playDriverFragment"
+              android:name="com.revolution.robotics.features.play.instances.PlayDriverFragment"
+              android:label="PlayDriverFragment"/>
 
     <!-- Challenges -->
     <fragment android:id="@+id/challengesFragment"
