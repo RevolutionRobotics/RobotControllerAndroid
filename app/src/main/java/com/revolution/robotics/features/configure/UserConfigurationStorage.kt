@@ -66,6 +66,16 @@ class UserConfigurationStorage {
         }
     }
 
+    fun getButtonPrograms() =
+        listOfNotNull(
+            controllerHolder?.userController?.mapping?.b1,
+            controllerHolder?.userController?.mapping?.b2,
+            controllerHolder?.userController?.mapping?.b3,
+            controllerHolder?.userController?.mapping?.b4,
+            controllerHolder?.userController?.mapping?.b5,
+            controllerHolder?.userController?.mapping?.b6
+        )
+
     fun addBackgroundProgram(userProgram: UserProgram) {
         controllerHolder?.backgroundBindings?.add(
             UserBackgroundProgramBinding(

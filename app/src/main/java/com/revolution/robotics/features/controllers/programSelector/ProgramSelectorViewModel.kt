@@ -25,7 +25,7 @@ class ProgramSelectorViewModel(private val presenter: ProgramSelectorMvp.Present
             } else {
                 OrderBy.NAME to Order.ASCENDING
             }
-        presenter.updateOrdering()
+        presenter.updateOrderingAndFiltering()
     }
 
     fun onOrderByDateClicked() {
@@ -35,7 +35,7 @@ class ProgramSelectorViewModel(private val presenter: ProgramSelectorMvp.Present
             } else {
                 OrderBy.DATE to Order.DESCENDING
             }
-        presenter.updateOrdering()
+        presenter.updateOrderingAndFiltering()
     }
 
     fun isOrderedByName() = currentOrder.first == OrderBy.NAME

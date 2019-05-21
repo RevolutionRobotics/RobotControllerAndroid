@@ -24,13 +24,14 @@ class Navigator {
         listener?.back(count)
     }
 
-    fun popUntil(fragmentId: Int) {
-        listener?.popUntil(fragmentId)
+    @Suppress("SpreadOperator")
+    fun popUntil(vararg fragmentId: Int) {
+        listener?.popUntil(*fragmentId)
     }
 
     interface NavigationEventListener {
         fun onNavigationEvent(navDirections: NavDirections)
         fun back(count: Int)
-        fun popUntil(fragmentId: Int)
+        fun popUntil(vararg fragmentId: Int)
     }
 }

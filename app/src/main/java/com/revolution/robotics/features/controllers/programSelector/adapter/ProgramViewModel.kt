@@ -3,11 +3,12 @@ package com.revolution.robotics.features.controllers.programSelector.adapter
 import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.local.UserProgram
 import com.revolution.robotics.core.extensions.formatYearMonthDayDotted
+import com.revolution.robotics.features.controllers.programSelector.ProgramSelectorMvp
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 import java.util.Date
 
 @Suppress("UseDataClass")
-class ProgramViewModel(program: UserProgram) {
+class ProgramViewModel(private val program: UserProgram, private val presenter: ProgramSelectorMvp.Presenter) {
 
     companion object {
         val background = ChippedBoxConfig.Builder()
@@ -22,4 +23,8 @@ class ProgramViewModel(program: UserProgram) {
     val programName = program.name
     val background = ProgramViewModel.background
     val formattedDate = Date(program.lastModified).formatYearMonthDayDotted()
+
+    fun onProgramClicked() {
+        presenter.onProgramSelected(program)
+    }
 }

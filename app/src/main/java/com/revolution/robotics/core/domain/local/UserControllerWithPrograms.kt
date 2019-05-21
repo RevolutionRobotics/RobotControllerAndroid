@@ -5,5 +5,6 @@ import android.util.SparseArray
 data class UserControllerWithPrograms(
     var userController: UserController,
     var backgroundBindings: MutableList<UserBackgroundProgramBinding>,
-    var programs: SparseArray<UserProgram>
+    var programs: SparseArray<UserProgram>,
+    var programToBeAdded: UserProgram? = null
 )

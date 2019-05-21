@@ -2,11 +2,15 @@ package com.revolution.robotics.features.controllers.setup
 
 import com.revolution.robotics.core.domain.local.UserProgram
 import com.revolution.robotics.core.interactor.GetUserProgramsInteractor
+import com.revolution.robotics.features.configure.UserConfigurationStorage
 import com.revolution.robotics.features.controllers.programInfo.ProgramInfoDialog
 import com.revolution.robotics.features.controllers.setup.mostRecent.MostRecentItem
 import com.revolution.robotics.features.controllers.setup.mostRecent.MostRecentProgramViewModel
 
-class SetupPresenter(private val getProgramsInteractor: GetUserProgramsInteractor) : SetupMvp.Presenter {
+class SetupPresenter(
+    private val getProgramsInteractor: GetUserProgramsInteractor,
+    private val storage: UserConfigurationStorage
+) : SetupMvp.Presenter {
 
     override var view: SetupMvp.View? = null
     override var model: SetupViewModel? = null
@@ -34,10 +38,10 @@ class SetupPresenter(private val getProgramsInteractor: GetUserProgramsInteracto
             .reversed()
             .map { MostRecentItem(it) }
             .toMutableList()
-        model?.getProgram(index)?.let { boundProgram ->
-            mostRecent.removeAll { it.program == boundProgram }
-            mostRecent.add(0, MostRecentItem(boundProgram, true))
+        storage.getButtonPrograms().forEach { boundProgram ->
+            mostRecent.removeAll { it.program.id == boundProgram.programId }
         }
+        model?.getProgram(index)?.let { boundProgram -> mostRecent.add(0, MostRecentItem(boundProgram, true)) }
         view?.onProgramSlotSelected(index, MostRecentProgramViewModel(mostRecent, this))
     }
 

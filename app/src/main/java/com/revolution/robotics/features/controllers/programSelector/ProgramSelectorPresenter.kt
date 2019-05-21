@@ -2,20 +2,22 @@ package com.revolution.robotics.features.controllers.programSelector
 
 import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.local.UserProgram
+import com.revolution.robotics.core.interactor.GetUserProgramsInteractor
 import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.features.configure.controller.CompatibleProgramFilterer
+import com.revolution.robotics.features.controllers.programInfo.ProgramInfoDialog
 import com.revolution.robotics.features.controllers.programSelector.adapter.ProgramViewModel
-import java.util.Random
 
 class ProgramSelectorPresenter(
-    private val navigator: Navigator,
-    private val compatibleProgramFilterer: CompatibleProgramFilterer
+    private val getUserProgramsInteractor: GetUserProgramsInteractor,
+    private val compatibleProgramFilterer: CompatibleProgramFilterer,
+    private val navigator: Navigator
 ) : ProgramSelectorMvp.Presenter {
 
     override var view: ProgramSelectorMvp.View? = null
     override var model: ProgramSelectorViewModel? = null
 
-    private var defaultPrograms: List<UserProgram>? = null
+    private var allPrograms: List<UserProgram>? = null
     private var programs: List<UserProgram> = ArrayList()
     private var onlyShowCompatiblePrograms = false
 
@@ -23,6 +25,21 @@ class ProgramSelectorPresenter(
         super.register(view, model)
         setShowOnlyCompatiblePrograms(false)
         loadPrograms()
+    }
+
+    private fun loadPrograms() {
+        getUserProgramsInteractor.execute(
+            onResponse = { result ->
+                allPrograms = result
+                programs = result
+                model?.currentOrder = ProgramSelectorViewModel.OrderBy.NAME to ProgramSelectorViewModel.Order.ASCENDING
+                orderAndFilterPrograms()
+                view?.onProgramsChanged(createViewModels(programs))
+            },
+            onError = {
+                // TODO add error handling
+            }
+        )
     }
 
     private fun setShowOnlyCompatiblePrograms(onlyCompatible: Boolean) {
@@ -36,27 +53,12 @@ class ProgramSelectorPresenter(
         }
     }
 
-    @Suppress("MagicNumber")
-    private fun loadPrograms() {
-        val random = Random(System.currentTimeMillis())
-        defaultPrograms = (0..100).mapIndexed { index, i ->
-            UserProgram(
-                name = "Program $index",
-                lastModified = System.currentTimeMillis() - (random.nextFloat() * 8640000000L).toLong(),
-                variables = listOf("sensor1", "sensor2", "motor1", "motor2")
-            )
-        }
-        model?.currentOrder = ProgramSelectorViewModel.OrderBy.NAME to ProgramSelectorViewModel.Order.ASCENDING
-        orderPrograms()
+    override fun updateOrderingAndFiltering() {
+        orderAndFilterPrograms()
         view?.onProgramsChanged(createViewModels(programs))
     }
 
-    override fun updateOrdering() {
-        orderPrograms()
-        view?.onProgramsChanged(createViewModels(programs))
-    }
-
-    private fun orderPrograms() {
+    private fun orderAndFilterPrograms() {
         model?.let { model ->
             val comparator =
                 if (model.currentOrder.first == ProgramSelectorViewModel.OrderBy.NAME) {
@@ -66,9 +68,9 @@ class ProgramSelectorPresenter(
                 }
             val filteredPrograms =
                 if (onlyShowCompatiblePrograms) {
-                    compatibleProgramFilterer.getCompatibleProgramsOnly(defaultPrograms ?: emptyList())
+                    compatibleProgramFilterer.getCompatibleProgramsOnly(allPrograms ?: emptyList())
                 } else {
-                    defaultPrograms?.toList() ?: emptyList()
+                    allPrograms ?: emptyList()
                 }
             programs =
                 if (model.currentOrder.second == ProgramSelectorViewModel.Order.ASCENDING) {
@@ -85,9 +87,13 @@ class ProgramSelectorPresenter(
 
     override fun showCompatibleProgramsClicked() {
         setShowOnlyCompatiblePrograms(!onlyShowCompatiblePrograms)
-        updateOrdering()
+        updateOrderingAndFiltering()
+    }
+
+    override fun onProgramSelected(userProgram: UserProgram) {
+        view?.showDialog(ProgramInfoDialog.Add.newInstance(userProgram))
     }
 
     private fun createViewModels(programs: List<UserProgram>) =
-        programs.map { ProgramViewModel(it) }
+        programs.map { ProgramViewModel(it, this) }
 }

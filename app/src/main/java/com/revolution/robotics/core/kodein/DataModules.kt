@@ -180,9 +180,15 @@ fun createPresenterModule() =
         bind<FirmwareMvp.Presenter>() with singleton { FirmwareUpdatePresenter(instance()) }
         bind<PlayMvp.Presenter>() with singleton { PlayPresenter() }
         bind<FirmwareUpdateMvp.Presenter>() with singleton { FirmwareUpdateDialogPresenter(instance(), instance()) }
-        bind<TypeSelectorMvp.Presenter>() with singleton { TypeSelectorPresenter(instance()) }
-        bind<ProgramSelectorMvp.Presenter>() with singleton { ProgramSelectorPresenter(instance(), instance()) }
-        bind<SetupMvp.Presenter>() with singleton { SetupPresenter(instance()) }
+        bind<TypeSelectorMvp.Presenter>() with singleton { TypeSelectorPresenter(instance(), instance()) }
+        bind<SetupMvp.Presenter>() with singleton { SetupPresenter(instance(), instance()) }
+        bind<ProgramSelectorMvp.Presenter>() with singleton {
+            ProgramSelectorPresenter(
+                instance(),
+                instance(),
+                instance()
+            )
+        }
         bind<ProgramPriorityMvp.Presenter>() with singleton { ProgramPriorityPresenter(instance()) }
     }
 

@@ -15,8 +15,11 @@ import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
 import com.revolution.robotics.core.extensions.onEnd
 import com.revolution.robotics.core.extensions.onStart
+import com.revolution.robotics.core.extensions.visible
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.databinding.FragmentControllerSetupCoreBinding
+import com.revolution.robotics.features.configure.UserConfigurationStorage
+import com.revolution.robotics.features.configure.controller.ControllerButton
 import com.revolution.robotics.features.controllers.programInfo.ProgramInfoDialog
 import com.revolution.robotics.features.controllers.setup.mostRecent.MostRecentProgramViewModel
 import org.kodein.di.erased.instance
@@ -31,9 +34,11 @@ abstract class SetupFragment :
 
     override val viewModelClass = SetupViewModel::class.java
 
+    private val buttonNames = ControllerButton.values().toList()
     private val presenter: SetupMvp.Presenter by kodein.instance()
     private val dialogEventBus: DialogEventBus by kodein.instance()
     private val resourceResolver: ResourceResolver by kodein.instance()
+    private val storage: UserConfigurationStorage by kodein.instance()
 
     abstract fun createContentView(inflater: LayoutInflater, container: ViewGroup?): View
 
@@ -52,11 +57,16 @@ abstract class SetupFragment :
             toolbarViewModel = SetupToolbarViewModel(resourceResolver)
             dimmer.setOnClickListener { hideProgramSelector() }
         }
+        storage.controllerHolder?.programToBeAdded?.let { programToAdd ->
+            addProgram(programToAdd)
+        }
+        hideProgramSelector()
     }
 
     override fun onDestroyView() {
         presenter.unregister()
         dialogEventBus.unregister(this)
+        viewModel?.saveToStorage(storage)
         super.onDestroyView()
     }
 
@@ -70,8 +80,10 @@ abstract class SetupFragment :
 
     private fun hideProgramSelector() {
         binding?.apply {
-            dimmer.disappearWithAnimation(R.anim.dim_screen_disappear)
-            programSelector.disappearWithAnimation(R.anim.program_selector_disappear)
+            if (dimmer.visible) {
+                dimmer.disappearWithAnimation(R.anim.dim_screen_disappear)
+                programSelector.disappearWithAnimation(R.anim.program_selector_disappear)
+            }
         }
         viewModel?.selectProgram(SetupViewModel.NO_PROGRAM_SELECTED)
     }
@@ -89,10 +101,25 @@ abstract class SetupFragment :
 
     override fun onDialogEvent(event: DialogEvent) {
         if (event == DialogEvent.ADD_PROGRAM) {
-            val program = event.extras.getParcelable<UserProgram>(ProgramInfoDialog.KEY_PROGRAM)
-            viewModel?.onProgramSet(program)
-            hideProgramSelector()
+            addProgram(event.extras.getParcelable(ProgramInfoDialog.KEY_PROGRAM))
         } else if (event == DialogEvent.REMOVE_PROGRAM) {
+            removeProgram()
+        }
+    }
+
+    private fun addProgram(program: UserProgram?) {
+        program?.let { userProgram ->
+            viewModel?.selectedProgram?.let { selectedProgram ->
+                storage.addButtonProgram(userProgram, buttonNames[selectedProgram - 1])
+                viewModel?.onProgramSet(userProgram)
+                hideProgramSelector()
+            }
+        }
+    }
+
+    private fun removeProgram() {
+        viewModel?.selectedProgram?.let { selectedProgram ->
+            storage.removeButtonProgram(buttonNames[selectedProgram - 1])
             viewModel?.onProgramSet(null)
             hideProgramSelector()
         }

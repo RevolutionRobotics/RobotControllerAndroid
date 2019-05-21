@@ -66,8 +66,8 @@ class MainActivity : AppCompatActivity(), KodeinAware, Navigator.NavigationEvent
         }
     }
 
-    override fun popUntil(fragmentId: Int) {
-        while (navController.currentDestination?.id != fragmentId) {
+    override fun popUntil(vararg fragmentId: Int) {
+        while (navController.currentDestination?.id ?: 0 !in fragmentId) {
             navController.popBackStack()
         }
     }

@@ -10,6 +10,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_40dp"
             android:layout_marginBottom="@dimen/dimen_12dp"
+            android:onClick="@{() -> viewModel.onProgramClicked()}"
             app:chippedBoxConfig="@{viewModel.background}">
 
         <TextView

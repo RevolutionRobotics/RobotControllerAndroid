@@ -23,12 +23,17 @@ class MostRecentProgramViewModel(private val items: List<MostRecentItem>, privat
             .create()
     }
 
-    private fun getItem(index: Int) = items[index - 1]
+    private fun getItem(index: Int) =
+        if (index <= items.size) {
+            items[index - 1]
+        } else {
+            null
+        }
 
-    fun getProgram(index: Int) = getItem(index).program
+    fun getProgram(index: Int) = getItem(index)?.program
 
     fun getBackground(index: Int) =
-        if (getItem(index).isBound) {
+        if (getItem(index)?.isBound == true) {
             BACKGROUND_BOUND
         } else {
             BACKGROUND
@@ -42,7 +47,7 @@ class MostRecentProgramViewModel(private val items: List<MostRecentItem>, privat
     }
 
     fun onProgramClicked(index: Int) {
-        getItem(index).let { item ->
+        getItem(index)?.let { item ->
             if (item.isBound) {
                 presenter.removeProgram(item.program)
             } else {
