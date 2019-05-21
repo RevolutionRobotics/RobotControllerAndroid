@@ -16,6 +16,7 @@
     <dimen name="dimen_44dp">44dp</dimen>
     <dimen name="dimen_48dp">48dp</dimen>
     <dimen name="dimen_64dp">64dp</dimen>
+    <dimen name="dimen_72dp">72dp</dimen>
     <dimen name="dimen_128dp">128dp</dimen>
 
     <!-- CUSTOM VIEW: SEEKBAR -->
@@ -230,6 +231,9 @@
     <dimen name="play_background_width">305dp</dimen>
     <dimen name="play_background_height">288dp</dimen>
     <dimen name="play_joystick_size">193dp</dimen>
+    <dimen name="play_joystick_handle_size">58dp</dimen>
+    <dimen name="lever_width">32dp</dimen>
+    <dimen name="lever_height">244dp</dimen>
     <dimen name="play_button_size_big">58dp</dimen>
     <dimen name="play_button_size_normal">40dp</dimen>
 
