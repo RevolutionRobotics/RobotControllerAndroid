@@ -1,9 +1,11 @@
-package com.revolution.robotics.features.controller.buttonless
+package com.revolution.robotics.features.controllers.buttonless
 
 import androidx.databinding.ObservableInt
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.revolution.robotics.R
-import com.revolution.robotics.features.controller.ProgramOrderingHandler
+import com.revolution.robotics.features.controllers.ProgramOrderingHandler
+import com.revolution.robotics.features.controllers.buttonless.adapter.ButtonlessProgramViewModel
 
 class ButtonlessProgramSelectorViewModel(private val presenter: ButtonlessProgramSelectorMvp.Presenter) : ViewModel() {
 
@@ -12,7 +14,8 @@ class ButtonlessProgramSelectorViewModel(private val presenter: ButtonlessProgra
     val showCompatibleButtonText = ObservableInt(R.string.buttonless_program_show_compatible_programs)
     val showCompatibleButtonIcon = ObservableInt(R.drawable.ic_compatible)
 
-    private val programOrderingHandler = ProgramOrderingHandler()
+    val programOrderingHandler = ProgramOrderingHandler()
+    val items = MutableLiveData<List<ButtonlessProgramViewModel>>()
 
     fun onNextButtonClicked() {
         presenter.onNextButtonClicked()
@@ -20,12 +23,12 @@ class ButtonlessProgramSelectorViewModel(private val presenter: ButtonlessProgra
 
     fun onDateOrderClicked() {
         programOrderingHandler.onOrderByDateClicked()
-        presenter.updateOrdering()
+        presenter.updateOrderingAndFiltering()
     }
 
     fun onAlphabeticalOrderIconClicked() {
         programOrderingHandler.onOrderByNameClicked()
-        presenter.updateOrdering()
+        presenter.updateOrderingAndFiltering()
     }
 
     fun onShowCompatibleProgramsButtonClicked() {

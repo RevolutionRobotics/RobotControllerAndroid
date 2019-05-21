@@ -30,4 +30,8 @@ class SetupMultitaskerFragment : SetupFragment() {
     override fun onShowAllProgramsSelected() {
         navigator.navigate(SetupMultitaskerFragmentDirections.toProgramSelectorFragment())
     }
+
+    override fun navigateToTheBackgroundPrograms() {
+        navigator.navigate(SetupMultitaskerFragmentDirections.toButtonlessProgramSelectorFragment())
+    }
 }

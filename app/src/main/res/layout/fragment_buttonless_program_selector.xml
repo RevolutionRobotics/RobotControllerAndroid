@@ -3,9 +3,9 @@
 
     <data>
         <variable name="viewModel"
-                  type="com.revolution.robotics.features.controller.buttonless.ButtonlessProgramSelectorViewModel"/>
+                  type="com.revolution.robotics.features.controllers.buttonless.ButtonlessProgramSelectorViewModel"/>
         <variable name="toolbarViewModel"
-                  type="com.revolution.robotics.features.controller.buttonless.ButtonlessProgramSelectorToolbarViewModel"/>
+                  type="com.revolution.robotics.features.controllers.buttonless.ButtonlessProgramSelectorToolbarViewModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -122,6 +122,7 @@
                 android:id="@+id/recycler_priority"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                app:buttonlessPrograms="@{viewModel.items}"
                 app:layout_constraintTop_toBottomOf="@id/toolbar"
                 app:layout_constraintBottom_toTopOf="@id/divider_bottom"/>
 

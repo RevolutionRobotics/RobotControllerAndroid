@@ -5,8 +5,8 @@ import com.revolution.robotics.core.domain.local.UserProgram
 import com.revolution.robotics.core.interactor.GetUserProgramsInteractor
 import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.features.configure.controller.CompatibleProgramFilterer
+import com.revolution.robotics.features.controllers.ProgramOrderingHandler
 import com.revolution.robotics.features.controllers.programInfo.ProgramDialog
-import com.revolution.robotics.features.controller.ProgramOrderingHandler
 import com.revolution.robotics.features.controllers.programSelector.adapter.ProgramViewModel
 
 class ProgramSelectorPresenter(

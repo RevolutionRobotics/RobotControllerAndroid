@@ -3,7 +3,7 @@ package com.revolution.robotics.features.controllers.programSelector
 import androidx.databinding.ObservableInt
 import androidx.lifecycle.ViewModel
 import com.revolution.robotics.R
-import com.revolution.robotics.features.controller.ProgramOrderingHandler
+import com.revolution.robotics.features.controllers.ProgramOrderingHandler
 
 class ProgramSelectorViewModel(private val presenter: ProgramSelectorMvp.Presenter) : ViewModel() {
 

@@ -1,4 +1,4 @@
-package com.revolution.robotics.features.controller
+package com.revolution.robotics.features.controllers
 
 import com.revolution.robotics.core.domain.local.UserProgram
 

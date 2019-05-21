@@ -27,6 +27,10 @@ class SetupDriverFragment : SetupFragment() {
         }
     }
 
+    override fun navigateToTheBackgroundPrograms() {
+        navigator.navigate(SetupDriverFragmentDirections.toButtonlessProgramSelectorFragment())
+    }
+
     override fun onShowAllProgramsSelected() {
         navigator.navigate(SetupDriverFragmentDirections.toProgramSelectorFragment())
     }

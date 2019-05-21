@@ -1,4 +1,4 @@
-package com.revolution.robotics.features.controller.buttonless
+package com.revolution.robotics.features.controllers.buttonless
 
 import com.revolution.robotics.R
 import com.revolution.robotics.core.kodein.utils.ResourceResolver

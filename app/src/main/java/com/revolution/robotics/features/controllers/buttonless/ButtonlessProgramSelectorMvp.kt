@@ -1,6 +1,7 @@
-package com.revolution.robotics.features.controller.buttonless
+package com.revolution.robotics.features.controllers.buttonless
 
 import com.revolution.robotics.core.Mvp
+import com.revolution.robotics.core.domain.local.UserProgram
 
 interface ButtonlessProgramSelectorMvp : Mvp {
 
@@ -10,7 +11,10 @@ interface ButtonlessProgramSelectorMvp : Mvp {
         fun onNextButtonClicked()
         fun onSelectAllClicked(checked: Boolean)
         fun onShowCompatibleProgramsButtonClicked()
-        fun updateOrdering()
+        fun updateOrderingAndFiltering()
+
+        fun onProgramSelected(userProgram: UserProgram)
+        fun onInfoButtonClicked(userProgram: UserProgram)
     }
 
 }
