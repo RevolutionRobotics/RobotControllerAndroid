@@ -10,6 +10,7 @@ import com.revolution.robotics.features.configure.controller.CompatibleProgramFi
 import com.revolution.robotics.features.controllers.ProgramOrderingHandler
 import com.revolution.robotics.features.controllers.buttonless.adapter.ButtonlessProgramViewModel
 
+@Suppress("TooManyFunctions")
 class ButtonlessProgramSelectorPresenter(
     private val getUserProgramsInteractor: GetUserProgramsInteractor,
     private val compatibleProgramFilterer: CompatibleProgramFilterer,
@@ -42,7 +43,7 @@ class ButtonlessProgramSelectorPresenter(
                     programs.addAll(this)
                 }
                 model?.programOrderingHandler?.currentOrder =
-                    ProgramOrderingHandler.OrderBy.NAME to ProgramOrderingHandler.Order.ASCENDING
+                    ProgramOrderingHandler.OrderBy.DATE to ProgramOrderingHandler.Order.ASCENDING
                 orderAndFilterPrograms()
                 setOrderingIcons()
             },
@@ -77,7 +78,7 @@ class ButtonlessProgramSelectorPresenter(
                 if (programOrderingHandler.currentOrder.second == ProgramOrderingHandler.Order.ASCENDING) {
                     dateOrderIcon.set(R.drawable.sort_date_down)
                 } else {
-                    dateOrderIcon.set(R.drawable.sort_date_down)
+                    dateOrderIcon.set(R.drawable.ic_sort_date_up)
                 }
                 alphabeticalOderIcon.set(R.drawable.sort_name_down_red)
             } else {
@@ -85,12 +86,12 @@ class ButtonlessProgramSelectorPresenter(
                 dateOrderIconColor.set(R.color.white)
 
                 if (programOrderingHandler.currentOrder.second == ProgramOrderingHandler.Order.ASCENDING) {
-                    alphabeticalOderIcon.set(R.drawable.sort_name_up)
-                } else {
                     alphabeticalOderIcon.set(R.drawable.sort_name_down_red)
+                } else {
+                    alphabeticalOderIcon.set(R.drawable.sort_name_up)
                 }
 
-                dateOrderIcon.set(R.drawable.sort_date_down)
+                dateOrderIcon.set(R.drawable.ic_sort_date_up)
             }
         }
     }
