@@ -5,6 +5,7 @@ import com.revolution.robotics.core.domain.local.UserProgram
 import com.revolution.robotics.core.interactor.GetUserProgramsInteractor
 import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.features.configure.controller.CompatibleProgramFilterer
+import com.revolution.robotics.features.controllers.ProgramOrderingHandler
 import com.revolution.robotics.features.controllers.programInfo.ProgramDialog
 import com.revolution.robotics.features.controllers.programSelector.adapter.ProgramViewModel
 
@@ -32,7 +33,8 @@ class ProgramSelectorPresenter(
             onResponse = { result ->
                 allPrograms = result
                 programs = result
-                model?.currentOrder = ProgramSelectorViewModel.OrderBy.NAME to ProgramSelectorViewModel.Order.ASCENDING
+                model?.programOrderingHandler?.currentOrder =
+                    ProgramOrderingHandler.OrderBy.NAME to ProgramOrderingHandler.Order.ASCENDING
                 orderAndFilterPrograms()
                 view?.onProgramsChanged(createViewModels(programs))
             },
@@ -60,24 +62,13 @@ class ProgramSelectorPresenter(
 
     private fun orderAndFilterPrograms() {
         model?.let { model ->
-            val comparator =
-                if (model.currentOrder.first == ProgramSelectorViewModel.OrderBy.NAME) {
-                    compareBy<UserProgram> { it.name }
-                } else {
-                    compareBy<UserProgram> { it.lastModified }
-                }
             val filteredPrograms =
                 if (onlyShowCompatiblePrograms) {
                     compatibleProgramFilterer.getCompatibleProgramsOnly(allPrograms ?: emptyList())
                 } else {
                     allPrograms ?: emptyList()
                 }
-            programs =
-                if (model.currentOrder.second == ProgramSelectorViewModel.Order.ASCENDING) {
-                    filteredPrograms.sortedWith(comparator)
-                } else {
-                    filteredPrograms.sortedWith(comparator).reversed()
-                }
+            programs = filteredPrograms.sortedWith(model.programOrderingHandler.getComparator())
         }
     }
 

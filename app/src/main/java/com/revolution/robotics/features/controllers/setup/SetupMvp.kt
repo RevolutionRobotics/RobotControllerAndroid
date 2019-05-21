@@ -11,6 +11,7 @@ interface SetupMvp : Mvp {
         fun onProgramSlotSelected(index: Int, mostRecent: MostRecentProgramViewModel)
         fun onShowAllProgramsSelected()
         fun showDialog(roboticsDialog: RoboticsDialog)
+        fun navigateToTheBackgroundPrograms()
     }
 
     interface Presenter : Mvp.Presenter<View, SetupViewModel> {

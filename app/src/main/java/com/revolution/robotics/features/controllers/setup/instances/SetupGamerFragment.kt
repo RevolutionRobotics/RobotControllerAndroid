@@ -30,4 +30,8 @@ class SetupGamerFragment : SetupFragment() {
     override fun onShowAllProgramsSelected() {
         navigator.navigate(SetupGamerFragmentDirections.toProgramSelectorFragment())
     }
+
+    override fun navigateToTheBackgroundPrograms() {
+        navigator.navigate(SetupGamerFragmentDirections.toButtonlessProgramSelectorFragment())
+    }
 }
