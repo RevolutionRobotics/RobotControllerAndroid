@@ -7,7 +7,6 @@ import kotlinx.android.parcel.Parcelize
 @Entity
 @Parcelize
 class UserButtonMapping(
-    var userControllerId: String? = null,
     var b1: UserProgramBinding? = null,
     var b2: UserProgramBinding? = null,
     var b3: UserProgramBinding? = null,

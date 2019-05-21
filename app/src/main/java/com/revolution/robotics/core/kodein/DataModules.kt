@@ -15,6 +15,7 @@ import com.revolution.robotics.core.interactor.GetUserChallengeCategoriesInterac
 import com.revolution.robotics.core.interactor.GetUserConfigurationInteractor
 import com.revolution.robotics.core.interactor.GetUserControllerInteractor
 import com.revolution.robotics.core.interactor.GetUserControllersInteractor
+import com.revolution.robotics.core.interactor.GetUserProgramsInteractor
 import com.revolution.robotics.core.interactor.GetUserRobotInteractor
 import com.revolution.robotics.core.interactor.RemoveUserControllerInteractor
 import com.revolution.robotics.core.interactor.RemoveUserProgramInteractor
@@ -51,8 +52,8 @@ import com.revolution.robotics.features.configure.motor.MotorConfigurationMvp
 import com.revolution.robotics.features.configure.motor.MotorConfigurationPresenter
 import com.revolution.robotics.features.configure.sensor.SensorConfigurationMvp
 import com.revolution.robotics.features.configure.sensor.SensorConfigurationPresenter
-import com.revolution.robotics.features.controller.programSelector.ProgramSelectorMvp
-import com.revolution.robotics.features.controller.programSelector.ProgramSelectorPresenter
+import com.revolution.robotics.features.controllers.programSelector.ProgramSelectorMvp
+import com.revolution.robotics.features.controllers.programSelector.ProgramSelectorPresenter
 import com.revolution.robotics.features.controllers.setup.SetupMvp
 import com.revolution.robotics.features.controllers.setup.SetupPresenter
 import com.revolution.robotics.features.controllers.typeSelector.TypeSelectorMvp
@@ -119,6 +120,7 @@ fun createInteractorModule() =
         bind<RemoveUserProgramInteractor>() with provider { RemoveUserProgramInteractor(instance()) }
         bind<GetUserChallengeCategoriesInteractor>() with provider { GetUserChallengeCategoriesInteractor(instance()) }
         bind<SaveUserChallengeCategoryInteractor>() with provider { SaveUserChallengeCategoryInteractor(instance()) }
+        bind<GetUserProgramsInteractor>() with provider { GetUserProgramsInteractor(instance()) }
     }
 
 @Suppress("LongMethod")
@@ -178,9 +180,15 @@ fun createPresenterModule() =
         bind<FirmwareMvp.Presenter>() with singleton { FirmwareUpdatePresenter(instance()) }
         bind<PlayMvp.Presenter>() with singleton { PlayPresenter() }
         bind<FirmwareUpdateMvp.Presenter>() with singleton { FirmwareUpdateDialogPresenter(instance(), instance()) }
-        bind<TypeSelectorMvp.Presenter>() with singleton { TypeSelectorPresenter(instance()) }
-        bind<SetupMvp.Presenter>() with singleton { SetupPresenter() }
-        bind<ProgramSelectorMvp.Presenter>() with singleton { ProgramSelectorPresenter(instance(), instance()) }
+        bind<TypeSelectorMvp.Presenter>() with singleton { TypeSelectorPresenter(instance(), instance()) }
+        bind<SetupMvp.Presenter>() with singleton { SetupPresenter(instance(), instance()) }
+        bind<ProgramSelectorMvp.Presenter>() with singleton {
+            ProgramSelectorPresenter(
+                instance(),
+                instance(),
+                instance()
+            )
+        }
         bind<ProgramPriorityMvp.Presenter>() with singleton { ProgramPriorityPresenter(instance()) }
     }
 

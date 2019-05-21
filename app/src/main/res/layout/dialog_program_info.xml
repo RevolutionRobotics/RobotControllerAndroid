@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable name="viewModel"
+                  type="com.revolution.robotics.core.domain.local.UserProgram"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/title"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/description"
+                app:layout_constraintVertical_chainStyle="packed"
+                android:text="@{viewModel.name}"
+                android:textAllCaps="true"
+                android:fontFamily="@font/jura_bold"
+                android:textSize="20sp"
+                android:textColor="@color/white"/>
+
+        <TextView
+                android:id="@+id/description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/title"
+                app:layout_constraintBottom_toTopOf="@id/image"
+                android:layout_marginStart="@dimen/dimen_32dp"
+                android:layout_marginEnd="@dimen/dimen_32dp"
+                android:text="@{viewModel.description}"
+                android:textSize="12sp"
+                android:textColor="@color/white"
+                android:layout_marginTop="@dimen/dimen_16dp"
+                android:fontFamily="@font/barlow_regular"/>
+
+        <ImageView
+                android:id="@+id/image"
+                android:layout_width="@dimen/dimen_16dp"
+                android:layout_height="@dimen/dimen_16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/description"
+                app:layout_constraintBottom_toTopOf="@id/compatibility_issue"
+                android:layout_marginStart="@dimen/dimen_32dp"
+                android:layout_marginTop="@dimen/dimen_16dp"
+                android:src="@drawable/ic_calendar"/>
+
+        <TextView
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintStart_toEndOf="@id/image"
+                app:layout_constraintTop_toTopOf="@id/image"
+                app:layout_constraintBottom_toBottomOf="@id/image"
+                android:layout_marginEnd="@dimen/dimen_32dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginStart="@dimen/dimen_8dp"
+                android:textColor="@color/white"
+                android:gravity="center_vertical"
+                android:text="@{viewModel.getFormattedDate()}"
+                android:fontFamily="@font/barlow_medium"
+                android:textSize="12sp"/>
+
+        <TextView
+                android:id="@+id/compatibility_issue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/image"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginStart="@dimen/dimen_32dp"
+                android:layout_marginEnd="@dimen/dimen_32dp"
+                android:textSize="12sp"
+                android:textColor="@color/robotics_red"
+                android:layout_marginTop="@dimen/dimen_16dp"
+                android:fontFamily="@font/barlow_regular"
+                android:text="@string/program_info_compatibility_issue"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

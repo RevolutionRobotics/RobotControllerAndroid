@@ -13,7 +13,9 @@ enum class DialogEvent {
     SKIP_TESTING,
     TEST_WORKS,
     DELETE_ROBOT,
-    SAVE_ROBOT;
+    SAVE_ROBOT,
+    ADD_PROGRAM,
+    REMOVE_PROGRAM;
 
     val extras = Bundle()
 }

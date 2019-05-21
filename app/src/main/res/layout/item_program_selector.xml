@@ -3,13 +3,14 @@
 
     <data>
         <variable name="viewModel"
-                  type="com.revolution.robotics.features.controller.programSelector.adapter.ProgramViewModel"/>
+                  type="com.revolution.robotics.features.controllers.programSelector.adapter.ProgramViewModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_40dp"
             android:layout_marginBottom="@dimen/dimen_12dp"
+            android:onClick="@{() -> viewModel.onProgramClicked()}"
             app:chippedBoxConfig="@{viewModel.background}">
 
         <TextView

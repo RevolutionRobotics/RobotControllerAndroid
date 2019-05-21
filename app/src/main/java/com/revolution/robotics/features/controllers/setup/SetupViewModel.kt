@@ -1,30 +1,47 @@
 package com.revolution.robotics.features.controllers.setup
 
 import androidx.lifecycle.ViewModel
+import com.revolution.robotics.core.domain.local.UserProgram
+import com.revolution.robotics.features.configure.UserConfigurationStorage
+import com.revolution.robotics.features.configure.controller.ControllerButton
 
 class SetupViewModel(private val presenter: SetupMvp.Presenter) : ViewModel() {
-    // TODO finalise program structure & remove test data
-    private val programs = listOf(
-        "Crane lift up",
-        null,
-        null,
-        "Crane lift down",
-        null,
-        null
-    )
 
-    var selectedProgram = 2
+    companion object {
+        const val NO_PROGRAM_SELECTED = -1
+    }
+
+    private val programs = mutableListOf<UserProgram?>(null, null, null, null, null, null)
+    var selectedProgram = NO_PROGRAM_SELECTED
 
     fun isProgramSelected(index: Int) = selectedProgram == index
 
-    fun getProgram(index: Int) = programs[index - 1]
+    fun getProgram(index: Int) =
+        if (programs.size >= index && index >= 0) {
+            programs[index - 1]
+        } else {
+            null
+        }
+
+    fun onProgramSet(program: UserProgram?) {
+        programs[selectedProgram - 1] = program
+    }
 
     fun selectProgram(index: Int) {
         selectedProgram = index
-        presenter.onProgramSlotSelected(index, this)
+        presenter.onProgramSlotSelected(index)
     }
 
     fun onControllerSetupFinished() {
         presenter.onControllerSetupFinished()
+    }
+
+    fun saveToStorage(storage: UserConfigurationStorage) {
+        val buttons = ControllerButton.values().toList()
+        programs.forEachIndexed { index, userProgram ->
+            userProgram?.let { program ->
+                storage.addButtonProgram(program, buttons[index])
+            }
+        }
     }
 }

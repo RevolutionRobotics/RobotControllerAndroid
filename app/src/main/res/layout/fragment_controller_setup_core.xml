@@ -6,6 +6,8 @@
                   type="com.revolution.robotics.features.controllers.setup.SetupViewModel"/>
         <variable name="toolbarViewModel"
                   type="com.revolution.robotics.views.toolbar.ToolbarViewModel"/>
+        <variable name="mostRecent"
+                  type="com.revolution.robotics.features.controllers.setup.mostRecent.MostRecentProgramViewModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -39,6 +41,130 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:text="@{@string/next}"
                 app:image="@{@drawable/ic_play}"/>
+
+        <FrameLayout
+                android:id="@+id/dimmer"
+                android:visibility="invisible"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@color/overlay_black_b3"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <LinearLayout
+                android:id="@+id/program_selector"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/controller_setup_program_selector_height"
+                android:orientation="horizontal"
+                android:background="@drawable/bg_setup_program_selector"
+                android:visibility="invisible"
+                android:padding="@dimen/dimen_4dp"
+                android:clickable="true"
+                android:focusable="true"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+            <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="@dimen/dimen_4dp"
+                    android:fontFamily="@font/jura_bold"
+                    android:textSize="12sp"
+                    android:textColor="@color/white"
+                    android:gravity="center"
+                    android:padding="@dimen/dimen_8dp"
+                    android:onClick="@{() -> mostRecent.onProgramClicked(1)}"
+                    app:program="@{mostRecent.getProgram(1)}"
+                    app:chippedBoxConfig="@{mostRecent.getBackground(1)}"/>
+
+            <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="@dimen/dimen_4dp"
+                    android:fontFamily="@font/jura_bold"
+                    android:textSize="12sp"
+                    android:textColor="@color/white"
+                    android:gravity="center"
+                    android:padding="@dimen/dimen_8dp"
+                    android:onClick="@{() -> mostRecent.onProgramClicked(2)}"
+                    app:program="@{mostRecent.getProgram(2)}"
+                    app:chippedBoxConfig="@{mostRecent.getBackground(2)}"/>
+
+            <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="@dimen/dimen_4dp"
+                    android:fontFamily="@font/jura_bold"
+                    android:textSize="12sp"
+                    android:textColor="@color/white"
+                    android:gravity="center"
+                    android:padding="@dimen/dimen_8dp"
+                    android:onClick="@{() -> mostRecent.onProgramClicked(3)}"
+                    app:program="@{mostRecent.getProgram(3)}"
+                    app:chippedBoxConfig="@{mostRecent.getBackground(3)}"/>
+
+            <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="@dimen/dimen_4dp"
+                    android:fontFamily="@font/jura_bold"
+                    android:textSize="12sp"
+                    android:textColor="@color/white"
+                    android:gravity="center"
+                    android:padding="@dimen/dimen_8dp"
+                    android:onClick="@{() -> mostRecent.onProgramClicked(4)}"
+                    app:program="@{mostRecent.getProgram(4)}"
+                    app:chippedBoxConfig="@{mostRecent.getBackground(4)}"/>
+
+            <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="@dimen/dimen_4dp"
+                    android:fontFamily="@font/jura_bold"
+                    android:textSize="12sp"
+                    android:textColor="@color/white"
+                    android:gravity="center"
+                    android:padding="@dimen/dimen_8dp"
+                    android:onClick="@{() -> mostRecent.onProgramClicked(5)}"
+                    app:program="@{mostRecent.getProgram(5)}"
+                    app:chippedBoxConfig="@{mostRecent.getBackground(5)}"/>
+
+            <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:onClick="@{() -> mostRecent.onShowMoreClicked()}"
+                    android:gravity="center"
+                    android:padding="@dimen/dimen_8dp"
+                    app:chippedBoxConfig="@{mostRecent.getShowMoreBackground()}">
+
+                <ImageView
+                        android:layout_width="@dimen/dimen_16dp"
+                        android:layout_height="@dimen/dimen_16dp"
+                        android:src="@drawable/ic_add"
+                        android:layout_marginEnd="@dimen/dimen_8dp"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:textSize="14sp"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/barlow_medium"
+                        android:text="@string/most_recent_show_more"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

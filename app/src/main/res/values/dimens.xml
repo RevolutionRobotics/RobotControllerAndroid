@@ -218,6 +218,7 @@
     <dimen name="controller_setup_button_normal_size">20dp</dimen>
     <dimen name="controller_setup_program_button_width">70dp</dimen>
     <dimen name="controller_setup_program_button_height">38dp</dimen>
+    <dimen name="controller_setup_program_selector_height">70dp</dimen>
 
     <!-- SCREEN: ABOUT -->
     <dimen name="about_social_icon_size">40dp</dimen>

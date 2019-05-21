@@ -1,4 +1,4 @@
-package com.revolution.robotics.features.controller.programSelector
+package com.revolution.robotics.features.controllers.programSelector
 
 import androidx.databinding.ObservableInt
 import androidx.lifecycle.ViewModel
@@ -25,7 +25,7 @@ class ProgramSelectorViewModel(private val presenter: ProgramSelectorMvp.Present
             } else {
                 OrderBy.NAME to Order.ASCENDING
             }
-        presenter.updateOrdering()
+        presenter.updateOrderingAndFiltering()
     }
 
     fun onOrderByDateClicked() {
@@ -35,7 +35,7 @@ class ProgramSelectorViewModel(private val presenter: ProgramSelectorMvp.Present
             } else {
                 OrderBy.DATE to Order.DESCENDING
             }
-        presenter.updateOrdering()
+        presenter.updateOrderingAndFiltering()
     }
 
     fun isOrderedByName() = currentOrder.first == OrderBy.NAME

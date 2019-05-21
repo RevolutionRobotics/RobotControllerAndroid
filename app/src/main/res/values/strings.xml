@@ -151,6 +151,14 @@
     <!-- Controller setup -->
     <string name="controller_setup_screen_title">Assign programs to buttons!</string>
     <string name="controller_setup_empty">empty</string>
+    <string name="most_recent_show_more">Show more</string>
+
+    <!-- Program info -->
+    <string name="program_info_edit_program">Edit program</string>
+    <string name="program_info_compatibility_issue">Description of compatibility issue. Lorem ipsum dolor sit amet, eu commodo numquam comprehensam vel. Quo cu alia placerat. Per graece denique.</string>
+    <string name="program_info_compatibility_issue_positive_button">Got it</string>
+    <string name="program_info_remove_button">Remove program</string>
+    <string name="program_info_add_button">Add program</string>
 
     <!-- Save dialog-->
     <string name="save_robot_dialog_title">The robot is ready, name it!</string>

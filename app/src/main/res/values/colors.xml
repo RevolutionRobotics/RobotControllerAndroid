@@ -8,6 +8,7 @@
     <color name="black">#000000</color>
 
     <color name="overlay_black_42">#42000000</color>
+    <color name="overlay_black_b3">#b3000000</color>
 
     <color name="grey_1d">#FF1D1D1D</color>
     <color name="grey_1e">#FF1E1E1E</color>
