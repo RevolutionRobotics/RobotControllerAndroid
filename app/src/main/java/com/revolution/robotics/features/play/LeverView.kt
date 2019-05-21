@@ -18,6 +18,7 @@ class LeverView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
 
     companion object {
         private const val LEVER_AXIS_CENTER = 128
+        private const val LEVER_AXIS_MAX = 255
         private const val FLOAT_CENTER = 0.5f
     }
 
@@ -32,8 +33,7 @@ class LeverView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
     private var center: Pair<Float, Float>? = null
     private var leverPosition = 0.0f
     private var isTouched = false
-    private var xAxisListener: ((value: Int) -> Unit)? = null
-    private var yAxisListener: ((value: Int) -> Unit)? = null
+    private var axisChangedListener: ((value: Int) -> Unit)? = null
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
         if (event.action == MotionEvent.ACTION_CANCEL ||
@@ -48,10 +48,7 @@ class LeverView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
                 .limit(FLOAT_CENTER)
         }
 
-        leverPosition.normalizeForController().let { value ->
-            xAxisListener?.invoke(value)
-            yAxisListener?.invoke(value)
-        }
+        axisChangedListener?.invoke(leverPosition.normalizeForController())
         invalidate()
         return true
     }
@@ -94,16 +91,16 @@ class LeverView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
         }
     }
 
-    fun onXAxisChanged(listener: ((value: Int) -> Unit)?) {
-        xAxisListener = listener
-    }
-
-    fun onYAxisChanged(listener: ((value: Int) -> Unit)?) {
-        yAxisListener = listener
+    fun onAxisChanged(listener: ((value: Int) -> Unit)?) {
+        axisChangedListener = listener
     }
 
     private fun Float.normalizeForController() =
-        (LEVER_AXIS_CENTER + this * LEVER_AXIS_CENTER * 2).toInt()
+        if (this == 0.0f) {
+            LEVER_AXIS_CENTER
+        } else {
+            ((this + FLOAT_CENTER) * LEVER_AXIS_MAX).toInt()
+        }
 
     private fun Float.limit(limit: Float) =
         Math.min(Math.max(this, -limit), limit)
