@@ -19,7 +19,6 @@ import com.revolution.robotics.features.mainmenu.settings.about.AboutViewModel
 import com.revolution.robotics.features.mainmenu.settings.firmware.FirmwareUpdateViewModel
 import com.revolution.robotics.features.myRobots.MyRobotsViewModel
 import com.revolution.robotics.features.play.PlayViewModel
-import com.revolution.robotics.features.play.liveController.LiveControllerViewModel
 import com.revolution.robotics.features.whoToBuild.WhoToBuildViewModel
 import org.kodein.di.Kodein
 import org.kodein.di.erased.bind
@@ -32,7 +31,6 @@ fun createViewModelModule() =
         bind<CodingViewModel>() with provider { CodingViewModel() }
         bind<ChallengesViewModel>() with provider { ChallengesViewModel() }
         bind<WhoToBuildViewModel>() with provider { WhoToBuildViewModel(instance()) }
-        bind<LiveControllerViewModel>() with provider { LiveControllerViewModel(instance()) }
         bind<MyRobotsViewModel>() with provider { MyRobotsViewModel(instance()) }
         bind<ConnectViewModel>() with provider { ConnectViewModel() }
         bind<BuildRobotViewModel>() with provider { BuildRobotViewModel(instance()) }

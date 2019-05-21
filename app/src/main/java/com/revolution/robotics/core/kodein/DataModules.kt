@@ -72,8 +72,6 @@ import com.revolution.robotics.features.myRobots.MyRobotsMvp
 import com.revolution.robotics.features.myRobots.MyRobotsPresenter
 import com.revolution.robotics.features.play.PlayMvp
 import com.revolution.robotics.features.play.PlayPresenter
-import com.revolution.robotics.features.play.liveController.LiveControllerMvp
-import com.revolution.robotics.features.play.liveController.LiveControllerPresenter
 import com.revolution.robotics.features.whoToBuild.WhoToBuildMvp
 import com.revolution.robotics.features.whoToBuild.WhoToBuildPresenter
 import org.kodein.di.Kodein
@@ -128,7 +126,6 @@ fun createPresenterModule() =
     Kodein.Module("PresenterModule") {
         bind<MainMenuMvp.Presenter>() with singleton { MainMenuPresenter(instance()) }
         bind<WhoToBuildMvp.Presenter>() with singleton { WhoToBuildPresenter(instance(), instance()) }
-        bind<LiveControllerMvp.Presenter>() with singleton { LiveControllerPresenter(instance()) }
         bind<MyRobotsMvp.Presenter>() with singleton { MyRobotsPresenter(instance(), instance(), instance()) }
         bind<ChapterFinishedMvp.Presenter>() with singleton { ChapterFinishedPresenter(instance()) }
         bind<BuildRobotMvp.Presenter>() with singleton {

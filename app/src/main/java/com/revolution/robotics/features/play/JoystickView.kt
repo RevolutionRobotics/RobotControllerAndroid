@@ -20,20 +20,10 @@ class JoystickView @JvmOverloads constructor(context: Context, attrs: AttributeS
         private const val JOYSTICK_AXIS_CENTER = 128
     }
 
-    private val joystickButtonSize = context.dimension(R.dimen.dimen_48dp)
+    private val joystickButtonSize = context.dimension(R.dimen.play_joystick_handle_size)
     private val joystickPadding = joystickButtonSize / 2
     private val innerPadding = context.dimension(R.dimen.dimen_2dp)
-    private val gradientPaint = Paint().apply {
-        shader = LinearGradient(
-            0.0f,
-            -joystickPadding.toFloat() - 1,
-            0.0f,
-            joystickPadding.toFloat(),
-            context.color(R.color.robotics_orange),
-            context.color(R.color.robotics_red),
-            Shader.TileMode.REPEAT
-        )
-    }
+    private val gradientPaint = Paint()
     private val darkRedPaint = Paint().apply { color = context.color(R.color.robotics_red) }
     private val backgroundDrawable = context.getDrawable(R.drawable.bg_joystick)
 
@@ -76,6 +66,15 @@ class JoystickView @JvmOverloads constructor(context: Context, attrs: AttributeS
             measuredHeight - joystickPadding
         )
         joystickPositionMax = measuredWidth / 2 - joystickButtonSize / 2 - innerPadding
+        gradientPaint.shader = LinearGradient(
+            0.0f,
+            measuredHeight / 2.0f - joystickPadding,
+            0.0f,
+            measuredHeight / 2.0f + joystickPadding,
+            context.color(R.color.robotics_orange),
+            context.color(R.color.robotics_red),
+            Shader.TileMode.REPEAT
+        )
     }
 
     override fun onDraw(canvas: Canvas) {
