@@ -5,7 +5,7 @@ import com.revolution.robotics.core.domain.local.UserProgram
 import com.revolution.robotics.core.interactor.GetUserProgramsInteractor
 import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.features.configure.controller.CompatibleProgramFilterer
-import com.revolution.robotics.features.controllers.programInfo.ProgramInfoDialog
+import com.revolution.robotics.features.controllers.programInfo.ProgramDialog
 import com.revolution.robotics.features.controllers.programSelector.adapter.ProgramViewModel
 
 class ProgramSelectorPresenter(
@@ -91,7 +91,7 @@ class ProgramSelectorPresenter(
     }
 
     override fun onProgramSelected(userProgram: UserProgram) {
-        view?.showDialog(ProgramInfoDialog.Add.newInstance(userProgram))
+        view?.showDialog(ProgramDialog.Add.newInstance(userProgram))
     }
 
     private fun createViewModels(programs: List<UserProgram>) =

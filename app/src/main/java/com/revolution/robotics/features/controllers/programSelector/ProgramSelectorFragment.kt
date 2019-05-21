@@ -11,7 +11,7 @@ import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
 import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.databinding.FragmentProgramSelectorBinding
 import com.revolution.robotics.features.configure.UserConfigurationStorage
-import com.revolution.robotics.features.controllers.programInfo.ProgramInfoDialog
+import com.revolution.robotics.features.controllers.programInfo.ProgramDialog
 import com.revolution.robotics.features.controllers.programSelector.adapter.ProgramSelectorAdapter
 import com.revolution.robotics.features.controllers.programSelector.adapter.ProgramViewModel
 import org.kodein.di.erased.instance
@@ -53,7 +53,7 @@ class ProgramSelectorFragment :
 
     override fun onDialogEvent(event: DialogEvent) {
         if (event == DialogEvent.ADD_PROGRAM) {
-            val program = event.extras.getParcelable<UserProgram>(ProgramInfoDialog.KEY_PROGRAM)
+            val program = event.extras.getParcelable<UserProgram>(ProgramDialog.KEY_PROGRAM)
             storage.controllerHolder?.programToBeAdded = program
             navigator.back()
         }
