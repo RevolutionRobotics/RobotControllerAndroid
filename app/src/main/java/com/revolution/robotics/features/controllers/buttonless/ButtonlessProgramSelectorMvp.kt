@@ -7,7 +7,7 @@ import com.revolution.robotics.features.controllers.buttonless.adapter.Buttonles
 interface ButtonlessProgramSelectorMvp : Mvp {
 
     interface View : Mvp.View {
-        fun showUserProgramDialog(userProgram: UserProgram)
+        fun showUserProgramDialog(userProgram: UserProgram, compatible: Boolean)
     }
 
     interface Presenter : Mvp.Presenter<View, ButtonlessProgramSelectorViewModel> {
@@ -19,5 +19,4 @@ interface ButtonlessProgramSelectorMvp : Mvp {
         fun onProgramSelected(viewModel: ButtonlessProgramViewModel)
         fun onInfoButtonClicked(userProgram: UserProgram)
     }
-
 }

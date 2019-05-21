@@ -9,7 +9,7 @@ import com.revolution.robotics.core.domain.local.UserProgram
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.databinding.FragmentButtonlessProgramSelectorBinding
 import com.revolution.robotics.features.controllers.buttonless.adapter.ButtonlessProgramAdapter
-import com.revolution.robotics.features.controllers.programInfo.ProgramInfoDialog
+import com.revolution.robotics.features.controllers.programInfo.ProgramDialog
 import org.kodein.di.erased.instance
 
 class ButtonlessProgramSelectorFragment :
@@ -38,7 +38,11 @@ class ButtonlessProgramSelectorFragment :
         super.onDestroyView()
     }
 
-    override fun showUserProgramDialog(userProgram: UserProgram) {
-        ProgramInfoDialog.CompatibilityIssue.newInstance(userProgram).show(fragmentManager)
+    override fun showUserProgramDialog(userProgram: UserProgram, compatible: Boolean) {
+        if (compatible) {
+            ProgramDialog.Info.newInstance(userProgram).show(fragmentManager)
+        } else {
+            ProgramDialog.CompatibilityIssue.newInstance(userProgram).show(fragmentManager)
+        }
     }
 }
