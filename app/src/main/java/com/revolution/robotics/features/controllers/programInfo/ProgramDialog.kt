@@ -12,10 +12,10 @@ import com.revolution.robotics.views.dialogs.DialogButton
 import com.revolution.robotics.views.dialogs.DialogFace
 import com.revolution.robotics.views.dialogs.RoboticsDialog
 
-sealed class ProgramInfoDialog(mode: Mode) : RoboticsDialog() {
+sealed class ProgramDialog(mode: Mode) : RoboticsDialog() {
 
     enum class Mode {
-        ADD_PROGRAM, REMOVE_PROGRAM, COMPATIBILITY_ISSUE
+        INFO, ADD_PROGRAM, REMOVE_PROGRAM, COMPATIBILITY_ISSUE
     }
 
     companion object {
@@ -42,7 +42,7 @@ sealed class ProgramInfoDialog(mode: Mode) : RoboticsDialog() {
                     dialogEventBus.publish(DialogEvent.REMOVE_PROGRAM)
                     dismissAllowingStateLoss()
                 }
-            Mode.COMPATIBILITY_ISSUE ->
+            Mode.COMPATIBILITY_ISSUE, Mode.INFO ->
                 DialogButton(R.string.program_info_compatibility_issue_positive_button, R.drawable.ic_check, true) {
                     dismissAllowingStateLoss()
                 }
@@ -61,7 +61,15 @@ sealed class ProgramInfoDialog(mode: Mode) : RoboticsDialog() {
         }
     }
 
-    class Add : ProgramInfoDialog(Mode.ADD_PROGRAM) {
+    class Info : ProgramDialog(Mode.INFO) {
+        companion object {
+            fun newInstance(program: UserProgram) = Info().withArguments { bundle ->
+                bundle.program = program
+            }
+        }
+    }
+
+    class Add : ProgramDialog(Mode.ADD_PROGRAM) {
         companion object {
             fun newInstance(program: UserProgram) = Add().withArguments { bundle ->
                 bundle.program = program
@@ -69,7 +77,7 @@ sealed class ProgramInfoDialog(mode: Mode) : RoboticsDialog() {
         }
     }
 
-    class Remove : ProgramInfoDialog(Mode.REMOVE_PROGRAM) {
+    class Remove : ProgramDialog(Mode.REMOVE_PROGRAM) {
         companion object {
             fun newInstance(program: UserProgram) = Remove().withArguments { bundle ->
                 bundle.program = program
@@ -77,7 +85,7 @@ sealed class ProgramInfoDialog(mode: Mode) : RoboticsDialog() {
         }
     }
 
-    class CompatibilityIssue : ProgramInfoDialog(Mode.COMPATIBILITY_ISSUE) {
+    class CompatibilityIssue : ProgramDialog(Mode.COMPATIBILITY_ISSUE) {
         companion object {
             fun newInstance(program: UserProgram) = CompatibilityIssue().withArguments { bundle ->
                 bundle.program = program

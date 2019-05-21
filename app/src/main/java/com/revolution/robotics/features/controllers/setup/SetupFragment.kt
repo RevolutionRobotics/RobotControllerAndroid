@@ -20,7 +20,7 @@ import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.databinding.FragmentControllerSetupCoreBinding
 import com.revolution.robotics.features.configure.UserConfigurationStorage
 import com.revolution.robotics.features.configure.controller.ControllerButton
-import com.revolution.robotics.features.controllers.programInfo.ProgramInfoDialog
+import com.revolution.robotics.features.controllers.programInfo.ProgramDialog
 import com.revolution.robotics.features.controllers.setup.mostRecent.MostRecentProgramViewModel
 import org.kodein.di.erased.instance
 
@@ -102,7 +102,7 @@ abstract class SetupFragment :
 
     override fun onDialogEvent(event: DialogEvent) {
         if (event == DialogEvent.ADD_PROGRAM) {
-            addProgram(event.extras.getParcelable(ProgramInfoDialog.KEY_PROGRAM))
+            addProgram(event.extras.getParcelable(ProgramDialog.KEY_PROGRAM))
         } else if (event == DialogEvent.REMOVE_PROGRAM) {
             removeProgram()
         }
