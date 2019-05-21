@@ -1,22 +1,27 @@
 package com.revolution.robotics.features.controllers.buttonless
 
 import com.revolution.robotics.R
+import com.revolution.robotics.core.domain.local.UserBackgroundProgramBinding
 import com.revolution.robotics.core.domain.local.UserProgram
 import com.revolution.robotics.core.interactor.GetUserProgramsInteractor
+import com.revolution.robotics.core.utils.Navigator
+import com.revolution.robotics.features.configure.UserConfigurationStorage
 import com.revolution.robotics.features.configure.controller.CompatibleProgramFilterer
 import com.revolution.robotics.features.controllers.ProgramOrderingHandler
 import com.revolution.robotics.features.controllers.buttonless.adapter.ButtonlessProgramViewModel
 
 class ButtonlessProgramSelectorPresenter(
     private val getUserProgramsInteractor: GetUserProgramsInteractor,
-    private val compatibleProgramFilterer: CompatibleProgramFilterer
+    private val compatibleProgramFilterer: CompatibleProgramFilterer,
+    private val navigator: Navigator,
+    private val userConfigurationStorage: UserConfigurationStorage
 ) : ButtonlessProgramSelectorMvp.Presenter {
 
     override var view: ButtonlessProgramSelectorMvp.View? = null
     override var model: ButtonlessProgramSelectorViewModel? = null
 
-    private var allPrograms: List<UserProgram>? = null
-    private var programs: List<UserProgram> = ArrayList()
+    private var allPrograms: List<ButtonlessProgramViewModel>? = null
+    private var programs: MutableList<ButtonlessProgramViewModel> = mutableListOf()
     private var onlyShowCompatiblePrograms = false
 
     override fun register(view: ButtonlessProgramSelectorMvp.View, model: ButtonlessProgramSelectorViewModel?) {
@@ -28,8 +33,10 @@ class ButtonlessProgramSelectorPresenter(
     private fun loadPrograms() {
         getUserProgramsInteractor.execute(
             onResponse = { result ->
-                allPrograms = result
-                programs = result
+                allPrograms = result.map { ButtonlessProgramViewModel(it, this) }.apply {
+                    programs.clear()
+                    programs.addAll(this)
+                }
                 model?.programOrderingHandler?.currentOrder =
                     ProgramOrderingHandler.OrderBy.NAME to ProgramOrderingHandler.Order.ASCENDING
                 orderAndFilterPrograms()
@@ -87,34 +94,55 @@ class ButtonlessProgramSelectorPresenter(
         model?.let { model ->
             val filteredPrograms =
                 if (onlyShowCompatiblePrograms) {
-                    compatibleProgramFilterer.getCompatibleProgramsOnly(allPrograms ?: emptyList())
+                    programs.filter { compatibleProgramFilterer.isProgramCompatible(it.program) }
                 } else {
                     allPrograms ?: emptyList()
                 }
-            programs = filteredPrograms.sortedWith(model.programOrderingHandler.getComparator())
-            model.items.value = programs.map {
-                ButtonlessProgramViewModel(it, this)
-            }
+            programs = filteredPrograms.sortedWith(Comparator { o1, o2 ->
+                model.programOrderingHandler.getComparator().compare(o1.program, o2.program)
+            }).toMutableList()
+            model.items.value = programs
         }
     }
 
-    override fun onNextButtonClicked() {
+    override fun onShowCompatibleProgramsButtonClicked() {
+        setShowOnlyCompatiblePrograms(!onlyShowCompatiblePrograms)
+        updateOrderingAndFiltering()
+    }
 
+    override fun onNextButtonClicked() {
+        userConfigurationStorage.controllerHolder?.backgroundBindings?.let { backgroundBindings ->
+            backgroundBindings.clear()
+            programs.forEach { viewModel ->
+                if (viewModel.selected.get()) {
+                    backgroundBindings.add(
+                        UserBackgroundProgramBinding(
+                            0,
+                            userConfigurationStorage.controllerHolder?.userController?.id ?: 0,
+                            viewModel.program.id,
+                            0
+                        )
+                    )
+                    userConfigurationStorage.controllerHolder?.programs?.put(viewModel.program.id, viewModel.program)
+                }
+            }
+        }
+        
+        navigator.navigate(ButtonlessProgramSelectorFragmentDirections.toProgramPriorityFragment())
     }
 
     override fun onSelectAllClicked(checked: Boolean) {
-
+        programs.forEach {
+            it.selected.set(checked)
+        }
     }
 
-    override fun onShowCompatibleProgramsButtonClicked() {
-
+    override fun onProgramSelected(viewModel: ButtonlessProgramViewModel) {
+        viewModel.selected.set(!viewModel.selected.get())
     }
 
-    override fun onProgramSelected(userProgram: UserProgram) {
-        
-    }
 
     override fun onInfoButtonClicked(userProgram: UserProgram) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        view?.showUserProgramDialog(userProgram)
     }
 }

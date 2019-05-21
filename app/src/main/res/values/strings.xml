@@ -235,7 +235,7 @@
     <string name="program_selector_show_all_programs">show all programs</string>
     <string name="buttonless_program_selector_title">Add buttonless programs running in the background</string>
     <string name="buttonless_program_select_all_checkbox">Select all</string>
-    <string name="buttonless_program_show_compatible_programs">show compatible programs only</string>
-    <string name="buttonless_program_show_all_programs">show all programs</string>
+    <string name="buttonless_program_show_compatible_programs">Show compatible programs only</string>
+    <string name="buttonless_program_show_all_programs">Show all programs</string>
 
 </resources>

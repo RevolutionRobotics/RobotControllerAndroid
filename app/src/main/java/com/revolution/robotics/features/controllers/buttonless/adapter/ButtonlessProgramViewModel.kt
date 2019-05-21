@@ -9,7 +9,7 @@ import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 import java.util.Date
 
 class ButtonlessProgramViewModel(
-    private val program: UserProgram,
+    val program: UserProgram,
     private val presenter: ButtonlessProgramSelectorMvp.Presenter
 ) {
 
@@ -40,7 +40,7 @@ class ButtonlessProgramViewModel(
     val formattedDate = Date(program.lastModified).formatYearMonthDayDotted()
 
     fun onProgramClicked() {
-        presenter.onProgramSelected(program)
+        presenter.onProgramSelected(this)
     }
 
     fun onInfoButtonClicked() {

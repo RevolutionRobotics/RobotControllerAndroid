@@ -5,8 +5,11 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
+import com.revolution.robotics.core.domain.local.UserProgram
+import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.databinding.FragmentButtonlessProgramSelectorBinding
 import com.revolution.robotics.features.controllers.buttonless.adapter.ButtonlessProgramAdapter
+import com.revolution.robotics.features.controllers.programInfo.ProgramInfoDialog
 import org.kodein.di.erased.instance
 
 class ButtonlessProgramSelectorFragment :
@@ -17,11 +20,13 @@ class ButtonlessProgramSelectorFragment :
         ButtonlessProgramSelectorViewModel::class.java
 
     private val presenter: ButtonlessProgramSelectorMvp.Presenter by kodein.instance()
+    private val resourceResolver: ResourceResolver by kodein.instance()
     private val adapter = ButtonlessProgramAdapter()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         presenter.register(this, viewModel)
+        binding?.toolbarViewModel = ButtonlessProgramSelectorToolbarViewModel(resourceResolver)
         binding?.recyclerPriority?.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = this@ButtonlessProgramSelectorFragment.adapter
@@ -33,4 +38,7 @@ class ButtonlessProgramSelectorFragment :
         super.onDestroyView()
     }
 
+    override fun showUserProgramDialog(userProgram: UserProgram) {
+        ProgramInfoDialog.CompatibilityIssue.newInstance(userProgram).show(fragmentManager)
+    }
 }

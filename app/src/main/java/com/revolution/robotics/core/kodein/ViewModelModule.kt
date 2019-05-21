@@ -10,6 +10,7 @@ import com.revolution.robotics.features.configure.controller.program.priority.Pr
 import com.revolution.robotics.features.configure.controllers.ConfigureControllersViewModel
 import com.revolution.robotics.features.configure.motor.MotorConfigurationViewModel
 import com.revolution.robotics.features.configure.sensor.SensorConfigurationViewModel
+import com.revolution.robotics.features.controllers.buttonless.ButtonlessProgramSelectorViewModel
 import com.revolution.robotics.features.controllers.programSelector.ProgramSelectorViewModel
 import com.revolution.robotics.features.controllers.setup.SetupViewModel
 import com.revolution.robotics.features.controllers.typeSelector.TypeSelectorViewModel
@@ -47,4 +48,5 @@ fun createViewModelModule() =
         bind<SetupViewModel>() with provider { SetupViewModel(instance()) }
         bind<ProgramSelectorViewModel>() with provider { ProgramSelectorViewModel(instance()) }
         bind<ProgramPriorityViewModel>() with provider { ProgramPriorityViewModel(instance()) }
+        bind<ButtonlessProgramSelectorViewModel>() with provider { ButtonlessProgramSelectorViewModel(instance()) }
     }

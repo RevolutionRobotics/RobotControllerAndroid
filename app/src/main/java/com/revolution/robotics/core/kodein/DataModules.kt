@@ -52,6 +52,8 @@ import com.revolution.robotics.features.configure.motor.MotorConfigurationMvp
 import com.revolution.robotics.features.configure.motor.MotorConfigurationPresenter
 import com.revolution.robotics.features.configure.sensor.SensorConfigurationMvp
 import com.revolution.robotics.features.configure.sensor.SensorConfigurationPresenter
+import com.revolution.robotics.features.controllers.buttonless.ButtonlessProgramSelectorMvp
+import com.revolution.robotics.features.controllers.buttonless.ButtonlessProgramSelectorPresenter
 import com.revolution.robotics.features.controllers.programSelector.ProgramSelectorMvp
 import com.revolution.robotics.features.controllers.programSelector.ProgramSelectorPresenter
 import com.revolution.robotics.features.controllers.setup.SetupMvp
@@ -187,6 +189,14 @@ fun createPresenterModule() =
             )
         }
         bind<ProgramPriorityMvp.Presenter>() with singleton { ProgramPriorityPresenter(instance()) }
+        bind<ButtonlessProgramSelectorMvp.Presenter>() with singleton {
+            ButtonlessProgramSelectorPresenter(
+                instance(),
+                instance(),
+                instance(),
+                instance()
+            )
+        }
     }
 
 fun createDbModule(context: Context) =
