@@ -3,20 +3,22 @@ package com.revolution.robotics.features.configure.controllers
 import com.revolution.robotics.core.extensions.formatYearMonthDaySlashed
 import com.revolution.robotics.core.extensions.isEmptyOrNull
 import com.revolution.robotics.core.interactor.GetUserControllersInteractor
+import com.revolution.robotics.core.interactor.RemoveUserControllerInteractor
 import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.features.configure.ConfigureFragmentDirections
 import com.revolution.robotics.features.configure.UserConfigurationStorage
 import com.revolution.robotics.features.configure.controller.ControllerInfoDialog
 import com.revolution.robotics.features.configure.controllers.adapter.ControllersItem
 import com.revolution.robotics.features.controllers.ControllerType
-import com.revolution.robotics.features.myRobots.delete.DeleteRobotDialog
 import kotlin.math.max
 
 class ConfigureControllersPresenter(
     private val navigator: Navigator,
     private val controllersInteractor: GetUserControllersInteractor,
-    private val userConfigurationStorage: UserConfigurationStorage
+    private val userConfigurationStorage: UserConfigurationStorage,
+    private val deleteControllerInteractor: RemoveUserControllerInteractor
 ) : ConfigureControllersMvp.Presenter {
+
     override var view: ConfigureControllersMvp.View? = null
     override var model: ConfigureControllersViewModel? = null
 
@@ -80,8 +82,24 @@ class ConfigureControllersPresenter(
         navigator.navigate(ConfigureFragmentDirections.toControllerTypeSelector())
     }
 
+    override fun deleteController(controllerId: Int, selectedPosition: Int) {
+        deleteControllerInteractor.controllerId = controllerId
+        deleteControllerInteractor.execute({}, {
+            // TODO Error handling
+        })
+
+        model?.controllersList?.apply {
+            get()?.toMutableList()?.apply {
+                removeAll { it.userController.id == controllerId }
+                set(this.toList())
+            }
+        }
+        updateButtonsVisibility(selectedPosition)
+        view?.onRobotsChanged()
+    }
+
     override fun onDeleteSelected(item: ControllersItem) {
-        DeleteRobotDialog
+        view?.showDeleteControllerDialog(item.userController.id)
     }
 
     override fun onEditSelected(item: ControllersItem) {

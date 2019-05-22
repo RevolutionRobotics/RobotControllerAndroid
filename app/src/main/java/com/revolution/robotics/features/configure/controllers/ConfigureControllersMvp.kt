@@ -10,6 +10,7 @@ interface ConfigureControllersMvp : Mvp {
         fun showNextRobot()
         fun showPreviousRobot()
         fun showInfoModal(dialog: ControllerInfoDialog)
+        fun showDeleteControllerDialog(controllerId: Int)
     }
 
     interface Presenter : Mvp.Presenter<View, ConfigureControllersViewModel> {
@@ -17,6 +18,7 @@ interface ConfigureControllersMvp : Mvp {
         fun nextButtonClick()
         fun previousButtonClick()
         fun onCreateNewClick()
+        fun deleteController(controllerId: Int, selectedPosition: Int)
         fun onItemSelectionChanged(item: ControllersItem)
         fun onEditSelected(item: ControllersItem)
         fun onDeleteSelected(item: ControllersItem)

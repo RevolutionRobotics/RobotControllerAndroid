@@ -5,27 +5,35 @@ import android.view.View
 import androidx.viewpager.widget.ViewPager
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
+import com.revolution.robotics.core.eventBus.dialog.DialogEvent
+import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
 import com.revolution.robotics.core.extensions.waitForLayout
 import com.revolution.robotics.databinding.FragmentConfigureControllersBinding
 import com.revolution.robotics.features.configure.controller.ControllerInfoDialog
 import com.revolution.robotics.features.configure.controllers.adapter.ControllersCarouselAdapter
+import com.revolution.robotics.features.controllers.delete.DeleteControllerDialog
 import com.revolution.robotics.views.carousel.initCarouselPadding
 import com.revolution.robotics.views.carousel.initCarouselVariables
 import com.revolution.robotics.views.carousel.initTransformerWithDelay
+import com.revolution.robotics.views.carousel.reInitTransformerWithDelay
 import org.kodein.di.erased.instance
 
 class ConfigureControllersFragment :
     BaseFragment<FragmentConfigureControllersBinding, ConfigureControllersViewModel>(
         R.layout.fragment_configure_controllers
     ),
-    ConfigureControllersMvp.View, ViewPager.OnPageChangeListener {
+    ConfigureControllersMvp.View, ViewPager.OnPageChangeListener, DialogEventBus.Listener {
 
     override val viewModelClass: Class<ConfigureControllersViewModel> = ConfigureControllersViewModel::class.java
     private val presenter: ConfigureControllersMvp.Presenter by kodein.instance()
+    private val dialogEventBus: DialogEventBus by kodein.instance()
     private val adapter = ControllersCarouselAdapter()
+
+    private var controllerDeleteId = -1
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         presenter.register(this, viewModel)
+        dialogEventBus.register(this)
         binding?.controllersViewpager?.initCarouselVariables(this@ConfigureControllersFragment, adapter)
         view.waitForLayout {
             binding?.controllersViewpager?.initCarouselPadding(view.width)
@@ -34,12 +42,30 @@ class ConfigureControllersFragment :
 
     override fun onDestroyView() {
         presenter.unregister()
+        dialogEventBus.unregister(this)
         super.onDestroyView()
     }
 
     override fun onRobotsChanged() {
         adapter.notifyDataSetChanged()
         binding?.controllersViewpager?.initTransformerWithDelay()
+    }
+
+    override fun onDialogEvent(event: DialogEvent) {
+        if (event == DialogEvent.DELETE_CONTROLLER) {
+            if (adapter.selectedPosition == adapter.count - 1) {
+                adapter.selectedPosition--
+            }
+            adapter.removeItems { it.userController.id == controllerDeleteId }
+            presenter.deleteController(controllerDeleteId, adapter.selectedPosition)
+            binding?.controllersViewpager?.reInitTransformerWithDelay()
+            controllerDeleteId = -1
+        }
+    }
+
+    override fun showDeleteControllerDialog(controllerId: Int) {
+        controllerDeleteId = controllerId
+        DeleteControllerDialog.newInstance().show(fragmentManager)
     }
 
     override fun showNextRobot() {

@@ -177,6 +177,7 @@ fun createPresenterModule() =
             ConfigureControllersPresenter(
                 instance(),
                 instance(),
+                instance(),
                 instance()
             )
         }
