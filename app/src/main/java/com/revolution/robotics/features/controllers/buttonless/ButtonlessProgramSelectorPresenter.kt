@@ -139,6 +139,7 @@ class ButtonlessProgramSelectorPresenter(
                 userConfigurationStorage.addBackgroundProgram(viewModel.program, if (priority == -1) 0 else priority)
             }
         }
+
         navigator.navigate(ButtonlessProgramSelectorFragmentDirections.toProgramPriorityFragment())
     }
 
