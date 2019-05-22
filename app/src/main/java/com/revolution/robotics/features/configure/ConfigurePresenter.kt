@@ -78,7 +78,6 @@ class ConfigurePresenter(
     override fun unregister() {
         configurationEventBus.unregister(this)
         dialogEventBus.unregister(this)
-        userConfigurationStorage.userConfiguration = null
         super.unregister()
     }
 

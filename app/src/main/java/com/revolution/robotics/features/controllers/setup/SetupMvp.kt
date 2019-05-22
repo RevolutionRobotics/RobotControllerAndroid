@@ -8,9 +8,9 @@ import com.revolution.robotics.views.dialogs.RoboticsDialog
 interface SetupMvp : Mvp {
 
     interface View : Mvp.View {
+        fun showDialog(roboticsDialog: RoboticsDialog)
         fun onProgramSlotSelected(index: Int, mostRecent: MostRecentProgramViewModel)
         fun onShowAllProgramsSelected()
-        fun showDialog(roboticsDialog: RoboticsDialog)
         fun navigateToTheBackgroundPrograms()
     }
 
