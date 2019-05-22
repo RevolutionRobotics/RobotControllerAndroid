@@ -12,6 +12,7 @@ import com.revolution.robotics.features.configure.controllers.adapter.Controller
 import com.revolution.robotics.features.controllers.ControllerType
 import kotlin.math.max
 
+@Suppress("TooManyFunctions")
 class ConfigureControllersPresenter(
     private val navigator: Navigator,
     private val controllersInteractor: GetUserControllersInteractor,

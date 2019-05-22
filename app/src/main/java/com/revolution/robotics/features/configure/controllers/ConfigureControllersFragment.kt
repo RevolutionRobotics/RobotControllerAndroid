@@ -18,6 +18,7 @@ import com.revolution.robotics.views.carousel.initTransformerWithDelay
 import com.revolution.robotics.views.carousel.reInitTransformerWithDelay
 import org.kodein.di.erased.instance
 
+@Suppress("TooManyFunctions")
 class ConfigureControllersFragment :
     BaseFragment<FragmentConfigureControllersBinding, ConfigureControllersViewModel>(
         R.layout.fragment_configure_controllers
