@@ -31,7 +31,6 @@ class ProgramSelectorPresenter(
     }
 
     private fun loadPrograms() {
-        // TODO filter for compatible programs only
         getUserProgramsInteractor.execute(
             onResponse = { result ->
                 allPrograms = result.toMutableList().apply {
