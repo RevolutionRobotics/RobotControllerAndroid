@@ -6,7 +6,9 @@ import com.revolution.robotics.core.extensions.formatYearMonthDaySlashed
 import com.revolution.robotics.core.extensions.isEmptyOrNull
 import com.revolution.robotics.core.interactor.DeleteRobotInteractor
 import com.revolution.robotics.core.interactor.GetAllUserRobotsInteractor
+import com.revolution.robotics.core.interactor.GetControllerTypeInteractor
 import com.revolution.robotics.core.utils.Navigator
+import com.revolution.robotics.features.controllers.ControllerType
 import com.revolution.robotics.features.myRobots.adapter.MyRobotsItem
 import kotlin.math.max
 
@@ -14,6 +16,7 @@ import kotlin.math.max
 class MyRobotsPresenter(
     private val getAllUserRobotsInteractor: GetAllUserRobotsInteractor,
     private val deleteRobotInteractor: DeleteRobotInteractor,
+    private val getControllerTypeInteractor: GetControllerTypeInteractor,
     private val navigator: Navigator
 ) : MyRobotsMvp.Presenter {
     override var view: MyRobotsMvp.View? = null
@@ -83,9 +86,17 @@ class MyRobotsPresenter(
         navigator.navigate(MyRobotsFragmentDirections.toWhoToBuild())
     }
 
-    override fun onPlaySelected(robotId: Int) {
-        // TODO select adequate controller from configuration
-        navigator.navigate(MyRobotsFragmentDirections.toPlayDriver())
+    override fun onPlaySelected(configId: Int) {
+        getControllerTypeInteractor.configurationId = configId
+        getControllerTypeInteractor.execute({type ->
+            when (type) {
+                ControllerType.GAMER -> navigator.navigate(MyRobotsFragmentDirections.toPlayGamer())
+                ControllerType.MULTITASKER -> navigator.navigate(MyRobotsFragmentDirections.toPlayMultitasker())
+                ControllerType.DRIVER -> navigator.navigate(MyRobotsFragmentDirections.toPlayDriver())
+            }
+        }, {
+            // TODO Error handling
+        })
     }
 
     override fun onContinueBuildingSelected(robot: UserRobot) {

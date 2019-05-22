@@ -28,7 +28,7 @@ data class MyRobotsItem(
         if (isUnderConstruction) {
             presenter.onContinueBuildingSelected(robot)
         } else {
-            presenter.onPlaySelected(id)
+            presenter.onPlaySelected(robot.configurationId)
         }
     }
 
