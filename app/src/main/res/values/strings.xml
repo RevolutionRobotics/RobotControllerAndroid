@@ -56,7 +56,7 @@
     <string name="build_chapter_finish_dialog_description">Well done!</string>
     <string name="build_chapter_finish_dialog_button_home">Home</string>
     <string name="build_chapter_finish_dialog_button_next_chapter">Test later</string>
-    <string name="build_chapter_finish_dialog_button_test">Test</string>
+    <string name="build_chapter_finish_dialog_button_test">Test now</string>
 
     <!-- Robot picture -->
     <string name="camera_dialog_title">Robot\'s profile picture</string>
