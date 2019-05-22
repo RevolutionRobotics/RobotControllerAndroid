@@ -3,7 +3,6 @@ package com.revolution.robotics.features.controllers.setup
 import androidx.lifecycle.ViewModel
 import com.revolution.robotics.core.domain.local.UserProgram
 import com.revolution.robotics.features.configure.UserConfigurationStorage
-import com.revolution.robotics.features.configure.controller.ControllerButton
 
 class SetupViewModel(private val presenter: SetupMvp.Presenter) : ViewModel() {
 
@@ -34,15 +33,6 @@ class SetupViewModel(private val presenter: SetupMvp.Presenter) : ViewModel() {
 
     fun onControllerSetupFinished() {
         presenter.onControllerSetupFinished()
-    }
-
-    fun saveToStorage(storage: UserConfigurationStorage) {
-        val buttons = ControllerButton.values().toList()
-        programs.forEachIndexed { index, userProgram ->
-            userProgram?.let { program ->
-                storage.addButtonProgram(program, buttons[index])
-            }
-        }
     }
 
     fun restoreFromStorage(storage: UserConfigurationStorage) {

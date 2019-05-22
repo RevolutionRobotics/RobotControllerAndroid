@@ -72,7 +72,6 @@ abstract class SetupFragment :
     override fun onDestroyView() {
         presenter.unregister()
         dialogEventBus.unregister(this)
-        viewModel?.saveToStorage(storage)
         super.onDestroyView()
     }
 
