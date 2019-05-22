@@ -27,6 +27,8 @@ class MostRecentProgramViewModel(
             .create()
     }
 
+    fun isEmpty() = items.isEmpty()
+
     private fun getItem(index: Int) =
         if (index <= items.size) {
             items[index - 1]

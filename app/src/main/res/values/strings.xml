@@ -152,6 +152,7 @@
     <string name="controller_setup_screen_title">Assign programs to buttons!</string>
     <string name="controller_setup_empty">empty</string>
     <string name="most_recent_show_more">Show more</string>
+    <string name="most_recent_empty">Empty state placeholder for most recent selector</string>
 
     <!-- Program info -->
     <string name="program_info_edit_program">Edit program</string>

@@ -68,6 +68,16 @@
                 app:layout_constraintBottom_toBottomOf="parent">
 
             <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textSize="14sp"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/barlow_medium"
+                    android:text="@string/most_recent_empty"
+                    gone="@{!mostRecent.isEmpty()}"/>
+
+            <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"

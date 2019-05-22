@@ -42,7 +42,6 @@ class SetupPresenter(
         storage.getButtonPrograms().forEach { boundProgram ->
             availablePrograms.removeAll { it.id == boundProgram.programId }
         }
-        availablePrograms.removeAll { it.id < 8007 }
 
         // TODO filter for compatible programs only
         var mostRecentPrograms = availablePrograms.sortedBy { it.lastModified }.reversed()
