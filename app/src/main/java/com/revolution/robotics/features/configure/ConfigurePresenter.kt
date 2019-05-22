@@ -104,6 +104,8 @@ class ConfigurePresenter(
                     toolbarViewModel?.title?.set(robot.name)
                     saveUserRobotInteractor.execute(
                         onResponse = { savedRobotId ->
+                            selectedTab = ConfigurationTabs.CONNECTIONS
+                            selectedConfigId = -1
                             updateRobotImage(robot.instanceId, savedRobotId.toInt())
                             navigator.popUntil(R.id.myRobotsFragment)
                         },
