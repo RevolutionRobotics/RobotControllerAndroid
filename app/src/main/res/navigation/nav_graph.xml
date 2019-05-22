@@ -107,6 +107,8 @@
     <fragment android:id="@+id/setupGamerFragment"
               android:name="com.revolution.robotics.features.controllers.setup.instances.SetupGamerFragment"
               android:label="SetupGamerFragment">
+        <argument android:name="controllerId"
+                  app:argType="integer"/>
         <action android:id="@+id/toProgramSelectorFragment"
                 app:destination="@id/program_selector"/>
         <action android:id="@+id/toButtonlessProgramSelectorFragment"
@@ -115,6 +117,8 @@
     <fragment android:id="@+id/setupMultitaskerFragment"
               android:name="com.revolution.robotics.features.controllers.setup.instances.SetupMultitaskerFragment"
               android:label="SetupMultitaskerFragment">
+        <argument android:name="controllerId"
+                  app:argType="integer"/>
         <action android:id="@+id/toProgramSelectorFragment"
                 app:destination="@id/program_selector"/>
         <action android:id="@+id/toButtonlessProgramSelectorFragment"
@@ -123,6 +127,8 @@
     <fragment android:id="@+id/setupDriverFragment"
               android:name="com.revolution.robotics.features.controllers.setup.instances.SetupDriverFragment"
               android:label="SetupDriverFragment">
+        <argument android:name="controllerId"
+                  app:argType="integer"/>
         <action android:id="@+id/toProgramSelectorFragment"
                 app:destination="@id/program_selector"/>
         <action android:id="@+id/toButtonlessProgramSelectorFragment"

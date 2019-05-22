@@ -34,7 +34,7 @@ class ProgramSelectorPresenter(
         getUserProgramsInteractor.execute(
             onResponse = { result ->
                 allPrograms = result.toMutableList().apply {
-                    storage.getButtonPrograms().forEach { boundProgram ->
+                    storage.getBoundButtonPrograms().forEach { boundProgram ->
                         removeAll { it.id == boundProgram.programId }
                     }
                 }

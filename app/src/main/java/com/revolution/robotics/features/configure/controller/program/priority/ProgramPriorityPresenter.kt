@@ -122,8 +122,7 @@ class ProgramPriorityPresenter(
             addItemFromButtonBinding(binding, items, programs)
         }
 
-        items.sortedWith(compareBy<UserProgramBindingItem> { it.priority }.thenBy { it.lastModified })
-        return items
+        return items.sortedWith(compareBy<UserProgramBindingItem> { it.priority }.thenBy { it.lastModified })
     }
 
     private fun addItemFromButtonBinding(

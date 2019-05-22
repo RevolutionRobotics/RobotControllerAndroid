@@ -106,9 +106,12 @@ class ConfigureControllersPresenter(
     override fun onEditSelected(item: ControllersItem) {
         ControllerType.fromId(item.userController.type)?.apply {
             when (this) {
-                ControllerType.GAMER -> navigator.navigate(ConfigureFragmentDirections.toSetupGamer())
-                ControllerType.MULTITASKER -> navigator.navigate(ConfigureFragmentDirections.toSetupMultitasker())
-                ControllerType.DRIVER -> navigator.navigate(ConfigureFragmentDirections.toSetupDriver())
+                ControllerType.GAMER ->
+                    navigator.navigate(ConfigureFragmentDirections.toSetupGamer(item.userController.id))
+                ControllerType.MULTITASKER ->
+                    navigator.navigate(ConfigureFragmentDirections.toSetupMultitasker(item.userController.id))
+                ControllerType.DRIVER ->
+                    navigator.navigate(ConfigureFragmentDirections.toSetupDriver(item.userController.id))
             }
         }
     }

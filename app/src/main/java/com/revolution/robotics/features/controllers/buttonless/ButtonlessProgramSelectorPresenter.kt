@@ -1,5 +1,7 @@
 package com.revolution.robotics.features.controllers.buttonless
 
+import android.util.SparseIntArray
+import androidx.core.util.set
 import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.local.UserProgram
 import com.revolution.robotics.core.interactor.GetUserProgramsInteractor
@@ -33,10 +35,15 @@ class ButtonlessProgramSelectorPresenter(
     private fun loadPrograms() {
         getUserProgramsInteractor.execute(
             onResponse = { result ->
-                allPrograms = result.filter {
-                    userConfigurationStorage.controllerHolder?.programs?.get(it.id) == null
+                val boundPrograms = userConfigurationStorage.getBoundButtonPrograms()
+                allPrograms = result.filter { program ->
+                    boundPrograms.find { it.programId == program.id } == null
                 }.map { userProgram ->
                     ButtonlessProgramViewModel(userProgram, this).apply {
+                        selected.set(userConfigurationStorage.controllerHolder?.backgroundBindings?.find
+                        { it.programId == userProgram.id } != null && compatibleProgramFilterer.isProgramCompatible(
+                            userProgram
+                        ))
                         enabled.set(compatibleProgramFilterer.isProgramCompatible(userProgram))
                     }
                 }.apply {
@@ -118,12 +125,21 @@ class ButtonlessProgramSelectorPresenter(
     }
 
     override fun onNextButtonClicked() {
+        val priorities = SparseIntArray()
+        programs.forEach { viewModel ->
+            if (viewModel.selected.get()) {
+                priorities[viewModel.program.id] = userConfigurationStorage.getPriority(viewModel.program.id)
+            }
+        }
+
         userConfigurationStorage.clearBackgroundPrograms()
         programs.forEach { viewModel ->
             if (viewModel.selected.get()) {
-                userConfigurationStorage.addBackgroundProgram(viewModel.program)
+                val priority = priorities[viewModel.program.id]
+                userConfigurationStorage.addBackgroundProgram(viewModel.program, if (priority == -1) 0 else priority)
             }
         }
+
         navigator.navigate(ButtonlessProgramSelectorFragmentDirections.toProgramPriorityFragment())
     }
 

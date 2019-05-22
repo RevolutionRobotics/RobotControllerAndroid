@@ -15,7 +15,7 @@ data class Controller(
 
     companion object {
         const val TYPE_GAMER = "gamer"
-        const val TYPE_MULTI_TASKER = "multiTasker"
+        const val TYPE_MULTITASKER = "multiTasker"
         const val TYPE_DRIVER = "driver"
     }
 

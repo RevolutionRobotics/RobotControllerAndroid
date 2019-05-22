@@ -67,8 +67,14 @@ class UserConfigurationStorage {
         }
     }
 
-    fun getButtonPrograms() =
-        listOfNotNull(
+    fun getPriority(userProgramId: Int) = getAllButtonPrograms().find { it?.programId == userProgramId }?.priority
+        ?: controllerHolder?.backgroundBindings?.find { it.programId == userProgramId }?.priority ?: -1
+
+    fun getBoundButtonPrograms() =
+        getAllButtonPrograms().filterNotNull()
+
+    fun getAllButtonPrograms() =
+        listOf(
             controllerHolder?.userController?.mapping?.b1,
             controllerHolder?.userController?.mapping?.b2,
             controllerHolder?.userController?.mapping?.b3,
@@ -77,13 +83,13 @@ class UserConfigurationStorage {
             controllerHolder?.userController?.mapping?.b6
         )
 
-    fun addBackgroundProgram(userProgram: UserProgram) {
+    fun addBackgroundProgram(userProgram: UserProgram, priority: Int = 0) {
         controllerHolder?.backgroundBindings?.add(
             UserBackgroundProgramBinding(
                 0,
                 controllerHolder?.userController?.id ?: 0,
                 userProgram.id,
-                0
+                priority
             )
         )
         controllerHolder?.programs?.put(userProgram.id, userProgram)
