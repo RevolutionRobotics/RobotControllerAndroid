@@ -20,12 +20,7 @@ class SetupGamerFragment : SetupFragment() {
         return contentBinding.root
     }
 
-    override fun updateBinding() {
-        contentBinding.apply {
-            this.viewModel = viewModel
-            executePendingBindings()
-        }
-    }
+    override fun getContentBinding() = contentBinding
 
     override fun onShowAllProgramsSelected() {
         navigator.navigate(SetupGamerFragmentDirections.toProgramSelectorFragment())

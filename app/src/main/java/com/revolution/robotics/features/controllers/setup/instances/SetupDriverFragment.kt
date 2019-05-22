@@ -20,12 +20,7 @@ class SetupDriverFragment : SetupFragment() {
         return contentBinding.root
     }
 
-    override fun updateBinding() {
-        contentBinding.apply {
-            this.viewModel = viewModel
-            executePendingBindings()
-        }
-    }
+    override fun getContentBinding() = contentBinding
 
     override fun navigateToTheBackgroundPrograms() {
         navigator.navigate(SetupDriverFragmentDirections.toButtonlessProgramSelectorFragment())

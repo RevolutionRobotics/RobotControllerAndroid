@@ -67,8 +67,11 @@ class UserConfigurationStorage {
         }
     }
 
-    fun getButtonPrograms() =
-        listOfNotNull(
+    fun getBoundButtonPrograms() =
+            getAllButtonPrograms().filter { it != null }
+
+    fun getAllButtonPrograms() =
+        listOf(
             controllerHolder?.userController?.mapping?.b1,
             controllerHolder?.userController?.mapping?.b2,
             controllerHolder?.userController?.mapping?.b3,

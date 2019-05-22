@@ -8,6 +8,7 @@ import android.view.animation.AccelerateInterpolator
 import android.view.animation.AnimationUtils
 import android.view.animation.DecelerateInterpolator
 import androidx.annotation.AnimRes
+import androidx.databinding.ViewDataBinding
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.local.UserProgram
@@ -17,6 +18,7 @@ import com.revolution.robotics.core.extensions.onEnd
 import com.revolution.robotics.core.extensions.onStart
 import com.revolution.robotics.core.extensions.visible
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
+import com.revolution.robotics.core.utils.BundleArgumentDelegate
 import com.revolution.robotics.databinding.FragmentControllerSetupCoreBinding
 import com.revolution.robotics.features.configure.UserConfigurationStorage
 import com.revolution.robotics.features.configure.controller.ControllerButton
@@ -30,7 +32,10 @@ abstract class SetupFragment :
     SetupMvp.View, DialogEventBus.Listener {
 
     companion object {
+        const val ID_CREATE_NEW = -1
+
         private const val PROGRAM_SELECTOR_ANIMATION_DURATION_MS = 250L
+        private var Bundle.controllerId by BundleArgumentDelegate.Int("controllerId")
     }
 
     override val viewModelClass = SetupViewModel::class.java
@@ -43,7 +48,7 @@ abstract class SetupFragment :
 
     abstract fun createContentView(inflater: LayoutInflater, container: ViewGroup?): View
 
-    abstract fun updateBinding()
+    abstract fun getContentBinding(): ViewDataBinding?
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val core = super.onCreateView(inflater, container, savedInstanceState)
@@ -53,14 +58,13 @@ abstract class SetupFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         presenter.register(this, viewModel)
+        arguments?.controllerId?.let { presenter.loadControllerAndPrograms(it) }
         dialogEventBus.register(this)
         binding?.apply {
             toolbarViewModel = SetupToolbarViewModel(resourceResolver)
             dimmer.setOnClickListener { hideProgramSelector() }
         }
-        storage.controllerHolder?.programToBeAdded?.let { programToAdd ->
-            addProgram(programToAdd)
-        }
+        storage.controllerHolder?.programToBeAdded?.let { programToAdd -> addProgram(programToAdd) }
         storage.controllerHolder?.programToBeAdded = null
         hideProgramSelector()
     }
@@ -90,8 +94,12 @@ abstract class SetupFragment :
         viewModel?.selectProgram(SetupViewModel.NO_PROGRAM_SELECTED)
     }
 
+    override fun updateContentBindings() {
+        getContentBinding()?.invalidateAll()
+    }
+
     override fun onProgramSlotSelected(index: Int, mostRecent: MostRecentProgramViewModel) {
-        viewModel?.let { updateBinding() }
+        viewModel?.let { updateContentBindings() }
         if (index != SetupViewModel.NO_PROGRAM_SELECTED) {
             binding?.apply {
                 this.mostRecent = mostRecent

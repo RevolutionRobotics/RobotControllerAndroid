@@ -44,4 +44,12 @@ class SetupViewModel(private val presenter: SetupMvp.Presenter) : ViewModel() {
             }
         }
     }
+
+    fun restoreFromStorage(storage: UserConfigurationStorage) {
+        storage.getAllButtonPrograms().forEachIndexed { index, userProgramBinding ->
+            userProgramBinding?.programId?.let { programId ->
+                programs[index] = storage.controllerHolder?.programs?.get(programId)
+            }
+        }
+    }
 }

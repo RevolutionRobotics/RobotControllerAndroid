@@ -6,6 +6,7 @@ import com.revolution.robotics.core.domain.local.UserControllerWithPrograms
 import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.features.configure.UserConfigurationStorage
 import com.revolution.robotics.features.controllers.ControllerType
+import com.revolution.robotics.features.controllers.setup.SetupFragment
 
 class TypeSelectorPresenter(
     private val storage: UserConfigurationStorage,
@@ -21,9 +22,11 @@ class TypeSelectorPresenter(
         }, mutableListOf(), SparseArray())
         navigator.navigate(
             when (type) {
-                ControllerType.GAMER -> TypeSelectorFragmentDirections.toSetupGamer()
-                ControllerType.MULTITASKER -> TypeSelectorFragmentDirections.toSetupMultitasker()
-                ControllerType.DRIVER -> TypeSelectorFragmentDirections.toSetupDriver()
+                ControllerType.GAMER ->
+                    TypeSelectorFragmentDirections.toSetupGamer(SetupFragment.ID_CREATE_NEW)
+                ControllerType.MULTITASKER ->
+                    TypeSelectorFragmentDirections.toSetupMultitasker(SetupFragment.ID_CREATE_NEW)
+                ControllerType.DRIVER -> TypeSelectorFragmentDirections.toSetupDriver(SetupFragment.ID_CREATE_NEW)
             }
         )
     }
