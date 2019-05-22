@@ -12,6 +12,10 @@ class SetupPresenter(
     private val storage: UserConfigurationStorage
 ) : SetupMvp.Presenter {
 
+    companion object {
+        private const val MOST_RECENT_PROGRAM_COUNT = 5
+    }
+
     override var view: SetupMvp.View? = null
     override var model: SetupViewModel? = null
 
@@ -25,6 +29,7 @@ class SetupPresenter(
     private fun loadUserPrograms() {
         getProgramsInteractor.execute(
             onResponse = { result ->
+                programs.clear()
                 programs.addAll(result)
             },
             onError = {
@@ -33,18 +38,23 @@ class SetupPresenter(
     }
 
     override fun onProgramSlotSelected(index: Int) {
-        val mostRecent = programs
-            .sortedBy { it.lastModified }
-            .reversed()
-            .map { MostRecentItem(it) }
-            .toMutableList()
+        val availablePrograms = programs.toMutableList()
         storage.getButtonPrograms().forEach { boundProgram ->
-            mostRecent.removeAll { it.program.id == boundProgram.programId }
+            availablePrograms.removeAll { it.id == boundProgram.programId }
         }
-        model?.getProgram(index)?.let { boundProgram -> mostRecent.add(0, MostRecentItem(boundProgram, true)) }
-        // TODO what happens if less than 5 programs remain?
-        // TODO what happens if 0 most recent programs remain?
-        view?.onProgramSlotSelected(index, MostRecentProgramViewModel(mostRecent, this))
+        availablePrograms.removeAll { it.id < 8007 }
+
+        // TODO filter for compatible programs only
+        var mostRecentPrograms = availablePrograms.sortedBy { it.lastModified }.reversed()
+        if (mostRecentPrograms.size > MOST_RECENT_PROGRAM_COUNT) {
+            mostRecentPrograms = mostRecentPrograms.subList(0, MOST_RECENT_PROGRAM_COUNT)
+        }
+        val hasMorePrograms = availablePrograms.size > mostRecentPrograms.size
+        val mostRecentItems = mostRecentPrograms.map { MostRecentItem(it) }.toMutableList()
+        model?.getProgram(index)?.let { boundProgram -> mostRecentItems.add(0, MostRecentItem(boundProgram, true)) }
+
+        val mostRecentViewModel = MostRecentProgramViewModel(mostRecentItems, hasMorePrograms, this)
+        view?.onProgramSlotSelected(index, mostRecentViewModel)
     }
 
     override fun addProgram(program: UserProgram) {
