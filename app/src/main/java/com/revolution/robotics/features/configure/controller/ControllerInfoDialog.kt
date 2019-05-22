@@ -49,5 +49,5 @@ class ControllerInfoDialog : RoboticsDialog() {
     }
 
     @Parcelize
-    data class ViewModel(val title: String, val date: String) : Parcelable
+    data class ViewModel(val title: String, val date: String, val description: String) : Parcelable
 }

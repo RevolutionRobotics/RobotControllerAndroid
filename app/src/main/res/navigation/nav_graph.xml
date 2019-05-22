@@ -17,8 +17,6 @@
                 app:destination="@id/placeholder_community"/>
         <action android:id="@+id/toSettings"
                 app:destination="@id/settingFragment"/>
-        <action android:id="@+id/toProgramSelector"
-                app:destination="@+id/program_selector"/>
     </fragment>
 
     <!-- My robots -->
@@ -85,6 +83,12 @@
 
         <action android:id="@+id/toControllerTypeSelector"
                 app:destination="@id/controllerTypeSelectorFragment"/>
+        <action android:id="@+id/toSetupDriver"
+                app:destination="@id/setupDriverFragment"/>
+        <action android:id="@+id/toSetupGamer"
+                app:destination="@id/setupGamerFragment"/>
+        <action android:id="@+id/toSetupMultitasker"
+                app:destination="@id/setupMultitaskerFragment"/>
     </fragment>
 
     <!-- Controller setup -->

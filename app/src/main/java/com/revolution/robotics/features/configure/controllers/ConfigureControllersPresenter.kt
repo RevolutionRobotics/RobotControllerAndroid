@@ -6,8 +6,10 @@ import com.revolution.robotics.core.interactor.GetUserControllersInteractor
 import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.features.configure.ConfigureFragmentDirections
 import com.revolution.robotics.features.configure.UserConfigurationStorage
+import com.revolution.robotics.features.configure.controller.ControllerInfoDialog
 import com.revolution.robotics.features.configure.controllers.adapter.ControllersItem
 import com.revolution.robotics.features.controllers.ControllerType
+import com.revolution.robotics.features.myRobots.delete.DeleteRobotDialog
 import kotlin.math.max
 
 class ConfigureControllersPresenter(
@@ -24,7 +26,7 @@ class ConfigureControllersPresenter(
             model?.controllersList?.set(
                 controllers.map { controller ->
                     ControllersItem(
-                        controller.id,
+                        controller,
                         controller.name ?: "",
                         ControllerType.fromId(controller.type)?.imageResource ?: 0,
                         controller.lastModified.formatYearMonthDaySlashed(),
@@ -78,11 +80,36 @@ class ConfigureControllersPresenter(
         navigator.navigate(ConfigureFragmentDirections.toControllerTypeSelector())
     }
 
-    override fun onItemSelected(controllerId: Int) = Unit
+    override fun onDeleteSelected(item: ControllersItem) {
+        DeleteRobotDialog
+    }
 
-    override fun onEditSelected(controllerId: Int) = Unit
+    override fun onEditSelected(item: ControllersItem) {
+        ControllerType.fromId(item.userController.type)?.apply {
+            when (this) {
+                ControllerType.GAMER -> navigator.navigate(ConfigureFragmentDirections.toSetupGamer())
+                ControllerType.MULTITASKER -> navigator.navigate(ConfigureFragmentDirections.toSetupMultitasker())
+                ControllerType.DRIVER -> navigator.navigate(ConfigureFragmentDirections.toSetupDriver())
+            }
+        }
+    }
 
-    override fun onDeleteSelected(controllerId: Int) = Unit
+    override fun onInfoSelected(item: ControllersItem) {
+        view?.showInfoModal(
+            ControllerInfoDialog.newInstance(
+                ControllerInfoDialog.ViewModel(
+                    title = item.userController.name ?: "",
+                    date = item.userController.lastModified.formatYearMonthDaySlashed(),
+                    description = item.userController.description ?: ""
+                )
+            )
+        )
+    }
 
-    override fun onInfoSelected(controllerId: Int) = Unit
+    override fun onItemSelectionChanged(item: ControllersItem) {
+        model?.controllersList?.get()?.forEach {
+            it.isCurrentlyActive.set(it == item)
+        }
+        userConfigurationStorage.userConfiguration?.controller = item.userController.id
+    }
 }
