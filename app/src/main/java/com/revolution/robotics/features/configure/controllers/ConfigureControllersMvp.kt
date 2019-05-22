@@ -1,12 +1,16 @@
 package com.revolution.robotics.features.configure.controllers
 
 import com.revolution.robotics.core.Mvp
+import com.revolution.robotics.features.configure.controller.ControllerInfoDialog
+import com.revolution.robotics.features.configure.controllers.adapter.ControllersItem
 
 interface ConfigureControllersMvp : Mvp {
     interface View : Mvp.View {
         fun onRobotsChanged()
         fun showNextRobot()
         fun showPreviousRobot()
+        fun showInfoModal(dialog: ControllerInfoDialog)
+        fun showDeleteControllerDialog(controllerId: Int)
     }
 
     interface Presenter : Mvp.Presenter<View, ConfigureControllersViewModel> {
@@ -14,9 +18,10 @@ interface ConfigureControllersMvp : Mvp {
         fun nextButtonClick()
         fun previousButtonClick()
         fun onCreateNewClick()
-        fun onItemSelected(controllerId: Int)
-        fun onEditSelected(controllerId: Int)
-        fun onDeleteSelected(controllerId: Int)
-        fun onInfoSelected(controllerId: Int)
+        fun deleteController(controllerId: Int, selectedPosition: Int)
+        fun onItemSelectionChanged(item: ControllersItem)
+        fun onEditSelected(item: ControllersItem)
+        fun onDeleteSelected(item: ControllersItem)
+        fun onInfoSelected(item: ControllersItem)
     }
 }

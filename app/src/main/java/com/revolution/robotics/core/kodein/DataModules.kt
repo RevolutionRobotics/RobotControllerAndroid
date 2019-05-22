@@ -173,7 +173,14 @@ fun createPresenterModule() =
             )
         }
         bind<BuildFinishedMvp.Presenter>() with singleton { BuildFinishedPresenter(instance()) }
-        bind<ConfigureControllersMvp.Presenter>() with singleton { ConfigureControllersPresenter(instance()) }
+        bind<ConfigureControllersMvp.Presenter>() with singleton {
+            ConfigureControllersPresenter(
+                instance(),
+                instance(),
+                instance(),
+                instance()
+            )
+        }
         bind<SettingsMvp.Presenter>() with singleton { SettingsPresenter(instance()) }
         bind<AboutMvp.Presenter>() with singleton { AboutPresenter(instance(), instance()) }
         bind<FirmwareMvp.Presenter>() with singleton { FirmwareUpdatePresenter(instance()) }
@@ -189,7 +196,15 @@ fun createPresenterModule() =
                 instance()
             )
         }
-        bind<ProgramPriorityMvp.Presenter>() with singleton { ProgramPriorityPresenter(instance()) }
+        bind<ProgramPriorityMvp.Presenter>() with singleton {
+            ProgramPriorityPresenter(
+                instance(),
+                instance(),
+                instance(),
+                instance(),
+                instance()
+            )
+        }
         bind<ButtonlessProgramSelectorMvp.Presenter>() with singleton {
             ButtonlessProgramSelectorPresenter(
                 instance(),

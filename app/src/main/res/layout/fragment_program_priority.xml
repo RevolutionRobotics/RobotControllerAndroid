@@ -40,8 +40,8 @@
                 android:layout_margin="@dimen/dimen_4dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:onClick="@{() -> viewModel.onNextButtonClicked()}"
-                app:text="@{@string/next}"
+                android:onClick="@{() -> viewModel.onDoneButtonClicked()}"
+                app:text="@{@string/priority_screen_button_done}"
                 app:image="@{@drawable/ic_check}"/>
 
         <androidx.recyclerview.widget.RecyclerView

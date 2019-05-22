@@ -7,7 +7,7 @@ class ProgramPriorityViewModel(private val presenter: ProgramPriorityMvp.Present
 
     val items = MutableLiveData<List<ProgramPriorityItemViewModel>>()
 
-    fun onNextButtonClicked() {
-        presenter.onNextButtonClicked()
+    fun onDoneButtonClicked() {
+        presenter.onDoneButtonClicked()
     }
 }

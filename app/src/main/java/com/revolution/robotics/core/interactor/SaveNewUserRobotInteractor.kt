@@ -35,7 +35,7 @@ class SaveNewUserRobotInteractor(
         configuration?.let { remoteConfig ->
             val configurationId = userConfigurationDao.saveUserConfiguration(createUserConfiguration(remoteConfig))
             userRobot.configurationId = configurationId.toInt()
-            val userController = saveUserController(controller, configurationId.toInt())
+            val userController = saveUserController(controller)
 
             val programIdMap = saveUserPrograms()
 
@@ -92,9 +92,9 @@ class SaveNewUserRobotInteractor(
         }
     }
 
-    private fun saveUserController(controller: Controller?, configId: Int): UserController {
+    private fun saveUserController(controller: Controller?): UserController {
         return controller?.let {
-            val userController = createUserController(controller, configId)
+            val userController = createUserController(controller)
             val id = controllerDao.saveUserController(userController).toInt()
             userController.id = id
             return userController
@@ -137,13 +137,12 @@ class SaveNewUserRobotInteractor(
             S4 = configuration.mapping?.S4
         })
 
-    private fun createUserController(controller: Controller, configId: Int) = UserController(
+    private fun createUserController(controller: Controller) = UserController(
         id = 0,
         description = controller.description,
         lastModified = controller.lastModified,
         name = controller.name,
         type = controller.type,
-        configId = configId,
         mapping = UserButtonMapping()
     )
 }

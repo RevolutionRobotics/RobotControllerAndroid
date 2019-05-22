@@ -4,23 +4,13 @@ import android.os.Parcelable
 import androidx.room.Dao
 import androidx.room.Embedded
 import androidx.room.Entity
-import androidx.room.ForeignKey
-import androidx.room.Index
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.PrimaryKey
 import androidx.room.Query
 import kotlinx.android.parcel.Parcelize
 
-@Entity(
-    indices = [Index(value = ["configId"])],
-    foreignKeys = [ForeignKey(
-        entity = UserConfiguration::class,
-        parentColumns = arrayOf("id"),
-        childColumns = arrayOf("configId"),
-        onDelete = ForeignKey.CASCADE
-    )]
-)
+@Entity
 @Suppress("DataClassContainsFunctions")
 @Parcelize
 data class UserController(
@@ -30,7 +20,6 @@ data class UserController(
     var lastModified: Long = 0L,
     var name: String? = null,
     var type: String? = null,
-    var configId: Int = 0,
     @Embedded
     var mapping: UserButtonMapping? = UserButtonMapping()
 ) : Parcelable {
