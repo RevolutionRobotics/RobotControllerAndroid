@@ -16,9 +16,7 @@ class TypeSelectorPresenter(
     override var model: TypeSelectorViewModel? = null
 
     override fun onControllerTypeSelected(type: ControllerType) {
-        storage.controllerHolder = UserControllerWithPrograms(UserController().apply {
-            configId = storage.userConfiguration?.id ?: 0
-        }, mutableListOf(), SparseArray())
+        storage.controllerHolder = UserControllerWithPrograms(UserController(), mutableListOf(), SparseArray())
         navigator.navigate(
             when (type) {
                 ControllerType.GAMER -> TypeSelectorFragmentDirections.toSetupGamer()
