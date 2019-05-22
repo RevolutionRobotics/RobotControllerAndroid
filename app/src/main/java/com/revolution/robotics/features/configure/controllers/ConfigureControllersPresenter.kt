@@ -1,46 +1,42 @@
 package com.revolution.robotics.features.configure.controllers
 
-import com.revolution.robotics.R
+import com.revolution.robotics.core.extensions.formatYearMonthDaySlashed
 import com.revolution.robotics.core.extensions.isEmptyOrNull
+import com.revolution.robotics.core.interactor.GetUserControllersInteractor
 import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.features.configure.ConfigureFragmentDirections
+import com.revolution.robotics.features.configure.UserConfigurationStorage
 import com.revolution.robotics.features.configure.controllers.adapter.ControllersItem
+import com.revolution.robotics.features.controllers.ControllerType
 import kotlin.math.max
 
-class ConfigureControllersPresenter(private val navigator: Navigator) : ConfigureControllersMvp.Presenter {
+class ConfigureControllersPresenter(
+    private val navigator: Navigator,
+    private val controllersInteractor: GetUserControllersInteractor,
+    private val userConfigurationStorage: UserConfigurationStorage
+) : ConfigureControllersMvp.Presenter {
     override var view: ConfigureControllersMvp.View? = null
     override var model: ConfigureControllersViewModel? = null
 
     override fun register(view: ConfigureControllersMvp.View, model: ConfigureControllersViewModel?) {
         super.register(view, model)
-        model?.controllersList?.set(
-            mutableListOf(
-                ControllersItem(
-                    1,
-                    "controller 1",
-                    R.drawable.controller_gamer,
-                    "Desc",
-                    true,
-                    this
-                ),
-                ControllersItem(
-                    1,
-                    "controller 2",
-                    R.drawable.controller_multitasker,
-                    "Desc",
-                    true,
-                    this
-                ),
-                ControllersItem(
-                    1,
-                    "controller 3",
-                    R.drawable.controller_driver,
-                    "Desc",
-                    true,
-                    this
-                )
+        controllersInteractor.execute({ controllers ->
+            model?.controllersList?.set(
+                controllers.map { controller ->
+                    ControllersItem(
+                        controller.id,
+                        controller.name ?: "",
+                        ControllerType.fromId(controller.type)?.imageResource ?: 0,
+                        controller.lastModified.formatYearMonthDaySlashed(),
+                        userConfigurationStorage.userConfiguration?.controller == controller.id,
+                        this
+                    )
+                }
             )
-        )
+        }, {
+            // TODO Error handling
+        })
+
         view.onRobotsChanged()
     }
 

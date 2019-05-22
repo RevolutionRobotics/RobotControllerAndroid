@@ -13,11 +13,10 @@ data class Controller(
     var mapping: ButtonMapping? = null
 ) {
 
-    // TODO @szabolcs.nagy: Use these consts for the enum creation
     companion object {
         const val TYPE_GAMER = "gamer"
         const val TYPE_MULTI_TASKER = "multiTasker"
-        const val DRIVER = "driver"
+        const val TYPE_DRIVER = "driver"
     }
 
     fun getProgramIds(): List<String> {
