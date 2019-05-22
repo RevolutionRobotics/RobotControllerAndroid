@@ -35,6 +35,9 @@ class ConfigurePresenter(
 
     var userRobot: UserRobot? = null
 
+    var selectedTab = ConfigurationTabs.CONNECTIONS
+    var selectedConfigId = -1
+
     override fun register(view: ConfigureMvp.View, model: ConfigureViewModel?) {
         super.register(view, model)
         configurationEventBus.register(this)
@@ -70,8 +73,17 @@ class ConfigurePresenter(
     private fun onConfigurationLoaded(config: UserConfiguration?) {
         userConfigurationStorage.userConfiguration = config
         config?.apply {
-            model?.setScreen(ConfigurationTabs.CONNECTIONS)
-            view?.showConnectionsScreen(this)
+            if (selectedConfigId != config.id) {
+                selectedTab = ConfigurationTabs.CONNECTIONS
+                selectedConfigId = config.id
+            }
+            model?.setScreen(selectedTab)
+
+            if (selectedTab == ConfigurationTabs.CONNECTIONS) {
+                view?.showConnectionsScreen(this)
+            } else {
+                view?.showControllerScreen()
+            }
         }
     }
 
@@ -131,11 +143,13 @@ class ConfigurePresenter(
     }
 
     override fun onConnectionsTabSelected() {
+        selectedTab = ConfigurationTabs.CONNECTIONS
         model?.setScreen(ConfigurationTabs.CONNECTIONS)
         userConfigurationStorage.userConfiguration?.let { view?.showConnectionsScreen(it) }
     }
 
     override fun onControllerTabSelected() {
+        selectedTab = ConfigurationTabs.CONTROLLERS
         model?.setScreen(ConfigurationTabs.CONTROLLERS)
         view?.showControllerScreen()
     }
