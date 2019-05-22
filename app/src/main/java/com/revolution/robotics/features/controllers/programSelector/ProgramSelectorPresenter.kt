@@ -4,6 +4,7 @@ import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.local.UserProgram
 import com.revolution.robotics.core.interactor.GetUserProgramsInteractor
 import com.revolution.robotics.core.utils.Navigator
+import com.revolution.robotics.features.configure.UserConfigurationStorage
 import com.revolution.robotics.features.configure.controller.CompatibleProgramFilterer
 import com.revolution.robotics.features.controllers.ProgramOrderingHandler
 import com.revolution.robotics.features.controllers.programInfo.ProgramDialog
@@ -12,6 +13,7 @@ import com.revolution.robotics.features.controllers.programSelector.adapter.Prog
 class ProgramSelectorPresenter(
     private val getUserProgramsInteractor: GetUserProgramsInteractor,
     private val compatibleProgramFilterer: CompatibleProgramFilterer,
+    private val storage: UserConfigurationStorage,
     private val navigator: Navigator
 ) : ProgramSelectorMvp.Presenter {
 
@@ -29,10 +31,15 @@ class ProgramSelectorPresenter(
     }
 
     private fun loadPrograms() {
+        // TODO filter for compatible programs only
         getUserProgramsInteractor.execute(
             onResponse = { result ->
-                allPrograms = result
-                programs = result
+                allPrograms = result.toMutableList().apply {
+                    storage.getButtonPrograms().forEach { boundProgram ->
+                        removeAll { it.id == boundProgram.programId }
+                    }
+                }
+                programs = ArrayList<UserProgram>().apply { allPrograms?.let { addAll(it) } }
                 model?.programOrderingHandler?.currentOrder =
                     ProgramOrderingHandler.OrderBy.NAME to ProgramOrderingHandler.Order.ASCENDING
                 orderAndFilterPrograms()

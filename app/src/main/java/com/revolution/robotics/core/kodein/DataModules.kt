@@ -185,6 +185,7 @@ fun createPresenterModule() =
             ProgramSelectorPresenter(
                 instance(),
                 instance(),
+                instance(),
                 instance()
             )
         }
