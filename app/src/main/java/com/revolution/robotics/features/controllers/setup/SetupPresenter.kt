@@ -40,20 +40,26 @@ class SetupPresenter(
     }
 
     override fun onProgramSlotSelected(index: Int) {
-        val availablePrograms = programs.toMutableList()
-        storage.getButtonPrograms().forEach { boundProgram ->
-            availablePrograms.removeAll { it.id == boundProgram.programId }
-        }
+        val mostRecentViewModel =
+            if (index == SetupViewModel.NO_PROGRAM_SELECTED) {
+                MostRecentProgramViewModel(emptyList(), false, this)
+            } else {
+                val availablePrograms = programs.toMutableList()
+                storage.getButtonPrograms().forEach { boundProgram ->
+                    availablePrograms.removeAll { it.id == boundProgram.programId }
+                }
 
-        var mostRecentPrograms = availablePrograms.sortedBy { it.lastModified }.reversed()
-        if (mostRecentPrograms.size > MOST_RECENT_PROGRAM_COUNT) {
-            mostRecentPrograms = mostRecentPrograms.subList(0, MOST_RECENT_PROGRAM_COUNT)
-        }
-        val hasMorePrograms = availablePrograms.size > mostRecentPrograms.size
-        val mostRecentItems = mostRecentPrograms.map { MostRecentItem(it) }.toMutableList()
-        model?.getProgram(index)?.let { boundProgram -> mostRecentItems.add(0, MostRecentItem(boundProgram, true)) }
+                var mostRecentPrograms = availablePrograms.sortedBy { it.lastModified }.reversed()
+                if (mostRecentPrograms.size > MOST_RECENT_PROGRAM_COUNT) {
+                    mostRecentPrograms = mostRecentPrograms.subList(0, MOST_RECENT_PROGRAM_COUNT)
+                }
+                val hasMorePrograms = availablePrograms.size > mostRecentPrograms.size
+                val mostRecentItems = mostRecentPrograms.map { MostRecentItem(it) }.toMutableList()
+                model?.getProgram(index)
+                    ?.let { boundProgram -> mostRecentItems.add(0, MostRecentItem(boundProgram, true)) }
 
-        val mostRecentViewModel = MostRecentProgramViewModel(mostRecentItems, hasMorePrograms, this)
+                MostRecentProgramViewModel(mostRecentItems, hasMorePrograms, this)
+            }
         view?.onProgramSlotSelected(index, mostRecentViewModel)
     }
 
