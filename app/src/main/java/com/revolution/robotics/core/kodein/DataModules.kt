@@ -189,7 +189,15 @@ fun createPresenterModule() =
                 instance()
             )
         }
-        bind<ProgramPriorityMvp.Presenter>() with singleton { ProgramPriorityPresenter(instance()) }
+        bind<ProgramPriorityMvp.Presenter>() with singleton {
+            ProgramPriorityPresenter(
+                instance(),
+                instance(),
+                instance(),
+                instance(),
+                instance()
+            )
+        }
         bind<ButtonlessProgramSelectorMvp.Presenter>() with singleton {
             ButtonlessProgramSelectorPresenter(
                 instance(),

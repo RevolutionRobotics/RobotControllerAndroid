@@ -1,7 +1,6 @@
 package com.revolution.robotics.features.controllers.buttonless
 
 import com.revolution.robotics.R
-import com.revolution.robotics.core.domain.local.UserBackgroundProgramBinding
 import com.revolution.robotics.core.domain.local.UserProgram
 import com.revolution.robotics.core.interactor.GetUserProgramsInteractor
 import com.revolution.robotics.core.utils.Navigator
@@ -34,7 +33,9 @@ class ButtonlessProgramSelectorPresenter(
     private fun loadPrograms() {
         getUserProgramsInteractor.execute(
             onResponse = { result ->
-                allPrograms = result.map { userProgram ->
+                allPrograms = result.filter {
+                    userConfigurationStorage.controllerHolder?.programs?.get(it.id) == null
+                }.map { userProgram ->
                     ButtonlessProgramViewModel(userProgram, this).apply {
                         enabled.set(compatibleProgramFilterer.isProgramCompatible(userProgram))
                     }
@@ -117,23 +118,12 @@ class ButtonlessProgramSelectorPresenter(
     }
 
     override fun onNextButtonClicked() {
-        userConfigurationStorage.controllerHolder?.backgroundBindings?.let { backgroundBindings ->
-            backgroundBindings.clear()
-            programs.forEach { viewModel ->
-                if (viewModel.selected.get()) {
-                    backgroundBindings.add(
-                        UserBackgroundProgramBinding(
-                            0,
-                            userConfigurationStorage.controllerHolder?.userController?.id ?: 0,
-                            viewModel.program.id,
-                            0
-                        )
-                    )
-                    userConfigurationStorage.controllerHolder?.programs?.put(viewModel.program.id, viewModel.program)
-                }
+        userConfigurationStorage.clearBackgroundPrograms()
+        programs.forEach { viewModel ->
+            if (viewModel.selected.get()) {
+                userConfigurationStorage.addBackgroundProgram(viewModel.program)
             }
         }
-
         navigator.navigate(ButtonlessProgramSelectorFragmentDirections.toProgramPriorityFragment())
     }
 

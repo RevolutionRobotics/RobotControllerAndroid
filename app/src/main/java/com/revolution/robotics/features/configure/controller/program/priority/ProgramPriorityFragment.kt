@@ -8,8 +8,11 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
+import com.revolution.robotics.core.domain.local.UserProgram
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.databinding.FragmentProgramPriorityBinding
+import com.revolution.robotics.features.configure.save.SaveControllerDialog
+import com.revolution.robotics.features.controllers.programInfo.ProgramDialog
 import org.kodein.di.erased.instance
 
 class ProgramPriorityFragment :
@@ -62,5 +65,17 @@ class ProgramPriorityFragment :
         presenter.unregister()
         binding?.recyclerPriority?.adapter = null
         super.onDestroyView()
+    }
+
+    override fun showProgramInfoDialog(userProgram: UserProgram, compatible: Boolean) {
+        if (compatible) {
+            ProgramDialog.Info.newInstance(userProgram).show(fragmentManager)
+        } else {
+            ProgramDialog.CompatibilityIssue.newInstance(userProgram).show(fragmentManager)
+        }
+    }
+
+    override fun showSaveDialog(name: String?, description: String?) {
+        SaveControllerDialog.newInstance(name ?: "", description ?: "").show(fragmentManager)
     }
 }

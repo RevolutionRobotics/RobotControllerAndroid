@@ -61,6 +61,7 @@ abstract class SetupFragment :
         storage.controllerHolder?.programToBeAdded?.let { programToAdd ->
             addProgram(programToAdd)
         }
+        storage.controllerHolder?.programToBeAdded = null
         hideProgramSelector()
     }
 

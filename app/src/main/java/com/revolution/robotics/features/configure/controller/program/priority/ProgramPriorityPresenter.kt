@@ -1,17 +1,27 @@
 package com.revolution.robotics.features.configure.controller.program.priority
 
 import android.util.SparseArray
-import com.revolution.robotics.core.domain.local.UserBackgroundProgramBinding
-import com.revolution.robotics.core.domain.local.UserButtonMapping
-import com.revolution.robotics.core.domain.local.UserController
+import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.local.UserControllerWithPrograms
 import com.revolution.robotics.core.domain.local.UserProgram
 import com.revolution.robotics.core.domain.local.UserProgramBinding
+import com.revolution.robotics.core.eventBus.dialog.DialogEvent
+import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
+import com.revolution.robotics.core.interactor.SaveUserControllerInteractor
+import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.features.configure.UserConfigurationStorage
+import com.revolution.robotics.features.configure.controller.CompatibleProgramFilterer
+import com.revolution.robotics.features.configure.save.SaveControllerDialog
 import java.util.Collections
 
-class ProgramPriorityPresenter(private val userConfigurationStorage: UserConfigurationStorage) :
-    ProgramPriorityMvp.Presenter {
+class ProgramPriorityPresenter(
+    private val userConfigurationStorage: UserConfigurationStorage,
+    private val compatibleProgramFilterer: CompatibleProgramFilterer,
+    private val saveUserControllerInteractor: SaveUserControllerInteractor,
+    private val dialogEventBus: DialogEventBus,
+    private val navigator: Navigator
+) :
+    ProgramPriorityMvp.Presenter, DialogEventBus.Listener {
 
     override var view: ProgramPriorityMvp.View? = null
     override var model: ProgramPriorityViewModel? = null
@@ -20,7 +30,7 @@ class ProgramPriorityPresenter(private val userConfigurationStorage: UserConfigu
 
     override fun register(view: ProgramPriorityMvp.View, model: ProgramPriorityViewModel?) {
         super.register(view, model)
-        userConfigurationStorage.controllerHolder = generateDummyUserController()
+        dialogEventBus.register(this)
         userConfigurationStorage.controllerHolder?.apply {
             viewModels.clear()
             viewModels.addAll(generateItems(this, programs).mapIndexed { index, userProgramBindingItem ->
@@ -30,9 +40,40 @@ class ProgramPriorityPresenter(private val userConfigurationStorage: UserConfigu
         }
     }
 
+    override fun unregister() {
+        dialogEventBus.unregister(this)
+        super.unregister()
+    }
+
     override fun onDragEnded() {
         viewModels.forEachIndexed { index, programPriorityItemViewModel ->
             programPriorityItemViewModel.position = index + 1
+        }
+    }
+
+    override fun onDialogEvent(event: DialogEvent) {
+        if (event == DialogEvent.SAVE_CONTROLLER) {
+            viewModels.forEach { item ->
+                item.userProgramBindingItem.userProgram?.let {
+                    userConfigurationStorage.setPriority(it, item.position)
+                }
+            }
+            userConfigurationStorage.controllerHolder?.backgroundBindings?.let {
+                saveUserControllerInteractor.backgroundProgramBindings = it
+            }
+            userConfigurationStorage.controllerHolder?.userController?.let { userController ->
+                userController.name = event.extras.getString(SaveControllerDialog.KEY_NAME)
+                userController.description = event.extras.getString(SaveControllerDialog.KEY_DESCRIPTION)
+                saveUserControllerInteractor.userController = userController
+            }
+            saveUserControllerInteractor.execute({
+                userConfigurationStorage.controllerHolder = null
+                navigator.popUntil(R.id.configureFragment)
+            }, {
+                // TODO Error handling
+            })
+            // TODO Save data
+            // TODO Popbackstack for the controllers screen after
         }
     }
 
@@ -49,16 +90,16 @@ class ProgramPriorityPresenter(private val userConfigurationStorage: UserConfigu
     }
 
     override fun onInfoButtonClicked(item: ProgramPriorityItemViewModel) {
-        // TODO Show info dialog
+        item.userProgramBindingItem.userProgram?.let {
+            view?.showProgramInfoDialog(it, compatibleProgramFilterer.isProgramCompatible(it))
+        }
     }
 
-    override fun onNextButtonClicked() {
-        viewModels.forEach { item ->
-            item.userProgramBindingItem.userProgram?.let {
-                userConfigurationStorage.setPriority(it, item.position)
-            }
-        }
-        // TODO Navigate to the next screen
+    override fun onDoneButtonClicked() {
+        view?.showSaveDialog(
+            userConfigurationStorage.controllerHolder?.userController?.name,
+            userConfigurationStorage.controllerHolder?.userController?.description
+        )
     }
 
     private fun generateItems(
@@ -105,40 +146,4 @@ class ProgramPriorityPresenter(private val userConfigurationStorage: UserConfigu
             )
         }
     }
-
-    // TODO Remove after we have real data
-    @Suppress("MagicNumber")
-    private fun generateDummyUserController() = UserControllerWithPrograms(
-        userController = UserController(
-            mapping = UserButtonMapping(
-                b1 = UserProgramBinding(1, 1, 1, 4),
-                b2 = UserProgramBinding(2, 1, 2, 3),
-                b4 = UserProgramBinding(3, 1, 3, 2),
-                b5 = UserProgramBinding(4, 1, 4, 1)
-            )
-        ),
-        backgroundBindings = mutableListOf(
-            UserBackgroundProgramBinding(5, 1, 5, 5),
-            UserBackgroundProgramBinding(6, 1, 5, 5),
-            UserBackgroundProgramBinding(7, 1, 6, 6),
-            UserBackgroundProgramBinding(8, 1, 7, 7),
-            UserBackgroundProgramBinding(9, 1, 8, 8),
-            UserBackgroundProgramBinding(10, 1, 9, 9),
-            UserBackgroundProgramBinding(11, 1, 10, 10),
-            UserBackgroundProgramBinding(12, 1, 11, 11)
-        ),
-        programs = SparseArray<UserProgram>().apply {
-            put(1, UserProgram(1, "This is a program #1", System.currentTimeMillis(), "Program name #1"))
-            put(2, UserProgram(2, "This is a program #2", System.currentTimeMillis(), "Program name #2"))
-            put(3, UserProgram(3, "This is a program #3", System.currentTimeMillis(), "Program name #3"))
-            put(4, UserProgram(4, "This is a program #4", System.currentTimeMillis(), "Program name #4"))
-            put(5, UserProgram(5, "This is a program #5", System.currentTimeMillis(), "Program name #5"))
-            put(6, UserProgram(6, "This is a program #6", System.currentTimeMillis(), "Program name #6"))
-            put(7, UserProgram(7, "This is a program #7", System.currentTimeMillis(), "Program name #7"))
-            put(8, UserProgram(8, "This is a program #8", System.currentTimeMillis(), "Program name #8"))
-            put(9, UserProgram(9, "This is a program #9", System.currentTimeMillis(), "Program name #9"))
-            put(10, UserProgram(10, "This is a program #10", System.currentTimeMillis(), "Program name #10"))
-            put(11, UserProgram(11, "This is a program #11", System.currentTimeMillis(), "Program name #11"))
-        }
-    )
 }
