@@ -72,8 +72,6 @@ class ProgramPriorityPresenter(
             }, {
                 // TODO Error handling
             })
-            // TODO Save data
-            // TODO Popbackstack for the controllers screen after
         }
     }
 
@@ -124,7 +122,7 @@ class ProgramPriorityPresenter(
             addItemFromButtonBinding(binding, items, programs)
         }
 
-        items.sortWith(compareBy({ it.priority }, { it.lastModified }))
+        items.sortedWith(compareBy<UserProgramBindingItem> { it.priority }.thenBy { it.lastModified })
         return items
     }
 
