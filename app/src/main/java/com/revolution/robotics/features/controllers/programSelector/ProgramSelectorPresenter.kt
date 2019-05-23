@@ -17,16 +17,20 @@ class ProgramSelectorPresenter(
     private val navigator: Navigator
 ) : ProgramSelectorMvp.Presenter {
 
+    companion object {
+        private const val SHOW_COMPATIBLE_PROGRAMS_ONLY_BY_DEFAULT = true
+    }
+
     override var view: ProgramSelectorMvp.View? = null
     override var model: ProgramSelectorViewModel? = null
 
     private var allPrograms: List<UserProgram>? = null
     private var programs: List<UserProgram> = ArrayList()
-    private var onlyShowCompatiblePrograms = false
+    private var onlyShowCompatiblePrograms = SHOW_COMPATIBLE_PROGRAMS_ONLY_BY_DEFAULT
 
     override fun register(view: ProgramSelectorMvp.View, model: ProgramSelectorViewModel?) {
         super.register(view, model)
-        setShowOnlyCompatiblePrograms(false)
+        setShowOnlyCompatiblePrograms(SHOW_COMPATIBLE_PROGRAMS_ONLY_BY_DEFAULT)
         loadPrograms()
     }
 
@@ -42,7 +46,7 @@ class ProgramSelectorPresenter(
                 model?.programOrderingHandler?.currentOrder =
                     ProgramOrderingHandler.OrderBy.NAME to ProgramOrderingHandler.Order.ASCENDING
                 orderAndFilterPrograms()
-                view?.onProgramsChanged(createViewModels(programs))
+                onProgramsChanged()
             },
             onError = {
                 // TODO add error handling
@@ -53,17 +57,17 @@ class ProgramSelectorPresenter(
     private fun setShowOnlyCompatiblePrograms(onlyCompatible: Boolean) {
         onlyShowCompatiblePrograms = onlyCompatible
         if (onlyCompatible) {
-            model?.filterText?.set(R.string.program_selector_show_all_programs)
-            model?.filterDrawable?.set(R.drawable.ic_compatible_selected)
-        } else {
             model?.filterText?.set(R.string.program_selector_show_compatible_programs)
             model?.filterDrawable?.set(R.drawable.ic_compatible)
+        } else {
+            model?.filterText?.set(R.string.program_selector_show_all_programs)
+            model?.filterDrawable?.set(R.drawable.ic_compatible_selected)
         }
     }
 
     override fun updateOrderingAndFiltering() {
         orderAndFilterPrograms()
-        view?.onProgramsChanged(createViewModels(programs))
+        onProgramsChanged()
     }
 
     private fun orderAndFilterPrograms() {
@@ -88,9 +92,15 @@ class ProgramSelectorPresenter(
     }
 
     override fun onProgramSelected(userProgram: UserProgram) {
-        view?.showDialog(ProgramDialog.Add.newInstance(userProgram))
+        if (compatibleProgramFilterer.isProgramCompatible(userProgram)) {
+            view?.showDialog(ProgramDialog.Add.newInstance(userProgram))
+        } else {
+            view?.showDialog(ProgramDialog.CompatibilityIssue.newInstance(userProgram))
+        }
     }
 
-    private fun createViewModels(programs: List<UserProgram>) =
-        programs.map { ProgramViewModel(it, this) }
+    private fun onProgramsChanged() {
+        model?.isEmpty?.set(programs.isEmpty())
+        view?.onProgramsChanged(programs.map { ProgramViewModel(it, this) })
+    }
 }

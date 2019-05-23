@@ -4,6 +4,7 @@
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="next">Next</string>
+    <string name="done">Done</string>
 
     <!-- Main menu -->
     <string name="menu_robots">robots</string>
@@ -121,6 +122,9 @@
     <string name="controller_selected">Selected</string>
     <string name="controller_choose_this">Choose this!</string>
     <string name="controller_create_new">create new</string>
+    <string name="delete_controller_description">Are you sure you want to delete this controller?</string>
+    <string name="delete_controller_confirm">Delete</string>
+    <string name="delete_controller_cancel">Cancel</string>
 
     <!-- Controller Info dialog-->
     <string name="controller_info_dialog_button_text">Got it</string>
@@ -156,7 +160,9 @@
 
     <!-- Program info -->
     <string name="program_info_edit_program">Edit program</string>
-    <string name="program_info_compatibility_issue">Description of compatibility issue. Lorem ipsum dolor sit amet, eu commodo numquam comprehensam vel. Quo cu alia placerat. Per graece denique.</string>
+    <string name="program_info_compatibility_issue">Description of compatibility issue. Lorem ipsum dolor sit amet, eu
+        commodo numquam comprehensam vel. Quo cu alia placerat. Per graece denique.
+    </string>
     <string name="program_info_compatibility_issue_positive_button">Got it</string>
     <string name="program_info_remove_button">Remove program</string>
     <string name="program_info_add_button">Add program</string>
@@ -183,6 +189,19 @@
     <string name="program_selector_title">Choose a program!</string>
     <string name="program_selector_order_by_name">Name</string>
     <string name="program_selector_order_by_date">Modified</string>
+    <string name="program_selector_empty">Empty state placeholder for program selector</string>
+    <string name="program_selector_show_compatible_programs">show compatible programs only</string>
+    <string name="program_selector_show_all_programs">show all programs</string>
+
+    <!-- Buttonless program selector -->
+    <string name="buttonless_program_selector_title">Add buttonless programs running in the background</string>
+    <string name="buttonless_program_select_all_checkbox">Select all</string>
+    <string name="buttonless_program_show_compatible_programs">Show compatible programs only</string>
+    <string name="buttonless_program_show_all_programs">Show all programs</string>
+    <string name="buttonless_program_selector_empty">Empty state placeholder for buttonless program selector</string>
+
+    <!-- Program priority -->
+    <string name="program_priority_screen_title">Create priority order for the programs</string>
 
     <!-- Settings -->
     <string name="settings_screen_title">Settings</string>
@@ -199,6 +218,8 @@
     <string name="about_privacy_policy_button_title">Privacy policy</string>
     <string name="about_terms_conditions_button_title"><![CDATA[Terms & conditions]]></string>
     <string name="about_version">Version</string>
+
+    <!-- Firmware update -->
     <string name="firmware_new_connection_button">Connect to new brain</string>
     <string name="firmware_check_for_updates">Check for updates</string>
     <string name="firmware_screen_title">Firmware update</string>
@@ -217,9 +238,6 @@
     <string name="firmware_please_wait">Please wait</string>
     <string name="firmware_successful_update">Successful update</string>
     <string name="firmware_done_button">Done</string>
-    <string name="tutorial_reset_success">Successful tutorial reset</string>
-
-    <string name="error_variable_already_in_use">Variable name is already in use</string>
     <string name="firmware_update_failed_title">Update failed</string>
     <string name="firmware_update_failed_tips_title">Try to…</string>
     <string name="firmware_update_failed_tips">- Lorem ipsum dolor sit amet, eu commodo numquam comprehensam vel. Quo cu
@@ -231,18 +249,11 @@
     <string name="firmware_update_failed_update_later_button">Update later</string>
     <string name="firmware_update_failed_update_community_button">Community</string>
     <string name="firmware_update_failed_update_try_again_button">Try again</string>
-    <string name="program_priority_screen_title">Create priority order for the programs</string>
-    <string name="program_selector_show_compatible_programs">show compatible programs only</string>
-    <string name="program_selector_show_all_programs">show all programs</string>
-    <string name="buttonless_program_selector_title">Add buttonless programs running in the background</string>
-    <string name="buttonless_program_select_all_checkbox">Select all</string>
-    <string name="buttonless_program_show_compatible_programs">Show compatible programs only</string>
-    <string name="buttonless_program_show_all_programs">Show all programs</string>
-    <string name="priority_screen_button_done">Done</string>
 
-    <string name="delete_controller_description">Are you sure you want to delete this controller?</string>
-    <string name="delete_controller_confirm">Delete</string>
-    <string name="delete_controller_cancel">Cancel</string>
+    <!-- Tutorial -->
+    <string name="tutorial_reset_success">Successful tutorial reset</string>
 
+    <!-- Errors -->
+    <string name="error_variable_already_in_use">Variable name is already in use</string>
 
 </resources>

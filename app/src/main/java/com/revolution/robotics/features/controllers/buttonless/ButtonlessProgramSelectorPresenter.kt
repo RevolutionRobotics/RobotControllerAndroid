@@ -19,16 +19,20 @@ class ButtonlessProgramSelectorPresenter(
     private val userConfigurationStorage: UserConfigurationStorage
 ) : ButtonlessProgramSelectorMvp.Presenter {
 
+    companion object {
+        private const val SHOW_COMPATIBLE_PROGRAMS_ONLY_BY_DEFAULT = true
+    }
+
     override var view: ButtonlessProgramSelectorMvp.View? = null
     override var model: ButtonlessProgramSelectorViewModel? = null
 
     private var allPrograms: List<ButtonlessProgramViewModel>? = null
     private var programs: MutableList<ButtonlessProgramViewModel> = mutableListOf()
-    private var onlyShowCompatiblePrograms = false
+    private var onlyShowCompatiblePrograms = SHOW_COMPATIBLE_PROGRAMS_ONLY_BY_DEFAULT
 
     override fun register(view: ButtonlessProgramSelectorMvp.View, model: ButtonlessProgramSelectorViewModel?) {
         super.register(view, model)
-        setShowOnlyCompatiblePrograms(false)
+        setShowOnlyCompatiblePrograms(SHOW_COMPATIBLE_PROGRAMS_ONLY_BY_DEFAULT)
         loadPrograms()
     }
 
@@ -64,11 +68,11 @@ class ButtonlessProgramSelectorPresenter(
     private fun setShowOnlyCompatiblePrograms(onlyCompatible: Boolean) {
         onlyShowCompatiblePrograms = onlyCompatible
         if (onlyCompatible) {
-            model?.showCompatibleButtonText?.set(R.string.buttonless_program_show_all_programs)
-            model?.showCompatibleButtonIcon?.set(R.drawable.ic_compatible_selected)
-        } else {
             model?.showCompatibleButtonText?.set(R.string.buttonless_program_show_compatible_programs)
             model?.showCompatibleButtonIcon?.set(R.drawable.ic_compatible)
+        } else {
+            model?.showCompatibleButtonText?.set(R.string.buttonless_program_show_all_programs)
+            model?.showCompatibleButtonIcon?.set(R.drawable.ic_compatible_selected)
         }
     }
 
@@ -116,6 +120,7 @@ class ButtonlessProgramSelectorPresenter(
                 model.programOrderingHandler.getComparator().compare(o1.program, o2.program)
             }).toMutableList()
             model.items.value = programs
+            model.isEmpty.set(programs.isEmpty())
         }
     }
 
