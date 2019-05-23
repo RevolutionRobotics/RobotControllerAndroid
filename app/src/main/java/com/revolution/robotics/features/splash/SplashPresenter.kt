@@ -16,5 +16,4 @@ class SplashPresenter(private val firebaseInitInteractor: FirebaseInitInteractor
             // TODO Error handling
         })
     }
-
 }
