@@ -16,7 +16,7 @@ class PlayPresenter : PlayMvp.Presenter {
     }
 
     override fun onDeviceConnected(handler: RoboticsDeviceConnector) {
-        liveControllerService = handler.getLiveControllerService()
+        liveControllerService = handler.liveControllerService
         liveControllerService?.start()
     }
 

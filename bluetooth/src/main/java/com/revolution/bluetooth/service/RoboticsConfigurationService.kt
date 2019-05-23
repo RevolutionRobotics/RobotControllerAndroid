@@ -167,22 +167,29 @@ class RoboticsConfigurationService : RoboticsBLEService() {
         when (characteristic.value[0]) {
             STATUS_UNUSED -> startUploading(null)
             STATUS_UPLOAD -> checkMd5(characteristic.value.copyOfRange(1, MD5_LENGTH + 1))
-            STATUS_VALIDATION -> readStatus()
+            STATUS_VALIDATION -> if (validationCounter < MAX_VALIDATION_COUNT) {
+                readStatus()
+                validationCounter++
+            } else {
+                error?.invoke(BLESendingTimeoutException())
+                resetVariables()
+            }
             STATUS_READY -> {
                 success?.invoke()
-                success = null
-                error = null
-                currentFile = null
-                validationCounter = 0
+                resetVariables()
             }
             STATUS_VALIDATION_ERROR -> {
                 error?.invoke(BLELongMessageValidationException())
-                success = null
-                error = null
-                currentFile = null
-                validationCounter = 0
+                resetVariables()
             }
         }
+    }
+
+    private fun resetVariables() {
+        success = null
+        error = null
+        currentFile = null
+        validationCounter = 0
     }
 
     override fun onCharacteristicWrite(gatt: BluetoothGatt?, characteristic: BluetoothGattCharacteristic, status: Int) {
@@ -190,17 +197,7 @@ class RoboticsConfigurationService : RoboticsBLEService() {
             MESSAGE_TYPE_SELECT -> readStatus()
             MESSAGE_TYPE_INIT -> startChunkSending()
             MESSAGE_TYPE_UPLOAD -> sendNextChunk()
-            MESSAGE_TYPE_FINALIZE ->
-                if (validationCounter < MAX_VALIDATION_COUNT) {
-                    readStatus()
-                    validationCounter++
-                } else {
-                    error?.invoke(BLESendingTimeoutException())
-                    success = null
-                    error = null
-                    currentFile = null
-                    validationCounter = 0
-                }
+            MESSAGE_TYPE_FINALIZE -> readStatus()
         }
     }
 

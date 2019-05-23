@@ -61,11 +61,15 @@ class BluetoothManager(private var kodein: Kodein) : RoboticsConnectionStatusLis
         connectionFlowHelper = null
     }
 
-    fun getDeviceInfoService() = bleConnectionHandler.getDeviceService()
+    fun getDeviceInfoService() = bleConnectionHandler.deviceService
 
-    fun getBatteryInfoService() = bleConnectionHandler.getBatteryService()
+    fun getBatteryInfoService() = bleConnectionHandler.batteryService
 
-    fun getConfigurationService() = bleConnectionHandler.getConfigurationService()
+    fun getConfigurationService() = bleConnectionHandler.configurationService
 
-    fun getLiveControllerService() = bleConnectionHandler.getLiveControllerService()
+    fun getLiveControllerService() = bleConnectionHandler.liveControllerService
+
+    fun getMotorService() = bleConnectionHandler.motorService
+
+    fun getSensorService() = bleConnectionHandler.sensorService
 }
