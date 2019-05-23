@@ -33,10 +33,13 @@ class SaveNewUserRobotInteractor(
 
     override fun getData(): Long {
         configuration?.let { remoteConfig ->
-            val configurationId = userConfigurationDao.saveUserConfiguration(createUserConfiguration(remoteConfig))
+            val userConfiguration = createUserConfiguration(remoteConfig)
+            val configurationId = userConfigurationDao.saveUserConfiguration(userConfiguration)
+            userConfiguration.id = configurationId.toInt()
             userRobot.configurationId = configurationId.toInt()
             val userController = saveUserController(controller)
-
+            userConfiguration.controller = userController.id
+            userConfigurationDao.saveUserConfiguration(userConfiguration)
             val programIdMap = saveUserPrograms()
 
             userController.mapping?.let { userMapping ->
