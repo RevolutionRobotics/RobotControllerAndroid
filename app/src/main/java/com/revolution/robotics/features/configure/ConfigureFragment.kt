@@ -37,6 +37,7 @@ class ConfigureFragment : BaseFragment<FragmentConfigureBinding, ConfigureViewMo
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         presenter.register(this, viewModel)
+        userConfigurationStorage.robot = arguments?.userRobot
         arguments?.let { arguments ->
             binding?.toolbarViewModel = ConfigureToolbarViewModel(presenter).apply {
                 presenter.initUI(arguments.userRobot, this)
@@ -82,7 +83,7 @@ class ConfigureFragment : BaseFragment<FragmentConfigureBinding, ConfigureViewMo
     }
 
     override fun showControllerScreen() {
-        commitFragmentToFrame(ConfigureControllersFragment())
+        commitFragmentToFrame(ConfigureControllersFragment.newInstance())
     }
 
     private fun commitFragmentToFrame(fragment: Fragment) {

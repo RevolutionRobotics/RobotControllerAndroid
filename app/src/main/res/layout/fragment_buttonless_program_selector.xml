@@ -145,10 +145,11 @@
                 android:id="@+id/recycler_priority"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                app:gone="@{viewModel.isEmpty}"
                 app:buttonlessPrograms="@{viewModel.items}"
                 app:layout_constraintTop_toBottomOf="@id/toolbar"
                 app:layout_constraintBottom_toTopOf="@id/divider_bottom"/>
 
-
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

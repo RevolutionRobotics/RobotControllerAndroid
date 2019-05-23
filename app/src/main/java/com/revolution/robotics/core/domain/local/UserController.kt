@@ -4,22 +4,31 @@ import android.os.Parcelable
 import androidx.room.Dao
 import androidx.room.Embedded
 import androidx.room.Entity
+import androidx.room.ForeignKey
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.PrimaryKey
 import androidx.room.Query
 import kotlinx.android.parcel.Parcelize
 
-@Entity
+@Entity(
+    foreignKeys = [ForeignKey(
+        entity = UserRobot::class,
+        parentColumns = arrayOf("instanceId"),
+        childColumns = arrayOf("robotId"),
+        onDelete = ForeignKey.CASCADE
+    )]
+)
 @Suppress("DataClassContainsFunctions")
 @Parcelize
 data class UserController(
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0,
-    var description: String? = null,
-    var lastModified: Long = 0L,
+    var robotId: Int = 0,
     var name: String? = null,
     var type: String? = null,
+    var description: String? = null,
+    var lastModified: Long = 0L,
     @Embedded
     var mapping: UserButtonMapping? = UserButtonMapping()
 ) : Parcelable {
@@ -33,8 +42,8 @@ interface UserControllerDao {
     @Query("SELECT * FROM UserController WHERE id=:id")
     fun getUserController(id: Int): UserController?
 
-    @Query("SELECT * FROM UserController ORDER BY lastModified")
-    fun getUserControllers(): List<UserController>
+    @Query("SELECT * FROM UserController WHERE robotId=:robotId ORDER BY lastModified")
+    fun getUserControllersForRobot(robotId: Int): List<UserController>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveUserController(userController: UserController): Long

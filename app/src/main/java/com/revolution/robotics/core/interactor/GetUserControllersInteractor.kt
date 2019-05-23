@@ -6,5 +6,7 @@ import com.revolution.robotics.core.domain.local.UserControllerDao
 class GetUserControllersInteractor(private val userControllerDao: UserControllerDao) :
     Interactor<List<UserController>>() {
 
-    override fun getData(): List<UserController> = userControllerDao.getUserControllers()
+    var robotId: Int = 0
+
+    override fun getData(): List<UserController> = userControllerDao.getUserControllersForRobot(robotId)
 }

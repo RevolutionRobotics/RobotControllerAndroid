@@ -13,7 +13,9 @@ interface ConfigureControllersMvp : Mvp {
         fun showDeleteControllerDialog(controllerId: Int)
     }
 
+    @Suppress("ComplexInterface")
     interface Presenter : Mvp.Presenter<View, ConfigureControllersViewModel> {
+        fun loadControllers(robotId: Int)
         fun onPageSelected(position: Int)
         fun nextButtonClick()
         fun previousButtonClick()
