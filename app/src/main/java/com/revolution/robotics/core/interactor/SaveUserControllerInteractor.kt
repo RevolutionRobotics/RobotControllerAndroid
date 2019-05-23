@@ -14,11 +14,11 @@ class SaveUserControllerInteractor(
     lateinit var backgroundProgramBindings: List<UserBackgroundProgramBinding>
 
     override fun getData(): Long {
-        val controllerId = userControllerDao.saveUserController(userController)
+        userControllerDao.updateUserController(userController)
         backgroundProgramBindings.forEach {
-            it.controllerId = controllerId.toInt()
+            it.controllerId = userController.id
         }
         userBackgroundProgramBindingDao.saveBackgroundPrograms(backgroundProgramBindings)
-        return controllerId
+        return userController.id.toLong()
     }
 }
