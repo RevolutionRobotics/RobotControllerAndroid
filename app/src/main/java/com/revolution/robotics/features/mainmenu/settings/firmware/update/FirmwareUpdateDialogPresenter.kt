@@ -1,5 +1,7 @@
 package com.revolution.robotics.features.mainmenu.settings.firmware.update
 
+import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.revolution.robotics.R
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
@@ -26,7 +28,16 @@ class FirmwareUpdateDialogPresenter(
             viewModel.infoTextsVisible.value = false
             viewModel.loadingTextVisible.value = true
             viewModel.updateText.value = resourceResolver.string(R.string.firmware_loading)
-            bluetoothManager.getDeviceInfoService().apply {
+            bluetoothManager.bleConnectionHandler.configurationService.sendConfiguration(
+                Uri.parse("/data/data/com.revolution.robotics.dev/files/images/robot-22.jpg"),
+                {
+                    Log.e("TEST", "SUCCESS")
+                }, {
+                    it.printStackTrace()
+                }
+            )
+
+            /*bluetoothManager.getDeviceInfoService().apply {
                 getSystemId({
                     viewModel.robotName.value = it
                 }, ::readError)
@@ -61,7 +72,7 @@ class FirmwareUpdateDialogPresenter(
                     viewModel.loadingTextVisible.value = false
                     viewModel.infoTextsVisible.value = true
                 }, ::readError)
-            }
+            }*/
         }
     }
 

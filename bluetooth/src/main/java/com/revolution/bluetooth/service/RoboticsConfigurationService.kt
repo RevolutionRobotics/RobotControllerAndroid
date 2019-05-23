@@ -3,6 +3,7 @@ package com.revolution.bluetooth.service
 import android.bluetooth.BluetoothGatt
 import android.bluetooth.BluetoothGattCharacteristic
 import android.net.Uri
+import android.util.Log
 import com.revolution.bluetooth.exception.BLEException
 import com.revolution.bluetooth.exception.BLELongMessageIsAlreadyRunning
 import com.revolution.bluetooth.exception.BLELongMessageValidationException
@@ -83,16 +84,10 @@ class RoboticsConfigurationService : RoboticsBLEService() {
     }
 
     private fun sendSelectLongMessage(typeId: Byte) {
-        service?.getCharacteristic(RoboticsLiveControllerService.CHARACTERISTIC_ID)?.let { characteristic ->
-            characteristic.value = ByteArray(2).apply {
-                set(0, MESSAGE_TYPE_SELECT)
-                set(1, typeId)
-            }
-
-            eventSerializer?.registerEvent {
-                bluetoothGatt?.writeCharacteristic(characteristic) ?: false
-            }
-        }
+        writeMessage(ByteArray(2).apply {
+            set(0, MESSAGE_TYPE_SELECT)
+            set(1, typeId)
+        })
     }
 
     private fun checkMd5(serverMd5: ByteArray) {
@@ -121,8 +116,8 @@ class RoboticsConfigurationService : RoboticsBLEService() {
             val md5 = fileMD5 ?: md5Checker.calculateMD5Hash(currentFile)
             ByteArray(MD5_LENGTH + 1).apply {
                 set(0, MESSAGE_TYPE_INIT)
-                for (index in 1..MD5_LENGTH + 1) {
-                    set(index, md5[index])
+                for (index in 0 until MD5_LENGTH) {
+                    set(index + 1, md5[index])
                 }
                 writeMessage(this)
             }
@@ -153,10 +148,14 @@ class RoboticsConfigurationService : RoboticsBLEService() {
     }
 
     private fun writeMessage(byteArray: ByteArray) {
-        service?.getCharacteristic(RoboticsLiveControllerService.CHARACTERISTIC_ID)?.let { characteristic ->
+        service?.getCharacteristic(CHARACTERISTIC)?.let { characteristic ->
+            characteristic.writeType = BluetoothGattCharacteristic.WRITE_TYPE_DEFAULT
             characteristic.value = byteArray
+            Log.e("TEST", "Write a message: ${byteArray.toCustomString()}")
             eventSerializer?.registerEvent {
-                bluetoothGatt?.writeCharacteristic(characteristic) ?: false
+                val value = bluetoothGatt?.writeCharacteristic(characteristic) ?: false
+                Log.e("TEST", "Write message sent $value  ${byteArray.toCustomString()}")
+                value
             }
         }
     }
@@ -164,21 +163,39 @@ class RoboticsConfigurationService : RoboticsBLEService() {
     private fun isUploadInProgress() = currentFile != null
 
     override fun onCharacteristicRead(gatt: BluetoothGatt?, characteristic: BluetoothGattCharacteristic, status: Int) {
+        if (characteristic.uuid != CHARACTERISTIC) {
+            return
+        }
+        Log.e(
+            "TEST",
+            "Characteristic read happened status: $status first byte: ${characteristic.value[0]} total message: ${characteristic.value.toCustomString()}"
+        )
         when (characteristic.value[0]) {
-            STATUS_UNUSED -> startUploading(null)
-            STATUS_UPLOAD -> checkMd5(characteristic.value.copyOfRange(1, MD5_LENGTH + 1))
-            STATUS_VALIDATION -> if (validationCounter < MAX_VALIDATION_COUNT) {
-                readStatus()
-                validationCounter++
-            } else {
-                error?.invoke(BLESendingTimeoutException())
-                resetVariables()
+            STATUS_UNUSED -> {
+                Log.e("TEST", "Unused --> start uploading")
+                startUploading(null)
+            }
+            STATUS_UPLOAD -> {
+                Log.e("TEST", "Upload --> checkMd5")
+                checkMd5(characteristic.value.copyOfRange(1, MD5_LENGTH + 1))
+            }
+            STATUS_VALIDATION -> {
+                Log.e("TEST", "Validation attempt:$validationCounter")
+                if (validationCounter < MAX_VALIDATION_COUNT) {
+                    readStatus()
+                    validationCounter++
+                } else {
+                    error?.invoke(BLESendingTimeoutException())
+                    resetVariables()
+                }
             }
             STATUS_READY -> {
+                Log.e("TEST", "Ready --> send success event")
                 success?.invoke()
                 resetVariables()
             }
             STATUS_VALIDATION_ERROR -> {
+                Log.e("TEST", "Error --> send error event")
                 error?.invoke(BLELongMessageValidationException())
                 resetVariables()
             }
@@ -193,13 +210,40 @@ class RoboticsConfigurationService : RoboticsBLEService() {
     }
 
     override fun onCharacteristicWrite(gatt: BluetoothGatt?, characteristic: BluetoothGattCharacteristic, status: Int) {
+        if (characteristic.uuid != CHARACTERISTIC) {
+            return
+        }
+        Log.e(
+            "TEST",
+            "Write happened! status: $status First byte: ${characteristic.value[0]} Total message: ${characteristic.value.toCustomString()}"
+        )
         when (characteristic.value[0]) {
-            MESSAGE_TYPE_SELECT -> readStatus()
-            MESSAGE_TYPE_INIT -> startChunkSending()
-            MESSAGE_TYPE_UPLOAD -> sendNextChunk()
-            MESSAGE_TYPE_FINALIZE -> readStatus()
+            MESSAGE_TYPE_SELECT -> {
+                Log.e("TEST", "Select --> read status")
+                readStatus()
+            }
+            MESSAGE_TYPE_INIT -> {
+                Log.e("TEST", "Init --> startChunkSending")
+                startChunkSending()
+            }
+            MESSAGE_TYPE_UPLOAD -> {
+                Log.e("TEST", "Upload --> sendNextChung")
+                sendNextChunk()
+            }
+            MESSAGE_TYPE_FINALIZE -> {
+                Log.e("TEST", "Finalize --> startStatusReadingLoop")
+                readStatus()
+            }
         }
     }
 
     override fun onCharacteristicChanged(gatt: BluetoothGatt?, characteristic: BluetoothGattCharacteristic) = Unit
+
+    fun ByteArray.toCustomString(): String {
+        var content = "["
+        this.forEach {
+            content += "$it,"
+        }
+        return content + "]"
+    }
 }
