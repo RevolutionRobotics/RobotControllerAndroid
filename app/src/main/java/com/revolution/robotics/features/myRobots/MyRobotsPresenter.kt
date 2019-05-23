@@ -88,7 +88,7 @@ class MyRobotsPresenter(
 
     override fun onPlaySelected(configId: Int) {
         getControllerTypeInteractor.configurationId = configId
-        getControllerTypeInteractor.execute({type ->
+        getControllerTypeInteractor.execute({ type ->
             when (type) {
                 ControllerType.GAMER -> navigator.navigate(MyRobotsFragmentDirections.toPlayGamer())
                 ControllerType.MULTITASKER -> navigator.navigate(MyRobotsFragmentDirections.toPlayMultitasker())
