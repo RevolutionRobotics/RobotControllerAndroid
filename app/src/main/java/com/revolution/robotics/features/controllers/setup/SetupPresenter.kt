@@ -58,7 +58,7 @@ class SetupPresenter(
     override fun onProgramSlotSelected(index: Int) {
         val mostRecentViewModel =
             if (index == SetupViewModel.NO_PROGRAM_SELECTED) {
-                MostRecentProgramViewModel(emptyList(), false, this)
+                null
             } else {
                 val availablePrograms = programs.toMutableList()
                 storage.getBoundButtonPrograms().forEach { boundProgram ->
@@ -72,12 +72,12 @@ class SetupPresenter(
                 if (mostRecentPrograms.size > MOST_RECENT_PROGRAM_COUNT) {
                     mostRecentPrograms = mostRecentPrograms.subList(0, MOST_RECENT_PROGRAM_COUNT)
                 }
-                val hasMorePrograms = availablePrograms.size > mostRecentPrograms.size
                 val mostRecentItems = mostRecentPrograms.map { MostRecentItem(it) }.toMutableList()
-                model?.getProgram(index)
-                    ?.let { boundProgram -> mostRecentItems.add(0, MostRecentItem(boundProgram, true)) }
+                model?.getProgram(index)?.let { boundProgram ->
+                    mostRecentItems.add(0, MostRecentItem(boundProgram, true))
+                }
 
-                MostRecentProgramViewModel(mostRecentItems, hasMorePrograms, this)
+                MostRecentProgramViewModel(mostRecentItems, this)
             }
         view?.onProgramSlotSelected(index, mostRecentViewModel)
     }
