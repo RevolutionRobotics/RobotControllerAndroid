@@ -10,6 +10,7 @@ import com.revolution.robotics.core.domain.local.UserControllerDao
 import com.revolution.robotics.core.domain.local.UserProgramDao
 import com.revolution.robotics.core.domain.local.UserRobotDao
 import com.revolution.robotics.core.interactor.DeleteRobotInteractor
+import com.revolution.robotics.core.interactor.FirebaseInitInteractor
 import com.revolution.robotics.core.interactor.GetAllUserRobotsInteractor
 import com.revolution.robotics.core.interactor.GetControllerTypeInteractor
 import com.revolution.robotics.core.interactor.GetUserChallengeCategoriesInteractor
@@ -75,6 +76,8 @@ import com.revolution.robotics.features.myRobots.MyRobotsMvp
 import com.revolution.robotics.features.myRobots.MyRobotsPresenter
 import com.revolution.robotics.features.play.PlayMvp
 import com.revolution.robotics.features.play.PlayPresenter
+import com.revolution.robotics.features.splash.SplashMvp
+import com.revolution.robotics.features.splash.SplashPresenter
 import com.revolution.robotics.features.whoToBuild.WhoToBuildMvp
 import com.revolution.robotics.features.whoToBuild.WhoToBuildPresenter
 import org.kodein.di.Kodein
@@ -123,6 +126,7 @@ fun createInteractorModule() =
         bind<SaveUserChallengeCategoryInteractor>() with provider { SaveUserChallengeCategoryInteractor(instance()) }
         bind<GetUserProgramsInteractor>() with provider { GetUserProgramsInteractor(instance()) }
         bind<GetControllerTypeInteractor>() with provider { GetControllerTypeInteractor(instance(), instance()) }
+        bind<FirebaseInitInteractor>() with provider { FirebaseInitInteractor() }
     }
 
 @Suppress("LongMethod")
@@ -229,6 +233,7 @@ fun createPresenterModule() =
                 instance()
             )
         }
+        bind<SplashMvp.Presenter>() with singleton { SplashPresenter(instance()) }
     }
 
 fun createDbModule(context: Context) =
