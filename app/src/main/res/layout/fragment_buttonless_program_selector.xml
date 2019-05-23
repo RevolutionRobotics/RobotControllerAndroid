@@ -67,6 +67,7 @@
                 android:fontFamily="@font/barlow_regular"
                 android:textSize="12sp"
                 android:textColor="@color/white"
+                app:gone="@{viewModel.isEmpty}"
                 app:layout_constraintStart_toStartOf="parent"/>
 
         <com.revolution.robotics.views.RoboticsButton
