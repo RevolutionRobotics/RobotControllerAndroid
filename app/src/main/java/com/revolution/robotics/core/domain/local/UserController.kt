@@ -9,6 +9,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.PrimaryKey
 import androidx.room.Query
+import androidx.room.Update
 import kotlinx.android.parcel.Parcelize
 
 @Entity(
@@ -45,8 +46,11 @@ interface UserControllerDao {
     @Query("SELECT * FROM UserController WHERE robotId=:robotId ORDER BY lastModified")
     fun getUserControllersForRobot(robotId: Int): List<UserController>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.FAIL)
     fun saveUserController(userController: UserController): Long
+
+    @Update
+    fun updateUserController(userController: UserController)
 
     @Query("DELETE FROM UserController WHERE id = :id")
     fun deleteUserControllerById(id: Int)

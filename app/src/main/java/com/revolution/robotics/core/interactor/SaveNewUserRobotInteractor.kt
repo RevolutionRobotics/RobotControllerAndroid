@@ -70,6 +70,7 @@ class SaveNewUserRobotInteractor(
                     createBackgroundBinding(userController.id, it, programIdMap)
                 } ?: emptyList()
             )
+            controllerDao.updateUserController(userController)
         }
 
         return userRobot.instanceId.toLong()
