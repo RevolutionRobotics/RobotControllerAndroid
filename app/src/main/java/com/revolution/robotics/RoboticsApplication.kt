@@ -3,6 +3,7 @@ package com.revolution.robotics
 import android.app.Application
 import com.crashlytics.android.Crashlytics
 import com.google.firebase.FirebaseApp
+import com.google.firebase.database.FirebaseDatabase
 import com.revolution.robotics.core.kodein.createAppModule
 import com.revolution.robotics.core.kodein.createDbModule
 import com.revolution.robotics.core.kodein.createInteractorModule
@@ -30,5 +31,6 @@ class RoboticsApplication : Application(), KodeinAware {
             Fabric.with(this, Crashlytics())
         }
         FirebaseApp.initializeApp(this)
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true)
     }
 }
