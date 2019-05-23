@@ -6,8 +6,12 @@ import android.net.Uri
 import com.revolution.bluetooth.exception.BLEException
 import com.revolution.bluetooth.exception.BLELongMessageIsAlreadyRunning
 import com.revolution.bluetooth.exception.BLELongMessageValidationException
+import com.revolution.bluetooth.exception.BLESendingTimeoutException
+import com.revolution.bluetooth.file.FileChunkHandler
+import com.revolution.bluetooth.file.MD5Checker
 import java.util.UUID
 
+@Suppress("TooManyFunctions")
 class RoboticsConfigurationService : RoboticsBLEService() {
 
     companion object {
@@ -29,14 +33,21 @@ class RoboticsConfigurationService : RoboticsBLEService() {
         const val STATUS_READY = 3.toByte()
         const val STATUS_VALIDATION_ERROR = 4.toByte()
 
-        val CHARACHTERISTIC: UUID = UUID.fromString("d59bb321-7218-4fb9-abac-2f6814f31a4d")
+        const val MAX_VALIDATION_COUNT = 30
+        const val MD5_LENGTH = 16
+        const val CHUNK_LENGTH = 20
+
+        val CHARACTERISTIC: UUID = UUID.fromString("d59bb321-7218-4fb9-abac-2f6814f31a4d")
     }
 
     override val serviceId: UUID = UUID.fromString(SERVICE_ID)
+    private val md5Checker = MD5Checker()
+    private val fileChunkHandler = FileChunkHandler()
 
     var success: (() -> Unit)? = null
     var error: ((exception: BLEException) -> Unit)? = null
     var currentFile: Uri? = null
+    var validationCounter = 0
 
     fun updateFirmware(file: Uri, onSuccess: () -> Unit, onError: (exception: BLEException) -> Unit) {
         initLongMessage(file, onSuccess, onError)
@@ -77,62 +88,119 @@ class RoboticsConfigurationService : RoboticsBLEService() {
                 set(0, MESSAGE_TYPE_SELECT)
                 set(1, typeId)
             }
-            bluetoothGatt?.writeCharacteristic(characteristic)
+
+            eventSerializer?.registerEvent {
+                bluetoothGatt?.writeCharacteristic(characteristic) ?: false
+            }
         }
     }
 
-    private fun checkMd5(serverMd5: ByteArray, serverFileLength: Int) {
-        // TODO Validate md5
-        startUploading()
+    private fun checkMd5(serverMd5: ByteArray) {
+        currentFile?.let { uri ->
+            val currentMD5 = MD5Checker().calculateMD5Hash(uri)
+            if (currentMD5.contentEquals(serverMd5)) {
+                sendFinalizeMessage()
+            } else {
+                startUploading(currentMD5)
+            }
+        }
     }
 
-    private fun readStatus(withDelay: Boolean) {
-
+    private fun readStatus() {
+        service?.getCharacteristic(CHARACTERISTIC)?.let { characteristic ->
+            bluetoothGatt?.let { bluetoothGatt ->
+                eventSerializer?.registerEvent {
+                    bluetoothGatt.readCharacteristic(characteristic)
+                }
+            }
+        }
     }
 
-    private fun startUploading() {
+    private fun startUploading(fileMD5: ByteArray?) {
+        currentFile?.let { currentFile ->
+            val md5 = fileMD5 ?: md5Checker.calculateMD5Hash(currentFile)
+            ByteArray(MD5_LENGTH + 1).apply {
+                set(0, MESSAGE_TYPE_INIT)
+                for (index in 1..MD5_LENGTH + 1) {
+                    set(index, md5[index])
+                }
+                writeMessage(this)
+            }
+        }
+    }
 
+    private fun startChunkSending() {
+        currentFile?.let {
+            fileChunkHandler.init(it, CHUNK_LENGTH, MESSAGE_TYPE_UPLOAD)
+        }
+        sendNextChunk()
     }
 
     private fun sendNextChunk() {
-
+        val nextChunk = fileChunkHandler.getNextChunk()
+        if (nextChunk != null) {
+            writeMessage(nextChunk)
+        } else {
+            sendFinalizeMessage()
+        }
     }
 
-    private fun checkValidation() {
+    private fun sendFinalizeMessage() {
+        ByteArray(1).apply {
+            set(0, MESSAGE_TYPE_FINALIZE)
+            writeMessage(this)
+        }
+    }
 
+    private fun writeMessage(byteArray: ByteArray) {
+        service?.getCharacteristic(RoboticsLiveControllerService.CHARACTERISTIC_ID)?.let { characteristic ->
+            characteristic.value = byteArray
+            eventSerializer?.registerEvent {
+                bluetoothGatt?.writeCharacteristic(characteristic) ?: false
+            }
+        }
     }
 
     private fun isUploadInProgress() = currentFile != null
 
     override fun onCharacteristicRead(gatt: BluetoothGatt?, characteristic: BluetoothGattCharacteristic, status: Int) {
         when (characteristic.value[0]) {
-            STATUS_UNUSED -> startUploading()
-            STATUS_UPLOAD -> checkMd5(
-                characteristic.value.copyOfRange(1, 17),
-                characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_SINT16, 17)
-            )
-            STATUS_VALIDATION -> readStatus(true)
+            STATUS_UNUSED -> startUploading(null)
+            STATUS_UPLOAD -> checkMd5(characteristic.value.copyOfRange(1, MD5_LENGTH + 1))
+            STATUS_VALIDATION -> readStatus()
             STATUS_READY -> {
                 success?.invoke()
                 success = null
                 error = null
                 currentFile = null
+                validationCounter = 0
             }
             STATUS_VALIDATION_ERROR -> {
                 error?.invoke(BLELongMessageValidationException())
                 success = null
                 error = null
                 currentFile = null
+                validationCounter = 0
             }
         }
     }
 
     override fun onCharacteristicWrite(gatt: BluetoothGatt?, characteristic: BluetoothGattCharacteristic, status: Int) {
         when (characteristic.value[0]) {
-            MESSAGE_TYPE_SELECT -> readStatus(false)
-            MESSAGE_TYPE_INIT -> startUploading()
+            MESSAGE_TYPE_SELECT -> readStatus()
+            MESSAGE_TYPE_INIT -> startChunkSending()
             MESSAGE_TYPE_UPLOAD -> sendNextChunk()
-            MESSAGE_TYPE_FINALIZE -> checkValidation()
+            MESSAGE_TYPE_FINALIZE ->
+                if (validationCounter < MAX_VALIDATION_COUNT) {
+                    readStatus()
+                    validationCounter++
+                } else {
+                    error?.invoke(BLESendingTimeoutException())
+                    success = null
+                    error = null
+                    currentFile = null
+                    validationCounter = 0
+                }
         }
     }
 
