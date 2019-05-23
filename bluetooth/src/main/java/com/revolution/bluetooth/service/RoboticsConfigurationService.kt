@@ -36,7 +36,9 @@ class RoboticsConfigurationService : RoboticsBLEService() {
 
         const val MAX_VALIDATION_COUNT = 30
         const val MD5_LENGTH = 16
-        const val CHUNK_LENGTH = 20
+        const val CHUNK_LENGTH = 512
+
+        const val TAG = "LongMessage"
 
         val CHARACTERISTIC: UUID = UUID.fromString("d59bb321-7218-4fb9-abac-2f6814f31a4d")
     }
@@ -77,6 +79,8 @@ class RoboticsConfigurationService : RoboticsBLEService() {
     private fun initLongMessage(file: Uri, onSuccess: () -> Unit, onError: (exception: BLEException) -> Unit) {
         if (isUploadInProgress()) {
             onError.invoke(BLELongMessageIsAlreadyRunning())
+            resetVariables()
+            return
         }
         currentFile = file
         success = onSuccess
@@ -151,12 +155,9 @@ class RoboticsConfigurationService : RoboticsBLEService() {
         service?.getCharacteristic(CHARACTERISTIC)?.let { characteristic ->
             characteristic.writeType = BluetoothGattCharacteristic.WRITE_TYPE_DEFAULT
             characteristic.value = byteArray
-            Log.e("TEST", "Write a message: ${byteArray.toCustomString()}")
-            eventSerializer?.registerEvent {
-                val value = bluetoothGatt?.writeCharacteristic(characteristic) ?: false
-                Log.e("TEST", "Write message sent $value  ${byteArray.toCustomString()}")
-                value
-            }
+            val value = bluetoothGatt?.writeCharacteristic(characteristic) ?: false
+            Log.d(TAG, "Write message sent $value  ${byteArray.toStringCustom()}")
+            value
         }
     }
 
@@ -166,21 +167,17 @@ class RoboticsConfigurationService : RoboticsBLEService() {
         if (characteristic.uuid != CHARACTERISTIC) {
             return
         }
-        Log.e(
-            "TEST",
-            "Characteristic read happened status: $status first byte: ${characteristic.value[0]} total message: ${characteristic.value.toCustomString()}"
-        )
         when (characteristic.value[0]) {
             STATUS_UNUSED -> {
-                Log.e("TEST", "Unused --> start uploading")
+                Log.d(TAG, "Unused --> start uploading")
                 startUploading(null)
             }
             STATUS_UPLOAD -> {
-                Log.e("TEST", "Upload --> checkMd5")
+                Log.d(TAG, "Upload --> checkMd5")
                 checkMd5(characteristic.value.copyOfRange(1, MD5_LENGTH + 1))
             }
             STATUS_VALIDATION -> {
-                Log.e("TEST", "Validation attempt:$validationCounter")
+                Log.d(TAG, "Validation attempt:$validationCounter")
                 if (validationCounter < MAX_VALIDATION_COUNT) {
                     readStatus()
                     validationCounter++
@@ -190,12 +187,12 @@ class RoboticsConfigurationService : RoboticsBLEService() {
                 }
             }
             STATUS_READY -> {
-                Log.e("TEST", "Ready --> send success event")
+                Log.d(TAG, "Ready --> send success event")
                 success?.invoke()
                 resetVariables()
             }
             STATUS_VALIDATION_ERROR -> {
-                Log.e("TEST", "Error --> send error event")
+                Log.d(TAG, "Error --> send error event")
                 error?.invoke(BLELongMessageValidationException())
                 resetVariables()
             }
@@ -213,25 +210,26 @@ class RoboticsConfigurationService : RoboticsBLEService() {
         if (characteristic.uuid != CHARACTERISTIC) {
             return
         }
-        Log.e(
-            "TEST",
-            "Write happened! status: $status First byte: ${characteristic.value[0]} Total message: ${characteristic.value.toCustomString()}"
+        Log.d(
+            TAG,
+            "Write happened! status: $status First byte: ${characteristic.value[0]} " +
+                    "Total message: ${characteristic.value.toStringCustom()}"
         )
         when (characteristic.value[0]) {
             MESSAGE_TYPE_SELECT -> {
-                Log.e("TEST", "Select --> read status")
+                Log.d(TAG, "Select --> read status")
                 readStatus()
             }
             MESSAGE_TYPE_INIT -> {
-                Log.e("TEST", "Init --> startChunkSending")
+                Log.d(TAG, "Init --> startChunkSending")
                 startChunkSending()
             }
             MESSAGE_TYPE_UPLOAD -> {
-                Log.e("TEST", "Upload --> sendNextChung")
+                Log.d(TAG, "Upload --> sendNextChunk")
                 sendNextChunk()
             }
             MESSAGE_TYPE_FINALIZE -> {
-                Log.e("TEST", "Finalize --> startStatusReadingLoop")
+                Log.d(TAG, "Finalize --> startStatusReadingLoop")
                 readStatus()
             }
         }
@@ -239,11 +237,5 @@ class RoboticsConfigurationService : RoboticsBLEService() {
 
     override fun onCharacteristicChanged(gatt: BluetoothGatt?, characteristic: BluetoothGattCharacteristic) = Unit
 
-    fun ByteArray.toCustomString(): String {
-        var content = "["
-        this.forEach {
-            content += "$it,"
-        }
-        return content + "]"
-    }
+    private fun ByteArray.toStringCustom(): String = this.joinToString { it.toString() }
 }

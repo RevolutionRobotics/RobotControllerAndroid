@@ -28,8 +28,8 @@ class FirmwareUpdateDialogPresenter(
             viewModel.infoTextsVisible.value = false
             viewModel.loadingTextVisible.value = true
             viewModel.updateText.value = resourceResolver.string(R.string.firmware_loading)
-            bluetoothManager.bleConnectionHandler.configurationService.sendConfiguration(
-                Uri.parse("/data/data/com.revolution.robotics.dev/files/images/robot-22.jpg"),
+            bluetoothManager.bleConnectionHandler.configurationService.updateFramework(
+                Uri.parse("/data/data/com.revolution.robotics.dev/files/images/lorem.txt"),
                 {
                     Log.e("TEST", "SUCCESS")
                 }, {
