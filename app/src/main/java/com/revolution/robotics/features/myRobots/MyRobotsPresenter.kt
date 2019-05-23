@@ -100,7 +100,11 @@ class MyRobotsPresenter(
     }
 
     override fun onContinueBuildingSelected(robot: UserRobot) {
-        navigator.navigate(MyRobotsFragmentDirections.toBuildRobot(robot))
+        if (robot.isCustomBuild()) {
+            navigator.navigate(MyRobotsFragmentDirections.toConfigure(robot))
+        } else {
+            navigator.navigate(MyRobotsFragmentDirections.toBuildRobot(robot))
+        }
     }
 
     override fun onEditSelected(userRobot: UserRobot) {

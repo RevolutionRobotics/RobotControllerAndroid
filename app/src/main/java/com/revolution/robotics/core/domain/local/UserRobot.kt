@@ -7,11 +7,13 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.PrimaryKey
 import androidx.room.Query
+import androidx.room.Update
 import kotlinx.android.parcel.Parcelize
 import java.util.Date
 
 @Entity
 @Parcelize
+@Suppress("DataClassContainsFunctions")
 data class UserRobot(
     @PrimaryKey(autoGenerate = true) var instanceId: Int = 0,
     var id: Int = 0,
@@ -22,7 +24,10 @@ data class UserRobot(
     var name: String? = null,
     var coverImage: String? = null,
     var description: String? = null
-) : Parcelable
+) : Parcelable {
+
+    fun isCustomBuild() = id == 0
+}
 
 @Dao
 interface UserRobotDao {
@@ -33,8 +38,11 @@ interface UserRobotDao {
     @Query("SELECT * FROM UserRobot WHERE id=:robotId AND buildStatus=:buildStatus")
     fun getRobotByStatus(robotId: Int, buildStatus: BuildStatus): UserRobot?
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.FAIL)
     fun saveUserRobot(userRobot: UserRobot): Long
+
+    @Update
+    fun updateUserRobot(userRobot: UserRobot)
 
     @Query("DELETE FROM UserRobot WHERE instanceId = :id")
     fun deleteRobotById(id: Int)

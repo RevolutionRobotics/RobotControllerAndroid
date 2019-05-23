@@ -38,11 +38,10 @@ class ConfigureControllersPresenter(
                     )
                 }
             )
+            view?.onControllersChanged()
         }, {
             // TODO Error handling
         })
-
-        view?.onRobotsChanged()
     }
 
     override fun onPageSelected(position: Int) {
@@ -96,7 +95,7 @@ class ConfigureControllersPresenter(
             }
         }
         updateButtonsVisibility(selectedPosition)
-        view?.onRobotsChanged()
+        view?.onControllersChanged()
     }
 
     override fun onDeleteSelected(item: ControllersItem) {

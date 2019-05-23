@@ -158,7 +158,7 @@
                     android:textColor="@color/white"
                     android:fontFamily="@font/barlow_medium"
                     android:textSize="@dimen/my_robots_robot_play_text_size"
-                    android:text="@{viewModel.isUnderConstruction ? @string/my_robots_under_construction_button : @string/my_robots_play_button}"/>
+                    android:text="@{viewModel.playButtonText()}"/>
 
             <Button
                     android:id="@+id/play_button"

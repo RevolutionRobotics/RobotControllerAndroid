@@ -25,8 +25,6 @@ class ConfigureFragment : BaseFragment<FragmentConfigureBinding, ConfigureViewMo
     ConfigureMvp.View, DrawerLayout.DrawerListener {
 
     companion object {
-        const val CONFIG_ID_EMPTY = -1
-
         val Bundle.userRobot: UserRobot by BundleArgumentDelegate.Parcelable("userRobot")
     }
 

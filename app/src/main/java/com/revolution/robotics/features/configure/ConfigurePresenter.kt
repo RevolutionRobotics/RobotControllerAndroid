@@ -2,7 +2,6 @@ package com.revolution.robotics.features.configure
 
 import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.local.UserConfiguration
-import com.revolution.robotics.core.domain.local.UserMapping
 import com.revolution.robotics.core.domain.local.UserRobot
 import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
@@ -54,20 +53,14 @@ class ConfigurePresenter(
                 userRobot.name
             }
         )
-        if (userRobot.configurationId == ConfigureFragment.CONFIG_ID_EMPTY) {
-            onConfigurationLoaded(UserConfiguration().apply {
-                mappingId = UserMapping()
+        getUserConfigurationInteractor.userConfigId = userRobot.configurationId
+        getUserConfigurationInteractor.execute(
+            onResponse = { config ->
+                onConfigurationLoaded(config)
+            },
+            onError = {
+                // TODO Error handling
             })
-        } else {
-            getUserConfigurationInteractor.userConfigId = userRobot.configurationId
-            getUserConfigurationInteractor.execute(
-                onResponse = { config ->
-                    onConfigurationLoaded(config)
-                },
-                onError = {
-                    // TODO Error handling
-                })
-        }
     }
 
     private fun onConfigurationLoaded(config: UserConfiguration?) {

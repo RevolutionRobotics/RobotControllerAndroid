@@ -52,7 +52,7 @@ class ConfigureControllersFragment : BaseFragment<FragmentConfigureControllersBi
         super.onDestroyView()
     }
 
-    override fun onRobotsChanged() {
+    override fun onControllersChanged() {
         adapter.notifyDataSetChanged()
         binding?.controllersViewpager?.initTransformerWithDelay()
     }

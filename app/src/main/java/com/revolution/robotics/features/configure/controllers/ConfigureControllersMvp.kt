@@ -6,7 +6,7 @@ import com.revolution.robotics.features.configure.controllers.adapter.Controller
 
 interface ConfigureControllersMvp : Mvp {
     interface View : Mvp.View {
-        fun onRobotsChanged()
+        fun onControllersChanged()
         fun showNextRobot()
         fun showPreviousRobot()
         fun showInfoModal(dialog: ControllerInfoDialog)

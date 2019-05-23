@@ -42,10 +42,12 @@
     <string name="build_robot_tips">Tips</string>
     <string name="build_robot_start">Start</string>
     <string name="untitled_robot_name">Untitled robot</string>
+    <string name="build_robot_custom_default_name">Custom robot</string>
 
     <!-- My robots -->
     <string name="my_robots_play_button">Play!</string>
     <string name="my_robots_under_construction_button">Continue building</string>
+    <string name="my_robots_under_construction_button_custom">Continue editing</string>
     <string name="my_robots_under_construction">under construction</string>
 
     <!-- Delete robot -->
