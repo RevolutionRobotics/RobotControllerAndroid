@@ -9,6 +9,7 @@ import com.revolution.robotics.core.domain.local.UserProgramBinding
 import com.revolution.robotics.core.domain.local.UserRobot
 import com.revolution.robotics.features.configure.controller.ControllerButton
 
+@Suppress("TooManyFunctions")
 class UserConfigurationStorage {
 
     companion object {
