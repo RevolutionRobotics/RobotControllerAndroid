@@ -9,6 +9,7 @@ import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
 import com.revolution.robotics.core.extensions.waitForLayout
 import com.revolution.robotics.databinding.FragmentConfigureControllersBinding
+import com.revolution.robotics.features.configure.UserConfigurationStorage
 import com.revolution.robotics.features.configure.controller.ControllerInfoDialog
 import com.revolution.robotics.features.configure.controllers.adapter.ControllersCarouselAdapter
 import com.revolution.robotics.features.controllers.delete.DeleteControllerDialog
@@ -19,21 +20,25 @@ import com.revolution.robotics.views.carousel.reInitTransformerWithDelay
 import org.kodein.di.erased.instance
 
 @Suppress("TooManyFunctions")
-class ConfigureControllersFragment :
-    BaseFragment<FragmentConfigureControllersBinding, ConfigureControllersViewModel>(
-        R.layout.fragment_configure_controllers
-    ),
-    ConfigureControllersMvp.View, ViewPager.OnPageChangeListener, DialogEventBus.Listener {
+class ConfigureControllersFragment : BaseFragment<FragmentConfigureControllersBinding,
+        ConfigureControllersViewModel>(R.layout.fragment_configure_controllers), ConfigureControllersMvp.View,
+    ViewPager.OnPageChangeListener, DialogEventBus.Listener {
 
     override val viewModelClass: Class<ConfigureControllersViewModel> = ConfigureControllersViewModel::class.java
     private val presenter: ConfigureControllersMvp.Presenter by kodein.instance()
     private val dialogEventBus: DialogEventBus by kodein.instance()
+    private val storage: UserConfigurationStorage by kodein.instance()
     private val adapter = ControllersCarouselAdapter()
 
     private var controllerDeleteId = -1
 
+    companion object {
+        fun newInstance() = ConfigureControllersFragment()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         presenter.register(this, viewModel)
+        storage.robot?.let { presenter.loadControllers(it.instanceId) }
         dialogEventBus.register(this)
         binding?.controllersViewpager?.initCarouselVariables(this@ConfigureControllersFragment, adapter)
         view.waitForLayout {
@@ -47,7 +52,7 @@ class ConfigureControllersFragment :
         super.onDestroyView()
     }
 
-    override fun onRobotsChanged() {
+    override fun onControllersChanged() {
         adapter.notifyDataSetChanged()
         binding?.controllersViewpager?.initTransformerWithDelay()
     }

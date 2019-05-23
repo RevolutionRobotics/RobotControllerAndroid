@@ -23,8 +23,8 @@ class ConfigureControllersPresenter(
     override var view: ConfigureControllersMvp.View? = null
     override var model: ConfigureControllersViewModel? = null
 
-    override fun register(view: ConfigureControllersMvp.View, model: ConfigureControllersViewModel?) {
-        super.register(view, model)
+    override fun loadControllers(robotId: Int) {
+        controllersInteractor.robotId = robotId
         controllersInteractor.execute({ controllers ->
             model?.controllersList?.set(
                 controllers.map { controller ->
@@ -38,11 +38,10 @@ class ConfigureControllersPresenter(
                     )
                 }
             )
+            view?.onControllersChanged()
         }, {
             // TODO Error handling
         })
-
-        view.onRobotsChanged()
     }
 
     override fun onPageSelected(position: Int) {
@@ -96,7 +95,7 @@ class ConfigureControllersPresenter(
             }
         }
         updateButtonsVisibility(selectedPosition)
-        view?.onRobotsChanged()
+        view?.onControllersChanged()
     }
 
     override fun onDeleteSelected(item: ControllersItem) {

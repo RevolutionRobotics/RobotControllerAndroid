@@ -37,6 +37,8 @@ class SaveNewUserRobotInteractor(
             val configurationId = userConfigurationDao.saveUserConfiguration(userConfiguration)
             userConfiguration.id = configurationId.toInt()
             userRobot.configurationId = configurationId.toInt()
+            userRobot.instanceId = userRobotDao.saveUserRobot(userRobot).toInt()
+
             val userController = saveUserController(controller)
             userConfiguration.controller = userController.id
             userConfigurationDao.saveUserConfiguration(userConfiguration)
@@ -68,9 +70,10 @@ class SaveNewUserRobotInteractor(
                     createBackgroundBinding(userController.id, it, programIdMap)
                 } ?: emptyList()
             )
+            controllerDao.updateUserController(userController)
         }
 
-        return userRobotDao.saveUserRobot(userRobot)
+        return userRobot.instanceId.toLong()
     }
 
     private fun createBackgroundBinding(
@@ -142,10 +145,11 @@ class SaveNewUserRobotInteractor(
 
     private fun createUserController(controller: Controller) = UserController(
         id = 0,
-        description = controller.description,
-        lastModified = controller.lastModified,
+        robotId = userRobot.instanceId,
         name = controller.name,
         type = controller.type,
+        description = controller.description,
+        lastModified = controller.lastModified,
         mapping = UserButtonMapping()
     )
 }

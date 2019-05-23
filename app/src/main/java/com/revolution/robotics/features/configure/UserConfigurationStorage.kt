@@ -6,14 +6,17 @@ import com.revolution.robotics.core.domain.local.UserControllerWithPrograms
 import com.revolution.robotics.core.domain.local.UserMapping
 import com.revolution.robotics.core.domain.local.UserProgram
 import com.revolution.robotics.core.domain.local.UserProgramBinding
+import com.revolution.robotics.core.domain.local.UserRobot
 import com.revolution.robotics.features.configure.controller.ControllerButton
 
+@Suppress("TooManyFunctions")
 class UserConfigurationStorage {
 
     companion object {
         const val ALLOWED_DIGITS_REGEXP = "[a-zA-Z0-9]+"
     }
 
+    var robot: UserRobot? = null
     var userConfiguration: UserConfiguration? = null
     var controllerHolder: UserControllerWithPrograms? = null
     var deleteRobotImage = false

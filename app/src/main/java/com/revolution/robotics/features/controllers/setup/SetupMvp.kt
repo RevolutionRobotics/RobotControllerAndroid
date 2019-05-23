@@ -10,7 +10,7 @@ interface SetupMvp : Mvp {
     interface View : Mvp.View {
         fun showDialog(roboticsDialog: RoboticsDialog)
         fun updateContentBindings()
-        fun onProgramSlotSelected(index: Int, mostRecent: MostRecentProgramViewModel)
+        fun onProgramSlotSelected(index: Int, mostRecent: MostRecentProgramViewModel?)
         fun onShowAllProgramsSelected()
         fun navigateToTheBackgroundPrograms()
     }

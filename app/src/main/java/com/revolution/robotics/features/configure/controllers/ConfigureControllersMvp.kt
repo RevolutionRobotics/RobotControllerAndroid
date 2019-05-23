@@ -6,14 +6,16 @@ import com.revolution.robotics.features.configure.controllers.adapter.Controller
 
 interface ConfigureControllersMvp : Mvp {
     interface View : Mvp.View {
-        fun onRobotsChanged()
+        fun onControllersChanged()
         fun showNextRobot()
         fun showPreviousRobot()
         fun showInfoModal(dialog: ControllerInfoDialog)
         fun showDeleteControllerDialog(controllerId: Int)
     }
 
+    @Suppress("ComplexInterface")
     interface Presenter : Mvp.Presenter<View, ConfigureControllersViewModel> {
+        fun loadControllers(robotId: Int)
         fun onPageSelected(position: Int)
         fun nextButtonClick()
         fun previousButtonClick()

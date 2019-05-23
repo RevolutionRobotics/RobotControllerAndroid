@@ -1,5 +1,6 @@
 package com.revolution.robotics.features.controllers.buttonless
 
+import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableInt
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,6 +14,7 @@ class ButtonlessProgramSelectorViewModel(private val presenter: ButtonlessProgra
     val alphabeticalOderIcon = ObservableInt(R.drawable.sort_name_up)
     val showCompatibleButtonText = ObservableInt(R.string.buttonless_program_show_compatible_programs)
     val showCompatibleButtonIcon = ObservableInt(R.drawable.ic_compatible)
+    val isEmpty = ObservableBoolean(false)
 
     val programOrderingHandler = ProgramOrderingHandler()
     val items = MutableLiveData<List<ButtonlessProgramViewModel>>()

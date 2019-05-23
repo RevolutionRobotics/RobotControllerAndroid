@@ -97,7 +97,7 @@ abstract class SetupFragment :
         getContentBinding()?.invalidateAll()
     }
 
-    override fun onProgramSlotSelected(index: Int, mostRecent: MostRecentProgramViewModel) {
+    override fun onProgramSlotSelected(index: Int, mostRecent: MostRecentProgramViewModel?) {
         viewModel?.let { updateContentBindings() }
         if (index != SetupViewModel.NO_PROGRAM_SELECTED) {
             binding?.apply {

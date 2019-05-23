@@ -53,11 +53,10 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/program_selector"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/controller_setup_program_selector_height"
-                android:orientation="horizontal"
                 android:background="@drawable/bg_setup_program_selector"
                 android:visibility="invisible"
                 android:padding="@dimen/dimen_4dp"
@@ -68,19 +67,9 @@
                 app:layout_constraintBottom_toBottomOf="parent">
 
             <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:textSize="14sp"
-                    android:textColor="@color/white"
-                    android:fontFamily="@font/barlow_medium"
-                    android:text="@string/most_recent_empty"
-                    gone="@{!mostRecent.isEmpty()}"/>
-
-            <TextView
+                    android:id="@+id/most_recent_1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:layout_marginEnd="@dimen/dimen_4dp"
                     android:fontFamily="@font/jura_bold"
                     android:textSize="12sp"
@@ -88,14 +77,18 @@
                     android:gravity="center"
                     android:padding="@dimen/dimen_8dp"
                     android:onClick="@{() -> mostRecent.onProgramClicked(1)}"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/most_recent_2"
                     app:program="@{mostRecent.getProgram(1)}"
                     app:chippedBoxConfig="@{mostRecent.getBackground(1)}"
                     app:visible="@{mostRecent.getProgram(1) != null}"/>
 
             <TextView
+                    android:id="@+id/most_recent_2"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:layout_marginEnd="@dimen/dimen_4dp"
                     android:fontFamily="@font/jura_bold"
                     android:textSize="12sp"
@@ -103,14 +96,18 @@
                     android:gravity="center"
                     android:padding="@dimen/dimen_8dp"
                     android:onClick="@{() -> mostRecent.onProgramClicked(2)}"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/most_recent_1"
+                    app:layout_constraintEnd_toStartOf="@id/most_recent_3"
                     app:program="@{mostRecent.getProgram(2)}"
                     app:chippedBoxConfig="@{mostRecent.getBackground(2)}"
                     app:visible="@{mostRecent.getProgram(2) != null}"/>
 
             <TextView
+                    android:id="@+id/most_recent_3"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:layout_marginEnd="@dimen/dimen_4dp"
                     android:fontFamily="@font/jura_bold"
                     android:textSize="12sp"
@@ -118,14 +115,18 @@
                     android:gravity="center"
                     android:padding="@dimen/dimen_8dp"
                     android:onClick="@{() -> mostRecent.onProgramClicked(3)}"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/most_recent_2"
+                    app:layout_constraintEnd_toStartOf="@id/most_recent_4"
                     app:program="@{mostRecent.getProgram(3)}"
                     app:chippedBoxConfig="@{mostRecent.getBackground(3)}"
                     app:visible="@{mostRecent.getProgram(3) != null}"/>
 
             <TextView
+                    android:id="@+id/most_recent_4"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:layout_marginEnd="@dimen/dimen_4dp"
                     android:fontFamily="@font/jura_bold"
                     android:textSize="12sp"
@@ -133,14 +134,18 @@
                     android:gravity="center"
                     android:padding="@dimen/dimen_8dp"
                     android:onClick="@{() -> mostRecent.onProgramClicked(4)}"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/most_recent_3"
+                    app:layout_constraintEnd_toStartOf="@id/most_recent_5"
                     app:program="@{mostRecent.getProgram(4)}"
                     app:chippedBoxConfig="@{mostRecent.getBackground(4)}"
                     app:visible="@{mostRecent.getProgram(4) != null}"/>
 
             <TextView
+                    android:id="@+id/most_recent_5"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:layout_marginEnd="@dimen/dimen_4dp"
                     android:fontFamily="@font/jura_bold"
                     android:textSize="12sp"
@@ -148,19 +153,26 @@
                     android:gravity="center"
                     android:padding="@dimen/dimen_8dp"
                     android:onClick="@{() -> mostRecent.onProgramClicked(5)}"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/most_recent_4"
+                    app:layout_constraintEnd_toStartOf="@id/most_recent_show_all"
                     app:program="@{mostRecent.getProgram(5)}"
                     app:chippedBoxConfig="@{mostRecent.getBackground(5)}"
                     app:visible="@{mostRecent.getProgram(5) != null}"/>
 
             <LinearLayout
+                    android:id="@+id/most_recent_show_all"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:orientation="horizontal"
-                    app:visible="@{mostRecent.hasMorePrograms}"
                     android:onClick="@{() -> mostRecent.onShowMoreClicked()}"
                     android:gravity="center"
                     android:padding="@dimen/dimen_8dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/most_recent_5"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:chippedBoxConfig="@{mostRecent.getShowMoreBackground()}">
 
                 <ImageView
@@ -180,7 +192,22 @@
 
             </LinearLayout>
 
-        </LinearLayout>
+            <TextView
+                    android:id="@+id/most_recent_empty"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textSize="14sp"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/barlow_medium"
+                    android:text="@string/most_recent_empty"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/most_recent_show_all"
+                    gone="@{!mostRecent.isEmpty()}"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
