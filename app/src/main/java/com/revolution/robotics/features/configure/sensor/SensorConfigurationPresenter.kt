@@ -62,7 +62,7 @@ class SensorConfigurationPresenter(
                 enabled = sensor.type == Sensor.TYPE_BUMPER || sensor.type == Sensor.TYPE_ULTRASONIC
             )
 
-            actionButtonsViewModel.testButtonEnabled.set(sensor.isTestable())
+            setTestButton(sensor.isTestable())
             bumperButton.isSelected.set(sensor.type == Sensor.TYPE_BUMPER)
             ultrasoundButton.isSelected.set(sensor.type == Sensor.TYPE_ULTRASONIC)
             emptyButton.isSelected.set(sensor.type.isNullOrEmpty())

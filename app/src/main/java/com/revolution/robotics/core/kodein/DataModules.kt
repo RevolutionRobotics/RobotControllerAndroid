@@ -11,6 +11,7 @@ import com.revolution.robotics.core.domain.local.UserProgramDao
 import com.revolution.robotics.core.domain.local.UserRobotDao
 import com.revolution.robotics.core.interactor.DeleteRobotInteractor
 import com.revolution.robotics.core.interactor.GetAllUserRobotsInteractor
+import com.revolution.robotics.core.interactor.GetControllerTypeInteractor
 import com.revolution.robotics.core.interactor.GetUserChallengeCategoriesInteractor
 import com.revolution.robotics.core.interactor.GetUserConfigurationInteractor
 import com.revolution.robotics.core.interactor.GetUserControllerInteractor
@@ -121,6 +122,7 @@ fun createInteractorModule() =
         bind<GetUserChallengeCategoriesInteractor>() with provider { GetUserChallengeCategoriesInteractor(instance()) }
         bind<SaveUserChallengeCategoryInteractor>() with provider { SaveUserChallengeCategoryInteractor(instance()) }
         bind<GetUserProgramsInteractor>() with provider { GetUserProgramsInteractor(instance()) }
+        bind<GetControllerTypeInteractor>() with provider { GetControllerTypeInteractor(instance(), instance()) }
     }
 
 @Suppress("LongMethod")
@@ -128,7 +130,14 @@ fun createPresenterModule() =
     Kodein.Module("PresenterModule") {
         bind<MainMenuMvp.Presenter>() with singleton { MainMenuPresenter(instance()) }
         bind<WhoToBuildMvp.Presenter>() with singleton { WhoToBuildPresenter(instance(), instance()) }
-        bind<MyRobotsMvp.Presenter>() with singleton { MyRobotsPresenter(instance(), instance(), instance()) }
+        bind<MyRobotsMvp.Presenter>() with singleton {
+            MyRobotsPresenter(
+                instance(),
+                instance(),
+                instance(),
+                instance()
+            )
+        }
         bind<ChapterFinishedMvp.Presenter>() with singleton { ChapterFinishedPresenter(instance()) }
         bind<BuildRobotMvp.Presenter>() with singleton {
             BuildRobotPresenter(
