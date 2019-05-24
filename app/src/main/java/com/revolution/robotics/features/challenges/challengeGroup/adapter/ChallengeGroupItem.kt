@@ -1,7 +1,7 @@
-package com.revolution.robotics.features.challenges.challengeList.adapter
+package com.revolution.robotics.features.challenges.challengeGroup.adapter
 
 @Suppress("DataClassContainsFunctions")
-data class ChallengeItem(
+data class ChallengeGroupItem(
     val iconUrl: String,
     val name: String,
     private val currentChallenge: Int,

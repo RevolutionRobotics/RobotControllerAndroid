@@ -1,8 +1,8 @@
-package com.revolution.robotics.features.challenges.challengeList.adapter
+package com.revolution.robotics.features.challenges.challengeGroup.adapter
 
 import com.revolution.robotics.core.utils.recyclerview.RecyclerAdapter
 
-class ChallengeListAdapter : RecyclerAdapter<ChallengeItem>() {
+class ChallengeGroupAdapter : RecyclerAdapter<ChallengeGroupItem>() {
 
     init {
         adapterDelegate.register(

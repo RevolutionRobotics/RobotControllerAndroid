@@ -72,7 +72,7 @@
 
     <!-- Challenges -->
     <fragment android:id="@+id/challengeListFragment"
-              android:name="com.revolution.robotics.features.challenges.challengeList.ChallengeListFragment"
+              android:name="com.revolution.robotics.features.challenges.challengeGroup.ChallengeGroupFragment"
               android:label="ChallengeListFragment"/>
 
     <!-- Configure -->

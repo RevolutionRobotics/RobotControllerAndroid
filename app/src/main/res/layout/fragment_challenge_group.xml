@@ -4,7 +4,7 @@
 
     <data>
         <variable name="viewModel"
-                  type="com.revolution.robotics.features.challenges.challengeList.ChallengeListViewModel"/>
+                  type="com.revolution.robotics.features.challenges.challengeGroup.ChallengeGroupViewModel"/>
         <variable name="toolbarViewModel"
                   type="com.revolution.robotics.views.toolbar.ToolbarViewModel"/>
     </data>
@@ -26,6 +26,7 @@
                 android:id="@+id/recycler"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                app:challengeGroups="@{viewModel.items}"
                 app:layout_constraintTop_toBottomOf="@id/toolbar"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

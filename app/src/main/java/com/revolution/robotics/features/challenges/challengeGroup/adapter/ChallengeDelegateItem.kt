@@ -1,4 +1,4 @@
-package com.revolution.robotics.features.challenges.challengeList.adapter
+package com.revolution.robotics.features.challenges.challengeGroup.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,11 +6,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.revolution.robotics.core.utils.recyclerview.AdapterDelegateItem
 import com.revolution.robotics.databinding.ItemChallengeListChallengeBinding
 
-class ChallengeDelegateItem : AdapterDelegateItem<ChallengeItem>() {
+class ChallengeDelegateItem : AdapterDelegateItem<ChallengeGroupItem>() {
 
-    override fun canHandleData(data: Any) = data is ChallengeItem
+    override fun canHandleData(data: Any) = data is ChallengeGroupItem
 
-    override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, data: ChallengeItem) {
+    override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, data: ChallengeGroupItem) {
         (viewHolder as ViewHolder).binding.viewModel = data
     }
 

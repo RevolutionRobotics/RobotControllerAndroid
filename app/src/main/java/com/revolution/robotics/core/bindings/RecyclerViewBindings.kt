@@ -4,6 +4,8 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.revolution.robotics.features.build.connect.adapter.ConnectAdapter
 import com.revolution.robotics.features.build.connect.adapter.ConnectRobotItem
+import com.revolution.robotics.features.challenges.challengeGroup.adapter.ChallengeGroupAdapter
+import com.revolution.robotics.features.challenges.challengeGroup.adapter.ChallengeGroupItem
 import com.revolution.robotics.features.configure.controller.program.priority.ProgramPriorityAdapter
 import com.revolution.robotics.features.configure.controller.program.priority.ProgramPriorityItemViewModel
 import com.revolution.robotics.features.controllers.buttonless.adapter.ButtonlessProgramAdapter
@@ -27,5 +29,12 @@ fun setPriorityPrograms(recyclerView: RecyclerView, itemList: List<ProgramPriori
 fun setButtonlessPrograms(recyclerView: RecyclerView, itemList: List<ButtonlessProgramViewModel>?) {
     if (itemList != null) {
         (recyclerView.adapter as? ButtonlessProgramAdapter)?.setItems(itemList)
+    }
+}
+
+@BindingAdapter("challengeGroups")
+fun setChallengeGroups(recyclerView: RecyclerView, itemList: List<ChallengeGroupItem>?) {
+    if (itemList != null) {
+        (recyclerView.adapter as? ChallengeGroupAdapter)?.setItems(itemList)
     }
 }
