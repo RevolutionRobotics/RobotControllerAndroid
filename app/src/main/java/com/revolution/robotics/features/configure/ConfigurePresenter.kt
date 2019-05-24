@@ -53,14 +53,21 @@ class ConfigurePresenter(
                 userRobot.name
             }
         )
-        getUserConfigurationInteractor.userConfigId = userRobot.configurationId
-        getUserConfigurationInteractor.execute(
-            onResponse = { config ->
-                onConfigurationLoaded(config)
-            },
-            onError = {
-                // TODO Error handling
-            })
+
+        if (userConfigurationStorage.userConfiguration == null ||
+            userConfigurationStorage.userConfiguration?.id != userRobot.configurationId
+        ) {
+            getUserConfigurationInteractor.userConfigId = userRobot.configurationId
+            getUserConfigurationInteractor.execute(
+                onResponse = { config ->
+                    onConfigurationLoaded(config)
+                },
+                onError = {
+                    // TODO Error handling
+                })
+        } else {
+            onConfigurationLoaded(userConfigurationStorage.userConfiguration)
+        }
     }
 
     private fun onConfigurationLoaded(config: UserConfiguration?) {
@@ -73,7 +80,7 @@ class ConfigurePresenter(
             model?.setScreen(selectedTab)
 
             if (selectedTab == ConfigurationTabs.CONNECTIONS) {
-                view?.showConnectionsScreen(this)
+                view?.showConnectionsScreen()
             } else {
                 view?.showControllerScreen()
             }
@@ -99,6 +106,8 @@ class ConfigurePresenter(
                         onResponse = { savedRobotId ->
                             selectedTab = ConfigurationTabs.CONNECTIONS
                             selectedConfigId = -1
+                            userConfigurationStorage.userConfiguration = null
+                            userConfigurationStorage.controllerHolder = null
                             updateRobotImage(robot.instanceId, savedRobotId.toInt())
                             navigator.popUntil(R.id.myRobotsFragment)
                         },
@@ -140,13 +149,18 @@ class ConfigurePresenter(
     override fun onConnectionsTabSelected() {
         selectedTab = ConfigurationTabs.CONNECTIONS
         model?.setScreen(ConfigurationTabs.CONNECTIONS)
-        userConfigurationStorage.userConfiguration?.let { view?.showConnectionsScreen(it) }
+        view?.showConnectionsScreen()
     }
 
     override fun onControllerTabSelected() {
         selectedTab = ConfigurationTabs.CONTROLLERS
         model?.setScreen(ConfigurationTabs.CONTROLLERS)
         view?.showControllerScreen()
+    }
+
+    override fun clearStorage() {
+        userConfigurationStorage.userConfiguration = null
+        userConfigurationStorage.controllerHolder = null
     }
 
     override fun onMotorConfigChangedEvent(event: MotorPort) {

@@ -41,6 +41,9 @@ class ProgramSelectorPresenter(
                     storage.getBoundButtonPrograms().forEach { boundProgram ->
                         removeAll { it.id == boundProgram.programId }
                     }
+                    storage.controllerHolder?.backgroundBindings?.forEach { backgroundBinding ->
+                        removeAll { it.id == backgroundBinding.programId }
+                    }
                 }
                 programs = ArrayList<UserProgram>().apply { allPrograms?.let { addAll(it) } }
                 model?.programOrderingHandler?.currentOrder =

@@ -17,7 +17,7 @@ class JoystickView @JvmOverloads constructor(context: Context, attrs: AttributeS
     View(context, attrs, defStyleAttr) {
 
     companion object {
-        private const val JOYSTICK_AXIS_CENTER = 128
+        private const val JOYSTICK_AXIS_CENTER = 127
     }
 
     private val joystickButtonSize = context.dimension(R.dimen.play_joystick_handle_size)

@@ -57,6 +57,7 @@ class ConfigureFragment : BaseFragment<FragmentConfigureBinding, ConfigureViewMo
             hideDrawer()
             true
         } else {
+            presenter.clearStorage()
             false
         }
 
@@ -76,8 +77,8 @@ class ConfigureFragment : BaseFragment<FragmentConfigureBinding, ConfigureViewMo
         binding?.drawerConfiguration?.setSensor(sensorPort.sensor ?: Sensor(), sensorPort.portName ?: "")
     }
 
-    override fun showConnectionsScreen(userConfiguration: UserConfiguration) {
-        commitFragmentToFrame(ConfigureConnectionsFragment.newInstance(userConfiguration))
+    override fun showConnectionsScreen() {
+        commitFragmentToFrame(ConfigureConnectionsFragment.newInstance())
     }
 
     override fun showControllerScreen() {

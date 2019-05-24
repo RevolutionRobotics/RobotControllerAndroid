@@ -119,7 +119,15 @@ fun createInteractorModule() =
             )
         }
         bind<RemoveUserControllerInteractor>() with provider { RemoveUserControllerInteractor(instance()) }
-        bind<SaveUserControllerInteractor>() with provider { SaveUserControllerInteractor(instance(), instance()) }
+        bind<SaveUserControllerInteractor>() with provider {
+            SaveUserControllerInteractor(
+                instance(),
+                instance(),
+                instance(),
+                instance(),
+                instance()
+            )
+        }
         bind<SaveUserProgramInteractor>() with provider { SaveUserProgramInteractor(instance()) }
         bind<RemoveUserProgramInteractor>() with provider { RemoveUserProgramInteractor(instance()) }
         bind<GetUserChallengeCategoriesInteractor>() with provider { GetUserChallengeCategoriesInteractor(instance()) }
@@ -174,6 +182,7 @@ fun createPresenterModule() =
         }
         bind<ConfigureConnectionsMvp.Presenter>() with singleton {
             ConfigureConnectionsPresenter(
+                instance(),
                 instance(),
                 instance()
             )

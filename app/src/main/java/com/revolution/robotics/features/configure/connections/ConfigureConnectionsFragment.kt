@@ -5,8 +5,6 @@ import android.view.View
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.local.UserConfiguration
-import com.revolution.robotics.core.extensions.withArguments
-import com.revolution.robotics.core.utils.BundleArgumentDelegate
 import com.revolution.robotics.databinding.FragmentConfigureConnectionsBinding
 import org.kodein.di.erased.instance
 
@@ -17,11 +15,7 @@ class ConfigureConnectionsFragment :
 
     companion object {
 
-        private var Bundle.userConfiguration: UserConfiguration by BundleArgumentDelegate.Parcelable("userConfig")
-
-        fun newInstance(userConfiguration: UserConfiguration) = ConfigureConnectionsFragment().withArguments {
-            it.userConfiguration = userConfiguration
-        }
+        fun newInstance() = ConfigureConnectionsFragment()
     }
 
     override val viewModelClass: Class<ConfigureConnectionsViewModel> = ConfigureConnectionsViewModel::class.java
@@ -30,9 +24,6 @@ class ConfigureConnectionsFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         presenter.register(this, viewModel)
-        arguments?.let {
-            presenter.setConfiguration(it.userConfiguration)
-        }
     }
 
     override fun onDestroyView() {
