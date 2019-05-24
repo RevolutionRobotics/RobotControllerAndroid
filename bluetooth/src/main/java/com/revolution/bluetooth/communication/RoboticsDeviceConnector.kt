@@ -18,6 +18,7 @@ import com.revolution.bluetooth.service.RoboticsMotorService
 import com.revolution.bluetooth.service.RoboticsSensorService
 import com.revolution.bluetooth.threading.moveToUIThread
 
+@Suppress("TooManyFunctions")
 class RoboticsDeviceConnector : BluetoothGattCallback() {
 
     private var device: BluetoothDevice? = null
