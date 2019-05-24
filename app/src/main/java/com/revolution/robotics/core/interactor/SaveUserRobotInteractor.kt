@@ -1,6 +1,5 @@
 package com.revolution.robotics.core.interactor
 
-import android.database.sqlite.SQLiteConstraintException
 import com.revolution.robotics.core.domain.local.BuildStatus
 import com.revolution.robotics.core.domain.local.UserConfiguration
 import com.revolution.robotics.core.domain.local.UserConfigurationDao
@@ -17,8 +16,16 @@ class SaveUserRobotInteractor(
 
     @Suppress("SwallowedException")
     override fun getData(): Long {
-        val configurationId = saveConfigurationDao.saveUserConfiguration(userConfiguration)
+        // TODO we always do this IF-ELSE - refactor this
+        val configurationId = if (userConfiguration.id == 0) {
+            saveConfigurationDao.saveUserConfiguration(userConfiguration)
+        } else {
+            saveConfigurationDao.updateUserConfiguration(userConfiguration)
+            userConfiguration.id.toLong()
+        }
         userRobot.configurationId = configurationId.toInt()
+
+        // TODO remove this when we introduce new BuildStatus (completed, but not playable)
         if (userRobot.isCustomBuild()) {
             val hasAssignedPort = !userConfiguration.mappingId?.getVariables()?.firstOrNull().isNullOrEmpty()
             val hasController = userConfiguration.controller != null && userConfiguration.controller != 0
@@ -30,9 +37,9 @@ class SaveUserRobotInteractor(
                 }
         }
 
-        return try {
+        return if (userRobot.instanceId == 0) {
             saveUserRobotDao.saveUserRobot(userRobot)
-        } catch (exception: SQLiteConstraintException) {
+        } else {
             saveUserRobotDao.updateUserRobot(userRobot)
             userRobot.instanceId.toLong()
         }
