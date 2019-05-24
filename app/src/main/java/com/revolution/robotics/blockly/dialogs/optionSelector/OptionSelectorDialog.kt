@@ -13,6 +13,7 @@ class OptionSelectorDialog :
     JavascriptPromptDialog<BlocklyDialogOptionSelectorBinding>(R.layout.blockly_dialog_option_selector) {
 
     override val hasBackButton = true
+    override val hasTitle = true
 
     companion object {
         private var Bundle.titleResource by BundleArgumentDelegate.Int("title")

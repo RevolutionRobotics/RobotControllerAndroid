@@ -9,6 +9,7 @@ import android.widget.SeekBar
 import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.annotation.StringRes
 import androidx.databinding.BindingAdapter
 import androidx.viewpager.widget.ViewPager
 import com.revolution.robotics.core.domain.local.UserProgram
@@ -103,5 +104,12 @@ fun setWidthPercent(view: View, widthPercent: Float) {
     if (layoutParams is ConstraintLayout.LayoutParams) {
         layoutParams.matchConstraintPercentWidth = widthPercent
         view.layoutParams = layoutParams
+    }
+}
+
+@BindingAdapter("textResource")
+fun setText(textView: TextView, @StringRes textResource: Int) {
+    if (textResource != 0) {
+        textView.setText(textResource)
     }
 }

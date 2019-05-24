@@ -58,6 +58,8 @@
     <dimen name="dialog_content_height">182dp</dimen>
     <dimen name="dialog_button_height">46dp</dimen>
     <dimen name="dialog_icon_size">16dp</dimen>
+    <dimen name="dialog_dialpad_width">176dp</dimen>
+    <dimen name="dialog_dialpad_result_width">152dp</dimen>
 
     <!-- DIALOG: CONNECT TO ROBOT -->
     <dimen name="dialog_connect_image_width">91dp</dimen>

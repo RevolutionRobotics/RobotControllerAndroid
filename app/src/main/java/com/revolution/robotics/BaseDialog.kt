@@ -16,7 +16,7 @@ open class BaseDialog : DialogFragment() {
     override fun onResume() {
         super.onResume()
         dialog?.window?.apply {
-            setLayout(context.dimension(R.dimen.dialog_width), context.dimension(R.dimen.dialog_height))
+            setLayout(context.dimension(dialogWidth()), context.dimension(R.dimen.dialog_height))
             setBackgroundDrawable(null)
         }
     }
@@ -25,6 +25,8 @@ open class BaseDialog : DialogFragment() {
         requireActivity().window?.hideSystemUI()
         super.onDismiss(dialog)
     }
+
+    open fun dialogWidth() = R.dimen.dialog_width
 
     fun show(fragmentManager: FragmentManager?) =
         show(fragmentManager, this.javaClass.simpleName)
