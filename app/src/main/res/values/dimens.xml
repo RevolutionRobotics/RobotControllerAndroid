@@ -236,5 +236,7 @@
     <dimen name="lever_height">244dp</dimen>
     <dimen name="play_button_size_big">58dp</dimen>
     <dimen name="play_button_size_normal">40dp</dimen>
+    <dimen name="challenge_list_size">167dp</dimen>
+    <dimen name="challenge_step_size">110dp</dimen>
 
 </resources>

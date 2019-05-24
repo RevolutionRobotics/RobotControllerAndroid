@@ -10,7 +10,7 @@
         <action android:id="@+id/toCoding"
                 app:destination="@id/codingFragment"/>
         <action android:id="@+id/toChallengeList"
-                app:destination="@id/challengeListFragment"/>
+                app:destination="@id/challengeGroupFragment"/>
         <action android:id="@+id/toMyRobots"
                 app:destination="@id/myRobotsFragment"/>
         <action android:id="@+id/toCommunity"
@@ -71,9 +71,12 @@
               android:label="PlayDriverFragment"/>
 
     <!-- Challenges -->
-    <fragment android:id="@+id/challengeListFragment"
+    <fragment android:id="@+id/challengeGroupFragment"
               android:name="com.revolution.robotics.features.challenges.challengeGroup.ChallengeGroupFragment"
-              android:label="ChallengeListFragment"/>
+              android:label="ChallengeListFragment">
+        <action android:id="@+id/toChallengeList"
+                app:destination="@id/challengeListFragment"/>
+    </fragment>
 
     <!-- Configure -->
     <fragment android:id="@+id/configureFragment"
@@ -164,4 +167,10 @@
     <fragment android:id="@+id/programPriorityFragment"
               android:name="com.revolution.robotics.features.configure.controller.program.priority.ProgramPriorityFragment"
               android:label="ProgramPriorityFragment"/>
+    <fragment android:id="@+id/challengeListFragment"
+              android:name="com.revolution.robotics.features.challenges.challengeList.ChallengeListFragment"
+              android:label="ChallengeListFragment">
+        <argument app:argType="com.revolution.robotics.core.domain.remote.ChallengeCategory"
+                  android:name="challenge"/>
+    </fragment>
 </navigation>
