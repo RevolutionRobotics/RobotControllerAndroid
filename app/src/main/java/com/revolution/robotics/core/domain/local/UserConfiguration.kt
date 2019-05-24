@@ -8,6 +8,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.PrimaryKey
 import androidx.room.Query
+import androidx.room.Update
 import kotlinx.android.parcel.Parcelize
 
 @Entity
@@ -28,4 +29,7 @@ interface UserConfigurationDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveUserConfiguration(userConfiguration: UserConfiguration): Long
+
+    @Update
+    fun updateUserConfiguration(userConfiguration: UserConfiguration): Int
 }

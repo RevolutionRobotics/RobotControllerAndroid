@@ -20,7 +20,7 @@ class SaveUserRobotInteractor(
         val configurationId = saveConfigurationDao.saveUserConfiguration(userConfiguration)
         userRobot.configurationId = configurationId.toInt()
         if (userRobot.isCustomBuild()) {
-            val hasAssignedPort = userConfiguration.mappingId?.getVariables()?.firstOrNull() != null
+            val hasAssignedPort = !userConfiguration.mappingId?.getVariables()?.firstOrNull().isNullOrEmpty()
             val hasController = userConfiguration.controller != null && userConfiguration.controller != 0
             userRobot.buildStatus =
                 if (hasAssignedPort && hasController) {

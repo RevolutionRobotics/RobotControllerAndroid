@@ -69,7 +69,6 @@ class ConfigureFragment : BaseFragment<FragmentConfigureBinding, ConfigureViewMo
         super.onDestroyView()
     }
 
-
     override fun openMotorConfig(motorPort: MotorPort) {
         binding?.drawerConfiguration?.setMotor(motorPort.motor ?: Motor(), motorPort.portName ?: "")
     }

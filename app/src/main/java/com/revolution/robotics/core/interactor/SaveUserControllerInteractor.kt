@@ -2,12 +2,18 @@ package com.revolution.robotics.core.interactor
 
 import com.revolution.robotics.core.domain.local.UserBackgroundProgramBinding
 import com.revolution.robotics.core.domain.local.UserBackgroundProgramBindingDao
+import com.revolution.robotics.core.domain.local.UserConfigurationDao
 import com.revolution.robotics.core.domain.local.UserController
 import com.revolution.robotics.core.domain.local.UserControllerDao
+import com.revolution.robotics.core.domain.local.UserRobotDao
+import com.revolution.robotics.features.configure.UserConfigurationStorage
 
 class SaveUserControllerInteractor(
     private val userControllerDao: UserControllerDao,
-    private val userBackgroundProgramBindingDao: UserBackgroundProgramBindingDao
+    private val userRobotDao: UserRobotDao,
+    private val userConfigDao: UserConfigurationDao,
+    private val userBackgroundProgramBindingDao: UserBackgroundProgramBindingDao,
+    private val storage: UserConfigurationStorage
 ) : Interactor<Long>() {
 
     lateinit var userController: UserController
@@ -21,6 +27,17 @@ class SaveUserControllerInteractor(
         } else {
             userControllerDao.updateUserController(userController)
         }
+
+        userRobotDao.getRobotById(userController.robotId)?.let { robot ->
+            userConfigDao.getUserConfiguration(robot.configurationId)?.let { config ->
+                if (config.controller == null || config.controller == 0) {
+                    config.controller = userController.id
+                    userConfigDao.updateUserConfiguration(config)
+                    storage.userConfiguration?.controller = userController.id
+                }
+            }
+        }
+
         backgroundProgramBindings.forEach {
             it.controllerId = userController.id
         }

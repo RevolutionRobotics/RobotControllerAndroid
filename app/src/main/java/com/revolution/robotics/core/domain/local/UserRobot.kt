@@ -35,6 +35,9 @@ interface UserRobotDao {
     @Query("SELECT * FROM UserRobot")
     fun getAllRobots(): List<UserRobot>
 
+    @Query("SELECT * FROM UserRobot WHERE instanceId=:robotId")
+    fun getRobotById(robotId: Int): UserRobot?
+
     @Query("SELECT * FROM UserRobot WHERE id=:robotId AND buildStatus=:buildStatus")
     fun getRobotByStatus(robotId: Int, buildStatus: BuildStatus): UserRobot?
 
