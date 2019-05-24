@@ -39,5 +39,5 @@ interface UserBackgroundProgramBindingDao {
     fun saveBackgroundPrograms(backgroundProgramBindings: List<UserBackgroundProgramBinding>): List<Long>
 
     @Query("DELETE FROM UserBackgroundProgramBinding WHERE controllerId=:controllerId")
-    fun removeOldBackgroundBingins(controllerId: Int)
+    fun removeOldBackgroundBindings(controllerId: Int)
 }

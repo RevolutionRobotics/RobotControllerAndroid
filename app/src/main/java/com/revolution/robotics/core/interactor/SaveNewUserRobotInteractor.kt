@@ -65,7 +65,7 @@ class SaveNewUserRobotInteractor(
                 }
             }
 
-            userBackgroundProgramBindingDao.removeOldBackgroundBingins(userController.id)
+            userBackgroundProgramBindingDao.removeOldBackgroundBindings(userController.id)
             userBackgroundProgramBindingDao.saveBackgroundPrograms(
                 controller?.backgroundProgramBindings?.map {
                     createBackgroundBinding(userController.id, it, programIdMap)

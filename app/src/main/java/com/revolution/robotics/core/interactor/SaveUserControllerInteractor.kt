@@ -24,7 +24,7 @@ class SaveUserControllerInteractor(
         backgroundProgramBindings.forEach {
             it.controllerId = userController.id
         }
-        userBackgroundProgramBindingDao.removeOldBackgroundBingins(userController.id)
+        userBackgroundProgramBindingDao.removeOldBackgroundBindings(userController.id)
         userBackgroundProgramBindingDao.saveBackgroundPrograms(backgroundProgramBindings)
         return userController.id.toLong()
     }
