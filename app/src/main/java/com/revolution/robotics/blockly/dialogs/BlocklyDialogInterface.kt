@@ -1,7 +1,10 @@
 package com.revolution.robotics.blockly.dialogs
 
-interface BlocklyDialogInterface {
+import androidx.databinding.ObservableInt
 
+interface BlocklyDialogInterface {
+    val hasBackButton: Boolean
+    val titleResource: ObservableInt
     fun dismiss()
-    fun confirm()
+    fun confirmResult(result: String)
 }

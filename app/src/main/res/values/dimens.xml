@@ -101,6 +101,12 @@
     <dimen name="delete_robot_image_width">46dp</dimen>
     <dimen name="delete_robot_image_height">62dp</dimen>
 
+    <!-- DIALOG: BLOCKLY OPTION SELECTOR -->
+    <dimen name="option_selector_button_width">128dp</dimen>
+    <dimen name="option_selector_button_height">44dp</dimen>
+    <dimen name="option_selector_button_padding_horizontal">52dp</dimen>
+    <dimen name="option_selector_button_padding_vertical">12dp</dimen>
+
     <!-- SCREEN: MAIN MENU -->
     <dimen name="main_menu_header_border_size">30dp</dimen>
     <dimen name="main_menu_footer_height">28dp</dimen>

@@ -1,29 +1,24 @@
 package com.revolution.robotics.views.dialogs
 
-import android.app.Activity
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.core.view.forEachIndexed
-import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.FragmentManager
+import com.revolution.robotics.BaseDialog
 import com.revolution.robotics.R
 import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
 import com.revolution.robotics.core.extensions.dimension
 import com.revolution.robotics.core.extensions.gone
-import com.revolution.robotics.core.extensions.hideSystemUI
 import com.revolution.robotics.databinding.DialogRoboticsCoreBinding
 import com.revolution.robotics.databinding.DialogRoboticsCoreButtonBinding
-import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 import org.kodein.di.KodeinAware
 import org.kodein.di.LateInitKodein
 import org.kodein.di.erased.instance
 
 @Suppress("OptionalUnit")
-abstract class RoboticsDialog : DialogFragment() {
+abstract class RoboticsDialog : BaseDialog() {
 
     abstract val hasCloseButton: Boolean
     abstract val dialogFaces: List<DialogFace<*>>
@@ -44,10 +39,7 @@ abstract class RoboticsDialog : DialogFragment() {
         binding = DialogRoboticsCoreBinding.inflate(inflater, container, false)
         activateFace(dialogFaces[0])
 
-        binding.background = ChippedBoxConfig.Builder()
-            .chipSize(R.dimen.dialog_chip_size)
-            .backgroundColorResource(R.color.grey_28)
-            .create()
+        binding.background = dialogBackgroundConfig.create()
         binding.viewModel = RoboticsDialogViewModel(hasCloseButton) {
             dialog.dismiss()
             onDialogCloseButtonClicked()
@@ -57,19 +49,6 @@ abstract class RoboticsDialog : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         updateButtonWeights()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        dialog?.window?.apply {
-            setLayout(context.dimension(R.dimen.dialog_width), context.dimension(R.dimen.dialog_height))
-            setBackgroundDrawable(null)
-        }
-    }
-
-    override fun onDismiss(dialog: DialogInterface?) {
-        super.onDismiss(dialog)
-        (context as? Activity)?.window?.hideSystemUI()
     }
 
     open fun onDialogCloseButtonClicked() = Unit
@@ -107,7 +86,4 @@ abstract class RoboticsDialog : DialogFragment() {
             }
         }
     }
-
-    fun show(fragmentManager: FragmentManager?) =
-        show(fragmentManager, javaClass.simpleName)
 }

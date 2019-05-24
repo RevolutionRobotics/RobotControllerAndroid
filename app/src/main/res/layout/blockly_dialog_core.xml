@@ -2,42 +2,57 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <variable name="background" type="com.revolution.robotics.views.chippedBox.ChippedBoxConfig"/>
         <variable name="dialogInterface" type="com.revolution.robotics.blockly.dialogs.BlocklyDialogInterface"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/root"
+            app:chippedBoxConfig="@{background}"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/dimen_16dp">
+            android:layout_height="match_parent">
+
+        <TextView
+                android:id="@+id/title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:fontFamily="@font/jura_bold"
+                android:gravity="center"
+                android:text="@{dialogInterface.titleResource}"
+                android:layout_marginStart="@dimen/dimen_32dp"
+                android:layout_marginEnd="@dimen/dimen_32dp"
+                android:layout_marginTop="@dimen/dimen_32dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+        <ImageView
+                android:id="@+id/close"
+                app:visible="@{dialogInterface.hasBackButton}"
+                android:onClick="@{() -> dialogInterface.dismiss()}"
+                android:background="?attr/selectableItemBackground"
+                android:layout_margin="@dimen/dimen_4dp"
+                android:layout_width="@dimen/dimen_32dp"
+                android:layout_height="@dimen/dimen_32dp"
+                android:padding="@dimen/dimen_8dp"
+                android:src="@drawable/ic_close"
+                android:scaleType="centerInside"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/container"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
+                android:layout_height="0dp"
+                app:layout_constraintTop_toBottomOf="@id/title"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
-
-        <Button
-                android:id="@+id/button_cancel"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/dimen_48dp"
-                android:onClick="@{() -> dialogInterface.dismiss()}"
-                android:text="@string/cancel"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/button_ok"
-                app:layout_constraintTop_toBottomOf="@id/container"
-                android:layout_marginTop="@dimen/dimen_16dp"/>
-
-        <Button
-                android:id="@+id/button_ok"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/dimen_48dp"
-                android:text="@string/ok"
-                android:onClick="@{() -> dialogInterface.confirm()}"
-                app:layout_constraintStart_toEndOf="@id/button_cancel"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/button_cancel"/>
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginTop="@dimen/dimen_16dp"
+                android:layout_marginBottom="@dimen/dimen_24dp"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
