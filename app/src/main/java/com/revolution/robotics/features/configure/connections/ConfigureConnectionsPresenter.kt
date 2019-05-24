@@ -11,11 +11,13 @@ import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.features.configure.ConfigurationEventBus
 import com.revolution.robotics.features.configure.MotorPort
 import com.revolution.robotics.features.configure.SensorPort
+import com.revolution.robotics.features.configure.UserConfigurationStorage
 
 @Suppress("TooManyFunctions")
 class ConfigureConnectionsPresenter(
     private val openConfigurationEventBus: ConfigurationEventBus,
-    private val resourceResolver: ResourceResolver
+    private val resourceResolver: ResourceResolver,
+    private val userConfigurationStorage: UserConfigurationStorage
 ) :
     ConfigureConnectionsMvp.Presenter {
     override var model: ConfigureConnectionsViewModel? = null
@@ -24,10 +26,16 @@ class ConfigureConnectionsPresenter(
     private var selectedPort: MutableLiveData<RobotPartModel>? = null
     private var userConfiguration: UserConfiguration? = null
 
+    override fun register(view: ConfigureConnectionsMvp.View, model: ConfigureConnectionsViewModel?) {
+        super.register(view, model)
+        userConfiguration = userConfigurationStorage.userConfiguration?.apply {
+            setConfiguration(this)
+        }
+    }
+
     override fun unregister() {
-        super.unregister()
         selectedPort = null
-        userConfiguration = null
+        super.unregister()
     }
 
     override fun setConfiguration(userConfiguration: UserConfiguration) {

@@ -8,7 +8,7 @@ import com.revolution.robotics.views.dialogs.RoboticsDialog
 interface ConfigureMvp : Mvp {
     interface View : Mvp.View {
         fun showDialog(roboticsDialog: RoboticsDialog)
-        fun showConnectionsScreen(userConfiguration: UserConfiguration)
+        fun showConnectionsScreen()
         fun showControllerScreen()
         fun openMotorConfig(motorPort: MotorPort)
         fun openSensorConfig(sensorPort: SensorPort)
@@ -23,5 +23,6 @@ interface ConfigureMvp : Mvp {
         fun saveConfiguration()
         fun onConnectionsTabSelected()
         fun onControllerTabSelected()
+        fun clearStorage()
     }
 }

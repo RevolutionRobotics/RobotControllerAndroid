@@ -175,6 +175,7 @@ fun createPresenterModule() =
         bind<ConfigureConnectionsMvp.Presenter>() with singleton {
             ConfigureConnectionsPresenter(
                 instance(),
+                instance(),
                 instance()
             )
         }

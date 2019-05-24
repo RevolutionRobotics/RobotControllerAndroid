@@ -37,4 +37,7 @@ interface UserBackgroundProgramBindingDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveBackgroundPrograms(backgroundProgramBindings: List<UserBackgroundProgramBinding>): List<Long>
+
+    @Query("DELETE FROM UserBackgroundProgramBinding WHERE controllerId=:controllerId")
+    fun removeOldBackgroundBingins(controllerId: Int)
 }
