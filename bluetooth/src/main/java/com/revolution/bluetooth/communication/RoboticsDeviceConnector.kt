@@ -14,6 +14,8 @@ import com.revolution.bluetooth.service.RoboticsConfigurationService
 import com.revolution.bluetooth.service.RoboticsDeviceService
 import com.revolution.bluetooth.service.RoboticsEventSerializer
 import com.revolution.bluetooth.service.RoboticsLiveControllerService
+import com.revolution.bluetooth.service.RoboticsMotorService
+import com.revolution.bluetooth.service.RoboticsSensorService
 import com.revolution.bluetooth.threading.moveToUIThread
 
 @Suppress("TooManyFunctions")
@@ -32,11 +34,38 @@ class RoboticsDeviceConnector : BluetoothGattCallback() {
 
     private val roboticEventSerializer = RoboticsEventSerializer()
 
+    val deviceService: RoboticsDeviceService
+        get() {
+            return services.first { it is RoboticsDeviceService } as RoboticsDeviceService
+        }
+    val liveControllerService: RoboticsLiveControllerService
+        get() {
+            return services.first { it is RoboticsLiveControllerService } as RoboticsLiveControllerService
+        }
+    val batteryService: RoboticsBatteryService
+        get() {
+            return services.first { it is RoboticsBatteryService } as RoboticsBatteryService
+        }
+    val configurationService: RoboticsConfigurationService
+        get() {
+            return services.first { it is RoboticsConfigurationService } as RoboticsConfigurationService
+        }
+    val motorService: RoboticsMotorService
+        get() {
+            return services.first { it is RoboticsMotorService } as RoboticsMotorService
+        }
+    val sensorService: RoboticsSensorService
+        get() {
+            return services.first { it is RoboticsSensorService } as RoboticsSensorService
+        }
+
     private val services = setOf(
         RoboticsDeviceService(),
         RoboticsLiveControllerService(),
         RoboticsBatteryService(),
-        RoboticsConfigurationService()
+        RoboticsConfigurationService(),
+        RoboticsMotorService(),
+        RoboticsSensorService()
     )
 
     fun connect(
@@ -140,17 +169,6 @@ class RoboticsDeviceConnector : BluetoothGattCallback() {
             services.forEach { it.onCharacteristicWrite(gatt, characteristic, status) }
         }
     }
-
-    fun getDeviceService() = services.first { it is RoboticsDeviceService } as RoboticsDeviceService
-
-    fun getLiveControllerService(): RoboticsLiveControllerService =
-        services.first { it is RoboticsLiveControllerService } as RoboticsLiveControllerService
-
-    fun getBatteryService(): RoboticsBatteryService =
-        services.first { it is RoboticsBatteryService } as RoboticsBatteryService
-
-    fun getConfigurationService(): RoboticsConfigurationService =
-        services.first { it is RoboticsConfigurationService } as RoboticsConfigurationService
 
     override fun onMtuChanged(gatt: BluetoothGatt?, mtu: Int, status: Int) = Unit
 
