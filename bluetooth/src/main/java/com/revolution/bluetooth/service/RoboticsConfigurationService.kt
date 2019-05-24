@@ -4,6 +4,7 @@ import android.bluetooth.BluetoothGatt
 import android.bluetooth.BluetoothGattCharacteristic
 import android.net.Uri
 import android.util.Log
+import com.revolution.bluetooth.exception.BLEConnectionException
 import com.revolution.bluetooth.exception.BLEException
 import com.revolution.bluetooth.exception.BLELongMessageIsAlreadyRunning
 import com.revolution.bluetooth.exception.BLELongMessageValidationException
@@ -12,6 +13,7 @@ import com.revolution.bluetooth.file.FileChunkHandler
 import com.revolution.bluetooth.file.MD5Checker
 import java.util.UUID
 
+// TODO Remove logs
 @Suppress("TooManyFunctions")
 class RoboticsConfigurationService : RoboticsBLEService() {
 
@@ -53,30 +55,27 @@ class RoboticsConfigurationService : RoboticsBLEService() {
     var validationCounter = 0
 
     fun updateFirmware(file: Uri, onSuccess: () -> Unit, onError: (exception: BLEException) -> Unit) {
-        initLongMessage(file, onSuccess, onError)
-        startLongMessageFlow(FUNCTION_TYPE_FIRMWARE)
+        initLongMessage(file, onSuccess, onError, FUNCTION_TYPE_FIRMWARE)
     }
 
     fun updateFramework(file: Uri, onSuccess: () -> Unit, onError: (exception: BLEException) -> Unit) {
-        initLongMessage(file, onSuccess, onError)
-        startLongMessageFlow(FUNCTION_TYPE_FRAMEWORK)
+        initLongMessage(file, onSuccess, onError, FUNCTION_TYPE_FRAMEWORK)
     }
 
     fun testKit(file: Uri, onSuccess: () -> Unit, onError: (exception: BLEException) -> Unit) {
-        initLongMessage(file, onSuccess, onError)
-        startLongMessageFlow(FUNCTION_TYPE_TESTKIT)
+        initLongMessage(file, onSuccess, onError, FUNCTION_TYPE_TESTKIT)
     }
 
     fun sendConfiguration(file: Uri, onSuccess: () -> Unit, onError: (exception: BLEException) -> Unit) {
-        initLongMessage(file, onSuccess, onError)
-        startLongMessageFlow(FUNCTION_TYPE_CONFIGURATION)
+        initLongMessage(file, onSuccess, onError, FUNCTION_TYPE_CONFIGURATION)
     }
 
-    private fun startLongMessageFlow(typeId: Byte) {
-        sendSelectLongMessage(typeId)
-    }
-
-    private fun initLongMessage(file: Uri, onSuccess: () -> Unit, onError: (exception: BLEException) -> Unit) {
+    private fun initLongMessage(
+        file: Uri,
+        onSuccess: () -> Unit,
+        onError: (exception: BLEException) -> Unit,
+        functionType: Byte
+    ) {
         if (isUploadInProgress()) {
             onError.invoke(BLELongMessageIsAlreadyRunning())
             resetVariables()
@@ -85,6 +84,7 @@ class RoboticsConfigurationService : RoboticsBLEService() {
         currentFile = file
         success = onSuccess
         error = onError
+        sendSelectLongMessage(functionType)
     }
 
     private fun sendSelectLongMessage(typeId: Byte) {
@@ -163,8 +163,23 @@ class RoboticsConfigurationService : RoboticsBLEService() {
 
     private fun isUploadInProgress() = currentFile != null
 
-    override fun onCharacteristicRead(gatt: BluetoothGatt?, characteristic: BluetoothGattCharacteristic, status: Int) {
+    @Suppress("ReturnCount")
+    private fun validateCharacteristicEvent(characteristic: BluetoothGattCharacteristic, status: Int): Boolean {
         if (characteristic.uuid != CHARACTERISTIC) {
+            return false
+        }
+        if (status != BluetoothGatt.GATT_SUCCESS) {
+            Log.d(TAG, "Bluetooth error: $status")
+            error?.invoke(BLEConnectionException(status))
+            resetVariables()
+            return false
+        }
+
+        return true
+    }
+
+    override fun onCharacteristicRead(gatt: BluetoothGatt?, characteristic: BluetoothGattCharacteristic, status: Int) {
+        if (!validateCharacteristicEvent(characteristic, status)) {
             return
         }
         when (characteristic.value[0]) {
@@ -207,7 +222,7 @@ class RoboticsConfigurationService : RoboticsBLEService() {
     }
 
     override fun onCharacteristicWrite(gatt: BluetoothGatt?, characteristic: BluetoothGattCharacteristic, status: Int) {
-        if (characteristic.uuid != CHARACTERISTIC) {
+        if (!validateCharacteristicEvent(characteristic, status)) {
             return
         }
         Log.d(

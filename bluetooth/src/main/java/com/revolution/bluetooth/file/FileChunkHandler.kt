@@ -1,7 +1,6 @@
 package com.revolution.bluetooth.file
 
 import android.net.Uri
-import android.util.Log
 import java.io.FileInputStream
 
 class FileChunkHandler {
@@ -33,7 +32,6 @@ class FileChunkHandler {
     }
 
     fun getNextChunk(): ByteArray? {
-        Log.e("TEST", "Get next chunk: $currentIndex")
         val currentChunk = chunks.getOrNull(currentIndex)
         currentIndex++
         return currentChunk
