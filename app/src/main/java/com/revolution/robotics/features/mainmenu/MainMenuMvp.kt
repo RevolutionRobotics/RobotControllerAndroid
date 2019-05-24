@@ -12,7 +12,7 @@ interface MainMenuMvp : Mvp {
     interface Presenter : Mvp.Presenter<View, MainMenuViewModel> {
         fun navigateToMyRobots()
         fun navigateToCoding()
-        fun navigateToChallenges()
+        fun navigateToChallengeList()
         fun onCommunityClicked()
         fun onSettingsClicked()
     }

@@ -23,7 +23,7 @@ class MainMenuViewModel(private val presenter: MainMenuMvp.Presenter) : ViewMode
         R.string.menu_challenges,
         R.drawable.card_border_blue,
         R.drawable.ic_challenges,
-        presenter::navigateToChallenges
+        presenter::navigateToChallengeList
     )
 
     @Suppress("OptionalUnit")

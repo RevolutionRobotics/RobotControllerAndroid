@@ -42,6 +42,8 @@ import com.revolution.robotics.features.build.chapterFinished.ChapterFinishedMvp
 import com.revolution.robotics.features.build.chapterFinished.ChapterFinishedPresenter
 import com.revolution.robotics.features.build.connect.availableRobotsFace.ConnectMvp
 import com.revolution.robotics.features.build.connect.availableRobotsFace.ConnectPresenter
+import com.revolution.robotics.features.challenges.challengeGroup.ChallengeGroupMvp
+import com.revolution.robotics.features.challenges.challengeGroup.ChallengeGroupPresenter
 import com.revolution.robotics.features.configure.ConfigureMvp
 import com.revolution.robotics.features.configure.ConfigurePresenter
 import com.revolution.robotics.features.configure.connections.ConfigureConnectionsMvp
@@ -243,6 +245,7 @@ fun createPresenterModule() =
             )
         }
         bind<SplashMvp.Presenter>() with singleton { SplashPresenter(instance()) }
+        bind<ChallengeGroupMvp.Presenter>() with singleton { ChallengeGroupPresenter(instance(), instance()) }
     }
 
 fun createDbModule(context: Context) =
