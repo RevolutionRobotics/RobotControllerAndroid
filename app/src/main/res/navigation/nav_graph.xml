@@ -52,6 +52,12 @@
               android:label="BuildRobotFragment">
         <argument app:argType="com.revolution.robotics.core.domain.local.UserRobot"
                   android:name="robot"/>
+        <action android:id="@+id/toPlayMultitasker"
+                app:destination="@id/playMultitaskerFragment" app:popUpTo="@+id/myRobotsFragment"/>
+        <action android:id="@+id/toPlayDriver"
+                app:destination="@id/playDriverFragment" app:popUpTo="@+id/myRobotsFragment"/>
+        <action android:id="@+id/toPlayGamer"
+                app:destination="@id/playGamerFragment" app:popUpTo="@+id/myRobotsFragment"/>
     </fragment>
 
     <!-- Coding -->

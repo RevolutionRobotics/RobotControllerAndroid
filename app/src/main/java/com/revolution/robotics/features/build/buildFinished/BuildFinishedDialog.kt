@@ -1,6 +1,7 @@
 package com.revolution.robotics.features.build.buildFinished
 
 import com.revolution.robotics.R
+import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.databinding.DialogBuildFinishedBinding
 import com.revolution.robotics.views.dialogs.DialogButton
 import com.revolution.robotics.views.dialogs.DialogFace
@@ -25,7 +26,7 @@ class BuildFinishedDialog : RoboticsDialog() {
             presenter.navigateHome()
         },
         DialogButton(R.string.build_robot_finished_button, R.drawable.ic_play, true) {
-            // TODO let's drive!
+            dialogEventBus.publish(DialogEvent.LETS_DRIVE)
             dismissAllowingStateLoss()
         }
     )
