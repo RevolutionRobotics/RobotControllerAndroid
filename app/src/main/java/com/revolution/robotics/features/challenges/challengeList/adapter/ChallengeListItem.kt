@@ -13,6 +13,7 @@ class ChallengeListItem(
     val backgroundResource: Int,
     val textColor: Int,
     val indexTextColor: Int,
+    val onClickEnabled: Boolean,
     val presenter: ChallengeListMvp.Presenter
 ) {
 

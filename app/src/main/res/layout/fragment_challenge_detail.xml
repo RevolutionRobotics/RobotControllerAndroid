@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable name="viewModel"
+                  type="com.revolution.robotics.features.challenges.challengeDetail.ChallengeDetailViewModel"/>
+        <variable name="toolbarViewModel"
+                  type="com.revolution.robotics.features.challenges.challengeDetail.ChallengeDetailToolbarViewModel"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_glow">
+
+        <com.revolution.robotics.views.toolbar.RoboticsToolbar
+                android:id="@+id/toolbar"
+                app:viewModel="@{toolbarViewModel}"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:background="@drawable/bg_glow"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/toolbar_height"/>
+
+        <com.revolution.robotics.features.challenges.challengeDetail.ChallengeDetailSlider
+                android:id="@+id/slider_challenge_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="16dp"/>
+
+        <TextView
+                android:id="@+id/txt_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/toolbar"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:fontFamily="@font/barlow_regular"
+                android:layout_marginStart="@dimen/dimen_64dp"
+                android:layout_marginEnd="@dimen/dimen_64dp"
+                android:layout_marginTop="@dimen/dimen_16dp"
+                android:text="@{viewModel.title}"
+                tools:text="In this challenge, you’ll learn a simple way to use gears to make your wheels rotate faster."
+                app:visible="@{!viewModel.isPartStep}"/>
+
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:adjustViewBounds="true"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="@dimen/dimen_32dp"
+                android:layout_marginBottom="@dimen/dimen_32dp"
+                app:layout_constraintTop_toBottomOf="@id/toolbar"
+                app:layout_constraintBottom_toTopOf="@id/slider_challenge_detail"
+                tools:src="@drawable/img_logo"
+                app:firebaseImageUrl="@{viewModel.image}"
+                app:visible="@{!viewModel.isPartStep}"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_parts"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                app:visible="@{viewModel.isPartStep}"
+                android:paddingStart="@dimen/dimen_64dp"
+                android:paddingEnd="@dimen/dimen_64dp"
+                android:paddingTop="@dimen/dimen_4dp"
+                android:paddingBottom="@dimen/dimen_20dp"
+                android:clipToPadding="false"
+                app:challengeParts="@{viewModel.parts}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/toolbar"
+                app:layout_constraintBottom_toTopOf="@id/slider_challenge_detail"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

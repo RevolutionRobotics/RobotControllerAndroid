@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <merge
+            xmlns:tools="http://schemas.android.com/tools"
+            tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
+
+
+        <ImageView
+                android:id="@+id/img_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dimen_12dp"
+                android:src="@drawable/ic_back"
+                android:layout_marginTop="3dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/seekbar_build_steps"
+                app:layout_constraintBottom_toBottomOf="@id/seekbar_build_steps"/>
+
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/img_next"
+                android:layout_marginTop="3dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/seekbar_build_steps"
+                app:layout_constraintBottom_toBottomOf="@id/seekbar_build_steps"
+                android:padding="@dimen/dimen_12dp"
+                android:src="@drawable/ic_next"/>
+
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/img_finish"
+                app:layout_constraintTop_toTopOf="@id/img_next"
+                app:layout_constraintEnd_toEndOf="@id/img_next"
+                app:layout_constraintStart_toStartOf="@id/img_next"
+                app:layout_constraintBottom_toBottomOf="@id/img_next"
+                android:padding="@dimen/dimen_2dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/slider_finish"/>
+
+        <com.revolution.robotics.features.challenges.challengeDetail.ChallengeDetailSeekbar
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                style="@style/RoboticsSeekBar"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@id/img_back"
+                app:layout_constraintEnd_toStartOf="@id/img_next"
+                android:id="@+id/seekbar_build_steps"/>
+
+    </merge>
+
+</layout>
