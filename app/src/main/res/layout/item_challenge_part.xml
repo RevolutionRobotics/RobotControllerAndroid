@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable name="viewModel"
+                  type="com.revolution.robotics.features.challenges.challengeDetail.adapter.ChallengePartItemViewModel"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="@dimen/size_challenge_part"
+            android:layout_height="@dimen/size_challenge_part"
+            android:layout_marginStart="@dimen/dimen_16dp"
+            android:layout_marginEnd="@dimen/dimen_16dp"
+            android:layout_marginBottom="@dimen/dimen_32dp"
+            android:background="@drawable/bg_challenge_part">
+
+        <ImageView
+                android:id="@+id/img_part"
+                android:layout_width="@dimen/dimen_16dp"
+                android:layout_height="@dimen/dimen_16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:firebaseImageUrl="@{viewModel.part.image}"
+                tools:src="@drawable/ic_check"
+                android:layout_marginTop="@dimen/dimen_16dp"/>
+
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_10dp"
+                tools:text="1x brain (powered on)"
+                android:textSize="10sp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/barlow_bold"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dimen_12dp"
+                android:text="@{viewModel.part.name}"
+                app:layout_constraintTop_toBottomOf="@id/img_part"
+                android:layout_marginEnd="@dimen/dimen_10dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -2,6 +2,7 @@ package com.revolution.robotics.features.challenges.challengeDetail
 
 import com.revolution.robotics.core.domain.remote.Challenge
 import com.revolution.robotics.core.domain.remote.ChallengeStep
+import com.revolution.robotics.features.challenges.challengeDetail.adapter.ChallengePartItemViewModel
 
 class ChallengeDetailPresenter : ChallengeDetailMvp.Presenter, ChallengeDetailSlider.ChallengeStepSelectedListener {
 
@@ -27,11 +28,14 @@ class ChallengeDetailPresenter : ChallengeDetailMvp.Presenter, ChallengeDetailSl
                 image.value = challengeStep.image
                 title.value = challengeStep.description
                 isPartStep.value = false
+                parts.value = emptyList()
             } else {
                 image.value = null
                 title.value = null
                 isPartStep.value = true
-                // TODO Set adapter items
+                parts.value = challengeStep.parts.map {
+                    ChallengePartItemViewModel(it)
+                }
             }
         }
     }

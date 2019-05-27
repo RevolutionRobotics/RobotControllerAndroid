@@ -53,7 +53,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginTop="@dimen/dimen_32dp"
                 android:layout_marginBottom="@dimen/dimen_32dp"
-                app:layout_constraintTop_toBottomOf="@id/txt_title"
+                app:layout_constraintTop_toBottomOf="@id/toolbar"
                 app:layout_constraintBottom_toTopOf="@id/slider_challenge_detail"
                 tools:src="@drawable/img_logo"
                 app:firebaseImageUrl="@{viewModel.image}"
@@ -61,14 +61,18 @@
 
         <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_parts"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 app:visible="@{viewModel.isPartStep}"
-                android:layout_marginStart="@dimen/dimen_64dp"
-                android:layout_marginEnd="@dimen/dimen_64dp"
-                android:layout_marginTop="@dimen/dimen_4dp"
-                android:layout_marginBottom="@dimen/dimen_20dp"
-                app:layout_constraintTop_toBottomOf="@id/txt_title"
+                android:paddingStart="@dimen/dimen_64dp"
+                android:paddingEnd="@dimen/dimen_64dp"
+                android:paddingTop="@dimen/dimen_4dp"
+                android:paddingBottom="@dimen/dimen_20dp"
+                android:clipToPadding="false"
+                app:challengeParts="@{viewModel.parts}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/toolbar"
                 app:layout_constraintBottom_toTopOf="@id/slider_challenge_detail"/>
 
 

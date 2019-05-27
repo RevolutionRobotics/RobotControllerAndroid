@@ -4,6 +4,8 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.revolution.robotics.features.build.connect.adapter.ConnectAdapter
 import com.revolution.robotics.features.build.connect.adapter.ConnectRobotItem
+import com.revolution.robotics.features.challenges.challengeDetail.adapter.ChallengePartAdapter
+import com.revolution.robotics.features.challenges.challengeDetail.adapter.ChallengePartItemViewModel
 import com.revolution.robotics.features.challenges.challengeGroup.adapter.ChallengeGroupAdapter
 import com.revolution.robotics.features.challenges.challengeGroup.adapter.ChallengeGroupItem
 import com.revolution.robotics.features.challenges.challengeList.adapter.ChallengeListAdapter
@@ -45,5 +47,12 @@ fun setChallengeGroups(recyclerView: RecyclerView, itemList: List<ChallengeGroup
 fun setChallengeSteps(recyclerView: RecyclerView, itemList: List<ChallengeListItem>?) {
     if (itemList != null) {
         (recyclerView.adapter as? ChallengeListAdapter)?.setItems(itemList)
+    }
+}
+
+@BindingAdapter("challengeParts")
+fun setChallengeParts(recyclerView: RecyclerView, itemList: List<ChallengePartItemViewModel>?) {
+    if (itemList != null) {
+        (recyclerView.adapter as? ChallengePartAdapter)?.setItems(itemList)
     }
 }
