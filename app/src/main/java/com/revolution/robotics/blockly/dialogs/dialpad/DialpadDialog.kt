@@ -15,7 +15,7 @@ class DialpadDialog : JavascriptPromptDialog<BlocklyDialogDialpadBinding>(R.layo
         fun newInstance() = DialpadDialog()
     }
 
-    override val hasBackButton = false
+    override val hasCloseButton = false
     override val hasTitle = false
 
     override fun dialogWidth() = R.dimen.dialog_dialpad_width

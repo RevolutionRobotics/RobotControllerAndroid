@@ -22,8 +22,7 @@ abstract class JavascriptPromptDialog<B : ViewDataBinding>(@LayoutRes private va
     lateinit var binding: B
 
     override val titleResource = ObservableInt()
-
-    private val kodein = LateInitKodein()
+    protected val kodein = LateInitKodein()
     private val javascriptResultHandler: JavascriptResultHandler by kodein.instance()
 
     override fun onCreate(savedInstanceState: Bundle?) {

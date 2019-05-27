@@ -12,7 +12,7 @@ import com.revolution.robotics.databinding.BlocklyDialogOptionSelectorBinding
 class OptionSelectorDialog :
     JavascriptPromptDialog<BlocklyDialogOptionSelectorBinding>(R.layout.blockly_dialog_option_selector) {
 
-    override val hasBackButton = true
+    override val hasCloseButton = true
     override val hasTitle = true
 
     companion object {
