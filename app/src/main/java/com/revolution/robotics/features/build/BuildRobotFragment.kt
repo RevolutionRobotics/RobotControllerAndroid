@@ -82,10 +82,14 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
     }
 
     override fun onDialogEvent(event: DialogEvent) {
-        if (event == DialogEvent.CHAPTER_FINISHED) {
-            getTestingDialog(event.extras.getInt(ChapterFinishedDialog.KEY_TEST_CODE_ID))?.show(fragmentManager)
-        } else if (event == DialogEvent.SKIP_TESTING || event == DialogEvent.TEST_WORKS) {
-            binding?.seekbar?.next()
+        when (event) {
+            DialogEvent.CHAPTER_FINISHED -> getTestingDialog(
+                event.extras.getInt(ChapterFinishedDialog.KEY_TEST_CODE_ID)
+            )?.show(
+                fragmentManager
+            )
+            DialogEvent.SKIP_TESTING, DialogEvent.TEST_WORKS -> binding?.seekbar?.next()
+            DialogEvent.LETS_DRIVE -> presenter.letsDrive()
         }
     }
 
