@@ -28,6 +28,8 @@
                 android:layout_height="@dimen/challenge_step_size"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/view_top_margin"
+                android:clickable="@{viewModel.onClickEnabled}"
+                android:onClick="@{() -> viewModel.onItemClicked()}"
                 tools:background="@drawable/bg_challenge_step_complete"
                 app:backgroundResource="@{viewModel.backgroundResource}"/>
 

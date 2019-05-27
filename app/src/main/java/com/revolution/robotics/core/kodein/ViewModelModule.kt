@@ -2,6 +2,7 @@ package com.revolution.robotics.core.kodein
 
 import com.revolution.robotics.features.build.BuildRobotViewModel
 import com.revolution.robotics.features.build.connect.availableRobotsFace.ConnectViewModel
+import com.revolution.robotics.features.challenges.challengeDetail.ChallengeDetailViewModel
 import com.revolution.robotics.features.challenges.challengeGroup.ChallengeGroupViewModel
 import com.revolution.robotics.features.challenges.challengeList.ChallengeListViewModel
 import com.revolution.robotics.features.coding.CodingViewModel
@@ -51,4 +52,5 @@ fun createViewModelModule() =
         bind<ProgramPriorityViewModel>() with provider { ProgramPriorityViewModel(instance()) }
         bind<ButtonlessProgramSelectorViewModel>() with provider { ButtonlessProgramSelectorViewModel(instance()) }
         bind<ChallengeListViewModel>() with provider { ChallengeListViewModel() }
+        bind<ChallengeDetailViewModel>() with provider { ChallengeDetailViewModel() }
     }

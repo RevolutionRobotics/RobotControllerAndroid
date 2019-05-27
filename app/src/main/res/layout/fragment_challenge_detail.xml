@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable name="viewModel"
+                  type="com.revolution.robotics.features.challenges.challengeDetail.ChallengeDetailViewModel"/>
+        <variable name="toolbarViewModel"
+                  type="com.revolution.robotics.features.challenges.challengeDetail.ChallengeDetailToolbarViewModel"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_glow">
+
+        <com.revolution.robotics.views.toolbar.RoboticsToolbar
+                android:id="@+id/toolbar"
+                app:viewModel="@{toolbarViewModel}"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:background="@drawable/bg_glow"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/toolbar_height"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

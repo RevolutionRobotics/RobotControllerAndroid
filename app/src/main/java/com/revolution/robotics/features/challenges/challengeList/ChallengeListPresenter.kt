@@ -4,9 +4,13 @@ import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.remote.Challenge
 import com.revolution.robotics.core.domain.remote.ChallengeCategory
 import com.revolution.robotics.core.interactor.GetUserChallengeCategoriesInteractor
+import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.features.challenges.challengeList.adapter.ChallengeListItem
 
-class ChallengeListPresenter(private val getUserChallengeCategoriesInteractor: GetUserChallengeCategoriesInteractor) :
+class ChallengeListPresenter(
+    private val getUserChallengeCategoriesInteractor: GetUserChallengeCategoriesInteractor,
+    private val navigator: Navigator
+) :
     ChallengeListMvp.Presenter {
 
     override var view: ChallengeListMvp.View? = null
@@ -27,6 +31,7 @@ class ChallengeListPresenter(private val getUserChallengeCategoriesInteractor: G
                     textColor = getTextColor(index, progress),
                     indexTextColor = getIndexTextColor(index, progress),
                     lineBackground = getLineBackground(index, progress),
+                    onClickEnabled = index <= progress,
                     presenter = this
                 )
             }
@@ -44,25 +49,25 @@ class ChallengeListPresenter(private val getUserChallengeCategoriesInteractor: G
 
     private fun getIndexTextColor(index: Int, progress: Int): Int =
         when {
-            index <= progress -> R.color.grey_28
-            index == progress + 1 -> R.color.white
+            index < progress -> R.color.grey_28
+            index == progress -> R.color.white
             else -> R.color.grey_6d
         }
 
     private fun getBackgroundResource(index: Int, progress: Int): Int =
         when {
-            index <= progress -> R.drawable.bg_challenge_step_complete
-            index == progress + 1 -> R.drawable.bg_challenge_step_incomplete
+            index < progress -> R.drawable.bg_challenge_step_complete
+            index == progress -> R.drawable.bg_challenge_step_incomplete
             else -> R.drawable.bg_challenge_step_unavailable
         }
 
     private fun getTextColor(index: Int, progress: Int): Int =
         when {
-            index <= progress + 1 -> R.color.white
+            index <= progress -> R.color.white
             else -> R.color.grey_6d
         }
 
     override fun onChallengeClicked(challengeStep: Challenge) {
-        // TODO Navigate to the challenge
+        navigator.navigate(ChallengeListFragmentDirections.toChallengeDetail(challengeStep))
     }
 }
