@@ -31,10 +31,12 @@ class ChallengeDetailFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         presenter.register(this, viewModel)
+        binding?.toolbarViewModel = ChallengeDetailToolbarViewModel().apply {
+            presenter.toolbarViewModel = this
+        }
         arguments?.let {
             presenter.setChallenge(it.challenge)
         }
-        binding?.toolbarViewModel = ChallengeDetailToolbarViewModel()
     }
 
     override fun onDestroyView() {

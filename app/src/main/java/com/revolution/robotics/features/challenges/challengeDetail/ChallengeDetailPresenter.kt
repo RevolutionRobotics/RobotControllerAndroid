@@ -7,15 +7,17 @@ class ChallengeDetailPresenter : ChallengeDetailMvp.Presenter, ChallengeDetailSl
 
     override var view: ChallengeDetailMvp.View? = null
     override var model: ChallengeDetailViewModel? = null
+    override var toolbarViewModel: ChallengeDetailToolbarViewModel? = null
 
     override fun setChallenge(challenge: Challenge) {
         view?.initSlider(challenge.challengeSteps, this)
+        toolbarViewModel?.title?.set(challenge.challengeSteps.first().title)
     }
 
     override fun shouldShowNext(challengeStep: ChallengeStep): Boolean = true
 
     override fun onChallengeStepSelected(challengeStep: ChallengeStep, fromUser: Boolean) {
-        // Set test layout
+        toolbarViewModel?.title?.set(challengeStep.title)
     }
 
     override fun onChallengeFinished() {

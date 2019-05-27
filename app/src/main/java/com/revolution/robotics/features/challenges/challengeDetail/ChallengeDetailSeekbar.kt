@@ -54,17 +54,19 @@ class ChallengeDetailSeekbar @JvmOverloads constructor(context: Context, attrs: 
         val stepWidth = (width - (paddingLeft + paddingRight)) / (steps.size - 1).toFloat()
         val leftMilestoneMargin = Math.max((stepWidth - maxWidth) / 2.0f, 0.0f)
         steps.forEachIndexed { index, _ ->
-            challengeStepRects.add(
-                RectF(
-                    paddingLeft + (index - 1) * stepWidth + leftMilestoneMargin + stepWidth / 2.0f,
-                    topMilestonePadding,
-                    paddingLeft + (index - 1) * stepWidth + Math.min(
-                        stepWidth,
-                        maxWidth
-                    ) + leftMilestoneMargin + stepWidth / 2.0f,
-                    topMilestonePadding + milestoneHeight
+            if (index > 0 && index < steps.size - 1) {
+                challengeStepRects.add(
+                    RectF(
+                        paddingLeft + (index - 1) * stepWidth + leftMilestoneMargin + stepWidth / 2.0f,
+                        topMilestonePadding,
+                        paddingLeft + (index - 1) * stepWidth + Math.min(
+                            stepWidth,
+                            maxWidth
+                        ) + leftMilestoneMargin + stepWidth / 2.0f,
+                        topMilestonePadding + milestoneHeight
+                    )
                 )
-            )
+            }
         }
     }
 
