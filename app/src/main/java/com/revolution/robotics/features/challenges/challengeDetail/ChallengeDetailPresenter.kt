@@ -11,13 +11,29 @@ class ChallengeDetailPresenter : ChallengeDetailMvp.Presenter, ChallengeDetailSl
 
     override fun setChallenge(challenge: Challenge) {
         view?.initSlider(challenge.challengeSteps, this)
-        toolbarViewModel?.title?.set(challenge.challengeSteps.first().title)
+        setChallengeStep(challenge.challengeSteps.first())
     }
 
     override fun shouldShowNext(challengeStep: ChallengeStep): Boolean = true
 
     override fun onChallengeStepSelected(challengeStep: ChallengeStep, fromUser: Boolean) {
+        setChallengeStep(challengeStep)
+    }
+
+    private fun setChallengeStep(challengeStep: ChallengeStep) {
         toolbarViewModel?.title?.set(challengeStep.title)
+        model?.apply {
+            if (challengeStep.parts.isEmpty()) {
+                image.value = challengeStep.image
+                title.value = challengeStep.description
+                isPartStep.value = false
+            } else {
+                image.value = null
+                title.value = null
+                isPartStep.value = true
+                // TODO Set adapter items
+            }
+        }
     }
 
     override fun onChallengeFinished() {
