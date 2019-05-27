@@ -3,11 +3,13 @@ package com.revolution.robotics.features.challenges.challengeGroup
 import com.revolution.robotics.core.domain.remote.ChallengeCategory
 import com.revolution.robotics.core.interactor.GetUserChallengeCategoriesInteractor
 import com.revolution.robotics.core.interactor.firebase.ChallengeCategoriesInteractor
+import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.features.challenges.challengeGroup.adapter.ChallengeGroupItem
 
 class ChallengeGroupPresenter(
     private val challengeCategoriesInteractor: ChallengeCategoriesInteractor,
-    private val userChallengeInteractor: GetUserChallengeCategoriesInteractor
+    private val userChallengeInteractor: GetUserChallengeCategoriesInteractor,
+    private val navigator: Navigator
 ) :
     ChallengeGroupMvp.Presenter {
 
@@ -31,11 +33,17 @@ class ChallengeGroupPresenter(
                     name = remoteCategory.name ?: "",
                     currentChallenge = userCategories.find { it.challengeCategoryId == remoteCategory.id }?.progress
                         ?: 0,
-                    totalChallenge = remoteCategory.challenges.size
+                    totalChallenge = remoteCategory.challenges.size,
+                    challengeCategory = remoteCategory,
+                    presenter = this
                 )
             }
         }, {
             // TODO Error handling
         })
+    }
+
+    override fun onItemClicked(challenge: ChallengeCategory) {
+        navigator.navigate(ChallengeGroupFragmentDirections.toChallengeList(challenge))
     }
 }
