@@ -29,8 +29,6 @@ class ChallengeDetailPresenter(
         setChallengeStep(challenge.challengeSteps.first())
     }
 
-    override fun shouldShowNext(challengeStep: ChallengeStep): Boolean = true
-
     override fun onChallengeStepSelected(challengeStep: ChallengeStep, fromUser: Boolean) {
         setChallengeStep(challengeStep)
     }
