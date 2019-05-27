@@ -43,8 +43,8 @@ class ChapterFinishedDialog : RoboticsDialog(), ChapterFinishedMvp.View {
             R.string.build_chapter_finish_dialog_button_next_chapter,
             R.drawable.ic_skip
         ) {
-            dialogEventBus.publish(DialogEvent.SKIP_TESTING)
             dismissAllowingStateLoss()
+            dialogEventBus.publish(DialogEvent.SKIP_TESTING)
         },
         DialogButton(
             R.string.build_chapter_finish_dialog_button_test,

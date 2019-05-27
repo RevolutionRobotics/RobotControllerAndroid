@@ -14,9 +14,9 @@ class FirmwareUpdatePresenter(private val bluetoothManager: BluetoothManager) : 
         bluetoothManager.registerListener(this)
     }
 
-    override fun unregister() {
+    override fun unregister(view: FirmwareMvp.View?) {
         bluetoothManager.unregisterListener(this)
-        super.unregister()
+        super.unregister(view)
     }
 
     override fun onBluetoothConnectionStateChanged(connected: Boolean, serviceDiscovered: Boolean) {

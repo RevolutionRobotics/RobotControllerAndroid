@@ -258,7 +258,13 @@ fun createPresenterModule() =
             )
         }
         bind<ChallengeListMvp.Presenter>() with singleton { ChallengeListPresenter(instance(), instance()) }
-        bind<ChallengeDetailMvp.Presenter>() with singleton { ChallengeDetailPresenter() }
+        bind<ChallengeDetailMvp.Presenter>() with singleton {
+            ChallengeDetailPresenter(
+                instance(),
+                instance(),
+                instance()
+            )
+        }
     }
 
 fun createDbModule(context: Context) =

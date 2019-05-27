@@ -26,8 +26,8 @@ class BuildFinishedDialog : RoboticsDialog() {
             presenter.navigateHome()
         },
         DialogButton(R.string.build_robot_finished_button, R.drawable.ic_play, true) {
-            dialogEventBus.publish(DialogEvent.LETS_DRIVE)
             dismissAllowingStateLoss()
+            dialogEventBus.publish(DialogEvent.LETS_DRIVE)
         }
     )
 

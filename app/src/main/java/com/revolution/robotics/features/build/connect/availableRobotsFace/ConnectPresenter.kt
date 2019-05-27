@@ -27,9 +27,9 @@ class ConnectPresenter(
         }
     }
 
-    override fun unregister() {
+    override fun unregister(view: ConnectMvp.View?) {
         bleDeviceDiscoverer.stopDiscovering()
-        super.unregister()
+        super.unregister(view)
     }
 
     override fun onItemClicked(robot: ConnectRobotItem) {
