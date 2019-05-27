@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.room.Room
 import com.revolution.robotics.blockly.dialogs.directionSelector.DirectionSelectorMvp
 import com.revolution.robotics.blockly.dialogs.directionSelector.DirectionSelectorPresenter
+import com.revolution.robotics.blockly.dialogs.donutSelector.DonutSelectorMvp
+import com.revolution.robotics.blockly.dialogs.donutSelector.DonutSelectorPresenter
 import com.revolution.robotics.core.db.RoboticsDatabase
 import com.revolution.robotics.core.domain.local.UserBackgroundProgramBindingDao
 import com.revolution.robotics.core.domain.local.UserChallengeCategoryDao
@@ -268,6 +270,7 @@ fun createPresenterModule() =
             )
         }
         bind<DirectionSelectorMvp.Presenter>() with singleton { DirectionSelectorPresenter() }
+        bind<DonutSelectorMvp.Presenter>() with singleton { DonutSelectorPresenter() }
     }
 
 fun createDbModule(context: Context) =

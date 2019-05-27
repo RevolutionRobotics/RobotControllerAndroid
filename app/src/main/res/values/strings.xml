@@ -254,6 +254,7 @@
 
     <!-- blockly -->
     <string name="blockly_dialog_choose_a_direction">Choose a direction!</string>
+    <string name="blockly_donut_selector_select_all">Select all"</string>
 
     <!-- Tutorial -->
     <string name="tutorial_reset_success">Successful tutorial reset</string>

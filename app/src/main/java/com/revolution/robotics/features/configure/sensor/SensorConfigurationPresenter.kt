@@ -37,7 +37,7 @@ class SensorConfigurationPresenter(
 
     private val chippedConfigDoneDisabled = ChippedBoxConfig.Builder()
         .backgroundColorResource(R.color.grey_28)
-        .borderColorResource(R.color.grey_1e)
+        .borderColorResource(R.color.grey_1d)
         .chipTopRight(true)
         .chipBottomLeft(false)
         .chipBottomRight(false)

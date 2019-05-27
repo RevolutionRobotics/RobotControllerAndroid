@@ -58,8 +58,6 @@
     <dimen name="dialog_content_height">182dp</dimen>
     <dimen name="dialog_button_height">46dp</dimen>
     <dimen name="dialog_icon_size">16dp</dimen>
-    <dimen name="dialog_dialpad_width">176dp</dimen>
-    <dimen name="dialog_dialpad_result_width">152dp</dimen>
 
     <!-- DIALOG: CONNECT TO ROBOT -->
     <dimen name="dialog_connect_image_width">91dp</dimen>
@@ -108,6 +106,15 @@
     <dimen name="option_selector_button_height">44dp</dimen>
     <dimen name="option_selector_button_padding_horizontal">52dp</dimen>
     <dimen name="option_selector_button_padding_vertical">12dp</dimen>
+
+    <!-- DIALOG: BLOCKLY DIALPAD -->
+    <dimen name="dialog_dialpad_width">176dp</dimen>
+    <dimen name="dialog_dialpad_result_width">152dp</dimen>
+
+    <!-- DIALOG: BLOCKLY DONUT SELECTOR -->
+    <dimen name="dialog_donut_size">208dp</dimen>
+    <dimen name="dialog_done_button_small_width">96dp</dimen>
+    <dimen name="dialog_donut_text_size">18sp</dimen>
 
     <!-- SCREEN: MAIN MENU -->
     <dimen name="main_menu_header_border_size">30dp</dimen>

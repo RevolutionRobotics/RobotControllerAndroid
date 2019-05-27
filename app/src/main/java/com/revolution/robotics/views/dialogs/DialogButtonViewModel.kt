@@ -48,7 +48,7 @@ data class DialogButtonViewModel(
         }
     }
 
-    private fun toDisabled() = setState(R.color.grey_8e, R.color.grey_28, R.color.grey_1e)
+    private fun toDisabled() = setState(R.color.grey_8e, R.color.grey_28, R.color.grey_1d)
     private fun toDefault() = setState(R.color.white, R.color.transparent, R.color.overlay_black_42)
     private fun toHighlighted() = setState(R.color.white, R.color.grey_28, R.color.white)
 
