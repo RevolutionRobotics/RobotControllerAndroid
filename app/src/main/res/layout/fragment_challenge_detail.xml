@@ -24,6 +24,7 @@
                 android:layout_height="@dimen/toolbar_height"/>
 
         <com.revolution.robotics.features.challenges.challengeDetail.ChallengeDetailSlider
+                android:id="@+id/slider_challenge_detail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"

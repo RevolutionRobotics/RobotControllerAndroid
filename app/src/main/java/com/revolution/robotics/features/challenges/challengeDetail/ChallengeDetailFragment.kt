@@ -5,6 +5,7 @@ import android.view.View
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.remote.Challenge
+import com.revolution.robotics.core.domain.remote.ChallengeStep
 import com.revolution.robotics.core.extensions.withArguments
 import com.revolution.robotics.core.utils.BundleArgumentDelegate
 import com.revolution.robotics.databinding.FragmentChallengeDetailBinding
@@ -30,11 +31,18 @@ class ChallengeDetailFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         presenter.register(this, viewModel)
+        arguments?.let {
+            presenter.setChallenge(it.challenge)
+        }
         binding?.toolbarViewModel = ChallengeDetailToolbarViewModel()
     }
 
     override fun onDestroyView() {
         presenter.unregister()
         super.onDestroyView()
+    }
+
+    override fun initSlider(steps: List<ChallengeStep>, listener: ChallengeDetailSlider.ChallengeStepSelectedListener) {
+        binding?.sliderChallengeDetail?.setChallengeSteps(steps, listener)
     }
 }
