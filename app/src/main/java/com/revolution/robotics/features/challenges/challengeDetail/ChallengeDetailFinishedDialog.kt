@@ -56,7 +56,15 @@ sealed class ChallengeDetailFinishedDialog(hasNextButton: Boolean) : RoboticsDia
     }
 
     class ChallengeDetailFinishedDialogFace(roboticsDialog: RoboticsDialog) :
-        DialogFace<DialogChallengeDetailFinishedBinding>(R.layout.dialog_challenge_detail_finished, roboticsDialog)
+        DialogFace<DialogChallengeDetailFinishedBinding>(R.layout.dialog_challenge_detail_finished, roboticsDialog) {
+
+        override fun onActivated() {
+            super.onActivated()
+            if (dialog is Latest) {
+                binding?.txtChallengeFinished?.setText(R.string.challenge_finished_dialog_latest_title)
+            }
+        }
+    }
 
     class Latest : ChallengeDetailFinishedDialog(false) {
         companion object {
