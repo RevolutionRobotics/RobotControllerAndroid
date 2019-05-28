@@ -40,9 +40,9 @@ class ProgramPriorityPresenter(
         }
     }
 
-    override fun unregister() {
+    override fun unregister(view: ProgramPriorityMvp.View?) {
         dialogEventBus.unregister(this)
-        super.unregister()
+        super.unregister(view)
     }
 
     override fun onDragEnded() {

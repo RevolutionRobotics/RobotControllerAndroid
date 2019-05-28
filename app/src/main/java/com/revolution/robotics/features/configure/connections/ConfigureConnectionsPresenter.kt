@@ -33,9 +33,9 @@ class ConfigureConnectionsPresenter(
         }
     }
 
-    override fun unregister() {
+    override fun unregister(view: ConfigureConnectionsMvp.View?) {
         selectedPort = null
-        super.unregister()
+        super.unregister(view)
     }
 
     override fun setConfiguration(userConfiguration: UserConfiguration) {

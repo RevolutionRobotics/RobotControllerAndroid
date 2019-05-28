@@ -27,11 +27,11 @@ class SaveControllerDialog : SaveDialog() {
     override val dialogFaces: List<DialogFace<*>> = listOf(dialogFace)
 
     override fun onDoneClicked() {
+        dismiss()
         dialogEventBus.publish(DialogEvent.SAVE_CONTROLLER.apply {
             extras.description = dialogFace.getDescription()
             extras.name = dialogFace.getName()
         })
-        dismiss()
     }
 
     private fun isNameValid(name: String): Boolean = name.isNotEmpty()

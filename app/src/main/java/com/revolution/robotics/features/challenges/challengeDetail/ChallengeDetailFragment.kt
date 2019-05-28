@@ -20,10 +20,12 @@ class ChallengeDetailFragment :
 
     companion object {
         private var Bundle.challenge: Challenge by BundleArgumentDelegate.Parcelable("challenge")
+        private var Bundle.categoryId: String by BundleArgumentDelegate.String("categoryId")
         const val SPAN_COUNT = 4
 
-        fun newInstance(challenge: Challenge) = ChallengeListFragment().withArguments {
-            it.challenge = challenge
+        fun newInstance(challenge: Challenge, categoryId: String) = ChallengeListFragment().withArguments { bundle ->
+            bundle.challenge = challenge
+            bundle.categoryId = categoryId
         }
     }
 
@@ -44,13 +46,22 @@ class ChallengeDetailFragment :
         }
 
         arguments?.let {
-            presenter.setChallenge(it.challenge)
+            presenter.setChallenge(it.challenge, it.categoryId)
         }
     }
 
     override fun onDestroyView() {
-        presenter.unregister()
+        presenter.unregister(this)
         super.onDestroyView()
+    }
+
+    override fun showChallengeFinishedDialog(nextChallenge: Challenge?) {
+        if (nextChallenge == null) {
+            ChallengeDetailFinishedDialog.Latest.newInstance().show(fragmentManager)
+        } else {
+            ChallengeDetailFinishedDialog.Intermediate.newInstance(nextChallenge, arguments?.categoryId ?: "")
+                .show(fragmentManager)
+        }
     }
 
     override fun initSlider(steps: List<ChallengeStep>, listener: ChallengeDetailSlider.ChallengeStepSelectedListener) {

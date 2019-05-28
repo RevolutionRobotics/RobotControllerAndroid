@@ -87,10 +87,10 @@ class ConfigurePresenter(
         }
     }
 
-    override fun unregister() {
+    override fun unregister(view: ConfigureMvp.View?) {
         configurationEventBus.unregister(this)
         dialogEventBus.unregister(this)
-        super.unregister()
+        super.unregister(view)
     }
 
     override fun onDialogEvent(event: DialogEvent) {

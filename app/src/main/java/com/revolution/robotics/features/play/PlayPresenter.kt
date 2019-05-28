@@ -10,9 +10,9 @@ class PlayPresenter : PlayMvp.Presenter {
 
     private var liveControllerService: RoboticsLiveControllerService? = null
 
-    override fun unregister() {
+    override fun unregister(view: PlayMvp.View?) {
         liveControllerService?.stop()
-        super.unregister()
+        super.unregister(view)
     }
 
     override fun onDeviceConnected(handler: RoboticsDeviceConnector) {

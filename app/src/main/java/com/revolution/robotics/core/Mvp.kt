@@ -18,9 +18,11 @@ interface Mvp {
         }
 
         @CallSuper
-        fun unregister() {
-            this.view = null
-            this.model = null
+        fun unregister(view: V? = null) {
+            if (view == null || view == this.view) {
+                this.view = null
+                this.model = null
+            }
         }
     }
 }

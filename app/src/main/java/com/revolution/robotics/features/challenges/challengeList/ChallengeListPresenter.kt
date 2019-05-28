@@ -16,7 +16,10 @@ class ChallengeListPresenter(
     override var view: ChallengeListMvp.View? = null
     override var model: ChallengeListViewModel? = null
 
+    var categoryId: String? = null
+
     override fun setChallengeCategory(challengeCategory: ChallengeCategory) {
+        categoryId = challengeCategory.id
         getUserChallengeCategoriesInteractor.execute({ userCategories ->
             model?.description?.value = challengeCategory.description
             val progress = userCategories.find { it.challengeCategoryId == challengeCategory.id }?.progress ?: 0
@@ -68,6 +71,8 @@ class ChallengeListPresenter(
         }
 
     override fun onChallengeClicked(challengeStep: Challenge) {
-        navigator.navigate(ChallengeListFragmentDirections.toChallengeDetail(challengeStep))
+        categoryId?.let {
+            navigator.navigate(ChallengeListFragmentDirections.toChallengeDetail(challengeStep, it))
+        }
     }
 }

@@ -22,8 +22,8 @@ class DeleteControllerDialog : RoboticsDialog() {
             dialog.dismiss()
         },
         DialogButton(R.string.delete_controller_confirm, R.drawable.ic_delete, true) {
-            dialogEventBus.publish(DialogEvent.DELETE_CONTROLLER)
             dialog.dismiss()
+            dialogEventBus.publish(DialogEvent.DELETE_CONTROLLER)
         }
     )
 

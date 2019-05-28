@@ -257,5 +257,12 @@
 
     <!-- Errors -->
     <string name="error_variable_already_in_use">Variable name is already in use</string>
+    
+    <string name="challenge_finished_dialog_title">Challenge accomplished!</string>
+    <string name="challenge_finished_dialog_latest_title">Challenge section accomplished, \n well done!</string>
+    <string name="challenge_finished_dialog_button_home">Home</string>
+    <string name="challenge_finished_dialog_button_challenge_list">Challenge list</string>
+    <string name="challenge_finished_dialog_button_next">Next challenge</string>
+
 
 </resources>

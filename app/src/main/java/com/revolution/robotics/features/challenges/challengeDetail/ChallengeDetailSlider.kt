@@ -19,24 +19,12 @@ class ChallengeDetailSlider @JvmOverloads constructor(context: Context, attrs: A
     private val binding = SliderChallengeDetailBinding.inflate(LayoutInflater.from(context), this, true).apply {
         seekbarBuildSteps.setOnSeekBarChangeListener(this@ChallengeDetailSlider)
         imgBack.setOnClickListener { seekbarBuildSteps.selectPrevious() }
-        imgNext.setOnClickListener { onNextClicked() }
+        imgNext.setOnClickListener { next() }
         imgFinish.setOnClickListener { buildStepSelectedListener?.onChallengeFinished() }
     }
 
     private var buildStepSelectedListener: ChallengeStepSelectedListener? = null
     private var buildSteps: List<ChallengeStep>? = null
-
-    private fun onNextClicked() {
-        val currentBuildStep = buildSteps?.get(binding.seekbarBuildSteps.progress)
-        val listener = buildStepSelectedListener
-        if (currentBuildStep != null && listener != null) {
-            if (listener.shouldShowNext(currentBuildStep)) {
-                next()
-            }
-        } else {
-            next()
-        }
-    }
 
     fun next() {
         binding.seekbarBuildSteps.selectNext()
@@ -63,7 +51,6 @@ class ChallengeDetailSlider @JvmOverloads constructor(context: Context, attrs: A
     override fun onStopTrackingTouch(p0: SeekBar?) = Unit
 
     interface ChallengeStepSelectedListener {
-        fun shouldShowNext(challengeStep: ChallengeStep): Boolean
         fun onChallengeStepSelected(challengeStep: ChallengeStep, fromUser: Boolean)
         fun onChallengeFinished()
     }

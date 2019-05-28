@@ -186,5 +186,9 @@
               android:label="ChallengeDetailFragment">
         <argument app:argType="com.revolution.robotics.core.domain.remote.Challenge"
                   android:name="challenge"/>
+        <argument app:argType="string"
+                  android:name="categoryId"/>
+        <action android:id="@+id/toNextChallenge" app:destination="@id/challengeDetailFragment"
+                app:popUpTo="@+id/challengeListFragment"/>
     </fragment>
 </navigation>
