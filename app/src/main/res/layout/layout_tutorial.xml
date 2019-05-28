@@ -13,8 +13,8 @@
               android:onClick="@{() -> tutorialViewModel.onOverlayClicked()}"
               android:background="#AA000000"/>
 
-
         <FrameLayout
+                android:id="@+id/layout_tutorial_robots"
                 app:layout_constraintTop_toBottomOf="@id/toolbar"
                 app:layout_constraintStart_toEndOf="@id/btn_robots"
                 android:layout_width="wrap_content"
@@ -29,7 +29,19 @@
                     app:tutorialItem="@{tutorialViewModel.tutorialItems.get(0)}"/>
         </FrameLayout>
 
+        <ImageView
+                app:layout_constraintTop_toTopOf="@id/layout_tutorial_robots"
+                app:layout_constraintEnd_toStartOf="@id/layout_tutorial_robots"
+                app:visible="@{tutorialViewModel.tutorialItems.get(0).isActive}"
+                android:tag="@string/tag_tutorial"
+                android:layout_marginTop="@dimen/dimen_64dp"
+                android:src="@drawable/back"
+                android:translationZ="200dp"
+                android:layout_width="@dimen/tutorial_triangle_width"
+                android:layout_height="@dimen/tutorial_triangle_height"/>
+
         <FrameLayout
+                android:id="@+id/layout_tutorial_programs"
                 app:layout_constraintTop_toBottomOf="@id/toolbar"
                 app:layout_constraintStart_toEndOf="@id/btn_coding"
                 android:tag="@string/tag_tutorial"
@@ -43,7 +55,19 @@
                     android:layout_height="@dimen/tutorial_dialog_height"/>
         </FrameLayout>
 
+        <ImageView
+                app:layout_constraintTop_toTopOf="@id/layout_tutorial_programs"
+                app:layout_constraintEnd_toStartOf="@id/layout_tutorial_programs"
+                android:tag="@string/tag_tutorial"
+                android:translationZ="200dp"
+                app:visible="@{tutorialViewModel.tutorialItems.get(1).isActive}"
+                android:layout_marginTop="@dimen/dimen_64dp"
+                android:src="@drawable/build_robot_parts_pin"
+                android:layout_width="@dimen/tutorial_triangle_width"
+                android:layout_height="@dimen/tutorial_triangle_height"/>
+
         <FrameLayout
+                android:id="@+id/layout_tutorial_challenges"
                 app:layout_constraintTop_toBottomOf="@id/toolbar"
                 app:layout_constraintEnd_toStartOf="@id/btn_challenges"
                 android:tag="@string/tag_tutorial"
@@ -57,10 +81,23 @@
                     android:layout_height="@dimen/tutorial_dialog_height"/>
         </FrameLayout>
 
+        <ImageView
+                app:layout_constraintTop_toTopOf="@id/layout_tutorial_challenges"
+                app:layout_constraintStart_toEndOf="@id/layout_tutorial_challenges"
+                android:tag="@string/tag_tutorial"
+                android:translationZ="200dp"
+                app:visible="@{tutorialViewModel.tutorialItems.get(2).isActive}"
+                android:layout_marginTop="@dimen/dimen_64dp"
+                android:src="@drawable/build_robot_parts_pin"
+                android:layout_width="@dimen/tutorial_triangle_width"
+                android:layout_height="@dimen/tutorial_triangle_height"/>
+
 
         <FrameLayout
+                android:id="@+id/layout_tutorial_settings"
                 app:layout_constraintTop_toBottomOf="@id/img_settings"
                 app:layout_constraintEnd_toEndOf="@id/img_settings"
+                android:layout_marginTop="@dimen/dimen_4dp"
                 android:tag="@string/tag_tutorial"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
@@ -72,9 +109,22 @@
                     android:layout_height="@dimen/tutorial_dialog_height"/>
         </FrameLayout>
 
+        <ImageView
+                app:layout_constraintBottom_toTopOf="@id/layout_tutorial_settings"
+                app:layout_constraintEnd_toEndOf="@id/layout_tutorial_settings"
+                android:tag="@string/tag_tutorial"
+                android:translationZ="200dp"
+                app:visible="@{tutorialViewModel.tutorialItems.get(4).isActive}"
+                android:layout_marginEnd="@dimen/dimen_12dp"
+                android:src="@drawable/build_robot_parts_pin"
+                android:layout_width="@dimen/tutorial_triangle_width"
+                android:layout_height="@dimen/tutorial_triangle_height"/>
+
         <FrameLayout
+                android:id="@+id/layout_tutorial_community"
                 app:layout_constraintTop_toBottomOf="@id/img_community"
                 app:layout_constraintEnd_toEndOf="@id/img_community"
+                android:layout_marginTop="@dimen/dimen_4dp"
                 android:tag="@string/tag_tutorial"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
@@ -85,6 +135,17 @@
                     android:layout_width="@dimen/tutorial_dialog_width"
                     android:layout_height="@dimen/tutorial_dialog_height"/>
         </FrameLayout>
+
+        <ImageView
+                app:layout_constraintBottom_toTopOf="@id/layout_tutorial_community"
+                app:layout_constraintEnd_toEndOf="@id/layout_tutorial_community"
+                android:tag="@string/tag_tutorial"
+                android:translationZ="200dp"
+                app:visible="@{tutorialViewModel.tutorialItems.get(3).isActive}"
+                android:layout_marginEnd="@dimen/dimen_12dp"
+                android:src="@drawable/build_robot_parts_pin"
+                android:layout_width="@dimen/tutorial_triangle_width"
+                android:layout_height="@dimen/tutorial_triangle_height"/>
 
         <View
                 android:id="@+id/tutorial_step3"

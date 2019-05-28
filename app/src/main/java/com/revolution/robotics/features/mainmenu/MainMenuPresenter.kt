@@ -29,30 +29,40 @@ class MainMenuPresenter(
     override fun navigateToMyRobots() {
         if (tutorialViewModel?.getSelectedTutorialItem() != TutorialItem.ROBOTS) {
             navigator.navigate(MainMenuFragmentDirections.toMyRobots())
+        } else {
+            tutorialViewModel?.onNextButtonClicked()
         }
     }
 
     override fun navigateToCoding() {
         if (tutorialViewModel?.getSelectedTutorialItem() != TutorialItem.PROGRAMS) {
             navigator.navigate(MainMenuFragmentDirections.toCoding())
+        } else {
+            tutorialViewModel?.onNextButtonClicked()
         }
     }
 
     override fun navigateToChallengeList() {
         if (tutorialViewModel?.getSelectedTutorialItem() != TutorialItem.CHALLENGES) {
             navigator.navigate(MainMenuFragmentDirections.toChallengeList())
+        } else {
+            tutorialViewModel?.onNextButtonClicked()
         }
     }
 
     override fun onCommunityClicked() {
         if (tutorialViewModel?.getSelectedTutorialItem() != TutorialItem.COMMUNITY) {
             navigator.navigate(MainMenuFragmentDirections.toCommunity())
+        } else {
+            tutorialViewModel?.onNextButtonClicked()
         }
     }
 
     override fun onSettingsClicked() {
         if (tutorialViewModel?.getSelectedTutorialItem() != TutorialItem.SETTINGS) {
             navigator.navigate(MainMenuFragmentDirections.toSettings())
+        } else {
+            tutorialViewModel?.onNextButtonClicked()
         }
     }
 
