@@ -243,5 +243,18 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:src="@drawable/ic_tutorial_next"/>
 
+        <com.revolution.robotics.views.RoboticsButton
+                android:layout_width="103dp"
+                android:layout_height="46dp"
+                app:image="@{tutorialViewModel.buttonImage}"
+                app:text="@{tutorialViewModel.buttonText}"
+                app:chippedBoxConfig="@{tutorialViewModel.buttonBackground}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginEnd="@dimen/dimen_4dp"
+                android:layout_marginBottom="@dimen/dimen_4dp"
+                app:layout_constraintEnd_toEndOf="parent">
+
+        </com.revolution.robotics.views.RoboticsButton>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
