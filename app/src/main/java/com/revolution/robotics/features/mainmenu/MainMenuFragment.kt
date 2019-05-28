@@ -5,6 +5,7 @@ import android.view.View
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
 import com.revolution.robotics.databinding.FragmentMainMenuBinding
+import com.revolution.robotics.features.mainmenu.tutorial.TutorialViewModel
 import org.kodein.di.erased.instance
 
 class MainMenuFragment : BaseFragment<FragmentMainMenuBinding, MainMenuViewModel>(R.layout.fragment_main_menu),
@@ -16,6 +17,8 @@ class MainMenuFragment : BaseFragment<FragmentMainMenuBinding, MainMenuViewModel
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         presenter.register(this, viewModel)
         binding?.toolbarViewModel = MainMenuToolbarViewModel(presenter)
+        binding?.btnRobots?.root?.translationZ = 1000.0f
+        binding?.tutorialViewModel = TutorialViewModel()
     }
 
     override fun onDestroyView() {
