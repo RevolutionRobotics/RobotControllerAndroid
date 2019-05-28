@@ -268,6 +268,6 @@
     <!-- SCREEN: TUTORIAL-->
     <dimen name="tutorial_dialog_width">212dp</dimen>
     <dimen name="tutorial_dialog_height">192dp</dimen>
-    <dimen name="tutorial_triangle_width">16dp</dimen>
-    <dimen name="tutorial_triangle_height">16dp</dimen>
+    <dimen name="tutorial_triangle_width">12dp</dimen>
+    <dimen name="tutorial_triangle_height">24dp</dimen>
 </resources>

@@ -35,8 +35,9 @@
                 app:visible="@{tutorialViewModel.tutorialItems.get(0).isActive}"
                 android:tag="@string/tag_tutorial"
                 android:layout_marginTop="@dimen/dimen_64dp"
-                android:src="@drawable/back"
+                android:src="@drawable/ic_triangle_left"
                 android:translationZ="200dp"
+                android:scaleType="fitXY"
                 android:layout_width="@dimen/tutorial_triangle_width"
                 android:layout_height="@dimen/tutorial_triangle_height"/>
 
@@ -60,9 +61,10 @@
                 app:layout_constraintEnd_toStartOf="@id/layout_tutorial_programs"
                 android:tag="@string/tag_tutorial"
                 android:translationZ="200dp"
+                android:scaleType="fitXY"
                 app:visible="@{tutorialViewModel.tutorialItems.get(1).isActive}"
                 android:layout_marginTop="@dimen/dimen_64dp"
-                android:src="@drawable/build_robot_parts_pin"
+                android:src="@drawable/ic_triangle_left"
                 android:layout_width="@dimen/tutorial_triangle_width"
                 android:layout_height="@dimen/tutorial_triangle_height"/>
 
@@ -86,9 +88,10 @@
                 app:layout_constraintStart_toEndOf="@id/layout_tutorial_challenges"
                 android:tag="@string/tag_tutorial"
                 android:translationZ="200dp"
+                android:scaleType="fitXY"
                 app:visible="@{tutorialViewModel.tutorialItems.get(2).isActive}"
                 android:layout_marginTop="@dimen/dimen_64dp"
-                android:src="@drawable/build_robot_parts_pin"
+                android:src="@drawable/ic_triangle_right"
                 android:layout_width="@dimen/tutorial_triangle_width"
                 android:layout_height="@dimen/tutorial_triangle_height"/>
 
@@ -114,11 +117,12 @@
                 app:layout_constraintEnd_toEndOf="@id/layout_tutorial_settings"
                 android:tag="@string/tag_tutorial"
                 android:translationZ="200dp"
+                android:scaleType="fitXY"
                 app:visible="@{tutorialViewModel.tutorialItems.get(4).isActive}"
                 android:layout_marginEnd="@dimen/dimen_12dp"
-                android:src="@drawable/build_robot_parts_pin"
-                android:layout_width="@dimen/tutorial_triangle_width"
-                android:layout_height="@dimen/tutorial_triangle_height"/>
+                android:src="@drawable/ic_triangle_top"
+                android:layout_width="@dimen/tutorial_triangle_height"
+                android:layout_height="@dimen/tutorial_triangle_width"/>
 
         <FrameLayout
                 android:id="@+id/layout_tutorial_community"
@@ -143,9 +147,10 @@
                 android:translationZ="200dp"
                 app:visible="@{tutorialViewModel.tutorialItems.get(3).isActive}"
                 android:layout_marginEnd="@dimen/dimen_12dp"
-                android:src="@drawable/build_robot_parts_pin"
-                android:layout_width="@dimen/tutorial_triangle_width"
-                android:layout_height="@dimen/tutorial_triangle_height"/>
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_triangle_top"
+                android:layout_width="@dimen/tutorial_triangle_height"
+                android:layout_height="@dimen/tutorial_triangle_width"/>
 
         <View
                 android:id="@+id/tutorial_step3"
