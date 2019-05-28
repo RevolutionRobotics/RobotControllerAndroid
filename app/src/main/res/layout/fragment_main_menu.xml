@@ -30,7 +30,7 @@
                 android:layout_marginEnd="@dimen/dimen_24dp"
                 android:padding="@dimen/dimen_8dp"
                 android:background="@drawable/bg_button_default"
-                app:translationZ="@{tutorialViewModel.tutorialItems.get(3).isActive ? 100.0f : 0.0f}"
+                app:translationZ="@{tutorialViewModel.tutorialItems.get(4).isActive ? 100.0f : 0.0f}"
                 android:onClick="@{() -> viewModel.onSettingsClicked()}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/toolbar"/>
@@ -44,7 +44,7 @@
                 android:layout_marginEnd="@dimen/dimen_24dp"
                 android:padding="@dimen/dimen_8dp"
                 android:background="@drawable/bg_button_default"
-                app:translationZ="@{tutorialViewModel.tutorialItems.get(4).isActive ? 100.0f : 0.0f}"
+                app:translationZ="@{tutorialViewModel.tutorialItems.get(3).isActive ? 100.0f : 0.0f}"
                 android:onClick="@{() -> viewModel.onCommunityClicked()}"
                 app:layout_constraintEnd_toStartOf="@id/img_settings"
                 app:layout_constraintTop_toTopOf="@id/toolbar"/>
@@ -122,6 +122,42 @@
                 app:layout_constraintStart_toEndOf="@id/btn_robots"
                 android:layout_width="212dp"
                 app:tutorialItem="@{tutorialViewModel.tutorialItems.get(0)}"
+                android:layout_height="191dp"/>
+
+        <include
+                layout="@layout/item_tutorial"
+                android:id="@+id/item_tutorial_coding"
+                app:layout_constraintTop_toBottomOf="@id/toolbar"
+                app:layout_constraintStart_toEndOf="@id/btn_coding"
+                android:layout_width="212dp"
+                app:tutorialItem="@{tutorialViewModel.tutorialItems.get(1)}"
+                android:layout_height="191dp"/>
+
+        <include
+                layout="@layout/item_tutorial"
+                android:id="@+id/item_tutorial_challenges"
+                app:layout_constraintTop_toBottomOf="@id/toolbar"
+                app:layout_constraintEnd_toStartOf="@id/btn_challenges"
+                android:layout_width="212dp"
+                app:tutorialItem="@{tutorialViewModel.tutorialItems.get(2)}"
+                android:layout_height="191dp"/>
+
+        <include
+                layout="@layout/item_tutorial"
+                android:id="@+id/item_tutorial_settings"
+                app:layout_constraintTop_toBottomOf="@id/img_settings"
+                app:layout_constraintEnd_toEndOf="@id/img_settings"
+                android:layout_width="212dp"
+                app:tutorialItem="@{tutorialViewModel.tutorialItems.get(4)}"
+                android:layout_height="191dp"/>
+
+        <include
+                layout="@layout/item_tutorial"
+                android:id="@+id/item_tutorial_community"
+                app:layout_constraintTop_toBottomOf="@id/img_community"
+                app:layout_constraintEnd_toEndOf="@id/img_community"
+                android:layout_width="212dp"
+                app:tutorialItem="@{tutorialViewModel.tutorialItems.get(3)}"
                 android:layout_height="191dp"/>
 
         <View
