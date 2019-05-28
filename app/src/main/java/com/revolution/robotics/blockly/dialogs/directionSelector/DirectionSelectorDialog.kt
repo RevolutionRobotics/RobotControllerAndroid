@@ -14,11 +14,12 @@ class DirectionSelectorDialog :
     DirectionSelectorMvp.View {
 
     companion object {
+        private const val INVALID_ORDINAL = -1
         private var Bundle.selectedDirectionOrdinal by BundleArgumentDelegate.Int("direction")
 
         fun newInstance(selectedDirection: Direction? = null) =
             DirectionSelectorDialog().withArguments { bundle ->
-                selectedDirection?.ordinal?.let { bundle.selectedDirectionOrdinal = it }
+                bundle.selectedDirectionOrdinal = selectedDirection?.ordinal ?: INVALID_ORDINAL
             }
     }
 
@@ -31,7 +32,11 @@ class DirectionSelectorDialog :
         titleResource.set(R.string.blockly_dialog_choose_a_direction)
         presenter.register(this, null)
         binding.viewModel = DirectionSelectorViewModel(presenter).apply {
-            arguments?.selectedDirectionOrdinal?.let { selectedDirection = Direction.values()[it] }
+            arguments?.selectedDirectionOrdinal?.let { selectedDirectionOrdinal ->
+                if (selectedDirectionOrdinal != INVALID_ORDINAL) {
+                    selectedDirection = Direction.values()[selectedDirectionOrdinal]
+                }
+            }
         }
     }
 

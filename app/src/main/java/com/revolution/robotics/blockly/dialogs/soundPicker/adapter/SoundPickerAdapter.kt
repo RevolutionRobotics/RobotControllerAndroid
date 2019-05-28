@@ -8,5 +8,4 @@ class SoundPickerAdapter : RecyclerAdapter<SoundOption>() {
     init {
         adapterDelegate.register(SoundOptionDelegateItem())
     }
-
 }

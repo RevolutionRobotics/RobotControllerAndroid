@@ -8,5 +8,4 @@ class ColorPickerAdapter : RecyclerAdapter<ColorOption>() {
     init {
         adapterDelegate.register(ColorOptionDelegateItem())
     }
-
 }
