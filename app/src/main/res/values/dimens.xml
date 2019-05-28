@@ -116,6 +116,11 @@
     <dimen name="dialog_done_button_small_width">96dp</dimen>
     <dimen name="dialog_donut_text_size">18sp</dimen>
 
+    <!-- DIALOG: BLOCKLY COLOR PICKER -->
+    <dimen name="dialog_color_picker_list_width">329dp</dimen>
+    <dimen name="dialog_color_picker_item_width">45dp</dimen>
+    <dimen name="dialog_color_picker_item_height">40dp</dimen>
+
     <!-- SCREEN: MAIN MENU -->
     <dimen name="main_menu_header_border_size">30dp</dimen>
     <dimen name="main_menu_footer_height">28dp</dimen>

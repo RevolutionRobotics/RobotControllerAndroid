@@ -2,6 +2,8 @@ package com.revolution.robotics.core.kodein
 
 import android.content.Context
 import androidx.room.Room
+import com.revolution.robotics.blockly.dialogs.colorPicker.ColorPickerMvp
+import com.revolution.robotics.blockly.dialogs.colorPicker.ColorPickerPresenter
 import com.revolution.robotics.blockly.dialogs.directionSelector.DirectionSelectorMvp
 import com.revolution.robotics.blockly.dialogs.directionSelector.DirectionSelectorPresenter
 import com.revolution.robotics.blockly.dialogs.donutSelector.DonutSelectorMvp
@@ -271,6 +273,7 @@ fun createPresenterModule() =
         }
         bind<DirectionSelectorMvp.Presenter>() with singleton { DirectionSelectorPresenter() }
         bind<DonutSelectorMvp.Presenter>() with singleton { DonutSelectorPresenter() }
+        bind<ColorPickerMvp.Presenter>() with singleton { ColorPickerPresenter() }
     }
 
 fun createDbModule(context: Context) =

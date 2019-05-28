@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable name="viewModel"
+                  type="com.revolution.robotics.blockly.dialogs.colorPicker.ColorOption"/>
+    </data>
+
+    <FrameLayout
+            android:layout_width="@dimen/dialog_color_picker_item_width"
+            android:layout_height="@dimen/dialog_color_picker_item_height"
+            android:padding="@dimen/dimen_2dp"
+            android:layout_margin="@dimen/dimen_1dp"
+            android:onClick="@{() -> viewModel.onColorClicked()}"
+            app:color="@{viewModel}">
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#ff0000"
+                app:color="@{viewModel.color}"/>
+
+    </FrameLayout>
+
+</layout>
