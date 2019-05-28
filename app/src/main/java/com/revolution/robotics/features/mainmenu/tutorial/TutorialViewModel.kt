@@ -5,9 +5,10 @@ import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import com.revolution.robotics.R
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
+import com.revolution.robotics.features.mainmenu.MainMenuMvp
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 
-class TutorialViewModel(private val resourceResolver: ResourceResolver) {
+class TutorialViewModel(private val resourceResolver: ResourceResolver, private val presenter: MainMenuMvp.Presenter) {
 
     companion object {
         private val BACKGROUND_SKIP = ChippedBoxConfig.Builder()
@@ -88,5 +89,9 @@ class TutorialViewModel(private val resourceResolver: ResourceResolver) {
                 BACKGROUND_SKIP
             }
         )
+    }
+
+    fun onDoneButtonClicked() {
+        presenter.onTutorialButtonClicked()
     }
 }
