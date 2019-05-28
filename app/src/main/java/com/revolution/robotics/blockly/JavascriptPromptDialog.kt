@@ -3,10 +3,10 @@ package com.revolution.robotics.blockly
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
+import androidx.databinding.ObservableInt
 import androidx.databinding.ViewDataBinding
 import com.revolution.robotics.BaseDialog
 import com.revolution.robotics.blockly.dialogs.BlocklyDialogInterface
@@ -21,7 +21,8 @@ abstract class JavascriptPromptDialog<B : ViewDataBinding>(@LayoutRes private va
 
     lateinit var binding: B
 
-    private val kodein = LateInitKodein()
+    override val titleResource = ObservableInt()
+    protected val kodein = LateInitKodein()
     private val javascriptResultHandler: JavascriptResultHandler by kodein.instance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,22 +30,20 @@ abstract class JavascriptPromptDialog<B : ViewDataBinding>(@LayoutRes private va
         kodein.baseKodein = (requireContext().applicationContext as KodeinAware).kodein
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val core = BlocklyDialogCoreBinding.inflate(inflater, container, false)
-        core.dialogInterface = this
-        binding = DataBindingUtil.inflate(inflater, layoutResourceId, core.container, true)
-        return core.root
-    }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
+        BlocklyDialogCoreBinding.inflate(inflater, container, false).apply {
+            background = dialogBackgroundConfig.create()
+            dialogInterface = this@JavascriptPromptDialog
+            binding = DataBindingUtil.inflate(inflater, layoutResourceId, this.container, true)
+        }.root
 
     override fun onDismiss(dialog: DialogInterface?) {
         javascriptResultHandler.cancelResult()
         super.onDismiss(dialog)
     }
 
-    override fun confirm() {
-        javascriptResultHandler.confirmResult(getResult())
-        dismiss()
+    override fun confirmResult(result: String) {
+        javascriptResultHandler.confirmResult(result)
+        dismissAllowingStateLoss()
     }
-
-    abstract fun getResult(): String
 }

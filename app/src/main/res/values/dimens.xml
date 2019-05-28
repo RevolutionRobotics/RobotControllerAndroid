@@ -101,6 +101,30 @@
     <dimen name="delete_robot_image_width">46dp</dimen>
     <dimen name="delete_robot_image_height">62dp</dimen>
 
+    <!-- DIALOG: BLOCKLY OPTION SELECTOR -->
+    <dimen name="option_selector_button_width">128dp</dimen>
+    <dimen name="option_selector_button_height">44dp</dimen>
+    <dimen name="option_selector_button_padding_horizontal">52dp</dimen>
+    <dimen name="option_selector_button_padding_vertical">12dp</dimen>
+
+    <!-- DIALOG: BLOCKLY DIALPAD -->
+    <dimen name="dialog_dialpad_width">176dp</dimen>
+    <dimen name="dialog_dialpad_result_width">152dp</dimen>
+
+    <!-- DIALOG: BLOCKLY DONUT SELECTOR -->
+    <dimen name="dialog_donut_size">208dp</dimen>
+    <dimen name="dialog_done_button_small_width">96dp</dimen>
+    <dimen name="dialog_donut_text_size">18sp</dimen>
+
+    <!-- DIALOG: BLOCKLY COLOR PICKER -->
+    <dimen name="dialog_color_picker_list_width">329dp</dimen>
+    <dimen name="dialog_color_picker_item_width">45dp</dimen>
+    <dimen name="dialog_color_picker_item_height">40dp</dimen>
+
+    <!-- DIALOG: BLOCKLY SOUND PICKER -->
+    <dimen name="dialog_sound_picker_image_width">72dp</dimen>
+    <dimen name="dialog_sound_picker_image_height">44dp</dimen>
+
     <!-- SCREEN: MAIN MENU -->
     <dimen name="main_menu_header_border_size">30dp</dimen>
     <dimen name="main_menu_footer_height">28dp</dimen>

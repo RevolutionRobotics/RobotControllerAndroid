@@ -2,6 +2,16 @@ package com.revolution.robotics.core.kodein
 
 import android.content.Context
 import androidx.room.Room
+import com.revolution.robotics.blockly.dialogs.colorPicker.ColorPickerMvp
+import com.revolution.robotics.blockly.dialogs.colorPicker.ColorPickerPresenter
+import com.revolution.robotics.blockly.dialogs.directionSelector.DirectionSelectorMvp
+import com.revolution.robotics.blockly.dialogs.directionSelector.DirectionSelectorPresenter
+import com.revolution.robotics.blockly.dialogs.donutSelector.DonutSelectorMvp
+import com.revolution.robotics.blockly.dialogs.donutSelector.DonutSelectorPresenter
+import com.revolution.robotics.blockly.dialogs.slider.SliderMvp
+import com.revolution.robotics.blockly.dialogs.slider.SliderPresenter
+import com.revolution.robotics.blockly.dialogs.soundPicker.SoundPickerMvp
+import com.revolution.robotics.blockly.dialogs.soundPicker.SoundPickerPresenter
 import com.revolution.robotics.core.db.RoboticsDatabase
 import com.revolution.robotics.core.domain.local.UserBackgroundProgramBindingDao
 import com.revolution.robotics.core.domain.local.UserChallengeCategoryDao
@@ -265,6 +275,11 @@ fun createPresenterModule() =
                 instance()
             )
         }
+        bind<DirectionSelectorMvp.Presenter>() with singleton { DirectionSelectorPresenter() }
+        bind<DonutSelectorMvp.Presenter>() with singleton { DonutSelectorPresenter() }
+        bind<ColorPickerMvp.Presenter>() with singleton { ColorPickerPresenter() }
+        bind<SoundPickerMvp.Presenter>() with singleton { SoundPickerPresenter(instance()) }
+        bind<SliderMvp.Presenter>() with singleton { SliderPresenter() }
     }
 
 fun createDbModule(context: Context) =

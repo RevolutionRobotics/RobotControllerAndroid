@@ -17,7 +17,7 @@
                 android:id="@+id/check_robot"
                 android:layout_width="20dp"
                 android:layout_height="wrap_content"
-                android:button="@drawable/robotics_program_checkbox_selector"
+                android:button="@drawable/robotics_checkbox_selector_red"
                 android:clickable="false"
                 app:layout_constraintTop_toTopOf="@id/background"
                 app:layout_constraintBottom_toBottomOf="@id/background"

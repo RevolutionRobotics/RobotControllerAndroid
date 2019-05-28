@@ -1,16 +1,20 @@
 package com.revolution.robotics.core.bindings
 
+import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.text.InputFilter
 import android.text.Spanned
 import android.view.View
 import android.widget.EditText
+import android.widget.FrameLayout
 import android.widget.SeekBar
 import android.widget.TextView
 import androidx.annotation.ColorRes
+import androidx.annotation.StringRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
 import androidx.viewpager.widget.ViewPager
+import com.revolution.robotics.blockly.dialogs.colorPicker.ColorOption
 import com.revolution.robotics.core.domain.local.UserProgram
 import com.revolution.robotics.core.extensions.color
 import com.revolution.robotics.views.ChippedEditText
@@ -103,5 +107,29 @@ fun setWidthPercent(view: View, widthPercent: Float) {
     if (layoutParams is ConstraintLayout.LayoutParams) {
         layoutParams.matchConstraintPercentWidth = widthPercent
         view.layoutParams = layoutParams
+    }
+}
+
+@BindingAdapter("textResource")
+fun setText(textView: TextView, @StringRes textResource: Int) {
+    if (textResource != 0) {
+        textView.setText(textResource)
+    }
+}
+
+@BindingAdapter("color")
+fun setColor(view: FrameLayout, colorOption: ColorOption?) {
+    if (colorOption != null) {
+        if (colorOption.isSelected) {
+            view.setBackgroundColor(Color.WHITE)
+        } else {
+            setColor(view, colorOption.color)
+        }
+    }
+}
+@BindingAdapter("color")
+fun setColor(view: View, color: String?) {
+    if (color != null) {
+        view.setBackgroundColor(Color.parseColor(color))
     }
 }

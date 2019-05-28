@@ -12,8 +12,8 @@ class ActionButtonsViewModel(
 ) {
 
     val testButtonChippedBoxConfig = ChippedBoxConfig.Builder()
-        .backgroundColorResource(R.color.grey_1e)
-        .borderColorResource(R.color.grey_1e)
+        .backgroundColorResource(R.color.grey_1d)
+        .borderColorResource(R.color.grey_1d)
         .chipBottomLeft(true)
         .chipTopRight(false)
         .chipBottomRight(false)

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable name="viewModel"
+                  type="com.revolution.robotics.blockly.dialogs.donutSelector.DonutSelectorViewModel"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <com.revolution.robotics.views.DonutSelectorView
+                android:id="@+id/donut"
+                android:layout_width="@dimen/dialog_donut_size"
+                android:layout_height="@dimen/dialog_donut_size"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dimen_4dp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:onClick="@{() -> viewModel.onSelectAllClicked()}"
+                app:layout_constraintTop_toTopOf="@id/donut"
+                app:layout_constraintBottom_toBottomOf="@id/donut"
+                app:layout_constraintStart_toStartOf="@id/donut"
+                app:layout_constraintEnd_toEndOf="@id/donut">
+
+            <CheckBox
+                    android:id="@+id/check"
+                    android:layout_width="@dimen/dialog_icon_size"
+                    android:layout_height="@dimen/dialog_icon_size"
+                    android:button="@drawable/robotics_checkbox_selector_white"
+                    android:clickable="false"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/blockly_donut_selector_select_all"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/barlow_regular"
+                    android:textColor="@color/white"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="@dimen/dialog_done_button_small_width"
+                android:layout_height="@dimen/dimen_44dp"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_margin="@dimen/dimen_4dp"
+                android:onClick="@{() -> viewModel.onDoneButtonClicked()}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:visible="@{viewModel.isDoneVisible}"
+                app:chippedBoxConfig="@{viewModel.doneButtonBackground}">
+
+            <ImageView
+                    android:layout_width="@dimen/dialog_icon_size"
+                    android:layout_height="@dimen/dialog_icon_size"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_check"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/barlow_medium"
+                    android:text="@string/done"
+                    android:layout_marginStart="@dimen/dimen_8dp"/>
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

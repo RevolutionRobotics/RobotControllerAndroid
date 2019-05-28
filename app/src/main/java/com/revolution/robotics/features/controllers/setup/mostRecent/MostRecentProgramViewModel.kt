@@ -9,7 +9,7 @@ class MostRecentProgramViewModel(private val items: List<MostRecentItem>, privat
     companion object {
         private val BACKGROUND_BASE = ChippedBoxConfig.Builder()
             .chipSize(R.dimen.dimen_4dp)
-            .backgroundColorResource(R.color.grey_1e)
+            .backgroundColorResource(R.color.grey_1d)
 
         private val BACKGROUND = BACKGROUND_BASE
             .chipTopLeft(true)

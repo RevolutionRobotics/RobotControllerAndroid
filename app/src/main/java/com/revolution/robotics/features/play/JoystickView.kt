@@ -11,6 +11,7 @@ import android.view.View
 import com.revolution.robotics.R
 import com.revolution.robotics.core.extensions.color
 import com.revolution.robotics.core.extensions.dimension
+import com.revolution.robotics.utils.Vector
 
 @Suppress("ClickableViewAccessibility")
 class JoystickView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
@@ -45,7 +46,13 @@ class JoystickView @JvmOverloads constructor(context: Context, attrs: AttributeS
             center?.let { center ->
                 isTouched = true
                 joystickPosition.calculateAngle(center.first, center.second, event.x, event.y)
-                joystickPosition.calculateDistance(center.first, center.second, event.x, event.y)
+                joystickPosition.calculateDistance(
+                    center.first,
+                    center.second,
+                    event.x,
+                    event.y,
+                    joystickPositionMax.toFloat()
+                )
             }
         }
 
@@ -90,35 +97,6 @@ class JoystickView @JvmOverloads constructor(context: Context, attrs: AttributeS
             val (x, y) = center.first + joystickPosition.getX() to center.second + joystickPosition.getY()
             canvas.drawCircle(x, y, joystickButtonSize.toFloat() / 2, if (isTouched) darkRedPaint else gradientPaint)
         }
-    }
-
-    private inner class Vector {
-        var mirrored = false
-        var angle = 0.0
-        var distance = 0.0
-
-        fun calculateAngle(x1: Float, y1: Float, x2: Float, y2: Float) {
-            angle = Math.atan(((y2 - y1) / (x2 - x1)).toDouble())
-            mirrored = x1 > x2
-        }
-
-        fun calculateDistance(x1: Float, y1: Float, x2: Float, y2: Float) {
-            center?.let {
-                distance = Math.min(
-                    Math.sqrt(((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1)).toDouble()),
-                    joystickPositionMax.toDouble()
-                )
-            }
-        }
-
-        fun reset() {
-            angle = 0.0
-            distance = 0.0
-            mirrored = false
-        }
-
-        fun getX() = ((if (mirrored) -distance else distance) * Math.cos(angle)).toFloat()
-        fun getY() = ((if (mirrored) -distance else distance) * Math.sin(angle)).toFloat()
     }
 
     private fun Float.normalizeForController() =
