@@ -47,6 +47,8 @@ class TutorialViewModel(private val resourceResolver: ResourceResolver, private 
         setButtons()
     }
 
+    fun getSelectedTutorialItem(): TutorialItem = tutorialItems[selectedIndex].tutorialItem
+
     fun onPreviousButtonClicked() {
         if (selectedIndex > 0) {
             tutorialItems[selectedIndex].isActive.set(false)
@@ -93,5 +95,9 @@ class TutorialViewModel(private val resourceResolver: ResourceResolver, private 
 
     fun onDoneButtonClicked() {
         presenter.onTutorialButtonClicked()
+    }
+
+    fun onOverlayClicked() {
+        onNextButtonClicked()
     }
 }

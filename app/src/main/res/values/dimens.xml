@@ -264,4 +264,7 @@
     <dimen name="challenge_step_size">110dp</dimen>
     <dimen name="size_challenge_part">86dp</dimen>
 
+    <!-- SCREEN: TUTORIAL-->
+    <dimen name="tutorial_dialog_width">212dp</dimen>
+    <dimen name="tutorial_dialog_height">192dp</dimen>
 </resources>

@@ -3,6 +3,7 @@ package com.revolution.robotics.features.mainmenu
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.core.utils.AppPrefs
 import com.revolution.robotics.core.utils.Navigator
+import com.revolution.robotics.features.mainmenu.tutorial.TutorialItem
 import com.revolution.robotics.features.mainmenu.tutorial.TutorialViewModel
 
 class MainMenuPresenter(
@@ -26,27 +27,38 @@ class MainMenuPresenter(
     }
 
     override fun navigateToMyRobots() {
-        navigator.navigate(MainMenuFragmentDirections.toMyRobots())
+        if (tutorialViewModel?.getSelectedTutorialItem() != TutorialItem.ROBOTS) {
+            navigator.navigate(MainMenuFragmentDirections.toMyRobots())
+        }
     }
 
     override fun navigateToCoding() {
-        navigator.navigate(MainMenuFragmentDirections.toCoding())
+        if (tutorialViewModel?.getSelectedTutorialItem() != TutorialItem.PROGRAMS) {
+            navigator.navigate(MainMenuFragmentDirections.toCoding())
+        }
     }
 
     override fun navigateToChallengeList() {
-        navigator.navigate(MainMenuFragmentDirections.toChallengeList())
+        if (tutorialViewModel?.getSelectedTutorialItem() != TutorialItem.CHALLENGES) {
+            navigator.navigate(MainMenuFragmentDirections.toChallengeList())
+        }
     }
 
     override fun onCommunityClicked() {
-        navigator.navigate(MainMenuFragmentDirections.toCommunity())
+        if (tutorialViewModel?.getSelectedTutorialItem() != TutorialItem.COMMUNITY) {
+            navigator.navigate(MainMenuFragmentDirections.toCommunity())
+        }
     }
 
     override fun onSettingsClicked() {
-        navigator.navigate(MainMenuFragmentDirections.toSettings())
+        if (tutorialViewModel?.getSelectedTutorialItem() != TutorialItem.SETTINGS) {
+            navigator.navigate(MainMenuFragmentDirections.toSettings())
+        }
     }
 
     override fun onTutorialButtonClicked() {
         appPrefs.showTutorial = false
+        tutorialViewModel = null
         view?.removeTutorialLayout()
     }
 }

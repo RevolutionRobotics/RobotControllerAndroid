@@ -10,6 +10,7 @@
         <View android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:tag="@string/tag_tutorial"
+              android:onClick="@{() -> tutorialViewModel.onOverlayClicked()}"
               android:background="#AA000000"/>
 
 
@@ -23,9 +24,9 @@
             <include
                     layout="@layout/item_tutorial"
                     android:id="@+id/item_tutorial_robots"
-                    android:layout_width="212dp"
-                    app:tutorialItem="@{tutorialViewModel.tutorialItems.get(0)}"
-                    android:layout_height="191dp"/>
+                    android:layout_width="@dimen/tutorial_dialog_width"
+                    android:layout_height="@dimen/tutorial_dialog_height"
+                    app:tutorialItem="@{tutorialViewModel.tutorialItems.get(0)}"/>
         </FrameLayout>
 
         <FrameLayout
@@ -37,9 +38,9 @@
             <include
                     layout="@layout/item_tutorial"
                     android:id="@+id/item_tutorial_coding"
-                    android:layout_width="212dp"
                     app:tutorialItem="@{tutorialViewModel.tutorialItems.get(1)}"
-                    android:layout_height="191dp"/>
+                    android:layout_width="@dimen/tutorial_dialog_width"
+                    android:layout_height="@dimen/tutorial_dialog_height"/>
         </FrameLayout>
 
         <FrameLayout
@@ -51,9 +52,9 @@
             <include
                     layout="@layout/item_tutorial"
                     android:id="@+id/item_tutorial_challenges"
-                    android:layout_width="212dp"
                     app:tutorialItem="@{tutorialViewModel.tutorialItems.get(2)}"
-                    android:layout_height="191dp"/>
+                    android:layout_width="@dimen/tutorial_dialog_width"
+                    android:layout_height="@dimen/tutorial_dialog_height"/>
         </FrameLayout>
 
 
@@ -66,9 +67,9 @@
             <include
                     layout="@layout/item_tutorial"
                     android:id="@+id/item_tutorial_settings"
-                    android:layout_width="212dp"
                     app:tutorialItem="@{tutorialViewModel.tutorialItems.get(4)}"
-                    android:layout_height="191dp"/>
+                    android:layout_width="@dimen/tutorial_dialog_width"
+                    android:layout_height="@dimen/tutorial_dialog_height"/>
         </FrameLayout>
 
         <FrameLayout
@@ -80,9 +81,9 @@
             <include
                     layout="@layout/item_tutorial"
                     android:id="@+id/item_tutorial_community"
-                    android:layout_width="212dp"
                     app:tutorialItem="@{tutorialViewModel.tutorialItems.get(3)}"
-                    android:layout_height="191dp"/>
+                    android:layout_width="@dimen/tutorial_dialog_width"
+                    android:layout_height="@dimen/tutorial_dialog_height"/>
         </FrameLayout>
 
         <View
