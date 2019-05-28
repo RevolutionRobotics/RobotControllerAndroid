@@ -2,17 +2,30 @@ package com.revolution.robotics.blockly.dialogs.slider
 
 import android.widget.SeekBar
 import androidx.databinding.ObservableField
-import org.revolution.blockly.view.DialogFactory
+import androidx.lifecycle.ViewModel
+import com.revolution.robotics.R
+import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 
-class SliderDialogViewModel(options: DialogFactory.SliderOptions) : SeekBar.OnSeekBarChangeListener {
+class SliderDialogViewModel(val maxValue: Int, private val presenter: SliderMvp.Presenter) : ViewModel(),
+    SeekBar.OnSeekBarChangeListener {
 
-    val minValue = options.minValue
-    val maxValue = options.maxValue
-        get() = field - minValue
-    val labelText = ObservableField<String>("$minValue")
+    companion object {
+        private val BACKGROUND = ChippedBoxConfig.Builder()
+            .chipSize(R.dimen.dimen_8dp)
+            .backgroundColorResource(R.color.grey_28)
+            .borderColorResource(R.color.white)
+            .create()
+    }
+
+    val background = BACKGROUND
+    val labelText = ObservableField<String>("0")
+
+    fun onDoneClicked() {
+        presenter.onDoneClicked()
+    }
 
     override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-        labelText.set((progress + minValue).toString())
+        labelText.set("$progress")
     }
 
     override fun onStartTrackingTouch(seekBar: SeekBar?) = Unit
