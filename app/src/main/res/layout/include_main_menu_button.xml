@@ -4,6 +4,7 @@
 
     <data>
         <variable name="viewModel" type="com.revolution.robotics.features.mainmenu.MainMenuButtonViewModel"/>
+        <variable name="translationZ" type="Float"/>
     </data>
 
     <LinearLayout
@@ -13,6 +14,7 @@
             android:layout_height="match_parent"
             tools:background="@drawable/card_border_red"
             android:onClick="@{() -> viewModel.onClick.invoke()}"
+            android:translationZ="@{translationZ}"
             tools:layout_width="120dp"
             tools:layout_height="160dp">
 

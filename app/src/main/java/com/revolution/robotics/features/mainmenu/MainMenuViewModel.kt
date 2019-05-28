@@ -32,4 +32,12 @@ class MainMenuViewModel(private val presenter: MainMenuMvp.Presenter) : ViewMode
     fun onRoboticsIconClicked() {
         presenter.onSettingsClicked()
     }
+
+    fun onSettingsClicked() {
+        presenter.onSettingsClicked()
+    }
+
+    fun onCommunityClicked() {
+        presenter.onCommunityClicked()
+    }
 }

@@ -16,8 +16,7 @@ class MainMenuFragment : BaseFragment<FragmentMainMenuBinding, MainMenuViewModel
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         presenter.register(this, viewModel)
-        binding?.toolbarViewModel = MainMenuToolbarViewModel(presenter)
-        binding?.btnRobots?.root?.translationZ = 1000.0f
+        binding?.toolbarViewModel = MainMenuToolbarViewModel()
         binding?.tutorialViewModel = TutorialViewModel()
     }
 
