@@ -16,9 +16,7 @@ class ColorOptionDelegateItem : AdapterDelegateItem<ColorOption>() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, inflater: LayoutInflater): RecyclerView.ViewHolder =
-        ViewHolder(
-            ItemColorPickerBinding.inflate(inflater, parent, false)
-        )
+        ViewHolder(ItemColorPickerBinding.inflate(inflater, parent, false))
 
     private class ViewHolder(val binding: ItemColorPickerBinding) : RecyclerView.ViewHolder(binding.root)
 }

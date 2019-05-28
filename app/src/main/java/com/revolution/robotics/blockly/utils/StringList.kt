@@ -1,4 +1,4 @@
-package com.revolution.robotics.blockly.dialogs.colorPicker
+package com.revolution.robotics.blockly.utils
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize

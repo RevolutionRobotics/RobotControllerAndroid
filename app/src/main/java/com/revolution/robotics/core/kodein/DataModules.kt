@@ -8,6 +8,8 @@ import com.revolution.robotics.blockly.dialogs.directionSelector.DirectionSelect
 import com.revolution.robotics.blockly.dialogs.directionSelector.DirectionSelectorPresenter
 import com.revolution.robotics.blockly.dialogs.donutSelector.DonutSelectorMvp
 import com.revolution.robotics.blockly.dialogs.donutSelector.DonutSelectorPresenter
+import com.revolution.robotics.blockly.dialogs.soundPicker.SoundPickerMvp
+import com.revolution.robotics.blockly.dialogs.soundPicker.SoundPickerPresenter
 import com.revolution.robotics.core.db.RoboticsDatabase
 import com.revolution.robotics.core.domain.local.UserBackgroundProgramBindingDao
 import com.revolution.robotics.core.domain.local.UserChallengeCategoryDao
@@ -274,6 +276,7 @@ fun createPresenterModule() =
         bind<DirectionSelectorMvp.Presenter>() with singleton { DirectionSelectorPresenter() }
         bind<DonutSelectorMvp.Presenter>() with singleton { DonutSelectorPresenter() }
         bind<ColorPickerMvp.Presenter>() with singleton { ColorPickerPresenter() }
+        bind<SoundPickerMvp.Presenter>() with singleton { SoundPickerPresenter(instance()) }
     }
 
 fun createDbModule(context: Context) =
