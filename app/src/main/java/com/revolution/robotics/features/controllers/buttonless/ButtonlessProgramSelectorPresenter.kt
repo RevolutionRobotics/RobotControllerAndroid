@@ -68,11 +68,11 @@ class ButtonlessProgramSelectorPresenter(
     private fun setShowOnlyCompatiblePrograms(onlyCompatible: Boolean) {
         onlyShowCompatiblePrograms = onlyCompatible
         if (onlyCompatible) {
-            model?.showCompatibleButtonText?.set(R.string.buttonless_program_show_compatible_programs)
-            model?.showCompatibleButtonIcon?.set(R.drawable.ic_compatible)
-        } else {
             model?.showCompatibleButtonText?.set(R.string.buttonless_program_show_all_programs)
             model?.showCompatibleButtonIcon?.set(R.drawable.ic_compatible_selected)
+        } else {
+            model?.showCompatibleButtonText?.set(R.string.buttonless_program_show_compatible_programs)
+            model?.showCompatibleButtonIcon?.set(R.drawable.ic_compatible)
         }
     }
 
@@ -121,6 +121,11 @@ class ButtonlessProgramSelectorPresenter(
             }).toMutableList()
             model.items.value = programs
             model.isEmpty.set(programs.isEmpty())
+            model.emptyText.set(if (onlyShowCompatiblePrograms) {
+                R.string.buttonless_program_selector_compatible_empty
+            } else {
+                R.string.buttonless_program_selector_empty
+            })
         }
     }
 
