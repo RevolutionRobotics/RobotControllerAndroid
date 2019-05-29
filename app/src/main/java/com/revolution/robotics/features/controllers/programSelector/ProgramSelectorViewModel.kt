@@ -12,6 +12,7 @@ class ProgramSelectorViewModel(private val presenter: ProgramSelectorMvp.Present
     val filterDrawable = ObservableInt(R.drawable.ic_compatible)
     val filterText = ObservableInt(R.string.program_selector_show_compatible_programs)
     val programOrderingHandler = ProgramOrderingHandler()
+    val emptyText = ObservableInt(R.string.program_selector_empty_compatible)
 
     fun onBackPressed() {
         presenter.back()

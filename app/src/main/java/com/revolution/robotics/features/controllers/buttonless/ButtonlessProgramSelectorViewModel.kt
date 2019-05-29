@@ -15,6 +15,7 @@ class ButtonlessProgramSelectorViewModel(private val presenter: ButtonlessProgra
     val showCompatibleButtonText = ObservableInt(R.string.buttonless_program_show_compatible_programs)
     val showCompatibleButtonIcon = ObservableInt(R.drawable.ic_compatible)
     val isEmpty = ObservableBoolean(false)
+    val emptyText = ObservableInt(R.string.buttonless_program_selector_compatible_empty)
 
     val programOrderingHandler = ProgramOrderingHandler()
     val items = MutableLiveData<List<ButtonlessProgramViewModel>>()

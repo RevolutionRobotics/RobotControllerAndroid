@@ -60,11 +60,11 @@ class ProgramSelectorPresenter(
     private fun setShowOnlyCompatiblePrograms(onlyCompatible: Boolean) {
         onlyShowCompatiblePrograms = onlyCompatible
         if (onlyCompatible) {
-            model?.filterText?.set(R.string.program_selector_show_compatible_programs)
-            model?.filterDrawable?.set(R.drawable.ic_compatible)
-        } else {
             model?.filterText?.set(R.string.program_selector_show_all_programs)
             model?.filterDrawable?.set(R.drawable.ic_compatible_selected)
+        } else {
+            model?.filterText?.set(R.string.program_selector_show_compatible_programs)
+            model?.filterDrawable?.set(R.drawable.ic_compatible)
         }
     }
 
@@ -104,6 +104,13 @@ class ProgramSelectorPresenter(
 
     private fun onProgramsChanged() {
         model?.isEmpty?.set(programs.isEmpty())
+        model?.emptyText?.set(
+            if (onlyShowCompatiblePrograms) {
+                R.string.program_selector_empty_compatible
+            } else {
+                R.string.program_selector_empty
+            }
+        )
         view?.onProgramsChanged(programs.map { ProgramViewModel(it, this) })
     }
 }
