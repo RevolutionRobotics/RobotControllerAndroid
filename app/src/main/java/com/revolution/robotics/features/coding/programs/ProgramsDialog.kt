@@ -17,7 +17,7 @@ import org.kodein.di.erased.instance
 class ProgramsDialog : RoboticsDialog(), ProgramsMvp.View {
 
     companion object {
-        const val EXTRA_PROGRAM_XML = "program-xml"
+        const val KEY_PROGRAM = "program"
 
         fun newInstance() = ProgramsDialog()
     }
@@ -44,8 +44,8 @@ class ProgramsDialog : RoboticsDialog(), ProgramsMvp.View {
 
     override fun onProgramSelected(program: UserProgram) {
         dismissAllowingStateLoss()
-        dialogEventBus.publish(DialogEvent.LOAD_PROGRAM.apply {
-            extras.putString(EXTRA_PROGRAM_XML, program.xml)
+        dialogEventBus.publish(DialogEvent.SHOW_PROGRAM_INFO.apply {
+            extras.putParcelable(KEY_PROGRAM, program)
         })
     }
 

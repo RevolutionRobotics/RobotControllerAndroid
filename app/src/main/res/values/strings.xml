@@ -158,7 +158,8 @@
     <string name="controller_setup_screen_title">Assign programs to buttons!</string>
     <string name="controller_setup_empty">empty</string>
     <string name="most_recent_show_more">Show more</string>
-    <string name="most_recent_empty">No additional compatible program to assign. Let\'s build one under Programs!</string>
+    <string name="most_recent_empty">No additional compatible program to assign. Let\'s build one under Programs!
+    </string>
 
     <!-- Program info -->
     <string name="program_info_edit_program">Edit program</string>
@@ -168,6 +169,8 @@
     <string name="program_info_compatibility_issue_positive_button">Got it</string>
     <string name="program_info_remove_button">Remove program</string>
     <string name="program_info_add_button">Add program</string>
+    <string name="program_info_delete_program">Delete program</string>
+    <string name="program_info_load_program">Load program</string>
 
     <!-- Save dialog-->
     <string name="save_robot_dialog_title">The robot is ready, name it!</string>
@@ -196,7 +199,9 @@
     <string name="program_selector_title">Choose a program!</string>
     <string name="program_selector_order_by_name">Name</string>
     <string name="program_selector_order_by_date">Modified</string>
-    <string name="program_selector_empty_compatible">No additional compatible program to assign.\n Let\'s build one under Programs!</string>
+    <string name="program_selector_empty_compatible">No additional compatible program to assign.\n Let\'s build one
+        under Programs!
+    </string>
     <string name="program_selector_empty">No additional program to assign.\n Let\'s build one under Programs!</string>
     <string name="program_selector_show_compatible_programs">show compatible programs only</string>
     <string name="program_selector_show_all_programs">show all programs</string>
@@ -206,8 +211,12 @@
     <string name="buttonless_program_select_all_checkbox">Select all</string>
     <string name="buttonless_program_show_compatible_programs">Show compatible programs only</string>
     <string name="buttonless_program_show_all_programs">Show all programs</string>
-    <string name="buttonless_program_selector_empty">No additional compatible program to assign.\n Let\'s build one under Programs!</string>
-    <string name="buttonless_program_selector_compatible_empty">No additional program to assign.\n Let\'s build one under Programs!</string>
+    <string name="buttonless_program_selector_empty">No additional compatible program to assign.\n Let\'s build one
+        under Programs!
+    </string>
+    <string name="buttonless_program_selector_compatible_empty">No additional program to assign.\n Let\'s build one
+        under Programs!
+    </string>
 
     <!-- Program priority -->
     <string name="program_priority_screen_title">Create priority order for the programs</string>

@@ -8,10 +8,12 @@ import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
 import com.revolution.robotics.blockly.DialogFactory
 import com.revolution.robotics.blockly.utils.JavascriptResultHandler
+import com.revolution.robotics.core.domain.local.UserProgram
 import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
 import com.revolution.robotics.databinding.FragmentCodingBinding
 import com.revolution.robotics.features.coding.programs.ProgramsDialog
+import com.revolution.robotics.features.controllers.programInfo.ProgramDialog
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 import org.kodein.di.erased.instance
 
@@ -51,9 +53,20 @@ class CodingFragment : BaseFragment<FragmentCodingBinding, CodingViewModel>(R.la
     // TODO remove this suppress
     @Suppress("UnusedPrivateMember")
     override fun onDialogEvent(event: DialogEvent) {
-        if (event == DialogEvent.LOAD_PROGRAM) {
-            val xml = event.extras.getString(ProgramsDialog.EXTRA_PROGRAM_XML)
-            // TODO load XML file into blockly
+        when (event) {
+            DialogEvent.SHOW_PROGRAM_INFO -> {
+                val program = event.extras.getParcelable<UserProgram>(ProgramsDialog.KEY_PROGRAM)
+                program?.let { showDialog(ProgramDialog.Load.newInstance(it)) }
+            }
+            DialogEvent.LOAD_PROGRAM -> {
+                val program = event.extras.getParcelable<UserProgram>(ProgramDialog.KEY_PROGRAM)
+                // TODO load program into blockly
+            }
+            DialogEvent.DELETE_PROGRAM -> {
+                val program = event.extras.getParcelable<UserProgram>(ProgramDialog.KEY_PROGRAM)
+                // TODO delete program here
+            }
+            else -> Unit
         }
     }
 }
