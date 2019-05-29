@@ -29,7 +29,7 @@ import org.kodein.di.erased.bind
 fun createViewModelModule() =
     Kodein.Module("ViewModelModule") {
         bind<MainMenuViewModel>() with p { MainMenuViewModel(i()) }
-        bind<CodingViewModel>() with p { CodingViewModel() }
+        bind<CodingViewModel>() with p { CodingViewModel(i()) }
         bind<ChallengeGroupViewModel>() with p { ChallengeGroupViewModel() }
         bind<WhoToBuildViewModel>() with p { WhoToBuildViewModel(i()) }
         bind<MyRobotsViewModel>() with p { MyRobotsViewModel(i()) }

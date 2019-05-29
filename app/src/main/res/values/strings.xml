@@ -301,6 +301,7 @@
     </string>
     <string name="tutorial_button_finish">Finish</string>
     <string name="tutorial_button_skip">Skip</string>
+    <string name="program_title_default">Untitled program</string>
 
 
 </resources>
