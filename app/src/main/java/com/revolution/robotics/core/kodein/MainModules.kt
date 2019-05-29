@@ -16,26 +16,25 @@ import com.revolution.robotics.features.configure.controller.CompatibleProgramFi
 import org.kodein.di.Kodein
 import org.kodein.di.erased.bind
 import org.kodein.di.erased.instance
-import org.kodein.di.erased.provider
-import org.kodein.di.erased.singleton
 
 fun createMainModule() =
     Kodein.Module("MainModule") {
         // Singletons
-        bind<DynamicPermissionHandler>() with singleton { DynamicPermissionHandler() }
-        bind<Navigator>() with singleton { Navigator() }
-        bind<JavascriptResultHandler>() with singleton { JavascriptResultHandler() }
-        bind<DialogEventBus>() with singleton { DialogEventBus() }
-        bind<ConfigurationEventBus>() with singleton { ConfigurationEventBus() }
-        bind<BluetoothManager>() with singleton { BluetoothManager(kodein) }
-        bind<RoboticsDeviceConnector>() with singleton { RoboticsDeviceConnector() }
-        bind<UserConfigurationStorage>() with singleton { UserConfigurationStorage() }
-        bind<CompatibleProgramFilterer>() with provider { CompatibleProgramFilterer(instance()) }
+        bind<DynamicPermissionHandler>() with s { DynamicPermissionHandler() }
+        bind<Navigator>() with s { Navigator() }
+        bind<JavascriptResultHandler>() with s { JavascriptResultHandler() }
+        bind<DialogEventBus>() with s { DialogEventBus() }
+        bind<ConfigurationEventBus>() with s { ConfigurationEventBus() }
+        bind<BluetoothManager>() with s { BluetoothManager(kodein) }
+        bind<RoboticsDeviceConnector>() with s { RoboticsDeviceConnector() }
+        bind<UserConfigurationStorage>() with s { UserConfigurationStorage() }
+
+        bind<CompatibleProgramFilterer>() with p { CompatibleProgramFilterer(instance()) }
     }
 
 fun createAppModule(context: Context) =
     Kodein.Module("AppModule") {
-        bind<ResourceResolver>() with singleton { ResourceResolver(context) }
-        bind<ApplicationContextProvider>() with singleton { ApplicationContextProvider(context) }
-        bind<AppPrefs>() with singleton { AppPrefs(context) }
+        bind<ResourceResolver>() with s { ResourceResolver(context) }
+        bind<ApplicationContextProvider>() with s { ApplicationContextProvider(context) }
+        bind<AppPrefs>() with s { AppPrefs(context) }
     }

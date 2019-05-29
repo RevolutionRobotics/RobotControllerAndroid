@@ -96,206 +96,102 @@ import com.revolution.robotics.features.splash.SplashMvp
 import com.revolution.robotics.features.splash.SplashPresenter
 import com.revolution.robotics.features.whoToBuild.WhoToBuildMvp
 import com.revolution.robotics.features.whoToBuild.WhoToBuildPresenter
+import org.kodein.di.DKodeinAware
 import org.kodein.di.Kodein
+import org.kodein.di.bindings.NoArgBindingKodein
+import org.kodein.di.bindings.NoArgSimpleBindingKodein
+import org.kodein.di.bindings.Provider
+import org.kodein.di.bindings.RefMaker
+import org.kodein.di.bindings.Singleton
+import org.kodein.di.erased
 import org.kodein.di.erased.bind
-import org.kodein.di.erased.instance
-import org.kodein.di.erased.provider
-import org.kodein.di.erased.singleton
 
 fun createInteractorModule() =
     Kodein.Module("InteractorModule") {
-        bind<RobotInteractor>() with provider { RobotInteractor() }
-        bind<BuildStepInteractor>() with provider { BuildStepInteractor() }
-        bind<ConfigurationInteractor>() with provider { ConfigurationInteractor() }
-        bind<TestCodeInteractor>() with provider { TestCodeInteractor() }
-        bind<GetUserRobotInteractor>() with provider { GetUserRobotInteractor(instance()) }
-        bind<SaveNewUserRobotInteractor>() with provider {
-            SaveNewUserRobotInteractor(
-                instance(),
-                instance(),
-                instance(),
-                instance(),
-                instance()
-            )
-        }
-        bind<UpdateUserRobotInteractor>() with provider { UpdateUserRobotInteractor(instance(), instance()) }
-        bind<GetAllUserRobotsInteractor>() with provider { GetAllUserRobotsInteractor(instance()) }
-        bind<DeleteRobotInteractor>() with provider { DeleteRobotInteractor(instance(), instance()) }
-        bind<GetUserConfigurationInteractor>() with provider { GetUserConfigurationInteractor(instance()) }
-        bind<ControllerInteractor>() with provider { ControllerInteractor() }
-        bind<ProgramInteractor>() with provider { ProgramInteractor() }
-        bind<ProgramsInteractor>() with provider { ProgramsInteractor() }
-        bind<ChallengeCategoriesInteractor>() with provider { ChallengeCategoriesInteractor() }
-        bind<GetUserControllersInteractor>() with provider { GetUserControllersInteractor(instance()) }
-        bind<GetUserControllerInteractor>() with provider {
-            GetUserControllerInteractor(
-                instance(),
-                instance(),
-                instance()
-            )
-        }
-        bind<RemoveUserControllerInteractor>() with provider { RemoveUserControllerInteractor(instance()) }
-        bind<SaveUserControllerInteractor>() with provider {
-            SaveUserControllerInteractor(
-                instance(),
-                instance(),
-                instance(),
-                instance(),
-                instance()
-            )
-        }
-        bind<SaveUserProgramInteractor>() with provider { SaveUserProgramInteractor(instance()) }
-        bind<RemoveUserProgramInteractor>() with provider { RemoveUserProgramInteractor(instance()) }
-        bind<GetUserChallengeCategoriesInteractor>() with provider { GetUserChallengeCategoriesInteractor(instance()) }
-        bind<SaveUserChallengeCategoryInteractor>() with provider { SaveUserChallengeCategoryInteractor(instance()) }
-        bind<GetUserProgramsInteractor>() with provider { GetUserProgramsInteractor(instance()) }
-        bind<GetControllerTypeInteractor>() with provider { GetControllerTypeInteractor(instance(), instance()) }
-        bind<FirebaseInitInteractor>() with provider { FirebaseInitInteractor() }
+        bind<RobotInteractor>() with p { RobotInteractor() }
+        bind<BuildStepInteractor>() with p { BuildStepInteractor() }
+        bind<ConfigurationInteractor>() with p { ConfigurationInteractor() }
+        bind<TestCodeInteractor>() with p { TestCodeInteractor() }
+        bind<GetUserRobotInteractor>() with p { GetUserRobotInteractor(i()) }
+        bind<SaveNewUserRobotInteractor>() with p { SaveNewUserRobotInteractor(i(), i(), i(), i(), i()) }
+        bind<UpdateUserRobotInteractor>() with p { UpdateUserRobotInteractor(i(), i()) }
+        bind<GetAllUserRobotsInteractor>() with p { GetAllUserRobotsInteractor(i()) }
+        bind<DeleteRobotInteractor>() with p { DeleteRobotInteractor(i(), i()) }
+        bind<GetUserConfigurationInteractor>() with p { GetUserConfigurationInteractor(i()) }
+        bind<ControllerInteractor>() with p { ControllerInteractor() }
+        bind<ProgramInteractor>() with p { ProgramInteractor() }
+        bind<ProgramsInteractor>() with p { ProgramsInteractor() }
+        bind<ChallengeCategoriesInteractor>() with p { ChallengeCategoriesInteractor() }
+        bind<GetUserControllersInteractor>() with p { GetUserControllersInteractor(i()) }
+        bind<GetUserControllerInteractor>() with p { GetUserControllerInteractor(i(), i(), i()) }
+        bind<RemoveUserControllerInteractor>() with p { RemoveUserControllerInteractor(i()) }
+        bind<SaveUserControllerInteractor>() with p { SaveUserControllerInteractor(i(), i(), i(), i(), i()) }
+        bind<SaveUserProgramInteractor>() with p { SaveUserProgramInteractor(i()) }
+        bind<RemoveUserProgramInteractor>() with p { RemoveUserProgramInteractor(i()) }
+        bind<GetUserChallengeCategoriesInteractor>() with p { GetUserChallengeCategoriesInteractor(i()) }
+        bind<SaveUserChallengeCategoryInteractor>() with p { SaveUserChallengeCategoryInteractor(i()) }
+        bind<GetUserProgramsInteractor>() with p { GetUserProgramsInteractor(i()) }
+        bind<GetControllerTypeInteractor>() with p { GetControllerTypeInteractor(i(), i()) }
+        bind<FirebaseInitInteractor>() with p { FirebaseInitInteractor() }
     }
 
 @Suppress("LongMethod")
 fun createPresenterModule() =
     Kodein.Module("PresenterModule") {
-        bind<MainMenuMvp.Presenter>() with singleton { MainMenuPresenter(instance(), instance(), instance()) }
-        bind<WhoToBuildMvp.Presenter>() with singleton {
-            WhoToBuildPresenter(
-                instance(),
-                instance(),
-                instance(),
-                instance()
-            )
-        }
-        bind<MyRobotsMvp.Presenter>() with singleton {
-            MyRobotsPresenter(
-                instance(),
-                instance(),
-                instance(),
-                instance()
-            )
-        }
-        bind<ChapterFinishedMvp.Presenter>() with singleton { ChapterFinishedPresenter(instance()) }
-        bind<BuildRobotMvp.Presenter>() with singleton {
-            BuildRobotPresenter(
-                instance(),
-                instance(),
-                instance(),
-                instance(),
-                instance(),
-                instance()
-            )
-        }
-        bind<ConnectMvp.Presenter>() with singleton { ConnectPresenter(instance(), instance()) }
-        bind<ConfigureMvp.Presenter>() with singleton {
-            ConfigurePresenter(
-                instance(),
-                instance(),
-                instance(),
-                instance(),
-                instance(),
-                instance(),
-                instance(),
-                instance()
-            )
-        }
-        bind<ConfigureConnectionsMvp.Presenter>() with singleton {
-            ConfigureConnectionsPresenter(
-                instance(),
-                instance(),
-                instance()
-            )
-        }
-        bind<MotorConfigurationMvp.Presenter>() with singleton {
-            MotorConfigurationPresenter(
-                instance(),
-                instance(),
-                instance()
-            )
-        }
-        bind<SensorConfigurationMvp.Presenter>() with singleton {
-            SensorConfigurationPresenter(
-                instance(),
-                instance(),
-                instance()
-            )
-        }
-        bind<BuildFinishedMvp.Presenter>() with singleton { BuildFinishedPresenter(instance()) }
-        bind<ConfigureControllersMvp.Presenter>() with singleton {
-            ConfigureControllersPresenter(
-                instance(),
-                instance(),
-                instance(),
-                instance(),
-                instance()
-            )
-        }
-        bind<SettingsMvp.Presenter>() with singleton { SettingsPresenter(instance(), instance()) }
-        bind<AboutMvp.Presenter>() with singleton { AboutPresenter(instance(), instance()) }
-        bind<FirmwareMvp.Presenter>() with singleton { FirmwareUpdatePresenter(instance()) }
-        bind<PlayMvp.Presenter>() with singleton { PlayPresenter() }
-        bind<FirmwareUpdateMvp.Presenter>() with singleton { FirmwareUpdateDialogPresenter(instance(), instance()) }
-        bind<TypeSelectorMvp.Presenter>() with singleton { TypeSelectorPresenter(instance(), instance()) }
-        bind<SetupMvp.Presenter>() with singleton { SetupPresenter(instance(), instance(), instance()) }
-        bind<ProgramSelectorMvp.Presenter>() with singleton {
-            ProgramSelectorPresenter(
-                instance(),
-                instance(),
-                instance(),
-                instance()
-            )
-        }
-        bind<ProgramPriorityMvp.Presenter>() with singleton {
-            ProgramPriorityPresenter(
-                instance(),
-                instance(),
-                instance(),
-                instance(),
-                instance()
-            )
-        }
-        bind<ButtonlessProgramSelectorMvp.Presenter>() with singleton {
-            ButtonlessProgramSelectorPresenter(
-                instance(),
-                instance(),
-                instance(),
-                instance()
-            )
-        }
-        bind<SplashMvp.Presenter>() with singleton { SplashPresenter(instance()) }
-        bind<ChallengeGroupMvp.Presenter>() with singleton {
-            ChallengeGroupPresenter(
-                instance(),
-                instance(),
-                instance()
-            )
-        }
-        bind<ChallengeListMvp.Presenter>() with singleton { ChallengeListPresenter(instance(), instance()) }
-        bind<ChallengeDetailMvp.Presenter>() with singleton {
-            ChallengeDetailPresenter(
-                instance(),
-                instance(),
-                instance()
-            )
-        }
-        bind<DirectionSelectorMvp.Presenter>() with singleton { DirectionSelectorPresenter() }
-        bind<DonutSelectorMvp.Presenter>() with singleton { DonutSelectorPresenter() }
-        bind<ColorPickerMvp.Presenter>() with singleton { ColorPickerPresenter() }
-        bind<SoundPickerMvp.Presenter>() with singleton { SoundPickerPresenter(instance()) }
-        bind<SliderMvp.Presenter>() with singleton { SliderPresenter() }
+        bind<MainMenuMvp.Presenter>() with s { MainMenuPresenter(i(), i(), i()) }
+        bind<WhoToBuildMvp.Presenter>() with s { WhoToBuildPresenter(i(), i(), i(), i()) }
+        bind<MyRobotsMvp.Presenter>() with s { MyRobotsPresenter(i(), i(), i(), i()) }
+        bind<ChapterFinishedMvp.Presenter>() with s { ChapterFinishedPresenter(i()) }
+        bind<BuildRobotMvp.Presenter>() with s { BuildRobotPresenter(i(), i(), i(), i(), i(), i()) }
+        bind<ConnectMvp.Presenter>() with s { ConnectPresenter(i(), i()) }
+        bind<ConfigureMvp.Presenter>() with s { ConfigurePresenter(i(), i(), i(), i(), i(), i(), i(), i()) }
+        bind<ConfigureConnectionsMvp.Presenter>() with s { ConfigureConnectionsPresenter(i(), i(), i()) }
+        bind<MotorConfigurationMvp.Presenter>() with s { MotorConfigurationPresenter(i(), i(), i()) }
+        bind<SensorConfigurationMvp.Presenter>() with s { SensorConfigurationPresenter(i(), i(), i()) }
+        bind<BuildFinishedMvp.Presenter>() with s { BuildFinishedPresenter(i()) }
+        bind<ConfigureControllersMvp.Presenter>() with s { ConfigureControllersPresenter(i(), i(), i(), i(), i()) }
+        bind<SettingsMvp.Presenter>() with s { SettingsPresenter(i(), i()) }
+        bind<AboutMvp.Presenter>() with s { AboutPresenter(i(), i()) }
+        bind<FirmwareMvp.Presenter>() with s { FirmwareUpdatePresenter(i()) }
+        bind<PlayMvp.Presenter>() with s { PlayPresenter() }
+        bind<FirmwareUpdateMvp.Presenter>() with s { FirmwareUpdateDialogPresenter(i(), i()) }
+        bind<TypeSelectorMvp.Presenter>() with s { TypeSelectorPresenter(i(), i()) }
+        bind<SetupMvp.Presenter>() with s { SetupPresenter(i(), i(), i()) }
+        bind<ProgramSelectorMvp.Presenter>() with s { ProgramSelectorPresenter(i(), i(), i(), i()) }
+        bind<ProgramPriorityMvp.Presenter>() with s { ProgramPriorityPresenter(i(), i(), i(), i(), i()) }
+        bind<ButtonlessProgramSelectorMvp.Presenter>() with s { ButtonlessProgramSelectorPresenter(i(), i(), i(), i()) }
+        bind<SplashMvp.Presenter>() with s { SplashPresenter(i()) }
+        bind<ChallengeGroupMvp.Presenter>() with s { ChallengeGroupPresenter(i(), i(), i()) }
+        bind<ChallengeListMvp.Presenter>() with s { ChallengeListPresenter(i(), i()) }
+        bind<ChallengeDetailMvp.Presenter>() with s { ChallengeDetailPresenter(i(), i(), i()) }
+        bind<DirectionSelectorMvp.Presenter>() with s { DirectionSelectorPresenter() }
+        bind<DonutSelectorMvp.Presenter>() with s { DonutSelectorPresenter() }
+        bind<ColorPickerMvp.Presenter>() with s { ColorPickerPresenter() }
+        bind<SoundPickerMvp.Presenter>() with s { SoundPickerPresenter(i()) }
+        bind<SliderMvp.Presenter>() with s { SliderPresenter() }
     }
 
 fun createDbModule(context: Context) =
     Kodein.Module("DbModule") {
-        bind<RoboticsDatabase>() with singleton {
+        bind<RoboticsDatabase>() with s {
             Room.databaseBuilder(context, RoboticsDatabase::class.java, "robotics-database")
                 .fallbackToDestructiveMigration()
                 .build()
         }
-        bind<UserRobotDao>() with provider { instance<RoboticsDatabase>().userRobotDao() }
-        bind<UserConfigurationDao>() with provider { instance<RoboticsDatabase>().userConfigurationDao() }
-        bind<UserControllerDao>() with provider { instance<RoboticsDatabase>().userControllerDao() }
-        bind<UserBackgroundProgramBindingDao>() with provider {
-            instance<RoboticsDatabase>().userBackgroundProgramBindingDao()
-        }
-        bind<UserProgramDao>() with provider { instance<RoboticsDatabase>().userProgramDao() }
-        bind<UserChallengeCategoryDao>() with provider { instance<RoboticsDatabase>().userChallengeCategoryDao() }
+        bind<UserRobotDao>() with p { i<RoboticsDatabase>().userRobotDao() }
+        bind<UserConfigurationDao>() with p { i<RoboticsDatabase>().userConfigurationDao() }
+        bind<UserControllerDao>() with p { i<RoboticsDatabase>().userControllerDao() }
+        bind<UserBackgroundProgramBindingDao>() with p { i<RoboticsDatabase>().userBackgroundProgramBindingDao() }
+        bind<UserProgramDao>() with p { i<RoboticsDatabase>().userProgramDao() }
+        bind<UserChallengeCategoryDao>() with p { i<RoboticsDatabase>().userChallengeCategoryDao() }
     }
+
+inline fun <reified T : Any> DKodeinAware.i(tag: Any? = null) = dkodein.Instance<T>(erased(), tag)
+inline fun <C, reified T : Any> Kodein.BindBuilder.WithScope<C>.s(
+    ref: RefMaker? = null,
+    sync: Boolean = true,
+    noinline creator: NoArgSimpleBindingKodein<C>.() -> T
+) = Singleton(scope, contextType, erased(), ref, sync, creator)
+
+inline fun <C, reified T : Any> Kodein.BindBuilder.WithContext<C>.p(noinline creator: NoArgBindingKodein<C>.() -> T) =
+    Provider(contextType, erased(), creator)
