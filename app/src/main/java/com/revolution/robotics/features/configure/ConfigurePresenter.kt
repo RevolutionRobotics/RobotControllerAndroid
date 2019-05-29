@@ -6,7 +6,7 @@ import com.revolution.robotics.core.domain.local.UserRobot
 import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
 import com.revolution.robotics.core.interactor.GetUserConfigurationInteractor
-import com.revolution.robotics.core.interactor.SaveUserRobotInteractor
+import com.revolution.robotics.core.interactor.UpdateUserRobotInteractor
 import com.revolution.robotics.core.kodein.utils.ApplicationContextProvider
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.core.utils.CameraHelper
@@ -18,7 +18,7 @@ import com.revolution.robotics.features.configure.save.SaveRobotDialog
 class ConfigurePresenter(
     private val configurationEventBus: ConfigurationEventBus,
     private val getUserConfigurationInteractor: GetUserConfigurationInteractor,
-    private val saveUserRobotInteractor: SaveUserRobotInteractor,
+    private val updateUserRobotInteractor: UpdateUserRobotInteractor,
     private val dialogEventBus: DialogEventBus,
     private val navigator: Navigator,
     private val userConfigurationStorage: UserConfigurationStorage,
@@ -99,16 +99,16 @@ class ConfigurePresenter(
                 userConfigurationStorage.userConfiguration?.let { config ->
                     robot.name = event.extras.getString(SaveRobotDialog.KEY_NAME)
                     robot.description = event.extras.getString(SaveRobotDialog.KEY_DESCRIPTION)
-                    saveUserRobotInteractor.userConfiguration = config
-                    saveUserRobotInteractor.userRobot = robot
+                    updateUserRobotInteractor.userConfiguration = config
+                    updateUserRobotInteractor.userRobot = robot
                     toolbarViewModel?.title?.set(robot.name)
-                    saveUserRobotInteractor.execute(
-                        onResponse = { savedRobotId ->
+                    updateUserRobotInteractor.execute(
+                        onResponse = { savedRobot ->
                             selectedTab = ConfigurationTabs.CONNECTIONS
                             selectedConfigId = -1
                             userConfigurationStorage.userConfiguration = null
                             userConfigurationStorage.controllerHolder = null
-                            updateRobotImage(robot.instanceId, savedRobotId.toInt())
+                            updateRobotImage(robot.instanceId, savedRobot.instanceId)
                             navigator.popUntil(R.id.myRobotsFragment)
                         },
                         onError = {

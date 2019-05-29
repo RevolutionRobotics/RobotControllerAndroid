@@ -8,7 +8,7 @@ interface MyRobotsMvp : Mvp {
         fun onRobotsChanged()
         fun showNextRobot()
         fun showPreviousRobot()
-        fun deleteRobot(robotId: Int)
+        fun deleteRobot(userRobot: UserRobot)
     }
 
     interface Presenter : Mvp.Presenter<View, MyRobotsViewModel> {
@@ -19,7 +19,7 @@ interface MyRobotsMvp : Mvp {
         fun onPlaySelected(configId: Int)
         fun onContinueBuildingSelected(robot: UserRobot)
         fun onEditSelected(userRobot: UserRobot)
-        fun onDeleteSelected(robotId: Int)
-        fun deleteRobot(robotId: Int, selectedPosition: Int)
+        fun onDeleteSelected(userRobot: UserRobot)
+        fun deleteRobot(userRobot: UserRobot, selectedPosition: Int)
     }
 }

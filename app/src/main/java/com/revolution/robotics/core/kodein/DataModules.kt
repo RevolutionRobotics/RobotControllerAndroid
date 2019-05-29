@@ -35,7 +35,7 @@ import com.revolution.robotics.core.interactor.SaveNewUserRobotInteractor
 import com.revolution.robotics.core.interactor.SaveUserChallengeCategoryInteractor
 import com.revolution.robotics.core.interactor.SaveUserControllerInteractor
 import com.revolution.robotics.core.interactor.SaveUserProgramInteractor
-import com.revolution.robotics.core.interactor.SaveUserRobotInteractor
+import com.revolution.robotics.core.interactor.UpdateUserRobotInteractor
 import com.revolution.robotics.core.interactor.firebase.BuildStepInteractor
 import com.revolution.robotics.core.interactor.firebase.ChallengeCategoriesInteractor
 import com.revolution.robotics.core.interactor.firebase.ConfigurationInteractor
@@ -118,9 +118,9 @@ fun createInteractorModule() =
                 instance()
             )
         }
-        bind<SaveUserRobotInteractor>() with provider { SaveUserRobotInteractor(instance(), instance()) }
+        bind<UpdateUserRobotInteractor>() with provider { UpdateUserRobotInteractor(instance(), instance()) }
         bind<GetAllUserRobotsInteractor>() with provider { GetAllUserRobotsInteractor(instance()) }
-        bind<DeleteRobotInteractor>() with provider { DeleteRobotInteractor(instance()) }
+        bind<DeleteRobotInteractor>() with provider { DeleteRobotInteractor(instance(), instance()) }
         bind<GetUserConfigurationInteractor>() with provider { GetUserConfigurationInteractor(instance()) }
         bind<ControllerInteractor>() with provider { ControllerInteractor() }
         bind<ProgramInteractor>() with provider { ProgramInteractor() }
@@ -224,6 +224,7 @@ fun createPresenterModule() =
                 instance(),
                 instance(),
                 instance(),
+                instance(),
                 instance()
             )
         }
@@ -233,7 +234,7 @@ fun createPresenterModule() =
         bind<PlayMvp.Presenter>() with singleton { PlayPresenter() }
         bind<FirmwareUpdateMvp.Presenter>() with singleton { FirmwareUpdateDialogPresenter(instance(), instance()) }
         bind<TypeSelectorMvp.Presenter>() with singleton { TypeSelectorPresenter(instance(), instance()) }
-        bind<SetupMvp.Presenter>() with singleton { SetupPresenter(instance(), instance(), instance(), instance()) }
+        bind<SetupMvp.Presenter>() with singleton { SetupPresenter(instance(), instance(), instance()) }
         bind<ProgramSelectorMvp.Presenter>() with singleton {
             ProgramSelectorPresenter(
                 instance(),

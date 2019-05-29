@@ -1,7 +1,6 @@
 package com.revolution.robotics.features.controllers.setup
 
 import com.revolution.robotics.core.domain.local.UserProgram
-import com.revolution.robotics.core.interactor.GetUserControllerInteractor
 import com.revolution.robotics.core.interactor.GetUserProgramsInteractor
 import com.revolution.robotics.features.configure.UserConfigurationStorage
 import com.revolution.robotics.features.configure.controller.CompatibleProgramFilterer
@@ -10,7 +9,6 @@ import com.revolution.robotics.features.controllers.setup.mostRecent.MostRecentI
 import com.revolution.robotics.features.controllers.setup.mostRecent.MostRecentProgramViewModel
 
 class SetupPresenter(
-    private val getUserControllerInteractor: GetUserControllerInteractor,
     private val getProgramsInteractor: GetUserProgramsInteractor,
     private val compatibleProgramFilterer: CompatibleProgramFilterer,
     private val storage: UserConfigurationStorage
@@ -26,22 +24,9 @@ class SetupPresenter(
     private val programs = ArrayList<UserProgram>()
 
     override fun loadControllerAndPrograms(controllerId: Int) {
-        if (controllerId == SetupFragment.ID_CREATE_NEW) {
-            loadPrograms()
-        } else {
-            getUserControllerInteractor.id = controllerId
-            getUserControllerInteractor.execute(
-                onResponse = { result ->
-                    storage.controllerHolder = result
-                    model?.restoreFromStorage(storage)
-                    view?.updateContentBindings()
-                    loadPrograms()
-                },
-                onError = {
-                    // TODO error handling
-                }
-            )
-        }
+        model?.restoreFromStorage(storage)
+        view?.updateContentBindings()
+        loadPrograms()
     }
 
     private fun loadPrograms() {

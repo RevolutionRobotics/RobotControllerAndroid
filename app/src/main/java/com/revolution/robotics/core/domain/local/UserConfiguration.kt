@@ -32,4 +32,7 @@ interface UserConfigurationDao {
 
     @Update
     fun updateUserConfiguration(userConfiguration: UserConfiguration): Int
+
+    @Query("DELETE FROM UserConfiguration WHERE id=:id")
+    fun deleteConfiguration(id: Int)
 }

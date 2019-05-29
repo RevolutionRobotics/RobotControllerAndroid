@@ -24,14 +24,14 @@ class SaveNewUserRobotInteractor(
     private val controllerDao: UserControllerDao,
     private val saveProgramDao: UserProgramDao,
     private val userBackgroundProgramBindingDao: UserBackgroundProgramBindingDao
-) : Interactor<Long>() {
+) : Interactor<UserRobot>() {
 
     lateinit var userRobot: UserRobot
     var configuration: Configuration? = null
     var controller: Controller? = null
     var programs: List<Program>? = null
 
-    override fun getData(): Long {
+    override fun getData(): UserRobot {
         configuration?.let { remoteConfig ->
             val userConfiguration = createUserConfiguration(remoteConfig)
             val configurationId = userConfigurationDao.saveUserConfiguration(userConfiguration)
@@ -39,42 +39,48 @@ class SaveNewUserRobotInteractor(
             userRobot.configurationId = configurationId.toInt()
             userRobot.instanceId = userRobotDao.saveUserRobot(userRobot).toInt()
 
-            val userController = saveUserController(controller)
-            userConfiguration.controller = userController.id
-            userConfigurationDao.saveUserConfiguration(userConfiguration)
-            val programIdMap = saveUserPrograms()
-
-            userController.mapping?.let { userMapping ->
-                controller?.mapping?.b1?.let {
-                    userMapping.b1 = createUserButtonMapping(it, userController.id, programIdMap)
-                }
-                controller?.mapping?.b2?.let {
-                    userMapping.b2 = createUserButtonMapping(it, userController.id, programIdMap)
-                }
-                controller?.mapping?.b3?.let {
-                    userMapping.b3 = createUserButtonMapping(it, userController.id, programIdMap)
-                }
-                controller?.mapping?.b4?.let {
-                    userMapping.b4 = createUserButtonMapping(it, userController.id, programIdMap)
-                }
-                controller?.mapping?.b5?.let {
-                    userMapping.b5 = createUserButtonMapping(it, userController.id, programIdMap)
-                }
-                controller?.mapping?.b6?.let {
-                    userMapping.b6 = createUserButtonMapping(it, userController.id, programIdMap)
-                }
+            controller?.let {
+                saveUserController(it, userConfiguration)
             }
-
-            userBackgroundProgramBindingDao.removeOldBackgroundBindings(userController.id)
-            userBackgroundProgramBindingDao.saveBackgroundPrograms(
-                controller?.backgroundProgramBindings?.map {
-                    createBackgroundBinding(userController.id, it, programIdMap)
-                } ?: emptyList()
-            )
-            controllerDao.updateUserController(userController)
         }
 
-        return userRobot.instanceId.toLong()
+        return userRobot
+    }
+
+    private fun saveUserController(controller: Controller, userConfiguration: UserConfiguration) {
+        val userController = saveUserController(controller)
+        userConfiguration.controller = userController.id
+        userConfigurationDao.saveUserConfiguration(userConfiguration)
+        val programIdMap = saveUserPrograms()
+
+        userController.mapping?.let { userMapping ->
+            controller.mapping?.b1?.let {
+                userMapping.b1 = createUserButtonMapping(it, userController.id, programIdMap)
+            }
+            controller.mapping?.b2?.let {
+                userMapping.b2 = createUserButtonMapping(it, userController.id, programIdMap)
+            }
+            controller.mapping?.b3?.let {
+                userMapping.b3 = createUserButtonMapping(it, userController.id, programIdMap)
+            }
+            controller.mapping?.b4?.let {
+                userMapping.b4 = createUserButtonMapping(it, userController.id, programIdMap)
+            }
+            controller.mapping?.b5?.let {
+                userMapping.b5 = createUserButtonMapping(it, userController.id, programIdMap)
+            }
+            controller.mapping?.b6?.let {
+                userMapping.b6 = createUserButtonMapping(it, userController.id, programIdMap)
+            }
+        }
+
+        userBackgroundProgramBindingDao.removeOldBackgroundBindings(userController.id)
+        userBackgroundProgramBindingDao.saveBackgroundPrograms(
+            controller.backgroundProgramBindings.map {
+                createBackgroundBinding(userController.id, it, programIdMap)
+            }
+        )
+        controllerDao.updateUserController(userController)
     }
 
     private fun createBackgroundBinding(
