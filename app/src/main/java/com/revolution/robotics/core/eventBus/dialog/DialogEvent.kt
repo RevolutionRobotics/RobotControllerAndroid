@@ -18,7 +18,8 @@ enum class DialogEvent {
     REMOVE_PROGRAM,
     SAVE_CONTROLLER,
     DELETE_CONTROLLER,
-    LETS_DRIVE;
+    LETS_DRIVE,
+    LOAD_PROGRAM;
 
     val extras = Bundle()
 }

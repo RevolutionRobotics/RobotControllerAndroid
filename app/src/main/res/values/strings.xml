@@ -186,6 +186,11 @@
 
     <!-- Challenges -->
     <string name="challenges_screen_title">Challenges</string>
+    <string name="challenge_finished_dialog_title">Challenge accomplished!</string>
+    <string name="challenge_finished_dialog_latest_title">Challenge section accomplished, \n well done!</string>
+    <string name="challenge_finished_dialog_button_home">Home</string>
+    <string name="challenge_finished_dialog_button_challenge_list">Challenge list</string>
+    <string name="challenge_finished_dialog_button_next">Next challenge</string>
 
     <!-- Program selector -->
     <string name="program_selector_title">Choose a program!</string>
@@ -254,22 +259,16 @@
     <string name="firmware_update_failed_update_community_button">Community</string>
     <string name="firmware_update_failed_update_try_again_button">Try again</string>
 
-    <!-- blockly -->
+    <!-- Programs -->
+    <string name="program_title_default">Untitled program</string>
+    <string name="dialog_programs_title">Programs</string>
+
+    <!-- Blockly -->
     <string name="blockly_dialog_choose_a_direction">Choose a direction!</string>
     <string name="blockly_donut_selector_select_all">Select all"</string>
 
     <!-- Tutorial -->
     <string name="tutorial_reset_success">Successful tutorial reset</string>
-
-    <!-- Errors -->
-    <string name="error_variable_already_in_use">Variable name is already in use</string>
-
-    <string name="challenge_finished_dialog_title">Challenge accomplished!</string>
-    <string name="challenge_finished_dialog_latest_title">Challenge section accomplished, \n well done!</string>
-    <string name="challenge_finished_dialog_button_home">Home</string>
-    <string name="challenge_finished_dialog_button_challenge_list">Challenge list</string>
-    <string name="challenge_finished_dialog_button_next">Next challenge</string>
-
     <string name="tutorial_robots_title">Under robots, you can…</string>
     <string name="tutorial_robots_description">- Lorem ipsum dolor sit amet, eu commodo numquam comprehensam vel. Quo cu
         alia placerat.\n - Per graece denique invidunt ei. Case ullum euripidis duo e \n - Eos meis quidam omnesque et.
@@ -301,7 +300,8 @@
     </string>
     <string name="tutorial_button_finish">Finish</string>
     <string name="tutorial_button_skip">Skip</string>
-    <string name="program_title_default">Untitled program</string>
 
+    <!-- Errors -->
+    <string name="error_variable_already_in_use">Variable name is already in use</string>
 
 </resources>
