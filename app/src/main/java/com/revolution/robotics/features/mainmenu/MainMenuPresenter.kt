@@ -3,7 +3,6 @@ package com.revolution.robotics.features.mainmenu
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.core.utils.AppPrefs
 import com.revolution.robotics.core.utils.Navigator
-import com.revolution.robotics.features.mainmenu.tutorial.TutorialItem
 import com.revolution.robotics.features.mainmenu.tutorial.TutorialViewModel
 
 class MainMenuPresenter(
@@ -27,43 +26,23 @@ class MainMenuPresenter(
     }
 
     override fun navigateToMyRobots() {
-        if (tutorialViewModel?.getSelectedTutorialItem() != TutorialItem.ROBOTS) {
-            navigator.navigate(MainMenuFragmentDirections.toMyRobots())
-        } else {
-            tutorialViewModel?.onNextButtonClicked()
-        }
+        navigator.navigate(MainMenuFragmentDirections.toMyRobots())
     }
 
     override fun navigateToCoding() {
-        if (tutorialViewModel?.getSelectedTutorialItem() != TutorialItem.PROGRAMS) {
-            navigator.navigate(MainMenuFragmentDirections.toCoding())
-        } else {
-            tutorialViewModel?.onNextButtonClicked()
-        }
+        navigator.navigate(MainMenuFragmentDirections.toCoding())
     }
 
     override fun navigateToChallengeList() {
-        if (tutorialViewModel?.getSelectedTutorialItem() != TutorialItem.CHALLENGES) {
-            navigator.navigate(MainMenuFragmentDirections.toChallengeList())
-        } else {
-            tutorialViewModel?.onNextButtonClicked()
-        }
+        navigator.navigate(MainMenuFragmentDirections.toChallengeList())
     }
 
     override fun onCommunityClicked() {
-        if (tutorialViewModel?.getSelectedTutorialItem() != TutorialItem.COMMUNITY) {
-            navigator.navigate(MainMenuFragmentDirections.toCommunity())
-        } else {
-            tutorialViewModel?.onNextButtonClicked()
-        }
+        navigator.navigate(MainMenuFragmentDirections.toCommunity())
     }
 
     override fun onSettingsClicked() {
-        if (tutorialViewModel?.getSelectedTutorialItem() != TutorialItem.SETTINGS) {
-            navigator.navigate(MainMenuFragmentDirections.toSettings())
-        } else {
-            tutorialViewModel?.onNextButtonClicked()
-        }
+        navigator.navigate(MainMenuFragmentDirections.toSettings())
     }
 
     override fun onTutorialButtonClicked() {
