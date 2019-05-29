@@ -37,6 +37,7 @@
                 android:scaleType="centerInside"
                 android:padding="@dimen/dimen_8dp"
                 android:src="@drawable/ic_save"
+                android:onClick="@{() -> viewModel.saveProgram()}"
                 app:layout_constraintTop_toTopOf="@id/icon_open"
                 app:layout_constraintEnd_toStartOf="@id/icon_open"
                 android:layout_marginEnd="@dimen/dimen_8dp"

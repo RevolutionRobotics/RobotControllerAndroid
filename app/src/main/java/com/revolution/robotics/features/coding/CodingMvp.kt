@@ -11,5 +11,6 @@ interface CodingMvp : Mvp {
 
     interface Presenter : Mvp.Presenter<View, CodingViewModel> {
         fun showProgramsDialog()
+        fun saveProgram()
     }
 }

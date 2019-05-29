@@ -183,6 +183,11 @@
     <string name="save_controller_dialog_name_hint">Tap here and name the controller!</string>
     <string name="save_dialog_done">Done</string>
     <string name="save_dialog_description_title">Description</string>
+    <string name="dialog_save_program_title">The program is ready, name it!</string>
+    <string name="dialog_save_program_name">Program name</string>
+    <string name="dialog_save_program_name_hint">Tap here to name it!</string>
+    <string name="dialog_save_program_description">Description</string>
+    <string name="dialog_save_program_description_hint">Tap here and add a hint to remember when to use it!</string>
 
     <!-- Play -->
     <string name="play_screen_title">Play!</string>
