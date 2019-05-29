@@ -20,6 +20,8 @@ class DonutSelectorView @JvmOverloads constructor(
 ) : View(context, attrs, defStyleAttr) {
 
     companion object {
+        const val OPTION_COUNT = 12
+
         private const val TOUCH_THRESHOLD = 250L
 
         private const val HALF = 0.5f
@@ -36,7 +38,7 @@ class DonutSelectorView @JvmOverloads constructor(
     private var lastTouchTime = 0L
     private var clickVector = Vector()
     private var fontVector = Vector()
-    private var selection = Array(12) { false }
+    private var selection = Array(OPTION_COUNT) { false }
 
     private val labelTextSize = context.dimension(R.dimen.dialog_donut_text_size).toFloat()
     private val arcPaint = Paint().apply { color = context.color(R.color.grey_1d) }
