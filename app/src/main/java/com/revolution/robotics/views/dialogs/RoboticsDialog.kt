@@ -44,7 +44,7 @@ abstract class RoboticsDialog : BaseDialog() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        dialogButtonHelper.updateButtonWeights(binding.container)
+        dialogButtonHelper.updateButtonWeights(binding.buttonContainer)
     }
 
     open fun onDialogCloseButtonClicked() = Unit
