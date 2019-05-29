@@ -117,7 +117,7 @@ fun setText(textView: TextView, @StringRes textResource: Int) {
     }
 }
 
-@BindingAdapter("color")
+@BindingAdapter("hexColor")
 fun setColor(view: FrameLayout, colorOption: ColorOption?) {
     if (colorOption != null) {
         if (colorOption.isSelected) {
@@ -127,7 +127,7 @@ fun setColor(view: FrameLayout, colorOption: ColorOption?) {
         }
     }
 }
-@BindingAdapter("color")
+@BindingAdapter("hexColor")
 fun setColor(view: View, color: String?) {
     if (color != null) {
         view.setBackgroundColor(Color.parseColor(color))

@@ -19,7 +19,6 @@ class DonutSelectorDialog :
     }
 
     companion object {
-        private const val OPTION_COUNT = 12
         private var Bundle.selectionTypeOrdinal by BundleArgumentDelegate.Int("selection-type")
         private var Bundle.selectedByDefault by BundleArgumentDelegate.Int("selectedByDefault")
 
@@ -45,7 +44,9 @@ class DonutSelectorDialog :
             val selectionType = DonutSelectionType.values()[arguments.selectionTypeOrdinal]
             if (selectionType == DonutSelectionType.SINGLE) {
                 binding.donut.selectionListener = this
-                val defaultSelection = List(OPTION_COUNT) { index -> index == arguments.selectedByDefault - 1 }
+                val defaultSelection = List(DonutSelectorView.OPTION_COUNT) { index ->
+                    index == arguments.selectedByDefault - 1
+                }
                 binding.donut.setSelection(defaultSelection)
             }
 
@@ -65,7 +66,7 @@ class DonutSelectorDialog :
 
     override fun onSelectAllClicked() {
         val isAllSelected = binding.donut.getSelection().firstOrNull { !it } == null
-        binding.donut.setSelection(List(OPTION_COUNT) { !isAllSelected })
+        binding.donut.setSelection(List(DonutSelectorView.OPTION_COUNT) { !isAllSelected })
         binding.check.isChecked = !isAllSelected
     }
 

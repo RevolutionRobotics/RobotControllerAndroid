@@ -12,13 +12,13 @@
             android:padding="@dimen/dimen_2dp"
             android:layout_margin="@dimen/dimen_1dp"
             android:onClick="@{() -> viewModel.onColorClicked()}"
-            app:color="@{viewModel}">
+            app:hexColor="@{viewModel}">
 
         <View
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="#ff0000"
-                app:color="@{viewModel.color}"/>
+                app:hexColor="@{viewModel.color}"/>
 
     </FrameLayout>
 

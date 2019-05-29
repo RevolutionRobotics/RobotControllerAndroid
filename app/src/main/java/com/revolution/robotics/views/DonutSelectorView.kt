@@ -6,7 +6,6 @@ import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import androidx.databinding.ObservableBoolean
 import com.revolution.robotics.R
 import com.revolution.robotics.core.extensions.color
 import com.revolution.robotics.core.extensions.dimension
@@ -21,6 +20,8 @@ class DonutSelectorView @JvmOverloads constructor(
 ) : View(context, attrs, defStyleAttr) {
 
     companion object {
+        const val OPTION_COUNT = 12
+
         private const val TOUCH_THRESHOLD = 250L
 
         private const val HALF = 0.5f
@@ -37,6 +38,7 @@ class DonutSelectorView @JvmOverloads constructor(
     private var lastTouchTime = 0L
     private var clickVector = Vector()
     private var fontVector = Vector()
+    private var selection = Array(OPTION_COUNT) { false }
 
     private val labelTextSize = context.dimension(R.dimen.dialog_donut_text_size).toFloat()
     private val arcPaint = Paint().apply { color = context.color(R.color.grey_1d) }
@@ -52,30 +54,17 @@ class DonutSelectorView @JvmOverloads constructor(
     }
     private val holePaint = Paint().apply { color = context.color(R.color.grey_28) }
 
-    private var selection = listOf(
-        ObservableBoolean(false), ObservableBoolean(false), ObservableBoolean(false), ObservableBoolean(false),
-        ObservableBoolean(false), ObservableBoolean(false), ObservableBoolean(false), ObservableBoolean(false),
-        ObservableBoolean(false), ObservableBoolean(false), ObservableBoolean(false), ObservableBoolean(false)
-    )
-
     var selectionListener: SelectionListener? = null
 
     fun setSelection(selection: List<Boolean>) {
-        selection.forEachIndexed { index, bool ->
-            if (this.selection[index].get() != bool) {
-                this.selection[index].set(bool)
-            }
+        selection.forEachIndexed { index, value ->
+            this.selection[index] = value
         }
         invalidate()
     }
 
-    fun getSelection(): ArrayList<Boolean> {
-        val result = ArrayList<Boolean>()
-        selection.forEachIndexed { _, value ->
-            result.add(value.get())
-        }
-        return result
-    }
+    fun getSelection() =
+        selection.toList()
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
         if (event.action == MotionEvent.ACTION_DOWN) {
@@ -108,7 +97,7 @@ class DonutSelectorView @JvmOverloads constructor(
     }
 
     private fun changeSelection(index: Int) {
-        selection[index].set(!selection[index].get())
+        selection[index] = !selection[index]
         selectionListener?.onSelectionChanged(getSelection())
         invalidate()
     }
@@ -132,7 +121,7 @@ class DonutSelectorView @JvmOverloads constructor(
                 index * OPTION_WIDTH_DEGREES + OPTION_WIDTH_HALF_DEGREES + OPTION_DIVIDER_DEGREES - ROTATION_CORRECTION,
                 OPTION_WIDTH_DEGREES - OPTION_DIVIDER_DEGREES * 2,
                 true,
-                if (selected.get()) selectedArcPaint else arcPaint
+                if (selected) selectedArcPaint else arcPaint
             )
 
             fontVector.angle = Math.toRadians(((index + 1) * OPTION_WIDTH_DEGREES - ROTATION_CORRECTION).toDouble())
@@ -141,7 +130,7 @@ class DonutSelectorView @JvmOverloads constructor(
                 "${index + 1}",
                 fontVector.getX() + dimensionHalf,
                 fontVector.getY() + dimensionHalf + labelTextSize * HALF,
-                if (selected.get()) selectedTextPaint else textPaint
+                if (selected) selectedTextPaint else textPaint
             )
         }
 
