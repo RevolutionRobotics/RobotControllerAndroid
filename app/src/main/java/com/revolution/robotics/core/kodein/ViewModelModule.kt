@@ -25,32 +25,30 @@ import com.revolution.robotics.features.play.PlayViewModel
 import com.revolution.robotics.features.whoToBuild.WhoToBuildViewModel
 import org.kodein.di.Kodein
 import org.kodein.di.erased.bind
-import org.kodein.di.erased.instance
-import org.kodein.di.erased.provider
 
 fun createViewModelModule() =
     Kodein.Module("ViewModelModule") {
-        bind<MainMenuViewModel>() with provider { MainMenuViewModel(instance()) }
-        bind<CodingViewModel>() with provider { CodingViewModel() }
-        bind<ChallengeGroupViewModel>() with provider { ChallengeGroupViewModel() }
-        bind<WhoToBuildViewModel>() with provider { WhoToBuildViewModel(instance()) }
-        bind<MyRobotsViewModel>() with provider { MyRobotsViewModel(instance()) }
-        bind<ConnectViewModel>() with provider { ConnectViewModel() }
-        bind<BuildRobotViewModel>() with provider { BuildRobotViewModel(instance()) }
-        bind<ConfigureViewModel>() with provider { ConfigureViewModel(instance()) }
-        bind<ConfigureConnectionsViewModel>() with provider { ConfigureConnectionsViewModel() }
-        bind<ConfigureControllersViewModel>() with provider { ConfigureControllersViewModel(instance()) }
-        bind<MotorConfigurationViewModel>() with provider { MotorConfigurationViewModel(instance()) }
-        bind<SensorConfigurationViewModel>() with provider { SensorConfigurationViewModel(instance()) }
-        bind<SettingsViewModel>() with provider { SettingsViewModel(instance()) }
-        bind<AboutViewModel>() with provider { AboutViewModel(instance()) }
-        bind<FirmwareUpdateViewModel>() with provider { FirmwareUpdateViewModel(instance()) }
-        bind<PlayViewModel>() with provider { PlayViewModel(instance()) }
-        bind<TypeSelectorViewModel>() with provider { TypeSelectorViewModel(instance()) }
-        bind<SetupViewModel>() with provider { SetupViewModel(instance()) }
-        bind<ProgramSelectorViewModel>() with provider { ProgramSelectorViewModel(instance()) }
-        bind<ProgramPriorityViewModel>() with provider { ProgramPriorityViewModel(instance()) }
-        bind<ButtonlessProgramSelectorViewModel>() with provider { ButtonlessProgramSelectorViewModel(instance()) }
-        bind<ChallengeListViewModel>() with provider { ChallengeListViewModel() }
-        bind<ChallengeDetailViewModel>() with provider { ChallengeDetailViewModel() }
+        bind<MainMenuViewModel>() with p { MainMenuViewModel(i()) }
+        bind<CodingViewModel>() with p { CodingViewModel() }
+        bind<ChallengeGroupViewModel>() with p { ChallengeGroupViewModel() }
+        bind<WhoToBuildViewModel>() with p { WhoToBuildViewModel(i()) }
+        bind<MyRobotsViewModel>() with p { MyRobotsViewModel(i()) }
+        bind<ConnectViewModel>() with p { ConnectViewModel() }
+        bind<BuildRobotViewModel>() with p { BuildRobotViewModel(i()) }
+        bind<ConfigureViewModel>() with p { ConfigureViewModel(i()) }
+        bind<ConfigureConnectionsViewModel>() with p { ConfigureConnectionsViewModel() }
+        bind<ConfigureControllersViewModel>() with p { ConfigureControllersViewModel(i()) }
+        bind<MotorConfigurationViewModel>() with p { MotorConfigurationViewModel(i()) }
+        bind<SensorConfigurationViewModel>() with p { SensorConfigurationViewModel(i()) }
+        bind<SettingsViewModel>() with p { SettingsViewModel(i()) }
+        bind<AboutViewModel>() with p { AboutViewModel(i()) }
+        bind<FirmwareUpdateViewModel>() with p { FirmwareUpdateViewModel(i()) }
+        bind<PlayViewModel>() with p { PlayViewModel(i()) }
+        bind<TypeSelectorViewModel>() with p { TypeSelectorViewModel(i()) }
+        bind<SetupViewModel>() with p { SetupViewModel(i()) }
+        bind<ProgramSelectorViewModel>() with p { ProgramSelectorViewModel(i()) }
+        bind<ProgramPriorityViewModel>() with p { ProgramPriorityViewModel(i()) }
+        bind<ButtonlessProgramSelectorViewModel>() with p { ButtonlessProgramSelectorViewModel(i()) }
+        bind<ChallengeListViewModel>() with p { ChallengeListViewModel() }
+        bind<ChallengeDetailViewModel>() with p { ChallengeDetailViewModel() }
     }

@@ -44,6 +44,6 @@ data class MyRobotsItem(
     }
 
     fun onDeleteClicked() {
-        presenter.onDeleteSelected(id)
+        presenter.onDeleteSelected(robot)
     }
 }

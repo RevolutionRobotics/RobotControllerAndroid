@@ -32,8 +32,6 @@ abstract class SetupFragment :
     SetupMvp.View, DialogEventBus.Listener {
 
     companion object {
-        const val ID_CREATE_NEW = -1
-
         private const val PROGRAM_SELECTOR_ANIMATION_DURATION_MS = 250L
         private var Bundle.controllerId by BundleArgumentDelegate.Int("controllerId")
     }

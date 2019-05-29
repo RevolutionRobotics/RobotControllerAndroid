@@ -6,16 +6,16 @@ import com.revolution.robotics.core.domain.local.UserConfigurationDao
 import com.revolution.robotics.core.domain.local.UserRobot
 import com.revolution.robotics.core.domain.local.UserRobotDao
 
-class SaveUserRobotInteractor(
+class UpdateUserRobotInteractor(
     private val saveConfigurationDao: UserConfigurationDao,
     private val saveUserRobotDao: UserRobotDao
-) : Interactor<Long>() {
+) : Interactor<UserRobot>() {
 
     lateinit var userConfiguration: UserConfiguration
     lateinit var userRobot: UserRobot
 
     @Suppress("SwallowedException")
-    override fun getData(): Long {
+    override fun getData(): UserRobot {
         // TODO we always do this IF-ELSE - refactor this
         val configurationId = if (userConfiguration.id == 0) {
             saveConfigurationDao.saveUserConfiguration(userConfiguration)
@@ -37,11 +37,7 @@ class SaveUserRobotInteractor(
                 }
         }
 
-        return if (userRobot.instanceId == 0) {
-            saveUserRobotDao.saveUserRobot(userRobot)
-        } else {
-            saveUserRobotDao.updateUserRobot(userRobot)
-            userRobot.instanceId.toLong()
-        }
+        saveUserRobotDao.updateUserRobot(userRobot)
+        return userRobot
     }
 }

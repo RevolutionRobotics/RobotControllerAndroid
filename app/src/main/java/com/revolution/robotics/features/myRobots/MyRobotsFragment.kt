@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.viewpager.widget.ViewPager
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
+import com.revolution.robotics.core.domain.local.UserRobot
 import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
 import com.revolution.robotics.core.extensions.waitForLayout
@@ -30,7 +31,7 @@ class MyRobotsFragment : BaseFragment<FragmentMyRobotsBinding, MyRobotsViewModel
 
     private lateinit var adapter: MyRobotsCarouselAdapter
 
-    private var robotToDeleteId = -1
+    private var robotToDelete: UserRobot? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = super.onCreateView(inflater, container, savedInstanceState)
@@ -76,20 +77,22 @@ class MyRobotsFragment : BaseFragment<FragmentMyRobotsBinding, MyRobotsViewModel
         presenter.onPageSelected(position)
     }
 
-    override fun deleteRobot(robotId: Int) {
-        robotToDeleteId = robotId
+    override fun deleteRobot(userRobot: UserRobot) {
+        robotToDelete = userRobot
         DeleteRobotDialog.newInstance().show(fragmentManager)
     }
 
     override fun onDialogEvent(event: DialogEvent) {
-        if (event == DialogEvent.DELETE_ROBOT && robotToDeleteId != -1) {
-            if (adapter.selectedPosition == adapter.count - 1) {
-                adapter.selectedPosition--
+        if (event == DialogEvent.DELETE_ROBOT && robotToDelete != null) {
+            robotToDelete?.let { robotToDelete ->
+                if (adapter.selectedPosition == adapter.count - 1) {
+                    adapter.selectedPosition--
+                }
+                adapter.removeItems { it.id == robotToDelete.instanceId }
+                presenter.deleteRobot(robotToDelete, adapter.selectedPosition)
+                binding?.myRobotsViewpager?.reInitTransformerWithDelay()
+                this.robotToDelete = null
             }
-            adapter.removeItems { it.id == robotToDeleteId }
-            presenter.deleteRobot(robotToDeleteId, adapter.selectedPosition)
-            binding?.myRobotsViewpager?.reInitTransformerWithDelay()
-            robotToDeleteId = -1
         }
     }
 }

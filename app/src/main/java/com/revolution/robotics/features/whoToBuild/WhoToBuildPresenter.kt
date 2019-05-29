@@ -1,13 +1,13 @@
 package com.revolution.robotics.features.whoToBuild
 
 import com.revolution.robotics.R
+import com.revolution.robotics.core.domain.PortMapping
 import com.revolution.robotics.core.domain.local.BuildStatus
-import com.revolution.robotics.core.domain.local.UserConfiguration
-import com.revolution.robotics.core.domain.local.UserMapping
 import com.revolution.robotics.core.domain.local.UserRobot
+import com.revolution.robotics.core.domain.remote.Configuration
 import com.revolution.robotics.core.domain.remote.Robot
 import com.revolution.robotics.core.extensions.isEmptyOrNull
-import com.revolution.robotics.core.interactor.SaveUserRobotInteractor
+import com.revolution.robotics.core.interactor.SaveNewUserRobotInteractor
 import com.revolution.robotics.core.interactor.firebase.RobotInteractor
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.core.utils.Navigator
@@ -18,7 +18,7 @@ import kotlin.math.max
 
 class WhoToBuildPresenter(
     private val robotsInteractor: RobotInteractor,
-    private val saveUserRobotInteractor: SaveUserRobotInteractor,
+    private val saveNewUserRobotInteractor: SaveNewUserRobotInteractor,
     private val navigator: Navigator,
     private val resourceResolver: ResourceResolver
 ) :
@@ -104,15 +104,17 @@ class WhoToBuildPresenter(
             lastModified = Date(System.currentTimeMillis()),
             name = resourceResolver.string(R.string.build_robot_custom_default_name)
         )
-        saveUserRobotInteractor.userRobot = userRobot
-        saveUserRobotInteractor.userConfiguration = UserConfiguration().apply { mappingId = UserMapping() }
-        saveUserRobotInteractor.execute(
-            onResponse = { robotId ->
-                userRobot.instanceId = robotId.toInt()
+        saveNewUserRobotInteractor.userRobot = userRobot
+        saveNewUserRobotInteractor.configuration = Configuration(mapping = PortMapping())
+        saveNewUserRobotInteractor.controller = null
+        saveNewUserRobotInteractor.programs = emptyList()
+        saveNewUserRobotInteractor.execute(
+            onResponse = {
                 navigator.navigate(WhoToBuildFragmentDirections.toConfigure(userRobot))
             },
             onError = {
                 // TODO error handling
-            })
+            }
+        )
     }
 }

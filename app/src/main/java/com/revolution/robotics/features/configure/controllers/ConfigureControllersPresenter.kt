@@ -2,6 +2,7 @@ package com.revolution.robotics.features.configure.controllers
 
 import com.revolution.robotics.core.extensions.formatYearMonthDaySlashed
 import com.revolution.robotics.core.extensions.isEmptyOrNull
+import com.revolution.robotics.core.interactor.GetUserControllerInteractor
 import com.revolution.robotics.core.interactor.GetUserControllersInteractor
 import com.revolution.robotics.core.interactor.RemoveUserControllerInteractor
 import com.revolution.robotics.core.utils.Navigator
@@ -16,6 +17,7 @@ import kotlin.math.max
 class ConfigureControllersPresenter(
     private val navigator: Navigator,
     private val controllersInteractor: GetUserControllersInteractor,
+    private val userControllerInteractor: GetUserControllerInteractor,
     private val userConfigurationStorage: UserConfigurationStorage,
     private val deleteControllerInteractor: RemoveUserControllerInteractor
 ) : ConfigureControllersMvp.Presenter {
@@ -103,16 +105,23 @@ class ConfigureControllersPresenter(
     }
 
     override fun onEditSelected(item: ControllersItem) {
-        ControllerType.fromId(item.userController.type)?.apply {
-            when (this) {
-                ControllerType.GAMER ->
-                    navigator.navigate(ConfigureFragmentDirections.toSetupGamer(item.userController.id))
-                ControllerType.MULTITASKER ->
-                    navigator.navigate(ConfigureFragmentDirections.toSetupMultitasker(item.userController.id))
-                ControllerType.DRIVER ->
-                    navigator.navigate(ConfigureFragmentDirections.toSetupDriver(item.userController.id))
+        userControllerInteractor.id = item.userController.id
+        userControllerInteractor.execute(onResponse = { controllerWithPrograms ->
+            userConfigurationStorage.controllerHolder = controllerWithPrograms
+            ControllerType.fromId(item.userController.type)?.apply {
+                when (this) {
+                    ControllerType.GAMER ->
+                        navigator.navigate(ConfigureFragmentDirections.toSetupGamer())
+                    ControllerType.MULTITASKER ->
+                        navigator.navigate(ConfigureFragmentDirections.toSetupMultitasker())
+                    ControllerType.DRIVER ->
+                        navigator.navigate(ConfigureFragmentDirections.toSetupDriver())
+                }
             }
-        }
+        },
+            onError = {
+                // TODO Error handling
+            })
     }
 
     override fun onInfoSelected(item: ControllersItem) {

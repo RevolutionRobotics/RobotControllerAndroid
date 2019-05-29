@@ -111,15 +111,16 @@ class MyRobotsPresenter(
         navigator.navigate(MyRobotsFragmentDirections.toConfigure(userRobot))
     }
 
-    override fun onDeleteSelected(robotId: Int) {
-        view?.deleteRobot(robotId)
+    override fun onDeleteSelected(userRobot: UserRobot) {
+        view?.deleteRobot(userRobot)
     }
 
-    override fun deleteRobot(robotId: Int, selectedPosition: Int) {
-        deleteRobotInteractor.id = robotId
+    override fun deleteRobot(userRobot: UserRobot, selectedPosition: Int) {
+        deleteRobotInteractor.id = userRobot.instanceId
+        deleteRobotInteractor.configId = userRobot.configurationId
         deleteRobotInteractor.execute()
         model?.robotsList?.apply {
-            get()?.removeAll { it.id == robotId }
+            get()?.removeAll { it.id == userRobot.instanceId }
             notifyChange()
         }
         updateButtonsVisibility(selectedPosition)
