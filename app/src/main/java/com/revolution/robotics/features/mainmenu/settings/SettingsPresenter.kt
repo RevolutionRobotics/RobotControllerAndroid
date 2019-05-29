@@ -1,13 +1,14 @@
 package com.revolution.robotics.features.mainmenu.settings
 
+import com.revolution.robotics.core.utils.AppPrefs
 import com.revolution.robotics.core.utils.Navigator
 
-class SettingsPresenter(private val navigator: Navigator) : SettingsMvp.Presenter {
+class SettingsPresenter(private val navigator: Navigator, private val appPrefs: AppPrefs) : SettingsMvp.Presenter {
     override var view: SettingsMvp.View? = null
     override var model: SettingsViewModel? = null
 
     override fun navigateToResetTutorial() {
-        // TODO reset tutorial
+        appPrefs.showTutorial = true
         view?.showTutorialResetSuccessDialog()
     }
 

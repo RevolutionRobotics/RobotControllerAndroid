@@ -156,7 +156,7 @@ fun createInteractorModule() =
 @Suppress("LongMethod")
 fun createPresenterModule() =
     Kodein.Module("PresenterModule") {
-        bind<MainMenuMvp.Presenter>() with singleton { MainMenuPresenter(instance()) }
+        bind<MainMenuMvp.Presenter>() with singleton { MainMenuPresenter(instance(), instance(), instance()) }
         bind<WhoToBuildMvp.Presenter>() with singleton {
             WhoToBuildPresenter(
                 instance(),
@@ -227,7 +227,7 @@ fun createPresenterModule() =
                 instance()
             )
         }
-        bind<SettingsMvp.Presenter>() with singleton { SettingsPresenter(instance()) }
+        bind<SettingsMvp.Presenter>() with singleton { SettingsPresenter(instance(), instance()) }
         bind<AboutMvp.Presenter>() with singleton { AboutPresenter(instance(), instance()) }
         bind<FirmwareMvp.Presenter>() with singleton { FirmwareUpdatePresenter(instance()) }
         bind<PlayMvp.Presenter>() with singleton { PlayPresenter() }

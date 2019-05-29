@@ -15,6 +15,7 @@
     <dimen name="dimen_40dp">40dp</dimen>
     <dimen name="dimen_44dp">44dp</dimen>
     <dimen name="dimen_48dp">48dp</dimen>
+    <dimen name="dimen_56dp">56dp</dimen>
     <dimen name="dimen_64dp">64dp</dimen>
     <dimen name="dimen_72dp">72dp</dimen>
     <dimen name="dimen_128dp">128dp</dimen>
@@ -264,4 +265,9 @@
     <dimen name="challenge_step_size">110dp</dimen>
     <dimen name="size_challenge_part">86dp</dimen>
 
+    <!-- SCREEN: TUTORIAL-->
+    <dimen name="tutorial_dialog_width">212dp</dimen>
+    <dimen name="tutorial_dialog_height">192dp</dimen>
+    <dimen name="tutorial_triangle_width">12dp</dimen>
+    <dimen name="tutorial_triangle_height">24dp</dimen>
 </resources>

@@ -263,12 +263,44 @@
 
     <!-- Errors -->
     <string name="error_variable_already_in_use">Variable name is already in use</string>
-    
+
     <string name="challenge_finished_dialog_title">Challenge accomplished!</string>
     <string name="challenge_finished_dialog_latest_title">Challenge section accomplished, \n well done!</string>
     <string name="challenge_finished_dialog_button_home">Home</string>
     <string name="challenge_finished_dialog_button_challenge_list">Challenge list</string>
     <string name="challenge_finished_dialog_button_next">Next challenge</string>
+
+    <string name="tutorial_robots_title">Under robots, you can…</string>
+    <string name="tutorial_robots_description">- Lorem ipsum dolor sit amet, eu commodo numquam comprehensam vel. Quo cu
+        alia placerat.\n - Per graece denique invidunt ei. Case ullum euripidis duo e \n - Eos meis quidam omnesque et.
+        Essent blandit ius ut, no ius melius sanctus.
+    </string>
+    <string name="tutorial_programs_title">Under programs, you can…</string>
+    <string name="tutorial_programs_description">- Lorem ipsum dolor sit amet, eu commodo numquam comprehensam vel. Quo
+        cu
+        alia placerat.\n - Per graece denique invidunt ei. Case ullum euripidis duo e \n - Eos meis quidam omnesque et.
+        Essent blandit ius ut, no ius melius sanctus.
+    </string>
+    <string name="tutorial_challenges_title">Under challanges, you can…</string>
+    <string name="tutorial_challenges_description">- Lorem ipsum dolor sit amet, eu commodo numquam comprehensam vel.
+        Quo cu
+        alia placerat.\n - Per graece denique invidunt ei. Case ullum euripidis duo e \n - Eos meis quidam omnesque et.
+        Essent blandit ius ut, no ius melius sanctus.
+    </string>
+    <string name="tutorial_settings_title">Under settings…</string>
+    <string name="tutorial_settings_description">- Lorem ipsum dolor sit amet, eu commodo numquam comprehensam vel. Quo
+        cu
+        alia placerat.\n - Per graece denique invidunt ei. Case ullum euripidis duo e \n - Eos meis quidam omnesque et.
+        Essent blandit ius ut, no ius melius sanctus.
+    </string>
+    <string name="tutorial_community_title">Under community…</string>
+    <string name="tutorial_community_description">- Lorem ipsum dolor sit amet, eu commodo numquam comprehensam vel. Quo
+        cu
+        alia placerat.\n - Per graece denique invidunt ei. Case ullum euripidis duo e \n - Eos meis quidam omnesque et.
+        Essent blandit ius ut, no ius melius sanctus.
+    </string>
+    <string name="tutorial_button_finish">Finish</string>
+    <string name="tutorial_button_skip">Skip</string>
 
 
 </resources>

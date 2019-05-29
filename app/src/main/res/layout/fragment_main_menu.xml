@@ -4,9 +4,11 @@
     <data>
         <variable name="viewModel" type="com.revolution.robotics.features.mainmenu.MainMenuViewModel"/>
         <variable name="toolbarViewModel" type="com.revolution.robotics.features.mainmenu.MainMenuToolbarViewModel"/>
+        <variable name="tutorialViewModel" type="com.revolution.robotics.features.mainmenu.tutorial.TutorialViewModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraint_main_menu"
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -20,12 +22,44 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/toolbar_height"/>
 
+        <ImageView
+                android:id="@+id/img_settings"
+                android:layout_width="@dimen/dimen_40dp"
+                android:layout_height="@dimen/dimen_40dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_gears"
+                android:layout_marginEnd="@dimen/dimen_24dp"
+                android:padding="@dimen/dimen_8dp"
+                android:background="@drawable/bg_button_default"
+                android:clickable="@{!tutorialViewModel.tutorialItems.get(4).isActive}"
+                app:translationZ="@{tutorialViewModel.tutorialItems.get(4).isActive ? 100.0f : 0.0f}"
+                android:onClick="@{() -> viewModel.onSettingsClicked()}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/toolbar"/>
+
+        <ImageView
+                android:id="@+id/img_community"
+                android:layout_width="@dimen/dimen_40dp"
+                android:layout_height="@dimen/dimen_40dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_community"
+                android:layout_marginEnd="@dimen/dimen_24dp"
+                android:padding="@dimen/dimen_8dp"
+                android:background="@drawable/bg_button_default"
+                android:clickable="@{!tutorialViewModel.tutorialItems.get(3).isActive}"
+                app:translationZ="@{tutorialViewModel.tutorialItems.get(3).isActive ? 100.0f : 0.0f}"
+                android:onClick="@{() -> viewModel.onCommunityClicked()}"
+                app:layout_constraintEnd_toStartOf="@id/img_settings"
+                app:layout_constraintTop_toTopOf="@id/toolbar"/>
+
         <include
                 layout="@layout/include_main_menu_button"
                 android:id="@+id/btn_robots"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                app:onClickEnabled="@{!tutorialViewModel.tutorialItems.get(0).isActive}"
                 app:viewModel="@{viewModel.robotButton}"
+                app:translationZ="@{tutorialViewModel.tutorialItems.get(0).isActive ? 100.0f : 0.0f}"
                 app:layout_constraintDimensionRatio="H,3:4"
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="parent"
@@ -39,7 +73,9 @@
                 android:id="@+id/btn_coding"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                app:onClickEnabled="@{!tutorialViewModel.tutorialItems.get(1).isActive}"
                 app:viewModel="@{viewModel.codingButton}"
+                app:translationZ="@{tutorialViewModel.tutorialItems.get(1).isActive ? 100.0f : 0.0f}"
                 app:layout_constraintDimensionRatio="H,3:4"
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toEndOf="@id/btn_robots"
@@ -55,6 +91,8 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 app:viewModel="@{viewModel.challengesButton}"
+                app:onClickEnabled="@{!tutorialViewModel.tutorialItems.get(2).isActive}"
+                app:translationZ="@{tutorialViewModel.tutorialItems.get(2).isActive ? 100.0f : 0.0f}"
                 app:layout_constraintDimensionRatio="H,3:4"
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toEndOf="@id/btn_coding"
@@ -78,6 +116,7 @@
                 android:layout_height="@dimen/main_menu_footer_height"
                 android:background="@color/grey_28"
                 app:layout_constraintBottom_toBottomOf="parent"/>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -13,10 +13,7 @@ open class AppPrefs constructor(context: Context) {
 
     private val preferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
 
-    open var latestAppVersion by PreferenceFieldDelegate.Integer(
-        preferences,
-        "latest_app_version"
-    )
+    open var showTutorial by PreferenceFieldDelegate.Boolean(preferences, "tutorial", true)
 }
 
 sealed class PreferenceFieldDelegate<T>(

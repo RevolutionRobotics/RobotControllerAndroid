@@ -127,9 +127,15 @@ fun setColor(view: FrameLayout, colorOption: ColorOption?) {
         }
     }
 }
+
 @BindingAdapter("hexColor")
 fun setColor(view: View, color: String?) {
     if (color != null) {
         view.setBackgroundColor(Color.parseColor(color))
     }
+}
+
+@BindingAdapter("selected")
+fun setSelected(view: View, selected: Boolean?) {
+    view.isSelected = selected == true
 }
