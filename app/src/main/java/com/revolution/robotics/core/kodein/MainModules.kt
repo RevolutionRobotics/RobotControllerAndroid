@@ -13,6 +13,7 @@ import com.revolution.robotics.features.bluetooth.BluetoothManager
 import com.revolution.robotics.features.configure.ConfigurationEventBus
 import com.revolution.robotics.features.configure.UserConfigurationStorage
 import com.revolution.robotics.features.configure.controller.CompatibleProgramFilterer
+import com.revolution.robotics.features.shared.ErrorHandler
 import org.kodein.di.Kodein
 import org.kodein.di.erased.bind
 import org.kodein.di.erased.instance
@@ -37,4 +38,5 @@ fun createAppModule(context: Context) =
         bind<ResourceResolver>() with s { ResourceResolver(context) }
         bind<ApplicationContextProvider>() with s { ApplicationContextProvider(context) }
         bind<AppPrefs>() with s { AppPrefs(context) }
+        bind<ErrorHandler>() with s { ErrorHandler() }
     }
