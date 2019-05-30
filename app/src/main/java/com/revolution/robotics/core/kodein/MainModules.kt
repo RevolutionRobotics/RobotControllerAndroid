@@ -4,6 +4,7 @@ import android.content.Context
 import com.revolution.bluetooth.communication.RoboticsDeviceConnector
 import com.revolution.robotics.blockly.utils.JavascriptResultHandler
 import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
+import com.revolution.robotics.core.interactor.firebase.FirebaseFileDownloader
 import com.revolution.robotics.core.kodein.utils.ApplicationContextProvider
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.core.utils.AppPrefs
@@ -29,7 +30,6 @@ fun createMainModule() =
         bind<BluetoothManager>() with s { BluetoothManager(kodein) }
         bind<RoboticsDeviceConnector>() with s { RoboticsDeviceConnector() }
         bind<UserConfigurationStorage>() with s { UserConfigurationStorage() }
-
         bind<CompatibleProgramFilterer>() with p { CompatibleProgramFilterer(instance()) }
     }
 
@@ -39,4 +39,5 @@ fun createAppModule(context: Context) =
         bind<ApplicationContextProvider>() with s { ApplicationContextProvider(context) }
         bind<AppPrefs>() with s { AppPrefs(context) }
         bind<ErrorHandler>() with s { ErrorHandler() }
+        bind<FirebaseFileDownloader>() with p { FirebaseFileDownloader(i()) }
     }

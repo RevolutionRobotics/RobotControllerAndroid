@@ -2,15 +2,12 @@ package com.revolution.robotics.features.build.testing.buildTest
 
 import android.net.Uri
 import androidx.lifecycle.ViewModel
-import com.revolution.robotics.core.kodein.utils.ApplicationContextProvider
+import com.revolution.robotics.core.interactor.firebase.FirebaseFileDownloader
 import com.revolution.robotics.features.bluetooth.BluetoothManager
-import java.io.File
-import java.io.FileOutputStream
-import java.nio.charset.Charset
 
 class TestBuildDialogPresenter(
     private val bluetoothManager: BluetoothManager,
-    private val contextProvider: ApplicationContextProvider
+    private val firebaseFileDownloader: FirebaseFileDownloader
 ) : TestBuildDialogMvp.Presenter {
 
     companion object {
@@ -21,20 +18,20 @@ class TestBuildDialogPresenter(
     override var model: ViewModel? = null
 
     override fun sendTestCode(code: String) {
-        val fileUri = saveTestKitFile(code)
-        bluetoothManager.getConfigurationService().testKit(fileUri, {
-            view?.activateBuildFace()
+        firebaseFileDownloader.downloadFirestoreFile(TEST_CODE_FILE_NAME, code, {
+            uploadTestCode(it)
         }, {
             // TODO User error message when it's available
             view?.dismiss()
         })
     }
 
-    private fun saveTestKitFile(code: String): Uri {
-        val outputFile = File("${contextProvider.applicationContext.filesDir.absolutePath}/$TEST_CODE_FILE_NAME")
-        FileOutputStream(outputFile).use {
-            it.write(code.toByteArray(Charset.forName("UTF-8")))
-        }
-        return Uri.fromFile(outputFile)
+    private fun uploadTestCode(fileUri: Uri) {
+        bluetoothManager.getConfigurationService().testKit(fileUri, {
+            view?.activateBuildFace()
+        }, {
+            // TODO User error message when it's available
+            view?.dismiss()
+        })
     }
 }
