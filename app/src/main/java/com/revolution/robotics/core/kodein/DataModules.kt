@@ -118,7 +118,15 @@ fun createInteractorModule() =
         bind<ConfigurationInteractor>() with p { ConfigurationInteractor() }
         bind<TestCodeInteractor>() with p { TestCodeInteractor() }
         bind<GetUserRobotInteractor>() with p { GetUserRobotInteractor(i()) }
-        bind<AssignDefaultConfigIntoTheRobotInteractor>() with p { AssignDefaultConfigIntoTheRobotInteractor(i(), i(), i(), i(), i()) }
+        bind<AssignDefaultConfigIntoTheRobotInteractor>() with p {
+            AssignDefaultConfigIntoTheRobotInteractor(
+                i(),
+                i(),
+                i(),
+                i(),
+                i()
+            )
+        }
         bind<UpdateUserRobotInteractor>() with p { UpdateUserRobotInteractor(i(), i()) }
         bind<GetAllUserRobotsInteractor>() with p { GetAllUserRobotsInteractor(i()) }
         bind<DeleteRobotInteractor>() with p { DeleteRobotInteractor(i(), i()) }
@@ -138,7 +146,7 @@ fun createInteractorModule() =
         bind<GetUserProgramsInteractor>() with p { GetUserProgramsInteractor(i()) }
         bind<GetControllerTypeInteractor>() with p { GetControllerTypeInteractor(i(), i()) }
         bind<FirebaseInitInteractor>() with p { FirebaseInitInteractor() }
-        bind<SaveUserRobotInteractor>() with p {SaveUserRobotInteractor(i())}
+        bind<SaveUserRobotInteractor>() with p { SaveUserRobotInteractor(i()) }
     }
 
 @Suppress("LongMethod")
