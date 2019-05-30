@@ -6,11 +6,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
+import androidx.databinding.ObservableField
 import androidx.databinding.ObservableInt
 import androidx.databinding.ViewDataBinding
 import com.revolution.robotics.BaseDialog
 import com.revolution.robotics.blockly.dialogs.BlocklyDialogInterface
 import com.revolution.robotics.blockly.utils.JavascriptResultHandler
+import com.revolution.robotics.core.extensions.onPropertyChanged
+import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.databinding.BlocklyDialogCoreBinding
 import org.kodein.di.KodeinAware
 import org.kodein.di.LateInitKodein
@@ -22,12 +25,16 @@ abstract class JavascriptPromptDialog<B : ViewDataBinding>(@LayoutRes private va
     lateinit var binding: B
 
     override val titleResource = ObservableInt()
+    override val title = ObservableField<String>("")
+
     protected val kodein = LateInitKodein()
     private val javascriptResultHandler: JavascriptResultHandler by kodein.instance()
+    private val resourceResolver: ResourceResolver by kodein.instance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         kodein.baseKodein = (requireContext().applicationContext as KodeinAware).kodein
+        titleResource.onPropertyChanged { title.set(resourceResolver.string(it)) }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =

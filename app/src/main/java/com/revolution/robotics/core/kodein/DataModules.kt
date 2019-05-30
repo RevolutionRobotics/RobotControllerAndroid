@@ -58,6 +58,10 @@ import com.revolution.robotics.features.challenges.challengeGroup.ChallengeGroup
 import com.revolution.robotics.features.challenges.challengeGroup.ChallengeGroupPresenter
 import com.revolution.robotics.features.challenges.challengeList.ChallengeListMvp
 import com.revolution.robotics.features.challenges.challengeList.ChallengeListPresenter
+import com.revolution.robotics.features.coding.CodingMvp
+import com.revolution.robotics.features.coding.CodingPresenter
+import com.revolution.robotics.features.coding.programs.ProgramsMvp
+import com.revolution.robotics.features.coding.programs.ProgramsPresenter
 import com.revolution.robotics.features.configure.ConfigureMvp
 import com.revolution.robotics.features.configure.ConfigurePresenter
 import com.revolution.robotics.features.configure.connections.ConfigureConnectionsMvp
@@ -169,6 +173,8 @@ fun createPresenterModule() =
         bind<ColorPickerMvp.Presenter>() with s { ColorPickerPresenter() }
         bind<SoundPickerMvp.Presenter>() with s { SoundPickerPresenter(i()) }
         bind<SliderMvp.Presenter>() with s { SliderPresenter() }
+        bind<CodingMvp.Presenter>() with s { CodingPresenter() }
+        bind<ProgramsMvp.Presenter>() with s { ProgramsPresenter(i()) }
     }
 
 fun createDbModule(context: Context) =

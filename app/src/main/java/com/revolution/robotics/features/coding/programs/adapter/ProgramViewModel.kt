@@ -1,13 +1,13 @@
-package com.revolution.robotics.features.controllers.programSelector.adapter
+package com.revolution.robotics.features.coding.programs.adapter
 
 import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.local.UserProgram
 import com.revolution.robotics.core.extensions.formatYearMonthDayDotted
-import com.revolution.robotics.features.controllers.programSelector.ProgramSelectorMvp
+import com.revolution.robotics.features.coding.programs.ProgramsMvp
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 import java.util.Date
 
-class ProgramViewModel(private val program: UserProgram, private val presenter: ProgramSelectorMvp.Presenter) {
+class ProgramViewModel(private val program: UserProgram, private val presenter: ProgramsMvp.Presenter) {
 
     companion object {
         val background = ChippedBoxConfig.Builder()

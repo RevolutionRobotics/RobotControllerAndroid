@@ -270,4 +270,10 @@
     <dimen name="tutorial_dialog_height">192dp</dimen>
     <dimen name="tutorial_triangle_width">12dp</dimen>
     <dimen name="tutorial_triangle_height">24dp</dimen>
+
+    <!-- SCREEN: CODING -->
+    <dimen name="coding_icon_width">48dp</dimen>
+    <dimen name="coding_icon_height">40dp</dimen>
+    <dimen name="coding_program_title_width">166dp</dimen>
+    <dimen name="coding_program_title_height">40dp</dimen>
 </resources>

@@ -6,6 +6,7 @@ import com.revolution.robotics.features.challenges.challengeDetail.ChallengeDeta
 import com.revolution.robotics.features.challenges.challengeGroup.ChallengeGroupViewModel
 import com.revolution.robotics.features.challenges.challengeList.ChallengeListViewModel
 import com.revolution.robotics.features.coding.CodingViewModel
+import com.revolution.robotics.features.coding.programs.ProgramsViewModel
 import com.revolution.robotics.features.configure.ConfigureViewModel
 import com.revolution.robotics.features.configure.connections.ConfigureConnectionsViewModel
 import com.revolution.robotics.features.configure.controller.program.priority.ProgramPriorityViewModel
@@ -29,7 +30,7 @@ import org.kodein.di.erased.bind
 fun createViewModelModule() =
     Kodein.Module("ViewModelModule") {
         bind<MainMenuViewModel>() with p { MainMenuViewModel(i()) }
-        bind<CodingViewModel>() with p { CodingViewModel() }
+        bind<CodingViewModel>() with p { CodingViewModel(i(), i()) }
         bind<ChallengeGroupViewModel>() with p { ChallengeGroupViewModel() }
         bind<WhoToBuildViewModel>() with p { WhoToBuildViewModel(i()) }
         bind<MyRobotsViewModel>() with p { MyRobotsViewModel(i()) }
@@ -51,4 +52,5 @@ fun createViewModelModule() =
         bind<ButtonlessProgramSelectorViewModel>() with p { ButtonlessProgramSelectorViewModel(i()) }
         bind<ChallengeListViewModel>() with p { ChallengeListViewModel() }
         bind<ChallengeDetailViewModel>() with p { ChallengeDetailViewModel() }
+        bind<ProgramsViewModel>() with p { ProgramsViewModel(i()) }
     }

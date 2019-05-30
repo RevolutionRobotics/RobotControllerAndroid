@@ -15,7 +15,7 @@ import com.revolution.robotics.views.dialogs.RoboticsDialog
 sealed class ProgramDialog(mode: Mode) : RoboticsDialog() {
 
     enum class Mode {
-        INFO, ADD_PROGRAM, REMOVE_PROGRAM, COMPATIBILITY_ISSUE
+        INFO, ADD_PROGRAM, REMOVE_PROGRAM, COMPATIBILITY_ISSUE, LOAD_PROGRAM
     }
 
     companion object {
@@ -25,17 +25,30 @@ sealed class ProgramDialog(mode: Mode) : RoboticsDialog() {
 
     override val hasCloseButton = mode != Mode.COMPATIBILITY_ISSUE
     override val dialogFaces = listOf(ProgramInfoDialogFace(mode == Mode.COMPATIBILITY_ISSUE))
-    override val dialogButtons = listOf(
-        DialogButton(R.string.program_info_edit_program, R.drawable.ic_edit) {
-            // TODO edit program here
-        },
+    override val dialogButtons = listOf(getFirstButton(mode), getSecondButton(mode))
+
+    private fun getFirstButton(mode: Mode) =
+        if (mode == Mode.LOAD_PROGRAM) {
+            DialogButton(R.string.program_info_delete_program, R.drawable.ic_delete) {
+                dismissAllowingStateLoss()
+                dialogEventBus.publish(DialogEvent.DELETE_PROGRAM.apply {
+                    extras.putParcelable(KEY_PROGRAM, arguments?.program)
+                })
+            }
+        } else {
+            DialogButton(R.string.program_info_edit_program, R.drawable.ic_edit) {
+                // TODO edit program here
+            }
+        }
+
+    private fun getSecondButton(mode: Mode) =
         when (mode) {
             Mode.ADD_PROGRAM ->
                 DialogButton(R.string.program_info_add_button, R.drawable.ic_add, true) {
+                    dismissAllowingStateLoss()
                     dialogEventBus.publish(DialogEvent.ADD_PROGRAM.apply {
                         extras.putParcelable(KEY_PROGRAM, arguments?.program)
                     })
-                    dismissAllowingStateLoss()
                 }
             Mode.REMOVE_PROGRAM ->
                 DialogButton(R.string.program_info_remove_button, R.drawable.ic_close, true) {
@@ -46,8 +59,14 @@ sealed class ProgramDialog(mode: Mode) : RoboticsDialog() {
                 DialogButton(R.string.program_info_compatibility_issue_positive_button, R.drawable.ic_check, true) {
                     dismissAllowingStateLoss()
                 }
+            Mode.LOAD_PROGRAM ->
+                DialogButton(R.string.program_info_load_program, R.drawable.ic_load_program, true) {
+                    dismissAllowingStateLoss()
+                    dialogEventBus.publish(DialogEvent.LOAD_PROGRAM.apply {
+                        extras.putParcelable(KEY_PROGRAM, arguments?.program)
+                    })
+                }
         }
-    )
 
     inner class ProgramInfoDialogFace(private val showCompatibilityWarning: Boolean) :
         DialogFace<DialogProgramInfoBinding>(R.layout.dialog_program_info) {
@@ -88,6 +107,14 @@ sealed class ProgramDialog(mode: Mode) : RoboticsDialog() {
     class CompatibilityIssue : ProgramDialog(Mode.COMPATIBILITY_ISSUE) {
         companion object {
             fun newInstance(program: UserProgram) = CompatibilityIssue().withArguments { bundle ->
+                bundle.program = program
+            }
+        }
+    }
+
+    class Load : ProgramDialog(Mode.LOAD_PROGRAM) {
+        companion object {
+            fun newInstance(program: UserProgram) = Load().withArguments { bundle ->
                 bundle.program = program
             }
         }

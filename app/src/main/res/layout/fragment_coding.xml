@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable name="viewModel" type="com.revolution.robotics.features.coding.CodingViewModel"/>
+        <variable name="buttonBackground" type="com.revolution.robotics.views.chippedBox.ChippedBoxConfig"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -14,6 +15,65 @@
                 android:id="@+id/view_blockly"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
+
+        <ImageView
+                android:id="@+id/icon_open"
+                android:layout_width="@dimen/coding_icon_width"
+                android:layout_height="@dimen/coding_icon_height"
+                android:scaleType="centerInside"
+                android:padding="@dimen/dimen_8dp"
+                android:src="@drawable/ic_open"
+                android:onClick="@{() -> viewModel.showProgramsDialog()}"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="@dimen/dimen_8dp"
+                android:layout_marginEnd="@dimen/dimen_8dp"
+                app:chippedBoxConfig="@{buttonBackground}"/>
+
+        <ImageView
+                android:id="@+id/icon_save"
+                android:layout_width="@dimen/coding_icon_width"
+                android:layout_height="@dimen/coding_icon_height"
+                android:scaleType="centerInside"
+                android:padding="@dimen/dimen_8dp"
+                android:src="@drawable/ic_save"
+                android:onClick="@{() -> viewModel.saveProgram()}"
+                app:layout_constraintTop_toTopOf="@id/icon_open"
+                app:layout_constraintEnd_toStartOf="@id/icon_open"
+                android:layout_marginEnd="@dimen/dimen_8dp"
+                app:chippedBoxConfig="@{buttonBackground}"/>
+
+        <ImageView
+                android:id="@+id/icon_code"
+                android:layout_width="@dimen/coding_icon_width"
+                android:layout_height="@dimen/coding_icon_height"
+                android:scaleType="centerInside"
+                android:padding="@dimen/dimen_8dp"
+                android:src="@drawable/ic_code"
+                app:layout_constraintTop_toTopOf="@id/icon_open"
+                app:layout_constraintEnd_toStartOf="@id/icon_save"
+                android:layout_marginEnd="@dimen/dimen_8dp"
+                app:chippedBoxConfig="@{buttonBackground}"/>
+
+        <TextView
+                android:id="@+id/program_title"
+                android:layout_width="@dimen/coding_program_title_width"
+                android:layout_height="@dimen/coding_program_title_height"
+                android:layout_marginEnd="@dimen/dimen_8dp"
+                android:fontFamily="@font/jura_bold"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:paddingStart="@dimen/dimen_12dp"
+                android:paddingEnd="@dimen/dimen_12dp"
+                android:text="@{viewModel.programName}"
+                android:maxLines="1"
+                app:autoSizeTextType="uniform"
+                app:autoSizeMinTextSize="10sp"
+                app:autoSizeMaxTextSize="16sp"
+                app:layout_constraintTop_toTopOf="@id/icon_open"
+                app:layout_constraintEnd_toStartOf="@id/icon_code"
+                app:chippedBoxConfig="@{buttonBackground}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
