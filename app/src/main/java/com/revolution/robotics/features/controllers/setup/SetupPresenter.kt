@@ -30,14 +30,10 @@ class SetupPresenter(
     }
 
     private fun loadPrograms() {
-        getProgramsInteractor.execute(
-            onResponse = { result ->
-                programs.clear()
-                programs.addAll(compatibleProgramFilterer.getCompatibleProgramsOnly(result))
-            },
-            onError = {
-                // TODO error handling
-            })
+        getProgramsInteractor.execute { result ->
+            programs.clear()
+            programs.addAll(compatibleProgramFilterer.getCompatibleProgramsOnly(result))
+        }
     }
 
     override fun onProgramSlotSelected(index: Int) {

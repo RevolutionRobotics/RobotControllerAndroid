@@ -108,13 +108,8 @@ class WhoToBuildPresenter(
         saveNewUserRobotInteractor.configuration = Configuration(mapping = PortMapping())
         saveNewUserRobotInteractor.controller = null
         saveNewUserRobotInteractor.programs = emptyList()
-        saveNewUserRobotInteractor.execute(
-            onResponse = {
-                navigator.navigate(WhoToBuildFragmentDirections.toConfigure(userRobot))
-            },
-            onError = {
-                // TODO error handling
-            }
-        )
+        saveNewUserRobotInteractor.execute {
+            navigator.navigate(WhoToBuildFragmentDirections.toConfigure(userRobot))
+        }
     }
 }

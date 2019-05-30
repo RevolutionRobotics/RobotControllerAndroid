@@ -37,32 +37,27 @@ class ButtonlessProgramSelectorPresenter(
     }
 
     private fun loadPrograms() {
-        getUserProgramsInteractor.execute(
-            onResponse = { result ->
-                val boundPrograms = userConfigurationStorage.getBoundButtonPrograms()
-                allPrograms = result.filter { program ->
-                    boundPrograms.find { it.programId == program.id } == null
-                }.map { userProgram ->
-                    ButtonlessProgramViewModel(userProgram, this).apply {
-                        selected.set(userConfigurationStorage.controllerHolder?.backgroundBindings?.find
-                        { it.programId == userProgram.id } != null && compatibleProgramFilterer.isProgramCompatible(
-                            userProgram
-                        ))
-                        enabled.set(compatibleProgramFilterer.isProgramCompatible(userProgram))
-                    }
-                }.apply {
-                    programs.clear()
-                    programs.addAll(this)
+        getUserProgramsInteractor.execute { result ->
+            val boundPrograms = userConfigurationStorage.getBoundButtonPrograms()
+            allPrograms = result.filter { program ->
+                boundPrograms.find { it.programId == program.id } == null
+            }.map { userProgram ->
+                ButtonlessProgramViewModel(userProgram, this).apply {
+                    selected.set(userConfigurationStorage.controllerHolder?.backgroundBindings?.find
+                    { it.programId == userProgram.id } != null && compatibleProgramFilterer.isProgramCompatible(
+                        userProgram
+                    ))
+                    enabled.set(compatibleProgramFilterer.isProgramCompatible(userProgram))
                 }
-                model?.programOrderingHandler?.currentOrder =
-                    ProgramOrderingHandler.OrderBy.DATE to ProgramOrderingHandler.Order.ASCENDING
-                orderAndFilterPrograms()
-                setOrderingIcons()
-            },
-            onError = {
-                // TODO add error handling
+            }.apply {
+                programs.clear()
+                programs.addAll(this)
             }
-        )
+            model?.programOrderingHandler?.currentOrder =
+                ProgramOrderingHandler.OrderBy.DATE to ProgramOrderingHandler.Order.ASCENDING
+            orderAndFilterPrograms()
+            setOrderingIcons()
+        }
     }
 
     private fun setShowOnlyCompatiblePrograms(onlyCompatible: Boolean) {
@@ -121,11 +116,13 @@ class ButtonlessProgramSelectorPresenter(
             }).toMutableList()
             model.items.value = programs
             model.isEmpty.set(programs.isEmpty())
-            model.emptyText.set(if (onlyShowCompatiblePrograms) {
-                R.string.buttonless_program_selector_compatible_empty
-            } else {
-                R.string.buttonless_program_selector_empty
-            })
+            model.emptyText.set(
+                if (onlyShowCompatiblePrograms) {
+                    R.string.buttonless_program_selector_compatible_empty
+                } else {
+                    R.string.buttonless_program_selector_empty
+                }
+            )
         }
     }
 

@@ -58,13 +58,9 @@ class ConfigurePresenter(
             userConfigurationStorage.userConfiguration?.id != userRobot.configurationId
         ) {
             getUserConfigurationInteractor.userConfigId = userRobot.configurationId
-            getUserConfigurationInteractor.execute(
-                onResponse = { config ->
-                    onConfigurationLoaded(config)
-                },
-                onError = {
-                    // TODO Error handling
-                })
+            getUserConfigurationInteractor.execute { config ->
+                onConfigurationLoaded(config)
+            }
         } else {
             onConfigurationLoaded(userConfigurationStorage.userConfiguration)
         }
@@ -102,18 +98,14 @@ class ConfigurePresenter(
                     updateUserRobotInteractor.userConfiguration = config
                     updateUserRobotInteractor.userRobot = robot
                     toolbarViewModel?.title?.set(robot.name)
-                    updateUserRobotInteractor.execute(
-                        onResponse = { savedRobot ->
-                            selectedTab = ConfigurationTabs.CONNECTIONS
-                            selectedConfigId = -1
-                            userConfigurationStorage.userConfiguration = null
-                            userConfigurationStorage.controllerHolder = null
-                            updateRobotImage(robot.instanceId, savedRobot.instanceId)
-                            navigator.popUntil(R.id.myRobotsFragment)
-                        },
-                        onError = {
-                            // TODO error handling
-                        })
+                    updateUserRobotInteractor.execute { savedRobot ->
+                        selectedTab = ConfigurationTabs.CONNECTIONS
+                        selectedConfigId = -1
+                        userConfigurationStorage.userConfiguration = null
+                        userConfigurationStorage.controllerHolder = null
+                        updateRobotImage(robot.instanceId, savedRobot.instanceId)
+                        navigator.popUntil(R.id.myRobotsFragment)
+                    }
                 }
             }
         }
