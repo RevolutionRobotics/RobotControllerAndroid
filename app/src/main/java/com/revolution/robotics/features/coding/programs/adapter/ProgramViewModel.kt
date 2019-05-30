@@ -7,7 +7,6 @@ import com.revolution.robotics.features.coding.programs.ProgramsMvp
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 import java.util.Date
 
-@Suppress("UseDataClass")
 class ProgramViewModel(private val program: UserProgram, private val presenter: ProgramsMvp.Presenter) {
 
     companion object {
