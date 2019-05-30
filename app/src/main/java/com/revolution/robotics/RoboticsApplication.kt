@@ -21,6 +21,33 @@ class RoboticsApplication : Application(), KodeinAware {
     companion object {
         lateinit var kodein: Kodein
     }
+    // Home options
+    // ChippedBox elements
+    // WhoToBuild items
+    // Toolbar back button & icons
+    // Bluetooth status button
+    // Build robot - Seekbar arrows & checkmark
+    // MyRobots items
+    // Configure tabs & buttons
+    // Configure motor & sensor panel items
+    // ControllerTypeSelector items
+    // Setup buttons
+    // Most recent buttons
+    // Program selector filter & ordering
+    // Program selector items
+    // Background program filter & ordering
+    // Background program items
+    // Challenge group items
+    // Challenge list items
+    // Challenge details seekbar arrows & checkmark
+    // Settings About buttons & social icons
+    // Firmware update - brain item
+    // Blockly direction selector items
+    // Blockly dialpad numbers & backspace arrow
+    // Blockly option selector items
+    // Blockly sound picker items
+    // Blockly color picker items
+    // Blockly donut selector items
 
     override var kodein = Kodein {
         import(createMainModule())
