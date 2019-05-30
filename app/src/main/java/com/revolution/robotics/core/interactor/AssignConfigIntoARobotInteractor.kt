@@ -18,7 +18,7 @@ import com.revolution.robotics.core.domain.remote.Controller
 import com.revolution.robotics.core.domain.remote.Program
 import com.revolution.robotics.core.domain.remote.ProgramBinding
 
-class AssignDefaultConfigIntoTheRobotInteractor(
+class AssignConfigIntoARobotInteractor(
     private val userRobotDao: UserRobotDao,
     private val userConfigurationDao: UserConfigurationDao,
     private val controllerDao: UserControllerDao,

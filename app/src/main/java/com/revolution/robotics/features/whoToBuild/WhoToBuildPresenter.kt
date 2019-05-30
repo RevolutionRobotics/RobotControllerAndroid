@@ -7,7 +7,7 @@ import com.revolution.robotics.core.domain.local.UserRobot
 import com.revolution.robotics.core.domain.remote.Configuration
 import com.revolution.robotics.core.domain.remote.Robot
 import com.revolution.robotics.core.extensions.isEmptyOrNull
-import com.revolution.robotics.core.interactor.AssignDefaultConfigIntoTheRobotInteractor
+import com.revolution.robotics.core.interactor.AssignConfigIntoARobotInteractor
 import com.revolution.robotics.core.interactor.SaveUserRobotInteractor
 import com.revolution.robotics.core.interactor.firebase.RobotInteractor
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
@@ -19,7 +19,7 @@ import kotlin.math.max
 
 class WhoToBuildPresenter(
     private val robotsInteractor: RobotInteractor,
-    private val assignDefaultConfigIntoTheRobotInteractor: AssignDefaultConfigIntoTheRobotInteractor,
+    private val assignConfigIntoARobotInteractor: AssignConfigIntoARobotInteractor,
     private val saveUserRobotInteractor: SaveUserRobotInteractor,
     private val navigator: Navigator,
     private val resourceResolver: ResourceResolver
@@ -113,11 +113,11 @@ class WhoToBuildPresenter(
     }
 
     private fun assignEmptyConfig(userRobot: UserRobot) {
-        assignDefaultConfigIntoTheRobotInteractor.userRobot = userRobot
-        assignDefaultConfigIntoTheRobotInteractor.configuration = Configuration(mapping = PortMapping())
-        assignDefaultConfigIntoTheRobotInteractor.controller = null
-        assignDefaultConfigIntoTheRobotInteractor.programs = emptyList()
-        assignDefaultConfigIntoTheRobotInteractor.execute {
+        assignConfigIntoARobotInteractor.userRobot = userRobot
+        assignConfigIntoARobotInteractor.configuration = Configuration(mapping = PortMapping())
+        assignConfigIntoARobotInteractor.controller = null
+        assignConfigIntoARobotInteractor.programs = emptyList()
+        assignConfigIntoARobotInteractor.execute {
             navigator.navigate(WhoToBuildFragmentDirections.toConfigure(userRobot))
         }
     }

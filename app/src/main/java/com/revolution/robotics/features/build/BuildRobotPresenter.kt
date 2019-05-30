@@ -4,7 +4,7 @@ import com.revolution.robotics.core.domain.local.UserRobot
 import com.revolution.robotics.core.domain.remote.Configuration
 import com.revolution.robotics.core.domain.remote.Controller
 import com.revolution.robotics.core.domain.remote.Program
-import com.revolution.robotics.core.interactor.AssignDefaultConfigIntoTheRobotInteractor
+import com.revolution.robotics.core.interactor.AssignConfigIntoARobotInteractor
 import com.revolution.robotics.core.interactor.SaveUserRobotInteractor
 import com.revolution.robotics.core.interactor.firebase.BuildStepInteractor
 import com.revolution.robotics.core.interactor.firebase.ConfigurationInteractor
@@ -15,7 +15,7 @@ import com.revolution.robotics.features.controllers.ControllerType
 
 class BuildRobotPresenter(
     private val buildStepInteractor: BuildStepInteractor,
-    private val assignDefaultConfigIntoTheRobotInteractor: AssignDefaultConfigIntoTheRobotInteractor,
+    private val assignConfigIntoARobotInteractor: AssignConfigIntoARobotInteractor,
     private val saveUserRobotInteractor: SaveUserRobotInteractor,
     private val configurationInteractor: ConfigurationInteractor,
     private val controllerInteractor: ControllerInteractor,
@@ -103,12 +103,12 @@ class BuildRobotPresenter(
     }
 
     private fun assignConfig(configuration: Configuration?, controller: Controller?, programs: List<Program>) {
-        assignDefaultConfigIntoTheRobotInteractor.controller = controller
-        assignDefaultConfigIntoTheRobotInteractor.configuration = configuration
-        assignDefaultConfigIntoTheRobotInteractor.programs = programs
+        assignConfigIntoARobotInteractor.controller = controller
+        assignConfigIntoARobotInteractor.configuration = configuration
+        assignConfigIntoARobotInteractor.programs = programs
         userRobot?.let { userRobot ->
-            assignDefaultConfigIntoTheRobotInteractor.userRobot = userRobot
-            assignDefaultConfigIntoTheRobotInteractor.execute({}, {
+            assignConfigIntoARobotInteractor.userRobot = userRobot
+            assignConfigIntoARobotInteractor.execute({}, {
                 // TODO Error handling
             })
         }

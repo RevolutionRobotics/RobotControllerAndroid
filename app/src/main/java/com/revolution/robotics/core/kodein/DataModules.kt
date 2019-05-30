@@ -19,7 +19,7 @@ import com.revolution.robotics.core.domain.local.UserConfigurationDao
 import com.revolution.robotics.core.domain.local.UserControllerDao
 import com.revolution.robotics.core.domain.local.UserProgramDao
 import com.revolution.robotics.core.domain.local.UserRobotDao
-import com.revolution.robotics.core.interactor.AssignDefaultConfigIntoTheRobotInteractor
+import com.revolution.robotics.core.interactor.AssignConfigIntoARobotInteractor
 import com.revolution.robotics.core.interactor.DeleteRobotInteractor
 import com.revolution.robotics.core.interactor.FirebaseInitInteractor
 import com.revolution.robotics.core.interactor.GetAllUserRobotsInteractor
@@ -118,15 +118,7 @@ fun createInteractorModule() =
         bind<ConfigurationInteractor>() with p { ConfigurationInteractor() }
         bind<TestCodeInteractor>() with p { TestCodeInteractor() }
         bind<GetUserRobotInteractor>() with p { GetUserRobotInteractor(i()) }
-        bind<AssignDefaultConfigIntoTheRobotInteractor>() with p {
-            AssignDefaultConfigIntoTheRobotInteractor(
-                i(),
-                i(),
-                i(),
-                i(),
-                i()
-            )
-        }
+        bind<AssignConfigIntoARobotInteractor>() with p { AssignConfigIntoARobotInteractor(i(), i(), i(), i(), i()) }
         bind<UpdateUserRobotInteractor>() with p { UpdateUserRobotInteractor(i(), i()) }
         bind<GetAllUserRobotsInteractor>() with p { GetAllUserRobotsInteractor(i()) }
         bind<DeleteRobotInteractor>() with p { DeleteRobotInteractor(i(), i()) }
