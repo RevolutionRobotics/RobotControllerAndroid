@@ -18,7 +18,7 @@ abstract class RoboticsDialog : BaseDialog() {
     abstract val dialogFaces: List<DialogFace<*>>
     abstract val dialogButtons: List<DialogButton>
 
-    protected var kodein = LateInitKodein()
+    var kodein = LateInitKodein()
     val dialogEventBus: DialogEventBus by kodein.instance()
 
     protected lateinit var binding: DialogRoboticsCoreBinding

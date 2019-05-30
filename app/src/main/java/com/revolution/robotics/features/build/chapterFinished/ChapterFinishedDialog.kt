@@ -3,22 +3,22 @@ package com.revolution.robotics.features.build.chapterFinished
 import android.os.Bundle
 import android.view.View
 import com.revolution.robotics.R
-import com.revolution.robotics.views.dialogs.DialogButton
-import com.revolution.robotics.views.dialogs.RoboticsDialog
 import com.revolution.robotics.core.domain.remote.Milestone
 import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.core.extensions.withArguments
 import com.revolution.robotics.core.utils.BundleArgumentDelegate
 import com.revolution.robotics.databinding.DialogChapterFinishedBinding
+import com.revolution.robotics.views.dialogs.DialogButton
 import com.revolution.robotics.views.dialogs.DialogFace
+import com.revolution.robotics.views.dialogs.RoboticsDialog
 import org.kodein.di.erased.instance
 
 class ChapterFinishedDialog : RoboticsDialog(), ChapterFinishedMvp.View {
 
     companion object {
-        const val KEY_TEST_CODE_ID = "test-code-id"
+        const val KEY_MILESTONE = "milestone"
 
-        private var Bundle.milestone by BundleArgumentDelegate.Parcelable<Milestone>("milestone")
+        private var Bundle.milestone by BundleArgumentDelegate.Parcelable<Milestone>(KEY_MILESTONE)
 
         fun newInstance(milestone: Milestone): ChapterFinishedDialog = ChapterFinishedDialog().withArguments {
             it.milestone = milestone
@@ -69,7 +69,7 @@ class ChapterFinishedDialog : RoboticsDialog(), ChapterFinishedMvp.View {
     override fun onTestUploaded() {
         dismissAllowingStateLoss()
         dialogEventBus.publish(DialogEvent.CHAPTER_FINISHED.apply {
-            arguments?.milestone?.let { extras.putInt(KEY_TEST_CODE_ID, it.testCodeId) }
+            arguments?.milestone?.let { extras.putParcelable(KEY_MILESTONE, it) }
         })
     }
 
