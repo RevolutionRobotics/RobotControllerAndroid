@@ -27,7 +27,7 @@ class ConfigureControllersPresenter(
 
     override fun loadControllers(robotId: Int) {
         controllersInteractor.robotId = robotId
-        controllersInteractor.execute({ controllers ->
+        controllersInteractor.execute { controllers ->
             model?.controllersList?.set(
                 controllers.map { controller ->
                     ControllersItem(
@@ -41,9 +41,7 @@ class ConfigureControllersPresenter(
                 }
             )
             view?.onControllersChanged()
-        }, {
-            // TODO Error handling
-        })
+        }
     }
 
     override fun onPageSelected(position: Int) {
@@ -86,9 +84,7 @@ class ConfigureControllersPresenter(
 
     override fun deleteController(controllerId: Int, selectedPosition: Int) {
         deleteControllerInteractor.controllerId = controllerId
-        deleteControllerInteractor.execute({}, {
-            // TODO Error handling
-        })
+        deleteControllerInteractor.execute()
 
         model?.controllersList?.apply {
             get()?.toMutableList()?.apply {
@@ -106,7 +102,7 @@ class ConfigureControllersPresenter(
 
     override fun onEditSelected(item: ControllersItem) {
         userControllerInteractor.id = item.userController.id
-        userControllerInteractor.execute(onResponse = { controllerWithPrograms ->
+        userControllerInteractor.execute { controllerWithPrograms ->
             userConfigurationStorage.controllerHolder = controllerWithPrograms
             ControllerType.fromId(item.userController.type)?.apply {
                 when (this) {
@@ -118,10 +114,7 @@ class ConfigureControllersPresenter(
                         navigator.navigate(ConfigureFragmentDirections.toSetupDriver())
                 }
             }
-        },
-            onError = {
-                // TODO Error handling
-            })
+        }
     }
 
     override fun onInfoSelected(item: ControllersItem) {

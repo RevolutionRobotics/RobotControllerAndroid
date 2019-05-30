@@ -20,7 +20,7 @@ class ChallengeListPresenter(
 
     override fun setChallengeCategory(challengeCategory: ChallengeCategory) {
         categoryId = challengeCategory.id
-        getUserChallengeCategoriesInteractor.execute({ userCategories ->
+        getUserChallengeCategoriesInteractor.execute { userCategories ->
             model?.description?.value = challengeCategory.description
             val progress = userCategories.find { it.challengeCategoryId == challengeCategory.id }?.progress ?: 0
             model?.items?.value = challengeCategory.challenges.mapIndexed { index, challenge ->
@@ -38,9 +38,7 @@ class ChallengeListPresenter(
                     presenter = this
                 )
             }
-        }, {
-            // TODO Error handling
-        })
+        }
     }
 
     private fun getLineBackground(index: Int, progress: Int): Int =

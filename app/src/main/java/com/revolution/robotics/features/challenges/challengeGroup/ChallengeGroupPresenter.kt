@@ -26,7 +26,7 @@ class ChallengeGroupPresenter(
     }
 
     private fun populateChallengeGroups(groups: List<ChallengeCategory>) {
-        userChallengeInteractor.execute({ userCategories ->
+        userChallengeInteractor.execute { userCategories ->
             model?.items?.value = groups.map { remoteCategory ->
                 ChallengeGroupItem(
                     iconUrl = remoteCategory.image ?: "",
@@ -38,9 +38,7 @@ class ChallengeGroupPresenter(
                     presenter = this
                 )
             }
-        }, {
-            // TODO Error handling
-        })
+        }
     }
 
     override fun onItemClicked(challenge: ChallengeCategory) {

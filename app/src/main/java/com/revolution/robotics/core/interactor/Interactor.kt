@@ -3,26 +3,28 @@ package com.revolution.robotics.core.interactor
 import com.crashlytics.android.Crashlytics
 import com.revolution.bluetooth.threading.moveToUIThread
 import com.revolution.robotics.BuildConfig
+import com.revolution.robotics.RoboticsApplication
+import com.revolution.robotics.features.shared.ErrorHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.kodein.di.erased.instance
 
 abstract class Interactor<T> {
 
+    private val errorHandler: ErrorHandler by RoboticsApplication.kodein.instance()
     private var runningJob: Job? = null
 
-    fun execute(callback: InteractorCallback<T>? = null) {
-        if (callback == null) {
-            execute({}, { it.printStackTrace() })
-        } else {
-            execute(callback::onResponse, callback::onError)
-        }
-    }
+    fun execute() =
+        execute({}, null)
+
+    fun execute(onResponse: (result: T) -> Unit) =
+        execute(onResponse, null)
 
     @Suppress("TooGenericExceptionCaught")
-    fun execute(onResponse: (result: T) -> Unit, onError: (throwable: Throwable) -> Unit) {
+    fun execute(onResponse: (result: T) -> Unit, onError: ((throwable: Throwable) -> Unit)?) {
         runningJob?.cancel()
         runningJob = GlobalScope.launch {
             withContext(Dispatchers.Default) {
@@ -38,7 +40,11 @@ abstract class Interactor<T> {
                             Crashlytics.logException(result)
                         }
                         result.printStackTrace()
-                        onError.invoke(result)
+                        if (onError != null) {
+                            onError.invoke(result)
+                        } else {
+                            errorHandler.onError()
+                        }
                     } else {
                         onResponse.invoke(result as T)
                     }
@@ -48,9 +54,4 @@ abstract class Interactor<T> {
     }
 
     abstract fun getData(): T
-
-    interface InteractorCallback<T> {
-        fun onResponse(result: T)
-        fun onError(throwable: Throwable)
-    }
 }

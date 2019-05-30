@@ -72,19 +72,15 @@ class ChallengeDetailPresenter(
     }
 
     private fun getCurrentProgress(categoryId: String?) {
-        getUserChallengeCategoriesInteractor.execute({ categories ->
+        getUserChallengeCategoriesInteractor.execute { categories ->
             saveProgress(categories.firstOrNull { it.challengeCategoryId == categoryId }?.progress ?: 0)
-        }, {
-            // TODO Error handling
-        })
+        }
     }
 
     private fun saveProgress(categoryId: String?, progress: Int) {
         categoryId?.let {
             saveUserChallengeCategoryInteractor.userChallengeCategory = UserChallengeCategory(categoryId, progress)
-            saveUserChallengeCategoryInteractor.execute({}, {
-                // TODO Error handling
-            })
+            saveUserChallengeCategoryInteractor.execute()
         }
     }
 }

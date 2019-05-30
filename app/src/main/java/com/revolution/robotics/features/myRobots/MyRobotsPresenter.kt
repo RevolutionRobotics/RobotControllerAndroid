@@ -28,24 +28,18 @@ class MyRobotsPresenter(
     }
 
     private fun loadRobots() {
-        getAllUserRobotsInteractor.execute(
-            onResponse = { robots ->
-                model?.robotsList?.set(robots.map { robot ->
-                    MyRobotsItem(
-                        robot.instanceId,
-                        robot,
-                        robot.lastModified?.formatYearMonthDaySlashed() ?: "",
-                        robot.buildStatus != BuildStatus.COMPLETED,
-                        this
-                    )
-                }.toMutableList())
-                view?.onRobotsChanged()
-            },
-            onError = { error ->
-                // TODO add error handling
-                error.printStackTrace()
-            }
-        )
+        getAllUserRobotsInteractor.execute { robots ->
+            model?.robotsList?.set(robots.map { robot ->
+                MyRobotsItem(
+                    robot.instanceId,
+                    robot,
+                    robot.lastModified?.formatYearMonthDaySlashed() ?: "",
+                    robot.buildStatus != BuildStatus.COMPLETED,
+                    this
+                )
+            }.toMutableList())
+            view?.onRobotsChanged()
+        }
     }
 
     override fun onPageSelected(position: Int) {
@@ -88,15 +82,13 @@ class MyRobotsPresenter(
 
     override fun onPlaySelected(configId: Int) {
         getControllerTypeInteractor.configurationId = configId
-        getControllerTypeInteractor.execute({ type ->
+        getControllerTypeInteractor.execute { type ->
             when (type) {
                 ControllerType.GAMER -> navigator.navigate(MyRobotsFragmentDirections.toPlayGamer())
                 ControllerType.MULTITASKER -> navigator.navigate(MyRobotsFragmentDirections.toPlayMultitasker())
                 ControllerType.DRIVER -> navigator.navigate(MyRobotsFragmentDirections.toPlayDriver())
             }
-        }, {
-            // TODO Error handling
-        })
+        }
     }
 
     override fun onContinueBuildingSelected(robot: UserRobot) {

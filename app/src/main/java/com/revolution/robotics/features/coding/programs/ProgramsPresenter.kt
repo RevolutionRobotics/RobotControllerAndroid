@@ -10,14 +10,9 @@ class ProgramsPresenter(private val getUserProgramsInteractor: GetUserProgramsIn
     override var model: ProgramsViewModel? = null
 
     override fun loadPrograms() {
-        getUserProgramsInteractor.execute(
-            onResponse = { programs ->
-                view?.onProgramsLoaded(programs.map { ProgramViewModel(it, this) })
-            },
-            onError = {
-                // TODO add error handling
-            }
-        )
+        getUserProgramsInteractor.execute { programs ->
+            view?.onProgramsLoaded(programs.map { ProgramViewModel(it, this) })
+        }
     }
 
     override fun onProgramSelected(program: UserProgram) {

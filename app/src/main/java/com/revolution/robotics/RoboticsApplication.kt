@@ -16,6 +16,10 @@ import org.kodein.di.KodeinAware
 
 class RoboticsApplication : Application(), KodeinAware {
 
+    companion object {
+        lateinit var kodein: Kodein
+    }
+
     override var kodein = Kodein {
         import(createMainModule())
         import(createAppModule(this@RoboticsApplication))
@@ -32,5 +36,6 @@ class RoboticsApplication : Application(), KodeinAware {
         }
         FirebaseApp.initializeApp(this)
         FirebaseDatabase.getInstance().setPersistenceEnabled(true)
+        RoboticsApplication.kodein = kodein
     }
 }

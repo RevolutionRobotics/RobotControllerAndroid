@@ -67,12 +67,10 @@ class ProgramPriorityPresenter(
                 userController.robotId = userConfigurationStorage.robot?.instanceId ?: 0
                 saveUserControllerInteractor.userController = userController
             }
-            saveUserControllerInteractor.execute({
+            saveUserControllerInteractor.execute {
                 userConfigurationStorage.controllerHolder = null
                 navigator.popUntil(R.id.configureFragment)
-            }, {
-                // TODO Error handling
-            })
+            }
         }
     }
 

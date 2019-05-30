@@ -35,26 +35,21 @@ class ProgramSelectorPresenter(
     }
 
     private fun loadPrograms() {
-        getUserProgramsInteractor.execute(
-            onResponse = { result ->
-                allPrograms = result.toMutableList().apply {
-                    storage.getBoundButtonPrograms().forEach { boundProgram ->
-                        removeAll { it.id == boundProgram.programId }
-                    }
-                    storage.controllerHolder?.backgroundBindings?.forEach { backgroundBinding ->
-                        removeAll { it.id == backgroundBinding.programId }
-                    }
+        getUserProgramsInteractor.execute { result ->
+            allPrograms = result.toMutableList().apply {
+                storage.getBoundButtonPrograms().forEach { boundProgram ->
+                    removeAll { it.id == boundProgram.programId }
                 }
-                programs = ArrayList<UserProgram>().apply { allPrograms?.let { addAll(it) } }
-                model?.programOrderingHandler?.currentOrder =
-                    ProgramOrderingHandler.OrderBy.NAME to ProgramOrderingHandler.Order.ASCENDING
-                orderAndFilterPrograms()
-                onProgramsChanged()
-            },
-            onError = {
-                // TODO add error handling
+                storage.controllerHolder?.backgroundBindings?.forEach { backgroundBinding ->
+                    removeAll { it.id == backgroundBinding.programId }
+                }
             }
-        )
+            programs = ArrayList<UserProgram>().apply { allPrograms?.let { addAll(it) } }
+            model?.programOrderingHandler?.currentOrder =
+                ProgramOrderingHandler.OrderBy.NAME to ProgramOrderingHandler.Order.ASCENDING
+            orderAndFilterPrograms()
+            onProgramsChanged()
+        }
     }
 
     private fun setShowOnlyCompatiblePrograms(onlyCompatible: Boolean) {

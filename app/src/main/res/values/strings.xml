@@ -324,5 +324,6 @@
 
     <!-- Errors -->
     <string name="error_variable_already_in_use">Variable name is already in use</string>
+    <string name="error_general">Something went wrong, please try again</string>
 
 </resources>

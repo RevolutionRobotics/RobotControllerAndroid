@@ -10,10 +10,8 @@ class SplashPresenter(private val firebaseInitInteractor: FirebaseInitInteractor
 
     override fun register(view: SplashMvp.View, model: ViewModel?) {
         super.register(view, model)
-        firebaseInitInteractor.execute({
+        firebaseInitInteractor.execute {
             this.view?.startApp()
-        }, {
-            // TODO Error handling
-        })
+        }
     }
 }
