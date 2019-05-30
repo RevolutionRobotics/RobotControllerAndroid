@@ -28,11 +28,11 @@ class MainActivity : AppCompatActivity(), KodeinAware, Navigator.NavigationEvent
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         navigator.registerListener(this)
-        errorHandler.registerContext(this)
     }
 
     override fun onStart() {
         super.onStart()
+        errorHandler.registerContext(this)
         bluetoothManager.init(this)
     }
 
@@ -43,12 +43,12 @@ class MainActivity : AppCompatActivity(), KodeinAware, Navigator.NavigationEvent
 
     override fun onStop() {
         bluetoothManager.shutDown()
+        errorHandler.releaseContext(this)
         super.onStop()
     }
 
     override fun onDestroy() {
         navigator.unregisterListener(this)
-        errorHandler.releaseContext(this)
         super.onDestroy()
     }
 
