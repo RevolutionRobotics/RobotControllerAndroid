@@ -19,6 +19,7 @@ import com.revolution.robotics.core.domain.local.UserConfigurationDao
 import com.revolution.robotics.core.domain.local.UserControllerDao
 import com.revolution.robotics.core.domain.local.UserProgramDao
 import com.revolution.robotics.core.domain.local.UserRobotDao
+import com.revolution.robotics.core.interactor.AssignDefaultConfigIntoTheRobotInteractor
 import com.revolution.robotics.core.interactor.DeleteRobotInteractor
 import com.revolution.robotics.core.interactor.FirebaseInitInteractor
 import com.revolution.robotics.core.interactor.GetAllUserRobotsInteractor
@@ -31,10 +32,10 @@ import com.revolution.robotics.core.interactor.GetUserProgramsInteractor
 import com.revolution.robotics.core.interactor.GetUserRobotInteractor
 import com.revolution.robotics.core.interactor.RemoveUserControllerInteractor
 import com.revolution.robotics.core.interactor.RemoveUserProgramInteractor
-import com.revolution.robotics.core.interactor.SaveNewUserRobotInteractor
 import com.revolution.robotics.core.interactor.SaveUserChallengeCategoryInteractor
 import com.revolution.robotics.core.interactor.SaveUserControllerInteractor
 import com.revolution.robotics.core.interactor.SaveUserProgramInteractor
+import com.revolution.robotics.core.interactor.SaveUserRobotInteractor
 import com.revolution.robotics.core.interactor.UpdateUserRobotInteractor
 import com.revolution.robotics.core.interactor.firebase.BuildStepInteractor
 import com.revolution.robotics.core.interactor.firebase.ChallengeCategoriesInteractor
@@ -117,7 +118,7 @@ fun createInteractorModule() =
         bind<ConfigurationInteractor>() with p { ConfigurationInteractor() }
         bind<TestCodeInteractor>() with p { TestCodeInteractor() }
         bind<GetUserRobotInteractor>() with p { GetUserRobotInteractor(i()) }
-        bind<SaveNewUserRobotInteractor>() with p { SaveNewUserRobotInteractor(i(), i(), i(), i(), i()) }
+        bind<AssignDefaultConfigIntoTheRobotInteractor>() with p { AssignDefaultConfigIntoTheRobotInteractor(i(), i(), i(), i(), i()) }
         bind<UpdateUserRobotInteractor>() with p { UpdateUserRobotInteractor(i(), i()) }
         bind<GetAllUserRobotsInteractor>() with p { GetAllUserRobotsInteractor(i()) }
         bind<DeleteRobotInteractor>() with p { DeleteRobotInteractor(i(), i()) }
@@ -137,16 +138,17 @@ fun createInteractorModule() =
         bind<GetUserProgramsInteractor>() with p { GetUserProgramsInteractor(i()) }
         bind<GetControllerTypeInteractor>() with p { GetControllerTypeInteractor(i(), i()) }
         bind<FirebaseInitInteractor>() with p { FirebaseInitInteractor() }
+        bind<SaveUserRobotInteractor>() with p {SaveUserRobotInteractor(i())}
     }
 
 @Suppress("LongMethod")
 fun createPresenterModule() =
     Kodein.Module("PresenterModule") {
         bind<MainMenuMvp.Presenter>() with s { MainMenuPresenter(i(), i(), i()) }
-        bind<WhoToBuildMvp.Presenter>() with s { WhoToBuildPresenter(i(), i(), i(), i()) }
+        bind<WhoToBuildMvp.Presenter>() with s { WhoToBuildPresenter(i(), i(), i(), i(), i()) }
         bind<MyRobotsMvp.Presenter>() with s { MyRobotsPresenter(i(), i(), i(), i()) }
         bind<ChapterFinishedMvp.Presenter>() with s { ChapterFinishedPresenter(i()) }
-        bind<BuildRobotMvp.Presenter>() with s { BuildRobotPresenter(i(), i(), i(), i(), i(), i()) }
+        bind<BuildRobotMvp.Presenter>() with s { BuildRobotPresenter(i(), i(), i(), i(), i(), i(), i()) }
         bind<ConnectMvp.Presenter>() with s { ConnectPresenter(i(), i()) }
         bind<ConfigureMvp.Presenter>() with s { ConfigurePresenter(i(), i(), i(), i(), i(), i(), i(), i()) }
         bind<ConfigureConnectionsMvp.Presenter>() with s { ConfigureConnectionsPresenter(i(), i(), i()) }

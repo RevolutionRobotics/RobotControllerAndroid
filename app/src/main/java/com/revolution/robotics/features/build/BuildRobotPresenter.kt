@@ -4,7 +4,8 @@ import com.revolution.robotics.core.domain.local.UserRobot
 import com.revolution.robotics.core.domain.remote.Configuration
 import com.revolution.robotics.core.domain.remote.Controller
 import com.revolution.robotics.core.domain.remote.Program
-import com.revolution.robotics.core.interactor.SaveNewUserRobotInteractor
+import com.revolution.robotics.core.interactor.AssignDefaultConfigIntoTheRobotInteractor
+import com.revolution.robotics.core.interactor.SaveUserRobotInteractor
 import com.revolution.robotics.core.interactor.firebase.BuildStepInteractor
 import com.revolution.robotics.core.interactor.firebase.ConfigurationInteractor
 import com.revolution.robotics.core.interactor.firebase.ControllerInteractor
@@ -14,7 +15,8 @@ import com.revolution.robotics.features.controllers.ControllerType
 
 class BuildRobotPresenter(
     private val buildStepInteractor: BuildStepInteractor,
-    private val saveNewUserRobotInteractor: SaveNewUserRobotInteractor,
+    private val assignDefaultConfigIntoTheRobotInteractor: AssignDefaultConfigIntoTheRobotInteractor,
+    private val saveUserRobotInteractor: SaveUserRobotInteractor,
     private val configurationInteractor: ConfigurationInteractor,
     private val controllerInteractor: ControllerInteractor,
     private val programsInteractor: ProgramsInteractor,
@@ -64,8 +66,8 @@ class BuildRobotPresenter(
                     // TODO Error handling
                 })
         } else {
-            saveNewUserRobotInteractor.userRobot = userRobot
-            saveNewUserRobotInteractor.execute()
+            saveUserRobotInteractor.userRobot = userRobot
+            saveUserRobotInteractor.execute()
         }
     }
 
@@ -89,12 +91,26 @@ class BuildRobotPresenter(
     }
 
     private fun createLocalObjects(configuration: Configuration?, controller: Controller?, programs: List<Program>) {
-        saveNewUserRobotInteractor.controller = controller
-        saveNewUserRobotInteractor.configuration = configuration
-        saveNewUserRobotInteractor.programs = programs
         userRobot?.let { userRobot ->
-            saveNewUserRobotInteractor.userRobot = userRobot
-            saveNewUserRobotInteractor.execute()
+            saveUserRobotInteractor.userRobot = userRobot
+            saveUserRobotInteractor.execute({ savedRobot ->
+                this.userRobot = savedRobot
+                assignConfig(configuration, controller, programs)
+            }, {
+                // TODO Error handling
+            })
+        }
+    }
+
+    private fun assignConfig(configuration: Configuration?, controller: Controller?, programs: List<Program>) {
+        assignDefaultConfigIntoTheRobotInteractor.controller = controller
+        assignDefaultConfigIntoTheRobotInteractor.configuration = configuration
+        assignDefaultConfigIntoTheRobotInteractor.programs = programs
+        userRobot?.let { userRobot ->
+            assignDefaultConfigIntoTheRobotInteractor.userRobot = userRobot
+            assignDefaultConfigIntoTheRobotInteractor.execute({}, {
+                // TODO Error handling
+            })
         }
     }
 }

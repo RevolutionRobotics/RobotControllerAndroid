@@ -18,7 +18,7 @@ import com.revolution.robotics.core.domain.remote.Controller
 import com.revolution.robotics.core.domain.remote.Program
 import com.revolution.robotics.core.domain.remote.ProgramBinding
 
-class SaveNewUserRobotInteractor(
+class AssignDefaultConfigIntoTheRobotInteractor(
     private val userRobotDao: UserRobotDao,
     private val userConfigurationDao: UserConfigurationDao,
     private val controllerDao: UserControllerDao,
@@ -37,7 +37,7 @@ class SaveNewUserRobotInteractor(
             val configurationId = userConfigurationDao.saveUserConfiguration(userConfiguration)
             userConfiguration.id = configurationId.toInt()
             userRobot.configurationId = configurationId.toInt()
-            userRobot.instanceId = userRobotDao.saveUserRobot(userRobot).toInt()
+            userRobotDao.updateUserRobot(userRobot)
 
             controller?.let {
                 saveUserController(it, userConfiguration)
