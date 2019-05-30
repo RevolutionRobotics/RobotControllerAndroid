@@ -23,14 +23,12 @@ class RoboticsApplication : Application(), KodeinAware {
     }
     // Home options
     // ChippedBox elements
-    // WhoToBuild items
     // Toolbar back button & icons
     // Bluetooth status button
     // Build robot - Seekbar arrows & checkmark
-    // MyRobots items
+    // MyRobots floating button
     // Configure tabs & buttons
     // Configure motor & sensor panel items
-    // ControllerTypeSelector items
     // Setup buttons
     // Most recent buttons
     // Program selector filter & ordering
@@ -41,13 +39,19 @@ class RoboticsApplication : Application(), KodeinAware {
     // Challenge list items
     // Challenge details seekbar arrows & checkmark
     // Settings About buttons & social icons
-    // Firmware update - brain item
     // Blockly direction selector items
     // Blockly dialpad numbers & backspace arrow
     // Blockly option selector items
     // Blockly sound picker items
     // Blockly color picker items
     // Blockly donut selector items
+    // Carousel page arrows
+
+    // ControllerTypeSelector items
+    // MyRobots robot items
+    // WhoToBuild robot items
+    // Carousel item options (edit config, delete robot, etc.)
+    // Firmware update - brain item
 
     override var kodein = Kodein {
         import(createMainModule())
