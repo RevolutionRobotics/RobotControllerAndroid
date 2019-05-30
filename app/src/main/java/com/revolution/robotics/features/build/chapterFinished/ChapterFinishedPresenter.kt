@@ -12,9 +12,8 @@ class ChapterFinishedPresenter(private val navigator: Navigator) : ChapterFinish
 
     override var milestone: Milestone? = null
 
-    override fun uploadTest() {
-        // TODO Upload & run test
-        view?.onTestUploaded()
+    override fun startTestingFlow() {
+        view?.startTestingFlow()
     }
 
     override fun navigateHome() {

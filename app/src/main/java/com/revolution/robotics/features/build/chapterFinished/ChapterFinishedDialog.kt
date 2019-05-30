@@ -51,7 +51,7 @@ class ChapterFinishedDialog : RoboticsDialog(), ChapterFinishedMvp.View {
             R.drawable.ic_test,
             true
         ) {
-            presenter.uploadTest()
+            presenter.startTestingFlow()
         }
     )
 
@@ -66,7 +66,7 @@ class ChapterFinishedDialog : RoboticsDialog(), ChapterFinishedMvp.View {
         super.onDestroyView()
     }
 
-    override fun onTestUploaded() {
+    override fun startTestingFlow() {
         dismissAllowingStateLoss()
         dialogEventBus.publish(DialogEvent.CHAPTER_FINISHED.apply {
             arguments?.milestone?.let { extras.putParcelable(KEY_MILESTONE, it) }

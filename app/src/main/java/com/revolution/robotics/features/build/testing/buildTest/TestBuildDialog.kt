@@ -1,16 +1,20 @@
-package com.revolution.robotics.features.build.testing
+package com.revolution.robotics.features.build.testing.buildTest
 
 import android.os.Bundle
+import android.view.View
 import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.core.extensions.withArguments
 import com.revolution.robotics.core.utils.BundleArgumentDelegate
+import com.revolution.robotics.features.build.testing.TestDialog
+import com.revolution.robotics.features.build.testing.TestLoadingDialogFace
 import com.revolution.robotics.features.build.tips.DialogController
 import com.revolution.robotics.features.build.tips.TipsDialogFace
 import com.revolution.robotics.views.dialogs.DialogButton
 import com.revolution.robotics.views.dialogs.DialogFace
 import com.revolution.robotics.views.dialogs.RoboticsDialog
+import org.kodein.di.erased.instance
 
-class TestBuildDialog : RoboticsDialog(), DialogController {
+class TestBuildDialog : RoboticsDialog(), DialogController, TestBuildDialogMvp.View {
 
     companion object {
         var Bundle.image: String by BundleArgumentDelegate.String("image")
@@ -30,6 +34,24 @@ class TestBuildDialog : RoboticsDialog(), DialogController {
         TestBuildDialogFace(this),
         TipsDialogFace(TestDialog.Source.BUILD, this, this)
     )
+    override val hasCloseButton = true
+    override val dialogButtons = emptyList<DialogButton>()
+
+    private val presenter: TestBuildDialogMvp.Presenter by kodein.instance()
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        presenter.register(this, null)
+    }
+
+    override fun onDestroyView() {
+        presenter.unregister(this)
+        super.onDestroyView()
+    }
+
+    override fun activateBuildFace() {
+        activateFace(dialogFaces.first { it is TestBuildDialogFace })
+    }
 
     override fun onCancelClicked() {
         dismissAllowingStateLoss()
@@ -46,7 +68,4 @@ class TestBuildDialog : RoboticsDialog(), DialogController {
     override fun showTips() {
         activateFace(dialogFaces[2])
     }
-
-    override val hasCloseButton = true
-    override val dialogButtons = emptyList<DialogButton>()
 }

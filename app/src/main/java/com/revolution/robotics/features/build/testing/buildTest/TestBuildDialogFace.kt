@@ -1,4 +1,4 @@
-package com.revolution.robotics.features.build.testing
+package com.revolution.robotics.features.build.testing.buildTest
 
 import com.revolution.robotics.R
 import com.revolution.robotics.core.bindings.loadFirebaseImage

@@ -15,7 +15,7 @@ import com.revolution.robotics.databinding.FragmentBuildRobotBinding
 import com.revolution.robotics.features.bluetooth.BluetoothManager
 import com.revolution.robotics.features.build.buildFinished.BuildFinishedDialog
 import com.revolution.robotics.features.build.chapterFinished.ChapterFinishedDialog
-import com.revolution.robotics.features.build.testing.TestBuildDialog
+import com.revolution.robotics.features.build.testing.buildTest.TestBuildDialog
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 import com.revolution.robotics.views.slider.BuildStepSliderView
 import org.kodein.di.erased.instance
@@ -77,14 +77,18 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
     override fun onDialogEvent(event: DialogEvent) {
         when (event) {
             DialogEvent.CHAPTER_FINISHED ->
-                event.extras.getParcelable<Milestone>(ChapterFinishedDialog.KEY_MILESTONE)?.let { milestone ->
-                    TestBuildDialog.newInstance(
-                        milestone.image ?: "",
-                        milestone.testDescription ?: "",
-                        milestone.testCode ?: ""
-                    ).show(
-                        fragmentManager
-                    )
+                if (bluetoothManager.isConnected) {
+                    event.extras.getParcelable<Milestone>(ChapterFinishedDialog.KEY_MILESTONE)?.let { milestone ->
+                        TestBuildDialog.newInstance(
+                            milestone.image ?: "",
+                            milestone.testDescription ?: "",
+                            milestone.testCode ?: ""
+                        ).show(
+                            fragmentManager
+                        )
+                    }
+                } else {
+                    bluetoothManager.startConnectionFlow()
                 }
             DialogEvent.SKIP_TESTING, DialogEvent.TEST_WORKS -> binding?.seekbar?.next()
             DialogEvent.LETS_DRIVE -> presenter.letsDrive()
