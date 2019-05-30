@@ -3,6 +3,7 @@ package com.revolution.bluetooth.service
 import android.bluetooth.BluetoothGatt
 import android.bluetooth.BluetoothGattCharacteristic
 import android.net.Uri
+import android.util.Base64
 import android.util.Log
 import com.revolution.bluetooth.exception.BLEConnectionException
 import com.revolution.bluetooth.exception.BLEException
@@ -53,6 +54,8 @@ class RoboticsConfigurationService : RoboticsBLEService() {
     var error: ((exception: BLEException) -> Unit)? = null
     var currentFile: Uri? = null
     var validationCounter = 0
+
+    var uploadStarted = false
 
     fun updateFirmware(file: Uri, onSuccess: () -> Unit, onError: (exception: BLEException) -> Unit) {
         initLongMessage(file, onSuccess, onError, FUNCTION_TYPE_FIRMWARE)
@@ -116,8 +119,10 @@ class RoboticsConfigurationService : RoboticsBLEService() {
     }
 
     private fun startUploading(fileMD5: ByteArray?) {
+        uploadStarted = true
         currentFile?.let { currentFile ->
             val md5 = fileMD5 ?: md5Checker.calculateMD5Hash(currentFile)
+            Log.e("TEST", "MD5: ${Base64.encodeToString(md5, Base64.DEFAULT)}")
             ByteArray(MD5_LENGTH + 1).apply {
                 set(0, MESSAGE_TYPE_INIT)
                 for (index in 0 until MD5_LENGTH) {
@@ -182,6 +187,7 @@ class RoboticsConfigurationService : RoboticsBLEService() {
         if (!validateCharacteristicEvent(characteristic, status)) {
             return
         }
+        Log.d(TAG, "Read happened: ${characteristic.value.toStringCustom()}")
         when (characteristic.value[0]) {
             STATUS_UNUSED -> {
                 Log.d(TAG, "Unused --> start uploading")
@@ -189,23 +195,10 @@ class RoboticsConfigurationService : RoboticsBLEService() {
             }
             STATUS_UPLOAD -> {
                 Log.d(TAG, "Upload --> checkMd5")
-                checkMd5(characteristic.value.copyOfRange(1, MD5_LENGTH + 1))
+                startUploading(null)
             }
-            STATUS_VALIDATION -> {
-                Log.d(TAG, "Validation attempt:$validationCounter")
-                if (validationCounter < MAX_VALIDATION_COUNT) {
-                    readStatus()
-                    validationCounter++
-                } else {
-                    error?.invoke(BLESendingTimeoutException())
-                    resetVariables()
-                }
-            }
-            STATUS_READY -> {
-                Log.d(TAG, "Ready --> send success event")
-                success?.invoke()
-                resetVariables()
-            }
+            STATUS_VALIDATION -> handleValidationStatus()
+            STATUS_READY -> handleReadyStatus(characteristic)
             STATUS_VALIDATION_ERROR -> {
                 Log.d(TAG, "Error --> send error event")
                 error?.invoke(BLELongMessageValidationException())
@@ -214,7 +207,30 @@ class RoboticsConfigurationService : RoboticsBLEService() {
         }
     }
 
+    private fun handleValidationStatus() {
+        Log.d(TAG, "Validation attempt:$validationCounter")
+        if (validationCounter < MAX_VALIDATION_COUNT) {
+            readStatus()
+            validationCounter++
+        } else {
+            error?.invoke(BLESendingTimeoutException())
+            resetVariables()
+        }
+    }
+
+    private fun handleReadyStatus(characteristic: BluetoothGattCharacteristic) {
+        if (!uploadStarted) {
+            Log.d(TAG, "Ready --> checkMd5")
+            checkMd5(characteristic.value.copyOfRange(1, MD5_LENGTH + 1))
+        } else {
+            Log.d(TAG, "Ready --> send success event")
+            success?.invoke()
+            resetVariables()
+        }
+    }
+
     private fun resetVariables() {
+        uploadStarted = false
         success = null
         error = null
         currentFile = null
