@@ -41,7 +41,7 @@ interface UserRobotDao {
     @Query("SELECT * FROM UserRobot WHERE id=:robotId AND buildStatus=:buildStatus")
     fun getRobotByStatus(robotId: Int, buildStatus: BuildStatus): UserRobot?
 
-    @Insert(onConflict = OnConflictStrategy.FAIL)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveUserRobot(userRobot: UserRobot): Long
 
     @Update

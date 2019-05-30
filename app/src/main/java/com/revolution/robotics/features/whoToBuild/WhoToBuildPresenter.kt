@@ -7,7 +7,8 @@ import com.revolution.robotics.core.domain.local.UserRobot
 import com.revolution.robotics.core.domain.remote.Configuration
 import com.revolution.robotics.core.domain.remote.Robot
 import com.revolution.robotics.core.extensions.isEmptyOrNull
-import com.revolution.robotics.core.interactor.SaveNewUserRobotInteractor
+import com.revolution.robotics.core.interactor.AssignConfigIntoARobotInteractor
+import com.revolution.robotics.core.interactor.SaveUserRobotInteractor
 import com.revolution.robotics.core.interactor.firebase.RobotInteractor
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.core.utils.Navigator
@@ -18,7 +19,8 @@ import kotlin.math.max
 
 class WhoToBuildPresenter(
     private val robotsInteractor: RobotInteractor,
-    private val saveNewUserRobotInteractor: SaveNewUserRobotInteractor,
+    private val assignConfigIntoARobotInteractor: AssignConfigIntoARobotInteractor,
+    private val saveUserRobotInteractor: SaveUserRobotInteractor,
     private val navigator: Navigator,
     private val resourceResolver: ResourceResolver
 ) :
@@ -104,11 +106,18 @@ class WhoToBuildPresenter(
             lastModified = Date(System.currentTimeMillis()),
             name = resourceResolver.string(R.string.build_robot_custom_default_name)
         )
-        saveNewUserRobotInteractor.userRobot = userRobot
-        saveNewUserRobotInteractor.configuration = Configuration(mapping = PortMapping())
-        saveNewUserRobotInteractor.controller = null
-        saveNewUserRobotInteractor.programs = emptyList()
-        saveNewUserRobotInteractor.execute {
+        saveUserRobotInteractor.userRobot = userRobot
+        saveUserRobotInteractor.execute { savedRobot ->
+            assignEmptyConfig(savedRobot)
+        }
+    }
+
+    private fun assignEmptyConfig(userRobot: UserRobot) {
+        assignConfigIntoARobotInteractor.userRobot = userRobot
+        assignConfigIntoARobotInteractor.configuration = Configuration(mapping = PortMapping())
+        assignConfigIntoARobotInteractor.controller = null
+        assignConfigIntoARobotInteractor.programs = emptyList()
+        assignConfigIntoARobotInteractor.execute {
             navigator.navigate(WhoToBuildFragmentDirections.toConfigure(userRobot))
         }
     }
