@@ -41,6 +41,8 @@ class RoboticsConfigurationService : RoboticsBLEService() {
         const val MD5_LENGTH = 16
         const val DEFAULT_MTU = 512
 
+        const val MTU_DECREASE = 4
+
         const val TAG = "LongMessage"
 
         val CHARACTERISTIC: UUID = UUID.fromString("d59bb321-7218-4fb9-abac-2f6814f31a4d")
@@ -136,7 +138,7 @@ class RoboticsConfigurationService : RoboticsBLEService() {
 
     private fun startChunkSending() {
         currentFile?.let {
-            fileChunkHandler.init(it, mtu, MESSAGE_TYPE_UPLOAD)
+            fileChunkHandler.init(it, mtu - MTU_DECREASE, MESSAGE_TYPE_UPLOAD)
         }
         sendNextChunk()
     }
