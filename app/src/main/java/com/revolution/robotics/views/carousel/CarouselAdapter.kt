@@ -31,7 +31,6 @@ abstract class CarouselAdapter<T> : PagerAdapter() {
                 iterator.remove()
             }
         }
-        notifyDataSetChanged()
     }
 
     override fun getItemPosition(item: Any): Int = POSITION_NONE

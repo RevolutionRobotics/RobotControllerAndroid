@@ -86,7 +86,7 @@ class MyRobotsFragment : BaseFragment<FragmentMyRobotsBinding, MyRobotsViewModel
 
     private fun handleDuplicateRobotEvent(event: DialogEvent) {
         event.extras.getParcelable<UserRobot>(InfoRobotDialog.KEY_ROBOT)?.let { robot ->
-            adapter.selectedPosition++
+            binding?.myRobotsViewpager?.reInitTransformerWithDelay(adapter.selectedPosition + 1)
             presenter.duplicateRobot(robot)
         }
     }
@@ -102,12 +102,14 @@ class MyRobotsFragment : BaseFragment<FragmentMyRobotsBinding, MyRobotsViewModel
 
     private fun handleDeleteRobotEvent(event: DialogEvent) {
         event.extras.getParcelable<UserRobot>(InfoRobotDialog.KEY_ROBOT)?.let { robotToDelete ->
-            if (adapter.selectedPosition == adapter.count - 1) {
-                adapter.selectedPosition--
+            val selectedPosition = if (adapter.selectedPosition == adapter.count - 1) {
+                adapter.selectedPosition - 1
+            } else {
+                adapter.selectedPosition
             }
             adapter.removeItems { it.id == robotToDelete.instanceId }
             presenter.deleteRobot(robotToDelete, adapter.selectedPosition)
-            binding?.myRobotsViewpager?.reInitTransformerWithDelay()
+            binding?.myRobotsViewpager?.reInitTransformerWithDelay(selectedPosition)
         }
     }
 }

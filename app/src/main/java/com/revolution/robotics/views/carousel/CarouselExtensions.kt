@@ -24,9 +24,20 @@ fun ViewPager.initTransformerWithDelay() {
 }
 
 @Suppress("OptionalUnit")
-fun ViewPager.reInitTransformerWithDelay() {
-    setPageTransformer(false, { _, _ -> Unit })
-    initTransformerWithDelay()
+fun ViewPager.reInitTransformerWithDelay(currentPosition: Int) {
+    setPageTransformer(false) { _, _ -> Unit }
+    (adapter as? CarouselAdapter<*>)?.apply {
+        selectedPosition = currentPosition
+        notifyDataSetChanged()
+        setSelectedPositionWithDelay(currentPosition)
+    }
+}
+
+fun ViewPager.setSelectedPositionWithDelay(currentPosition: Int) {
+    postDelayed(PAGE_TRANSFORM_INIT_DELAY) {
+        currentItem = currentPosition
+        initTransformerWithDelay()
+    }
 }
 
 fun ViewPager.initCarouselPadding(
