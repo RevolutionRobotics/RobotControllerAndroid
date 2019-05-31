@@ -174,7 +174,8 @@
     <dimen name="robots_card_time_text_size">16sp</dimen>
 
     <!-- SCREEN: BUILD ROBOT -->
-    <dimen name="build_robot_parts_size">112dp</dimen>
+    <dimen name="build_robot_parts_wrapper_width">112dp</dimen>
+    <dimen name="build_robot_part_image_size">52dp</dimen>
     <dimen name="drawer_config_width">214dp</dimen>
 
     <!-- SCREEN: CONFIGURE -->

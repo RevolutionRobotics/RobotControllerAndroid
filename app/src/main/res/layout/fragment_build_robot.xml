@@ -44,7 +44,7 @@
 
         <TextView
                 android:id="@+id/steps"
-                android:layout_width="@dimen/build_robot_parts_size"
+                android:layout_width="@dimen/build_robot_parts_wrapper_width"
                 android:layout_height="wrap_content"
                 android:textSize="17sp"
                 android:gravity="center"
@@ -86,10 +86,12 @@
                 app:animate="@{true}"
                 app:firebaseImageUrl="@{viewModel.imageUrl}"/>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
                 android:id="@+id/parts_wrapper"
-                android:layout_width="@dimen/build_robot_parts_size"
-                android:layout_height="@dimen/build_robot_parts_size"
+                android:layout_width="@dimen/build_robot_parts_wrapper_width"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
                 app:layout_constraintStart_toStartOf="@id/steps"
                 app:layout_constraintEnd_toEndOf="@id/steps"
                 app:layout_constraintTop_toBottomOf="@id/steps"
@@ -97,35 +99,56 @@
                 app:chippedBoxConfig="@{background}"
                 android:paddingTop="@dimen/dimen_16dp"
                 android:paddingBottom="@dimen/dimen_16dp"
-                android:paddingStart="@dimen/dimen_32dp"
-                android:paddingEnd="@dimen/dimen_32dp">
+                android:paddingStart="@dimen/dimen_12dp"
+                android:paddingEnd="@dimen/dimen_12dp">
 
             <ImageView
-                    android:id="@+id/parts_image"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    app:layout_constraintStart_toStartOf="parent"
+                    android:id="@+id/part_image"
+                    android:layout_width="@dimen/build_robot_part_image_size"
+                    android:layout_height="@dimen/build_robot_part_image_size"
                     android:scaleType="centerInside"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:firebaseImageUrl="@{viewModel.partsImage}"
-                    app:errorDrawable="@{@drawable/ic_image_not_found_dark}"
-                    app:layout_constraintBottom_toTopOf="@+id/parts_quantity"
-                    app:layout_constraintTop_toTopOf="parent"/>
+                    app:firebaseImageUrl="@{viewModel.partImage}"
+                    app:errorDrawable="@{@drawable/ic_image_not_found_dark}"/>
 
             <TextView
-                    android:id="@+id/parts_quantity"
+                    android:id="@+id/part_quantity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{viewModel.partsQuantity}"
-                    android:textSize="17sp"
+                    android:text="@{viewModel.partQuantity}"
+                    android:textSize="16sp"
                     android:fontFamily="@font/barlow_regular"
                     android:textColor="@color/white"
-                    app:layout_constraintTop_toBottomOf="@id/parts_image"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"/>
+                    android:layout_marginTop="@dimen/dimen_8dp"/>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_1dp"
+                    android:background="@color/grey_6d"
+                    android:layout_marginTop="@dimen/dimen_16dp"
+                    app:gone="@{!viewModel.hasTwoParts}"/>
+
+            <ImageView
+                    android:id="@+id/part_2_image"
+                    android:layout_width="@dimen/build_robot_part_image_size"
+                    android:layout_height="@dimen/build_robot_part_image_size"
+                    android:scaleType="centerInside"
+                    android:layout_marginTop="@dimen/dimen_16dp"
+                    app:firebaseImageUrl="@{viewModel.part2Image}"
+                    app:errorDrawable="@{@drawable/ic_image_not_found_dark}"
+                    app:gone="@{!viewModel.hasTwoParts}"/>
+
+            <TextView
+                    android:id="@+id/part_2_quantity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.part2Quantity}"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/barlow_regular"
+                    android:textColor="@color/white"
+                    android:layout_marginTop="@dimen/dimen_8dp"
+                    app:gone="@{!viewModel.hasTwoParts}"/>
+
+        </LinearLayout>
 
         <ImageView
                 android:id="@+id/parts_pin"
