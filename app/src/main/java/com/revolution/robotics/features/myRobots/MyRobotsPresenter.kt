@@ -145,7 +145,6 @@ class MyRobotsPresenter(
                 notifyChange()
             }
         }
-        updateButtonsVisibility((model?.currentPosition?.get() ?: 0 + 1))
         view?.onRobotsChanged()
     }
 }
