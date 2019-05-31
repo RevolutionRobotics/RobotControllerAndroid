@@ -16,6 +16,8 @@ class PlayGamerFragment : PlayFragment(), JoystickView.JoystickEventListener {
         contentBinding.joystick.listener = this
     }
 
+    override fun getContentBinding() = contentBinding
+
     override fun onJoystickPositionChanged(x: Int, y: Int) {
         presenter.onJoystickXAxisChanged(x)
         presenter.onJoystickYAxisChanged(y)

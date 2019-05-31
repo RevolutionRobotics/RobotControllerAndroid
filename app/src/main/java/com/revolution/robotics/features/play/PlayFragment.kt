@@ -56,6 +56,18 @@ abstract class PlayFragment : BaseFragment<FragmentPlayCoreBinding, PlayViewMode
     }
 
     override fun onControllerLoaded(controller: UserControllerWithPrograms) {
+        viewModel?.programs?.apply {
+            clear()
+            addAll(listOf(
+                controller.userController.mapping?.b1?.programId?.let { controller.programs[it] },
+                controller.userController.mapping?.b2?.programId?.let { controller.programs[it] },
+                controller.userController.mapping?.b3?.programId?.let { controller.programs[it] },
+                controller.userController.mapping?.b4?.programId?.let { controller.programs[it] },
+                controller.userController.mapping?.b5?.programId?.let { controller.programs[it] },
+                controller.userController.mapping?.b6?.programId?.let { controller.programs[it] }
+            ))
+        }
+        getContentBinding()?.invalidateAll()
     }
 
     override fun onBluetoothConnectionStateChanged(connected: Boolean, serviceDiscovered: Boolean) {
