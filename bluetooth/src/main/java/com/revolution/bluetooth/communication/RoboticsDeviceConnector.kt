@@ -122,6 +122,7 @@ class RoboticsDeviceConnector : BluetoothGattCallback() {
                         gatt?.requestMtu(REQUESTED_MTU)
                     } else {
                         onError?.invoke(BLEConnectionException(status))
+                        onError = null
                     }
                 }
                 ConnectionState.DISCONNECTED -> {
@@ -146,6 +147,7 @@ class RoboticsDeviceConnector : BluetoothGattCallback() {
         gatt.requestConnectionPriority(BluetoothGatt.CONNECTION_PRIORITY_HIGH)
         moveToUIThread {
             onConnected?.invoke()
+            onConnected = null
             connectionListeners.forEach {
                 it.onConnectionStateChanged(isConnected, true)
             }
