@@ -53,6 +53,9 @@
     <!-- Delete robot -->
     <string name="delete_robot_description">Are you sure you want to delete this robot?</string>
     <string name="delete_robot_confirm">Delete</string>
+    <string name="info_robot_delete">Delete</string>
+    <string name="info_robot_duplicate">Duplicate</string>
+    <string name="info_robot_edit">Edit</string>
 
     <!-- Chapter finished -->
     <string name="build_chapter_finish_dialog_title">Chapter finished</string>
@@ -329,5 +332,7 @@
     <string name="error_variable_already_in_use">Variable name is already in use</string>
     <string name="error_general">Something went wrong, please try again</string>
     <string name="error_test_code_upload">Test code upload error</string>
+    
+    <string name="dialog_robot_info_edit">Let’s edit the configuration to play with this robot!</string>
 
 </resources>

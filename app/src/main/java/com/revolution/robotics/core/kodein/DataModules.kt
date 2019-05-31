@@ -21,6 +21,7 @@ import com.revolution.robotics.core.domain.local.UserProgramDao
 import com.revolution.robotics.core.domain.local.UserRobotDao
 import com.revolution.robotics.core.interactor.AssignConfigIntoARobotInteractor
 import com.revolution.robotics.core.interactor.DeleteRobotInteractor
+import com.revolution.robotics.core.interactor.DuplicateUserRobotInteractor
 import com.revolution.robotics.core.interactor.FirebaseInitInteractor
 import com.revolution.robotics.core.interactor.GetAllUserRobotsInteractor
 import com.revolution.robotics.core.interactor.GetControllerTypeInteractor
@@ -141,6 +142,7 @@ fun createInteractorModule() =
         bind<GetControllerTypeInteractor>() with p { GetControllerTypeInteractor(i(), i()) }
         bind<FirebaseInitInteractor>() with p { FirebaseInitInteractor() }
         bind<SaveUserRobotInteractor>() with p { SaveUserRobotInteractor(i()) }
+        bind<DuplicateUserRobotInteractor>() with p { DuplicateUserRobotInteractor(i(), i(), i(), i(), i()) }
     }
 
 @Suppress("LongMethod")
@@ -148,7 +150,7 @@ fun createPresenterModule() =
     Kodein.Module("PresenterModule") {
         bind<MainMenuMvp.Presenter>() with s { MainMenuPresenter(i(), i(), i()) }
         bind<WhoToBuildMvp.Presenter>() with s { WhoToBuildPresenter(i(), i(), i(), i(), i()) }
-        bind<MyRobotsMvp.Presenter>() with s { MyRobotsPresenter(i(), i(), i(), i()) }
+        bind<MyRobotsMvp.Presenter>() with s { MyRobotsPresenter(i(), i(), i(), i(), i()) }
         bind<ChapterFinishedMvp.Presenter>() with s { ChapterFinishedPresenter(i()) }
         bind<BuildRobotMvp.Presenter>() with s { BuildRobotPresenter(i(), i(), i(), i(), i(), i(), i()) }
         bind<ConnectMvp.Presenter>() with s { ConnectPresenter(i(), i()) }

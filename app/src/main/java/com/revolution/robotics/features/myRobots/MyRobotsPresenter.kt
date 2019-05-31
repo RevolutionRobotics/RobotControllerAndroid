@@ -5,11 +5,13 @@ import com.revolution.robotics.core.domain.local.UserRobot
 import com.revolution.robotics.core.extensions.formatYearMonthDaySlashed
 import com.revolution.robotics.core.extensions.isEmptyOrNull
 import com.revolution.robotics.core.interactor.DeleteRobotInteractor
+import com.revolution.robotics.core.interactor.DuplicateUserRobotInteractor
 import com.revolution.robotics.core.interactor.GetAllUserRobotsInteractor
 import com.revolution.robotics.core.interactor.GetControllerTypeInteractor
 import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.features.controllers.ControllerType
 import com.revolution.robotics.features.myRobots.adapter.MyRobotsItem
+import com.revolution.robotics.features.myRobots.info.InfoRobotDialog
 import kotlin.math.max
 
 @Suppress("TooManyFunctions")
@@ -17,8 +19,10 @@ class MyRobotsPresenter(
     private val getAllUserRobotsInteractor: GetAllUserRobotsInteractor,
     private val deleteRobotInteractor: DeleteRobotInteractor,
     private val getControllerTypeInteractor: GetControllerTypeInteractor,
+    private val duplicateUserRobotInteractor: DuplicateUserRobotInteractor,
     private val navigator: Navigator
 ) : MyRobotsMvp.Presenter {
+
     override var view: MyRobotsMvp.View? = null
     override var model: MyRobotsViewModel? = null
 
@@ -103,8 +107,14 @@ class MyRobotsPresenter(
         navigator.navigate(MyRobotsFragmentDirections.toConfigure(userRobot))
     }
 
-    override fun onDeleteSelected(userRobot: UserRobot) {
-        view?.deleteRobot(userRobot)
+    override fun onMorInfoClicked(userRobot: UserRobot) {
+        view?.showDialog(
+            if (userRobot.isCustomBuild() || userRobot.buildStatus == BuildStatus.COMPLETED) {
+                InfoRobotDialog.Edit.newInstance(userRobot)
+            } else {
+                InfoRobotDialog.Normal.newInstance(userRobot)
+            }
+        )
     }
 
     override fun deleteRobot(userRobot: UserRobot, selectedPosition: Int) {
@@ -116,6 +126,26 @@ class MyRobotsPresenter(
             notifyChange()
         }
         updateButtonsVisibility(selectedPosition)
+        view?.onRobotsChanged()
+    }
+
+    override fun duplicateRobot(userRobot: UserRobot) {
+        duplicateUserRobotInteractor.currentRobot = userRobot
+        duplicateUserRobotInteractor.execute { robot ->
+            model?.robotsList?.apply {
+                get()?.add(
+                    0, MyRobotsItem(
+                        robot.instanceId,
+                        robot,
+                        robot.lastModified?.formatYearMonthDaySlashed() ?: "",
+                        robot.buildStatus != BuildStatus.COMPLETED,
+                        this@MyRobotsPresenter
+                    )
+                )
+                notifyChange()
+            }
+        }
+        updateButtonsVisibility((model?.currentPosition?.get() ?: 0 + 1))
         view?.onRobotsChanged()
     }
 }

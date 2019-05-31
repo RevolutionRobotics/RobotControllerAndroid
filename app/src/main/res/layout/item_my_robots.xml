@@ -172,65 +172,37 @@
                     android:enabled="@{viewModel.isSelected}"
                     app:layout_constraintTop_toTopOf="@id/buttons_top_guide"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/edit_button"
+                    app:layout_constraintEnd_toStartOf="@id/more_button"
                     app:layout_constraintBottom_toBottomOf="@id/buttons_bottom_guide"/>
 
-            <Button
-                    android:id="@+id/edit_button"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:background="@drawable/ic_your_robots_button_bg"
-                    app:layout_constraintDimensionRatio="1.0"
-                    android:layout_marginStart="@dimen/my_robots_robot_edit_margin_start"
-                    android:onClick="@{()-> viewModel.onEditClicked()}"
-                    android:enabled="@{viewModel.isSelected &amp;&amp; !viewModel.isUnderConstruction}"
-                    android:stateListAnimator="@null"
-                    app:layout_constraintHorizontal_chainStyle="spread"
-                    app:layout_constraintTop_toTopOf="@id/buttons_top_guide"
-                    app:layout_constraintStart_toEndOf="@id/play_button"
-                    app:layout_constraintEnd_toStartOf="@id/delete_button"
-                    app:layout_constraintBottom_toBottomOf="@id/buttons_bottom_guide"/>
 
             <Button
-                    android:id="@+id/delete_button"
+                    android:id="@+id/more_button"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:background="@drawable/ic_your_robots_clipped_button_bg"
                     app:layout_constraintDimensionRatio="1.0"
                     android:layout_marginStart="@dimen/my_robots_robot_delete_margin_start"
                     android:layout_marginEnd="@dimen/my_robots_robot_delete_margin_end"
-                    android:onClick="@{()-> viewModel.onDeleteClicked()}"
+                    android:onClick="@{()-> viewModel.onMoreInfoClicked()}"
                     android:enabled="@{viewModel.isSelected}"
                     android:stateListAnimator="@null"
                     app:layout_constraintHorizontal_chainStyle="spread"
                     app:layout_constraintTop_toTopOf="@id/buttons_top_guide"
-                    app:layout_constraintStart_toEndOf="@id/edit_button"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toBottomOf="@id/buttons_bottom_guide"/>
 
             <ImageView
                     android:layout_width="@dimen/my_robots_robot_button_icon_size"
                     android:layout_height="@dimen/my_robots_robot_button_icon_size"
-                    android:src="@drawable/ic_edit"
-                    android:scaleType="fitCenter"
-                    android:tint="@{viewModel.isUnderConstruction ? @color/grey_6d : @color/white}"
-                    android:elevation="3dp"
-                    app:layout_constraintStart_toStartOf="@id/edit_button"
-                    app:layout_constraintEnd_toEndOf="@id/edit_button"
-                    app:layout_constraintTop_toTopOf="@id/edit_button"
-                    app:layout_constraintBottom_toBottomOf="@id/edit_button"/>
-
-            <ImageView
-                    android:layout_width="@dimen/my_robots_robot_button_icon_size"
-                    android:layout_height="@dimen/my_robots_robot_button_icon_size"
-                    android:src="@drawable/ic_delete"
+                    android:src="@drawable/ic_more"
                     android:scaleType="fitCenter"
                     android:tint="@color/white"
                     android:elevation="3dp"
-                    app:layout_constraintStart_toStartOf="@id/delete_button"
-                    app:layout_constraintEnd_toEndOf="@id/delete_button"
-                    app:layout_constraintTop_toTopOf="@id/delete_button"
-                    app:layout_constraintBottom_toBottomOf="@id/delete_button"/>
+                    app:layout_constraintStart_toStartOf="@id/more_button"
+                    app:layout_constraintEnd_toEndOf="@id/more_button"
+                    app:layout_constraintTop_toTopOf="@id/more_button"
+                    app:layout_constraintBottom_toBottomOf="@id/more_button"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
