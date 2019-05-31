@@ -87,11 +87,11 @@ class MotorConfigurationPresenter(
 
     override fun onTestButtonClicked() {
         if (model?.driveTrainButton?.isSelected?.get() == true) {
-            view?.showDialog(DrivetrainTestDialog.Configure())
+            view?.showDialog(DrivetrainTestDialog())
         }
 
         if (model?.motorButton?.isSelected?.get() == true) {
-            view?.showDialog(MotorTestDialog.Configure())
+            view?.showDialog(MotorTestDialog())
         }
     }
 

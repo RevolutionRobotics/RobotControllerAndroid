@@ -1,15 +1,15 @@
 package com.revolution.robotics.features.build.testing
 
 import com.revolution.robotics.R
-import com.revolution.robotics.features.build.tips.UltrasonicTipsDialogFace
+import com.revolution.robotics.features.build.tips.TipsDialogFace
 import com.revolution.robotics.views.dialogs.DialogFace
 import com.revolution.robotics.views.dialogs.RoboticsDialog
 
-sealed class UltrasonicTestDialog(source: Source) : TestDialog() {
+class UltrasonicTestDialog : TestDialog() {
 
     override val dialogFaces: List<DialogFace<*>> = listOf(
         UltrasonicTestDialogFace(this),
-        UltrasonicTipsDialogFace(source, this)
+        TipsDialogFace(Source.CONFIGURE, this, this)
     )
 
     inner class UltrasonicTestDialogFace(dialog: RoboticsDialog) : TestDialogFace(dialog) {
@@ -17,10 +17,7 @@ sealed class UltrasonicTestDialog(source: Source) : TestDialog() {
         override val textResource: Int = R.string.testing_ultrasonic_test
 
         override fun showTipsFace() {
-            activateFace(dialogFaces.first { it is UltrasonicTipsDialogFace })
+            activateFace(dialogFaces.first { it is TipsDialogFace })
         }
     }
-
-    class Build : UltrasonicTestDialog(Source.BUILD)
-    class Configure : UltrasonicTestDialog(Source.CONFIGURE)
 }

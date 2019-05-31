@@ -9,6 +9,7 @@ class FileChunkHandler {
     var currentIndex = 0
 
     fun init(file: Uri, chunkLength: Int, firstByte: Byte) {
+
         chunks.clear()
         currentIndex = 0
 
@@ -19,11 +20,9 @@ class FileChunkHandler {
         do {
             numRead = fileInputStream.read(buffer)
             if (numRead > 0) {
-                ByteArray(chunkLength).apply {
+                ByteArray(numRead + 1).apply {
                     this[0] = firstByte
-                    buffer.forEachIndexed { index, byte ->
-                        this[index + 1] = byte
-                    }
+                    buffer.copyInto(this, 1, 0, numRead)
                     chunks.add(this)
                 }
             }

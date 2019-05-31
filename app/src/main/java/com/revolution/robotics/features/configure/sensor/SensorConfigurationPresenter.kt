@@ -131,11 +131,11 @@ class SensorConfigurationPresenter(
 
     override fun onTestButtonClicked() {
         if (model?.bumperButton?.isSelected?.get() == true) {
-            view?.showDialog(BumperTestDialog.Configure())
+            view?.showDialog(BumperTestDialog())
         }
 
         if (model?.ultrasoundButton?.isSelected?.get() == true) {
-            view?.showDialog(UltrasonicTestDialog.Configure())
+            view?.showDialog(UltrasonicTestDialog())
         }
     }
 

@@ -7,14 +7,14 @@ import com.revolution.robotics.core.domain.remote.Milestone
 interface ChapterFinishedMvp : Mvp {
 
     interface View : Mvp.View {
-        fun onTestUploaded()
+        fun startTestingFlow()
     }
 
     interface Presenter : Mvp.Presenter<View, ViewModel> {
 
         var milestone: Milestone?
 
-        fun uploadTest()
+        fun startTestingFlow()
         fun navigateHome()
     }
 }

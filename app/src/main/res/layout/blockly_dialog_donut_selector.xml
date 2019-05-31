@@ -33,8 +33,8 @@
 
             <CheckBox
                     android:id="@+id/check"
-                    android:layout_width="@dimen/dialog_icon_size"
-                    android:layout_height="@dimen/dialog_icon_size"
+                    android:layout_width="@dimen/donut_checkbox_size"
+                    android:layout_height="@dimen/donut_checkbox_size"
                     android:button="@drawable/robotics_checkbox_selector_white"
                     android:clickable="false"/>
 

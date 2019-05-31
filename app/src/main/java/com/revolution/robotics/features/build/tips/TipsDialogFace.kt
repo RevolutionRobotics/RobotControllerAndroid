@@ -2,14 +2,27 @@ package com.revolution.robotics.features.build.tips
 
 import com.revolution.robotics.R
 import com.revolution.robotics.databinding.DialogTipsBinding
+import com.revolution.robotics.features.build.testing.TestDialog
 import com.revolution.robotics.views.dialogs.DialogFace
 import com.revolution.robotics.views.dialogs.RoboticsDialog
 
-abstract class TipsDialogFace(dialog: RoboticsDialog? = null) :
+open class TipsDialogFace(
+    source: TestDialog.Source,
+    dialogController: DialogController?,
+    dialog: RoboticsDialog? = null
+) :
     DialogFace<DialogTipsBinding>(R.layout.dialog_tips, dialog) {
 
-    abstract val bulletCharacter: Char
-    abstract val tipsList: List<Int>
+    open val bulletCharacter: Char = '-'
+    open val tipsList: List<Int> = listOf(
+        R.string.tips_dialog_placeholder_1,
+        R.string.tips_dialog_placeholder_2,
+        R.string.tips_dialog_placeholder_3,
+        R.string.tips_dialog_placeholder_4
+    )
+    override val dialogFaceButtons = dialogController?.let {
+        createTipsDialogButtons(source, it)
+    } ?: mutableListOf()
 
     override fun onActivated() {
         super.onActivated()

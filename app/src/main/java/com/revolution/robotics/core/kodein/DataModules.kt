@@ -53,6 +53,8 @@ import com.revolution.robotics.features.build.chapterFinished.ChapterFinishedMvp
 import com.revolution.robotics.features.build.chapterFinished.ChapterFinishedPresenter
 import com.revolution.robotics.features.build.connect.availableRobotsFace.ConnectMvp
 import com.revolution.robotics.features.build.connect.availableRobotsFace.ConnectPresenter
+import com.revolution.robotics.features.build.testing.buildTest.TestBuildDialogMvp
+import com.revolution.robotics.features.build.testing.buildTest.TestBuildDialogPresenter
 import com.revolution.robotics.features.challenges.challengeDetail.ChallengeDetailMvp
 import com.revolution.robotics.features.challenges.challengeDetail.ChallengeDetailPresenter
 import com.revolution.robotics.features.challenges.challengeGroup.ChallengeGroupMvp
@@ -177,6 +179,7 @@ fun createPresenterModule() =
         bind<SliderMvp.Presenter>() with s { SliderPresenter() }
         bind<CodingMvp.Presenter>() with s { CodingPresenter() }
         bind<ProgramsMvp.Presenter>() with s { ProgramsPresenter(i()) }
+        bind<TestBuildDialogMvp.Presenter>() with s { TestBuildDialogPresenter(i(), i(), i()) }
     }
 
 fun createDbModule(context: Context) =
