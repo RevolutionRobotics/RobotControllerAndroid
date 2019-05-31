@@ -276,4 +276,5 @@
     <dimen name="coding_icon_height">40dp</dimen>
     <dimen name="coding_program_title_width">166dp</dimen>
     <dimen name="coding_program_title_height">40dp</dimen>
+    <dimen name="donut_checkbox_size">18dp</dimen>
 </resources>
