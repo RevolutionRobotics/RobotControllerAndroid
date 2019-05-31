@@ -99,13 +99,12 @@ class RoboticsConfigurationService : RoboticsBLEService() {
     private fun checkMd5(serverMd5: ByteArray) {
         currentFile?.let { uri ->
             val currentMD5 = MD5Checker().calculateMD5Hash(uri)
-            startUploading(currentMD5)
-            /*
             if (currentMD5.contentEquals(serverMd5)) {
+                uploadStarted = true
                 sendFinalizeMessage()
             } else {
-
-            }*/
+                startUploading(currentMD5)
+            }
         }
     }
 
