@@ -5,7 +5,11 @@ import androidx.lifecycle.ViewModel
 import com.revolution.robotics.R
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 
-class SoundOption(val fileName: String, private val presenter: SoundPickerMvp.Presenter) : ViewModel() {
+class SoundOption(
+    val fileName: String,
+    emojiUnicode: Int,
+    private val presenter: SoundPickerMvp.Presenter
+) : ViewModel() {
 
     companion object {
         private val BACKGROUND = ChippedBoxConfig.Builder()
@@ -22,6 +26,7 @@ class SoundOption(val fileName: String, private val presenter: SoundPickerMvp.Pr
     val background = BACKGROUND
     val backgroundSelected = BACKGROUND_SELECTED
     val isSelected = ObservableBoolean(false)
+    val iconEmoji = String(Character.toChars(emojiUnicode))
 
     fun onSoundClicked() {
         presenter.onSoundSelected(this)
