@@ -26,7 +26,7 @@ class SoundPickerPresenter(
                     it.substring(0, it.length - EXTENSION_MP3.length)
                 }
             if (fileNames != null) {
-                addAll(fileNames.map { SoundOption(it, this@SoundPickerPresenter) })
+                addAll(fileNames.map { SoundOption(it, SoundIcons.ICONS[it] ?: 0, this@SoundPickerPresenter) })
             }
         }
 
