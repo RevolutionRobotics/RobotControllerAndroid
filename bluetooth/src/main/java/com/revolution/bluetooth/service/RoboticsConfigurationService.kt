@@ -81,7 +81,6 @@ class RoboticsConfigurationService : RoboticsBLEService() {
     ) {
         if (isUploadInProgress()) {
             onError.invoke(BLELongMessageIsAlreadyRunning())
-            resetVariables()
             return
         }
         currentFile = file
@@ -100,11 +99,13 @@ class RoboticsConfigurationService : RoboticsBLEService() {
     private fun checkMd5(serverMd5: ByteArray) {
         currentFile?.let { uri ->
             val currentMD5 = MD5Checker().calculateMD5Hash(uri)
+            startUploading(currentMD5)
+            /*
             if (currentMD5.contentEquals(serverMd5)) {
                 sendFinalizeMessage()
             } else {
-                startUploading(currentMD5)
-            }
+
+            }*/
         }
     }
 
@@ -235,6 +236,11 @@ class RoboticsConfigurationService : RoboticsBLEService() {
         error = null
         currentFile = null
         validationCounter = 0
+    }
+
+    override fun disconnect() {
+        super.disconnect()
+        resetVariables()
     }
 
     override fun onCharacteristicWrite(gatt: BluetoothGatt?, characteristic: BluetoothGattCharacteristic, status: Int) {

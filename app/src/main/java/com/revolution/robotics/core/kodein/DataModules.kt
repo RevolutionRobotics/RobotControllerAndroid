@@ -179,7 +179,7 @@ fun createPresenterModule() =
         bind<SliderMvp.Presenter>() with s { SliderPresenter() }
         bind<CodingMvp.Presenter>() with s { CodingPresenter() }
         bind<ProgramsMvp.Presenter>() with s { ProgramsPresenter(i()) }
-        bind<TestBuildDialogMvp.Presenter>() with s { TestBuildDialogPresenter(i(), i()) }
+        bind<TestBuildDialogMvp.Presenter>() with s { TestBuildDialogPresenter(i(), i(), i()) }
     }
 
 fun createDbModule(context: Context) =

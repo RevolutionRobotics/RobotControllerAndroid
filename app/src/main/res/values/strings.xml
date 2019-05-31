@@ -322,6 +322,9 @@
     <string name="tutorial_button_finish">Finish</string>
     <string name="tutorial_button_skip">Skip</string>
 
+    <string name="build_test_download_info">Downloading &amp; updating</string>
+    <string name="build_test_please_wait">Please wait</string>
+
     <!-- Errors -->
     <string name="error_variable_already_in_use">Variable name is already in use</string>
     <string name="error_general">Something went wrong, please try again</string>

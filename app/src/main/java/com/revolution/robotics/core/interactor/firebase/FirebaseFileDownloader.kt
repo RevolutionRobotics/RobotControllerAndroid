@@ -19,7 +19,7 @@ class FirebaseFileDownloader(
         gsUrl: String,
         onResponse: (uri: Uri) -> Unit
     ) {
-        downloadFirestoreFile(outputFileName, gsUrl, onResponse)
+        downloadFirestoreFile(outputFileName, gsUrl, onResponse, null)
     }
 
     fun downloadFirestoreFile(

@@ -80,7 +80,7 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
                 if (bluetoothManager.isConnected) {
                     event.extras.getParcelable<Milestone>(ChapterFinishedDialog.KEY_MILESTONE)?.let { milestone ->
                         TestBuildDialog.newInstance(
-                            milestone.image ?: "",
+                            milestone.testImage ?: "",
                             milestone.testDescription ?: "",
                             milestone.testCode ?: ""
                         ).show(
