@@ -12,10 +12,11 @@
 
         <TextView
                 style="@style/ProgramButtonLabel"
-                android:layout_width="@dimen/dimen_64dp"
+                android:layout_width="@dimen/dimen_56dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@{viewModel.getProgramLabel(1)}"
+                android:maxLines="3"
                 app:layout_constraintStart_toStartOf="@id/button_1"
                 app:layout_constraintEnd_toEndOf="@id/button_1"
                 app:layout_constraintBottom_toTopOf="@id/button_1"
@@ -23,10 +24,11 @@
 
         <TextView
                 style="@style/ProgramButtonLabel"
-                android:layout_width="@dimen/dimen_64dp"
+                android:layout_width="@dimen/dimen_56dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@{viewModel.getProgramLabel(2)}"
+                android:maxLines="3"
                 app:layout_constraintStart_toStartOf="@id/button_2"
                 app:layout_constraintEnd_toEndOf="@id/button_2"
                 app:layout_constraintBottom_toTopOf="@id/button_2"
@@ -34,10 +36,11 @@
 
         <TextView
                 style="@style/ProgramButtonLabel"
-                android:layout_width="@dimen/dimen_64dp"
+                android:layout_width="@dimen/dimen_56dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@{viewModel.getProgramLabel(3)}"
+                android:maxLines="3"
                 app:layout_constraintStart_toStartOf="@id/button_3"
                 app:layout_constraintEnd_toEndOf="@id/button_3"
                 app:layout_constraintBottom_toTopOf="@id/button_3"
@@ -45,10 +48,11 @@
 
         <TextView
                 style="@style/ProgramButtonLabel"
-                android:layout_width="@dimen/dimen_64dp"
+                android:layout_width="@dimen/dimen_56dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@{viewModel.getProgramLabel(4)}"
+                android:maxLines="3"
                 app:layout_constraintStart_toStartOf="@id/button_4"
                 app:layout_constraintEnd_toEndOf="@id/button_4"
                 app:layout_constraintBottom_toTopOf="@id/button_4"
@@ -56,10 +60,11 @@
 
         <TextView
                 style="@style/ProgramButtonLabel"
-                android:layout_width="@dimen/dimen_64dp"
+                android:layout_width="@dimen/dimen_56dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@{viewModel.getProgramLabel(5)}"
+                android:maxLines="3"
                 app:layout_constraintStart_toStartOf="@id/button_5"
                 app:layout_constraintEnd_toEndOf="@id/button_5"
                 app:layout_constraintBottom_toTopOf="@id/button_5"
@@ -67,10 +72,11 @@
 
         <TextView
                 style="@style/ProgramButtonLabel"
-                android:layout_width="@dimen/dimen_64dp"
+                android:layout_width="@dimen/dimen_56dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@{viewModel.getProgramLabel(6)}"
+                android:maxLines="3"
                 app:layout_constraintStart_toStartOf="@id/button_6"
                 app:layout_constraintEnd_toEndOf="@id/button_6"
                 app:layout_constraintBottom_toTopOf="@id/button_6"
