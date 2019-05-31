@@ -22,6 +22,7 @@ import com.revolution.bluetooth.threading.moveToUIThread
 class RoboticsDeviceConnector : BluetoothGattCallback() {
 
     companion object {
+        // TODO Modify to 512 when the robot will support bigger mtu than 256
         const val REQUESTED_MTU = 256
     }
 
