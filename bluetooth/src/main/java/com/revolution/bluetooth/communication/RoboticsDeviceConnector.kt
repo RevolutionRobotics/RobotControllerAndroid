@@ -21,6 +21,10 @@ import com.revolution.bluetooth.threading.moveToUIThread
 @Suppress("TooManyFunctions")
 class RoboticsDeviceConnector : BluetoothGattCallback() {
 
+    companion object {
+        const val REQUESTED_MTU = 256
+    }
+
     private var device: BluetoothDevice? = null
     private var gattConnection: BluetoothGatt? = null
 
@@ -111,13 +115,11 @@ class RoboticsDeviceConnector : BluetoothGattCallback() {
             when (ConnectionState.parseConnectionId(newState)) {
                 ConnectionState.CONNECTED -> {
                     isConnected = true
-                    onConnected?.invoke()
                     connectionListeners.forEach {
                         it.onConnectionStateChanged(true, isServiceDiscovered)
                     }
-
                     if (status == BluetoothGatt.GATT_SUCCESS) {
-                        gatt?.discoverServices()
+                        gatt?.requestMtu(REQUESTED_MTU)
                     } else {
                         onError?.invoke(BLEConnectionException(status))
                     }
@@ -141,7 +143,9 @@ class RoboticsDeviceConnector : BluetoothGattCallback() {
             it.init(gatt, roboticEventSerializer)
         }
         isServiceDiscovered = true
+        gatt.requestConnectionPriority(BluetoothGatt.CONNECTION_PRIORITY_HIGH)
         moveToUIThread {
+            onConnected?.invoke()
             connectionListeners.forEach {
                 it.onConnectionStateChanged(isConnected, true)
             }
@@ -170,7 +174,10 @@ class RoboticsDeviceConnector : BluetoothGattCallback() {
         }
     }
 
-    override fun onMtuChanged(gatt: BluetoothGatt?, mtu: Int, status: Int) = Unit
+    override fun onMtuChanged(gatt: BluetoothGatt?, mtu: Int, status: Int) {
+        configurationService.mtu = mtu
+        gatt?.discoverServices()
+    }
 
     override fun onReadRemoteRssi(gatt: BluetoothGatt?, rssi: Int, status: Int) = Unit
 }

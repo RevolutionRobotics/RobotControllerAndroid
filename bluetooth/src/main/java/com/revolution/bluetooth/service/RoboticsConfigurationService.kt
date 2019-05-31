@@ -39,7 +39,7 @@ class RoboticsConfigurationService : RoboticsBLEService() {
 
         const val MAX_VALIDATION_COUNT = 30
         const val MD5_LENGTH = 16
-        const val CHUNK_LENGTH = 512
+        const val DEFAULT_MTU = 512
 
         const val TAG = "LongMessage"
 
@@ -56,6 +56,7 @@ class RoboticsConfigurationService : RoboticsBLEService() {
     var validationCounter = 0
 
     var uploadStarted = false
+    var mtu = DEFAULT_MTU
 
     fun updateFirmware(file: Uri, onSuccess: () -> Unit, onError: (exception: BLEException) -> Unit) {
         initLongMessage(file, onSuccess, onError, FUNCTION_TYPE_FIRMWARE)
@@ -135,7 +136,7 @@ class RoboticsConfigurationService : RoboticsBLEService() {
 
     private fun startChunkSending() {
         currentFile?.let {
-            fileChunkHandler.init(it, CHUNK_LENGTH, MESSAGE_TYPE_UPLOAD)
+            fileChunkHandler.init(it, mtu, MESSAGE_TYPE_UPLOAD)
         }
         sendNextChunk()
     }
