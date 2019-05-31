@@ -15,17 +15,23 @@ class BuildRobotViewModel(
 ) : ViewModel() {
     val imageUrl: MutableLiveData<String?> = MutableLiveData()
     val step: MutableLiveData<Spannable?> = MutableLiveData()
-    val partsImage: MutableLiveData<String?> = MutableLiveData()
-    val partsQuantity: MutableLiveData<String?> = MutableLiveData()
+    val partImage: MutableLiveData<String?> = MutableLiveData()
+    val part2Image: MutableLiveData<String?> = MutableLiveData()
+    val partQuantity: MutableLiveData<String?> = MutableLiveData()
+    val part2Quantity: MutableLiveData<String?> = MutableLiveData()
+    val hasTwoParts: MutableLiveData<Boolean> = MutableLiveData()
 
     // TODO remove this suppress
     @Suppress("MagicNumber")
     fun setBuildStep(buildStep: BuildStep, totalSteps: Int) {
         imageUrl.value = buildStep.image
         step.value = createStepText(buildStep.stepNumber, totalSteps)
-        partsImage.value = buildStep.partImage
+        partImage.value = buildStep.partImage
+        part2Image.value = buildStep.part2Image
         // TODO update parts quantity
-        partsQuantity.value = "${buildStep.stepNumber % 3 + 1}x"
+        partQuantity.value = "${buildStep.stepNumber % 3 + 1}x"
+        part2Quantity.value = "${buildStep.stepNumber % 5 + 1}x"
+        hasTwoParts.value = !part2Image.value.isNullOrEmpty()
     }
 
     private fun createStepText(actualStep: Int, totalSteps: Int) =
