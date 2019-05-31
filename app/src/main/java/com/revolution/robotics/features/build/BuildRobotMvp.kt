@@ -8,6 +8,7 @@ interface BuildRobotMvp : Mvp {
 
     interface View : Mvp.View {
         fun onBuildStepsLoaded(steps: List<BuildStep>)
+        fun onRobotSaved()
     }
 
     interface Presenter : Mvp.Presenter<View, BuildRobotViewModel> {

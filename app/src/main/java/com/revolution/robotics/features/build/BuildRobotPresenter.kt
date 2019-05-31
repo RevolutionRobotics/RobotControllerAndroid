@@ -45,10 +45,15 @@ class BuildRobotPresenter(
 
     override fun letsDrive() {
         controller?.let { controller ->
-            when (ControllerType.fromId(controller.type)) {
-                ControllerType.GAMER -> navigator.navigate(BuildRobotFragmentDirections.toPlayGamer())
-                ControllerType.MULTITASKER -> navigator.navigate(BuildRobotFragmentDirections.toPlayMultitasker())
-                ControllerType.DRIVER -> navigator.navigate(BuildRobotFragmentDirections.toPlayDriver())
+            userRobot?.let { robot ->
+                when (ControllerType.fromId(controller.type)) {
+                    ControllerType.GAMER ->
+                        navigator.navigate(BuildRobotFragmentDirections.toPlayGamer(robot.configurationId))
+                    ControllerType.MULTITASKER ->
+                        navigator.navigate(BuildRobotFragmentDirections.toPlayMultitasker(robot.configurationId))
+                    ControllerType.DRIVER ->
+                        navigator.navigate(BuildRobotFragmentDirections.toPlayDriver(robot.configurationId))
+                }
             }
         }
     }
@@ -67,7 +72,10 @@ class BuildRobotPresenter(
                 })
         } else {
             saveUserRobotInteractor.userRobot = userRobot
-            saveUserRobotInteractor.execute()
+            saveUserRobotInteractor.execute { savedRobot ->
+                this.userRobot = savedRobot
+                view?.onRobotSaved()
+            }
         }
     }
 
@@ -108,7 +116,10 @@ class BuildRobotPresenter(
         assignConfigIntoARobotInteractor.programs = programs
         userRobot?.let { userRobot ->
             assignConfigIntoARobotInteractor.userRobot = userRobot
-            assignConfigIntoARobotInteractor.execute({}, {
+            assignConfigIntoARobotInteractor.execute({ savedRobot ->
+                this.userRobot = savedRobot
+                view?.onRobotSaved()
+            }, {
                 // TODO Error handling
             })
         }

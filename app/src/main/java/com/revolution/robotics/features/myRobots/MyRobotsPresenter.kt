@@ -84,9 +84,12 @@ class MyRobotsPresenter(
         getControllerTypeInteractor.configurationId = configId
         getControllerTypeInteractor.execute { type ->
             when (type) {
-                ControllerType.GAMER -> navigator.navigate(MyRobotsFragmentDirections.toPlayGamer())
-                ControllerType.MULTITASKER -> navigator.navigate(MyRobotsFragmentDirections.toPlayMultitasker())
-                ControllerType.DRIVER -> navigator.navigate(MyRobotsFragmentDirections.toPlayDriver())
+                ControllerType.GAMER ->
+                    navigator.navigate(MyRobotsFragmentDirections.toPlayGamer(configId))
+                ControllerType.MULTITASKER ->
+                    navigator.navigate(MyRobotsFragmentDirections.toPlayMultitasker(configId))
+                ControllerType.DRIVER ->
+                    navigator.navigate(MyRobotsFragmentDirections.toPlayDriver(configId))
             }
         }
     }

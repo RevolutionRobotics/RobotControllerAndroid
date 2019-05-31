@@ -119,6 +119,9 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
             lastModified = Date(System.currentTimeMillis())
             presenter.saveUserRobot(this, true)
         }
+    }
+
+    override fun onRobotSaved() {
         BuildFinishedDialog.newInstance().show(fragmentManager)
     }
 }
