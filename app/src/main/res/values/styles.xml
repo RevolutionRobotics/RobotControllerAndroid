@@ -38,4 +38,10 @@
         <item name="android:textSize">14sp</item>
     </style>
 
+    <style name="ProgramButtonLabel">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:fontFamily">@font/jura_bold</item>
+    </style>
+
 </resources>

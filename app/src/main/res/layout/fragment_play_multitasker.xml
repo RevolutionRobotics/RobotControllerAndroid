@@ -87,6 +87,9 @@
                 android:layout_marginTop="@dimen/dimen_8dp"
                 android:layout_marginEnd="@dimen/dimen_8dp"/>
 
+        <include layout="@layout/include_play_button_labels"
+                 app:viewModel="@{viewModel}"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
