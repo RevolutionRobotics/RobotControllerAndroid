@@ -16,4 +16,6 @@ class PlayDriverFragment : PlayFragment() {
             leverRight.onAxisChanged { x -> presenter.onJoystickXAxisChanged(x) }
         }
     }
+
+    override fun getContentBinding() = contentBinding
 }

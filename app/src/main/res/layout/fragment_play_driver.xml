@@ -96,6 +96,9 @@
                 android:layout_width="@dimen/play_joystick_handle_size"
                 android:layout_height="@dimen/lever_height"/>
 
+        <include layout="@layout/include_play_button_labels"
+                 app:viewModel="@{viewModel}"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
