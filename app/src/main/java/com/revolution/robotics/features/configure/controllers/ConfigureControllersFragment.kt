@@ -59,12 +59,14 @@ class ConfigureControllersFragment : BaseFragment<FragmentConfigureControllersBi
 
     override fun onDialogEvent(event: DialogEvent) {
         if (event == DialogEvent.DELETE_CONTROLLER) {
-            if (adapter.selectedPosition == adapter.count - 1) {
-                adapter.selectedPosition--
+            val selectedPosition = if (adapter.selectedPosition == adapter.count - 1) {
+                adapter.selectedPosition - 1
+            } else {
+                adapter.selectedPosition
             }
             adapter.removeItems { it.userController.id == controllerDeleteId }
             presenter.deleteController(controllerDeleteId, adapter.selectedPosition)
-            binding?.controllersViewpager?.reInitTransformerWithDelay()
+            binding?.controllersViewpager?.reInitTransformerWithDelay(selectedPosition)
             controllerDeleteId = -1
         }
     }

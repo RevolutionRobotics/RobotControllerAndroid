@@ -39,11 +39,7 @@ data class MyRobotsItem(
         }
     }
 
-    fun onEditClicked() {
-        if (!isUnderConstruction) presenter.onEditSelected(robot)
-    }
-
-    fun onDeleteClicked() {
-        presenter.onDeleteSelected(robot)
+    fun onMoreInfoClicked() {
+        presenter.onMorInfoClicked(robot)
     }
 }

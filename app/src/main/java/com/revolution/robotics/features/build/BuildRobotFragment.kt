@@ -92,6 +92,7 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
                 }
             DialogEvent.SKIP_TESTING, DialogEvent.TEST_WORKS -> binding?.seekbar?.next()
             DialogEvent.LETS_DRIVE -> presenter.letsDrive()
+            else -> Unit
         }
     }
 

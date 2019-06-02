@@ -14,7 +14,7 @@ import com.revolution.robotics.core.extensions.waitForLayout
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.databinding.FragmentMyRobotsBinding
 import com.revolution.robotics.features.myRobots.adapter.MyRobotsCarouselAdapter
-import com.revolution.robotics.features.myRobots.delete.DeleteRobotDialog
+import com.revolution.robotics.features.myRobots.info.InfoRobotDialog
 import com.revolution.robotics.views.carousel.initCarouselPadding
 import com.revolution.robotics.views.carousel.initCarouselVariables
 import com.revolution.robotics.views.carousel.initTransformerWithDelay
@@ -30,8 +30,6 @@ class MyRobotsFragment : BaseFragment<FragmentMyRobotsBinding, MyRobotsViewModel
     private val dialogEventBus: DialogEventBus by kodein.instance()
 
     private lateinit var adapter: MyRobotsCarouselAdapter
-
-    private var robotToDelete: UserRobot? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = super.onCreateView(inflater, container, savedInstanceState)
@@ -77,22 +75,41 @@ class MyRobotsFragment : BaseFragment<FragmentMyRobotsBinding, MyRobotsViewModel
         presenter.onPageSelected(position)
     }
 
-    override fun deleteRobot(userRobot: UserRobot) {
-        robotToDelete = userRobot
-        DeleteRobotDialog.newInstance().show(fragmentManager)
+    override fun onDialogEvent(event: DialogEvent) {
+        when (event) {
+            DialogEvent.DELETE_ROBOT -> handleDeleteRobotEvent(event)
+            DialogEvent.EDIT_ROBOT -> handleEditRobot(event)
+            DialogEvent.DUPLICATE_ROBOT -> handleDuplicateRobotEvent(event)
+            else -> Unit
+        }
     }
 
-    override fun onDialogEvent(event: DialogEvent) {
-        if (event == DialogEvent.DELETE_ROBOT && robotToDelete != null) {
-            robotToDelete?.let { robotToDelete ->
-                if (adapter.selectedPosition == adapter.count - 1) {
-                    adapter.selectedPosition--
-                }
-                adapter.removeItems { it.id == robotToDelete.instanceId }
-                presenter.deleteRobot(robotToDelete, adapter.selectedPosition)
-                binding?.myRobotsViewpager?.reInitTransformerWithDelay()
-                this.robotToDelete = null
+    private fun handleDuplicateRobotEvent(event: DialogEvent) {
+        event.extras.getParcelable<UserRobot>(InfoRobotDialog.KEY_ROBOT)?.let { robot ->
+            binding?.myRobotsViewpager?.reInitTransformerWithDelay(adapter.selectedPosition + 1)
+            presenter.duplicateRobot(robot)
+        }
+    }
+
+    private fun handleEditRobot(event: DialogEvent) {
+        event.extras.getParcelable<UserRobot>(InfoRobotDialog.KEY_ROBOT)?.let { robot ->
+            if (adapter.selectedPosition == adapter.count - 1) {
+                adapter.selectedPosition--
             }
+            presenter.onEditSelected(robot)
+        }
+    }
+
+    private fun handleDeleteRobotEvent(event: DialogEvent) {
+        event.extras.getParcelable<UserRobot>(InfoRobotDialog.KEY_ROBOT)?.let { robotToDelete ->
+            val selectedPosition = if (adapter.selectedPosition == adapter.count - 1) {
+                adapter.selectedPosition - 1
+            } else {
+                adapter.selectedPosition
+            }
+            adapter.removeItems { it.id == robotToDelete.instanceId }
+            presenter.deleteRobot(robotToDelete, adapter.selectedPosition)
+            binding?.myRobotsViewpager?.reInitTransformerWithDelay(selectedPosition)
         }
     }
 }
