@@ -29,7 +29,7 @@ fun createMainModule() =
         bind<ConfigurationEventBus>() with s { ConfigurationEventBus() }
         bind<BluetoothManager>() with s { BluetoothManager(kodein) }
         bind<RoboticsDeviceConnector>() with s { RoboticsDeviceConnector() }
-        bind<UserConfigurationStorage>() with s { UserConfigurationStorage() }
+        bind<UserConfigurationStorage>() with s { UserConfigurationStorage(i(), i()) }
         bind<CompatibleProgramFilterer>() with p { CompatibleProgramFilterer(instance()) }
     }
 

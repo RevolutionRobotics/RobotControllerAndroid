@@ -8,11 +8,9 @@ import com.revolution.robotics.core.extensions.withArguments
 import com.revolution.robotics.core.utils.BundleArgumentDelegate
 import com.revolution.robotics.core.utils.CameraHelper
 import com.revolution.robotics.databinding.DialogRobotPictureBinding
-import com.revolution.robotics.features.configure.UserConfigurationStorage
 import com.revolution.robotics.views.dialogs.DialogButton
 import com.revolution.robotics.views.dialogs.DialogFace
 import com.revolution.robotics.views.dialogs.RoboticsDialog
-import org.kodein.di.erased.instance
 
 class RobotPictureDialog : RoboticsDialog() {
 
@@ -30,7 +28,6 @@ class RobotPictureDialog : RoboticsDialog() {
     }
 
     private val dialogFace = RobotPictureDialogFace()
-    private val userConfigurationStorage: UserConfigurationStorage by kodein.instance()
     private lateinit var cameraHelper: CameraHelper
     private var defaultCoverImage: String? = null
 

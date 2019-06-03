@@ -6,10 +6,7 @@ import com.revolution.robotics.core.domain.local.UserRobot
 import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
 import com.revolution.robotics.core.interactor.GetUserConfigurationInteractor
-import com.revolution.robotics.core.interactor.UpdateUserRobotInteractor
-import com.revolution.robotics.core.kodein.utils.ApplicationContextProvider
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
-import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.features.configure.robotPicture.RobotPictureDialog
 import com.revolution.robotics.features.configure.save.SaveRobotDialog
 
@@ -17,12 +14,9 @@ import com.revolution.robotics.features.configure.save.SaveRobotDialog
 class ConfigurePresenter(
     private val configurationEventBus: ConfigurationEventBus,
     private val getUserConfigurationInteractor: GetUserConfigurationInteractor,
-    private val updateUserRobotInteractor: UpdateUserRobotInteractor,
     private val dialogEventBus: DialogEventBus,
-    private val navigator: Navigator,
     private val userConfigurationStorage: UserConfigurationStorage,
-    private val resourceResolver: ResourceResolver,
-    private val applicationContextProvider: ApplicationContextProvider
+    private val resourceResolver: ResourceResolver
 ) : ConfigureMvp.Presenter,
     ConfigurationEventBus.Listener, DialogEventBus.Listener {
 
@@ -90,22 +84,11 @@ class ConfigurePresenter(
 
     override fun onDialogEvent(event: DialogEvent) {
         if (event == DialogEvent.SAVE_ROBOT) {
-            userRobot?.let { robot ->
-                userConfigurationStorage.userConfiguration?.let { config ->
-                    robot.name = event.extras.getString(SaveRobotDialog.KEY_NAME)
-                    robot.description = event.extras.getString(SaveRobotDialog.KEY_DESCRIPTION)
-                    updateUserRobotInteractor.userConfiguration = config
-                    updateUserRobotInteractor.userRobot = robot
-                    toolbarViewModel?.title?.set(robot.name)
-                    updateUserRobotInteractor.execute { savedRobot ->
-                        selectedTab = ConfigurationTabs.CONNECTIONS
-                        selectedConfigId = -1
-                        userConfigurationStorage.userConfiguration = null
-                        userConfigurationStorage.controllerHolder = null
-                        navigator.popUntil(R.id.myRobotsFragment)
-                    }
-                }
-            }
+            userConfigurationStorage.setRobotName(
+                event.extras.getString(SaveRobotDialog.KEY_NAME) ?: "",
+                event.extras.getString(SaveRobotDialog.KEY_DESCRIPTION) ?: ""
+            )
+            toolbarViewModel?.title?.set(event.extras.getString(SaveRobotDialog.KEY_NAME) ?: "")
         }
     }
 
@@ -135,17 +118,17 @@ class ConfigurePresenter(
     }
 
     override fun onMotorConfigChangedEvent(event: MotorPort) {
-        userConfigurationStorage.userConfiguration?.let { config ->
-            config.mappingId?.updateMotorPort(event)
-            view?.updateConfig(config)
+        userConfigurationStorage.updateMotorPort(event)
+        userConfigurationStorage.userConfiguration?.let {
+            view?.updateConfig(it)
         }
         view?.hideDrawer()
     }
 
     override fun onSensorConfigChangedEvent(event: SensorPort) {
-        userConfigurationStorage.userConfiguration?.let { config ->
-            config.mappingId?.updateSensorPort(event)
-            view?.updateConfig(config)
+        userConfigurationStorage.updateSensorPort(event)
+        userConfigurationStorage.userConfiguration?.let {
+            view?.updateConfig(it)
         }
         view?.hideDrawer()
     }
