@@ -151,6 +151,7 @@ class MyRobotsPresenter(
                 notifyChange()
             }
         }
+        model?.currentPosition?.set(0)
         view?.onRobotsChanged()
     }
 }

@@ -334,5 +334,6 @@
     <string name="error_test_code_upload">Test code upload error</string>
     
     <string name="dialog_robot_info_edit">Let’s edit the configuration to play with this robot!</string>
+    <string name="duplicated_robot_name_suffix">Copy</string>
 
 </resources>
