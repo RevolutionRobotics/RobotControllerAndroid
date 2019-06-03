@@ -1,7 +1,7 @@
 package com.revolution.robotics.features.configure.controller.program.priority
 
 import com.revolution.robotics.R
-import com.revolution.robotics.core.extensions.formatYearMonthDayDotted
+import com.revolution.robotics.core.extensions.formatYearMonthDay
 import com.revolution.robotics.core.utils.recyclerview.DiffUtilRecyclerAdapter
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 
@@ -27,7 +27,7 @@ class ProgramPriorityItemViewModel(
         get() {
             return "$position."
         }
-    val formattedDate = userProgramBindingItem.lastModified.formatYearMonthDayDotted()
+    val formattedDate = userProgramBindingItem.lastModified.formatYearMonthDay()
     val name = userProgramBindingItem.name
     val icon = if (userProgramBindingItem.type == ProgramType.BACKGROUND) {
         R.drawable.ic_bg_program
