@@ -57,7 +57,7 @@ class ChallengeDetailPresenter(
     }
 
     private fun saveProgress(currentProgress: Int) {
-        getCategoriesInteractor.execute({ categories ->
+        getCategoriesInteractor.execute { categories ->
             categories.find { it.id == categoryId }?.let { category ->
                 category.challenges.indexOfFirst { it.id == challengeId }.let { index ->
                     if (index + 1 > currentProgress) {
@@ -66,9 +66,7 @@ class ChallengeDetailPresenter(
                     view?.showChallengeFinishedDialog(category.challenges.getOrNull(index + 1))
                 }
             }
-        }, {
-            // TODO Error handling
-        })
+        }
     }
 
     private fun getCurrentProgress(categoryId: String?) {

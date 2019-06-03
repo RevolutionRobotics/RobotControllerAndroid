@@ -8,13 +8,15 @@ import com.revolution.robotics.features.build.testing.MotorTestDialog
 import com.revolution.robotics.features.configure.ConfigurationEventBus
 import com.revolution.robotics.features.configure.MotorPort
 import com.revolution.robotics.features.configure.UserConfigurationStorage
+import com.revolution.robotics.features.shared.ErrorHandler
 import com.revolution.robotics.views.ChippedEditTextViewModel
 
 @Suppress("ComplexInterface", "TooManyFunctions")
 class MotorConfigurationPresenter(
     private val resourceResolver: ResourceResolver,
     private val configurationEventBus: ConfigurationEventBus,
-    private val userConfigurationStorage: UserConfigurationStorage
+    private val userConfigurationStorage: UserConfigurationStorage,
+    private val errorHandler: ErrorHandler
 ) : MotorConfigurationMvp.Presenter {
 
     override var view: MotorConfigurationMvp.View? = null
@@ -143,7 +145,7 @@ class MotorConfigurationPresenter(
                     portName ?: ""
                 )
             ) {
-                view?.showError(resourceResolver.string(R.string.error_variable_already_in_use) ?: "")
+                errorHandler.onError(R.string.error_variable_already_in_use)
             } else {
                 when {
                     model?.driveTrainButton?.isSelected?.get() == true -> setDrivetrainValues(this)

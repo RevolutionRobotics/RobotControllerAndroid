@@ -16,7 +16,6 @@ class UpdateUserRobotInteractor(
 
     @Suppress("SwallowedException")
     override fun getData(): UserRobot {
-        // TODO we always do this IF-ELSE - refactor this
         val configurationId = if (userConfiguration.id == 0) {
             saveConfigurationDao.saveUserConfiguration(userConfiguration)
         } else {
