@@ -22,7 +22,7 @@ open class BaseDialog : DialogFragment() {
     }
 
     override fun onDismiss(dialog: DialogInterface?) {
-        requireActivity().window?.hideSystemUI()
+        activity?.window?.hideSystemUI()
         super.onDismiss(dialog)
     }
 

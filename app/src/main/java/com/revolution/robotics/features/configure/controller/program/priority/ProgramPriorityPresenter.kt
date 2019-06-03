@@ -61,16 +61,12 @@ class ProgramPriorityPresenter(
             userConfigurationStorage.controllerHolder?.backgroundBindings?.let {
                 saveUserControllerInteractor.backgroundProgramBindings = it
             }
-            userConfigurationStorage.controllerHolder?.userController?.let { userController ->
-                userController.name = event.extras.getString(SaveControllerDialog.KEY_NAME)
-                userController.description = event.extras.getString(SaveControllerDialog.KEY_DESCRIPTION)
-                userController.robotId = userConfigurationStorage.robot?.instanceId ?: 0
-                saveUserControllerInteractor.userController = userController
-            }
-            saveUserControllerInteractor.execute {
-                userConfigurationStorage.controllerHolder = null
-                navigator.popUntil(R.id.configureFragment)
-            }
+            userConfigurationStorage.setControllerName(
+                event.extras.getString(SaveControllerDialog.KEY_NAME) ?: "",
+                event.extras.getString(SaveControllerDialog.KEY_DESCRIPTION) ?: ""
+            )
+            userConfigurationStorage.controllerHolder = null
+            navigator.popUntil(R.id.configureFragment)
         }
     }
 

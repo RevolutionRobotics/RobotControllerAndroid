@@ -133,7 +133,7 @@ fun createInteractorModule() =
         bind<GetUserControllersInteractor>() with p { GetUserControllersInteractor(i()) }
         bind<GetUserControllerInteractor>() with p { GetUserControllerInteractor(i(), i(), i()) }
         bind<RemoveUserControllerInteractor>() with p { RemoveUserControllerInteractor(i()) }
-        bind<SaveUserControllerInteractor>() with p { SaveUserControllerInteractor(i(), i(), i(), i(), i()) }
+        bind<SaveUserControllerInteractor>() with p { SaveUserControllerInteractor(i(), i(), i(), i()) }
         bind<SaveUserProgramInteractor>() with p { SaveUserProgramInteractor(i()) }
         bind<RemoveUserProgramInteractor>() with p { RemoveUserProgramInteractor(i()) }
         bind<GetUserChallengeCategoriesInteractor>() with p { GetUserChallengeCategoriesInteractor(i()) }
@@ -154,7 +154,7 @@ fun createPresenterModule() =
         bind<ChapterFinishedMvp.Presenter>() with s { ChapterFinishedPresenter(i()) }
         bind<BuildRobotMvp.Presenter>() with s { BuildRobotPresenter(i(), i(), i(), i(), i(), i(), i()) }
         bind<ConnectMvp.Presenter>() with s { ConnectPresenter(i(), i()) }
-        bind<ConfigureMvp.Presenter>() with s { ConfigurePresenter(i(), i(), i(), i(), i(), i(), i(), i()) }
+        bind<ConfigureMvp.Presenter>() with s { ConfigurePresenter(i(), i(), i(), i(), i()) }
         bind<ConfigureConnectionsMvp.Presenter>() with s { ConfigureConnectionsPresenter(i(), i(), i()) }
         bind<MotorConfigurationMvp.Presenter>() with s { MotorConfigurationPresenter(i(), i(), i()) }
         bind<SensorConfigurationMvp.Presenter>() with s { SensorConfigurationPresenter(i(), i(), i()) }

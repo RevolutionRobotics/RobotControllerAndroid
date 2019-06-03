@@ -98,6 +98,9 @@ class ConfigureControllersPresenter(
         deleteControllerInteractor.controllerId = controllerId
         deleteControllerInteractor.execute()
         currentPosition = selectedPosition
+        if (userConfigurationStorage.userConfiguration?.controller == controllerId) {
+            userConfigurationStorage.userConfiguration?.controller = null
+        }
 
         model?.controllersList?.apply {
             get()?.toMutableList()?.apply {

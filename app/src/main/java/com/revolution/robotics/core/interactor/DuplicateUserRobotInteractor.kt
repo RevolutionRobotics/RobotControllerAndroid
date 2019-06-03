@@ -80,17 +80,15 @@ class DuplicateUserRobotInteractor(
     }
 
     private fun copyRobotImage(oldRobotId: Int, newRobotId: Int) {
-        val oldImage = CameraHelper.getImageFile(
-            applicationContextProvider.applicationContext,
-            CameraHelper.generateFilenameForRobot(oldRobotId, false)
-        )
+        val oldImage = getImageForRobot(oldRobotId)
         if (oldImage.exists()) {
-            oldImage.copyTo(
-                CameraHelper.getImageFile(
-                    applicationContextProvider.applicationContext,
-                    CameraHelper.generateFilenameForRobot(newRobotId, false)
-                )
-            )
+            oldImage.copyTo(getImageForRobot(newRobotId))
         }
     }
+
+    private fun getImageForRobot(robotId: Int) =
+        CameraHelper.getImageFile(
+            applicationContextProvider.applicationContext,
+            CameraHelper.generateFilenameForRobot(robotId)
+        )
 }

@@ -7,10 +7,15 @@ import com.revolution.robotics.core.domain.local.UserMapping
 import com.revolution.robotics.core.domain.local.UserProgram
 import com.revolution.robotics.core.domain.local.UserProgramBinding
 import com.revolution.robotics.core.domain.local.UserRobot
+import com.revolution.robotics.core.interactor.SaveUserControllerInteractor
+import com.revolution.robotics.core.interactor.UpdateUserRobotInteractor
 import com.revolution.robotics.features.configure.controller.ControllerButton
 
 @Suppress("TooManyFunctions")
-class UserConfigurationStorage {
+class UserConfigurationStorage(
+    val updateUserRobotInteractor: UpdateUserRobotInteractor,
+    val saveUserControllerInteractor: SaveUserControllerInteractor
+) {
 
     companion object {
         const val ALLOWED_DIGITS_REGEXP = "[a-zA-Z0-9]+"
@@ -19,9 +24,22 @@ class UserConfigurationStorage {
     var robot: UserRobot? = null
     var userConfiguration: UserConfiguration? = null
     var controllerHolder: UserControllerWithPrograms? = null
-    var deleteRobotImage = false
 
     fun isUsedVariableName(name: String, portName: String): Boolean = collectVariableNames(portName).contains(name)
+
+    fun updateSensorPort(sensorPort: SensorPort) {
+        userConfiguration?.let { config ->
+            config.mappingId?.updateSensorPort(sensorPort)
+        }
+        updateRobot()
+    }
+
+    fun updateMotorPort(motorPort: MotorPort) {
+        userConfiguration?.let { config ->
+            config.mappingId?.updateMotorPort(motorPort)
+        }
+        updateRobot()
+    }
 
     fun addButtonProgram(userProgram: UserProgram, buttonName: ControllerButton) {
         when (buttonName) {
@@ -39,6 +57,7 @@ class UserConfigurationStorage {
                 getNewProgramBinding(userProgram, controllerHolder?.userController?.mapping?.b6)
         }
         controllerHolder?.programs?.put(userProgram.id, userProgram)
+        updateUserController()
     }
 
     fun removeButtonProgram(button: ControllerButton) {
@@ -68,6 +87,7 @@ class UserConfigurationStorage {
                 controllerHolder?.userController?.mapping?.b6 = null
             }
         }
+        updateUserController()
     }
 
     fun getPriority(userProgramId: Int) = getAllButtonPrograms().find { it?.programId == userProgramId }?.priority
@@ -96,6 +116,7 @@ class UserConfigurationStorage {
             )
         )
         controllerHolder?.programs?.put(userProgram.id, userProgram)
+        updateUserController()
     }
 
     fun removeBackgroundProgram(userProgram: UserProgram) {
@@ -118,6 +139,42 @@ class UserConfigurationStorage {
         controllerHolder?.userController?.getMappingList()?.forEach { binding ->
             if (binding?.programId == userProgram.id) {
                 binding.priority = priority
+            }
+        }
+        updateUserController()
+    }
+
+    fun setRobotName(name: String, description: String) {
+        robot?.name = name
+        robot?.description = description
+        updateRobot()
+    }
+
+    fun setControllerName(name: String, description: String) {
+        controllerHolder?.userController?.name = name
+        controllerHolder?.userController?.description = description
+        updateUserController()
+    }
+
+    private fun updateUserController() {
+        controllerHolder?.userController?.let { userController ->
+            saveUserControllerInteractor.userController = userController
+            saveUserControllerInteractor.backgroundProgramBindings = controllerHolder?.backgroundBindings ?: emptyList()
+            userController.robotId = robot?.instanceId ?: 0
+            saveUserControllerInteractor.execute { controller ->
+                if (userConfiguration?.controller == null || userConfiguration?.controller == 0) {
+                    userConfiguration?.controller = controller.id
+                }
+            }
+        }
+    }
+
+    private fun updateRobot() {
+        userConfiguration?.let { config ->
+            robot?.let { robot ->
+                updateUserRobotInteractor.userConfiguration = config
+                updateUserRobotInteractor.userRobot = robot
+                updateUserRobotInteractor.execute()
             }
         }
     }

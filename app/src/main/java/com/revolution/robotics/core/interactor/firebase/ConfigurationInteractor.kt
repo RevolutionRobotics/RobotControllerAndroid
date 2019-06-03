@@ -16,9 +16,9 @@ class ConfigurationInteractor : FirebaseCustomObjectReadInteractor<Configuration
         val json = gson.toJson(snapShot.value)
         val list: List<Configuration> =
             gson.fromJson(json, object : TypeToken<List<Configuration>>() {}.type) ?: emptyList()
-        return list.first()
+        return list.first { it.id == configId }
     }
 
     override fun getDatabaseReference(database: FirebaseDatabase): Query =
-        database.getReference("configuration").orderByChild("id").equalTo(configId.toDouble()).limitToFirst(1)
+        database.getReference("configuration")
 }
