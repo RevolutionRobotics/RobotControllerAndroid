@@ -142,7 +142,7 @@ fun createInteractorModule() =
         bind<GetControllerTypeInteractor>() with p { GetControllerTypeInteractor(i(), i()) }
         bind<FirebaseInitInteractor>() with p { FirebaseInitInteractor() }
         bind<SaveUserRobotInteractor>() with p { SaveUserRobotInteractor(i()) }
-        bind<DuplicateUserRobotInteractor>() with p { DuplicateUserRobotInteractor(i(), i(), i(), i(), i()) }
+        bind<DuplicateUserRobotInteractor>() with p { DuplicateUserRobotInteractor(i(), i(), i(), i(), i(), i()) }
     }
 
 @Suppress("LongMethod")

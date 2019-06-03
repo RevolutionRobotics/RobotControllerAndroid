@@ -10,9 +10,9 @@ import com.revolution.robotics.features.myRobots.adapter.MyRobotsItem
 
 class MyRobotsViewModel(private val presenter: MyRobotsMvp.Presenter) : ViewModel() {
     val robotsList: ObservableField<MutableList<MyRobotsItem>?> = ObservableField()
-    val currentPosition: ObservableInt = ObservableInt()
     val isNextButtonVisible: ObservableBoolean = ObservableBoolean(false)
     val isPreviousButtonVisible: ObservableBoolean = ObservableBoolean(false)
+    val currentPosition: ObservableInt = ObservableInt()
     var isEmpty = ObservableBoolean(true)
 
     init {

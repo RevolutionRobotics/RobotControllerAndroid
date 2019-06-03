@@ -33,6 +33,9 @@ class MyRobotsPresenter(
 
     private fun loadRobots() {
         getAllUserRobotsInteractor.execute { robots ->
+            if (model?.robotsList?.get()?.size != robots.size) {
+                model?.currentPosition?.set(0)
+            }
             model?.robotsList?.set(robots.map { robot ->
                 MyRobotsItem(
                     robot.instanceId,
@@ -148,6 +151,7 @@ class MyRobotsPresenter(
                 notifyChange()
             }
         }
+        model?.currentPosition?.set(0)
         view?.onRobotsChanged()
     }
 }

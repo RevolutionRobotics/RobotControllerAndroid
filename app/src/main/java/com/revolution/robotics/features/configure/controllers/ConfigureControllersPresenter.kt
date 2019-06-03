@@ -25,7 +25,15 @@ class ConfigureControllersPresenter(
     override var view: ConfigureControllersMvp.View? = null
     override var model: ConfigureControllersViewModel? = null
 
+    var currentPosition = 0
+    var currentRobotId = 0
+    var itemCount = 0
+
     override fun loadControllers(robotId: Int) {
+        if (currentRobotId != robotId) {
+            currentRobotId = robotId
+            currentPosition = 0
+        }
         controllersInteractor.robotId = robotId
         controllersInteractor.execute { controllers ->
             model?.controllersList?.set(
@@ -40,7 +48,11 @@ class ConfigureControllersPresenter(
                     )
                 }
             )
-            view?.onControllersChanged()
+            if (itemCount != controllers.size) {
+                currentPosition = 0
+                itemCount = controllers.size
+            }
+            view?.onControllersChanged(currentPosition)
         }
     }
 
@@ -48,11 +60,11 @@ class ConfigureControllersPresenter(
         model?.run {
             val list = controllersList.get() ?: return
             if (list.isNotEmpty()) {
-                if (currentPosition.get() < list.size) {
-                    list[currentPosition.get()].isSelected.set(false)
+                if (currentPosition < list.size) {
+                    list[currentPosition].isSelected.set(false)
                 }
                 list[position].isSelected.set(true)
-                currentPosition.set(position)
+                currentPosition = position
                 updateButtonsVisibility(position)
             }
         }
@@ -85,6 +97,7 @@ class ConfigureControllersPresenter(
     override fun deleteController(controllerId: Int, selectedPosition: Int) {
         deleteControllerInteractor.controllerId = controllerId
         deleteControllerInteractor.execute()
+        currentPosition = selectedPosition
 
         model?.controllersList?.apply {
             get()?.toMutableList()?.apply {
@@ -93,7 +106,7 @@ class ConfigureControllersPresenter(
             }
         }
         updateButtonsVisibility(selectedPosition)
-        view?.onControllersChanged()
+        view?.onControllersChanged(currentPosition)
     }
 
     override fun onDeleteSelected(item: ControllersItem) {

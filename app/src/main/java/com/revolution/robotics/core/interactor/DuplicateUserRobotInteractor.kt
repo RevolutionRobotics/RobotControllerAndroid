@@ -1,5 +1,6 @@
 package com.revolution.robotics.core.interactor
 
+import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.local.UserBackgroundProgramBinding
 import com.revolution.robotics.core.domain.local.UserBackgroundProgramBindingDao
 import com.revolution.robotics.core.domain.local.UserConfiguration
@@ -8,6 +9,7 @@ import com.revolution.robotics.core.domain.local.UserControllerDao
 import com.revolution.robotics.core.domain.local.UserRobot
 import com.revolution.robotics.core.domain.local.UserRobotDao
 import com.revolution.robotics.core.kodein.utils.ApplicationContextProvider
+import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.core.utils.CameraHelper
 import java.util.Date
 
@@ -16,7 +18,8 @@ class DuplicateUserRobotInteractor(
     private val backgroundProgramBindingDao: UserBackgroundProgramBindingDao,
     private val controllerDao: UserControllerDao,
     private val userConfigurationDao: UserConfigurationDao,
-    private val applicationContextProvider: ApplicationContextProvider
+    private val applicationContextProvider: ApplicationContextProvider,
+    private val resourceResolver: ResourceResolver
 ) : Interactor<UserRobot>() {
 
     lateinit var currentRobot: UserRobot
@@ -27,6 +30,7 @@ class DuplicateUserRobotInteractor(
         val currentConfigCopy = copyConfig()
         robotCopy.configurationId = currentConfigCopy?.id ?: 0
         robotCopy.lastModified = Date(System.currentTimeMillis())
+        robotCopy.name = "${robotCopy.name} ${resourceResolver.string(R.string.duplicated_robot_name_suffix)}"
 
         robotCopy.instanceId = 0
         robotCopy.instanceId = userRobotDao.saveUserRobot(robotCopy).toInt()

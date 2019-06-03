@@ -17,7 +17,6 @@ import com.revolution.robotics.features.myRobots.adapter.MyRobotsCarouselAdapter
 import com.revolution.robotics.features.myRobots.info.InfoRobotDialog
 import com.revolution.robotics.views.carousel.initCarouselPadding
 import com.revolution.robotics.views.carousel.initCarouselVariables
-import com.revolution.robotics.views.carousel.initTransformerWithDelay
 import com.revolution.robotics.views.carousel.reInitTransformerWithDelay
 import org.kodein.di.erased.instance
 
@@ -55,7 +54,7 @@ class MyRobotsFragment : BaseFragment<FragmentMyRobotsBinding, MyRobotsViewModel
 
     override fun onRobotsChanged() {
         adapter.notifyDataSetChanged()
-        binding?.myRobotsViewpager?.initTransformerWithDelay()
+        binding?.myRobotsViewpager?.reInitTransformerWithDelay(viewModel?.currentPosition?.get() ?: 0)
     }
 
     override fun showNextRobot() {

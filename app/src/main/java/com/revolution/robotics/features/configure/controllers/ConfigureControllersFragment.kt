@@ -15,7 +15,6 @@ import com.revolution.robotics.features.configure.controllers.adapter.Controller
 import com.revolution.robotics.features.controllers.delete.DeleteControllerDialog
 import com.revolution.robotics.views.carousel.initCarouselPadding
 import com.revolution.robotics.views.carousel.initCarouselVariables
-import com.revolution.robotics.views.carousel.initTransformerWithDelay
 import com.revolution.robotics.views.carousel.reInitTransformerWithDelay
 import org.kodein.di.erased.instance
 
@@ -52,9 +51,9 @@ class ConfigureControllersFragment : BaseFragment<FragmentConfigureControllersBi
         super.onDestroyView()
     }
 
-    override fun onControllersChanged() {
+    override fun onControllersChanged(currentPosition: Int) {
         adapter.notifyDataSetChanged()
-        binding?.controllersViewpager?.initTransformerWithDelay()
+        binding?.controllersViewpager?.reInitTransformerWithDelay(currentPosition)
     }
 
     override fun onDialogEvent(event: DialogEvent) {

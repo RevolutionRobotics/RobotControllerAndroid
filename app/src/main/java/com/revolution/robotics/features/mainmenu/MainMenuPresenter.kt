@@ -38,7 +38,7 @@ class MainMenuPresenter(
     }
 
     override fun onCommunityClicked() {
-        navigator.navigate(MainMenuFragmentDirections.toCommunity())
+        // navigator.navigate(MainMenuFragmentDirections.toCommunity())
     }
 
     override fun onSettingsClicked() {
@@ -47,6 +47,9 @@ class MainMenuPresenter(
 
     override fun onTutorialButtonClicked() {
         appPrefs.showTutorial = false
+        tutorialViewModel?.tutorialItems?.forEach {
+            it.isActive.set(false)
+        }
         tutorialViewModel = null
         view?.removeTutorialLayout()
     }
