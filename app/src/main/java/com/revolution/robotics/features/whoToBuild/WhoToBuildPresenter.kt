@@ -35,20 +35,15 @@ class WhoToBuildPresenter(
     }
 
     private fun loadRobots() {
-        robotsInteractor.execute(
-            onResponse = { response ->
-                model?.apply {
-                    currentPosition.set(0)
-                    robotsList.value = response.map { robot -> RobotsItem(robot, this@WhoToBuildPresenter) }
-                    robotsList.value?.firstOrNull()?.isSelected?.set(true)
-                    updateButtonsVisibility(0)
-                    view?.onRobotsLoaded()
-                }
-            },
-            onError = { error ->
-                // TODO add error handling
-                error.printStackTrace()
-            })
+        robotsInteractor.execute { response ->
+            model?.apply {
+                currentPosition.set(0)
+                robotsList.value = response.map { robot -> RobotsItem(robot, this@WhoToBuildPresenter) }
+                robotsList.value?.firstOrNull()?.isSelected?.set(true)
+                updateButtonsVisibility(0)
+                view?.onRobotsLoaded()
+            }
+        }
     }
 
     override fun onPageSelected(position: Int) {

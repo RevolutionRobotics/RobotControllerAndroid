@@ -8,13 +8,15 @@ import com.revolution.robotics.features.build.testing.UltrasonicTestDialog
 import com.revolution.robotics.features.configure.ConfigurationEventBus
 import com.revolution.robotics.features.configure.SensorPort
 import com.revolution.robotics.features.configure.UserConfigurationStorage
+import com.revolution.robotics.features.shared.ErrorHandler
 import com.revolution.robotics.views.ChippedEditTextViewModel
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 
 class SensorConfigurationPresenter(
     private val resourceResolver: ResourceResolver,
     private val configurationEventBus: ConfigurationEventBus,
-    private val userConfigurationStorage: UserConfigurationStorage
+    private val userConfigurationStorage: UserConfigurationStorage,
+    private val errorHandler: ErrorHandler
 ) : SensorConfigurationMvp.Presenter {
 
     override var view: SensorConfigurationMvp.View? = null
@@ -141,24 +143,25 @@ class SensorConfigurationPresenter(
 
     override fun onDoneButtonClicked() {
         sensor?.apply {
-            if (userConfigurationStorage.isUsedVariableName(
+            val isUsedVariable =
+                userConfigurationStorage.isUsedVariableName(
                     this@SensorConfigurationPresenter.variableName ?: "",
                     portName ?: ""
                 )
-            ) {
-                view?.showError(resourceResolver.string(R.string.error_variable_already_in_use) ?: "")
+            if (isUsedVariable) {
+                errorHandler.onError(R.string.error_variable_already_in_use)
             } else {
-                type =
-                    when {
-                        model?.bumperButton?.isSelected?.get() == true -> Sensor.TYPE_BUMPER
-                        model?.ultrasoundButton?.isSelected?.get() == true -> Sensor.TYPE_ULTRASONIC
-                        else -> null
-                    }
-                variableName = if (model?.emptyButton?.isSelected?.get() == true) {
-                    ""
-                } else {
-                    this@SensorConfigurationPresenter.variableName
+                type = when {
+                    model?.bumperButton?.isSelected?.get() == true -> Sensor.TYPE_BUMPER
+                    model?.ultrasoundButton?.isSelected?.get() == true -> Sensor.TYPE_ULTRASONIC
+                    else -> null
                 }
+                variableName =
+                    if (model?.emptyButton?.isSelected?.get() == true) {
+                        ""
+                    } else {
+                        this@SensorConfigurationPresenter.variableName
+                    }
                 configurationEventBus.publishSensorUpdateEvent(SensorPort(this, portName))
             }
         }

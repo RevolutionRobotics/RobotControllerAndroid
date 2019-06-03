@@ -18,11 +18,7 @@ class ChallengeGroupPresenter(
 
     override fun register(view: ChallengeGroupMvp.View, model: ChallengeGroupViewModel?) {
         super.register(view, model)
-        challengeCategoriesInteractor.execute({
-            populateChallengeGroups(it)
-        }, {
-            // TODO Error handling
-        })
+        challengeCategoriesInteractor.execute { populateChallengeGroups(it) }
     }
 
     private fun populateChallengeGroups(groups: List<ChallengeCategory>) {

@@ -19,14 +19,10 @@ class ErrorHandler {
     }
 
     fun onError(customMessage: Int = R.string.error_general) {
-        context?.let {
-            Toast.makeText(it, customMessage, Toast.LENGTH_LONG).show()
-        }
+        context?.let { Toast.makeText(it, customMessage, Toast.LENGTH_LONG).show() }
     }
 
     fun onError(customMessage: String) {
-        context?.let {
-            Toast.makeText(it, customMessage, Toast.LENGTH_LONG).show()
-        }
+        context?.let { Toast.makeText(it, customMessage, Toast.LENGTH_LONG).show() }
     }
 }

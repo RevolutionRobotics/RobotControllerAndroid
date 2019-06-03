@@ -32,15 +32,9 @@ class BuildRobotPresenter(
 
     override fun loadBuildSteps(robotId: Int) {
         buildStepInteractor.robotId = robotId
-        buildStepInteractor.execute(
-            onResponse = { steps ->
-                view?.onBuildStepsLoaded(steps)
-            },
-            onError = { error ->
-                // TODO add error handling
-                error.printStackTrace()
-            }
-        )
+        buildStepInteractor.execute { steps ->
+            view?.onBuildStepsLoaded(steps)
+        }
     }
 
     override fun letsDrive() {
@@ -62,14 +56,10 @@ class BuildRobotPresenter(
         if (createDefaultConfig) {
             this.userRobot = userRobot
             configurationInteractor.configId = userRobot.configurationId
-            configurationInteractor.execute(
-                onResponse = { config ->
-                    configuration = config
-                    downloadControllerInfo(config.controller)
-                },
-                onError = {
-                    // TODO Error handling
-                })
+            configurationInteractor.execute { config ->
+                configuration = config
+                downloadControllerInfo(config.controller)
+            }
         } else {
             saveUserRobotInteractor.userRobot = userRobot
             saveUserRobotInteractor.execute { savedRobot ->
@@ -81,32 +71,26 @@ class BuildRobotPresenter(
 
     private fun downloadControllerInfo(controllerId: String?) {
         controllerInteractor.controllerId = controllerId ?: ""
-        controllerInteractor.execute({ controller ->
+        controllerInteractor.execute { controller ->
             this.controller = controller
             downloadPrograms(controller.getProgramIds())
-        }, {
-            // TODO Error handling
-        })
+        }
     }
 
     private fun downloadPrograms(ids: List<String>) {
         programsInteractor.programIds = ids
-        programsInteractor.execute({ programs ->
+        programsInteractor.execute { programs ->
             createLocalObjects(configuration, controller, programs)
-        }, {
-            // TODO Error handling
-        })
+        }
     }
 
     private fun createLocalObjects(configuration: Configuration?, controller: Controller?, programs: List<Program>) {
         userRobot?.let { userRobot ->
             saveUserRobotInteractor.userRobot = userRobot
-            saveUserRobotInteractor.execute({ savedRobot ->
+            saveUserRobotInteractor.execute { savedRobot ->
                 this.userRobot = savedRobot
                 assignConfig(configuration, controller, programs)
-            }, {
-                // TODO Error handling
-            })
+            }
         }
     }
 
@@ -116,12 +100,10 @@ class BuildRobotPresenter(
         assignConfigIntoARobotInteractor.programs = programs
         userRobot?.let { userRobot ->
             assignConfigIntoARobotInteractor.userRobot = userRobot
-            assignConfigIntoARobotInteractor.execute({ savedRobot ->
+            assignConfigIntoARobotInteractor.execute { savedRobot ->
                 this.userRobot = savedRobot
                 view?.onRobotSaved()
-            }, {
-                // TODO Error handling
-            })
+            }
         }
     }
 }

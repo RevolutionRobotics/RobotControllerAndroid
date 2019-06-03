@@ -8,7 +8,6 @@ interface MotorConfigurationMvp : Mvp {
 
     interface View : Mvp.View {
         fun showDialog(baseDialog: BaseDialog)
-        fun showError(error: String)
     }
 
     @Suppress("ComplexInterface", "TooManyFunctions")
