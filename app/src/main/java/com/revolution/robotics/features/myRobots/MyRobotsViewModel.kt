@@ -2,6 +2,7 @@ package com.revolution.robotics.features.myRobots
 
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
+import androidx.databinding.ObservableInt
 import androidx.lifecycle.ViewModel
 import com.revolution.robotics.core.extensions.isEmptyOrNull
 import com.revolution.robotics.core.extensions.onPropertyChanged
@@ -11,6 +12,7 @@ class MyRobotsViewModel(private val presenter: MyRobotsMvp.Presenter) : ViewMode
     val robotsList: ObservableField<MutableList<MyRobotsItem>?> = ObservableField()
     val isNextButtonVisible: ObservableBoolean = ObservableBoolean(false)
     val isPreviousButtonVisible: ObservableBoolean = ObservableBoolean(false)
+    val currentPosition: ObservableInt = ObservableInt()
     var isEmpty = ObservableBoolean(true)
 
     init {

@@ -32,7 +32,7 @@ data class UserRobot(
 @Dao
 interface UserRobotDao {
 
-    @Query("SELECT * FROM UserRobot ORDER BY lastModified")
+    @Query("SELECT * FROM UserRobot ORDER BY lastModified DESC")
     fun getAllRobots(): List<UserRobot>
 
     @Query("SELECT * FROM UserRobot WHERE instanceId=:robotId")

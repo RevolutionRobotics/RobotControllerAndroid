@@ -26,9 +26,14 @@ class ConfigureControllersPresenter(
     override var model: ConfigureControllersViewModel? = null
 
     var currentPosition = 0
+    var currentRobotId = 0
+    var itemCount = 0
 
     override fun loadControllers(robotId: Int) {
-        currentPosition = 0
+        if (currentRobotId != robotId) {
+            currentRobotId = robotId
+            currentPosition = 0
+        }
         controllersInteractor.robotId = robotId
         controllersInteractor.execute { controllers ->
             model?.controllersList?.set(
@@ -43,7 +48,11 @@ class ConfigureControllersPresenter(
                     )
                 }
             )
-            view?.onControllersChanged()
+            if (itemCount != controllers.size) {
+                currentPosition = 0
+                itemCount = controllers.size
+            }
+            view?.onControllersChanged(currentPosition)
         }
     }
 
@@ -88,6 +97,7 @@ class ConfigureControllersPresenter(
     override fun deleteController(controllerId: Int, selectedPosition: Int) {
         deleteControllerInteractor.controllerId = controllerId
         deleteControllerInteractor.execute()
+        currentPosition = selectedPosition
 
         model?.controllersList?.apply {
             get()?.toMutableList()?.apply {
@@ -96,7 +106,7 @@ class ConfigureControllersPresenter(
             }
         }
         updateButtonsVisibility(selectedPosition)
-        view?.onControllersChanged()
+        view?.onControllersChanged(currentPosition)
     }
 
     override fun onDeleteSelected(item: ControllersItem) {
