@@ -180,7 +180,7 @@
                     android:id="@+id/more_button"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:background="@drawable/ic_your_robots_clipped_button_bg"
+                    android:background="@drawable/ic_your_robots_clipped_button_bg_selector"
                     app:layout_constraintDimensionRatio="1.0"
                     android:layout_marginStart="@dimen/my_robots_robot_delete_margin_start"
                     android:layout_marginEnd="@dimen/my_robots_robot_delete_margin_end"

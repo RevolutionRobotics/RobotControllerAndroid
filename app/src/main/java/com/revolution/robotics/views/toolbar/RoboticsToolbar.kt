@@ -63,6 +63,7 @@ class RoboticsToolbar @JvmOverloads constructor(context: Context, attrs: Attribu
     private val back = AppCompatImageView(context).apply {
         id = View.generateViewId()
         setImageResource(R.drawable.back)
+        setBackgroundResource(R.drawable.bg_button_default)
         scaleType = ImageView.ScaleType.CENTER_INSIDE
         addView(this, R.dimen.toolbar_back_size.toDimension(), R.dimen.toolbar_back_size.toDimension())
         makeConnections { connections ->

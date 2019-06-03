@@ -3,6 +3,7 @@ package com.revolution.robotics.features.bluetooth
 import android.content.Context
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatImageView
+import com.revolution.robotics.R
 import com.revolution.robotics.core.bindings.setGreyscale
 import org.kodein.di.KodeinAware
 import org.kodein.di.erased.instance
@@ -14,6 +15,10 @@ class BluetoothStatusImageView @JvmOverloads constructor(
 
     private val kodein = (context.applicationContext as KodeinAware).kodein
     private val bluetoothManager: BluetoothManager by kodein.instance()
+
+    init {
+        setBackgroundResource(R.drawable.bg_button_default)
+    }
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()

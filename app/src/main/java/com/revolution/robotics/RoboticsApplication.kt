@@ -21,24 +21,9 @@ class RoboticsApplication : Application(), KodeinAware {
     companion object {
         lateinit var kodein: Kodein
     }
-    // Home options
-    // ChippedBox elements
-    // Toolbar back button & icons
-    // Bluetooth status button
-    // Build robot - Seekbar arrows & checkmark
-    // MyRobots floating button
-    // Configure tabs & buttons
-    // Configure motor & sensor panel items
-    // Setup buttons
-    // Most recent buttons
-    // Program selector filter & ordering
-    // Program selector items
-    // Background program filter & ordering
-    // Background program items
     // Challenge group items
     // Challenge list items
-    // Challenge details seekbar arrows & checkmark
-    // Settings About buttons & social icons
+    // Settings  social icons
     // Blockly direction selector items
     // Blockly dialpad numbers & backspace arrow
     // Blockly option selector items
@@ -50,7 +35,6 @@ class RoboticsApplication : Application(), KodeinAware {
     // ControllerTypeSelector items
     // MyRobots robot items
     // WhoToBuild robot items
-    // Carousel item options (edit config, delete robot, etc.)
     // Firmware update - brain item
 
     override var kodein = Kodein {
