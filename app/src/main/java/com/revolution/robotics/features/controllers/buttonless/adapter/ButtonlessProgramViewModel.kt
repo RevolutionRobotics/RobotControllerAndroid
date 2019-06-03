@@ -3,7 +3,7 @@ package com.revolution.robotics.features.controllers.buttonless.adapter
 import androidx.databinding.ObservableBoolean
 import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.local.UserProgram
-import com.revolution.robotics.core.extensions.formatYearMonthDayDotted
+import com.revolution.robotics.core.extensions.formatYearMonthDay
 import com.revolution.robotics.features.controllers.buttonless.ButtonlessProgramSelectorMvp
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 import java.util.Date
@@ -37,7 +37,7 @@ class ButtonlessProgramViewModel(
     val programName = program.name
     val background = ButtonlessProgramViewModel.background
     val selectedBackground = ButtonlessProgramViewModel.selectedBackground
-    val formattedDate = Date(program.lastModified).formatYearMonthDayDotted()
+    val formattedDate = Date(program.lastModified).formatYearMonthDay()
 
     fun onProgramClicked() {
         presenter.onProgramSelected(this)

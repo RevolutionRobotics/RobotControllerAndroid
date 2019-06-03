@@ -3,7 +3,7 @@ package com.revolution.robotics.features.myRobots.info
 import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.local.UserRobot
 import com.revolution.robotics.core.eventBus.dialog.DialogEvent
-import com.revolution.robotics.core.extensions.formatYearMonthDayDotted
+import com.revolution.robotics.core.extensions.formatYearMonthDay
 import com.revolution.robotics.databinding.DialogRobotInfoBinding
 import com.revolution.robotics.features.myRobots.info.InfoRobotDialog.Companion.KEY_ROBOT
 import com.revolution.robotics.views.dialogs.DialogButton
@@ -40,7 +40,7 @@ class InfoRobotDialogFace(dialog: RoboticsDialog, showEditButton: Boolean) :
                 binding?.viewModel = InfoRobotDialogViewModel(
                     robotName = userRobot.name ?: "",
                     robotDescription = userRobot.description ?: "",
-                    dateText = userRobot.lastModified?.formatYearMonthDayDotted() ?: "",
+                    dateText = userRobot.lastModified?.formatYearMonthDay() ?: "",
                     errorTextVisible = userRobot.isCustomBuild()
                 )
             }

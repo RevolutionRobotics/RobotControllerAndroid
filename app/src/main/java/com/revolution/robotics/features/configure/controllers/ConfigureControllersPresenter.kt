@@ -1,6 +1,6 @@
 package com.revolution.robotics.features.configure.controllers
 
-import com.revolution.robotics.core.extensions.formatYearMonthDaySlashed
+import com.revolution.robotics.core.extensions.formatYearMonthDay
 import com.revolution.robotics.core.extensions.isEmptyOrNull
 import com.revolution.robotics.core.interactor.GetUserControllerInteractor
 import com.revolution.robotics.core.interactor.GetUserControllersInteractor
@@ -42,7 +42,7 @@ class ConfigureControllersPresenter(
                         controller,
                         controller.name ?: "",
                         ControllerType.fromId(controller.type)?.imageResource ?: 0,
-                        controller.lastModified.formatYearMonthDaySlashed(),
+                        controller.lastModified.formatYearMonthDay(),
                         userConfigurationStorage.userConfiguration?.controller == controller.id,
                         this
                     )
@@ -135,7 +135,7 @@ class ConfigureControllersPresenter(
             ControllerInfoDialog.newInstance(
                 ControllerInfoDialog.ViewModel(
                     title = item.userController.name ?: "",
-                    date = item.userController.lastModified.formatYearMonthDaySlashed(),
+                    date = item.userController.lastModified.formatYearMonthDay(),
                     description = item.userController.description ?: ""
                 )
             )

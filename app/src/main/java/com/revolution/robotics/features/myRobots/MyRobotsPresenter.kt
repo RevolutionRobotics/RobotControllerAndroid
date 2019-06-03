@@ -2,7 +2,7 @@ package com.revolution.robotics.features.myRobots
 
 import com.revolution.robotics.core.domain.local.BuildStatus
 import com.revolution.robotics.core.domain.local.UserRobot
-import com.revolution.robotics.core.extensions.formatYearMonthDaySlashed
+import com.revolution.robotics.core.extensions.formatYearMonthDay
 import com.revolution.robotics.core.extensions.isEmptyOrNull
 import com.revolution.robotics.core.interactor.DeleteRobotInteractor
 import com.revolution.robotics.core.interactor.DuplicateUserRobotInteractor
@@ -40,7 +40,7 @@ class MyRobotsPresenter(
                 MyRobotsItem(
                     robot.instanceId,
                     robot,
-                    robot.lastModified?.formatYearMonthDaySlashed() ?: "",
+                    robot.lastModified?.formatYearMonthDay() ?: "",
                     robot.buildStatus != BuildStatus.COMPLETED,
                     this
                 )
@@ -143,7 +143,7 @@ class MyRobotsPresenter(
                     0, MyRobotsItem(
                         robot.instanceId,
                         robot,
-                        robot.lastModified?.formatYearMonthDaySlashed() ?: "",
+                        robot.lastModified?.formatYearMonthDay() ?: "",
                         robot.buildStatus != BuildStatus.COMPLETED,
                         this@MyRobotsPresenter
                     )
