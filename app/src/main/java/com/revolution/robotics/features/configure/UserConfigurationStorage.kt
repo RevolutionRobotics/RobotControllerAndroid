@@ -41,6 +41,11 @@ class UserConfigurationStorage(
         updateRobot()
     }
 
+    fun changeController(controllerId: Int) {
+        userConfiguration?.controller = controllerId
+        updateRobot()
+    }
+
     fun addButtonProgram(userProgram: UserProgram, buttonName: ControllerButton) {
         when (buttonName) {
             ControllerButton.B1 -> controllerHolder?.userController?.mapping?.b1 =

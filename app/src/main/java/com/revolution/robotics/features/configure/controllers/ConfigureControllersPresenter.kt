@@ -149,6 +149,6 @@ class ConfigureControllersPresenter(
         model?.controllersList?.get()?.forEach {
             it.isCurrentlyActive.set(it == item)
         }
-        userConfigurationStorage.userConfiguration?.controller = item.userController.id
+        userConfigurationStorage.changeController(item.userController.id)
     }
 }
