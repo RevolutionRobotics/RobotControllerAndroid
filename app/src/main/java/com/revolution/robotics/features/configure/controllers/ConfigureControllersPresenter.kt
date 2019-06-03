@@ -25,7 +25,10 @@ class ConfigureControllersPresenter(
     override var view: ConfigureControllersMvp.View? = null
     override var model: ConfigureControllersViewModel? = null
 
+    var currentPosition = 0
+
     override fun loadControllers(robotId: Int) {
+        currentPosition = 0
         controllersInteractor.robotId = robotId
         controllersInteractor.execute { controllers ->
             model?.controllersList?.set(
@@ -48,11 +51,11 @@ class ConfigureControllersPresenter(
         model?.run {
             val list = controllersList.get() ?: return
             if (list.isNotEmpty()) {
-                if (currentPosition.get() < list.size) {
-                    list[currentPosition.get()].isSelected.set(false)
+                if (currentPosition < list.size) {
+                    list[currentPosition].isSelected.set(false)
                 }
                 list[position].isSelected.set(true)
-                currentPosition.set(position)
+                currentPosition = position
                 updateButtonsVisibility(position)
             }
         }

@@ -25,9 +25,11 @@ class MyRobotsPresenter(
 
     override var view: MyRobotsMvp.View? = null
     override var model: MyRobotsViewModel? = null
+    var currentPosition = 0
 
     override fun register(view: MyRobotsMvp.View, model: MyRobotsViewModel?) {
         super.register(view, model)
+        currentPosition = 0
         loadRobots()
     }
 
@@ -50,11 +52,11 @@ class MyRobotsPresenter(
         model?.run {
             val list = robotsList.get() ?: return
             if (list.isNotEmpty()) {
-                if (currentPosition.get() < list.size) {
-                    list[currentPosition.get()].isSelected.set(false)
+                if (currentPosition < list.size) {
+                    list[currentPosition].isSelected.set(false)
                 }
                 list[position].isSelected.set(true)
-                currentPosition.set(position)
+                currentPosition = position
                 updateButtonsVisibility(position)
             }
         }
