@@ -64,8 +64,6 @@ class ConfigureFragment : BaseFragment<FragmentConfigureBinding, ConfigureViewMo
     override fun onDestroyView() {
         presenter.unregister()
         binding?.drawerConfiguration?.removeDrawerListener(this)
-        cameraHelper.getDirtyImageFile(requireContext()).delete()
-        userConfigurationStorage.deleteRobotImage = false
         super.onDestroyView()
     }
 

@@ -103,7 +103,7 @@ fun loadFirebaseImage(
     animate: Boolean?
 ) {
     val imageFile =
-        CameraHelper.getImageFile(remoteImageView.context, CameraHelper.generateFilenameForRobot(robotId ?: -1, false))
+        CameraHelper.getImageFile(remoteImageView.context, CameraHelper.generateFilenameForRobot(robotId ?: -1))
     if (imageFile.exists()) {
         loadImageFromFile(remoteImageView, imageFile, null)
     } else if (!gsUrl.isNullOrEmpty()) {

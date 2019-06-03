@@ -38,7 +38,7 @@ class RobotPictureDialog : RoboticsDialog() {
     override val dialogFaces: List<DialogFace<*>> = listOf(dialogFace)
     override val dialogButtons = listOf(
         DialogButton(R.string.camera_dialog_delete_title, R.drawable.ic_delete) {
-            userConfigurationStorage.deleteRobotImage = true
+            cameraHelper.getImageFile(requireContext()).delete()
             dialogFace.onImageDeleted()
         },
         DialogButton(R.string.camera_dialog_new_photo_title, R.drawable.ic_camera, true) {
@@ -54,7 +54,6 @@ class RobotPictureDialog : RoboticsDialog() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_CODE_CAMERA && resultCode == Activity.RESULT_OK) {
-            userConfigurationStorage.deleteRobotImage = false
             dialogFace.onCameraCaptured(false)
         } else {
             super.onActivityResult(requestCode, resultCode, data)
@@ -79,17 +78,8 @@ class RobotPictureDialog : RoboticsDialog() {
         }
 
         fun onCameraCaptured(openCameraIfFileDoesNotExist: Boolean) {
-            val imageFile =
-                if (userConfigurationStorage.deleteRobotImage) {
-                    null
-                } else {
-                    val context = requireContext()
-                    val dirtyImage = cameraHelper.getDirtyImageFile(context)
-                    val savedImage = cameraHelper.getSavedImageFile(context)
-                    listOf(dirtyImage, savedImage).firstOrNull { it.exists() }
-                }
-            if (imageFile?.exists() == true) {
-                userConfigurationStorage.deleteRobotImage = false
+            val imageFile = cameraHelper.getImageFile(requireContext())
+            if (imageFile.exists()) {
                 binding?.viewModel?.image?.set(imageFile)
             } else if (openCameraIfFileDoesNotExist) {
                 startCamera()

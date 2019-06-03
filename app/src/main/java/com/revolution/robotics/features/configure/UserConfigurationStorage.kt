@@ -19,7 +19,6 @@ class UserConfigurationStorage {
     var robot: UserRobot? = null
     var userConfiguration: UserConfiguration? = null
     var controllerHolder: UserControllerWithPrograms? = null
-    var deleteRobotImage = false
 
     fun isUsedVariableName(name: String, portName: String): Boolean = collectVariableNames(portName).contains(name)
 
