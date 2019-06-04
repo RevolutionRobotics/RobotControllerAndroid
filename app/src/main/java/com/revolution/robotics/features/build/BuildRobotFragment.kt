@@ -122,7 +122,7 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
         }
     }
 
-    override fun onRobotSaved() {
+    override fun onRobotSaveStarted() {
         BuildFinishedDialog.newInstance().show(fragmentManager)
     }
 }

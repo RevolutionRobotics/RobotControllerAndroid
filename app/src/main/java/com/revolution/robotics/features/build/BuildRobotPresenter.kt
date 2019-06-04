@@ -5,6 +5,8 @@ import com.revolution.robotics.core.domain.local.UserRobot
 import com.revolution.robotics.core.domain.remote.Configuration
 import com.revolution.robotics.core.domain.remote.Controller
 import com.revolution.robotics.core.domain.remote.Program
+import com.revolution.robotics.core.eventBus.dialog.DialogEvent
+import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
 import com.revolution.robotics.core.interactor.AssignConfigIntoARobotInteractor
 import com.revolution.robotics.core.interactor.SaveUserRobotInteractor
 import com.revolution.robotics.core.interactor.firebase.BuildStepInteractor
@@ -23,6 +25,7 @@ class BuildRobotPresenter(
     private val controllerInteractor: ControllerInteractor,
     private val programsInteractor: ProgramsInteractor,
     private val navigator: Navigator,
+    private val dialogEventBus: DialogEventBus,
     private val firebaseProgramDownloader: FirebaseProgramDownloader
 ) : BuildRobotMvp.Presenter {
 
@@ -57,6 +60,7 @@ class BuildRobotPresenter(
 
     override fun saveUserRobot(userRobot: UserRobot, createDefaultConfig: Boolean) {
         if (createDefaultConfig) {
+            view?.onRobotSaveStarted()
             this.userRobot = userRobot
             configurationInteractor.configId = userRobot.configurationId
             configurationInteractor.execute { config ->
@@ -67,7 +71,6 @@ class BuildRobotPresenter(
             saveUserRobotInteractor.userRobot = userRobot
             saveUserRobotInteractor.execute { savedRobot ->
                 this.userRobot = savedRobot
-                view?.onRobotSaved()
             }
         }
     }
@@ -122,7 +125,7 @@ class BuildRobotPresenter(
             assignConfigIntoARobotInteractor.userRobot = userRobot
             assignConfigIntoARobotInteractor.execute { savedRobot ->
                 this.userRobot = savedRobot
-                view?.onRobotSaved()
+                dialogEventBus.publish(DialogEvent.ROBOT_CREATED)
             }
         }
     }

@@ -18,6 +18,7 @@ import com.revolution.robotics.core.domain.remote.Configuration
 import com.revolution.robotics.core.domain.remote.Controller
 import com.revolution.robotics.core.domain.remote.Program
 import com.revolution.robotics.core.domain.remote.ProgramBinding
+import java.io.File
 
 class AssignConfigIntoARobotInteractor(
     private val userRobotDao: UserRobotDao,
@@ -118,8 +119,10 @@ class AssignConfigIntoARobotInteractor(
 
     private fun saveUserPrograms() = hashMapOf<String, Int>().apply {
         programs?.forEach { remoteProgram ->
-            val currentProgram = remoteProgram.id?.let {
-                saveProgramDao.getUserProgramBasedOnRemoteId(it)
+            val currentProgram = remoteProgram.id?.let { remoteId ->
+                val currentProgram = saveProgramDao.getUserProgramBasedOnRemoteId(remoteId)
+                deleteCurrentProgramFiles(currentProgram)
+                currentProgram
             }
 
             this[remoteProgram.id ?: ""] = saveProgramDao.saveUserProgram(
@@ -134,6 +137,15 @@ class AssignConfigIntoARobotInteractor(
                     remoteProgram.id
                 )
             ).toInt()
+        }
+    }
+
+    private fun deleteCurrentProgramFiles(currentProgram: UserProgram?) {
+        currentProgram?.python?.let { python ->
+            File(python).delete()
+        }
+        currentProgram?.xml?.let { xml ->
+            File(xml).delete()
         }
     }
 
