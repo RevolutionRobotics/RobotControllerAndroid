@@ -17,6 +17,7 @@ import com.revolution.robotics.features.coding.saveProgram.SaveProgramDialog
 import com.revolution.robotics.features.controllers.programInfo.ProgramDialog
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 import org.kodein.di.erased.instance
+import java.io.File
 
 class CodingFragment : BaseFragment<FragmentCodingBinding, CodingViewModel>(R.layout.fragment_coding), CodingMvp.View,
     DialogEventBus.Listener {
@@ -61,7 +62,10 @@ class CodingFragment : BaseFragment<FragmentCodingBinding, CodingViewModel>(R.la
             }
             DialogEvent.LOAD_PROGRAM -> {
                 val program = event.extras.getParcelable<UserProgram>(ProgramDialog.KEY_PROGRAM)
-                // TODO load program into blockly
+                program?.xml?.let {
+                    val xml = File(it).readText(Charsets.UTF_8)
+                    binding?.viewBlockly?.loadUrl("javascript:loadXMLProgram(`$xml}`)")
+                }
             }
             DialogEvent.DELETE_PROGRAM -> {
                 val program = event.extras.getParcelable<UserProgram>(ProgramDialog.KEY_PROGRAM)
@@ -71,6 +75,7 @@ class CodingFragment : BaseFragment<FragmentCodingBinding, CodingViewModel>(R.la
                 val name = event.extras.getString(SaveProgramDialog.KEY_NAME)
                 val description = event.extras.getString(SaveProgramDialog.KEY_DESCRIPTION)
                 viewModel?.programName?.set(name)
+                binding?.viewBlockly?.loadUrl("javascript:saveProgram()")
                 // TODO save program from blockly
             }
             else -> Unit

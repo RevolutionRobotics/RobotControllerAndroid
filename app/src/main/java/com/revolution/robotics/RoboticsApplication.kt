@@ -1,6 +1,8 @@
 package com.revolution.robotics
 
 import android.app.Application
+import android.content.pm.ApplicationInfo
+import android.webkit.WebView
 import com.crashlytics.android.Crashlytics
 import com.google.firebase.FirebaseApp
 import com.google.firebase.database.FirebaseDatabase
@@ -37,5 +39,8 @@ class RoboticsApplication : Application(), KodeinAware {
         FirebaseApp.initializeApp(this)
         FirebaseDatabase.getInstance().setPersistenceEnabled(true)
         RoboticsApplication.kodein = kodein
+        if (0 != applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE) {
+            WebView.setWebContentsDebuggingEnabled(true)
+        }
     }
 }
