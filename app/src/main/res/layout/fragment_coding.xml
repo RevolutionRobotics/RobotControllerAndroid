@@ -9,12 +9,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorPrimary">
-
-        <org.revolution.blockly.view.BlocklyView
-                android:id="@+id/view_blockly"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+            android:background="@color/black">
 
         <ImageView
                 android:id="@+id/icon_open"
@@ -74,6 +69,39 @@
                 app:layout_constraintTop_toTopOf="@id/icon_open"
                 app:layout_constraintEnd_toStartOf="@id/icon_code"
                 app:chippedBoxConfig="@{buttonBackground}"/>
+
+        <View
+                android:id="@+id/divider"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dimen_1dp"
+                app:layout_constraintTop_toBottomOf="@id/program_title"
+                android:background="@color/grey_28"
+                android:layout_marginTop="@dimen/dimen_2dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+        <ImageView
+                android:id="@+id/back"
+                android:layout_width="@dimen/coding_icon_width"
+                android:layout_height="@dimen/coding_icon_height"
+                android:scaleType="centerInside"
+                android:padding="@dimen/dimen_8dp"
+                android:src="@drawable/ic_back"
+                app:layout_constraintTop_toTopOf="@id/icon_open"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginEnd="@dimen/dimen_8dp"
+                android:onClick="@{() -> viewModel.onBackPressed()}"/>
+
+        <org.revolution.blockly.view.BlocklyView
+                android:id="@+id/view_blockly"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/dimen_2dp"
+                app:layout_constraintTop_toBottomOf="@id/divider"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:visible="@{viewModel.isBlocklyLoaded}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

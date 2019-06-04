@@ -1,5 +1,6 @@
 package com.revolution.robotics.features.coding
 
+import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModel
 import com.revolution.robotics.R
@@ -10,6 +11,7 @@ class CodingViewModel(resourceResolver: ResourceResolver, private val presenter:
 
     val programName = ObservableField<String>(resourceResolver.string(R.string.program_title_default))
     var userProgram: UserProgram? = null
+    val isBlocklyLoaded = ObservableBoolean(false)
 
     fun showProgramsDialog() {
         presenter.showProgramsDialog()
@@ -17,5 +19,9 @@ class CodingViewModel(resourceResolver: ResourceResolver, private val presenter:
 
     fun saveProgram() {
         presenter.showSaveProgramDialog(userProgram)
+    }
+
+    fun onBackPressed() {
+        presenter.onBackPressed()
     }
 }

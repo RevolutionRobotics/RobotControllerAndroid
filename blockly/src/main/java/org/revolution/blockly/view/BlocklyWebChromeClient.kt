@@ -6,7 +6,21 @@ import android.webkit.WebView
 import org.json.JSONObject
 import org.revolution.blockly.BlocklyOption
 
-class BlocklyWebChromeClient(private val dialogFactory: DialogFactory) : WebChromeClient() {
+class BlocklyWebChromeClient(
+    private val dialogFactory: DialogFactory,
+    private val listener: BlocklyLoadedListener
+) : WebChromeClient() {
+
+    companion object {
+        private const val PROGRESS_COMPLETE = 100
+    }
+
+    override fun onProgressChanged(view: WebView?, newProgress: Int) {
+        super.onProgressChanged(view, newProgress)
+        if (newProgress == PROGRESS_COMPLETE) {
+            listener.onBlocklyLoaded()
+        }
+    }
 
     // TODO add dialpad
     // TODO add text input

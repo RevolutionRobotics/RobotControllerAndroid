@@ -10,7 +10,15 @@ import org.revolution.blockly.view.jsInterface.IOJavascriptInterface
 
 @Suppress("SetJavaScriptEnabled")
 class BlocklyView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
-    WebView(context, attrs, defStyleAttr) {
+    WebView(context, attrs, defStyleAttr), BlocklyLoadedListener {
+
+    var listener: BlocklyLoadedListener? = null
+        set(value) {
+            field = value
+            if (isBlocklyLoaded) {
+                listener?.onBlocklyLoaded()
+            }
+        }
 
     private companion object {
         const val BRIDGE_NAME = "NativeBridge"
@@ -18,6 +26,7 @@ class BlocklyView @JvmOverloads constructor(context: Context, attrs: AttributeSe
     }
 
     private var javascriptInterface: IOJavascriptInterface = IOJavascriptInterface(context)
+    private var isBlocklyLoaded = false
 
     init {
         settings.javaScriptEnabled = true
@@ -26,7 +35,7 @@ class BlocklyView @JvmOverloads constructor(context: Context, attrs: AttributeSe
 
     @Suppress("JavascriptInterface")
     fun init(htmlPath: String, dialogFactory: DialogFactory) {
-        webChromeClient = BlocklyWebChromeClient(dialogFactory)
+        webChromeClient = BlocklyWebChromeClient(dialogFactory, this)
         loadUrl(htmlPath)
         addJavascriptInterface(IOJavascriptInterface(context), BRIDGE_NAME)
     }
@@ -53,5 +62,10 @@ class BlocklyView @JvmOverloads constructor(context: Context, attrs: AttributeSe
 
     fun clearWorkspace() {
         loadUrl("javascript:clearWorkspace()")
+    }
+
+    override fun onBlocklyLoaded() {
+        isBlocklyLoaded = true
+        listener?.onBlocklyLoaded()
     }
 }
