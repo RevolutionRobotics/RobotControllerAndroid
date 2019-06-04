@@ -1,10 +1,20 @@
 package com.revolution.robotics.core.utils
 
-class UserProgramFileNameGenerator {
+import com.revolution.robotics.core.kodein.utils.ApplicationContextProvider
 
-    fun generatePythonFileName() =
-        "${System.currentTimeMillis()}.py"
+class UserProgramFileNameGenerator(private val applicationContextProvider: ApplicationContextProvider) {
 
-    fun generateXmlFileName() =
-        "${System.currentTimeMillis()}.xml"
+    fun generatePythonFileName(includeFolder: Boolean = false) =
+        if (includeFolder) {
+            "${applicationContextProvider.applicationContext.filesDir}/${System.currentTimeMillis()}.py"
+        } else {
+            "${System.currentTimeMillis()}.py"
+        }
+
+    fun generateXmlFileName(includeFolder: Boolean = false) =
+        if (includeFolder) {
+            "${applicationContextProvider.applicationContext.filesDir}/${System.currentTimeMillis()}.xml"
+        } else {
+            "${System.currentTimeMillis()}.xml"
+        }
 }

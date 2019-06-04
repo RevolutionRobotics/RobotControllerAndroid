@@ -31,6 +31,8 @@ import com.revolution.robotics.core.interactor.GetUserControllerInteractor
 import com.revolution.robotics.core.interactor.GetUserControllersInteractor
 import com.revolution.robotics.core.interactor.GetUserProgramsInteractor
 import com.revolution.robotics.core.interactor.GetUserRobotInteractor
+import com.revolution.robotics.core.interactor.LocalFileLoader
+import com.revolution.robotics.core.interactor.LocalFileSaver
 import com.revolution.robotics.core.interactor.RemoveUserControllerInteractor
 import com.revolution.robotics.core.interactor.RemoveUserProgramInteractor
 import com.revolution.robotics.core.interactor.SaveUserChallengeCategoryInteractor
@@ -143,6 +145,8 @@ fun createInteractorModule() =
         bind<FirebaseInitInteractor>() with p { FirebaseInitInteractor() }
         bind<SaveUserRobotInteractor>() with p { SaveUserRobotInteractor(i()) }
         bind<DuplicateUserRobotInteractor>() with p { DuplicateUserRobotInteractor(i(), i(), i(), i(), i(), i()) }
+        bind<LocalFileLoader>() with p { LocalFileLoader() }
+        bind<LocalFileSaver>() with p { LocalFileSaver() }
     }
 
 @Suppress("LongMethod")
@@ -179,7 +183,7 @@ fun createPresenterModule() =
         bind<ColorPickerMvp.Presenter>() with s { ColorPickerPresenter() }
         bind<SoundPickerMvp.Presenter>() with s { SoundPickerPresenter(i()) }
         bind<SliderMvp.Presenter>() with s { SliderPresenter() }
-        bind<CodingMvp.Presenter>() with s { CodingPresenter(i(), i(), i(), i()) }
+        bind<CodingMvp.Presenter>() with s { CodingPresenter(i(), i(), i(), i(), i()) }
         bind<ProgramsMvp.Presenter>() with s { ProgramsPresenter(i()) }
         bind<TestBuildDialogMvp.Presenter>() with s { TestBuildDialogPresenter(i(), i(), i()) }
     }

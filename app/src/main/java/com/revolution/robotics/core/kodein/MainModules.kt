@@ -19,7 +19,6 @@ import com.revolution.robotics.features.configure.controller.CompatibleProgramFi
 import com.revolution.robotics.features.shared.ErrorHandler
 import org.kodein.di.Kodein
 import org.kodein.di.erased.bind
-import org.kodein.di.erased.instance
 
 fun createMainModule() =
     Kodein.Module("MainModule") {
@@ -32,7 +31,7 @@ fun createMainModule() =
         bind<BluetoothManager>() with s { BluetoothManager(kodein) }
         bind<RoboticsDeviceConnector>() with s { RoboticsDeviceConnector() }
         bind<UserConfigurationStorage>() with s { UserConfigurationStorage(i(), i()) }
-        bind<CompatibleProgramFilterer>() with p { CompatibleProgramFilterer(instance()) }
+        bind<CompatibleProgramFilterer>() with p { CompatibleProgramFilterer(i()) }
     }
 
 fun createAppModule(context: Context) =
@@ -42,6 +41,6 @@ fun createAppModule(context: Context) =
         bind<AppPrefs>() with s { AppPrefs(context) }
         bind<ErrorHandler>() with s { ErrorHandler() }
         bind<FirebaseFileDownloader>() with p { FirebaseFileDownloader(i(), i()) }
-        bind<UserProgramFileNameGenerator>() with p { UserProgramFileNameGenerator() }
+        bind<UserProgramFileNameGenerator>() with p { UserProgramFileNameGenerator(i()) }
         bind<FirebaseProgramDownloader>() with p { FirebaseProgramDownloader(i(), i(), i(), i()) }
     }

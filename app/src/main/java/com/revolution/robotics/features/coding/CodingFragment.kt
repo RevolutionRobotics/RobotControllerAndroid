@@ -17,7 +17,6 @@ import com.revolution.robotics.features.coding.saveProgram.SaveProgramDialog
 import com.revolution.robotics.features.controllers.programInfo.ProgramDialog
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 import org.kodein.di.erased.instance
-import java.io.File
 
 class CodingFragment : BaseFragment<FragmentCodingBinding, CodingViewModel>(R.layout.fragment_coding), CodingMvp.View,
     DialogEventBus.Listener {
@@ -52,23 +51,22 @@ class CodingFragment : BaseFragment<FragmentCodingBinding, CodingViewModel>(R.la
         super.onDestroyView()
     }
 
+    override fun loadProgramIntoTheBlockly(xml: String) {
+        binding?.viewBlockly?.loadProgram(xml)
+    }
+
     override fun onDialogEvent(event: DialogEvent) {
         when (event) {
             DialogEvent.SHOW_PROGRAM_INFO -> {
-                val program = event.extras.getParcelable<UserProgram>(ProgramsDialog.KEY_PROGRAM)
-                program?.let { showDialog(ProgramDialog.Load.newInstance(it)) }
-            }
-            DialogEvent.LOAD_PROGRAM -> {
-                val program = event.extras.getParcelable<UserProgram>(ProgramDialog.KEY_PROGRAM)
-                viewModel?.userProgram = program
-                viewModel?.programName?.set(program?.name)
-                program?.xml?.let {
-                    binding?.viewBlockly?.loadProgram(File(it).readText(Charsets.UTF_8))
+                event.extras.getParcelable<UserProgram>(ProgramsDialog.KEY_PROGRAM)?.let {
+                    showDialog(ProgramDialog.Load.newInstance(it))
                 }
             }
+            DialogEvent.LOAD_PROGRAM ->
+                event.extras.getParcelable<UserProgram>(ProgramDialog.KEY_PROGRAM)?.let {
+                    presenter.loadProgram(it)
+                }
             DialogEvent.DELETE_PROGRAM -> {
-                viewModel?.userProgram = null
-                viewModel?.programName?.set("")
                 event.extras.getParcelable<UserProgram>(ProgramDialog.KEY_PROGRAM)?.let {
                     presenter.removeProgram(it)
                 }
@@ -76,7 +74,6 @@ class CodingFragment : BaseFragment<FragmentCodingBinding, CodingViewModel>(R.la
             DialogEvent.SAVE_PROGRAM -> {
                 val userProgram = event.extras.getParcelable<UserProgram?>(SaveProgramDialog.KEY_USER_PROGRAM)
                 userProgram?.let { program ->
-                    viewModel?.programName?.set(program.name)
                     presenter.setSavedProgramData(program)
                     binding?.viewBlockly?.saveProgram(presenter)
                 }

@@ -1,20 +1,31 @@
 package com.revolution.robotics.features.coding
 
 import com.revolution.robotics.core.domain.local.UserProgram
+import com.revolution.robotics.core.interactor.LocalFileLoader
+import com.revolution.robotics.core.interactor.LocalFileSaver
 import com.revolution.robotics.core.interactor.RemoveUserProgramInteractor
 import com.revolution.robotics.core.interactor.SaveUserProgramInteractor
-import com.revolution.robotics.core.kodein.utils.ApplicationContextProvider
 import com.revolution.robotics.core.utils.UserProgramFileNameGenerator
 import com.revolution.robotics.features.coding.programs.ProgramsDialog
 import com.revolution.robotics.features.coding.saveProgram.SaveProgramDialog
-import java.io.File
 
 class CodingPresenter(
     private val removeUserProgramInteractor: RemoveUserProgramInteractor,
     private val saveUserProgramInteractor: SaveUserProgramInteractor,
     private val fileNameGenerator: UserProgramFileNameGenerator,
-    private val applicationContextProvider: ApplicationContextProvider
+    private val localFileLoader: LocalFileLoader,
+    private val localFileSaver: LocalFileSaver
 ) : CodingMvp.Presenter {
+    override fun loadProgram(userProgram: UserProgram) {
+        model?.userProgram = userProgram
+        model?.programName?.set(userProgram.name)
+        userProgram.xml?.let { xmlFile ->
+            localFileLoader.filePath = xmlFile
+            localFileLoader.execute { xml ->
+                view?.loadProgramIntoTheBlockly(xml)
+            }
+        }
+    }
 
     override var view: CodingMvp.View? = null
     override var model: CodingViewModel? = null
@@ -34,28 +45,37 @@ class CodingPresenter(
 
     override fun setSavedProgramData(userProgram: UserProgram) {
         this.userProgram = userProgram
+        model?.programName?.set(userProgram.name)
     }
 
     override fun removeProgram(userProgram: UserProgram) {
+        model?.userProgram = null
+        model?.programName?.set("")
         removeUserProgramInteractor.userProgramId = userProgram.id
         removeUserProgramInteractor.execute()
     }
 
     override fun onPythonProgramSaved(file: String) {
-        "${applicationContextProvider.applicationContext.filesDir}/${fileNameGenerator.generatePythonFileName()}".also { fileName ->
-            File(fileName).writeText(file)
-            userProgram?.python = fileName
-            pythonSaved = true
-            saveUserProgramWhenEveryDataIsReady()
+        fileNameGenerator.generatePythonFileName(true).also { fileName ->
+            localFileSaver.filePath = fileName
+            localFileSaver.content = file
+            localFileSaver.execute {
+                userProgram?.python = fileName
+                pythonSaved = true
+                saveUserProgramWhenEveryDataIsReady()
+            }
         }
     }
 
     override fun onXMLProgramSaved(file: String) {
-        "${applicationContextProvider.applicationContext.filesDir}/${fileNameGenerator.generateXmlFileName()}".also { fileName ->
-            File(fileName).writeText(file)
-            userProgram?.xml = fileName
-            xmlSaved = true
-            saveUserProgramWhenEveryDataIsReady()
+        fileNameGenerator.generateXmlFileName(true).also { fileName ->
+            localFileSaver.filePath = fileName
+            localFileSaver.content = file
+            localFileSaver.execute {
+                userProgram?.xml = fileName
+                xmlSaved = true
+                saveUserProgramWhenEveryDataIsReady()
+            }
         }
     }
 
