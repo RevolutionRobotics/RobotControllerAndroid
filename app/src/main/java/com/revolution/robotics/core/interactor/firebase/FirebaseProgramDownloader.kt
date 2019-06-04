@@ -7,7 +7,8 @@ import com.revolution.robotics.core.utils.UserProgramFileNameGenerator
 import com.revolution.robotics.features.shared.ErrorHandler
 
 class FirebaseProgramDownloader(
-    private val firebaseFileDownloader: FirebaseFileDownloader,
+    private val xmlFirebaseFileDownloader: FirebaseFileDownloader,
+    private val pythonFirebaseFileDownloader: FirebaseFileDownloader,
     private val userProgramFileNameGenerator: UserProgramFileNameGenerator,
     private val errorHandler: ErrorHandler
 ) {
@@ -45,7 +46,7 @@ class FirebaseProgramDownloader(
 
     private fun downloadFiles(index: Int) {
         programs[index].let { currentProgram ->
-            firebaseFileDownloader.downloadFirestoreFile(
+            pythonFirebaseFileDownloader.downloadFirestoreFile(
                 userProgramFileNameGenerator.generatePythonFileName(),
                 currentProgram.python ?: "",
                 { storedFile ->
@@ -54,7 +55,7 @@ class FirebaseProgramDownloader(
                 }, {
                     sendOnError(it)
                 })
-            firebaseFileDownloader.downloadFirestoreFile(userProgramFileNameGenerator.generateXmlFileName(),
+            xmlFirebaseFileDownloader.downloadFirestoreFile(userProgramFileNameGenerator.generateXmlFileName(),
                 currentProgram.xml ?: "", { storedFile ->
                     xml = storedFile
                     downloadNextFile()

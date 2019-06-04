@@ -42,6 +42,6 @@ fun createAppModule(context: Context) =
         bind<AppPrefs>() with s { AppPrefs(context) }
         bind<ErrorHandler>() with s { ErrorHandler() }
         bind<FirebaseFileDownloader>() with p { FirebaseFileDownloader(i(), i()) }
-        bind<UserProgramFileNameGenerator>() with p { UserProgramFileNameGenerator(i()) }
-        bind<FirebaseProgramDownloader>() with p { FirebaseProgramDownloader(i(), i()) }
+        bind<UserProgramFileNameGenerator>() with p { UserProgramFileNameGenerator() }
+        bind<FirebaseProgramDownloader>() with p { FirebaseProgramDownloader(i(), i(), i(), i()) }
     }
