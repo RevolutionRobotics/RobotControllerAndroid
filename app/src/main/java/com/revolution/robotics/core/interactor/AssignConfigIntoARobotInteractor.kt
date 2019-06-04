@@ -1,5 +1,6 @@
 package com.revolution.robotics.core.interactor
 
+import com.revolution.robotics.core.domain.local.ProgramLocalFiles
 import com.revolution.robotics.core.domain.local.UserBackgroundProgramBinding
 import com.revolution.robotics.core.domain.local.UserBackgroundProgramBindingDao
 import com.revolution.robotics.core.domain.local.UserButtonMapping
@@ -30,6 +31,7 @@ class AssignConfigIntoARobotInteractor(
     var configuration: Configuration? = null
     var controller: Controller? = null
     var programs: List<Program>? = null
+    var programLocalFiles: List<ProgramLocalFiles>? = null
 
     override fun getData(): UserRobot {
         configuration?.let { remoteConfig ->
@@ -126,8 +128,8 @@ class AssignConfigIntoARobotInteractor(
                     remoteProgram.description,
                     remoteProgram.lastModified,
                     remoteProgram.name,
-                    remoteProgram.python,
-                    remoteProgram.xml,
+                    programLocalFiles?.find { it.remoteId == remoteProgram.id }?.python?.path ?: "",
+                    programLocalFiles?.find { it.remoteId == remoteProgram.id }?.xml?.path ?: "",
                     remoteProgram.variables,
                     remoteProgram.id
                 )
