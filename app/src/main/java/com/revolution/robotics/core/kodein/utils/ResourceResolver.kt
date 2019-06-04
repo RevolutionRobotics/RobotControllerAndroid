@@ -28,4 +28,6 @@ class ResourceResolver(val context: Context) {
         BitmapFactory.decodeResource(context.resources, drawableId, options)
 
     fun drawable(@DrawableRes drawableId: Int): Drawable? = context.getDrawable(drawableId)
+
+    fun drawableResourceByName(name: String) = context.resources.getIdentifier(name, "drawable", context.packageName)
 }

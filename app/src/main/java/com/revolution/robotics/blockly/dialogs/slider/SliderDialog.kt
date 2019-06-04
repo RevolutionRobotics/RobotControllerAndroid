@@ -4,7 +4,6 @@ import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.View
-import androidx.annotation.StringRes
 import com.revolution.robotics.R
 import com.revolution.robotics.blockly.JavascriptPromptDialog
 import com.revolution.robotics.core.extensions.withArguments
@@ -17,13 +16,13 @@ class SliderDialog : JavascriptPromptDialog<BlocklyDialogSliderBinding>(R.layout
 
     companion object {
 
-        private var Bundle.titleResource by BundleArgumentDelegate.Int("titleResource")
+        private var Bundle.title by BundleArgumentDelegate.String("title")
         private var Bundle.maxValue by BundleArgumentDelegate.Int("maxValue")
         private var Bundle.defaultValue by BundleArgumentDelegate.Int("defaultValue")
 
-        fun newInstance(@StringRes titleResource: Int, maxValue: Int, defaultValue: Int = 0) =
+        fun newInstance(title: String, maxValue: Int, defaultValue: Int = 0) =
             SliderDialog().withArguments { bundle ->
-                bundle.titleResource = titleResource
+                bundle.title = title
                 bundle.maxValue = maxValue
                 bundle.defaultValue = defaultValue
             }
@@ -37,7 +36,7 @@ class SliderDialog : JavascriptPromptDialog<BlocklyDialogSliderBinding>(R.layout
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         presenter.register(this, null)
         arguments?.let { arguments ->
-            titleResource.set(arguments.titleResource)
+            title.set(arguments.title)
             binding.slider.apply {
                 progress = arguments.defaultValue
                 progressDrawable.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN)

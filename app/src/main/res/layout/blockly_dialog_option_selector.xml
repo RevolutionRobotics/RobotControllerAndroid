@@ -29,7 +29,7 @@
                 app:gone="@{viewModel.getOption(1) == null}"
                 android:scaleType="centerInside"
                 android:onClick="@{() -> viewModel.onOptionClicked(1)}"
-                app:chippedBoxConfig="@{viewModel.background}"
+                app:chippedBoxConfig="@{viewModel.getBackground(1)}"
                 app:drawable="@{viewModel.getOption(1).drawableRes}"/>
 
         <TextView
@@ -62,7 +62,7 @@
                 app:gone="@{viewModel.getOption(2) == null}"
                 android:scaleType="centerInside"
                 android:onClick="@{() -> viewModel.onOptionClicked(2)}"
-                app:chippedBoxConfig="@{viewModel.background}"
+                app:chippedBoxConfig="@{viewModel.getBackground(2)}"
                 app:drawable="@{viewModel.getOption(2).drawableRes}"/>
 
         <TextView
@@ -94,7 +94,7 @@
                 app:gone="@{viewModel.getOption(3) == null}"
                 android:onClick="@{() -> viewModel.onOptionClicked(3)}"
                 android:scaleType="centerInside"
-                app:chippedBoxConfig="@{viewModel.background}"
+                app:chippedBoxConfig="@{viewModel.getBackground(3)}"
                 app:drawable="@{viewModel.getOption(3).drawableRes}"/>
 
         <TextView
@@ -127,7 +127,7 @@
                 app:gone="@{viewModel.getOption(4) == null}"
                 android:onClick="@{() -> viewModel.onOptionClicked(4)}"
                 android:scaleType="centerInside"
-                app:chippedBoxConfig="@{viewModel.background}"
+                app:chippedBoxConfig="@{viewModel.getBackground(4)}"
                 app:drawable="@{viewModel.getOption(4).drawableRes}"/>
 
         <TextView
@@ -160,7 +160,7 @@
                 app:gone="@{viewModel.getOption(5) == null}"
                 android:onClick="@{() -> viewModel.onOptionClicked(5)}"
                 android:scaleType="centerInside"
-                app:chippedBoxConfig="@{viewModel.background}"
+                app:chippedBoxConfig="@{viewModel.getBackground(5)}"
                 app:drawable="@{viewModel.getOption(5).drawableRes}"/>
 
         <TextView
@@ -192,7 +192,7 @@
                 app:gone="@{viewModel.getOption(6) == null}"
                 android:onClick="@{() -> viewModel.onOptionClicked(6)}"
                 android:scaleType="centerInside"
-                app:chippedBoxConfig="@{viewModel.background}"
+                app:chippedBoxConfig="@{viewModel.getBackground(6)}"
                 app:drawable="@{viewModel.getOption(6).drawableRes}"/>
 
         <TextView

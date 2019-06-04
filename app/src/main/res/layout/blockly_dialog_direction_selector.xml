@@ -19,7 +19,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintVertical_chainStyle="packed"
-                android:src="@drawable/direction_forward"
+                android:src="@drawable/ic_blockly_motor_direction_fwd"
                 android:scaleType="centerInside"
                 android:onClick="@{() -> viewModel.onForwardSelected()}"
                 app:chippedBoxConfig="@{viewModel.forwardBackground}"/>
@@ -33,7 +33,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginTop="@dimen/dimen_40dp"
-                android:src="@drawable/direction_backward"
+                android:src="@drawable/ic_blockly_motor_direction_back"
                 android:scaleType="centerInside"
                 android:onClick="@{() -> viewModel.onBackwardSelected()}"
                 app:chippedBoxConfig="@{viewModel.backwardBackground}"/>
@@ -46,7 +46,7 @@
                 app:layout_constraintBottom_toBottomOf="@id/direction_bottom"
                 app:layout_constraintEnd_toStartOf="@id/direction_top"
                 android:layout_marginEnd="@dimen/dimen_12dp"
-                android:src="@drawable/direction_turn_left"
+                android:src="@drawable/ic_blockly_motor_direction_left"
                 android:scaleType="centerInside"
                 android:onClick="@{() -> viewModel.onTurnLeftSelected()}"
                 app:chippedBoxConfig="@{viewModel.turnLeftBackground}"/>
@@ -59,7 +59,7 @@
                 app:layout_constraintBottom_toBottomOf="@id/direction_bottom"
                 app:layout_constraintStart_toEndOf="@id/direction_top"
                 android:layout_marginStart="@dimen/dimen_12dp"
-                android:src="@drawable/direction_turn_right"
+                android:src="@drawable/ic_blockly_motor_direction_right"
                 android:scaleType="centerInside"
                 android:onClick="@{() -> viewModel.onTurnRightSelected()}"
                 app:chippedBoxConfig="@{viewModel.turnRightBackground}"/>

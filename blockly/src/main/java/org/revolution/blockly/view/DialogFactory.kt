@@ -1,8 +1,18 @@
 package org.revolution.blockly.view
 
 import android.webkit.JsPromptResult
+import org.revolution.blockly.BlocklyOption
 
 interface DialogFactory {
 
-    fun showDirectionSelectorDialog(result: JsPromptResult)
+    fun showDirectionSelectorDialog(defaultValue: String, result: JsPromptResult)
+    fun showSlider(title: String, maxValue: Int, defaultValue: Int, result: JsPromptResult)
+    fun showOptionSelector(
+        title: String,
+        blocklyOptions: List<BlocklyOption>,
+        default: BlocklyOption?,
+        result: JsPromptResult
+    )
+    fun showColorPicker(title: String, colors: List<String>, selectedColor: String, result: JsPromptResult)
+    fun showSoundPicker(title: String, result: JsPromptResult)
 }

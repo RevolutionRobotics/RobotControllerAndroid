@@ -11,6 +11,7 @@ import com.revolution.robotics.blockly.utils.JavascriptResultHandler
 import com.revolution.robotics.core.domain.local.UserProgram
 import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
+import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.databinding.FragmentCodingBinding
 import com.revolution.robotics.features.coding.programs.ProgramsDialog
 import com.revolution.robotics.features.coding.saveProgram.SaveProgramDialog
@@ -29,6 +30,7 @@ class CodingFragment : BaseFragment<FragmentCodingBinding, CodingViewModel>(R.la
 
     private val presenter: CodingMvp.Presenter by kodein.instance()
     private val javascriptResultHandler: JavascriptResultHandler by kodein.instance()
+    private val resourceResolver: ResourceResolver by kodein.instance()
     private val dialogEventBus: DialogEventBus by kodein.instance()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
@@ -40,7 +42,10 @@ class CodingFragment : BaseFragment<FragmentCodingBinding, CodingViewModel>(R.la
         }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding?.viewBlockly?.init(BLOCKLY_LOCATION, DialogFactory(javascriptResultHandler, fragmentManager))
+        binding?.viewBlockly?.init(
+            BLOCKLY_LOCATION,
+            DialogFactory(javascriptResultHandler, resourceResolver, fragmentManager)
+        )
         presenter.register(this, viewModel)
         dialogEventBus.register(this)
     }
