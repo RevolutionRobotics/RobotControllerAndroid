@@ -12,6 +12,7 @@ import com.revolution.robotics.databinding.BlocklyDialogBlockOptionsBinding
 import com.revolution.robotics.views.ChippedEditTextViewModel
 import com.revolution.robotics.views.dialogs.DialogButton
 import com.revolution.robotics.views.dialogs.DialogButtonHelper
+import org.json.JSONObject
 import org.kodein.di.erased.instance
 
 class BlockOptionsDialog :
@@ -19,6 +20,9 @@ class BlockOptionsDialog :
 
     companion object {
         private const val COMMENT_MAX_LENGTH = 80
+
+        private const val ACTION_DELETE = "DELETE_BLOCK"
+        private const val ACTION_DUPLICATE = "DUPLICATE_BLOCK"
 
         private var Bundle.title by BundleArgumentDelegate.String("title")
         private var Bundle.comment by BundleArgumentDelegate.StringNullable("comment")
@@ -40,16 +44,14 @@ class BlockOptionsDialog :
         super.onCreateView(inflater, container, savedInstanceState).apply {
             dialogButtonHelper.createButtons(binding.buttonContainer, setOf(
                 DialogButton(R.string.dialog_block_options_delete, R.drawable.ic_delete) {
-                    // TODO delete block
-                    confirmResult("action=delete")
+                    confirmResult(createResponse(ACTION_DELETE))
                 },
                 DialogButton(R.string.dialog_block_options_help, R.drawable.ic_community) {
                     dismiss()
                     // TODO open community
                 },
                 DialogButton(R.string.dialog_block_options_duplicate, R.drawable.ic_copy, true) {
-                    // TODO duplicate block
-                    confirmResult("action=duplicate")
+                    confirmResult(createResponse(ACTION_DUPLICATE))
                 }
             ))
             title.set(arguments?.title)
@@ -68,12 +70,18 @@ class BlockOptionsDialog :
         }
 
     override fun dismiss() {
-        // TODO update comment
+        // TODO update comment (?)
         super.dismiss()
     }
 
     override fun confirmResult(result: String) {
-        // TODO update comment
+        // TODO update comment (?)
         super.confirmResult(result)
     }
+
+    private fun createResponse(action: String, payload: String? = null) =
+        JSONObject().apply {
+            put("type", action)
+            payload?.let { put("payload", it) }
+        }.toString()
 }

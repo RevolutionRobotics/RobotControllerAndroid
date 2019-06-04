@@ -8,6 +8,9 @@ import org.revolution.blockly.BlocklyOption
 
 class BlocklyWebChromeClient(private val dialogFactory: DialogFactory) : WebChromeClient() {
 
+    // TODO add dialpad
+    // TODO add text input
+    // TODO add donut selector
     @Suppress("SwallowedException", "ComplexMethod")
     override fun onJsPrompt(
         view: WebView,
@@ -33,7 +36,10 @@ class BlocklyWebChromeClient(private val dialogFactory: DialogFactory) : WebChro
                 dialogFactory.showColorPicker(json.title(), json.getColors(), json.defaultKey(), result)
             } else if (message == "play_tune.in_sound") {
                 dialogFactory.showSoundPicker(json.title(), result)
+            } else if (message == "block_context") {
+                dialogFactory.showBlockOptionsDialog(json.title(), json.comment(), result)
             } else {
+                // TODO remove super call
                 wasDialogHandled = super.onJsPrompt(view, url, message, defaultValue, result)
             }
             wasDialogHandled
@@ -45,6 +51,21 @@ class BlocklyWebChromeClient(private val dialogFactory: DialogFactory) : WebChro
 
     private fun JSONObject.defaultKey() =
         optString("defaultKey")
+
+    private fun JSONObject.getDefaultOption() =
+        getOptions().find { it.key == defaultKey() }
+
+    private fun JSONObject.defaultInput() =
+        Integer.parseInt(optString("defaultInput", "0"))
+
+    private fun JSONObject.maxValue() =
+        Integer.parseInt(optString("maxValue", "100"))
+
+    private fun JSONObject.title() =
+        optString("title", "")
+
+    private fun JSONObject.comment() =
+        optString("comment")
 
     private fun JSONObject.getOptions(): List<BlocklyOption> =
         ArrayList<BlocklyOption>().apply {
@@ -59,18 +80,6 @@ class BlocklyWebChromeClient(private val dialogFactory: DialogFactory) : WebChro
                 add(option.getString("key"))
             }
         }
-
-    private fun JSONObject.getDefaultOption() =
-        getOptions().find { it.key == defaultKey() }
-
-    private fun JSONObject.defaultInput() =
-        Integer.parseInt(optString("defaultInput", "0"))
-
-    private fun JSONObject.maxValue() =
-        Integer.parseInt(optString("maxValue", "100"))
-
-    private fun JSONObject.title() =
-        optString("title", "")
 
     private fun JSONObject.withOptions(callback: (option: JSONObject) -> Unit) {
         val options = getJSONArray("options")

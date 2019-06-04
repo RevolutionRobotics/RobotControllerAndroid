@@ -2,6 +2,7 @@ package com.revolution.robotics.blockly
 
 import android.webkit.JsPromptResult
 import androidx.fragment.app.FragmentManager
+import com.revolution.robotics.blockly.dialogs.blockOptions.BlockOptionsDialog
 import com.revolution.robotics.blockly.dialogs.colorPicker.ColorPickerDialog
 import com.revolution.robotics.blockly.dialogs.directionSelector.Direction
 import com.revolution.robotics.blockly.dialogs.directionSelector.DirectionSelectorDialog
@@ -54,5 +55,10 @@ class DialogFactory(
     private fun BlocklyOption.toOption(defaultOption: BlocklyOption?, resourceResolver: ResourceResolver): Option {
         val resourceName = "ic_blockly_${Regex("[^A-Za-z]").replace(key, "_").toLowerCase()}"
         return Option(resourceResolver.drawableResourceByName(resourceName), value, key, key == defaultOption?.key)
+    }
+
+    override fun showBlockOptionsDialog(title: String, comment: String, result: JsPromptResult) {
+        javascriptResultHandler.registerResult(result)
+        BlockOptionsDialog.newInstance(title, comment).show(fragmentManager)
     }
 }
