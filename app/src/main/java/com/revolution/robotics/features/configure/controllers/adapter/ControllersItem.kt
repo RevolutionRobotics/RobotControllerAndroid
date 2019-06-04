@@ -17,7 +17,7 @@ class ControllersItem(
 ) {
 
     @DrawableRes
-    val selectedResource: Int = R.drawable.configure_controllers_card_bg_red
+    val selectedResource: Int = R.drawable.configure_controllers_card_bg_red_selector
     @DrawableRes
     val defaultResource: Int = R.drawable.configure_controllers_card_bg_white
 

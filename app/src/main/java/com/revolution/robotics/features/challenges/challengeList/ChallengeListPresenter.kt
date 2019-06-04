@@ -57,8 +57,8 @@ class ChallengeListPresenter(
 
     private fun getBackgroundResource(index: Int, progress: Int): Int =
         when {
-            index < progress -> R.drawable.bg_challenge_step_complete
-            index == progress -> R.drawable.bg_challenge_step_incomplete
+            index < progress -> R.drawable.bg_challenge_item_gold_selector
+            index == progress -> R.drawable.bg_challenge_item_grey_selector
             else -> R.drawable.bg_challenge_step_unavailable
         }
 

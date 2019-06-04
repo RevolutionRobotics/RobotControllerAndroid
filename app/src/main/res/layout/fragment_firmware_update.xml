@@ -35,7 +35,7 @@
                 android:scaleType="fitXY"
                 android:onClick="@{() -> viewModel.onRobotClicked()}"
                 app:visible="@{safeUnbox(viewModel.hasConnectedRobot)}"
-                android:src="@drawable/configure_controllers_card_bg_red"/>
+                android:src="@drawable/configure_controllers_card_bg_red_selector"/>
 
         <TextView
                 android:id="@+id/txt_robot_name"

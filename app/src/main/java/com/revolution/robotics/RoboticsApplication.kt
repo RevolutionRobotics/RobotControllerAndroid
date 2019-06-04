@@ -22,20 +22,6 @@ class RoboticsApplication : Application(), KodeinAware {
         lateinit var kodein: Kodein
     }
     // Challenge group items
-    // Challenge list items
-    // Settings  social icons
-    // Blockly direction selector items
-    // Blockly dialpad numbers & backspace arrow
-    // Blockly option selector items
-    // Blockly sound picker items
-    // Blockly color picker items
-    // Blockly donut selector items
-    // Carousel page arrows
-
-    // ControllerTypeSelector items
-    // MyRobots robot items
-    // WhoToBuild robot items
-    // Firmware update - brain item
 
     override var kodein = Kodein {
         import(createMainModule())

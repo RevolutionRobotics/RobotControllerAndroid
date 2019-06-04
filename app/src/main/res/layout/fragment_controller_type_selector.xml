@@ -31,7 +31,7 @@
                 android:onClick="@{() -> viewModel.onGamerControllerSelected()}"
                 android:layout_width="@dimen/controller_type_selector_wrapper_width"
                 android:layout_height="@dimen/controller_type_selector_wrapper_height"
-                android:background="@drawable/bg_controller_type_selector_item">
+                android:background="@drawable/bg_controller_type_selector_item_selector">
 
             <TextView
                     android:id="@+id/title_gamer"
@@ -68,7 +68,7 @@
                 android:onClick="@{() -> viewModel.onMultitaskerControllerSelected()}"
                 android:layout_width="@dimen/controller_type_selector_wrapper_width"
                 android:layout_height="@dimen/controller_type_selector_wrapper_height"
-                android:background="@drawable/bg_controller_type_selector_item">
+                android:background="@drawable/bg_controller_type_selector_item_selector">
 
             <TextView
                     android:id="@+id/title_multitasker"
@@ -105,7 +105,7 @@
                 android:onClick="@{() -> viewModel.onDriverControllerSelected()}"
                 android:layout_width="@dimen/controller_type_selector_wrapper_width"
                 android:layout_height="@dimen/controller_type_selector_wrapper_height"
-                android:background="@drawable/bg_controller_type_selector_item">
+                android:background="@drawable/bg_controller_type_selector_item_selector">
 
             <TextView
                     android:id="@+id/title_driver"
