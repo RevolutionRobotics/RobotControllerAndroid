@@ -2,6 +2,7 @@ package com.revolution.robotics.features.coding.saveProgram
 
 import android.os.Bundle
 import com.revolution.robotics.R
+import com.revolution.robotics.core.domain.local.UserProgram
 import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.core.extensions.withArguments
 import com.revolution.robotics.core.utils.BundleArgumentDelegate
@@ -12,16 +13,13 @@ import com.revolution.robotics.views.dialogs.DialogFace
 class SaveProgramDialog : SaveDialog() {
 
     companion object {
-        const val KEY_NAME = "name"
-        const val KEY_DESCRIPTION = "description"
+        const val KEY_USER_PROGRAM = "userProgram"
 
-        private var Bundle.name by BundleArgumentDelegate.StringNullable(KEY_NAME)
-        private var Bundle.description by BundleArgumentDelegate.StringNullable(KEY_DESCRIPTION)
+        private var Bundle.userProgram by BundleArgumentDelegate.ParcelableNullable<UserProgram>(KEY_USER_PROGRAM)
 
-        fun newInstance(name: String? = null, description: String? = null) =
+        fun newInstance(userProgram: UserProgram?) =
             SaveProgramDialog().withArguments { bundle ->
-                bundle.name = name
-                bundle.description = description
+                bundle.userProgram = userProgram
             }
     }
 
@@ -31,8 +29,10 @@ class SaveProgramDialog : SaveDialog() {
     override fun onDoneClicked() {
         dismiss()
         dialogEventBus.publish(DialogEvent.SAVE_PROGRAM.apply {
-            extras.description = dialogFace.getDescription()
-            extras.name = dialogFace.getName()
+            val userProgram = arguments?.userProgram ?: UserProgram()
+            userProgram.name = dialogFace.getName()
+            userProgram.description = dialogFace.getDescription()
+            extras.userProgram = userProgram
         })
     }
 
@@ -51,8 +51,8 @@ class SaveProgramDialog : SaveDialog() {
 
         override fun onActivated() {
             super.onActivated()
-            binding?.name?.binding?.content?.setText(arguments?.name)
-            binding?.description?.binding?.content?.setText(arguments?.description)
+            binding?.name?.binding?.content?.setText(arguments?.userProgram?.name)
+            binding?.description?.binding?.content?.setText(arguments?.userProgram?.description)
             if (isNameValid(getName())) enableDoneButton() else disableDoneButton()
         }
     }

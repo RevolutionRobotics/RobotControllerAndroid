@@ -2,6 +2,8 @@ package com.revolution.robotics.features.coding
 
 import com.revolution.robotics.BaseDialog
 import com.revolution.robotics.core.Mvp
+import com.revolution.robotics.core.domain.local.UserProgram
+import org.revolution.blockly.view.jsInterface.BlocklyJavascriptListener
 
 interface CodingMvp : Mvp {
 
@@ -9,8 +11,10 @@ interface CodingMvp : Mvp {
         fun showDialog(baseDialog: BaseDialog)
     }
 
-    interface Presenter : Mvp.Presenter<View, CodingViewModel> {
+    interface Presenter : Mvp.Presenter<View, CodingViewModel>, BlocklyJavascriptListener {
         fun showProgramsDialog()
-        fun saveProgram()
+        fun showSaveProgramDialog(userProgram: UserProgram?)
+        fun setSavedProgramData(userProgram: UserProgram)
+        fun removeProgram(userProgram: UserProgram)
     }
 }

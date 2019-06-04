@@ -52,8 +52,6 @@ class CodingFragment : BaseFragment<FragmentCodingBinding, CodingViewModel>(R.la
         super.onDestroyView()
     }
 
-    // TODO remove this suppress
-    @Suppress("UnusedPrivateMember")
     override fun onDialogEvent(event: DialogEvent) {
         when (event) {
             DialogEvent.SHOW_PROGRAM_INFO -> {
@@ -62,21 +60,26 @@ class CodingFragment : BaseFragment<FragmentCodingBinding, CodingViewModel>(R.la
             }
             DialogEvent.LOAD_PROGRAM -> {
                 val program = event.extras.getParcelable<UserProgram>(ProgramDialog.KEY_PROGRAM)
+                viewModel?.userProgram = program
+                viewModel?.programName?.set(program?.name)
                 program?.xml?.let {
-                    val xml = File(it).readText(Charsets.UTF_8)
-                    binding?.viewBlockly?.loadUrl("javascript:loadXMLProgram(`$xml}`)")
+                    binding?.viewBlockly?.loadProgram(File(it).readText(Charsets.UTF_8))
                 }
             }
             DialogEvent.DELETE_PROGRAM -> {
-                val program = event.extras.getParcelable<UserProgram>(ProgramDialog.KEY_PROGRAM)
-                // TODO delete program here
+                viewModel?.userProgram = null
+                viewModel?.programName?.set("")
+                event.extras.getParcelable<UserProgram>(ProgramDialog.KEY_PROGRAM)?.let {
+                    presenter.removeProgram(it)
+                }
             }
             DialogEvent.SAVE_PROGRAM -> {
-                val name = event.extras.getString(SaveProgramDialog.KEY_NAME)
-                val description = event.extras.getString(SaveProgramDialog.KEY_DESCRIPTION)
-                viewModel?.programName?.set(name)
-                binding?.viewBlockly?.loadUrl("javascript:saveProgram()")
-                // TODO save program from blockly
+                val userProgram = event.extras.getParcelable<UserProgram?>(SaveProgramDialog.KEY_USER_PROGRAM)
+                userProgram?.let { program ->
+                    viewModel?.programName?.set(program.name)
+                    presenter.setSavedProgramData(program)
+                    binding?.viewBlockly?.saveProgram(presenter)
+                }
             }
             else -> Unit
         }
