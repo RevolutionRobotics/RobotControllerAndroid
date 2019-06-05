@@ -28,19 +28,4 @@
       android:fillColor="#FFF"
       android:fillAlpha=".16"
       android:fillType="evenOdd"/>
-  <path
-      android:pathData="M94,96l27,-29h39v18l-11,11z"
-      android:fillType="evenOdd">
-    <aapt:attr name="android:fillColor">
-      <gradient 
-          android:startY="81.5"
-          android:startX="160"
-          android:endY="81.5"
-          android:endX="94"
-          android:type="linear">
-        <item android:offset="0" android:color="#FFE7E27E"/>
-        <item android:offset="1" android:color="#FFD2592F"/>
-      </gradient>
-    </aapt:attr>
-  </path>
 </vector>

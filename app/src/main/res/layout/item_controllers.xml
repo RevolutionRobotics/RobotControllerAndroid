@@ -155,7 +155,7 @@
                     android:id="@+id/select_button"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:background="@drawable/ic_controllers_select_button_bg"
+                    android:background="@drawable/ic_controllers_select_button_bg_selector"
                     android:layout_marginStart="@dimen/configure_controllers_controller_card_border_margin"
                     app:layout_constraintHorizontal_chainStyle="spread"
                     app:layout_constraintHorizontal_weight="1"

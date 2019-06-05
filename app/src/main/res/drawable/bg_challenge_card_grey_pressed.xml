@@ -28,21 +28,4 @@
       android:fillColor="#FFF"
       android:fillAlpha=".16"
       android:fillType="evenOdd"/>
-  <path
-      android:pathData="M91.703,97l28.862,-31H161v19.414L149.414,97H91.703z"
-      android:strokeWidth="2"
-      android:fillColor="#000"
-      android:fillType="evenOdd">
-    <aapt:attr name="android:strokeColor">
-      <gradient 
-          android:startY="81.5"
-          android:startX="161"
-          android:endY="81.5"
-          android:endX="38.98947"
-          android:type="linear">
-        <item android:offset="0" android:color="#FFD9DEE1"/>
-        <item android:offset="1" android:color="#FF6D6D6D"/>
-      </gradient>
-    </aapt:attr>
-  </path>
 </vector>
