@@ -1,5 +1,6 @@
 package com.revolution.robotics.blockly.dialogs.blockOptions
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -23,6 +24,7 @@ class BlockOptionsDialog :
 
         private const val ACTION_DELETE = "DELETE_BLOCK"
         private const val ACTION_DUPLICATE = "DUPLICATE_BLOCK"
+        private const val ACTION_COMMENT = "ADD_COMMENT"
 
         private var Bundle.title by BundleArgumentDelegate.String("title")
         private var Bundle.comment by BundleArgumentDelegate.StringNullable("comment")
@@ -37,8 +39,9 @@ class BlockOptionsDialog :
     override val hasTitle = true
 
     private val resourceResolver: ResourceResolver by kodein.instance()
-
     private val dialogButtonHelper = DialogButtonHelper()
+
+    private var wasResultConfirmed = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
         super.onCreateView(inflater, container, savedInstanceState).apply {
@@ -47,7 +50,7 @@ class BlockOptionsDialog :
                     confirmResult(createResponse(ACTION_DELETE))
                 },
                 DialogButton(R.string.dialog_block_options_help, R.drawable.ic_community) {
-                    dismiss()
+                    dismissAllowingStateLoss()
                     // TODO open community
                 },
                 DialogButton(R.string.dialog_block_options_duplicate, R.drawable.ic_copy, true) {
@@ -69,19 +72,20 @@ class BlockOptionsDialog :
             )
         }
 
-    override fun dismiss() {
-        // TODO update comment (?)
-        super.dismiss()
+    override fun onDismiss(dialog: DialogInterface?) {
+        if (!wasResultConfirmed) {
+            confirmResult(createResponse(ACTION_COMMENT))
+        }
     }
 
     override fun confirmResult(result: String) {
-        // TODO update comment (?)
+        wasResultConfirmed = true
         super.confirmResult(result)
     }
 
-    private fun createResponse(action: String, payload: String? = null) =
+    private fun createResponse(action: String) =
         JSONObject().apply {
             put("type", action)
-            payload?.let { put("payload", it) }
+            put("payload", binding.comment.getContent())
         }.toString()
 }
