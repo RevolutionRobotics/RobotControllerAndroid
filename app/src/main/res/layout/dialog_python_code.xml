@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ScrollView android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+            <TextView
+                    android:id="@+id/python_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:fontFamily="@font/jura_bold"
+                    android:layout_marginTop="@dimen/dimen_32dp"
+                    android:layout_marginStart="@dimen/dimen_32dp"
+                    android:layout_marginEnd="@dimen/dimen_32dp"
+                    android:text="@string/title_python_code"
+                    android:paddingStart="@dimen/dimen_32dp"
+                    android:paddingEnd="@dimen/dimen_32dp"
+                    android:gravity="center_horizontal"/>
+
+            <TextView
+                    android:id="@+id/txt_code"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    android:paddingStart="@dimen/dimen_32dp"
+                    android:paddingEnd="@dimen/dimen_32dp"
+                    android:layout_marginTop="@dimen/dimen_16dp"
+                    android:layout_marginBottom="@dimen/dimen_16dp"
+                    android:fontFamily="@font/barlow_regular"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+</layout>
