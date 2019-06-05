@@ -1,10 +1,8 @@
 package org.revolution.blockly.view
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
 import android.webkit.WebView
-import org.revolution.blockly.view.jsInterface.BlocklyJavascriptInterface
 import org.revolution.blockly.view.jsInterface.BlocklyJavascriptListener
 import org.revolution.blockly.view.jsInterface.IOJavascriptInterface
 
@@ -25,7 +23,7 @@ class BlocklyView @JvmOverloads constructor(context: Context, attrs: AttributeSe
         const val USER_AGENT = "Android-Blockly"
     }
 
-    private var javascriptInterface: IOJavascriptInterface = IOJavascriptInterface(context)
+    private var javascriptInterface = IOJavascriptInterface(context)
     private var isBlocklyLoaded = false
 
     init {
@@ -37,17 +35,11 @@ class BlocklyView @JvmOverloads constructor(context: Context, attrs: AttributeSe
     fun init(htmlPath: String, dialogFactory: DialogFactory) {
         webChromeClient = BlocklyWebChromeClient(dialogFactory, this)
         loadUrl(htmlPath)
-        addJavascriptInterface(IOJavascriptInterface(context), BRIDGE_NAME)
-    }
-
-    @SuppressLint("JavascriptInterface")
-    override fun addJavascriptInterface(javascriptInterface: Any?, name: String?) {
-        this.javascriptInterface = javascriptInterface as IOJavascriptInterface
-        super.addJavascriptInterface(javascriptInterface, name)
+        addJavascriptInterface(javascriptInterface, BRIDGE_NAME)
     }
 
     override fun onDetachedFromWindow() {
-        (javascriptInterface as? BlocklyJavascriptInterface)?.release()
+        javascriptInterface.release()
         super.onDetachedFromWindow()
     }
 
