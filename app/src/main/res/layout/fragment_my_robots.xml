@@ -63,7 +63,7 @@
                 android:layout_height="0dp"
                 android:onClick="@{()->viewModel.previousButtonClick()}"
                 app:visible="@{viewModel.previousButtonVisible}"
-                android:background="@drawable/robots_left_arrow"
+                android:background="@drawable/ic_arrow_left_selector"
                 app:layout_constraintWidth_percent="@dimen/robots_pager_button_width_percentage"
                 app:layout_constraintHeight_percent="@dimen/robots_pager_button_height_percentage"
                 app:layout_constraintTop_toTopOf="@id/robots_buttons_center_guide"
@@ -76,7 +76,7 @@
                 android:layout_height="0dp"
                 android:onClick="@{()->viewModel.nextButtonClick()}"
                 app:visible="@{viewModel.nextButtonVisible}"
-                android:background="@drawable/robots_right_arrow"
+                android:background="@drawable/ic_arrow_right_selector"
                 app:layout_constraintWidth_percent="@dimen/robots_pager_button_width_percentage"
                 app:layout_constraintHeight_percent="@dimen/robots_pager_button_height_percentage"
                 app:layout_constraintTop_toTopOf="@id/robots_buttons_center_guide"
@@ -88,6 +88,8 @@
                 android:layout_width="@dimen/floating_button_width"
                 android:layout_height="@dimen/floating_button_height"
                 android:onClick="@{() -> viewModel.onBuildNewClicked()}"
+                android:clickable="true"
+                android:focusable="true"
                 android:layout_marginBottom="@dimen/dimen_8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent">
@@ -139,14 +141,18 @@
                     app:layout_constraintBottom_toBottomOf="@+id/view"
                     app:layout_constraintStart_toEndOf="@id/floating_button_icon"
                     app:layout_constraintEnd_toEndOf="parent"
+                    android:background="@drawable/bg_button_default"
                     android:gravity="center_vertical"
                     android:includeFontPadding="false"
                     android:padding="@dimen/dimen_8dp"
+                    android:paddingBottom="@dimen/dimen_16dp"
+                    android:paddingTop="@dimen/dimen_8dp"
+                    android:paddingLeft="@dimen/dimen_8dp"
+                    android:paddingRight="@dimen/dimen_8dp"
                     android:text="@string/my_robots_build_new"
                     android:textSize="15sp"
                     android:textColor="@color/white"
-                    android:fontFamily="@font/barlow_regular"
-                    android:layout_marginBottom="8dp"/>
+                    android:fontFamily="@font/barlow_regular"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

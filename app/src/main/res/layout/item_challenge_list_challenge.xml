@@ -18,7 +18,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:background="@{viewModel.isComplete() ? @drawable/bg_challenge_list_challenge_item_complete : @drawable/bg_challenge_list_challenge_item}"
+                android:background="@{viewModel.isComplete() ? @drawable/bg_challenge_card_gold_selector : @drawable/bg_challenge_card_grey_selector}"
                 app:layout_constraintDimensionRatio="H, 162:98">
 
             <androidx.constraintlayout.widget.Guideline

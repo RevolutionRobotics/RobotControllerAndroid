@@ -10,14 +10,17 @@
             xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:clickable="true"
-            android:focusable="true"
             android:paddingTop="@dimen/dimen_16dp"
             android:paddingBottom="@dimen/dimen_4dp"
             android:paddingLeft="@dimen/dimen_4dp"
             android:paddingRight="@dimen/dimen_4dp"
             android:background="@color/grey_28"
             tools:layout_width="@dimen/drawer_config_width">
+
+        <View android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:clickable="true"
+              android:focusable="true"/>
 
         <com.revolution.robotics.views.ChippedEditText
                 android:id="@+id/edit_motor"

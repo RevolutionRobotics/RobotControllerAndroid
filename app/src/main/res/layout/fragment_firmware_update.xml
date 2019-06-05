@@ -35,7 +35,7 @@
                 android:scaleType="fitXY"
                 android:onClick="@{() -> viewModel.onRobotClicked()}"
                 app:visible="@{safeUnbox(viewModel.hasConnectedRobot)}"
-                android:src="@drawable/configure_controllers_card_bg_red"/>
+                android:src="@drawable/configure_controllers_card_bg_red_selector"/>
 
         <TextView
                 android:id="@+id/txt_robot_name"
@@ -142,6 +142,7 @@
                     android:gravity="center_vertical"
                     android:includeFontPadding="false"
                     android:padding="@dimen/dimen_8dp"
+                    android:background="@drawable/bg_button_default"
                     android:text="@string/firmware_new_connection_button"
                     android:textSize="15sp"
                     android:textColor="@color/white"

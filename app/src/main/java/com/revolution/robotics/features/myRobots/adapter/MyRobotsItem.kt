@@ -19,7 +19,7 @@ data class MyRobotsItem(
     val imageUrl = robot.coverImage
 
     @DrawableRes
-    val selectedResource: Int = R.drawable.my_robots_border_red
+    val selectedResource: Int = R.drawable.my_robots_border_red_selector
     @DrawableRes
     val defaultResource: Int = R.drawable.my_robots_border_white
     var isSelected: ObservableBoolean = ObservableBoolean(false)

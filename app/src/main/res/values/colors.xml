@@ -9,6 +9,7 @@
 
     <color name="overlay_black_42">#42000000</color>
     <color name="overlay_black_b3">#b3000000</color>
+    <color name="overlay_white_28">#28ffffff</color>
 
     <color name="grey_1d">#FF1D1D1D</color>
     <color name="grey_28">#FF282828</color>
