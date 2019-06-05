@@ -11,15 +11,17 @@ import com.revolution.robotics.blockly.utils.JavascriptResultHandler
 import com.revolution.robotics.core.domain.local.UserProgram
 import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
+import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.databinding.FragmentCodingBinding
 import com.revolution.robotics.features.coding.programs.ProgramsDialog
 import com.revolution.robotics.features.coding.saveProgram.SaveProgramDialog
 import com.revolution.robotics.features.controllers.programInfo.ProgramDialog
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 import org.kodein.di.erased.instance
+import org.revolution.blockly.view.BlocklyLoadedListener
 
 class CodingFragment : BaseFragment<FragmentCodingBinding, CodingViewModel>(R.layout.fragment_coding), CodingMvp.View,
-    DialogEventBus.Listener {
+    DialogEventBus.Listener, BlocklyLoadedListener {
 
     companion object {
         private const val BLOCKLY_LOCATION = "file:///android_asset/blockly/webview.html"
@@ -29,6 +31,7 @@ class CodingFragment : BaseFragment<FragmentCodingBinding, CodingViewModel>(R.la
 
     private val presenter: CodingMvp.Presenter by kodein.instance()
     private val javascriptResultHandler: JavascriptResultHandler by kodein.instance()
+    private val resourceResolver: ResourceResolver by kodein.instance()
     private val dialogEventBus: DialogEventBus by kodein.instance()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
@@ -40,7 +43,13 @@ class CodingFragment : BaseFragment<FragmentCodingBinding, CodingViewModel>(R.la
         }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding?.viewBlockly?.init(BLOCKLY_LOCATION, DialogFactory(javascriptResultHandler, fragmentManager))
+        binding?.viewBlockly?.apply {
+            init(
+                BLOCKLY_LOCATION,
+                DialogFactory(javascriptResultHandler, resourceResolver, fragmentManager)
+            )
+            listener = this@CodingFragment
+        }
         presenter.register(this, viewModel)
         dialogEventBus.register(this)
     }
@@ -57,6 +66,10 @@ class CodingFragment : BaseFragment<FragmentCodingBinding, CodingViewModel>(R.la
 
     override fun clearBlocklyWorkspace() {
         binding?.viewBlockly?.clearWorkspace()
+    }
+
+    override fun onBlocklyLoaded() {
+        viewModel?.isBlocklyLoaded?.set(true)
     }
 
     @Suppress("ComplexMethod")

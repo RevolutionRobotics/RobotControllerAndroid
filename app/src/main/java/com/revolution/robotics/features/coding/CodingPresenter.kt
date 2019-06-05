@@ -1,5 +1,7 @@
 package com.revolution.robotics.features.coding
 
+import com.revolution.robotics.core.utils.Navigator
+
 import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.local.UserProgram
 import com.revolution.robotics.core.interactor.LocalFileLoader
@@ -17,7 +19,8 @@ class CodingPresenter(
     private val fileNameGenerator: UserProgramFileNameGenerator,
     private val localFileLoader: LocalFileLoader,
     private val localFileSaver: LocalFileSaver,
-    private val resourceResolver: ResourceResolver
+    private val resourceResolver: ResourceResolver,
+    private val navigator: Navigator
 ) : CodingMvp.Presenter {
 
     override var view: CodingMvp.View? = null
@@ -104,5 +107,9 @@ class CodingPresenter(
                 }
             }
         }
+    }
+
+    override fun onBackPressed() {
+        navigator.back()
     }
 }

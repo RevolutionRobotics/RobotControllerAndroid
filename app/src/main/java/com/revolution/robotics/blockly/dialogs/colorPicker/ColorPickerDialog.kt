@@ -20,11 +20,13 @@ class ColorPickerDialog :
     companion object {
         private const val SPAN_COUNT = 7
 
+        private var Bundle.title by BundleArgumentDelegate.String("title")
         private var Bundle.colors by BundleArgumentDelegate.Parcelable<StringList>("colors")
         private var Bundle.selectedColor by BundleArgumentDelegate.StringNullable("selectedColor")
 
-        fun newInstance(colors: List<String>, selectedColor: String? = null) =
+        fun newInstance(title: String, colors: List<String>, selectedColor: String? = null) =
             ColorPickerDialog().withArguments { bundle ->
+                bundle.title = title
                 bundle.colors = StringList().apply { addAll(colors) }
                 bundle.selectedColor = selectedColor
             }
@@ -42,6 +44,7 @@ class ColorPickerDialog :
                 layoutManager = GridLayoutManager(context, SPAN_COUNT)
                 adapter = this@ColorPickerDialog.adapter
             }
+            arguments?.let { title.set(it.title) }
         }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

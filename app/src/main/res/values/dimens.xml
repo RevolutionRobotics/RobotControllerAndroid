@@ -105,7 +105,7 @@
     <!-- DIALOG: BLOCKLY OPTION SELECTOR -->
     <dimen name="option_selector_button_width">128dp</dimen>
     <dimen name="option_selector_button_height">44dp</dimen>
-    <dimen name="option_selector_button_padding_horizontal">52dp</dimen>
+    <dimen name="option_selector_button_padding_horizontal">24dp</dimen>
     <dimen name="option_selector_button_padding_vertical">12dp</dimen>
 
     <!-- DIALOG: BLOCKLY DIALPAD -->

@@ -1,9 +1,12 @@
 package com.revolution.robotics.blockly.dialogs.directionSelector
 
-// TODO finalize these values
 enum class Direction(val value: String) {
-    FORWARD("forward"),
-    BACKWARD("backward"),
-    TURN_LEFT("turn_left"),
-    TURN_RIGHT("turn_right")
+    FORWARD("Motor.DIRECTION_FWD"),
+    BACKWARD("Motor.DIRECTION_BACK"),
+    TURN_LEFT("Motor.DIRECTION_LEFT"),
+    TURN_RIGHT("Motor.DIRECTION_RIGHT");
+
+    companion object {
+        fun getByValue(value: String) = values().firstOrNull { it.value == value }
+    }
 }

@@ -11,7 +11,7 @@ class SoundPickerMvp : Mvp {
     }
 
     interface Presenter : Mvp.Presenter<View, SoundOption> {
-        fun loadSounds()
+        fun loadSounds(selectedSound: String?)
         fun onSoundSelected(sound: SoundOption)
         fun onDoneClicked()
     }

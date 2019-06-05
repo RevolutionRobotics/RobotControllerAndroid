@@ -2,7 +2,6 @@ package com.revolution.robotics.blockly.dialogs.optionSelector
 
 import android.os.Bundle
 import android.view.View
-import androidx.annotation.StringRes
 import com.revolution.robotics.R
 import com.revolution.robotics.blockly.JavascriptPromptDialog
 import com.revolution.robotics.core.extensions.withArguments
@@ -16,12 +15,12 @@ class OptionSelectorDialog :
     override val hasTitle = true
 
     companion object {
-        private var Bundle.titleResource by BundleArgumentDelegate.Int("title")
+        private var Bundle.title by BundleArgumentDelegate.String("title")
         private var Bundle.options by BundleArgumentDelegate.Parcelable<OptionList>("options")
 
-        fun newInstance(@StringRes titleResource: Int, options: List<Option>) =
+        fun newInstance(title: String, options: List<Option>) =
             OptionSelectorDialog().withArguments { bundle ->
-                bundle.titleResource = titleResource
+                bundle.title = title
                 bundle.options = OptionList().apply { addAll(options) }
             }
     }
@@ -29,7 +28,7 @@ class OptionSelectorDialog :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         arguments?.let { arguments ->
             binding.viewModel = OptionSelectorViewModel(arguments.options, this)
-            titleResource.set(arguments.titleResource)
+            title.set(arguments.title)
         }
     }
 }

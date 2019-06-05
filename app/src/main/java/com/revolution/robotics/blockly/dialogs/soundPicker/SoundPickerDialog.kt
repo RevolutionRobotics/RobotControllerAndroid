@@ -9,6 +9,8 @@ import com.revolution.robotics.R
 import com.revolution.robotics.blockly.JavascriptPromptDialog
 import com.revolution.robotics.blockly.dialogs.soundPicker.adapter.SoundPickerAdapter
 import com.revolution.robotics.blockly.utils.SoundHelper
+import com.revolution.robotics.core.extensions.withArguments
+import com.revolution.robotics.core.utils.BundleArgumentDelegate
 import com.revolution.robotics.databinding.BlocklyDialogSoundPickerBinding
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 import org.kodein.di.erased.instance
@@ -19,7 +21,14 @@ class SoundPickerDialog :
     companion object {
         private const val SPAN_COUNT = 5
 
-        fun newInstance() = SoundPickerDialog()
+        private var Bundle.title by BundleArgumentDelegate.String("title")
+        private var Bundle.selectedSound by BundleArgumentDelegate.StringNullable("selectedSound")
+
+        fun newInstance(title: String, selectedSound: String? = null) =
+            SoundPickerDialog().withArguments { bundle ->
+                bundle.title = title
+                bundle.selectedSound = selectedSound
+            }
     }
 
     override val hasCloseButton = true
@@ -41,11 +50,12 @@ class SoundPickerDialog :
                 layoutManager = GridLayoutManager(context, SPAN_COUNT)
                 adapter = this@SoundPickerDialog.adapter
             }
+            arguments?.let { title.set(it.title) }
         }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         presenter.register(this, null)
-        presenter.loadSounds()
+        presenter.loadSounds(arguments?.selectedSound)
     }
 
     override fun onDestroyView() {

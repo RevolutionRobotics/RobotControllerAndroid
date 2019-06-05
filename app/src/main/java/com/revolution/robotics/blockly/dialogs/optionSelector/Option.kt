@@ -8,5 +8,6 @@ import kotlinx.android.parcel.Parcelize
 data class Option(
     @DrawableRes val drawableRes: Int,
     val text: String,
-    val value: String
+    val value: String,
+    val isSelected: Boolean
 ) : Parcelable

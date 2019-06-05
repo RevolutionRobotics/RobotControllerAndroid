@@ -1,5 +1,6 @@
 package com.revolution.robotics.blockly.dialogs.blockOptions
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -12,6 +13,7 @@ import com.revolution.robotics.databinding.BlocklyDialogBlockOptionsBinding
 import com.revolution.robotics.views.ChippedEditTextViewModel
 import com.revolution.robotics.views.dialogs.DialogButton
 import com.revolution.robotics.views.dialogs.DialogButtonHelper
+import org.json.JSONObject
 import org.kodein.di.erased.instance
 
 class BlockOptionsDialog :
@@ -19,6 +21,10 @@ class BlockOptionsDialog :
 
     companion object {
         private const val COMMENT_MAX_LENGTH = 80
+
+        private const val ACTION_DELETE = "DELETE_BLOCK"
+        private const val ACTION_DUPLICATE = "DUPLICATE_BLOCK"
+        private const val ACTION_COMMENT = "ADD_COMMENT"
 
         private var Bundle.title by BundleArgumentDelegate.String("title")
         private var Bundle.comment by BundleArgumentDelegate.StringNullable("comment")
@@ -33,23 +39,22 @@ class BlockOptionsDialog :
     override val hasTitle = true
 
     private val resourceResolver: ResourceResolver by kodein.instance()
-
     private val dialogButtonHelper = DialogButtonHelper()
+
+    private var wasResultConfirmed = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
         super.onCreateView(inflater, container, savedInstanceState).apply {
             dialogButtonHelper.createButtons(binding.buttonContainer, setOf(
                 DialogButton(R.string.dialog_block_options_delete, R.drawable.ic_delete) {
-                    // TODO delete block
-                    confirmResult("action=delete")
+                    confirmResult(createResponse(ACTION_DELETE))
                 },
                 DialogButton(R.string.dialog_block_options_help, R.drawable.ic_community) {
-                    dismiss()
+                    dismissAllowingStateLoss()
                     // TODO open community
                 },
                 DialogButton(R.string.dialog_block_options_duplicate, R.drawable.ic_copy, true) {
-                    // TODO duplicate block
-                    confirmResult("action=duplicate")
+                    confirmResult(createResponse(ACTION_DUPLICATE))
                 }
             ))
             title.set(arguments?.title)
@@ -67,13 +72,20 @@ class BlockOptionsDialog :
             )
         }
 
-    override fun dismiss() {
-        // TODO update comment
-        super.dismiss()
+    override fun onDismiss(dialog: DialogInterface?) {
+        if (!wasResultConfirmed) {
+            confirmResult(createResponse(ACTION_COMMENT))
+        }
     }
 
     override fun confirmResult(result: String) {
-        // TODO update comment
+        wasResultConfirmed = true
         super.confirmResult(result)
     }
+
+    private fun createResponse(action: String) =
+        JSONObject().apply {
+            put("type", action)
+            put("payload", binding.comment.getContent())
+        }.toString()
 }
