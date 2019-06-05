@@ -95,7 +95,7 @@ class LeverView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
     }
 
     private fun Float.normalizeForController() =
-        ((this + FLOAT_CENTER) * LEVER_AXIS_MAX).toInt()
+        LEVER_AXIS_MAX - ((this + FLOAT_CENTER) * LEVER_AXIS_MAX).toInt()
 
     private fun Float.limit(limit: Float) =
         Math.min(Math.max(this, -limit), limit)
