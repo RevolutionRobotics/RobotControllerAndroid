@@ -4,15 +4,16 @@ import android.webkit.JsPromptResult
 import org.json.JSONObject
 import org.revolution.blockly.view.DialogFactory
 import org.revolution.blockly.view.dialogHandlers.JsPromptHandler
-import org.revolution.blockly.view.dialogHandlers.defaultInputInt
-import org.revolution.blockly.view.dialogHandlers.maxValue
+import org.revolution.blockly.view.dialogHandlers.defaultInput
 import org.revolution.blockly.view.dialogHandlers.title
 
-class SliderHandler : JsPromptHandler {
+class TextInputHandler : JsPromptHandler {
 
-    override fun canHandleRequest(message: String) = message == "math_number.num"
+    override fun canHandleRequest(message: String) =
+        message.endsWith(".name_input") ||
+                message == "variable"
 
     override fun handleRequest(request: JSONObject, dialogFactory: DialogFactory, result: JsPromptResult) {
-        dialogFactory.showSlider(request.title(), request.maxValue(), request.defaultInputInt(), result)
+        dialogFactory.showTextInput(request.title(), request.defaultInput(), result)
     }
 }

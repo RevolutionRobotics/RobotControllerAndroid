@@ -10,6 +10,7 @@ import org.revolution.blockly.view.dialogHandlers.instances.DirectionHandler
 import org.revolution.blockly.view.dialogHandlers.instances.OptionSelectorHandler
 import org.revolution.blockly.view.dialogHandlers.instances.SliderHandler
 import org.revolution.blockly.view.dialogHandlers.instances.SoundPickerHandler
+import org.revolution.blockly.view.dialogHandlers.instances.TextInputHandler
 
 class BlocklyWebChromeClient(
     private val dialogFactory: DialogFactory,
@@ -21,6 +22,7 @@ class BlocklyWebChromeClient(
     }
 
     private val promptHandlers = listOf(
+        TextInputHandler(),
         OptionSelectorHandler(),
         DirectionHandler(),
         SliderHandler(),
@@ -37,7 +39,6 @@ class BlocklyWebChromeClient(
     }
 
     // TODO add dialpad
-    // TODO add text input
     // TODO add donut selector
     override fun onJsPrompt(
         view: WebView,

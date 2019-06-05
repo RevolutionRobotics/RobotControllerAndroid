@@ -10,6 +10,7 @@ import com.revolution.robotics.blockly.dialogs.optionSelector.Option
 import com.revolution.robotics.blockly.dialogs.optionSelector.OptionSelectorDialog
 import com.revolution.robotics.blockly.dialogs.slider.SliderDialog
 import com.revolution.robotics.blockly.dialogs.soundPicker.SoundPickerDialog
+import com.revolution.robotics.blockly.dialogs.textInput.TextInputDialog
 import com.revolution.robotics.blockly.utils.JavascriptResultHandler
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import org.revolution.blockly.BlocklyOption
@@ -52,13 +53,18 @@ class DialogFactory(
         SoundPickerDialog.newInstance(title, selectedSound).show(fragmentManager)
     }
 
-    private fun BlocklyOption.toOption(defaultOption: BlocklyOption?, resourceResolver: ResourceResolver): Option {
-        val resourceName = "ic_blockly_${Regex("[^A-Za-z]").replace(key, "_").toLowerCase()}"
-        return Option(resourceResolver.drawableResourceByName(resourceName), value, key, key == defaultOption?.key)
-    }
-
     override fun showBlockOptionsDialog(title: String, comment: String, result: JsPromptResult) {
         javascriptResultHandler.registerResult(result)
         BlockOptionsDialog.newInstance(title, comment).show(fragmentManager)
+    }
+
+    override fun showTextInput(title: String, defaultValue: String?, result: JsPromptResult) {
+        javascriptResultHandler.registerResult(result)
+        TextInputDialog.newInstance(title, defaultValue).show(fragmentManager)
+    }
+
+    private fun BlocklyOption.toOption(defaultOption: BlocklyOption?, resourceResolver: ResourceResolver): Option {
+        val resourceName = "ic_blockly_${Regex("[^A-Za-z]").replace(key, "_").toLowerCase()}"
+        return Option(resourceResolver.drawableResourceByName(resourceName), value, key, key == defaultOption?.key)
     }
 }

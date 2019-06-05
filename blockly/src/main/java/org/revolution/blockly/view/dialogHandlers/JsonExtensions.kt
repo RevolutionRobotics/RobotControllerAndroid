@@ -9,8 +9,11 @@ fun JSONObject.defaultKey(): String =
 fun JSONObject.defaultOption() =
     options().find { it.key == defaultKey() }
 
-fun JSONObject.defaultInput() =
+fun JSONObject.defaultInputInt() =
     Integer.parseInt(optString("defaultInput", "0"))
+
+fun JSONObject.defaultInput(): String =
+    optString("defaultInput", "")
 
 fun JSONObject.maxValue() =
     Integer.parseInt(optString("maxValue", "100"))
