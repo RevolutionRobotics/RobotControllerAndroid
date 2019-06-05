@@ -55,22 +55,21 @@ class CodingFragment : BaseFragment<FragmentCodingBinding, CodingViewModel>(R.la
         binding?.viewBlockly?.loadProgram(xml)
     }
 
+    @Suppress("ComplexMethod")
     override fun onDialogEvent(event: DialogEvent) {
         when (event) {
-            DialogEvent.SHOW_PROGRAM_INFO -> {
+            DialogEvent.SHOW_PROGRAM_INFO ->
                 event.extras.getParcelable<UserProgram>(ProgramsDialog.KEY_PROGRAM)?.let {
                     showDialog(ProgramDialog.Load.newInstance(it))
                 }
-            }
             DialogEvent.LOAD_PROGRAM ->
                 event.extras.getParcelable<UserProgram>(ProgramDialog.KEY_PROGRAM)?.let {
                     presenter.loadProgram(it)
                 }
-            DialogEvent.DELETE_PROGRAM -> {
+            DialogEvent.DELETE_PROGRAM ->
                 event.extras.getParcelable<UserProgram>(ProgramDialog.KEY_PROGRAM)?.let {
                     presenter.removeProgram(it)
                 }
-            }
             DialogEvent.SAVE_PROGRAM -> {
                 val userProgram = event.extras.getParcelable<UserProgram?>(SaveProgramDialog.KEY_USER_PROGRAM)
                 userProgram?.let { program ->
