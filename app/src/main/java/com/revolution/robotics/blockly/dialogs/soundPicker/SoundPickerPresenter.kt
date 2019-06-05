@@ -16,7 +16,7 @@ class SoundPickerPresenter(
 
     private var selectedSound: SoundOption? = null
 
-    override fun loadSounds() {
+    override fun loadSounds(selectedSound: String?) {
         val assets = contextProvider.applicationContext.assets
         val result = ArrayList<SoundOption>().apply {
             val fileNames =
@@ -26,7 +26,18 @@ class SoundPickerPresenter(
                     it.substring(0, it.length - EXTENSION_MP3.length)
                 }
             if (fileNames != null) {
-                addAll(fileNames.map { SoundOption(it, SoundIcons.ICONS[it] ?: 0, this@SoundPickerPresenter) })
+                addAll(fileNames.map { filename ->
+                    SoundOption(
+                        filename,
+                        SoundIcons.ICONS[filename] ?: 0,
+                        filename == selectedSound,
+                        this@SoundPickerPresenter
+                    ).apply {
+                        if (isSelected.get()) {
+                            this@SoundPickerPresenter.selectedSound = this
+                        }
+                    }
+                })
             }
         }
 
@@ -41,7 +52,7 @@ class SoundPickerPresenter(
     }
 
     override fun onDoneClicked() {
-        view?.onSoundConfirmed(selectedSound?.let { getFilePath(it.fileName) })
+        view?.onSoundConfirmed(selectedSound?.fileName)
     }
 
     private fun getFilePath(fileName: String) =

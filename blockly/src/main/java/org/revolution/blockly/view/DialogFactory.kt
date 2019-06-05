@@ -14,6 +14,6 @@ interface DialogFactory {
         result: JsPromptResult
     )
     fun showColorPicker(title: String, colors: List<String>, selectedColor: String, result: JsPromptResult)
-    fun showSoundPicker(title: String, result: JsPromptResult)
+    fun showSoundPicker(title: String, selectedSound: String?, result: JsPromptResult)
     fun showBlockOptionsDialog(title: String, comment: String, result: JsPromptResult)
 }

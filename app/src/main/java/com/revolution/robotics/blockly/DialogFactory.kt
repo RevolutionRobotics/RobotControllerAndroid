@@ -47,9 +47,9 @@ class DialogFactory(
         ColorPickerDialog.newInstance(title, colors, selectedColor).show(fragmentManager)
     }
 
-    override fun showSoundPicker(title: String, result: JsPromptResult) {
+    override fun showSoundPicker(title: String, selectedSound: String?, result: JsPromptResult) {
         javascriptResultHandler.registerResult(result)
-        SoundPickerDialog.newInstance(title).show(fragmentManager)
+        SoundPickerDialog.newInstance(title, selectedSound).show(fragmentManager)
     }
 
     private fun BlocklyOption.toOption(defaultOption: BlocklyOption?, resourceResolver: ResourceResolver): Option {

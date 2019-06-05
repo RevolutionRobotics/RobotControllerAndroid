@@ -22,10 +22,13 @@ class SoundPickerDialog :
         private const val SPAN_COUNT = 5
 
         private var Bundle.title by BundleArgumentDelegate.String("title")
+        private var Bundle.selectedSound by BundleArgumentDelegate.StringNullable("selectedSound")
 
-        fun newInstance(title: String) = SoundPickerDialog().withArguments { bundle ->
-            bundle.title = title
-        }
+        fun newInstance(title: String, selectedSound: String? = null) =
+            SoundPickerDialog().withArguments { bundle ->
+                bundle.title = title
+                bundle.selectedSound = selectedSound
+            }
     }
 
     override val hasCloseButton = true
@@ -52,7 +55,7 @@ class SoundPickerDialog :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         presenter.register(this, null)
-        presenter.loadSounds()
+        presenter.loadSounds(arguments?.selectedSound)
     }
 
     override fun onDestroyView() {
