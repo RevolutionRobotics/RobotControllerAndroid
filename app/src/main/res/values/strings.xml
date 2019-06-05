@@ -338,5 +338,8 @@
     <string name="dialog_robot_info_edit">Let’s edit the configuration to play with this robot!</string>
     <string name="duplicated_robot_name_suffix">Copy</string>
     <string name="title_python_code">Generated python code</string>
+    <string name="disconnect_modal_cancel">Cancel</string>
+    <string name="disconnect_modal_disconnect">Disconnect</string>
+    <string name="disconnect_modal_description">Would you like to disconnect from the robot?</string>
 
 </resources>

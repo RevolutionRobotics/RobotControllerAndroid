@@ -3,6 +3,7 @@ package com.revolution.robotics.features.bluetooth
 import android.content.Context
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.fragment.app.FragmentActivity
 import com.revolution.robotics.R
 import com.revolution.robotics.core.bindings.setGreyscale
 import org.kodein.di.KodeinAware
@@ -26,6 +27,10 @@ class BluetoothStatusImageView @JvmOverloads constructor(
         setOnClickListener {
             if (!bluetoothManager.isConnected) {
                 bluetoothManager.startConnectionFlow()
+            } else {
+                (context as? FragmentActivity)?.let {
+                    BluetoothDisconnectDialog().show(it.supportFragmentManager)
+                }
             }
         }
     }
