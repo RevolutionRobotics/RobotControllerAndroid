@@ -110,7 +110,7 @@ class WhoToBuildPresenter(
     private fun assignEmptyConfig(userRobot: UserRobot) {
         assignConfigIntoARobotInteractor.userRobot = userRobot
         assignConfigIntoARobotInteractor.configuration = Configuration(mapping = PortMapping())
-        assignConfigIntoARobotInteractor.controller = null
+        assignConfigIntoARobotInteractor.controllers = null
         assignConfigIntoARobotInteractor.programs = emptyList()
         assignConfigIntoARobotInteractor.execute {
             navigator.navigate(WhoToBuildFragmentDirections.toConfigure(userRobot))

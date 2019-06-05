@@ -30,7 +30,7 @@ class AssignConfigIntoARobotInteractor(
 
     lateinit var userRobot: UserRobot
     var configuration: Configuration? = null
-    var controller: Controller? = null
+    var controllers: List<Controller>? = null
     var programs: List<Program>? = null
     var programLocalFiles: List<ProgramLocalFiles>? = null
 
@@ -42,18 +42,20 @@ class AssignConfigIntoARobotInteractor(
             userRobot.configurationId = configurationId.toInt()
             userRobotDao.updateUserRobot(userRobot)
 
-            controller?.let {
-                saveUserController(it, userConfiguration)
+            controllers?.forEach {
+                saveUserController(it, userConfiguration, configuration?.controller == it.id)
             }
         }
 
         return userRobot
     }
 
-    private fun saveUserController(controller: Controller, userConfiguration: UserConfiguration) {
+    private fun saveUserController(controller: Controller, userConfiguration: UserConfiguration, isDefault: Boolean) {
         val userController = saveUserController(controller)
-        userConfiguration.controller = userController.id
-        userConfigurationDao.saveUserConfiguration(userConfiguration)
+        if (isDefault) {
+            userConfiguration.controller = userController.id
+            userConfigurationDao.saveUserConfiguration(userConfiguration)
+        }
         val programIdMap = saveUserPrograms()
 
         userController.mapping?.let { userMapping ->
@@ -114,7 +116,7 @@ class AssignConfigIntoARobotInteractor(
             val id = controllerDao.saveUserController(userController).toInt()
             userController.id = id
             return userController
-        } ?: throw IllegalArgumentException("Missing controller")
+        } ?: throw IllegalArgumentException("Missing controllers")
     }
 
     private fun saveUserPrograms() = hashMapOf<String, Int>().apply {

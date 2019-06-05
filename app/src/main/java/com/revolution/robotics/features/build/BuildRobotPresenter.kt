@@ -33,7 +33,7 @@ class BuildRobotPresenter(
     override var model: BuildRobotViewModel? = null
 
     private var configuration: Configuration? = null
-    private var controller: Controller? = null
+    private var controllers: List<Controller>? = null
     private var userRobot: UserRobot? = null
 
     override fun loadBuildSteps(robotId: Int) {
@@ -44,16 +44,22 @@ class BuildRobotPresenter(
     }
 
     override fun letsDrive() {
-        controller?.let { controller ->
+        configuration?.let { configuration ->
             userRobot?.let { robot ->
-                when (ControllerType.fromId(controller.type)) {
-                    ControllerType.GAMER ->
-                        navigator.navigate(BuildRobotFragmentDirections.toPlayGamer(robot.configurationId))
-                    ControllerType.MULTITASKER ->
-                        navigator.navigate(BuildRobotFragmentDirections.toPlayMultitasker(robot.configurationId))
-                    ControllerType.DRIVER ->
-                        navigator.navigate(BuildRobotFragmentDirections.toPlayDriver(robot.configurationId))
-                }
+                startPlayFragment(configuration, robot, controllers)
+            }
+        }
+    }
+
+    private fun startPlayFragment(configuration: Configuration, robot: UserRobot, controllers: List<Controller>?) {
+        controllers?.find { it.id == configuration.controller }?.let { controller ->
+            when (ControllerType.fromId(controller.type)) {
+                ControllerType.GAMER ->
+                    navigator.navigate(BuildRobotFragmentDirections.toPlayGamer(robot.configurationId))
+                ControllerType.MULTITASKER ->
+                    navigator.navigate(BuildRobotFragmentDirections.toPlayMultitasker(robot.configurationId))
+                ControllerType.DRIVER ->
+                    navigator.navigate(BuildRobotFragmentDirections.toPlayDriver(robot.configurationId))
             }
         }
     }
@@ -65,7 +71,7 @@ class BuildRobotPresenter(
             configurationInteractor.configId = userRobot.configurationId
             configurationInteractor.execute { config ->
                 configuration = config
-                downloadControllerInfo(config.controller)
+                downloadControllerInfos(config.id)
             }
         } else {
             saveUserRobotInteractor.userRobot = userRobot
@@ -75,11 +81,19 @@ class BuildRobotPresenter(
         }
     }
 
-    private fun downloadControllerInfo(controllerId: String?) {
-        controllerInteractor.controllerId = controllerId ?: ""
-        controllerInteractor.execute { controller ->
-            this.controller = controller
-            downloadPrograms(controller.getProgramIds())
+    private fun downloadControllerInfos(configurationId: Int) {
+        controllerInteractor.configurationId = configurationId.toString()
+        controllerInteractor.execute { controllers ->
+            this.controllers = controllers
+            val programIds = mutableListOf<String>()
+            controllers.forEach { controller ->
+                controller.getProgramIds().forEach { programId ->
+                    if (!programIds.contains(programId)) {
+                        programIds.add(programId)
+                    }
+                }
+            }
+            downloadPrograms(programIds)
         }
     }
 
@@ -92,13 +106,13 @@ class BuildRobotPresenter(
 
     private fun downloadProgramFiles(programs: List<Program>) {
         firebaseProgramDownloader.downloadProgramFiles(programs) {
-            createLocalObjects(configuration, controller, programs, it)
+            createLocalObjects(configuration, controllers, programs, it)
         }
     }
 
     private fun createLocalObjects(
         configuration: Configuration?,
-        controller: Controller?,
+        controllers: List<Controller>?,
         programs: List<Program>,
         programFiles: List<ProgramLocalFiles>
     ) {
@@ -106,18 +120,18 @@ class BuildRobotPresenter(
             saveUserRobotInteractor.userRobot = userRobot
             saveUserRobotInteractor.execute { savedRobot ->
                 this.userRobot = savedRobot
-                assignConfig(configuration, controller, programs, programFiles)
+                assignConfig(configuration, controllers, programs, programFiles)
             }
         }
     }
 
     private fun assignConfig(
         configuration: Configuration?,
-        controller: Controller?,
+        controllers: List<Controller>?,
         programs: List<Program>,
         programFiles: List<ProgramLocalFiles>
     ) {
-        assignConfigIntoARobotInteractor.controller = controller
+        assignConfigIntoARobotInteractor.controllers = controllers
         assignConfigIntoARobotInteractor.configuration = configuration
         assignConfigIntoARobotInteractor.programs = programs
         assignConfigIntoARobotInteractor.programLocalFiles = programFiles
