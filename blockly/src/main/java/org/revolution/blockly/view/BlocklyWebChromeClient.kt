@@ -23,8 +23,8 @@ class BlocklyWebChromeClient(
 
     private val promptHandlers = listOf(
         TextInputHandler(),
-        OptionSelectorHandler(),
         DirectionHandler(),
+        OptionSelectorHandler(),
         SliderHandler(),
         SoundPickerHandler(),
         ColorPickerHandler(),
