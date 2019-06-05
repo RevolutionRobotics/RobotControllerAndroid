@@ -24,7 +24,8 @@ enum class DialogEvent {
     DELETE_PROGRAM,
     SAVE_PROGRAM,
     DUPLICATE_ROBOT,
-    EDIT_ROBOT;
+    EDIT_ROBOT,
+    ROBOT_CREATED;
 
     val extras = Bundle()
 }

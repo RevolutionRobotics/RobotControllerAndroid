@@ -1,5 +1,6 @@
 package com.revolution.robotics.core.interactor
 
+import com.revolution.robotics.core.domain.local.ProgramLocalFiles
 import com.revolution.robotics.core.domain.local.UserBackgroundProgramBinding
 import com.revolution.robotics.core.domain.local.UserBackgroundProgramBindingDao
 import com.revolution.robotics.core.domain.local.UserButtonMapping
@@ -17,6 +18,7 @@ import com.revolution.robotics.core.domain.remote.Configuration
 import com.revolution.robotics.core.domain.remote.Controller
 import com.revolution.robotics.core.domain.remote.Program
 import com.revolution.robotics.core.domain.remote.ProgramBinding
+import java.io.File
 
 class AssignConfigIntoARobotInteractor(
     private val userRobotDao: UserRobotDao,
@@ -30,6 +32,7 @@ class AssignConfigIntoARobotInteractor(
     var configuration: Configuration? = null
     var controller: Controller? = null
     var programs: List<Program>? = null
+    var programLocalFiles: List<ProgramLocalFiles>? = null
 
     override fun getData(): UserRobot {
         configuration?.let { remoteConfig ->
@@ -116,8 +119,10 @@ class AssignConfigIntoARobotInteractor(
 
     private fun saveUserPrograms() = hashMapOf<String, Int>().apply {
         programs?.forEach { remoteProgram ->
-            val currentProgram = remoteProgram.id?.let {
-                saveProgramDao.getUserProgramBasedOnRemoteId(it)
+            val currentProgram = remoteProgram.id?.let { remoteId ->
+                val currentProgram = saveProgramDao.getUserProgramBasedOnRemoteId(remoteId)
+                deleteCurrentProgramFiles(currentProgram)
+                currentProgram
             }
 
             this[remoteProgram.id ?: ""] = saveProgramDao.saveUserProgram(
@@ -126,12 +131,21 @@ class AssignConfigIntoARobotInteractor(
                     remoteProgram.description,
                     remoteProgram.lastModified,
                     remoteProgram.name,
-                    remoteProgram.python,
-                    remoteProgram.xml,
+                    programLocalFiles?.find { it.remoteId == remoteProgram.id }?.python?.path ?: "",
+                    programLocalFiles?.find { it.remoteId == remoteProgram.id }?.xml?.path ?: "",
                     remoteProgram.variables,
                     remoteProgram.id
                 )
             ).toInt()
+        }
+    }
+
+    private fun deleteCurrentProgramFiles(currentProgram: UserProgram?) {
+        currentProgram?.python?.let { python ->
+            File(python).delete()
+        }
+        currentProgram?.xml?.let { xml ->
+            File(xml).delete()
         }
     }
 

@@ -5,7 +5,10 @@ import com.revolution.robotics.core.Mvp
 
 interface BuildFinishedMvp : Mvp {
 
-    interface View : Mvp.View
+    interface View : Mvp.View {
+        fun showBuildFinishedDialogFace()
+    }
+
     interface Presenter : Mvp.Presenter<View, ViewModel> {
         fun navigateHome()
     }

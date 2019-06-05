@@ -31,6 +31,8 @@ import com.revolution.robotics.core.interactor.GetUserControllerInteractor
 import com.revolution.robotics.core.interactor.GetUserControllersInteractor
 import com.revolution.robotics.core.interactor.GetUserProgramsInteractor
 import com.revolution.robotics.core.interactor.GetUserRobotInteractor
+import com.revolution.robotics.core.interactor.LocalFileLoader
+import com.revolution.robotics.core.interactor.LocalFileSaver
 import com.revolution.robotics.core.interactor.RemoveUserControllerInteractor
 import com.revolution.robotics.core.interactor.RemoveUserProgramInteractor
 import com.revolution.robotics.core.interactor.SaveUserChallengeCategoryInteractor
@@ -143,6 +145,8 @@ fun createInteractorModule() =
         bind<FirebaseInitInteractor>() with p { FirebaseInitInteractor() }
         bind<SaveUserRobotInteractor>() with p { SaveUserRobotInteractor(i()) }
         bind<DuplicateUserRobotInteractor>() with p { DuplicateUserRobotInteractor(i(), i(), i(), i(), i(), i()) }
+        bind<LocalFileLoader>() with p { LocalFileLoader() }
+        bind<LocalFileSaver>() with p { LocalFileSaver() }
     }
 
 @Suppress("LongMethod")
@@ -152,13 +156,13 @@ fun createPresenterModule() =
         bind<WhoToBuildMvp.Presenter>() with s { WhoToBuildPresenter(i(), i(), i(), i(), i()) }
         bind<MyRobotsMvp.Presenter>() with s { MyRobotsPresenter(i(), i(), i(), i(), i()) }
         bind<ChapterFinishedMvp.Presenter>() with s { ChapterFinishedPresenter(i()) }
-        bind<BuildRobotMvp.Presenter>() with s { BuildRobotPresenter(i(), i(), i(), i(), i(), i(), i()) }
+        bind<BuildRobotMvp.Presenter>() with s { BuildRobotPresenter(i(), i(), i(), i(), i(), i(), i(), i(), i()) }
         bind<ConnectMvp.Presenter>() with s { ConnectPresenter(i(), i()) }
         bind<ConfigureMvp.Presenter>() with s { ConfigurePresenter(i(), i(), i(), i(), i()) }
         bind<ConfigureConnectionsMvp.Presenter>() with s { ConfigureConnectionsPresenter(i(), i(), i()) }
         bind<MotorConfigurationMvp.Presenter>() with s { MotorConfigurationPresenter(i(), i(), i(), i()) }
         bind<SensorConfigurationMvp.Presenter>() with s { SensorConfigurationPresenter(i(), i(), i(), i()) }
-        bind<BuildFinishedMvp.Presenter>() with s { BuildFinishedPresenter(i()) }
+        bind<BuildFinishedMvp.Presenter>() with s { BuildFinishedPresenter(i(), i()) }
         bind<ConfigureControllersMvp.Presenter>() with s { ConfigureControllersPresenter(i(), i(), i(), i(), i()) }
         bind<SettingsMvp.Presenter>() with s { SettingsPresenter(i(), i()) }
         bind<AboutMvp.Presenter>() with s { AboutPresenter(i(), i()) }
@@ -179,7 +183,7 @@ fun createPresenterModule() =
         bind<ColorPickerMvp.Presenter>() with s { ColorPickerPresenter() }
         bind<SoundPickerMvp.Presenter>() with s { SoundPickerPresenter(i()) }
         bind<SliderMvp.Presenter>() with s { SliderPresenter() }
-        bind<CodingMvp.Presenter>() with s { CodingPresenter() }
+        bind<CodingMvp.Presenter>() with s { CodingPresenter(i(), i(), i(), i(), i(), i()) }
         bind<ProgramsMvp.Presenter>() with s { ProgramsPresenter(i()) }
         bind<TestBuildDialogMvp.Presenter>() with s { TestBuildDialogPresenter(i(), i(), i()) }
     }

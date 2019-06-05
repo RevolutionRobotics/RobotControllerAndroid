@@ -90,6 +90,14 @@ sealed class BundleArgumentDelegate<T>(protected val key: kotlin.String) : ReadW
             thisRef?.putParcelable(key, value) ?: Unit
     }
 
+    class ParcelableNullable<out U : android.os.Parcelable?>(key: kotlin.String) :
+        BundleArgumentDelegate<android.os.Parcelable?>(key) {
+        override fun getValue(thisRef: Bundle?, property: KProperty<*>) = thisRef?.getParcelable<U?>(key)
+
+        override fun setValue(thisRef: Bundle?, property: KProperty<*>, value: android.os.Parcelable?) =
+            thisRef?.putParcelable(key, value) ?: Unit
+    }
+
     class ParcelableArrayList<U : android.os.Parcelable>(key: kotlin.String) :
         BundleArgumentDelegate<ArrayList<U>>(key) {
 

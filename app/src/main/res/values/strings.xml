@@ -43,6 +43,8 @@
     <string name="build_robot_start">Start</string>
     <string name="untitled_robot_name">Untitled robot</string>
     <string name="build_robot_custom_default_name">Custom robot</string>
+    <string name="build_robot_loading_title">Creating your robot</string>
+    <string name="build_robot_loading_description">Please wait</string>
 
     <!-- My robots -->
     <string name="my_robots_play_button">Play!</string>

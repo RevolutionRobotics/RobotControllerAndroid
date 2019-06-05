@@ -51,27 +51,35 @@ class CodingFragment : BaseFragment<FragmentCodingBinding, CodingViewModel>(R.la
         super.onDestroyView()
     }
 
-    // TODO remove this suppress
-    @Suppress("UnusedPrivateMember")
+    override fun loadProgramIntoTheBlockly(xml: String) {
+        binding?.viewBlockly?.loadProgram(xml)
+    }
+
+    override fun clearBlocklyWorkspace() {
+        binding?.viewBlockly?.clearWorkspace()
+    }
+
+    @Suppress("ComplexMethod")
     override fun onDialogEvent(event: DialogEvent) {
         when (event) {
-            DialogEvent.SHOW_PROGRAM_INFO -> {
-                val program = event.extras.getParcelable<UserProgram>(ProgramsDialog.KEY_PROGRAM)
-                program?.let { showDialog(ProgramDialog.Load.newInstance(it)) }
-            }
-            DialogEvent.LOAD_PROGRAM -> {
-                val program = event.extras.getParcelable<UserProgram>(ProgramDialog.KEY_PROGRAM)
-                // TODO load program into blockly
-            }
-            DialogEvent.DELETE_PROGRAM -> {
-                val program = event.extras.getParcelable<UserProgram>(ProgramDialog.KEY_PROGRAM)
-                // TODO delete program here
-            }
+            DialogEvent.SHOW_PROGRAM_INFO ->
+                event.extras.getParcelable<UserProgram>(ProgramsDialog.KEY_PROGRAM)?.let {
+                    showDialog(ProgramDialog.Load.newInstance(it))
+                }
+            DialogEvent.LOAD_PROGRAM ->
+                event.extras.getParcelable<UserProgram>(ProgramDialog.KEY_PROGRAM)?.let {
+                    presenter.loadProgram(it)
+                }
+            DialogEvent.DELETE_PROGRAM ->
+                event.extras.getParcelable<UserProgram>(ProgramDialog.KEY_PROGRAM)?.let {
+                    presenter.removeProgram(it)
+                }
             DialogEvent.SAVE_PROGRAM -> {
-                val name = event.extras.getString(SaveProgramDialog.KEY_NAME)
-                val description = event.extras.getString(SaveProgramDialog.KEY_DESCRIPTION)
-                viewModel?.programName?.set(name)
-                // TODO save program from blockly
+                val userProgram = event.extras.getParcelable<UserProgram?>(SaveProgramDialog.KEY_USER_PROGRAM)
+                userProgram?.let { program ->
+                    presenter.setSavedProgramData(program)
+                    binding?.viewBlockly?.saveProgram(presenter)
+                }
             }
             else -> Unit
         }

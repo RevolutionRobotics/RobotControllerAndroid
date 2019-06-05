@@ -1,14 +1,18 @@
 package com.revolution.robotics.features.build
 
+import com.revolution.robotics.core.domain.local.ProgramLocalFiles
 import com.revolution.robotics.core.domain.local.UserRobot
 import com.revolution.robotics.core.domain.remote.Configuration
 import com.revolution.robotics.core.domain.remote.Controller
 import com.revolution.robotics.core.domain.remote.Program
+import com.revolution.robotics.core.eventBus.dialog.DialogEvent
+import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
 import com.revolution.robotics.core.interactor.AssignConfigIntoARobotInteractor
 import com.revolution.robotics.core.interactor.SaveUserRobotInteractor
 import com.revolution.robotics.core.interactor.firebase.BuildStepInteractor
 import com.revolution.robotics.core.interactor.firebase.ConfigurationInteractor
 import com.revolution.robotics.core.interactor.firebase.ControllerInteractor
+import com.revolution.robotics.core.interactor.firebase.FirebaseProgramDownloader
 import com.revolution.robotics.core.interactor.firebase.ProgramsInteractor
 import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.features.controllers.ControllerType
@@ -20,7 +24,9 @@ class BuildRobotPresenter(
     private val configurationInteractor: ConfigurationInteractor,
     private val controllerInteractor: ControllerInteractor,
     private val programsInteractor: ProgramsInteractor,
-    private val navigator: Navigator
+    private val navigator: Navigator,
+    private val dialogEventBus: DialogEventBus,
+    private val firebaseProgramDownloader: FirebaseProgramDownloader
 ) : BuildRobotMvp.Presenter {
 
     override var view: BuildRobotMvp.View? = null
@@ -54,6 +60,7 @@ class BuildRobotPresenter(
 
     override fun saveUserRobot(userRobot: UserRobot, createDefaultConfig: Boolean) {
         if (createDefaultConfig) {
+            view?.onRobotSaveStarted()
             this.userRobot = userRobot
             configurationInteractor.configId = userRobot.configurationId
             configurationInteractor.execute { config ->
@@ -64,7 +71,6 @@ class BuildRobotPresenter(
             saveUserRobotInteractor.userRobot = userRobot
             saveUserRobotInteractor.execute { savedRobot ->
                 this.userRobot = savedRobot
-                view?.onRobotSaved()
             }
         }
     }
@@ -80,29 +86,46 @@ class BuildRobotPresenter(
     private fun downloadPrograms(ids: List<String>) {
         programsInteractor.programIds = ids
         programsInteractor.execute { programs ->
-            createLocalObjects(configuration, controller, programs)
+            downloadProgramFiles(programs)
         }
     }
 
-    private fun createLocalObjects(configuration: Configuration?, controller: Controller?, programs: List<Program>) {
+    private fun downloadProgramFiles(programs: List<Program>) {
+        firebaseProgramDownloader.downloadProgramFiles(programs) {
+            createLocalObjects(configuration, controller, programs, it)
+        }
+    }
+
+    private fun createLocalObjects(
+        configuration: Configuration?,
+        controller: Controller?,
+        programs: List<Program>,
+        programFiles: List<ProgramLocalFiles>
+    ) {
         userRobot?.let { userRobot ->
             saveUserRobotInteractor.userRobot = userRobot
             saveUserRobotInteractor.execute { savedRobot ->
                 this.userRobot = savedRobot
-                assignConfig(configuration, controller, programs)
+                assignConfig(configuration, controller, programs, programFiles)
             }
         }
     }
 
-    private fun assignConfig(configuration: Configuration?, controller: Controller?, programs: List<Program>) {
+    private fun assignConfig(
+        configuration: Configuration?,
+        controller: Controller?,
+        programs: List<Program>,
+        programFiles: List<ProgramLocalFiles>
+    ) {
         assignConfigIntoARobotInteractor.controller = controller
         assignConfigIntoARobotInteractor.configuration = configuration
         assignConfigIntoARobotInteractor.programs = programs
+        assignConfigIntoARobotInteractor.programLocalFiles = programFiles
         userRobot?.let { userRobot ->
             assignConfigIntoARobotInteractor.userRobot = userRobot
             assignConfigIntoARobotInteractor.execute { savedRobot ->
                 this.userRobot = savedRobot
-                view?.onRobotSaved()
+                dialogEventBus.publish(DialogEvent.ROBOT_CREATED)
             }
         }
     }
