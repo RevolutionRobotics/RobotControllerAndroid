@@ -55,6 +55,10 @@ class CodingFragment : BaseFragment<FragmentCodingBinding, CodingViewModel>(R.la
         binding?.viewBlockly?.loadProgram(xml)
     }
 
+    override fun clearBlocklyWorkspace() {
+        binding?.viewBlockly?.clearWorkspace()
+    }
+
     @Suppress("ComplexMethod")
     override fun onDialogEvent(event: DialogEvent) {
         when (event) {

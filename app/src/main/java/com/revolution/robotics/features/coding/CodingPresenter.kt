@@ -1,10 +1,12 @@
 package com.revolution.robotics.features.coding
 
+import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.local.UserProgram
 import com.revolution.robotics.core.interactor.LocalFileLoader
 import com.revolution.robotics.core.interactor.LocalFileSaver
 import com.revolution.robotics.core.interactor.RemoveUserProgramInteractor
 import com.revolution.robotics.core.interactor.SaveUserProgramInteractor
+import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.core.utils.UserProgramFileNameGenerator
 import com.revolution.robotics.features.coding.programs.ProgramsDialog
 import com.revolution.robotics.features.coding.saveProgram.SaveProgramDialog
@@ -14,8 +16,18 @@ class CodingPresenter(
     private val saveUserProgramInteractor: SaveUserProgramInteractor,
     private val fileNameGenerator: UserProgramFileNameGenerator,
     private val localFileLoader: LocalFileLoader,
-    private val localFileSaver: LocalFileSaver
+    private val localFileSaver: LocalFileSaver,
+    private val resourceResolver: ResourceResolver
 ) : CodingMvp.Presenter {
+
+    override var view: CodingMvp.View? = null
+    override var model: CodingViewModel? = null
+
+    private var userProgram: UserProgram? = null
+    private var pythonSaved = false
+    private var xmlSaved = false
+    private var variablesSaved = false
+
     override fun loadProgram(userProgram: UserProgram) {
         model?.userProgram = userProgram
         model?.programName?.set(userProgram.name)
@@ -26,14 +38,6 @@ class CodingPresenter(
             }
         }
     }
-
-    override var view: CodingMvp.View? = null
-    override var model: CodingViewModel? = null
-
-    private var userProgram: UserProgram? = null
-    private var pythonSaved = false
-    private var xmlSaved = false
-    private var variablesSaved = false
 
     override fun showProgramsDialog() {
         view?.showDialog(ProgramsDialog.newInstance())
@@ -49,8 +53,11 @@ class CodingPresenter(
     }
 
     override fun removeProgram(userProgram: UserProgram) {
-        model?.userProgram = null
-        model?.programName?.set("")
+        if (model?.userProgram?.id == userProgram.id) {
+            view?.clearBlocklyWorkspace()
+            model?.userProgram = null
+            model?.programName?.set(resourceResolver.string(R.string.program_title_default))
+        }
         removeUserProgramInteractor.userProgramId = userProgram.id
         removeUserProgramInteractor.execute()
     }

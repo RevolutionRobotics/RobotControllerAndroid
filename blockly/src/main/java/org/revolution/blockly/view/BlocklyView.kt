@@ -50,4 +50,8 @@ class BlocklyView @JvmOverloads constructor(context: Context, attrs: AttributeSe
         javascriptInterface.listener = listener
         loadUrl("javascript:saveProgram()")
     }
+
+    fun clearWorkspace() {
+        loadUrl("javascript:clearWorkspace()")
+    }
 }

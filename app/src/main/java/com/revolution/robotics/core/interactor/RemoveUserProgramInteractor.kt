@@ -13,8 +13,8 @@ class RemoveUserProgramInteractor(private val userProgramDao: UserProgramDao) : 
                 File(xml).delete()
             }
 
-            program.python?.let { xml ->
-                File(xml).delete()
+            program.python?.let { python ->
+                File(python).delete()
             }
         }
         userProgramDao.removeUserProgram(userProgramId)

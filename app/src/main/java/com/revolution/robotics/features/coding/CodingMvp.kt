@@ -10,6 +10,7 @@ interface CodingMvp : Mvp {
     interface View : Mvp.View {
         fun showDialog(baseDialog: BaseDialog)
         fun loadProgramIntoTheBlockly(xml: String)
+        fun clearBlocklyWorkspace()
     }
 
     interface Presenter : Mvp.Presenter<View, CodingViewModel>, BlocklyJavascriptListener {
