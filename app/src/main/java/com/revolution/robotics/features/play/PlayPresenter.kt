@@ -10,6 +10,10 @@ class PlayPresenter(
     private val getUserControllerInteractor: GetUserControllerInteractor
 ) : PlayMvp.Presenter {
 
+    companion object {
+        const val DIRECTION_VALUE_MAX = 255
+    }
+
     override var view: PlayMvp.View? = null
     override var model: PlayViewModel? = null
 
@@ -46,7 +50,7 @@ class PlayPresenter(
     }
 
     override fun onJoystickYAxisChanged(value: Int) {
-        liveControllerService?.updateYDirection(value)
+        liveControllerService?.updateYDirection(DIRECTION_VALUE_MAX - value)
     }
 
     override fun onButtonPressed(ordinal: Int) {

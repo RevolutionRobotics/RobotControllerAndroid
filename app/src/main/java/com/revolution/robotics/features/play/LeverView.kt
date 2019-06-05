@@ -17,7 +17,6 @@ class LeverView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
     View(context, attrs, defStyleAttr) {
 
     companion object {
-        private const val LEVER_AXIS_MAX = 255
         private const val FLOAT_CENTER = 0.5f
     }
 
@@ -95,7 +94,7 @@ class LeverView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
     }
 
     private fun Float.normalizeForController() =
-        ((this + FLOAT_CENTER) * LEVER_AXIS_MAX).toInt()
+        ((this + FLOAT_CENTER) * PlayPresenter.DIRECTION_VALUE_MAX).toInt()
 
     private fun Float.limit(limit: Float) =
         Math.min(Math.max(this, -limit), limit)
