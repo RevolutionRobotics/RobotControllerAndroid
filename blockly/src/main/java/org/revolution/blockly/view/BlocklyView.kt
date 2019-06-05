@@ -14,12 +14,14 @@ class BlocklyView @JvmOverloads constructor(context: Context, attrs: AttributeSe
 
     private companion object {
         const val BRIDGE_NAME = "NativeBridge"
+        const val USER_AGENT = "Android-Blockly"
     }
 
     private var javascriptInterface: IOJavascriptInterface = IOJavascriptInterface(context)
 
     init {
         settings.javaScriptEnabled = true
+        settings.userAgentString = USER_AGENT
     }
 
     @Suppress("JavascriptInterface")

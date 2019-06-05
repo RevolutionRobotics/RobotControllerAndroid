@@ -89,6 +89,7 @@ class CodingPresenter(
         if (pythonSaved && xmlSaved && variablesSaved) {
             userProgram?.let { userProgram ->
                 saveUserProgramInteractor.userProgram = userProgram
+                saveUserProgramInteractor.clearRemoteId = true
                 saveUserProgramInteractor.execute {
                     xmlSaved = false
                     pythonSaved = false
