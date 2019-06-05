@@ -100,7 +100,7 @@ class JoystickView @JvmOverloads constructor(context: Context, attrs: AttributeS
     }
 
     private fun Float.normalizeForController() =
-        JOYSTICK_AXIS_CENTER - (this / joystickPositionMax * JOYSTICK_AXIS_CENTER).toInt()
+        JOYSTICK_AXIS_CENTER + (this / joystickPositionMax * JOYSTICK_AXIS_CENTER).toInt()
 
     interface JoystickEventListener {
         fun onJoystickPositionChanged(x: Int, y: Int)
