@@ -7,6 +7,7 @@ data class Controller(
     var description: String? = null,
     var id: String? = null,
     var lastModified: Long = 0L,
+    var configurationId: String? = null,
     var name: String? = null,
     var type: String? = null,
     var backgroundProgramBindings: List<@JvmSuppressWildcards ProgramBinding> = emptyList(),

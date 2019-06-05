@@ -5,13 +5,15 @@ import com.google.firebase.database.GenericTypeIndicator
 import com.google.firebase.database.Query
 import com.revolution.robotics.core.domain.remote.Controller
 
-class ControllerInteractor : FirebaseSingleObjectInteractor<Controller>() {
+class ControllerInteractor : FirebaseListInteractor<Controller>() {
 
     override val genericTypeIndicator: GenericTypeIndicator<ArrayList<Controller>> =
         object : GenericTypeIndicator<ArrayList<Controller>>() {}
 
-    lateinit var controllerId: String
+    lateinit var configurationId: String
 
     override fun getDatabaseReference(database: FirebaseDatabase): Query =
-        database.getReference("controller").orderByChild("id").equalTo(controllerId).limitToFirst(1)
+        database.getReference("controller")
+
+    override fun filter(item: Controller): Boolean = item.configurationId == configurationId
 }
