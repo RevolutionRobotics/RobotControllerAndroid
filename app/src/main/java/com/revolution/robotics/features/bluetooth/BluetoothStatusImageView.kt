@@ -25,12 +25,12 @@ class BluetoothStatusImageView @JvmOverloads constructor(
         super.onAttachedToWindow()
         bluetoothManager.registerListener(this)
         setOnClickListener {
-            if (!bluetoothManager.isConnected) {
-                bluetoothManager.startConnectionFlow()
-            } else {
-                (context as? FragmentActivity)?.let {
-                    BluetoothDisconnectDialog().show(it.supportFragmentManager)
+            if (bluetoothManager.isConnected) {
+                (context as? FragmentActivity)?.supportFragmentManager?.let {
+                    BluetoothDisconnectDialog.newInstance().show(it)
                 }
+            } else {
+                bluetoothManager.startConnectionFlow()
             }
         }
     }
