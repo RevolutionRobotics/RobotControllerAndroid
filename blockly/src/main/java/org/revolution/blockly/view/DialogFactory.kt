@@ -7,6 +7,7 @@ interface DialogFactory {
 
     fun showDirectionSelectorDialog(defaultValue: String, result: JsPromptResult)
     fun showSlider(title: String, maxValue: Int, defaultValue: Int, result: JsPromptResult)
+    fun showDialpad(defaultValue: Double, result: JsPromptResult)
     fun showOptionSelector(
         title: String,
         blocklyOptions: List<BlocklyOption>,

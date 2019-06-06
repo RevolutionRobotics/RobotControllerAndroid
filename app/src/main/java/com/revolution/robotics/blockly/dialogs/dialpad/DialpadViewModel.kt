@@ -31,7 +31,12 @@ class DialpadViewModel(private val dialogInterface: BlocklyDialogInterface) : Vi
         .create()
 
     fun onCharacterClicked(character: String) {
-        val nextResult = "${result.get() ?: ""}$character"
+        val nextResult =
+            if (result.get() == "0" && character != ".") {
+                character
+            } else {
+                "${result.get() ?: ""}$character"
+            }
         if (isValidNumber(nextResult)) {
             result.set(nextResult)
         }
@@ -52,7 +57,7 @@ class DialpadViewModel(private val dialogInterface: BlocklyDialogInterface) : Vi
     private fun isValidNumber(number: String) =
         try {
             number.toDouble()
-            !number.startsWith("0")
+            !number.startsWith("0") || number == "0" || number.startsWith("0.")
         } catch (exception: NumberFormatException) {
             false
         }

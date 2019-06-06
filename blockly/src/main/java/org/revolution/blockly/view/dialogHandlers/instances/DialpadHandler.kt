@@ -5,14 +5,12 @@ import org.json.JSONObject
 import org.revolution.blockly.view.DialogFactory
 import org.revolution.blockly.view.dialogHandlers.JsPromptHandler
 import org.revolution.blockly.view.dialogHandlers.defaultInput
-import org.revolution.blockly.view.dialogHandlers.maxValue
-import org.revolution.blockly.view.dialogHandlers.title
 
-class SliderHandler : JsPromptHandler {
+class DialpadHandler : JsPromptHandler {
 
-    override fun canHandleRequest(message: String) = message.contains("_slider")
+    override fun canHandleRequest(message: String) = message.endsWith("math_number.num")
 
     override fun handleRequest(request: JSONObject, dialogFactory: DialogFactory, result: JsPromptResult) {
-        dialogFactory.showSlider(request.title(), request.maxValue(), request.defaultInput("0").toInt(), result)
+        dialogFactory.showDialpad(request.defaultInput("0").toDouble(), result)
     }
 }

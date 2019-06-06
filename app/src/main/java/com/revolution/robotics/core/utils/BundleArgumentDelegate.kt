@@ -24,6 +24,14 @@ sealed class BundleArgumentDelegate<T>(protected val key: kotlin.String) : ReadW
             thisRef?.putInt(key, value) ?: Unit
     }
 
+    class Double(key: kotlin.String) : BundleArgumentDelegate<kotlin.Double>(key) {
+
+        override fun getValue(thisRef: Bundle?, property: KProperty<*>) = thisRef?.getDouble(key) ?: 0.0
+
+        override fun setValue(thisRef: Bundle?, property: KProperty<*>, value: kotlin.Double) =
+            thisRef?.putDouble(key, value) ?: Unit
+    }
+
     class String(key: kotlin.String) : BundleArgumentDelegate<kotlin.String>(key) {
 
         override fun getValue(thisRef: Bundle?, property: KProperty<*>) = thisRef?.getString(key, "") ?: ""

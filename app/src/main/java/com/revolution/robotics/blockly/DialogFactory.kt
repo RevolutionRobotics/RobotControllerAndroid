@@ -4,6 +4,7 @@ import android.webkit.JsPromptResult
 import androidx.fragment.app.FragmentManager
 import com.revolution.robotics.blockly.dialogs.blockOptions.BlockOptionsDialog
 import com.revolution.robotics.blockly.dialogs.colorPicker.ColorPickerDialog
+import com.revolution.robotics.blockly.dialogs.dialpad.DialpadDialog
 import com.revolution.robotics.blockly.dialogs.directionSelector.Direction
 import com.revolution.robotics.blockly.dialogs.directionSelector.DirectionSelectorDialog
 import com.revolution.robotics.blockly.dialogs.donutSelector.DonutSelectorDialog
@@ -26,6 +27,11 @@ class DialogFactory(
     override fun showDirectionSelectorDialog(defaultValue: String, result: JsPromptResult) {
         javascriptResultHandler.registerResult(result)
         DirectionSelectorDialog.newInstance(Direction.getByValue(defaultValue)).show(fragmentManager)
+    }
+
+    override fun showDialpad(defaultValue: Double, result: JsPromptResult) {
+        javascriptResultHandler.registerResult(result)
+        DialpadDialog.newInstance(defaultValue).show(fragmentManager)
     }
 
     override fun showSlider(title: String, maxValue: Int, defaultValue: Int, result: JsPromptResult) {
