@@ -7,7 +7,9 @@ import org.json.JSONObject
 import org.revolution.blockly.view.dialogHandlers.instances.BlockOptionsHandler
 import org.revolution.blockly.view.dialogHandlers.instances.ColorPickerHandler
 import org.revolution.blockly.view.dialogHandlers.instances.DirectionHandler
+import org.revolution.blockly.view.dialogHandlers.instances.MultiDonutSelectorHandler
 import org.revolution.blockly.view.dialogHandlers.instances.OptionSelectorHandler
+import org.revolution.blockly.view.dialogHandlers.instances.SingleDonutSelectorHandler
 import org.revolution.blockly.view.dialogHandlers.instances.SliderHandler
 import org.revolution.blockly.view.dialogHandlers.instances.SoundPickerHandler
 import org.revolution.blockly.view.dialogHandlers.instances.TextInputHandler
@@ -28,6 +30,8 @@ class BlocklyWebChromeClient(
         SliderHandler(),
         SoundPickerHandler(),
         ColorPickerHandler(),
+        SingleDonutSelectorHandler(),
+        MultiDonutSelectorHandler(),
         BlockOptionsHandler()
     )
 
@@ -39,7 +43,6 @@ class BlocklyWebChromeClient(
     }
 
     // TODO add dialpad
-    // TODO add donut selector
     override fun onJsPrompt(
         view: WebView,
         url: String,
@@ -48,13 +51,11 @@ class BlocklyWebChromeClient(
         result: JsPromptResult
     ) =
         if (message != null && message.isNotEmpty()) {
-            var wasDialogHandled = true
             val json = JSONObject(defaultValue)
             promptHandlers.find { it.canHandleRequest(message) }?.let { handler ->
-                wasDialogHandled = true
                 handler.handleRequest(JSONObject(defaultValue), dialogFactory, result)
-            }
-            wasDialogHandled
+                true
+            } ?: super.onJsPrompt(view, url, message, defaultValue, result)
         } else {
             super.onJsPrompt(view, url, message, defaultValue, result)
         }

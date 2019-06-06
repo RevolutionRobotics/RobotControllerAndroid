@@ -17,4 +17,5 @@ interface DialogFactory {
     fun showSoundPicker(title: String, selectedSound: String?, result: JsPromptResult)
     fun showBlockOptionsDialog(title: String, comment: String, result: JsPromptResult)
     fun showTextInput(title: String, defaultValue: String?, result: JsPromptResult)
+    fun showDonutSelector(defaultSelection: String, isMultiSelection: Boolean, result: JsPromptResult)
 }

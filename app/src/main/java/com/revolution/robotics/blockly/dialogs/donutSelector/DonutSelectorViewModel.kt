@@ -4,8 +4,10 @@ import androidx.lifecycle.ViewModel
 import com.revolution.robotics.R
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 
-class DonutSelectorViewModel(val isDoneVisible: Boolean, private val presenter: DonutSelectorMvp.Presenter) :
-    ViewModel() {
+class DonutSelectorViewModel(
+    val areControlsVisible: Boolean,
+    private val presenter: DonutSelectorMvp.Presenter
+) : ViewModel() {
 
     companion object {
         private val BACKGROUND = ChippedBoxConfig.Builder()

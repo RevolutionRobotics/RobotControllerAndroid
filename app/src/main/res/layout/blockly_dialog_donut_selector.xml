@@ -25,6 +25,7 @@
                 android:padding="@dimen/dimen_4dp"
                 android:orientation="vertical"
                 android:gravity="center"
+                app:visible="@{viewModel.areControlsVisible}"
                 android:onClick="@{() -> viewModel.onSelectAllClicked()}"
                 app:layout_constraintTop_toTopOf="@id/donut"
                 app:layout_constraintBottom_toBottomOf="@id/donut"
@@ -57,7 +58,7 @@
                 android:onClick="@{() -> viewModel.onDoneButtonClicked()}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:visible="@{viewModel.isDoneVisible}"
+                app:visible="@{viewModel.areControlsVisible}"
                 app:chippedBoxConfig="@{viewModel.doneButtonBackground}">
 
             <ImageView

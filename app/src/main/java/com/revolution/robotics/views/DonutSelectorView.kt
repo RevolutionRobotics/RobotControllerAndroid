@@ -98,7 +98,7 @@ class DonutSelectorView @JvmOverloads constructor(
 
     private fun changeSelection(index: Int) {
         selection[index] = !selection[index]
-        selectionListener?.onSelectionChanged(getSelection())
+        selectionListener?.onSelectionChanged(index, selection[index])
         invalidate()
     }
 
@@ -143,6 +143,6 @@ class DonutSelectorView @JvmOverloads constructor(
     }
 
     interface SelectionListener {
-        fun onSelectionChanged(selection: List<Boolean>)
+        fun onSelectionChanged(index: Int, value: Boolean)
     }
 }
