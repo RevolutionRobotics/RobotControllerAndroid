@@ -13,6 +13,10 @@ class CodingViewModel(resourceResolver: ResourceResolver, private val presenter:
     var userProgram: UserProgram? = null
     val isBlocklyLoaded = ObservableBoolean(false)
 
+    fun showPythonCode() {
+        presenter.showPythonCode()
+    }
+
     fun showProgramsDialog() {
         presenter.showProgramsDialog()
     }
