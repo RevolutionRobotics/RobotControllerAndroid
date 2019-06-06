@@ -12,8 +12,11 @@ fun JSONObject.defaultOption() =
 fun JSONObject.defaultInput(fallback: String? = ""): String =
     optString("defaultInput", fallback)
 
+fun JSONObject.defaultValue(fallback: String? = ""): String =
+    optString("defaultValue", fallback)
+
 fun JSONObject.maxValue() =
-    Integer.parseInt(optString("maxValue", "100"))
+    optString("maximum", "100").toInt()
 
 fun JSONObject.title(): String =
     optString("title", "")
