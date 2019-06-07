@@ -10,8 +10,15 @@ class ProgramsInteractor : FirebaseListInteractor<Program>() {
         object : GenericTypeIndicator<ArrayList<Program>>() {}
 
     lateinit var programIds: List<String>
+    private var downloadAllPrograms = false
 
-    override fun filter(item: Program): Boolean = programIds.contains(item.id)
+    override fun filter(item: Program): Boolean = programIds.contains(item.id) || downloadAllPrograms
 
     override fun getDatabaseReference(database: FirebaseDatabase): Query = database.getReference("program")
+
+    fun downloadAllPrograms(onResponse: (List<Program>) -> Unit) {
+        downloadAllPrograms = true
+        programIds = emptyList()
+        execute(onResponse)
+    }
 }

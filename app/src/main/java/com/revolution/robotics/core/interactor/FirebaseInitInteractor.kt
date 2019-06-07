@@ -9,8 +9,8 @@ class FirebaseInitInteractor : Interactor<Unit>() {
 
     override fun getData() {
         FirebaseDatabase.getInstance().apply {
-            references.forEach {
-                getReference(it).keepSynced(true)
+            references.forEach { reference ->
+                getReference(reference).keepSynced(true)
             }
         }
     }
