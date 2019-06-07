@@ -9,14 +9,14 @@ fun JSONObject.defaultKey(): String =
 fun JSONObject.defaultOption() =
     options().find { it.key == defaultKey() }
 
-fun JSONObject.defaultInputInt() =
-    Integer.parseInt(defaultInput("0"))
-
 fun JSONObject.defaultInput(fallback: String? = ""): String =
     optString("defaultInput", fallback)
 
+fun JSONObject.defaultValue(fallback: String? = ""): String =
+    optString("defaultValue", fallback)
+
 fun JSONObject.maxValue() =
-    Integer.parseInt(optString("maxValue", "100"))
+    optString("maximum", "100").toInt()
 
 fun JSONObject.title(): String =
     optString("title", "")

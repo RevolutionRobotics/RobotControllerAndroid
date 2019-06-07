@@ -20,16 +20,12 @@ class DonutSelectorDialog :
 
     companion object {
         private var Bundle.selectionTypeOrdinal by BundleArgumentDelegate.Int("selection-type")
-        private var Bundle.selectedByDefault by BundleArgumentDelegate.Int("selectedByDefault")
+        private var Bundle.defaultSelection by BundleArgumentDelegate.String("default-selection")
 
-        fun newInstance() = newInstance(DonutSelectionType.MULTI, -1)
-
-        fun newInstance(selectedByDefault: Int) = newInstance(DonutSelectionType.SINGLE, selectedByDefault)
-
-        fun newInstance(selectionType: DonutSelectionType, selectedByDefault: Int) =
+        fun newInstance(selectionType: DonutSelectionType, defaultSelection: String) =
             DonutSelectorDialog().withArguments { bundle ->
                 bundle.selectionTypeOrdinal = selectionType.ordinal
-                bundle.selectedByDefault = selectedByDefault
+                bundle.defaultSelection = defaultSelection
             }
     }
 
@@ -42,15 +38,16 @@ class DonutSelectorDialog :
         presenter.register(this, null)
         arguments?.let { arguments ->
             val selectionType = DonutSelectionType.values()[arguments.selectionTypeOrdinal]
+            val defaultSelection = arguments.defaultSelection.split(",")
+            binding.donut.setSelection(
+                List(DonutSelectorView.OPTION_COUNT) { index ->
+                    defaultSelection.contains((index + 1).toString())
+                })
+            binding.viewModel = DonutSelectorViewModel(selectionType == DonutSelectionType.MULTI, presenter)
+
             if (selectionType == DonutSelectionType.SINGLE) {
                 binding.donut.selectionListener = this
-                val defaultSelection = List(DonutSelectorView.OPTION_COUNT) { index ->
-                    index == arguments.selectedByDefault - 1
-                }
-                binding.donut.setSelection(defaultSelection)
             }
-
-            binding.viewModel = DonutSelectorViewModel(selectionType == DonutSelectionType.MULTI, presenter)
         }
     }
 
@@ -59,9 +56,8 @@ class DonutSelectorDialog :
         super.onDestroyView()
     }
 
-    override fun onSelectionChanged(selection: List<Boolean>) {
-        val selectedIndex = selection.indexOfFirst { it }
-        confirmResult("$selectedIndex")
+    override fun onSelectionChanged(index: Int, value: Boolean) {
+        confirmResult("${index + 1}")
     }
 
     override fun onSelectAllClicked() {
@@ -71,6 +67,11 @@ class DonutSelectorDialog :
     }
 
     override fun onDoneButtonClicked() {
-        confirmResult(binding.donut.getSelection().joinToString(","))
+        val result = binding.donut.getSelection()
+            .mapIndexed { index, value -> index + 1 to value }
+            .filter { it.second }
+            .map { it.first }
+            .joinToString(",")
+        confirmResult(result)
     }
 }
