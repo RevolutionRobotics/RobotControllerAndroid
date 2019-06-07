@@ -63,7 +63,12 @@
     <!-- Coding -->
     <fragment android:id="@+id/codingFragment"
               android:name="com.revolution.robotics.features.coding.CodingFragment"
-              android:label="CodingFragment"/>
+              android:label="CodingFragment">
+        <argument android:name="program"
+                  android:defaultValue="@null"
+                  app:nullable="true"
+                  app:argType="com.revolution.robotics.core.domain.local.UserProgram"/>
+    </fragment>
 
     <!-- Play -->
     <fragment android:id="@+id/playGamerFragment"
@@ -89,6 +94,25 @@
         <action android:id="@+id/toChallengeList"
                 app:destination="@id/challengeListFragment"/>
     </fragment>
+    <fragment android:id="@+id/challengeListFragment"
+              android:name="com.revolution.robotics.features.challenges.challengeList.ChallengeListFragment"
+              android:label="ChallengeListFragment">
+        <argument app:argType="com.revolution.robotics.core.domain.remote.ChallengeCategory"
+                  android:name="challenge"/>
+        <action android:id="@+id/toChallengeDetail"
+                app:destination="@id/challengeDetailFragment"/>
+    </fragment>
+    <fragment android:id="@+id/challengeDetailFragment"
+              android:name="com.revolution.robotics.features.challenges.challengeDetail.ChallengeDetailFragment"
+              android:label="ChallengeDetailFragment">
+        <argument app:argType="com.revolution.robotics.core.domain.remote.Challenge"
+                  android:name="challenge"/>
+        <argument app:argType="string"
+                  android:name="categoryId"/>
+        <action android:id="@+id/toNextChallenge"
+                app:destination="@id/challengeDetailFragment"
+                app:popUpTo="@+id/challengeListFragment"/>
+    </fragment>
 
     <!-- Configure -->
     <fragment android:id="@+id/configureFragment"
@@ -110,7 +134,6 @@
     <fragment android:id="@+id/controllerTypeSelectorFragment"
               android:name="com.revolution.robotics.features.controllers.typeSelector.TypeSelectorFragment"
               android:label="ControllerTypeSelectorFragment">
-
         <action android:id="@+id/toSetupGamer"
                 app:destination="@id/setupGamerFragment"/>
         <action android:id="@+id/toSetupMultitasker"
@@ -118,41 +141,62 @@
         <action android:id="@+id/toSetupDriver"
                 app:destination="@id/setupDriverFragment"/>
     </fragment>
-
     <fragment android:id="@+id/setupGamerFragment"
               android:name="com.revolution.robotics.features.controllers.setup.instances.SetupGamerFragment"
               android:label="SetupGamerFragment">
-        <action android:id="@+id/toProgramSelectorFragment"
+        <action android:id="@+id/toProgramSelector"
                 app:destination="@id/program_selector"/>
-        <action android:id="@+id/toButtonlessProgramSelectorFragment"
+        <action android:id="@+id/toButtonlessProgramSelector"
                 app:destination="@id/buttonlessProgramSelectorFragment"/>
+        <action android:id="@+id/toCoding"
+                app:destination="@id/codingFragment"/>
     </fragment>
     <fragment android:id="@+id/setupMultitaskerFragment"
               android:name="com.revolution.robotics.features.controllers.setup.instances.SetupMultitaskerFragment"
               android:label="SetupMultitaskerFragment">
-        <action android:id="@+id/toProgramSelectorFragment"
+        <action android:id="@+id/toProgramSelector"
                 app:destination="@id/program_selector"/>
-        <action android:id="@+id/toButtonlessProgramSelectorFragment"
+        <action android:id="@+id/toButtonlessProgramSelector"
                 app:destination="@id/buttonlessProgramSelectorFragment"/>
+        <action android:id="@+id/toCoding"
+                app:destination="@id/codingFragment"/>
     </fragment>
     <fragment android:id="@+id/setupDriverFragment"
               android:name="com.revolution.robotics.features.controllers.setup.instances.SetupDriverFragment"
               android:label="SetupDriverFragment">
-        <action android:id="@+id/toProgramSelectorFragment"
+        <action android:id="@+id/toProgramSelector"
                 app:destination="@id/program_selector"/>
-        <action android:id="@+id/toButtonlessProgramSelectorFragment"
+        <action android:id="@+id/toButtonlessProgramSelector"
                 app:destination="@id/buttonlessProgramSelectorFragment"/>
+        <action android:id="@+id/toCoding"
+                app:destination="@id/codingFragment"/>
     </fragment>
     <fragment android:id="@+id/program_selector"
               android:name="com.revolution.robotics.features.controllers.programSelector.ProgramSelectorFragment"
-              android:label="ProgramSelectorFragment "/>
+              android:label="ProgramSelectorFragment ">
+        <action android:id="@+id/toCoding"
+                app:destination="@id/codingFragment"/>
+    </fragment>
+    <fragment android:id="@+id/buttonlessProgramSelectorFragment"
+              android:name="com.revolution.robotics.features.controllers.buttonless.ButtonlessProgramSelectorFragment"
+              android:label="ButtonlessProgramSelectorFragment">
+        <action android:id="@+id/toProgramPriority"
+                app:destination="@id/programPriorityFragment"/>
+        <action android:id="@+id/toCoding"
+                app:destination="@id/codingFragment"/>
+    </fragment>
+    <fragment android:id="@+id/programPriorityFragment"
+              android:name="com.revolution.robotics.features.configure.controller.program.priority.ProgramPriorityFragment"
+              android:label="ProgramPriorityFragment"/>
 
     <!-- Settings -->
     <fragment android:id="@+id/settingFragment"
               android:name="com.revolution.robotics.features.mainmenu.settings.SettingsFragment"
               android:label="SettingsFragment">
-        <action android:id="@+id/toAboutFragment" app:destination="@id/aboutFragment"/>
-        <action android:id="@+id/toFirmwareFragment" app:destination="@id/firmwareFragment"/>
+        <action android:id="@+id/toAbout"
+                app:destination="@id/aboutFragment"/>
+        <action android:id="@+id/toFirmware"
+                app:destination="@id/firmwareFragment"/>
     </fragment>
     <fragment android:id="@+id/aboutFragment"
               android:name="com.revolution.robotics.features.mainmenu.settings.about.AboutFragment"
@@ -164,31 +208,4 @@
     <!-- Other -->
     <fragment android:id="@+id/placeholder_robotics"/>
     <fragment android:id="@+id/placeholder_community"/>
-    <fragment android:id="@+id/buttonlessProgramSelectorFragment"
-              android:name="com.revolution.robotics.features.controllers.buttonless.ButtonlessProgramSelectorFragment"
-              android:label="ButtonlessProgramSelectorFragment">
-        <action android:id="@+id/toProgramPriorityFragment"
-                app:destination="@id/programPriorityFragment"/>
-    </fragment>
-    <fragment android:id="@+id/programPriorityFragment"
-              android:name="com.revolution.robotics.features.configure.controller.program.priority.ProgramPriorityFragment"
-              android:label="ProgramPriorityFragment"/>
-    <fragment android:id="@+id/challengeListFragment"
-              android:name="com.revolution.robotics.features.challenges.challengeList.ChallengeListFragment"
-              android:label="ChallengeListFragment">
-        <argument app:argType="com.revolution.robotics.core.domain.remote.ChallengeCategory"
-                  android:name="challenge"/>
-        <action android:id="@+id/toChallengeDetail"
-                app:destination="@id/challengeDetailFragment"/>
-    </fragment>
-    <fragment android:id="@+id/challengeDetailFragment"
-              android:name="com.revolution.robotics.features.challenges.challengeDetail.ChallengeDetailFragment"
-              android:label="ChallengeDetailFragment">
-        <argument app:argType="com.revolution.robotics.core.domain.remote.Challenge"
-                  android:name="challenge"/>
-        <argument app:argType="string"
-                  android:name="categoryId"/>
-        <action android:id="@+id/toNextChallenge" app:destination="@id/challengeDetailFragment"
-                app:popUpTo="@+id/challengeListFragment"/>
-    </fragment>
 </navigation>

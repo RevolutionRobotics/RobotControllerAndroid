@@ -13,8 +13,8 @@ import com.revolution.robotics.features.configure.controller.ControllerButton
 
 @Suppress("TooManyFunctions")
 class UserConfigurationStorage(
-    val updateUserRobotInteractor: UpdateUserRobotInteractor,
-    val saveUserControllerInteractor: SaveUserControllerInteractor
+    private val updateUserRobotInteractor: UpdateUserRobotInteractor,
+    private val saveUserControllerInteractor: SaveUserControllerInteractor
 ) {
 
     companion object {
@@ -24,6 +24,7 @@ class UserConfigurationStorage(
     var robot: UserRobot? = null
     var userConfiguration: UserConfiguration? = null
     var controllerHolder: UserControllerWithPrograms? = null
+    var programBeingEdited: UserProgram? = null
 
     fun isUsedVariableName(name: String, portName: String): Boolean = collectVariableNames(portName).contains(name)
 

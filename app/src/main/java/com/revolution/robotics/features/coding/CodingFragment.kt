@@ -12,6 +12,8 @@ import com.revolution.robotics.core.domain.local.UserProgram
 import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
+import com.revolution.robotics.core.utils.BundleArgumentDelegate
+import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.databinding.FragmentCodingBinding
 import com.revolution.robotics.features.coding.programs.ProgramsDialog
 import com.revolution.robotics.features.coding.saveProgram.SaveProgramDialog
@@ -26,6 +28,7 @@ class CodingFragment : BaseFragment<FragmentCodingBinding, CodingViewModel>(R.la
 
     companion object {
         private const val BLOCKLY_LOCATION = "file:///android_asset/blockly/webview.html"
+        private var Bundle.program by BundleArgumentDelegate.ParcelableNullable<UserProgram>("program")
     }
 
     override val viewModelClass: Class<CodingViewModel> = CodingViewModel::class.java
@@ -34,6 +37,7 @@ class CodingFragment : BaseFragment<FragmentCodingBinding, CodingViewModel>(R.la
     private val javascriptResultHandler: JavascriptResultHandler by kodein.instance()
     private val resourceResolver: ResourceResolver by kodein.instance()
     private val dialogEventBus: DialogEventBus by kodein.instance()
+    private val navigator: Navigator by kodein.instance()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
         super.onCreateView(inflater, container, savedInstanceState).apply {
@@ -41,6 +45,7 @@ class CodingFragment : BaseFragment<FragmentCodingBinding, CodingViewModel>(R.la
                 .chipSize(R.dimen.dimen_12dp)
                 .backgroundColorResource(R.color.grey_28)
                 .create()
+            viewModel?.isInEditMode?.set(arguments?.program != null)
         }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -71,10 +76,17 @@ class CodingFragment : BaseFragment<FragmentCodingBinding, CodingViewModel>(R.la
 
     override fun onBlocklyLoaded() {
         viewModel?.isBlocklyLoaded?.set(true)
+        arguments?.program?.let { presenter.loadProgram(it) }
     }
 
     override fun getPythonCodeFromBlockly(listener: BlocklyJavascriptListener) {
         binding?.viewBlockly?.saveProgram(listener)
+    }
+
+    override fun onProgramSaved() {
+        if (viewModel?.isInEditMode?.get() == true) {
+            navigator.back()
+        }
     }
 
     @Suppress("ComplexMethod")

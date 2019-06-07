@@ -3,6 +3,7 @@ package com.revolution.robotics.features.controllers.setup.instances
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.revolution.robotics.core.domain.local.UserProgram
 import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.databinding.FragmentControllerSetupMultitaskerBinding
 import com.revolution.robotics.features.controllers.setup.SetupFragment
@@ -23,10 +24,14 @@ class SetupMultitaskerFragment : SetupFragment() {
     override fun getContentBinding() = contentBinding
 
     override fun onShowAllProgramsSelected() {
-        navigator.navigate(SetupMultitaskerFragmentDirections.toProgramSelectorFragment())
+        navigator.navigate(SetupMultitaskerFragmentDirections.toProgramSelector())
     }
 
-    override fun navigateToTheBackgroundPrograms() {
-        navigator.navigate(SetupMultitaskerFragmentDirections.toButtonlessProgramSelectorFragment())
+    override fun navigateToBackgroundPrograms() {
+        navigator.navigate(SetupMultitaskerFragmentDirections.toButtonlessProgramSelector())
+    }
+
+    override fun navigateToEditProgram(userProgram: UserProgram?) {
+        userProgram?.let { navigator.navigate(SetupMultitaskerFragmentDirections.toCoding(it)) }
     }
 }

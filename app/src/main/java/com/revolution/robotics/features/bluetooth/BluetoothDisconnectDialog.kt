@@ -21,7 +21,7 @@ class BluetoothDisconnectDialog : RoboticsDialog() {
             dismiss()
         },
         // TODO Change icon
-        DialogButton(R.string.disconnect_modal_disconnect, R.drawable.ic_close, true) {
+        DialogButton(R.string.disconnect_modal_disconnect, R.drawable.ic_check, true) {
             bluetoothManager.disconnect()
             dismiss()
         }

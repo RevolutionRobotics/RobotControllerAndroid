@@ -22,6 +22,7 @@ enum class DialogEvent {
     SHOW_PROGRAM_INFO,
     LOAD_PROGRAM,
     DELETE_PROGRAM,
+    EDIT_PROGRAM,
     SAVE_PROGRAM,
     DUPLICATE_ROBOT,
     EDIT_ROBOT,

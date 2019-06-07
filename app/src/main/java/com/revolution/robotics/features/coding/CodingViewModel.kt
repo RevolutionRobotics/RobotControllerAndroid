@@ -12,6 +12,7 @@ class CodingViewModel(resourceResolver: ResourceResolver, private val presenter:
     val programName = ObservableField<String>(resourceResolver.string(R.string.program_title_default))
     var userProgram: UserProgram? = null
     val isBlocklyLoaded = ObservableBoolean(false)
+    val isInEditMode = ObservableBoolean(true)
 
     fun showPythonCode() {
         presenter.showPythonCode()

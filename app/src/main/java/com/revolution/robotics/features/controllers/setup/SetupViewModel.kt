@@ -22,6 +22,9 @@ class SetupViewModel(private val presenter: SetupMvp.Presenter) : ViewModel() {
             null
         }
 
+    fun getProgramIndex(program: UserProgram) =
+        programs.indexOf(program)
+
     fun onProgramSet(program: UserProgram?) {
         programs[selectedProgram - 1] = program
     }

@@ -12,7 +12,9 @@ interface SetupMvp : Mvp {
         fun updateContentBindings()
         fun onProgramSlotSelected(index: Int, mostRecent: MostRecentProgramViewModel?)
         fun onShowAllProgramsSelected()
-        fun navigateToTheBackgroundPrograms()
+        fun navigateToBackgroundPrograms()
+        fun navigateToEditProgram(userProgram: UserProgram?)
+        fun removeSelectedProgram()
     }
 
     interface Presenter : Mvp.Presenter<View, SetupViewModel> {
@@ -22,5 +24,6 @@ interface SetupMvp : Mvp {
         fun onControllerSetupFinished()
         fun addProgram(program: UserProgram)
         fun removeProgram(program: UserProgram)
+        fun onProgramEdited(program: UserProgram)
     }
 }

@@ -12,7 +12,7 @@ class SettingsPresenter(private val navigator: Navigator, private val appPrefs: 
         view?.showTutorialResetSuccessDialog()
     }
 
-    override fun navigateToFirmwareUpdate() = navigator.navigate(SettingsFragmentDirections.toFirmwareFragment())
+    override fun navigateToFirmwareUpdate() = navigator.navigate(SettingsFragmentDirections.toFirmware())
 
-    override fun navigateToAboutApplication() = navigator.navigate(SettingsFragmentDirections.toAboutFragment())
+    override fun navigateToAboutApplication() = navigator.navigate(SettingsFragmentDirections.toAbout())
 }
