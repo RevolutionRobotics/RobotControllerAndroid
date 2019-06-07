@@ -38,6 +38,7 @@ import com.revolution.robotics.core.interactor.RemoveUserProgramInteractor
 import com.revolution.robotics.core.interactor.SaveUserChallengeCategoryInteractor
 import com.revolution.robotics.core.interactor.SaveUserControllerInteractor
 import com.revolution.robotics.core.interactor.SaveUserProgramInteractor
+import com.revolution.robotics.core.interactor.SaveUserProgramsInteractor
 import com.revolution.robotics.core.interactor.SaveUserRobotInteractor
 import com.revolution.robotics.core.interactor.UpdateUserRobotInteractor
 import com.revolution.robotics.core.interactor.firebase.BuildStepInteractor
@@ -147,6 +148,7 @@ fun createInteractorModule() =
         bind<DuplicateUserRobotInteractor>() with p { DuplicateUserRobotInteractor(i(), i(), i(), i(), i(), i()) }
         bind<LocalFileLoader>() with p { LocalFileLoader() }
         bind<LocalFileSaver>() with p { LocalFileSaver() }
+        bind<SaveUserProgramsInteractor>() with p { SaveUserProgramsInteractor(i()) }
     }
 
 @Suppress("LongMethod")
@@ -174,7 +176,7 @@ fun createPresenterModule() =
         bind<ProgramSelectorMvp.Presenter>() with s { ProgramSelectorPresenter(i(), i(), i(), i()) }
         bind<ProgramPriorityMvp.Presenter>() with s { ProgramPriorityPresenter(i(), i(), i(), i(), i()) }
         bind<ButtonlessProgramSelectorMvp.Presenter>() with s { ButtonlessProgramSelectorPresenter(i(), i(), i(), i()) }
-        bind<SplashMvp.Presenter>() with s { SplashPresenter(i()) }
+        bind<SplashMvp.Presenter>() with s { SplashPresenter(i(), i(), i(), i(), i()) }
         bind<ChallengeGroupMvp.Presenter>() with s { ChallengeGroupPresenter(i(), i(), i()) }
         bind<ChallengeListMvp.Presenter>() with s { ChallengeListPresenter(i(), i()) }
         bind<ChallengeDetailMvp.Presenter>() with s { ChallengeDetailPresenter(i(), i(), i()) }
