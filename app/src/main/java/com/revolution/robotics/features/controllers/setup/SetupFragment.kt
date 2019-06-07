@@ -64,6 +64,9 @@ abstract class SetupFragment :
         }
         storage.controllerHolder?.programToBeAdded?.let { programToAdd -> addProgram(programToAdd) }
         storage.controllerHolder?.programToBeAdded = null
+
+        storage.programBeingEdited?.let { presenter.onProgramEdited(it) }
+        storage.programBeingEdited = null
         hideProgramSelector()
     }
 
@@ -110,11 +113,20 @@ abstract class SetupFragment :
         if (event == DialogEvent.ADD_PROGRAM) {
             addProgram(event.program())
         } else if (event == DialogEvent.REMOVE_PROGRAM) {
-            removeProgram()
+            removeSelectedProgram()
         } else if (event == DialogEvent.EDIT_PROGRAM) {
             event.program().let { program ->
+                storage.programBeingEdited = program
                 navigateToEditProgram(program)
             }
+        }
+    }
+
+    override fun removeSelectedProgram() {
+        viewModel?.selectedProgram?.let { selectedProgram ->
+            storage.removeButtonProgram(buttonNames[selectedProgram - 1])
+            viewModel?.onProgramSet(null)
+            hideProgramSelector()
         }
     }
 
@@ -125,14 +137,6 @@ abstract class SetupFragment :
                 viewModel?.onProgramSet(userProgram)
                 hideProgramSelector()
             }
-        }
-    }
-
-    private fun removeProgram() {
-        viewModel?.selectedProgram?.let { selectedProgram ->
-            storage.removeButtonProgram(buttonNames[selectedProgram - 1])
-            viewModel?.onProgramSet(null)
-            hideProgramSelector()
         }
     }
 

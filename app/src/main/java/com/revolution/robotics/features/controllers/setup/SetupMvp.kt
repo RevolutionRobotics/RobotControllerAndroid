@@ -14,6 +14,7 @@ interface SetupMvp : Mvp {
         fun onShowAllProgramsSelected()
         fun navigateToBackgroundPrograms()
         fun navigateToEditProgram(userProgram: UserProgram?)
+        fun removeSelectedProgram()
     }
 
     interface Presenter : Mvp.Presenter<View, SetupViewModel> {
@@ -23,5 +24,6 @@ interface SetupMvp : Mvp {
         fun onControllerSetupFinished()
         fun addProgram(program: UserProgram)
         fun removeProgram(program: UserProgram)
+        fun onProgramEdited(program: UserProgram)
     }
 }

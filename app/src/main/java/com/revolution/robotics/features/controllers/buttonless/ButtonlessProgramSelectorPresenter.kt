@@ -165,4 +165,11 @@ class ButtonlessProgramSelectorPresenter(
     override fun onInfoButtonClicked(userProgram: UserProgram) {
         view?.showUserProgramDialog(userProgram, compatibleProgramFilterer.isProgramCompatible(userProgram))
     }
+
+    override fun onProgramEdited(userProgram: UserProgram) {
+        val viewModel = programs.find { it.program == userProgram }
+        if (viewModel?.selected?.get() == true && !compatibleProgramFilterer.isProgramCompatible(userProgram)) {
+            viewModel.selected.set(false)
+        }
+    }
 }

@@ -16,6 +16,7 @@ class SetupPresenter(
 
     companion object {
         private const val MOST_RECENT_PROGRAM_COUNT = 5
+        private const val INDEX_NOT_FOUND = -1
     }
 
     override var view: SetupMvp.View? = null
@@ -77,5 +78,15 @@ class SetupPresenter(
 
     override fun onControllerSetupFinished() {
         view?.navigateToBackgroundPrograms()
+    }
+
+    override fun onProgramEdited(program: UserProgram) {
+        if (!compatibleProgramFilterer.isProgramCompatible(program)) {
+            val index = model?.getProgramIndex(program)
+            if (index != null && index != INDEX_NOT_FOUND) {
+                model?.selectedProgram = index + 1
+                view?.removeSelectedProgram()
+            }
+        }
     }
 }
