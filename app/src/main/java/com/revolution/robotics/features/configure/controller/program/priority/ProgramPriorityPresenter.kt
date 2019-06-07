@@ -10,14 +10,12 @@ import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
 import com.revolution.robotics.core.interactor.SaveUserControllerInteractor
 import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.features.configure.UserConfigurationStorage
-import com.revolution.robotics.features.configure.controller.CompatibleProgramFilterer
 import com.revolution.robotics.features.configure.save.SaveControllerDialog
 import com.revolution.robotics.features.controllers.programInfo.ProgramDialog
 import java.util.Collections
 
 class ProgramPriorityPresenter(
     private val userConfigurationStorage: UserConfigurationStorage,
-    private val compatibleProgramFilterer: CompatibleProgramFilterer,
     private val saveUserControllerInteractor: SaveUserControllerInteractor,
     private val dialogEventBus: DialogEventBus,
     private val navigator: Navigator
