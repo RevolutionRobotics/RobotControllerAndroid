@@ -117,6 +117,7 @@ class CodingPresenter(
                     xmlSaved = false
                     pythonSaved = false
                     variablesSaved = false
+                    view?.onProgramSaved()
                 }
             }
         }

@@ -13,8 +13,8 @@ import com.revolution.robotics.features.configure.controller.ControllerButton
 
 @Suppress("TooManyFunctions")
 class UserConfigurationStorage(
-    val updateUserRobotInteractor: UpdateUserRobotInteractor,
-    val saveUserControllerInteractor: SaveUserControllerInteractor
+    private val updateUserRobotInteractor: UpdateUserRobotInteractor,
+    private val saveUserControllerInteractor: SaveUserControllerInteractor
 ) {
 
     companion object {

@@ -147,7 +147,7 @@ class ButtonlessProgramSelectorPresenter(
             }
         }
 
-        navigator.navigate(ButtonlessProgramSelectorFragmentDirections.toProgramPriorityFragment())
+        navigator.navigate(ButtonlessProgramSelectorFragmentDirections.toProgramPriority())
     }
 
     override fun onSelectAllClicked(checked: Boolean) {

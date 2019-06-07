@@ -76,6 +76,6 @@ class SetupPresenter(
     }
 
     override fun onControllerSetupFinished() {
-        view?.navigateToTheBackgroundPrograms()
+        view?.navigateToBackgroundPrograms()
     }
 }

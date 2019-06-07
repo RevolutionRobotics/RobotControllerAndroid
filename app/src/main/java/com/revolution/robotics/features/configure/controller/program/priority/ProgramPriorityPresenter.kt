@@ -12,6 +12,7 @@ import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.features.configure.UserConfigurationStorage
 import com.revolution.robotics.features.configure.controller.CompatibleProgramFilterer
 import com.revolution.robotics.features.configure.save.SaveControllerDialog
+import com.revolution.robotics.features.controllers.programInfo.ProgramDialog
 import java.util.Collections
 
 class ProgramPriorityPresenter(
@@ -83,16 +84,13 @@ class ProgramPriorityPresenter(
     }
 
     override fun onInfoButtonClicked(item: ProgramPriorityItemViewModel) {
-        item.userProgramBindingItem.userProgram?.let {
-            view?.showProgramInfoDialog(it, compatibleProgramFilterer.isProgramCompatible(it))
-        }
+        item.userProgramBindingItem.userProgram?.let { view?.showDialog(ProgramDialog.InfoNoEdit.newInstance(it)) }
     }
 
     override fun onDoneButtonClicked() {
-        view?.showSaveDialog(
-            userConfigurationStorage.controllerHolder?.userController?.name,
-            userConfigurationStorage.controllerHolder?.userController?.description
-        )
+        val name = userConfigurationStorage.controllerHolder?.userController?.name ?: ""
+        val description = userConfigurationStorage.controllerHolder?.userController?.description ?: ""
+        view?.showDialog(SaveControllerDialog.newInstance(name, description))
     }
 
     private fun generateItems(

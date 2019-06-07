@@ -108,9 +108,13 @@ abstract class SetupFragment :
 
     override fun onDialogEvent(event: DialogEvent) {
         if (event == DialogEvent.ADD_PROGRAM) {
-            addProgram(event.extras.getParcelable(ProgramDialog.KEY_PROGRAM))
+            addProgram(event.program())
         } else if (event == DialogEvent.REMOVE_PROGRAM) {
             removeProgram()
+        } else if (event == DialogEvent.EDIT_PROGRAM) {
+            event.program().let { program ->
+                navigateToEditProgram(program)
+            }
         }
     }
 
@@ -159,4 +163,7 @@ abstract class SetupFragment :
             onEnd { this@disappearWithAnimation.visibility = View.INVISIBLE }
         })
     }
+
+    private fun DialogEvent.program() =
+        extras.getParcelable<UserProgram>(ProgramDialog.KEY_PROGRAM)
 }

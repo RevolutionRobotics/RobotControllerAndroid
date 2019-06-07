@@ -53,9 +53,13 @@ class ProgramSelectorFragment :
 
     override fun onDialogEvent(event: DialogEvent) {
         if (event == DialogEvent.ADD_PROGRAM) {
-            val program = event.extras.getParcelable<UserProgram>(ProgramDialog.KEY_PROGRAM)
-            storage.controllerHolder?.programToBeAdded = program
+            storage.controllerHolder?.programToBeAdded = event.program()
             navigator.back()
+        } else if (event == DialogEvent.EDIT_PROGRAM) {
+            navigator.navigate(ProgramSelectorFragmentDirections.toCoding(event.program()))
         }
     }
+
+    private fun DialogEvent.program() =
+        extras.getParcelable<UserProgram>(ProgramDialog.KEY_PROGRAM)
 }
