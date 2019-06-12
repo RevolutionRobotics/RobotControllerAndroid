@@ -25,7 +25,7 @@ interface DialogFactory {
 
     fun showVariableOptionsDialog(
         title: String,
-        selectedKey: String?,
+        selectedKey: String,
         variables: List<BlocklyVariable>,
         result: JsPromptResult
     )
