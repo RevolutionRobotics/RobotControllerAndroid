@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.postDelayed
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
 import com.revolution.robotics.blockly.DialogFactory
@@ -27,6 +28,7 @@ class CodingFragment : BaseFragment<FragmentCodingBinding, CodingViewModel>(R.la
     DialogEventBus.Listener, BlocklyLoadedListener {
 
     companion object {
+        private const val BLOCKLY_DELAY_MS = 125L
         private const val BLOCKLY_LOCATION = "file:///android_asset/blockly/webview.html"
         private var Bundle.program by BundleArgumentDelegate.ParcelableNullable<UserProgram>("program")
     }
@@ -75,8 +77,10 @@ class CodingFragment : BaseFragment<FragmentCodingBinding, CodingViewModel>(R.la
     }
 
     override fun onBlocklyLoaded() {
-        viewModel?.isBlocklyLoaded?.set(true)
-        arguments?.program?.let { presenter.loadProgram(it) }
+        binding?.root?.postDelayed(BLOCKLY_DELAY_MS) {
+            viewModel?.isBlocklyLoaded?.set(true)
+            arguments?.program?.let { presenter.loadProgram(it) }
+        }
     }
 
     override fun getPythonCodeFromBlockly(listener: BlocklyJavascriptListener) {
