@@ -2,6 +2,7 @@ package org.revolution.blockly.view.dialogHandlers
 
 import org.json.JSONObject
 import org.revolution.blockly.BlocklyOption
+import org.revolution.blockly.BlocklyVariable
 
 fun JSONObject.defaultKey(): String =
     optString("defaultKey", "")
@@ -24,17 +25,33 @@ fun JSONObject.title(): String =
 fun JSONObject.comment(): String =
     optString("comment", "")
 
+fun JSONObject.key(): String =
+    getString("key")
+
+fun JSONObject.value(): String =
+    getString("value")
+
+fun JSONObject.variables(): List<BlocklyVariable> =
+    ArrayList<BlocklyVariable>().apply {
+        withOptions { option ->
+            val key = option.key()
+            if (key != "DELETE_VARIABLE_ID") {
+                add(BlocklyVariable(option.value(), key))
+            }
+        }
+    }
+
 fun JSONObject.options(): List<BlocklyOption> =
     ArrayList<BlocklyOption>().apply {
         withOptions { option ->
-            add(BlocklyOption(option.getString("key"), option.getString("value")))
+            add(BlocklyOption(option.key(), option.value()))
         }
     }
 
 fun JSONObject.colors(): List<String> =
     ArrayList<String>().apply {
         withOptions { option ->
-            add(option.getString("key"))
+            add(option.key())
         }
     }
 

@@ -12,6 +12,8 @@ import com.revolution.robotics.blockly.dialogs.slider.SliderMvp
 import com.revolution.robotics.blockly.dialogs.slider.SliderPresenter
 import com.revolution.robotics.blockly.dialogs.soundPicker.SoundPickerMvp
 import com.revolution.robotics.blockly.dialogs.soundPicker.SoundPickerPresenter
+import com.revolution.robotics.blockly.dialogs.variableOptions.VariableOptionsMvp
+import com.revolution.robotics.blockly.dialogs.variableOptions.VariableOptionsPresenter
 import com.revolution.robotics.core.db.RoboticsDatabase
 import com.revolution.robotics.core.domain.local.UserBackgroundProgramBindingDao
 import com.revolution.robotics.core.domain.local.UserChallengeCategoryDao
@@ -188,6 +190,7 @@ fun createPresenterModule() =
         bind<CodingMvp.Presenter>() with s { CodingPresenter(i(), i(), i(), i(), i(), i(), i()) }
         bind<ProgramsMvp.Presenter>() with s { ProgramsPresenter(i()) }
         bind<TestBuildDialogMvp.Presenter>() with s { TestBuildDialogPresenter(i(), i(), i()) }
+        bind<VariableOptionsMvp.Presenter>() with s { VariableOptionsPresenter() }
     }
 
 fun createDbModule(context: Context) =
