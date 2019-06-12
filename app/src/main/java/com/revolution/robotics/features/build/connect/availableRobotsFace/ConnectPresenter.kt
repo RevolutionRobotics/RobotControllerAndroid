@@ -22,8 +22,11 @@ class ConnectPresenter(
         super.register(view, model)
 
         bleDeviceDiscoverer.discoverRobots(applicationContextProvider.applicationContext) { devices ->
-            model?.availableRobots?.value = devices.map { device -> ConnectRobotItem(device, this) }
-            model?.isDiscovering?.set(devices.isEmpty())
+            model?.availableRobots?.value = HashSet<ConnectRobotItem>().apply {
+                model?.availableRobots?.value?.let { addAll(it) }
+                addAll(devices.map { device -> ConnectRobotItem(device, this@ConnectPresenter) })
+            }
+            model?.isDiscovering?.set(model.availableRobots.value?.isEmpty() == true)
         }
     }
 

@@ -16,9 +16,9 @@ import com.revolution.robotics.features.controllers.buttonless.adapter.Buttonles
 import com.revolution.robotics.features.controllers.buttonless.adapter.ButtonlessProgramViewModel
 
 @BindingAdapter("availableRobots")
-fun setAvailableRobotsItems(recyclerView: RecyclerView, itemList: List<ConnectRobotItem>?) {
-    if (itemList != null) {
-        (recyclerView.adapter as? ConnectAdapter)?.setItems(itemList)
+fun setAvailableRobotsItems(recyclerView: RecyclerView, items: Set<ConnectRobotItem>?) {
+    if (items != null) {
+        (recyclerView.adapter as? ConnectAdapter)?.setItems(items.toList())
     }
 }
 
