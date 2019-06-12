@@ -3,6 +3,7 @@ package com.revolution.robotics.features.myRobots.adapter
 import androidx.annotation.DrawableRes
 import androidx.databinding.ObservableBoolean
 import com.revolution.robotics.R
+import com.revolution.robotics.core.domain.local.BuildStatus
 import com.revolution.robotics.core.domain.local.UserRobot
 import com.revolution.robotics.features.myRobots.MyRobotsMvp
 
@@ -26,8 +27,12 @@ data class MyRobotsItem(
 
     fun playButtonText() =
         when {
-            isUnderConstruction && robot.isCustomBuild() -> R.string.my_robots_under_construction_button_custom
-            isUnderConstruction && !robot.isCustomBuild() -> R.string.my_robots_under_construction_button
+            isUnderConstruction && robot.isCustomBuild() ->
+                R.string.my_robots_under_construction_button_custom
+            isUnderConstruction && robot.buildStatus == BuildStatus.INVALID_CONFIGURATION ->
+                R.string.my_robots_under_construction_button_custom
+            isUnderConstruction ->
+                R.string.my_robots_under_construction_button
             else -> R.string.my_robots_play_button
         }
 
@@ -40,6 +45,6 @@ data class MyRobotsItem(
     }
 
     fun onMoreInfoClicked() {
-        presenter.onMorInfoClicked(robot)
+        presenter.onMoreInfoClicked(robot)
     }
 }

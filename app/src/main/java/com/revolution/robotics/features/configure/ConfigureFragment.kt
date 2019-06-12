@@ -85,7 +85,7 @@ class ConfigureFragment : BaseFragment<FragmentConfigureBinding, ConfigureViewMo
 
     private fun commitFragmentToFrame(fragment: Fragment) {
         fragmentManager?.beginTransaction()?.apply {
-            replace(R.id.configureFragmentFrame, fragment).commit()
+            replace(R.id.configureFragmentFrame, fragment).commitAllowingStateLoss()
         }
     }
 

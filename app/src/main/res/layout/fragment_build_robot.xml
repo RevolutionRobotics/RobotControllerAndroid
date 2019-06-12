@@ -110,16 +110,6 @@
                     app:firebaseImageUrl="@{viewModel.partImage}"
                     app:errorDrawable="@{@drawable/ic_image_not_found_dark}"/>
 
-            <TextView
-                    android:id="@+id/part_quantity"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{viewModel.partQuantity}"
-                    android:textSize="16sp"
-                    android:fontFamily="@font/barlow_regular"
-                    android:textColor="@color/white"
-                    android:layout_marginTop="@dimen/dimen_8dp"/>
-
             <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dimen_1dp"
@@ -135,17 +125,6 @@
                     android:layout_marginTop="@dimen/dimen_16dp"
                     app:firebaseImageUrl="@{viewModel.part2Image}"
                     app:errorDrawable="@{@drawable/ic_image_not_found_dark}"
-                    app:gone="@{!viewModel.hasTwoParts}"/>
-
-            <TextView
-                    android:id="@+id/part_2_quantity"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{viewModel.part2Quantity}"
-                    android:textSize="16sp"
-                    android:fontFamily="@font/barlow_regular"
-                    android:textColor="@color/white"
-                    android:layout_marginTop="@dimen/dimen_8dp"
                     app:gone="@{!viewModel.hasTwoParts}"/>
 
         </LinearLayout>

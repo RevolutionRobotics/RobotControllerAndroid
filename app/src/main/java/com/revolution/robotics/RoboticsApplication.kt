@@ -18,6 +18,16 @@ import org.kodein.di.KodeinAware
 
 class RoboticsApplication : Application(), KodeinAware {
 
+    /*
+    blocking issues
+        - community véglegesítése (háttér & url)
+        - "Turn on the brain" tips
+        - About alatt megnyitható URL-ekhez hibaüzenet, ha nem található a megnyitásukhoz kompatibilis alkalmazás
+        - Privacy Policy url
+        - T&C url
+        - BLE disconnect ikon
+    */
+
     companion object {
         lateinit var kodein: Kodein
     }

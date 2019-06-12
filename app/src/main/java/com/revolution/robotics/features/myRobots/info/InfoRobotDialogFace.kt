@@ -1,6 +1,7 @@
 package com.revolution.robotics.features.myRobots.info
 
 import com.revolution.robotics.R
+import com.revolution.robotics.core.domain.local.BuildStatus
 import com.revolution.robotics.core.domain.local.UserRobot
 import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.core.extensions.formatYearMonthDay
@@ -41,7 +42,7 @@ class InfoRobotDialogFace(dialog: RoboticsDialog, showEditButton: Boolean) :
                     robotName = userRobot.name ?: "",
                     robotDescription = userRobot.description ?: "",
                     dateText = userRobot.lastModified?.formatYearMonthDay() ?: "",
-                    errorTextVisible = userRobot.isCustomBuild()
+                    errorTextVisible = userRobot.buildStatus == BuildStatus.INVALID_CONFIGURATION
                 )
             }
         }

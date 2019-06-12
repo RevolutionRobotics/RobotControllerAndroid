@@ -51,9 +51,9 @@ class ConfigureControllersFragment : BaseFragment<FragmentConfigureControllersBi
         super.onDestroyView()
     }
 
-    override fun onControllersChanged(currentPosition: Int) {
+    override fun onControllersChanged(selectedPosition: Int) {
         adapter.notifyDataSetChanged()
-        binding?.controllersViewpager?.reInitTransformerWithDelay(currentPosition)
+        binding?.controllersViewpager?.reInitTransformerWithDelay(selectedPosition)
     }
 
     override fun onDialogEvent(event: DialogEvent) {
