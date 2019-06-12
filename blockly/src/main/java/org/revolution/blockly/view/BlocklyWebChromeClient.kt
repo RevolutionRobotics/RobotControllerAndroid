@@ -14,6 +14,7 @@ import org.revolution.blockly.view.dialogHandlers.instances.SingleDonutSelectorH
 import org.revolution.blockly.view.dialogHandlers.instances.SliderHandler
 import org.revolution.blockly.view.dialogHandlers.instances.SoundPickerHandler
 import org.revolution.blockly.view.dialogHandlers.instances.TextInputHandler
+import org.revolution.blockly.view.dialogHandlers.instances.VariableOptionsHandler
 
 class BlocklyWebChromeClient(
     private val dialogFactory: DialogFactory,
@@ -34,7 +35,8 @@ class BlocklyWebChromeClient(
         SliderHandler(),
         DialpadHandler(),
         TextInputHandler(),
-        BlockOptionsHandler()
+        BlockOptionsHandler(),
+        VariableOptionsHandler()
     )
 
     override fun onProgressChanged(view: WebView?, newProgress: Int) {

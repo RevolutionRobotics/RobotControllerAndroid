@@ -13,11 +13,14 @@ import com.revolution.robotics.blockly.dialogs.optionSelector.OptionSelectorDial
 import com.revolution.robotics.blockly.dialogs.slider.SliderDialog
 import com.revolution.robotics.blockly.dialogs.soundPicker.SoundPickerDialog
 import com.revolution.robotics.blockly.dialogs.textInput.TextInputDialog
+import com.revolution.robotics.blockly.dialogs.variableOptions.VariableOptionsDialog
 import com.revolution.robotics.blockly.utils.JavascriptResultHandler
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import org.revolution.blockly.BlocklyOption
+import org.revolution.blockly.BlocklyVariable
 import org.revolution.blockly.view.DialogFactory
 
+@Suppress("TooManyFunctions")
 class DialogFactory(
     private val javascriptResultHandler: JavascriptResultHandler,
     private val resourceResolver: ResourceResolver,
@@ -63,6 +66,16 @@ class DialogFactory(
     override fun showBlockOptionsDialog(title: String, comment: String, result: JsPromptResult) {
         javascriptResultHandler.registerResult(result)
         BlockOptionsDialog.newInstance(title, comment).show(fragmentManager)
+    }
+
+    override fun showVariableOptionsDialog(
+        title: String,
+        selectedKey: String,
+        variables: List<BlocklyVariable>,
+        result: JsPromptResult
+    ) {
+        javascriptResultHandler.registerResult(result)
+        VariableOptionsDialog.newInstance(title, selectedKey, variables).show(fragmentManager)
     }
 
     override fun showTextInput(title: String, defaultValue: String?, result: JsPromptResult) {
