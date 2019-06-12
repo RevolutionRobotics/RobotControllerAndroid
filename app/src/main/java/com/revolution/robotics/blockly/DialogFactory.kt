@@ -20,6 +20,7 @@ import org.revolution.blockly.BlocklyOption
 import org.revolution.blockly.BlocklyVariable
 import org.revolution.blockly.view.DialogFactory
 
+@Suppress("TooManyFunctions")
 class DialogFactory(
     private val javascriptResultHandler: JavascriptResultHandler,
     private val resourceResolver: ResourceResolver,
