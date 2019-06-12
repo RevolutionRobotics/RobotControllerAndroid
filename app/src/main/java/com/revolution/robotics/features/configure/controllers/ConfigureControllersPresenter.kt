@@ -1,5 +1,6 @@
 package com.revolution.robotics.features.configure.controllers
 
+import com.revolution.robotics.core.domain.local.BuildStatus
 import com.revolution.robotics.core.extensions.formatYearMonthDay
 import com.revolution.robotics.core.extensions.isEmptyOrNull
 import com.revolution.robotics.core.interactor.GetUserControllerInteractor
@@ -98,8 +99,12 @@ class ConfigureControllersPresenter(
         deleteControllerInteractor.controllerId = controllerId
         deleteControllerInteractor.execute()
         currentPosition = selectedPosition
-        if (userConfigurationStorage.userConfiguration?.controller == controllerId) {
-            userConfigurationStorage.userConfiguration?.controller = null
+        userConfigurationStorage.apply {
+            if (userConfiguration?.controller == controllerId) {
+                userConfiguration?.controller = null
+                robot?.buildStatus = BuildStatus.INVALID_CONFIGURATION
+                updateRobot()
+            }
         }
 
         model?.controllersList?.apply {

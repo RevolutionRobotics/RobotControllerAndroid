@@ -24,17 +24,14 @@ class UpdateUserRobotInteractor(
         }
         userRobot.configurationId = configurationId.toInt()
 
-        // TODO remove this when we introduce new BuildStatus (completed, but not playable)
-        if (userRobot.isCustomBuild()) {
-            val hasAssignedPort = !userConfiguration.mappingId?.getVariables()?.firstOrNull().isNullOrEmpty()
-            val hasController = userConfiguration.controller != null && userConfiguration.controller != 0
-            userRobot.buildStatus =
-                if (hasAssignedPort && hasController) {
-                    BuildStatus.COMPLETED
-                } else {
-                    BuildStatus.IN_PROGRESS
-                }
-        }
+        val hasAssignedPort = !userConfiguration.mappingId?.getVariables()?.firstOrNull().isNullOrEmpty()
+        val hasController = userConfiguration.controller != null && userConfiguration.controller != -1
+        userRobot.buildStatus =
+            if (hasAssignedPort && hasController) {
+                BuildStatus.COMPLETED
+            } else {
+                BuildStatus.INVALID_CONFIGURATION
+            }
 
         saveUserRobotDao.updateUserRobot(userRobot)
         return userRobot

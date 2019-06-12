@@ -22,7 +22,7 @@ interface MyRobotsMvp : Mvp {
         fun onContinueBuildingSelected(robot: UserRobot)
         fun onEditSelected(userRobot: UserRobot)
         fun duplicateRobot(userRobot: UserRobot)
-        fun onMorInfoClicked(userRobot: UserRobot)
+        fun onMoreInfoClicked(userRobot: UserRobot)
         fun deleteRobot(userRobot: UserRobot, selectedPosition: Int)
     }
 }

@@ -1,5 +1,6 @@
 package com.revolution.robotics.features.configure
 
+import com.revolution.robotics.core.domain.local.BuildStatus
 import com.revolution.robotics.core.domain.local.UserBackgroundProgramBinding
 import com.revolution.robotics.core.domain.local.UserConfiguration
 import com.revolution.robotics.core.domain.local.UserControllerWithPrograms
@@ -27,6 +28,16 @@ class UserConfigurationStorage(
     var programBeingEdited: UserProgram? = null
 
     fun isUsedVariableName(name: String, portName: String): Boolean = collectVariableNames(portName).contains(name)
+
+    fun updateRobot() {
+        userConfiguration?.let { config ->
+            robot?.let { robot ->
+                updateUserRobotInteractor.userConfiguration = config
+                updateUserRobotInteractor.userRobot = robot
+                updateUserRobotInteractor.execute()
+            }
+        }
+    }
 
     fun updateSensorPort(sensorPort: SensorPort) {
         userConfiguration?.let { config ->
@@ -168,19 +179,14 @@ class UserConfigurationStorage(
             saveUserControllerInteractor.backgroundProgramBindings = controllerHolder?.backgroundBindings ?: emptyList()
             userController.robotId = robot?.instanceId ?: 0
             saveUserControllerInteractor.execute { controller ->
-                if (userConfiguration?.controller == null || userConfiguration?.controller == 0) {
+                if (userConfiguration?.controller == null || userConfiguration?.controller == -1) {
                     userConfiguration?.controller = controller.id
+                    val hasAssignedPort = !userConfiguration?.mappingId?.getVariables()?.firstOrNull().isNullOrEmpty()
+                    if (hasAssignedPort) {
+                        robot?.buildStatus = BuildStatus.COMPLETED
+                        updateRobot()
+                    }
                 }
-            }
-        }
-    }
-
-    private fun updateRobot() {
-        userConfiguration?.let { config ->
-            robot?.let { robot ->
-                updateUserRobotInteractor.userConfiguration = config
-                updateUserRobotInteractor.userRobot = robot
-                updateUserRobotInteractor.execute()
             }
         }
     }
