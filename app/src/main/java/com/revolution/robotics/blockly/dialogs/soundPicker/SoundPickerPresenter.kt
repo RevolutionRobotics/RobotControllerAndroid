@@ -29,7 +29,8 @@ class SoundPickerPresenter(
                 addAll(fileNames.map { filename ->
                     SoundOption(
                         filename,
-                        SoundIcons.ICONS[filename] ?: 0,
+                        // TODO remove this default
+                        SoundIcons.ICONS[filename] ?: 0x1F437,
                         filename == selectedSound,
                         this@SoundPickerPresenter
                     ).apply {
