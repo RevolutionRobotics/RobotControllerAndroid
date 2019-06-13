@@ -7,13 +7,12 @@ import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
-import com.revolution.robotics.core.domain.local.UserConfiguration
-import com.revolution.robotics.core.domain.local.UserControllerWithPrograms
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.core.utils.BundleArgumentDelegate
 import com.revolution.robotics.databinding.FragmentPlayCoreBinding
 import com.revolution.robotics.features.bluetooth.BluetoothConnectionListener
 import com.revolution.robotics.features.bluetooth.BluetoothManager
+import com.revolution.robotics.features.play.configurationBuilder.ConfigurationBuilder
 import org.kodein.di.erased.instance
 
 abstract class PlayFragment : BaseFragment<FragmentPlayCoreBinding, PlayViewModel>(R.layout.fragment_play_core),
@@ -56,8 +55,10 @@ abstract class PlayFragment : BaseFragment<FragmentPlayCoreBinding, PlayViewMode
         super.onDestroyView()
     }
 
-    override fun onControllerLoaded(configuration: UserConfiguration?, controller: UserControllerWithPrograms?) {
-        if (configuration != null && controller != null) {
+    override fun onControllerLoaded(data: FullControllerData) {
+        val controller = data.controller
+        if (controller != null) {
+            val json = ConfigurationBuilder().createConfigurationJson(data)
             viewModel?.programs?.apply {
                 clear()
                 addAll(listOf(

@@ -132,11 +132,11 @@ class MotorConfigurationPresenter(
     private fun setDrivetrainValues(motor: Motor) {
         motor.apply {
             type = Motor.TYPE_DRIVETRAIN
-            rotation =
+            direction =
                 if (model?.clockwiseButton?.isSelected?.get() == true) {
-                    Motor.ROTATION_CLOCKWISE
+                    Motor.DIRECTION_CLOCKWISE
                 } else {
-                    Motor.ROTATION_COUNTER_CLOCKWISE
+                    Motor.DIRECTION_COUNTER_CLOCKWISE
                 }
 
             side =
@@ -152,11 +152,11 @@ class MotorConfigurationPresenter(
     private fun setMotorValues(motor: Motor) {
         motor.apply {
             type = Motor.TYPE_MOTOR
-            rotation =
+            direction =
                 if (model?.motorClockwiseButton?.isSelected?.get() == true) {
-                    Motor.ROTATION_CLOCKWISE
+                    Motor.DIRECTION_CLOCKWISE
                 } else {
-                    Motor.ROTATION_COUNTER_CLOCKWISE
+                    Motor.DIRECTION_COUNTER_CLOCKWISE
                 }
             side = null
             variableName = this@MotorConfigurationPresenter.variableName
@@ -166,7 +166,7 @@ class MotorConfigurationPresenter(
     private fun setEmptyValues(motor: Motor) {
         motor.apply {
             type = null
-            rotation = null
+            direction = null
         }
     }
 

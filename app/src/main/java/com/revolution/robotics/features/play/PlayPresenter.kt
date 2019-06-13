@@ -25,7 +25,7 @@ class PlayPresenter(
     override fun loadConfiguration(configId: Int) {
         interactor.userConfigId = configId
         interactor.execute { result ->
-            view?.onControllerLoaded(result.first, result.second)
+            view?.onControllerLoaded(result)
         }
     }
 
