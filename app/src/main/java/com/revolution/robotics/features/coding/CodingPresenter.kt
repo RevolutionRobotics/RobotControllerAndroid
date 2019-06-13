@@ -103,7 +103,12 @@ class CodingPresenter(
     }
 
     override fun onVariablesExported(variables: String) {
-        userProgram?.variables = variables.split(",")
+        userProgram?.variables =
+            if (variables.isEmpty()) {
+                emptyList()
+            } else {
+                variables.split(",")
+            }
         variablesSaved = true
         saveUserProgramWhenEveryDataIsReady()
     }

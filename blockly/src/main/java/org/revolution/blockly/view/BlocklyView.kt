@@ -56,6 +56,12 @@ class BlocklyView @JvmOverloads constructor(context: Context, attrs: AttributeSe
         loadUrl("javascript:clearWorkspace()")
     }
 
+    /*
+    fun closeToolbox() {
+        loadUrl("javascript:closeToolbox()")
+    }
+    */
+
     override fun onBlocklyLoaded() {
         isBlocklyLoaded = true
         listener?.onBlocklyLoaded()
