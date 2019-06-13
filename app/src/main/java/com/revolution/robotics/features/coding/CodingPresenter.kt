@@ -124,6 +124,6 @@ class CodingPresenter(
     }
 
     override fun onBackPressed() {
-        navigator.back()
+        view?.onToolbarBackPressed()
     }
 }

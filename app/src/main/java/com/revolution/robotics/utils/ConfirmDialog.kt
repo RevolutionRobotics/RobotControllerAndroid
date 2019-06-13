@@ -18,17 +18,20 @@ abstract class ConfirmDialog(
     override val dialogFaces = listOf(ConfirmDialogFace(this))
     override val dialogButtons: List<DialogButton> = listOf(
         DialogButton(negativeButtonText, negativeButtonIcon, false) {
+            onCancelled()
             dismissAllowingStateLoss()
         },
         DialogButton(positiveButtonText, positiveButtonIcon, true) {
             onConfirmed()
-            dismiss()
+            dismissAllowingStateLoss()
         }
     )
 
-    open fun onActivated(binding: DialogConfirmBinding?) = Unit
+    open fun onCancelled() = Unit
 
-    abstract fun onConfirmed()
+    open fun onConfirmed() = Unit
+
+    open fun onActivated(binding: DialogConfirmBinding?) = Unit
 
     class ConfirmDialogFace(private val confirmDialog: ConfirmDialog) :
         DialogFace<DialogConfirmBinding>(R.layout.dialog_confirm, confirmDialog) {

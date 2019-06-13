@@ -93,6 +93,15 @@ class CodingFragment : BaseFragment<FragmentCodingBinding, CodingViewModel>(R.la
         }
     }
 
+    override fun onToolbarBackPressed() {
+        onBackPressed()
+    }
+
+    override fun onBackPressed(): Boolean {
+        LeaveProgramDialog.newInstance().show(fragmentManager)
+        return true
+    }
+
     @Suppress("ComplexMethod")
     override fun onDialogEvent(event: DialogEvent) {
         when (event) {
@@ -115,6 +124,8 @@ class CodingFragment : BaseFragment<FragmentCodingBinding, CodingViewModel>(R.la
                     binding?.viewBlockly?.saveProgram(presenter)
                 }
             }
+            DialogEvent.PROGRAM_CONFIRM_CLOSE ->
+                navigator.back()
             else -> Unit
         }
     }
