@@ -20,7 +20,7 @@ import com.revolution.robotics.core.domain.remote.Program
 import com.revolution.robotics.core.domain.remote.ProgramBinding
 import java.io.File
 
-class AssignConfigIntoARobotInteractor(
+class AssignConfigToRobotInteractor(
     private val userRobotDao: UserRobotDao,
     private val userConfigurationDao: UserConfigurationDao,
     private val controllerDao: UserControllerDao,

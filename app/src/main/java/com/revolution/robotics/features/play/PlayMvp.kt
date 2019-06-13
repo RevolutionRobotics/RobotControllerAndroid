@@ -2,12 +2,13 @@ package com.revolution.robotics.features.play
 
 import com.revolution.bluetooth.communication.RoboticsDeviceConnector
 import com.revolution.robotics.core.Mvp
+import com.revolution.robotics.core.domain.local.UserConfiguration
 import com.revolution.robotics.core.domain.local.UserControllerWithPrograms
 
 interface PlayMvp : Mvp {
 
     interface View : Mvp.View {
-        fun onControllerLoaded(controller: UserControllerWithPrograms)
+        fun onControllerLoaded(configuration: UserConfiguration?, controller: UserControllerWithPrograms?)
     }
 
     interface Presenter : Mvp.Presenter<View, PlayViewModel> {
