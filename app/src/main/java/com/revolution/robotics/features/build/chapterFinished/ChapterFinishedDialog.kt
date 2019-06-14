@@ -1,19 +1,19 @@
 package com.revolution.robotics.features.build.chapterFinished
 
 import android.os.Bundle
-import android.view.View
 import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.remote.Milestone
 import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.core.extensions.withArguments
 import com.revolution.robotics.core.utils.BundleArgumentDelegate
+import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.databinding.DialogChapterFinishedBinding
 import com.revolution.robotics.views.dialogs.DialogButton
 import com.revolution.robotics.views.dialogs.DialogFace
 import com.revolution.robotics.views.dialogs.RoboticsDialog
 import org.kodein.di.erased.instance
 
-class ChapterFinishedDialog : RoboticsDialog(), ChapterFinishedMvp.View {
+class ChapterFinishedDialog : RoboticsDialog() {
 
     companion object {
         const val KEY_MILESTONE = "milestone"
@@ -25,48 +25,25 @@ class ChapterFinishedDialog : RoboticsDialog(), ChapterFinishedMvp.View {
         }
     }
 
-    private val presenter: ChapterFinishedMvp.Presenter by kodein.instance()
+    private val navigator: Navigator by kodein.instance()
 
     override val hasCloseButton = true
-    override val dialogFaces: List<DialogFace<*>> = listOf(
-        ChapterFinishedDialogFace()
-    )
+    override val dialogFaces: List<DialogFace<*>> = listOf(ChapterFinishedDialogFace())
     override val dialogButtons: List<DialogButton> = listOf(
-        DialogButton(
-            R.string.build_chapter_finish_dialog_button_home,
-            R.drawable.ic_home
-        ) {
+        DialogButton(R.string.build_chapter_finish_dialog_button_home, R.drawable.ic_home) {
             dismissAllowingStateLoss()
-            presenter.navigateHome()
+            navigator.popUntil(R.id.mainMenuFragment)
         },
-        DialogButton(
-            R.string.build_chapter_finish_dialog_button_next_chapter,
-            R.drawable.ic_skip
-        ) {
+        DialogButton(R.string.build_chapter_finish_dialog_button_next_chapter, R.drawable.ic_skip) {
             dismissAllowingStateLoss()
             dialogEventBus.publish(DialogEvent.SKIP_TESTING)
         },
-        DialogButton(
-            R.string.build_chapter_finish_dialog_button_test,
-            R.drawable.ic_test,
-            true
-        ) {
-            presenter.startTestingFlow()
+        DialogButton(R.string.build_chapter_finish_dialog_button_test, R.drawable.ic_test, true) {
+            startTestingFlow()
         }
     )
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        presenter.milestone = arguments?.milestone
-        presenter.register(this, null)
-    }
-
-    override fun onDestroyView() {
-        presenter.unregister()
-        super.onDestroyView()
-    }
-
-    override fun startTestingFlow() {
+    private fun startTestingFlow() {
         dismissAllowingStateLoss()
         dialogEventBus.publish(DialogEvent.CHAPTER_FINISHED.apply {
             arguments?.milestone?.let { extras.putParcelable(KEY_MILESTONE, it) }

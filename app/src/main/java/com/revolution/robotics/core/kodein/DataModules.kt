@@ -58,8 +58,6 @@ import com.revolution.robotics.features.build.BuildRobotMvp
 import com.revolution.robotics.features.build.BuildRobotPresenter
 import com.revolution.robotics.features.build.buildFinished.BuildFinishedMvp
 import com.revolution.robotics.features.build.buildFinished.BuildFinishedPresenter
-import com.revolution.robotics.features.build.chapterFinished.ChapterFinishedMvp
-import com.revolution.robotics.features.build.chapterFinished.ChapterFinishedPresenter
 import com.revolution.robotics.features.build.connect.availableRobotsFace.ConnectMvp
 import com.revolution.robotics.features.build.connect.availableRobotsFace.ConnectPresenter
 import com.revolution.robotics.features.build.testing.buildTest.TestBuildDialogMvp

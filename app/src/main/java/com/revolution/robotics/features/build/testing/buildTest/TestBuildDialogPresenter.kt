@@ -30,11 +30,13 @@ class TestBuildDialogPresenter(
     }
 
     private fun uploadTestCode(fileUri: Uri) {
-        bluetoothManager.getConfigurationService().testKit(fileUri, {
-            view?.activateBuildFace()
-        }, {
-            errorHandler.onError(R.string.error_test_code_upload)
-            view?.dismiss()
-        })
+        bluetoothManager.getConfigurationService().testKit(fileUri,
+            onSuccess = {
+                view?.activateBuildFace()
+            },
+            onError = {
+                errorHandler.onError(R.string.error_test_code_upload)
+                view?.dismiss()
+            })
     }
 }
