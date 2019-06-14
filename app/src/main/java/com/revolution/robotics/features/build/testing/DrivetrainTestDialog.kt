@@ -8,9 +8,16 @@ import com.revolution.robotics.views.dialogs.RoboticsDialog
 class DrivetrainTestDialog : TestDialog() {
 
     override val dialogFaces: List<DialogFace<*>> = listOf(
+        TestLoadingDialogFace(this),
         DrivetrainTestDialogFace(this),
         TipsDialogFace(Source.CONFIGURE, this, this)
     )
+
+    override val testFileName = "drivetrain"
+
+    override fun onTestUploaded() {
+        activateFace(dialogFaces.first { it is DrivetrainTestDialogFace })
+    }
 
     inner class DrivetrainTestDialogFace(dialog: RoboticsDialog) : TestDialogFace(dialog) {
         override val imageResource: Int = R.drawable.test_drivetrain

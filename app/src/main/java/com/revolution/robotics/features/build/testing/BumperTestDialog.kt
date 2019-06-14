@@ -8,9 +8,16 @@ import com.revolution.robotics.views.dialogs.RoboticsDialog
 class BumperTestDialog : TestDialog() {
 
     override val dialogFaces: List<DialogFace<*>> = listOf(
+        TestLoadingDialogFace(this),
         BumperTestDialogFace(this),
         TipsDialogFace(Source.CONFIGURE, this, this)
     )
+
+    override val testFileName = "bumper"
+
+    override fun onTestUploaded() {
+        activateFace(dialogFaces.first { it is BumperTestDialogFace })
+    }
 
     inner class BumperTestDialogFace(dialog: RoboticsDialog) : TestDialogFace(dialog) {
         override val imageResource: Int = R.drawable.test_bumper

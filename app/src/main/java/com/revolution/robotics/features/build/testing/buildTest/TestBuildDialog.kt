@@ -61,9 +61,7 @@ class TestBuildDialog : RoboticsDialog(), DialogController, TestBuildDialogMvp.V
 
     override fun onRetryClicked() {
         activateFace(dialogFaces.first())
-        arguments?.let {
-            presenter.sendTestCode(it.code)
-        }
+        arguments?.let { presenter.sendTestCode(it.code) }
     }
 
     override fun navigateToCommunity() {

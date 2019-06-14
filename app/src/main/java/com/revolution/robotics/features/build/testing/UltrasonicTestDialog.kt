@@ -8,9 +8,16 @@ import com.revolution.robotics.views.dialogs.RoboticsDialog
 class UltrasonicTestDialog : TestDialog() {
 
     override val dialogFaces: List<DialogFace<*>> = listOf(
+        TestLoadingDialogFace(this),
         UltrasonicTestDialogFace(this),
         TipsDialogFace(Source.CONFIGURE, this, this)
     )
+
+    override val testFileName = "ultrasonic"
+
+    override fun onTestUploaded() {
+        activateFace(dialogFaces.first { it is UltrasonicTestDialogFace })
+    }
 
     inner class UltrasonicTestDialogFace(dialog: RoboticsDialog) : TestDialogFace(dialog) {
         override val imageResource: Int = R.drawable.test_ultrasonic

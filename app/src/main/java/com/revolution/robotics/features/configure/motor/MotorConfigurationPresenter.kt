@@ -3,6 +3,7 @@ package com.revolution.robotics.features.configure.motor
 import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.remote.Motor
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
+import com.revolution.robotics.features.bluetooth.BluetoothManager
 import com.revolution.robotics.features.build.testing.DrivetrainTestDialog
 import com.revolution.robotics.features.build.testing.MotorTestDialog
 import com.revolution.robotics.features.configure.ConfigurationEventBus
@@ -16,6 +17,7 @@ class MotorConfigurationPresenter(
     private val resourceResolver: ResourceResolver,
     private val configurationEventBus: ConfigurationEventBus,
     private val userConfigurationStorage: UserConfigurationStorage,
+    private val bluetoothManager: BluetoothManager,
     private val errorHandler: ErrorHandler
 ) : MotorConfigurationMvp.Presenter {
 
@@ -88,12 +90,16 @@ class MotorConfigurationPresenter(
     }
 
     override fun onTestButtonClicked() {
-        if (model?.driveTrainButton?.isSelected?.get() == true) {
-            view?.showDialog(DrivetrainTestDialog())
-        }
+        if (bluetoothManager.isConnected) {
+            if (model?.driveTrainButton?.isSelected?.get() == true) {
+                view?.showDialog(DrivetrainTestDialog())
+            }
 
-        if (model?.motorButton?.isSelected?.get() == true) {
-            view?.showDialog(MotorTestDialog())
+            if (model?.motorButton?.isSelected?.get() == true) {
+                view?.showDialog(MotorTestDialog())
+            }
+        } else {
+            bluetoothManager.startConnectionFlow()
         }
     }
 

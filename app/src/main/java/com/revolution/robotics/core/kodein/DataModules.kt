@@ -60,6 +60,8 @@ import com.revolution.robotics.features.build.buildFinished.BuildFinishedMvp
 import com.revolution.robotics.features.build.buildFinished.BuildFinishedPresenter
 import com.revolution.robotics.features.build.connect.availableRobotsFace.ConnectMvp
 import com.revolution.robotics.features.build.connect.availableRobotsFace.ConnectPresenter
+import com.revolution.robotics.features.build.testing.TestMvp
+import com.revolution.robotics.features.build.testing.TestPresenter
 import com.revolution.robotics.features.build.testing.buildTest.TestBuildDialogMvp
 import com.revolution.robotics.features.build.testing.buildTest.TestBuildDialogPresenter
 import com.revolution.robotics.features.challenges.challengeDetail.ChallengeDetailMvp
@@ -172,8 +174,8 @@ fun createPresenterModule() =
         bind<ConnectMvp.Presenter>() with s { ConnectPresenter(i(), i()) }
         bind<ConfigureMvp.Presenter>() with s { ConfigurePresenter(i(), i(), i(), i(), i()) }
         bind<ConfigureConnectionsMvp.Presenter>() with s { ConfigureConnectionsPresenter(i(), i(), i()) }
-        bind<MotorConfigurationMvp.Presenter>() with s { MotorConfigurationPresenter(i(), i(), i(), i()) }
-        bind<SensorConfigurationMvp.Presenter>() with s { SensorConfigurationPresenter(i(), i(), i(), i()) }
+        bind<MotorConfigurationMvp.Presenter>() with s { MotorConfigurationPresenter(i(), i(), i(), i(), i()) }
+        bind<SensorConfigurationMvp.Presenter>() with s { SensorConfigurationPresenter(i(), i(), i(), i(), i()) }
         bind<BuildFinishedMvp.Presenter>() with s { BuildFinishedPresenter(i(), i()) }
         bind<ConfigureControllersMvp.Presenter>() with s { ConfigureControllersPresenter(i(), i(), i(), i(), i()) }
         bind<SettingsMvp.Presenter>() with s { SettingsPresenter(i(), i()) }
@@ -201,6 +203,7 @@ fun createPresenterModule() =
         bind<VariableOptionsMvp.Presenter>() with s { VariableOptionsPresenter() }
         bind<SaveProgramMvp.Presenter>() with s { SaveProgramPresenter(i(), i()) }
         bind<CommunityMvp.Presenter>() with s { CommunityPresenter() }
+        bind<TestMvp.Presenter>() with s { TestPresenter(i(), i(), i()) }
     }
 
 fun createDbModule(context: Context) =
