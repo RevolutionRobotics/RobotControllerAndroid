@@ -7,7 +7,7 @@ import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 
 class SoundOption(
     val fileName: String,
-    emojiUnicode: Int,
+    val iconEmoji: String,
     isSelected: Boolean,
     private val presenter: SoundPickerMvp.Presenter
 ) : ViewModel() {
@@ -27,7 +27,6 @@ class SoundOption(
     val background = BACKGROUND
     val backgroundSelected = BACKGROUND_SELECTED
     val isSelected = ObservableBoolean(isSelected)
-    val iconEmoji = String(Character.toChars(emojiUnicode))
 
     fun onSoundClicked() {
         presenter.onSoundSelected(this)

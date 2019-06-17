@@ -5,11 +5,22 @@ class SoundIcons private constructor() {
 
     companion object {
         val ICONS = hashMapOf(
-            "bell_1" to 0x1F437,
-            "bell_2" to 0x1F430,
-            "bell_3" to 0x1F414,
-            "bell_4" to 0x1F438,
-            "bell_5" to 0x1F419
-            )
+            "siren" to "🔉",
+            "cat" to "😸",
+            "car_horn" to "📯",
+            "robot" to "🤖",
+            "robot2" to "📟",
+            "buzzer" to "🛑",
+            "oh_no" to "😱",
+            "yee_haw" to "🤠",
+            "engine_revving" to "🏍",
+            "ta_da" to "🎉",
+            "uh_oh" to "🙊",
+            "bell" to "🔔",
+            "duck" to "🐤",
+            "alarm_clock" to "⏰",
+            "lion" to "🐯",
+            "dog" to "🐶"
+        )
     }
 }
