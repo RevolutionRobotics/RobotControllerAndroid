@@ -14,6 +14,7 @@ import com.revolution.robotics.features.coding.saveProgram.SaveProgramDialog
 import org.revolution.blockly.view.jsInterface.BlocklyJavascriptListener
 import java.util.concurrent.TimeUnit
 
+@Suppress("TooManyFunctions")
 class CodingPresenter(
     private val removeUserProgramInteractor: RemoveUserProgramInteractor,
     private val saveUserProgramInteractor: SaveUserProgramInteractor,
