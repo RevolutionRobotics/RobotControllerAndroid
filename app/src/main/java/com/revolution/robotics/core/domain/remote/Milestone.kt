@@ -5,7 +5,6 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Milestone(
-    var image: String? = null,
     var testImage: String? = null,
     var testDescription: String? = null,
     var testCode: String? = null,

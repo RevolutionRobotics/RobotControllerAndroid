@@ -73,7 +73,7 @@ class UserConfigurationStorage(
             ControllerButton.B6 -> controllerHolder?.userController?.mapping?.b6 =
                 getNewProgramBinding(userProgram, controllerHolder?.userController?.mapping?.b6)
         }
-        controllerHolder?.programs?.put(userProgram.id, userProgram)
+        controllerHolder?.programs?.put(userProgram.name, userProgram)
         updateUserController()
     }
 
@@ -107,8 +107,8 @@ class UserConfigurationStorage(
         updateUserController()
     }
 
-    fun getPriority(userProgramId: Int) = getAllButtonPrograms().find { it?.programId == userProgramId }?.priority
-        ?: controllerHolder?.backgroundBindings?.find { it.programId == userProgramId }?.priority ?: -1
+    fun getPriority(userProgramName: String) = getAllButtonPrograms().find { it?.programId == userProgramName }?.priority
+        ?: controllerHolder?.backgroundBindings?.find { it.programId == userProgramName }?.priority ?: -1
 
     fun getBoundButtonPrograms() =
         getAllButtonPrograms().filterNotNull()
@@ -128,17 +128,17 @@ class UserConfigurationStorage(
             UserBackgroundProgramBinding(
                 0,
                 controllerHolder?.userController?.id ?: 0,
-                userProgram.id,
+                userProgram.name,
                 priority
             )
         )
-        controllerHolder?.programs?.put(userProgram.id, userProgram)
+        controllerHolder?.programs?.put(userProgram.name, userProgram)
         updateUserController()
     }
 
     fun removeBackgroundProgram(userProgram: UserProgram) {
-        controllerHolder?.backgroundBindings?.removeAll { it.id == userProgram.id }
-        controllerHolder?.programs?.remove(userProgram.id)
+        controllerHolder?.backgroundBindings?.removeAll { it.programId == userProgram.name }
+        controllerHolder?.programs?.remove(userProgram.name)
     }
 
     fun clearBackgroundPrograms() {
@@ -149,12 +149,12 @@ class UserConfigurationStorage(
     }
 
     fun setPriority(userProgram: UserProgram, priority: Int) {
-        controllerHolder?.backgroundBindings?.find { it.programId == userProgram.id }?.let {
+        controllerHolder?.backgroundBindings?.find { it.programId == userProgram.name }?.let {
             it.priority = priority
         }
 
         controllerHolder?.userController?.getMappingList()?.forEach { binding ->
-            if (binding?.programId == userProgram.id) {
+            if (binding?.programId == userProgram.name) {
                 binding.priority = priority
             }
         }
@@ -199,7 +199,7 @@ class UserConfigurationStorage(
 
     private fun getNewProgramBinding(newProgram: UserProgram, currentBinding: UserProgramBinding?): UserProgramBinding {
         removeUserProgram(currentBinding)
-        return UserProgramBinding(0, controllerHolder?.userController?.id ?: 0, newProgram.id, -1)
+        return UserProgramBinding(0, controllerHolder?.userController?.id ?: 0, newProgram.name, -1)
     }
 
     private fun collectVariableNames(excludedPortName: String): List<String> {

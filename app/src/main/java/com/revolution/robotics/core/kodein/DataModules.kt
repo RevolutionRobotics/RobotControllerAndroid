@@ -32,6 +32,7 @@ import com.revolution.robotics.core.interactor.GetUserChallengeCategoriesInterac
 import com.revolution.robotics.core.interactor.GetUserConfigurationInteractor
 import com.revolution.robotics.core.interactor.GetUserControllerInteractor
 import com.revolution.robotics.core.interactor.GetUserControllersInteractor
+import com.revolution.robotics.core.interactor.GetUserProgramInteractor
 import com.revolution.robotics.core.interactor.GetUserProgramsInteractor
 import com.revolution.robotics.core.interactor.GetUserRobotInteractor
 import com.revolution.robotics.core.interactor.LocalFileLoader
@@ -72,6 +73,8 @@ import com.revolution.robotics.features.coding.CodingMvp
 import com.revolution.robotics.features.coding.CodingPresenter
 import com.revolution.robotics.features.coding.programs.ProgramsMvp
 import com.revolution.robotics.features.coding.programs.ProgramsPresenter
+import com.revolution.robotics.features.coding.saveProgram.SaveProgramMvp
+import com.revolution.robotics.features.coding.saveProgram.SaveProgramPresenter
 import com.revolution.robotics.features.configure.ConfigureMvp
 import com.revolution.robotics.features.configure.ConfigurePresenter
 import com.revolution.robotics.features.configure.connections.ConfigureConnectionsMvp
@@ -153,6 +156,7 @@ fun createInteractorModule() =
         bind<LocalFileSaver>() with p { LocalFileSaver() }
         bind<SaveUserProgramsInteractor>() with p { SaveUserProgramsInteractor(i()) }
         bind<GetFullConfigurationInteractor>() with p { GetFullConfigurationInteractor(i(), i(), i(), i()) }
+        bind<GetUserProgramInteractor>() with p { GetUserProgramInteractor(i()) }
     }
 
 @Suppress("LongMethod")
@@ -189,10 +193,11 @@ fun createPresenterModule() =
         bind<ColorPickerMvp.Presenter>() with s { ColorPickerPresenter() }
         bind<SoundPickerMvp.Presenter>() with s { SoundPickerPresenter(i()) }
         bind<SliderMvp.Presenter>() with s { SliderPresenter() }
-        bind<CodingMvp.Presenter>() with s { CodingPresenter(i(), i(), i(), i(), i(), i(), i()) }
+        bind<CodingMvp.Presenter>() with s { CodingPresenter(i(), i(), i(), i(), i(), i()) }
         bind<ProgramsMvp.Presenter>() with s { ProgramsPresenter(i()) }
         bind<TestBuildDialogMvp.Presenter>() with s { TestBuildDialogPresenter(i(), i(), i()) }
         bind<VariableOptionsMvp.Presenter>() with s { VariableOptionsPresenter() }
+        bind<SaveProgramMvp.Presenter>() with s { SaveProgramPresenter(i(), i()) }
     }
 
 fun createDbModule(context: Context) =

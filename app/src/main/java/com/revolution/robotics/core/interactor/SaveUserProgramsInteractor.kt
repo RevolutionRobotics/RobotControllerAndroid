@@ -14,10 +14,9 @@ class SaveUserProgramsInteractor(private val userProgramDao: UserProgramDao) : I
         programs.forEach { remoteProgram ->
             userProgramDao.saveUserProgram(
                 UserProgram(
-                    0,
                     remoteProgram.description,
                     remoteProgram.lastModified,
-                    remoteProgram.name,
+                    remoteProgram.name ?: "",
                     programLocalFiles.find { it.remoteId == remoteProgram.id }?.python?.path ?: "",
                     programLocalFiles.find { it.remoteId == remoteProgram.id }?.xml?.path ?: "",
                     remoteProgram.variables,

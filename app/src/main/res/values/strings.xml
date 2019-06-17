@@ -347,5 +347,6 @@
     <string name="error_variable_already_in_use">Variable name is already in use</string>
     <string name="error_general">Something went wrong, please try again</string>
     <string name="error_test_code_upload">Test code upload error</string>
+    <string name="error_program_already_in_use">Program name is already in use.</string>
 
 </resources>

@@ -20,7 +20,8 @@ sealed class ProgramDialog(mode: Mode, hasEditButton: Boolean = true) : Robotics
         ADD_PROGRAM,
         REMOVE_PROGRAM,
         COMPATIBILITY_ISSUE,
-        LOAD_PROGRAM
+        LOAD_PROGRAM,
+        LOAD_REMOTE_PROGRAM
     }
 
     companion object {
@@ -33,18 +34,17 @@ sealed class ProgramDialog(mode: Mode, hasEditButton: Boolean = true) : Robotics
     override val dialogButtons = listOfNotNull(getFirstButton(mode, hasEditButton), getSecondButton(mode))
 
     private fun getFirstButton(mode: Mode, hasEditButton: Boolean) =
-        if (mode == Mode.LOAD_PROGRAM) {
-            DialogButton(R.string.program_info_delete_program, R.drawable.ic_delete) {
+        when {
+            mode == Mode.LOAD_PROGRAM -> DialogButton(R.string.program_info_delete_program, R.drawable.ic_delete) {
                 dismissAllowingStateLoss()
                 dialogEventBus.publish(DialogEvent.DELETE_PROGRAM.withProgram())
             }
-        } else if (hasEditButton) {
-            DialogButton(R.string.program_info_edit_program, R.drawable.ic_edit) {
+            mode == Mode.LOAD_REMOTE_PROGRAM -> null
+            hasEditButton -> DialogButton(R.string.program_info_edit_program, R.drawable.ic_edit) {
                 dismissAllowingStateLoss()
                 dialogEventBus.publish(DialogEvent.EDIT_PROGRAM.withProgram())
             }
-        } else {
-            null
+            else -> null
         }
 
     private fun getSecondButton(mode: Mode) =
@@ -63,7 +63,7 @@ sealed class ProgramDialog(mode: Mode, hasEditButton: Boolean = true) : Robotics
                 DialogButton(R.string.program_info_compatibility_issue_positive_button, R.drawable.ic_check, true) {
                     dismissAllowingStateLoss()
                 }
-            Mode.LOAD_PROGRAM ->
+            Mode.LOAD_PROGRAM, Mode.LOAD_REMOTE_PROGRAM ->
                 DialogButton(R.string.program_info_load_program, R.drawable.ic_load_program, true) {
                     dismissAllowingStateLoss()
                     dialogEventBus.publish(DialogEvent.LOAD_PROGRAM.withProgram())
@@ -129,6 +129,14 @@ sealed class ProgramDialog(mode: Mode, hasEditButton: Boolean = true) : Robotics
     class Load : ProgramDialog(Mode.LOAD_PROGRAM) {
         companion object {
             fun newInstance(program: UserProgram) = Load().withArguments { bundle ->
+                bundle.program = program
+            }
+        }
+    }
+
+    class LoadRemote : ProgramDialog(Mode.LOAD_REMOTE_PROGRAM) {
+        companion object {
+            fun newInstance(program: UserProgram) = LoadRemote().withArguments { bundle ->
                 bundle.program = program
             }
         }

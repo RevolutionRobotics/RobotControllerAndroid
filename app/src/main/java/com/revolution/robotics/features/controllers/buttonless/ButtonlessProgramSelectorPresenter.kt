@@ -1,7 +1,5 @@
 package com.revolution.robotics.features.controllers.buttonless
 
-import android.util.SparseIntArray
-import androidx.core.util.set
 import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.local.UserProgram
 import com.revolution.robotics.core.interactor.GetUserProgramsInteractor
@@ -10,6 +8,7 @@ import com.revolution.robotics.features.configure.UserConfigurationStorage
 import com.revolution.robotics.features.configure.controller.CompatibleProgramFilterer
 import com.revolution.robotics.features.controllers.ProgramOrderingHandler
 import com.revolution.robotics.features.controllers.buttonless.adapter.ButtonlessProgramViewModel
+import kotlin.collections.set
 
 @Suppress("TooManyFunctions")
 class ButtonlessProgramSelectorPresenter(
@@ -40,11 +39,11 @@ class ButtonlessProgramSelectorPresenter(
         getUserProgramsInteractor.execute { result ->
             val boundPrograms = userConfigurationStorage.getBoundButtonPrograms()
             allPrograms = result.filter { program ->
-                boundPrograms.find { it.programId == program.id } == null
+                boundPrograms.find { it.programId == program.name } == null
             }.map { userProgram ->
                 ButtonlessProgramViewModel(userProgram, this).apply {
                     selected.set(userConfigurationStorage.controllerHolder?.backgroundBindings?.find
-                    { it.programId == userProgram.id } != null && compatibleProgramFilterer.isProgramCompatible(
+                    { it.programId == userProgram.name } != null && compatibleProgramFilterer.isProgramCompatible(
                         userProgram
                     ))
                     enabled.set(compatibleProgramFilterer.isProgramCompatible(userProgram))
@@ -132,18 +131,21 @@ class ButtonlessProgramSelectorPresenter(
     }
 
     override fun onNextButtonClicked() {
-        val priorities = SparseIntArray()
+        val priorities = HashMap<String, Int>()
         programs.forEach { viewModel ->
             if (viewModel.selected.get()) {
-                priorities[viewModel.program.id] = userConfigurationStorage.getPriority(viewModel.program.id)
+                priorities[viewModel.program.name] = userConfigurationStorage.getPriority(viewModel.program.name)
             }
         }
 
         userConfigurationStorage.clearBackgroundPrograms()
         programs.forEach { viewModel ->
             if (viewModel.selected.get()) {
-                val priority = priorities[viewModel.program.id]
-                userConfigurationStorage.addBackgroundProgram(viewModel.program, if (priority == -1) 0 else priority)
+                val priority = priorities[viewModel.program.name]
+                userConfigurationStorage.addBackgroundProgram(
+                    viewModel.program,
+                    if (priority == -1) 0 else priority ?: 0
+                )
             }
         }
 

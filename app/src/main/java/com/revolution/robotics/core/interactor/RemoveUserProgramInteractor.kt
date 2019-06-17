@@ -5,10 +5,10 @@ import java.io.File
 
 class RemoveUserProgramInteractor(private val userProgramDao: UserProgramDao) : Interactor<Unit>() {
 
-    var userProgramId = -1
+    lateinit var userProgramName: String
 
     override fun getData() {
-        userProgramDao.getUserProgram(userProgramId)?.let { program ->
+        userProgramDao.getUserProgram(userProgramName)?.let { program ->
             program.xml?.let { xml ->
                 File(xml).delete()
             }
@@ -17,6 +17,6 @@ class RemoveUserProgramInteractor(private val userProgramDao: UserProgramDao) : 
                 File(python).delete()
             }
         }
-        userProgramDao.removeUserProgram(userProgramId)
+        userProgramDao.removeUserProgram(userProgramName)
     }
 }

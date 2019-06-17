@@ -1,6 +1,5 @@
 package com.revolution.robotics.core.interactor.helper
 
-import android.util.SparseArray
 import com.revolution.robotics.core.domain.local.UserBackgroundProgramBindingDao
 import com.revolution.robotics.core.domain.local.UserController
 import com.revolution.robotics.core.domain.local.UserControllerDao
@@ -32,8 +31,8 @@ class UserControllerHelper {
         return UserControllerWithPrograms(
             controller,
             backgroundProgramBindings.toMutableList(),
-            SparseArray<UserProgram>(programs.size).apply {
-                programs.forEach { put(it.id, it) }
+            hashMapOf<String, UserProgram>().apply {
+                programs.forEach { put(it.name, it) }
             })
     }
 

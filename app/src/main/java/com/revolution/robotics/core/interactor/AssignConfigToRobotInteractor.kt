@@ -42,21 +42,26 @@ class AssignConfigToRobotInteractor(
             userRobot.configurationId = configurationId.toInt()
             userRobotDao.updateUserRobot(userRobot)
 
+            val programIdMap = saveUserPrograms()
             controllers?.forEach {
-                saveUserController(it, userConfiguration, configuration?.controller == it.id)
+                saveUserController(it, userConfiguration, configuration?.controller == it.id, programIdMap)
             }
         }
 
         return userRobot
     }
 
-    private fun saveUserController(controller: Controller, userConfiguration: UserConfiguration, isDefault: Boolean) {
+    private fun saveUserController(
+        controller: Controller,
+        userConfiguration: UserConfiguration,
+        isDefault: Boolean,
+        programIdMap: HashMap<String, String>
+    ) {
         val userController = saveUserController(controller)
         if (isDefault) {
             userConfiguration.controller = userController.id
             userConfigurationDao.saveUserConfiguration(userConfiguration)
         }
-        val programIdMap = saveUserPrograms()
 
         userController.mapping?.let { userMapping ->
             controller.mapping?.b1?.let {
@@ -91,20 +96,20 @@ class AssignConfigToRobotInteractor(
     private fun createBackgroundBinding(
         controllerId: Int,
         binding: ProgramBinding,
-        idMap: HashMap<String, Int>
+        idMap: HashMap<String, String>
     ): UserBackgroundProgramBinding =
-        UserBackgroundProgramBinding(0, controllerId, idMap[binding.programId] ?: 0, binding.priority)
+        UserBackgroundProgramBinding(0, controllerId, idMap[binding.programId] ?: "", binding.priority)
 
     private fun createUserButtonMapping(
         binding: ProgramBinding?,
         controllerId: Int,
-        programIdMap: HashMap<String, Int>
+        programIdMap: HashMap<String, String>
     ): UserProgramBinding? {
         return binding?.let { remoteBinding ->
             UserProgramBinding(
                 id = 0,
                 controllerId = controllerId,
-                programId = programIdMap[remoteBinding.programId] ?: 0,
+                programId = programIdMap[remoteBinding.programId] ?: "",
                 priority = remoteBinding.priority
             )
         }
@@ -119,25 +124,24 @@ class AssignConfigToRobotInteractor(
         } ?: throw IllegalArgumentException("Missing controllers")
     }
 
-    private fun saveUserPrograms() = hashMapOf<String, Int>().apply {
+    private fun saveUserPrograms() = hashMapOf<String, String>().apply {
         programs?.forEach { remoteProgram ->
             val currentProgram = remoteProgram.id?.let { remoteId ->
                 val currentProgram = saveProgramDao.getUserProgramBasedOnRemoteId(remoteId)
                 deleteCurrentProgramFiles(currentProgram)
                 currentProgram
             }
-            this[remoteProgram.id ?: ""] = saveProgramDao.saveUserProgram(
-                UserProgram(
-                    currentProgram?.id ?: 0,
-                    remoteProgram.description,
-                    remoteProgram.lastModified,
-                    remoteProgram.name,
-                    programLocalFiles?.find { it.remoteId == remoteProgram.id }?.python?.path ?: "",
-                    programLocalFiles?.find { it.remoteId == remoteProgram.id }?.xml?.path ?: "",
-                    remoteProgram.variables,
-                    remoteProgram.id
-                )
-            ).toInt()
+            val newProgram = UserProgram(
+                remoteProgram.description,
+                remoteProgram.lastModified,
+                currentProgram?.name ?: remoteProgram.name ?: "",
+                programLocalFiles?.find { it.remoteId == remoteProgram.id }?.python?.path ?: "",
+                programLocalFiles?.find { it.remoteId == remoteProgram.id }?.xml?.path ?: "",
+                remoteProgram.variables,
+                remoteProgram.id
+            )
+            this[remoteProgram.id ?: ""] = newProgram.name
+            saveProgramDao.saveUserProgram(newProgram)
         }
     }
 

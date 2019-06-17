@@ -34,6 +34,7 @@ class FirebaseProgramDownloader(
         this.xml = null
         this.python = null
         currentIndex = 0
+        downloadedFiles.clear()
         downloadFiles(currentIndex)
     }
 

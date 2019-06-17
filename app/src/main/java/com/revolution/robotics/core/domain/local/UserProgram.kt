@@ -14,11 +14,10 @@ import kotlinx.android.parcel.Parcelize
 @Entity
 @Parcelize
 data class UserProgram(
-    @PrimaryKey(autoGenerate = true)
-    var id: Int = 0,
     var description: String? = null,
     var lastModified: Long = 0,
-    var name: String? = null,
+    @PrimaryKey
+    var name: String = "",
     var python: String? = null,
     var xml: String? = null,
     var variables: List<String> = emptyList(),
@@ -30,17 +29,17 @@ data class UserProgram(
 @Dao
 interface UserProgramDao {
 
-    @Query("SELECT * FROM UserProgram WHERE id=:id")
-    fun getUserProgram(id: Int): UserProgram?
+    @Query("SELECT * FROM UserProgram WHERE name=:name")
+    fun getUserProgram(name: String): UserProgram?
 
     @Query("SELECT * FROM UserProgram")
     fun getAllPrograms(): List<UserProgram>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun saveUserProgram(userProgram: UserProgram): Long
+    fun saveUserProgram(userProgram: UserProgram)
 
-    @Query("DELETE FROM UserProgram WHERE id=:id")
-    fun removeUserProgram(id: Int)
+    @Query("DELETE FROM UserProgram WHERE name=:name")
+    fun removeUserProgram(name: String)
 
     @Query("SELECT * FROM UserProgram WHERE remoteId=:remoteId")
     fun getUserProgramBasedOnRemoteId(remoteId: String): UserProgram?
