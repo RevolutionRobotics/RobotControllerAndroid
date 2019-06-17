@@ -19,7 +19,7 @@ class SoundIcons private constructor() {
             "bell" to "🔔",
             "duck" to "🐤",
             "alarm_clock" to "⏰",
-            "lion" to "🐯",
+            "lion" to "🦁",
             "dog" to "🐶"
         )
     }
