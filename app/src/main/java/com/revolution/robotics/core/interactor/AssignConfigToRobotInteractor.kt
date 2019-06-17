@@ -126,7 +126,6 @@ class AssignConfigToRobotInteractor(
                 deleteCurrentProgramFiles(currentProgram)
                 currentProgram
             }
-
             this[remoteProgram.id ?: ""] = saveProgramDao.saveUserProgram(
                 UserProgram(
                     currentProgram?.id ?: 0,
