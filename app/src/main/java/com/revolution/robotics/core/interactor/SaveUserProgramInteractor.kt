@@ -3,15 +3,15 @@ package com.revolution.robotics.core.interactor
 import com.revolution.robotics.core.domain.local.UserProgram
 import com.revolution.robotics.core.domain.local.UserProgramDao
 
-class SaveUserProgramInteractor(private val userProgramDao: UserProgramDao) : Interactor<Long>() {
+class SaveUserProgramInteractor(private val userProgramDao: UserProgramDao) : Interactor<Unit>() {
 
     lateinit var userProgram: UserProgram
     var clearRemoteId = false
 
-    override fun getData(): Long {
+    override fun getData() {
         if (clearRemoteId) {
             userProgram.remoteId = null
         }
-        return userProgramDao.saveUserProgram(userProgram)
+        userProgramDao.saveUserProgram(userProgram)
     }
 }

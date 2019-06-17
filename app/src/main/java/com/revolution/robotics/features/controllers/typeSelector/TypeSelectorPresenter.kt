@@ -1,6 +1,5 @@
 package com.revolution.robotics.features.controllers.typeSelector
 
-import android.util.SparseArray
 import com.revolution.robotics.core.domain.local.UserController
 import com.revolution.robotics.core.domain.local.UserControllerWithPrograms
 import com.revolution.robotics.core.utils.Navigator
@@ -18,7 +17,7 @@ class TypeSelectorPresenter(
     override fun onControllerTypeSelected(type: ControllerType) {
         storage.controllerHolder = UserControllerWithPrograms(UserController().apply {
             this.type = type.id
-        }, mutableListOf(), SparseArray())
+        }, mutableListOf(), HashMap())
         navigator.navigate(
             when (type) {
                 ControllerType.GAMER ->

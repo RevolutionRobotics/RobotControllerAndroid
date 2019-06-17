@@ -7,7 +7,7 @@ import com.revolution.robotics.core.domain.local.UserRobot
 import com.revolution.robotics.core.domain.remote.Configuration
 import com.revolution.robotics.core.domain.remote.Robot
 import com.revolution.robotics.core.extensions.isEmptyOrNull
-import com.revolution.robotics.core.interactor.AssignConfigIntoARobotInteractor
+import com.revolution.robotics.core.interactor.AssignConfigToRobotInteractor
 import com.revolution.robotics.core.interactor.SaveUserRobotInteractor
 import com.revolution.robotics.core.interactor.firebase.RobotInteractor
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
@@ -19,7 +19,7 @@ import kotlin.math.max
 
 class WhoToBuildPresenter(
     private val robotsInteractor: RobotInteractor,
-    private val assignConfigIntoARobotInteractor: AssignConfigIntoARobotInteractor,
+    private val assignConfigToRobotInteractor: AssignConfigToRobotInteractor,
     private val saveUserRobotInteractor: SaveUserRobotInteractor,
     private val navigator: Navigator,
     private val resourceResolver: ResourceResolver
@@ -108,11 +108,11 @@ class WhoToBuildPresenter(
     }
 
     private fun assignEmptyConfig(userRobot: UserRobot) {
-        assignConfigIntoARobotInteractor.userRobot = userRobot
-        assignConfigIntoARobotInteractor.configuration = Configuration(mapping = PortMapping())
-        assignConfigIntoARobotInteractor.controllers = null
-        assignConfigIntoARobotInteractor.programs = emptyList()
-        assignConfigIntoARobotInteractor.execute {
+        assignConfigToRobotInteractor.userRobot = userRobot
+        assignConfigToRobotInteractor.configuration = Configuration(mapping = PortMapping())
+        assignConfigToRobotInteractor.controllers = null
+        assignConfigToRobotInteractor.programs = emptyList()
+        assignConfigToRobotInteractor.execute {
             navigator.navigate(WhoToBuildFragmentDirections.toConfigure(userRobot))
         }
     }

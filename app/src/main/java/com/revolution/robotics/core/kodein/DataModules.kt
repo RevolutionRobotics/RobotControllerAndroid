@@ -21,16 +21,18 @@ import com.revolution.robotics.core.domain.local.UserConfigurationDao
 import com.revolution.robotics.core.domain.local.UserControllerDao
 import com.revolution.robotics.core.domain.local.UserProgramDao
 import com.revolution.robotics.core.domain.local.UserRobotDao
-import com.revolution.robotics.core.interactor.AssignConfigIntoARobotInteractor
+import com.revolution.robotics.core.interactor.AssignConfigToRobotInteractor
 import com.revolution.robotics.core.interactor.DeleteRobotInteractor
 import com.revolution.robotics.core.interactor.DuplicateUserRobotInteractor
 import com.revolution.robotics.core.interactor.FirebaseInitInteractor
 import com.revolution.robotics.core.interactor.GetAllUserRobotsInteractor
 import com.revolution.robotics.core.interactor.GetControllerTypeInteractor
+import com.revolution.robotics.core.interactor.GetFullConfigurationInteractor
 import com.revolution.robotics.core.interactor.GetUserChallengeCategoriesInteractor
 import com.revolution.robotics.core.interactor.GetUserConfigurationInteractor
 import com.revolution.robotics.core.interactor.GetUserControllerInteractor
 import com.revolution.robotics.core.interactor.GetUserControllersInteractor
+import com.revolution.robotics.core.interactor.GetUserProgramInteractor
 import com.revolution.robotics.core.interactor.GetUserProgramsInteractor
 import com.revolution.robotics.core.interactor.GetUserRobotInteractor
 import com.revolution.robotics.core.interactor.LocalFileLoader
@@ -71,6 +73,8 @@ import com.revolution.robotics.features.coding.CodingMvp
 import com.revolution.robotics.features.coding.CodingPresenter
 import com.revolution.robotics.features.coding.programs.ProgramsMvp
 import com.revolution.robotics.features.coding.programs.ProgramsPresenter
+import com.revolution.robotics.features.coding.saveProgram.SaveProgramMvp
+import com.revolution.robotics.features.coding.saveProgram.SaveProgramPresenter
 import com.revolution.robotics.features.configure.ConfigureMvp
 import com.revolution.robotics.features.configure.ConfigurePresenter
 import com.revolution.robotics.features.configure.connections.ConfigureConnectionsMvp
@@ -126,7 +130,7 @@ fun createInteractorModule() =
         bind<ConfigurationInteractor>() with p { ConfigurationInteractor() }
         bind<TestCodeInteractor>() with p { TestCodeInteractor() }
         bind<GetUserRobotInteractor>() with p { GetUserRobotInteractor(i()) }
-        bind<AssignConfigIntoARobotInteractor>() with p { AssignConfigIntoARobotInteractor(i(), i(), i(), i(), i()) }
+        bind<AssignConfigToRobotInteractor>() with p { AssignConfigToRobotInteractor(i(), i(), i(), i(), i()) }
         bind<UpdateUserRobotInteractor>() with p { UpdateUserRobotInteractor(i(), i()) }
         bind<GetAllUserRobotsInteractor>() with p { GetAllUserRobotsInteractor(i()) }
         bind<DeleteRobotInteractor>() with p { DeleteRobotInteractor(i(), i()) }
@@ -151,6 +155,8 @@ fun createInteractorModule() =
         bind<LocalFileLoader>() with p { LocalFileLoader() }
         bind<LocalFileSaver>() with p { LocalFileSaver() }
         bind<SaveUserProgramsInteractor>() with p { SaveUserProgramsInteractor(i()) }
+        bind<GetFullConfigurationInteractor>() with p { GetFullConfigurationInteractor(i(), i(), i(), i()) }
+        bind<GetUserProgramInteractor>() with p { GetUserProgramInteractor(i()) }
     }
 
 @Suppress("LongMethod")
@@ -171,7 +177,7 @@ fun createPresenterModule() =
         bind<SettingsMvp.Presenter>() with s { SettingsPresenter(i(), i()) }
         bind<AboutMvp.Presenter>() with s { AboutPresenter(i(), i()) }
         bind<FirmwareMvp.Presenter>() with s { FirmwareUpdatePresenter(i()) }
-        bind<PlayMvp.Presenter>() with s { PlayPresenter(i(), i()) }
+        bind<PlayMvp.Presenter>() with s { PlayPresenter(i()) }
         bind<FirmwareUpdateMvp.Presenter>() with s { FirmwareUpdateDialogPresenter(i(), i()) }
         bind<TypeSelectorMvp.Presenter>() with s { TypeSelectorPresenter(i(), i()) }
         bind<SetupMvp.Presenter>() with s { SetupPresenter(i(), i(), i()) }
@@ -187,10 +193,11 @@ fun createPresenterModule() =
         bind<ColorPickerMvp.Presenter>() with s { ColorPickerPresenter() }
         bind<SoundPickerMvp.Presenter>() with s { SoundPickerPresenter(i()) }
         bind<SliderMvp.Presenter>() with s { SliderPresenter() }
-        bind<CodingMvp.Presenter>() with s { CodingPresenter(i(), i(), i(), i(), i(), i(), i()) }
+        bind<CodingMvp.Presenter>() with s { CodingPresenter(i(), i(), i(), i(), i(), i()) }
         bind<ProgramsMvp.Presenter>() with s { ProgramsPresenter(i()) }
         bind<TestBuildDialogMvp.Presenter>() with s { TestBuildDialogPresenter(i(), i(), i()) }
         bind<VariableOptionsMvp.Presenter>() with s { VariableOptionsPresenter() }
+        bind<SaveProgramMvp.Presenter>() with s { SaveProgramPresenter(i(), i()) }
     }
 
 fun createDbModule(context: Context) =

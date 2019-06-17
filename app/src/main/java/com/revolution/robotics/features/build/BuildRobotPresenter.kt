@@ -7,7 +7,7 @@ import com.revolution.robotics.core.domain.remote.Controller
 import com.revolution.robotics.core.domain.remote.Program
 import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
-import com.revolution.robotics.core.interactor.AssignConfigIntoARobotInteractor
+import com.revolution.robotics.core.interactor.AssignConfigToRobotInteractor
 import com.revolution.robotics.core.interactor.SaveUserRobotInteractor
 import com.revolution.robotics.core.interactor.firebase.BuildStepInteractor
 import com.revolution.robotics.core.interactor.firebase.ConfigurationInteractor
@@ -19,7 +19,7 @@ import com.revolution.robotics.features.controllers.ControllerType
 
 class BuildRobotPresenter(
     private val buildStepInteractor: BuildStepInteractor,
-    private val assignConfigIntoARobotInteractor: AssignConfigIntoARobotInteractor,
+    private val assignConfigToRobotInteractor: AssignConfigToRobotInteractor,
     private val saveUserRobotInteractor: SaveUserRobotInteractor,
     private val configurationInteractor: ConfigurationInteractor,
     private val controllerInteractor: ControllerInteractor,
@@ -131,13 +131,13 @@ class BuildRobotPresenter(
         programs: List<Program>,
         programFiles: List<ProgramLocalFiles>
     ) {
-        assignConfigIntoARobotInteractor.controllers = controllers
-        assignConfigIntoARobotInteractor.configuration = configuration
-        assignConfigIntoARobotInteractor.programs = programs
-        assignConfigIntoARobotInteractor.programLocalFiles = programFiles
+        assignConfigToRobotInteractor.controllers = controllers
+        assignConfigToRobotInteractor.configuration = configuration
+        assignConfigToRobotInteractor.programs = programs
+        assignConfigToRobotInteractor.programLocalFiles = programFiles
         userRobot?.let { userRobot ->
-            assignConfigIntoARobotInteractor.userRobot = userRobot
-            assignConfigIntoARobotInteractor.execute { savedRobot ->
+            assignConfigToRobotInteractor.userRobot = userRobot
+            assignConfigToRobotInteractor.execute { savedRobot ->
                 this.userRobot = savedRobot
                 dialogEventBus.publish(DialogEvent.ROBOT_CREATED)
             }

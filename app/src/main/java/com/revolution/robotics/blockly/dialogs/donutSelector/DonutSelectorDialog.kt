@@ -33,21 +33,19 @@ class DonutSelectorDialog :
     override val hasTitle = false
 
     private val presenter: DonutSelectorMvp.Presenter by kodein.instance()
+    var selectionType = DonutSelectionType.SINGLE
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         presenter.register(this, null)
         arguments?.let { arguments ->
-            val selectionType = DonutSelectionType.values()[arguments.selectionTypeOrdinal]
+            selectionType = DonutSelectionType.values()[arguments.selectionTypeOrdinal]
             val defaultSelection = arguments.defaultSelection.split(",")
             binding.donut.setSelection(
                 List(DonutSelectorView.OPTION_COUNT) { index ->
                     defaultSelection.contains((index + 1).toString())
                 })
             binding.viewModel = DonutSelectorViewModel(selectionType == DonutSelectionType.MULTI, presenter)
-
-            if (selectionType == DonutSelectionType.SINGLE) {
-                binding.donut.selectionListener = this
-            }
+            binding.donut.selectionListener = this
         }
     }
 
@@ -57,7 +55,11 @@ class DonutSelectorDialog :
     }
 
     override fun onSelectionChanged(index: Int, value: Boolean) {
-        confirmResult("${index + 1}")
+        if (selectionType == DonutSelectionType.SINGLE) {
+            confirmResult("${index + 1}")
+        } else {
+            binding.check.isChecked = binding.donut.getSelection().all { it }
+        }
     }
 
     override fun onSelectAllClicked() {

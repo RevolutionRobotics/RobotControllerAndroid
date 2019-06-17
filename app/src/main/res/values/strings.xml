@@ -288,6 +288,9 @@
     <string name="program_title_default">Untitled program</string>
     <string name="dialog_programs_title">Programs</string>
     <string name="title_python_code">Generated python code</string>
+    <string name="program_confirm_title">Would you like to leave the editor?</string>
+    <string name="program_confirm_description">All your unsaved changes will be lost.</string>
+    <string name="program_confirm_positive">Leave</string>
 
     <!-- Block options -->
     <string name="dialog_block_options_delete">Delete block</string>
@@ -344,5 +347,6 @@
     <string name="error_variable_already_in_use">Variable name is already in use</string>
     <string name="error_general">Something went wrong, please try again</string>
     <string name="error_test_code_upload">Test code upload error</string>
+    <string name="error_program_already_in_use">Program name is already in use.</string>
 
 </resources>

@@ -1,6 +1,5 @@
 package com.revolution.robotics.features.configure.controller.program.priority
 
-import android.util.SparseArray
 import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.local.UserControllerWithPrograms
 import com.revolution.robotics.core.domain.local.UserProgram
@@ -93,7 +92,7 @@ class ProgramPriorityPresenter(
 
     private fun generateItems(
         controllerWithPrograms: UserControllerWithPrograms,
-        programs: SparseArray<UserProgram>
+        programs: HashMap<String, UserProgram>
     ): List<UserProgramBindingItem> {
         val items = mutableListOf<UserProgramBindingItem>()
         controllerWithPrograms.backgroundBindings.forEach { binding ->
@@ -102,8 +101,8 @@ class ProgramPriorityPresenter(
                     binding.id,
                     binding.priority,
                     ProgramType.BACKGROUND,
-                    programs.get(binding.programId).lastModified,
-                    programs.get(binding.programId).name ?: "",
+                    programs[binding.programId]?.lastModified ?: 0L,
+                    programs[binding.programId]?.name ?: "",
                     programs[binding.programId]
                 )
             )
@@ -119,7 +118,7 @@ class ProgramPriorityPresenter(
     private fun addItemFromButtonBinding(
         binding: UserProgramBinding?,
         items: MutableList<UserProgramBindingItem>,
-        programs: SparseArray<UserProgram>
+        programs: HashMap<String, UserProgram>
     ) {
         binding?.let { programBinding ->
             items.add(
@@ -127,9 +126,9 @@ class ProgramPriorityPresenter(
                     programBinding.id,
                     programBinding.priority,
                     ProgramType.BUTTON,
-                    programs.get(programBinding.programId).lastModified,
-                    programs.get(programBinding.programId).name ?: "",
-                    programs[programBinding.programId]
+                    programs[programBinding.programName]?.lastModified ?: 0L,
+                    programs[programBinding.programName]?.name ?: "",
+                    programs[programBinding.programName]
                 )
             )
         }

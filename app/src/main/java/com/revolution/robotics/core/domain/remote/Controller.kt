@@ -11,7 +11,8 @@ data class Controller(
     var name: String? = null,
     var type: String? = null,
     var backgroundProgramBindings: List<@JvmSuppressWildcards ProgramBinding> = emptyList(),
-    var mapping: ButtonMapping? = null
+    var mapping: ButtonMapping? = null,
+    var joystickPriority: Long? = null
 ) {
 
     companion object {

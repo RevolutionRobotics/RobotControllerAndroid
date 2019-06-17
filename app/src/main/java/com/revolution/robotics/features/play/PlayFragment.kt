@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
+import com.revolution.robotics.core.domain.local.UserConfiguration
 import com.revolution.robotics.core.domain.local.UserControllerWithPrograms
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.core.utils.BundleArgumentDelegate
@@ -55,19 +56,21 @@ abstract class PlayFragment : BaseFragment<FragmentPlayCoreBinding, PlayViewMode
         super.onDestroyView()
     }
 
-    override fun onControllerLoaded(controller: UserControllerWithPrograms) {
-        viewModel?.programs?.apply {
-            clear()
-            addAll(listOf(
-                controller.userController.mapping?.b1?.programId?.let { controller.programs[it] },
-                controller.userController.mapping?.b2?.programId?.let { controller.programs[it] },
-                controller.userController.mapping?.b3?.programId?.let { controller.programs[it] },
-                controller.userController.mapping?.b4?.programId?.let { controller.programs[it] },
-                controller.userController.mapping?.b5?.programId?.let { controller.programs[it] },
-                controller.userController.mapping?.b6?.programId?.let { controller.programs[it] }
-            ))
+    override fun onControllerLoaded(configuration: UserConfiguration?, controller: UserControllerWithPrograms?) {
+        if (configuration != null && controller != null) {
+            viewModel?.programs?.apply {
+                clear()
+                addAll(listOf(
+                    controller.userController.mapping?.b1?.programName?.let { controller.programs[it] },
+                    controller.userController.mapping?.b2?.programName?.let { controller.programs[it] },
+                    controller.userController.mapping?.b3?.programName?.let { controller.programs[it] },
+                    controller.userController.mapping?.b4?.programName?.let { controller.programs[it] },
+                    controller.userController.mapping?.b5?.programName?.let { controller.programs[it] },
+                    controller.userController.mapping?.b6?.programName?.let { controller.programs[it] }
+                ))
+            }
+            getContentBinding()?.invalidateAll()
         }
-        getContentBinding()?.invalidateAll()
     }
 
     override fun onBluetoothConnectionStateChanged(connected: Boolean, serviceDiscovered: Boolean) {

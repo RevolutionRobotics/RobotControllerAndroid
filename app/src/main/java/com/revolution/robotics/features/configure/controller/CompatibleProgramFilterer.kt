@@ -7,7 +7,6 @@ class CompatibleProgramFilterer(private val configurationStorage: UserConfigurat
 
     fun isProgramCompatible(userProgram: UserProgram): Boolean {
         val configVariables = configurationStorage.userConfiguration?.mappingId?.getVariables() ?: emptyList()
-        // TODO remove this filter when blockly-js is fixed
         return userProgram.variables.filter { it.isNotEmpty() }.all { configVariables.contains(it) }
     }
 

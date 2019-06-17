@@ -21,6 +21,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/description"
                 app:layout_constraintVertical_chainStyle="packed"
+                android:layout_marginTop="@dimen/dimen_32dp"
                 android:text="@{viewModel.name}"
                 android:textAllCaps="true"
                 android:fontFamily="@font/jura_bold"
@@ -30,13 +31,14 @@
         <TextView
                 android:id="@+id/description"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 app:layout_constraintTop_toBottomOf="@id/title"
                 app:layout_constraintBottom_toTopOf="@id/image"
                 android:layout_marginStart="@dimen/dimen_32dp"
                 android:layout_marginEnd="@dimen/dimen_32dp"
                 android:text="@{viewModel.description}"
                 android:textSize="12sp"
+                android:ellipsize="end"
                 android:textColor="@color/white"
                 android:layout_marginTop="@dimen/dimen_16dp"
                 android:fontFamily="@font/barlow_regular"/>
@@ -50,6 +52,7 @@
                 app:layout_constraintBottom_toTopOf="@id/compatibility_issue"
                 android:layout_marginStart="@dimen/dimen_32dp"
                 android:layout_marginTop="@dimen/dimen_16dp"
+                android:layout_marginBottom="@dimen/dimen_16dp"
                 android:src="@drawable/ic_calendar"/>
 
         <TextView

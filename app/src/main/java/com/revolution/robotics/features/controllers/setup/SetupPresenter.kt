@@ -44,10 +44,10 @@ class SetupPresenter(
             } else {
                 val availablePrograms = programs.toMutableList()
                 storage.getBoundButtonPrograms().forEach { boundProgram ->
-                    availablePrograms.removeAll { it.id == boundProgram.programId }
+                    availablePrograms.removeAll { it.name == boundProgram.programName }
                 }
                 storage.controllerHolder?.backgroundBindings?.forEach { backgroundBinding ->
-                    availablePrograms.removeAll { it.id == backgroundBinding.programId }
+                    availablePrograms.removeAll { it.name == backgroundBinding.programId }
                 }
 
                 var mostRecentPrograms = availablePrograms.sortedBy { it.lastModified }.reversed()

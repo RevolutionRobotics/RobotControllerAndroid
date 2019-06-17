@@ -25,7 +25,7 @@ data class UserBackgroundProgramBinding(
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0,
     var controllerId: Int = 0,
-    var programId: Int = 0,
+    var programId: String = "",
     var priority: Int = 0
 ) : Parcelable
 

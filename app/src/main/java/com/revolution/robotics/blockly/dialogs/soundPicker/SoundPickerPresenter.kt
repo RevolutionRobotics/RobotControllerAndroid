@@ -29,7 +29,7 @@ class SoundPickerPresenter(
                 addAll(fileNames.map { filename ->
                     SoundOption(
                         filename,
-                        SoundIcons.ICONS[filename] ?: 0,
+                        SoundIcons.ICONS[filename] ?: "",
                         filename == selectedSound,
                         this@SoundPickerPresenter
                     ).apply {

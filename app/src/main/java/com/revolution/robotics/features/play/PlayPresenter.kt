@@ -2,12 +2,10 @@ package com.revolution.robotics.features.play
 
 import com.revolution.bluetooth.communication.RoboticsDeviceConnector
 import com.revolution.bluetooth.service.RoboticsLiveControllerService
-import com.revolution.robotics.core.interactor.GetUserConfigurationInteractor
-import com.revolution.robotics.core.interactor.GetUserControllerInteractor
+import com.revolution.robotics.core.interactor.GetFullConfigurationInteractor
 
 class PlayPresenter(
-    private val getUserConfigurationInteractor: GetUserConfigurationInteractor,
-    private val getUserControllerInteractor: GetUserControllerInteractor
+    private val interactor: GetFullConfigurationInteractor
 ) : PlayMvp.Presenter {
 
     companion object {
@@ -25,14 +23,9 @@ class PlayPresenter(
     }
 
     override fun loadConfiguration(configId: Int) {
-        getUserConfigurationInteractor.userConfigId = configId
-        getUserConfigurationInteractor.execute { userConfig ->
-            userConfig?.controller?.let { id ->
-                getUserControllerInteractor.id = id
-                getUserControllerInteractor.execute { result ->
-                    view?.onControllerLoaded(result)
-                }
-            }
+        interactor.userConfigId = configId
+        interactor.execute { result ->
+            view?.onControllerLoaded(result.first, result.second)
         }
     }
 

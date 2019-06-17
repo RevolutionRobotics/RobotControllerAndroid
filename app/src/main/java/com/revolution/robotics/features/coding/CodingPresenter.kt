@@ -7,21 +7,21 @@ import com.revolution.robotics.core.interactor.LocalFileSaver
 import com.revolution.robotics.core.interactor.RemoveUserProgramInteractor
 import com.revolution.robotics.core.interactor.SaveUserProgramInteractor
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
-import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.core.utils.UserProgramFileNameGenerator
 import com.revolution.robotics.features.coding.programs.ProgramsDialog
 import com.revolution.robotics.features.coding.python.PythonDialog
 import com.revolution.robotics.features.coding.saveProgram.SaveProgramDialog
 import org.revolution.blockly.view.jsInterface.BlocklyJavascriptListener
+import java.util.concurrent.TimeUnit
 
+@Suppress("TooManyFunctions")
 class CodingPresenter(
     private val removeUserProgramInteractor: RemoveUserProgramInteractor,
     private val saveUserProgramInteractor: SaveUserProgramInteractor,
     private val fileNameGenerator: UserProgramFileNameGenerator,
     private val localFileLoader: LocalFileLoader,
     private val localFileSaver: LocalFileSaver,
-    private val resourceResolver: ResourceResolver,
-    private val navigator: Navigator
+    private val resourceResolver: ResourceResolver
 ) : CodingMvp.Presenter {
 
     override var view: CodingMvp.View? = null
@@ -57,12 +57,12 @@ class CodingPresenter(
     }
 
     override fun removeProgram(userProgram: UserProgram) {
-        if (model?.userProgram?.id == userProgram.id) {
+        if (model?.userProgram?.name == userProgram.name) {
             view?.clearBlocklyWorkspace()
             model?.userProgram = null
             model?.programName?.set(resourceResolver.string(R.string.program_title_default))
         }
-        removeUserProgramInteractor.userProgramId = userProgram.id
+        removeUserProgramInteractor.userProgramName = userProgram.name
         removeUserProgramInteractor.execute()
     }
 
@@ -103,7 +103,12 @@ class CodingPresenter(
     }
 
     override fun onVariablesExported(variables: String) {
-        userProgram?.variables = variables.split(",")
+        userProgram?.variables =
+            if (variables.isEmpty()) {
+                emptyList()
+            } else {
+                variables.split(",")
+            }
         variablesSaved = true
         saveUserProgramWhenEveryDataIsReady()
     }
@@ -111,6 +116,7 @@ class CodingPresenter(
     private fun saveUserProgramWhenEveryDataIsReady() {
         if (pythonSaved && xmlSaved && variablesSaved) {
             userProgram?.let { userProgram ->
+                userProgram.lastModified = System.currentTimeMillis() / TimeUnit.SECONDS.toMillis(1)
                 saveUserProgramInteractor.userProgram = userProgram
                 saveUserProgramInteractor.clearRemoteId = true
                 saveUserProgramInteractor.execute {
@@ -124,6 +130,6 @@ class CodingPresenter(
     }
 
     override fun onBackPressed() {
-        navigator.back()
+        view?.onToolbarBackPressed()
     }
 }
