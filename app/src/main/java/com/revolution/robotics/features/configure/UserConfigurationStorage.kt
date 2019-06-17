@@ -107,8 +107,9 @@ class UserConfigurationStorage(
         updateUserController()
     }
 
-    fun getPriority(userProgramName: String) = getAllButtonPrograms().find { it?.programId == userProgramName }?.priority
-        ?: controllerHolder?.backgroundBindings?.find { it.programId == userProgramName }?.priority ?: -1
+    fun getPriority(userProgramName: String) =
+        getAllButtonPrograms().find { it?.programName == userProgramName }?.priority
+            ?: controllerHolder?.backgroundBindings?.find { it.programId == userProgramName }?.priority ?: -1
 
     fun getBoundButtonPrograms() =
         getAllButtonPrograms().filterNotNull()
@@ -154,7 +155,7 @@ class UserConfigurationStorage(
         }
 
         controllerHolder?.userController?.getMappingList()?.forEach { binding ->
-            if (binding?.programId == userProgram.name) {
+            if (binding?.programName == userProgram.name) {
                 binding.priority = priority
             }
         }
@@ -193,7 +194,7 @@ class UserConfigurationStorage(
 
     private fun removeUserProgram(currentBinding: UserProgramBinding?) {
         if (currentBinding != null) {
-            controllerHolder?.programs?.remove(currentBinding.programId)
+            controllerHolder?.programs?.remove(currentBinding.programName)
         }
     }
 

@@ -9,6 +9,6 @@ data class UserProgramBinding(
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0,
     var controllerId: Int,
-    var programId: String = "",
+    var programName: String = "",
     var priority: Int = 0
 ) : Parcelable

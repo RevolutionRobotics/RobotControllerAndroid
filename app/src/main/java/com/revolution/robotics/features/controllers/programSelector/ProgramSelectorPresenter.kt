@@ -38,7 +38,7 @@ class ProgramSelectorPresenter(
         getUserProgramsInteractor.execute { result ->
             allPrograms = result.toMutableList().apply {
                 storage.getBoundButtonPrograms().forEach { boundProgram ->
-                    removeAll { it.name == boundProgram.programId }
+                    removeAll { it.name == boundProgram.programName }
                 }
                 storage.controllerHolder?.backgroundBindings?.forEach { backgroundBinding ->
                     removeAll { it.name == backgroundBinding.programId }

@@ -106,7 +106,7 @@ class CodingFragment : BaseFragment<FragmentCodingBinding, CodingViewModel>(R.la
     override fun onDialogEvent(event: DialogEvent) {
         when (event) {
             DialogEvent.SHOW_PROGRAM_INFO ->
-                event.extras.getParcelable<UserProgram>(ProgramsDialog.KEY_PROGRAM)?.let {program ->
+                event.extras.getParcelable<UserProgram>(ProgramsDialog.KEY_PROGRAM)?.let { program ->
                     if (program.remoteId == null) {
                         showDialog(ProgramDialog.Load.newInstance(program))
                     } else {

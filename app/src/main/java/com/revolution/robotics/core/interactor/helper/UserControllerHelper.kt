@@ -62,7 +62,7 @@ class UserControllerHelper {
     }
 
     private fun getButtonProgram(programBinding: UserProgramBinding?, userProgramDao: UserProgramDao): UserProgram? =
-        programBinding?.programId?.let {
+        programBinding?.programName?.let {
             userProgramDao.getUserProgram(it)
         }
 }

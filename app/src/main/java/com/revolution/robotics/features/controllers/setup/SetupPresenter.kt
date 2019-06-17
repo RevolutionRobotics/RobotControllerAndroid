@@ -44,7 +44,7 @@ class SetupPresenter(
             } else {
                 val availablePrograms = programs.toMutableList()
                 storage.getBoundButtonPrograms().forEach { boundProgram ->
-                    availablePrograms.removeAll { it.name == boundProgram.programId }
+                    availablePrograms.removeAll { it.name == boundProgram.programName }
                 }
                 storage.controllerHolder?.backgroundBindings?.forEach { backgroundBinding ->
                     availablePrograms.removeAll { it.name == backgroundBinding.programId }

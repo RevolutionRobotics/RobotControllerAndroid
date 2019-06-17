@@ -39,7 +39,7 @@ class ButtonlessProgramSelectorPresenter(
         getUserProgramsInteractor.execute { result ->
             val boundPrograms = userConfigurationStorage.getBoundButtonPrograms()
             allPrograms = result.filter { program ->
-                boundPrograms.find { it.programId == program.name } == null
+                boundPrograms.find { it.programName == program.name } == null
             }.map { userProgram ->
                 ButtonlessProgramViewModel(userProgram, this).apply {
                     selected.set(userConfigurationStorage.controllerHolder?.backgroundBindings?.find

@@ -126,9 +126,9 @@ class ProgramPriorityPresenter(
                     programBinding.id,
                     programBinding.priority,
                     ProgramType.BUTTON,
-                    programs.get(programBinding.programId)?.lastModified ?: 0L,
-                    programs.get(programBinding.programId)?.name ?: "",
-                    programs[programBinding.programId]
+                    programs[programBinding.programName]?.lastModified ?: 0L,
+                    programs[programBinding.programName]?.name ?: "",
+                    programs[programBinding.programName]
                 )
             )
         }

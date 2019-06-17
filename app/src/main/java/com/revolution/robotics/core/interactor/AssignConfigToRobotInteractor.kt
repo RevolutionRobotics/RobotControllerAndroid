@@ -109,7 +109,7 @@ class AssignConfigToRobotInteractor(
             UserProgramBinding(
                 id = 0,
                 controllerId = controllerId,
-                programId = programIdMap[remoteBinding.programId] ?: "",
+                programName = programIdMap[remoteBinding.programId] ?: "",
                 priority = remoteBinding.priority
             )
         }

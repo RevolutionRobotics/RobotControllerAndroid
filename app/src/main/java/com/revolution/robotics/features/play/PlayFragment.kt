@@ -61,12 +61,12 @@ abstract class PlayFragment : BaseFragment<FragmentPlayCoreBinding, PlayViewMode
             viewModel?.programs?.apply {
                 clear()
                 addAll(listOf(
-                    controller.userController.mapping?.b1?.programId?.let { controller.programs[it] },
-                    controller.userController.mapping?.b2?.programId?.let { controller.programs[it] },
-                    controller.userController.mapping?.b3?.programId?.let { controller.programs[it] },
-                    controller.userController.mapping?.b4?.programId?.let { controller.programs[it] },
-                    controller.userController.mapping?.b5?.programId?.let { controller.programs[it] },
-                    controller.userController.mapping?.b6?.programId?.let { controller.programs[it] }
+                    controller.userController.mapping?.b1?.programName?.let { controller.programs[it] },
+                    controller.userController.mapping?.b2?.programName?.let { controller.programs[it] },
+                    controller.userController.mapping?.b3?.programName?.let { controller.programs[it] },
+                    controller.userController.mapping?.b4?.programName?.let { controller.programs[it] },
+                    controller.userController.mapping?.b5?.programName?.let { controller.programs[it] },
+                    controller.userController.mapping?.b6?.programName?.let { controller.programs[it] }
                 ))
             }
             getContentBinding()?.invalidateAll()
