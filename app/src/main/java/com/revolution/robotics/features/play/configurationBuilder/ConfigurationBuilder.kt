@@ -2,6 +2,7 @@ package com.revolution.robotics.features.play.configurationBuilder
 
 import com.revolution.robotics.core.domain.local.UserBackgroundProgramBinding
 import com.revolution.robotics.core.domain.local.UserProgramBinding
+import com.revolution.robotics.core.domain.remote.Controller
 import com.revolution.robotics.core.domain.remote.Motor
 import com.revolution.robotics.core.domain.remote.Sensor
 import com.revolution.robotics.features.play.FullControllerData
@@ -10,26 +11,36 @@ import org.json.JSONObject
 
 class ConfigurationBuilder {
 
-    private enum class Key {
+    companion object {
+        private const val DRIVE_TYPE_JOYSTICK = "drive_joystick"
+        private const val DRIVE_TYPE_LEVERS = "drive_2sticks"
+    }
+
+    private enum class Key(val jsonKey: String? = null) {
+        ROBOT_CONFIG("robotConfig"),
         MOTORS,
         NAME,
         TYPE,
         DIRECTION,
         SIDE,
         SENSORS,
-        BLOCKLY_LIST,
-        PYTHON_CODE,
+        BLOCKLY_LIST("blocklyList"),
+        PYTHON_CODE("pythonCode"),
         ASSIGNMENTS,
         BUTTONS,
         ID,
         PRIORITY,
-        BUILTIN_SCRIPT_NAME,
+        BUILTIN_SCRIPT_NAME("builtinScriptName"),
         ANALOG,
         CHANNELS,
         BACKGROUND;
 
         override fun toString() =
-            Regex("[^A-Za-z]").replace(super.toString(), "").toLowerCase()
+            if (jsonKey == null) {
+                Regex("[^A-Za-z]").replace(super.toString(), "").toLowerCase()
+            } else {
+                jsonKey
+            }
     }
 
     @Suppress("ComplexMethod")
@@ -67,12 +78,23 @@ class ConfigurationBuilder {
                 ).forEachIndexed { index, binding -> binding?.let { put(buttonToJson(it, data.sources, index)) } }
                 controller.backgroundBindings.forEach { put(backgroundProgramToJson(it, data.sources)) }
 
-                put(joystickToJson())
+                put(
+                    joystickToJson(
+                        if (controller.userController.type == Controller.TYPE_DRIVER) {
+                            DRIVE_TYPE_LEVERS
+                        } else {
+                            DRIVE_TYPE_JOYSTICK
+                        }
+                    )
+                )
             }
 
             return JSONObject().apply {
-                put(Key.MOTORS, motors)
-                put(Key.SENSORS, sensors)
+                put(Key.ROBOT_CONFIG,
+                    JSONObject().apply {
+                        put(Key.MOTORS, motors)
+                        put(Key.SENSORS, sensors)
+                    })
                 put(Key.BLOCKLY_LIST, blocklyList)
             }.toString()
         } else {
@@ -82,9 +104,7 @@ class ConfigurationBuilder {
 
     private fun motorToJson(motor: Motor?) =
         JSONObject().apply {
-            if (motor == null) {
-                put(Key.TYPE, 0)
-            } else {
+            if (motor != null) {
                 put(Key.NAME, motor.variableName)
                 put(Key.TYPE, ConfigurationConstants.get(motor.type))
                 put(Key.DIRECTION, ConfigurationConstants.get(motor.direction))
@@ -94,9 +114,7 @@ class ConfigurationBuilder {
 
     private fun sensorToJson(sensor: Sensor?) =
         JSONObject().apply {
-            if (sensor == null) {
-                put(Key.TYPE, 0)
-            } else {
+            if (sensor != null) {
                 put(Key.NAME, sensor.variableName)
                 put(Key.TYPE, ConfigurationConstants.get(sensor.type))
             }
@@ -123,9 +141,9 @@ class ConfigurationBuilder {
 
     // TODO remove this suppress
     @Suppress("MagicNumber")
-    private fun joystickToJson() =
+    private fun joystickToJson(driveType: String) =
         JSONObject().apply {
-            put(Key.BUILTIN_SCRIPT_NAME, "script name")
+            put(Key.BUILTIN_SCRIPT_NAME, driveType)
             val joystick = JSONObject().apply {
                 put(Key.CHANNELS,
                     JSONArray().apply {
