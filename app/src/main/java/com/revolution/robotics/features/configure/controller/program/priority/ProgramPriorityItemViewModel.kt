@@ -2,15 +2,14 @@ package com.revolution.robotics.features.configure.controller.program.priority
 
 import com.revolution.robotics.R
 import com.revolution.robotics.core.extensions.formatYearMonthDay
-import com.revolution.robotics.core.utils.recyclerview.DiffUtilRecyclerAdapter
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 
-class ProgramPriorityItemViewModel(
+open class ProgramPriorityItemViewModel(
     val userProgramBindingItem: UserProgramBindingItem,
-    var position: Int,
+    position: Int,
     private val presenter: ProgramPriorityMvp.Presenter
 ) :
-    DiffUtilRecyclerAdapter.BaseListViewModel() {
+    PriorityItem(position) {
 
     override val idField = userProgramBindingItem.id
 

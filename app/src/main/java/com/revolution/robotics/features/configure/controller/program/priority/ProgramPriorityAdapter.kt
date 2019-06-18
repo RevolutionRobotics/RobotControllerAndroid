@@ -6,10 +6,11 @@ import com.revolution.robotics.core.utils.recyclerview.RecyclerAdapter
 import java.util.Collections
 
 class ProgramPriorityAdapter(lifecycleOwner: LifecycleOwner, itemTouchHelper: ItemTouchHelper) :
-    RecyclerAdapter<ProgramPriorityItemViewModel>() {
+    RecyclerAdapter<PriorityItem>() {
 
     init {
         adapterDelegate.register(PriorityProgramDelegateItem(lifecycleOwner, itemTouchHelper))
+        adapterDelegate.register(JoystickDelegateItem(lifecycleOwner, itemTouchHelper))
     }
 
     fun swapItems(from: Int, to: Int) {

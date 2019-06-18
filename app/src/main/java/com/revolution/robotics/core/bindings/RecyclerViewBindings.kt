@@ -10,8 +10,8 @@ import com.revolution.robotics.features.challenges.challengeGroup.adapter.Challe
 import com.revolution.robotics.features.challenges.challengeGroup.adapter.ChallengeGroupItem
 import com.revolution.robotics.features.challenges.challengeList.adapter.ChallengeListAdapter
 import com.revolution.robotics.features.challenges.challengeList.adapter.ChallengeListItem
+import com.revolution.robotics.features.configure.controller.program.priority.PriorityItem
 import com.revolution.robotics.features.configure.controller.program.priority.ProgramPriorityAdapter
-import com.revolution.robotics.features.configure.controller.program.priority.ProgramPriorityItemViewModel
 import com.revolution.robotics.features.controllers.buttonless.adapter.ButtonlessProgramAdapter
 import com.revolution.robotics.features.controllers.buttonless.adapter.ButtonlessProgramViewModel
 
@@ -23,7 +23,7 @@ fun setAvailableRobotsItems(recyclerView: RecyclerView, items: Set<ConnectRobotI
 }
 
 @BindingAdapter("priorityPrograms")
-fun setPriorityPrograms(recyclerView: RecyclerView, itemList: List<ProgramPriorityItemViewModel>?) {
+fun setPriorityPrograms(recyclerView: RecyclerView, itemList: List<PriorityItem>?) {
     if (itemList != null) {
         (recyclerView.adapter as? ProgramPriorityAdapter)?.setItems(itemList)
     }
