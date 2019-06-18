@@ -10,7 +10,7 @@ import org.revolution.blockly.view.dialogHandlers.variables
 
 class VariableOptionsHandler : JsPromptHandler {
 
-    override fun canHandleRequest(message: String) = message == "variables_get.var"
+    override fun canHandleRequest(message: String) = message.endsWith(".var")
 
     override fun handleRequest(request: JSONObject, dialogFactory: DialogFactory, result: JsPromptResult) {
         dialogFactory.showVariableOptionsDialog(request.title(), request.defaultKey(), request.variables(), result)
