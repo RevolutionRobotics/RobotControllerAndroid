@@ -40,4 +40,7 @@ interface UserBackgroundProgramBindingDao {
 
     @Query("DELETE FROM UserBackgroundProgramBinding WHERE controllerId=:controllerId")
     fun removeOldBackgroundBindings(controllerId: Int)
+
+    @Query("DELETE FROM UserBackgroundProgramBinding WHERE programId=:programId")
+    fun removeBackgroundProgram(programId: String)
 }
