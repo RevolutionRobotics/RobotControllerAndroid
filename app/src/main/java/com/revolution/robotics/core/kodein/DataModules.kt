@@ -144,7 +144,7 @@ fun createInteractorModule() =
         bind<RemoveUserControllerInteractor>() with p { RemoveUserControllerInteractor(i()) }
         bind<SaveUserControllerInteractor>() with p { SaveUserControllerInteractor(i(), i(), i(), i()) }
         bind<SaveUserProgramInteractor>() with p { SaveUserProgramInteractor(i()) }
-        bind<RemoveUserProgramInteractor>() with p { RemoveUserProgramInteractor(i()) }
+        bind<RemoveUserProgramInteractor>() with p { RemoveUserProgramInteractor(i(), i(), i()) }
         bind<GetUserChallengeCategoriesInteractor>() with p { GetUserChallengeCategoriesInteractor(i()) }
         bind<SaveUserChallengeCategoryInteractor>() with p { SaveUserChallengeCategoryInteractor(i()) }
         bind<GetUserProgramsInteractor>() with p { GetUserProgramsInteractor(i()) }

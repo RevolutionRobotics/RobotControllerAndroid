@@ -40,6 +40,9 @@ data class UserController(
 @Dao
 interface UserControllerDao {
 
+    @Query("SELECT * FROM UserController")
+    fun getUserControllers(): List<UserController>
+
     @Query("SELECT * FROM UserController WHERE id=:id")
     fun getUserController(id: Int): UserController?
 
