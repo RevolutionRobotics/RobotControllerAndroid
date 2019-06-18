@@ -1,6 +1,8 @@
 package com.revolution.robotics
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Message
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections
@@ -14,8 +16,13 @@ import com.revolution.robotics.features.shared.ErrorHandler
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.erased.instance
+import java.lang.ref.WeakReference
 
 class MainActivity : AppCompatActivity(), KodeinAware, Navigator.NavigationEventListener {
+
+    private companion object {
+        const val WINDOW_HIDE_DELAY = 300L
+    }
 
     override val kodein by kodein()
     private val dynamicPermissionHandler: DynamicPermissionHandler by instance()
@@ -24,10 +31,13 @@ class MainActivity : AppCompatActivity(), KodeinAware, Navigator.NavigationEvent
     private val bluetoothManager: BluetoothManager by instance()
     private val navController: NavController by lazy { findNavController(R.id.nav_host_fragment) }
 
+    private var windowHideHandler: WindowHideHandler? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         navigator.registerListener(this)
+        windowHideHandler = WindowHideHandler(this)
     }
 
     override fun onStart() {
@@ -39,6 +49,17 @@ class MainActivity : AppCompatActivity(), KodeinAware, Navigator.NavigationEvent
     override fun onResume() {
         super.onResume()
         window.hideSystemUI()
+    }
+
+    // From the official Google sample app:
+    // https://android.googlesource.com/platform/development/+/e7a6ab4/samples/devbytes/ui/ImmersiveMode/src/main/java/com/example/android/immersive/ImmersiveActivity.java
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        if (hasFocus) {
+            windowHideHandler?.sendEmptyMessageDelayed(0, WINDOW_HIDE_DELAY)
+        } else {
+            windowHideHandler?.removeMessages(0)
+        }
     }
 
     override fun onStop() {
@@ -78,4 +99,12 @@ class MainActivity : AppCompatActivity(), KodeinAware, Navigator.NavigationEvent
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) =
         dynamicPermissionHandler.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+    private class WindowHideHandler(activity: MainActivity) : Handler() {
+        private val mActivity: WeakReference<MainActivity> = WeakReference(activity)
+
+        override fun handleMessage(msg: Message) {
+            mActivity.get()?.window?.hideSystemUI()
+        }
+    }
 }
