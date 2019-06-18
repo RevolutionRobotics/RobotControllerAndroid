@@ -9,10 +9,10 @@ import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.core.utils.BundleArgumentDelegate
+import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.databinding.FragmentPlayCoreBinding
 import com.revolution.robotics.features.bluetooth.BluetoothConnectionListener
 import com.revolution.robotics.features.bluetooth.BluetoothManager
-import com.revolution.robotics.features.play.configurationBuilder.ConfigurationBuilder
 import org.kodein.di.erased.instance
 
 abstract class PlayFragment : BaseFragment<FragmentPlayCoreBinding, PlayViewModel>(R.layout.fragment_play_core),
@@ -27,6 +27,7 @@ abstract class PlayFragment : BaseFragment<FragmentPlayCoreBinding, PlayViewMode
     protected val presenter: PlayMvp.Presenter by kodein.instance()
     private val resourceResolver: ResourceResolver by kodein.instance()
     private val bluetoothManager: BluetoothManager by kodein.instance()
+    private val navigator: Navigator by kodein.instance()
 
     abstract fun createContentView(inflater: LayoutInflater, container: ViewGroup?)
 
@@ -45,20 +46,18 @@ abstract class PlayFragment : BaseFragment<FragmentPlayCoreBinding, PlayViewMode
         if (!bluetoothManager.isConnected) {
             bluetoothManager.startConnectionFlow()
         }
-
         presenter.register(this, viewModel)
-        arguments?.configId?.let { presenter.loadConfiguration(it) }
     }
 
     override fun onDestroyView() {
         presenter.unregister()
+        bluetoothManager.unregisterListener(this)
         super.onDestroyView()
     }
 
     override fun onControllerLoaded(data: FullControllerData) {
         val controller = data.controller
         if (controller != null) {
-            val json = ConfigurationBuilder().createConfigurationJson(data)
             viewModel?.programs?.apply {
                 clear()
                 addAll(listOf(
@@ -74,11 +73,19 @@ abstract class PlayFragment : BaseFragment<FragmentPlayCoreBinding, PlayViewMode
         }
     }
 
+    override fun onControllerLoadingError() {
+        navigator.back()
+    }
+
     override fun onBluetoothConnectionStateChanged(connected: Boolean, serviceDiscovered: Boolean) {
-        if (connected) {
-            presenter.onDeviceConnected(bluetoothManager.bleConnectionHandler)
-        } else {
+        if (connected && serviceDiscovered) {
+            uploadConfiguration()
+        } else if (!connected) {
             presenter.onDeviceDisconnected()
         }
+    }
+
+    private fun uploadConfiguration() {
+        arguments?.configId?.let { presenter.loadConfiguration(it) }
     }
 }
