@@ -24,15 +24,19 @@ class ProgramPriorityPresenter(
     override var view: ProgramPriorityMvp.View? = null
     override var model: ProgramPriorityViewModel? = null
 
-    private val viewModels = mutableListOf<ProgramPriorityItemViewModel>()
+    private val viewModels = mutableListOf<PriorityItem>()
 
     override fun register(view: ProgramPriorityMvp.View, model: ProgramPriorityViewModel?) {
         super.register(view, model)
         dialogEventBus.register(this)
         userConfigurationStorage.controllerHolder?.apply {
             viewModels.clear()
-            viewModels.addAll(generateItems(this, programs).mapIndexed { index, userProgramBindingItem ->
-                ProgramPriorityItemViewModel(userProgramBindingItem, index + 1, this@ProgramPriorityPresenter)
+            viewModels.addAll(generateItems(this, programs).mapIndexed { index, bindingItem ->
+                if (bindingItem is UserProgramBindingItem) {
+                    ProgramPriorityItemViewModel(bindingItem, index + 1, this@ProgramPriorityPresenter)
+                } else {
+                    ProgramPriorityJoystickViewModel(index + 1)
+                }
             })
             model?.items?.value = viewModels
         }
@@ -51,21 +55,32 @@ class ProgramPriorityPresenter(
 
     override fun onDialogEvent(event: DialogEvent) {
         if (event == DialogEvent.SAVE_CONTROLLER) {
-            viewModels.forEach { item ->
-                item.userProgramBindingItem.userProgram?.let {
-                    userConfigurationStorage.setPriority(it, item.position)
-                }
-            }
-            userConfigurationStorage.controllerHolder?.backgroundBindings?.let {
-                saveUserControllerInteractor.backgroundProgramBindings = it
-            }
-            userConfigurationStorage.setControllerName(
+            saveController(
                 event.extras.getString(SaveControllerDialog.KEY_NAME) ?: "",
                 event.extras.getString(SaveControllerDialog.KEY_DESCRIPTION) ?: ""
             )
-            userConfigurationStorage.controllerHolder = null
-            navigator.popUntil(R.id.configureFragment)
         }
+    }
+
+    private fun saveController(name: String, description: String) {
+        viewModels.forEach { item ->
+            if (item is ProgramPriorityItemViewModel) {
+                item.userProgramBindingItem.userProgram?.let {
+                    userConfigurationStorage.setPriority(it, item.position)
+                }
+            } else if (item is ProgramPriorityJoystickViewModel) {
+                userConfigurationStorage.controllerHolder?.userController?.joystickPriority = item.position
+            }
+        }
+        userConfigurationStorage.controllerHolder?.backgroundBindings?.let {
+            saveUserControllerInteractor.backgroundProgramBindings = it
+        }
+        userConfigurationStorage.setControllerName(
+            name,
+            description
+        )
+        userConfigurationStorage.controllerHolder = null
+        navigator.popUntil(R.id.configureFragment)
     }
 
     override fun onItemMoved(from: Int, to: Int) {
@@ -93,8 +108,8 @@ class ProgramPriorityPresenter(
     private fun generateItems(
         controllerWithPrograms: UserControllerWithPrograms,
         programs: HashMap<String, UserProgram>
-    ): List<UserProgramBindingItem> {
-        val items = mutableListOf<UserProgramBindingItem>()
+    ): List<BindingItem> {
+        val items = mutableListOf<BindingItem>()
         controllerWithPrograms.backgroundBindings.forEach { binding ->
             items.add(
                 UserProgramBindingItem(
@@ -112,12 +127,13 @@ class ProgramPriorityPresenter(
             addItemFromButtonBinding(binding, items, programs)
         }
 
-        return items.sortedWith(compareBy<UserProgramBindingItem> { it.priority }.thenBy { it.lastModified })
+        items.add(JoystickBindingItem(controllerWithPrograms.userController.joystickPriority, 0L))
+        return items.sortedWith(compareBy<BindingItem> { it.priority }.thenBy { it.lastModified })
     }
 
     private fun addItemFromButtonBinding(
         binding: UserProgramBinding?,
-        items: MutableList<UserProgramBindingItem>,
+        items: MutableList<BindingItem>,
         programs: HashMap<String, UserProgram>
     ) {
         binding?.let { programBinding ->

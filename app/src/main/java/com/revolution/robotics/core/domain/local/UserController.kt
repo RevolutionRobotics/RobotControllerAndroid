@@ -30,6 +30,7 @@ data class UserController(
     var type: String? = null,
     var description: String? = null,
     var lastModified: Long = 0L,
+    var joystickPriority: Int = 0,
     @Embedded
     var mapping: UserButtonMapping? = UserButtonMapping()
 ) : Parcelable {

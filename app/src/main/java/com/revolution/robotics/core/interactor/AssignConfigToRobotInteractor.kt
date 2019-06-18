@@ -176,6 +176,7 @@ class AssignConfigToRobotInteractor(
         type = controller.type,
         description = controller.description,
         lastModified = controller.lastModified,
-        mapping = UserButtonMapping()
+        mapping = UserButtonMapping(),
+        joystickPriority = controller.joystickPriority?.toInt() ?: 0
     )
 }

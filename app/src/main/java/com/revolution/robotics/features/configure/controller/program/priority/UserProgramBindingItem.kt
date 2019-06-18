@@ -4,9 +4,9 @@ import com.revolution.robotics.core.domain.local.UserProgram
 
 data class UserProgramBindingItem(
     var id: Int,
-    var priority: Int,
+    override var priority: Int,
     var type: ProgramType,
-    var lastModified: Long,
+    override var lastModified: Long,
     var name: String,
     var userProgram: UserProgram?
-)
+) : BindingItem

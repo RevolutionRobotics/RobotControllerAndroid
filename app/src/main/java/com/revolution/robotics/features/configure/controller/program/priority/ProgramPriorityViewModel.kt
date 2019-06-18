@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 
 class ProgramPriorityViewModel(private val presenter: ProgramPriorityMvp.Presenter) : ViewModel() {
 
-    val items = MutableLiveData<List<ProgramPriorityItemViewModel>>()
+    val items = MutableLiveData<List<PriorityItem>>()
 
     fun onDoneButtonClicked() {
         presenter.onDoneButtonClicked()
