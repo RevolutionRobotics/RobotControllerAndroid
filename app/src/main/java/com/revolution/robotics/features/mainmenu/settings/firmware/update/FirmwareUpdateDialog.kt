@@ -56,6 +56,10 @@ class FirmwareUpdateDialog : RoboticsDialog(), FirmwareUpdateMvp.View {
         activateFace(dialogFaces.first { it is FirmwareUpdateFailedDialogFace })
     }
 
+    override fun closeDialog() {
+        dismissAllowingStateLoss()
+    }
+
     fun retryFirmwareUpload() {
         presenter.retryFirmwareUpdate()
     }

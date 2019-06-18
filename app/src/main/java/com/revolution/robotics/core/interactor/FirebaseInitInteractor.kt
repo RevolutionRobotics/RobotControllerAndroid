@@ -5,7 +5,16 @@ import com.google.firebase.database.FirebaseDatabase
 class FirebaseInitInteractor : Interactor<Unit>() {
 
     private val references =
-        listOf("buildStep", "challengeCategory", "configuration", "controller", "program", "robot", "testCode")
+        listOf(
+            "buildStep",
+            "challengeCategory",
+            "configuration",
+            "controller",
+            "program",
+            "robot",
+            "testCode",
+            "firmware"
+        )
 
     override fun getData() {
         FirebaseDatabase.getInstance().apply {

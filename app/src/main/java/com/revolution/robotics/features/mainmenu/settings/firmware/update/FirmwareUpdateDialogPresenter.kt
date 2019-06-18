@@ -2,19 +2,32 @@ package com.revolution.robotics.features.mainmenu.settings.firmware.update
 
 import androidx.lifecycle.ViewModel
 import com.revolution.robotics.R
+import com.revolution.robotics.core.domain.remote.Firmware
+import com.revolution.robotics.core.interactor.firebase.FirebaseFileDownloader
+import com.revolution.robotics.core.interactor.firebase.FirmwareInteractor
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.features.bluetooth.BluetoothManager
+import com.revolution.robotics.features.shared.ErrorHandler
 import com.revolution.robotics.views.dialogs.DialogButton
 
 class FirmwareUpdateDialogPresenter(
+    private val interactor: FirmwareInteractor,
+    private val fileDownloader: FirebaseFileDownloader,
     private val bluetoothManager: BluetoothManager,
+    private val errorHandler: ErrorHandler,
     private val resourceResolver: ResourceResolver
 ) : FirmwareUpdateMvp.Presenter {
+
+    companion object {
+        private const val FIRMWARE_FILENAME = "firmware.tar.gz"
+    }
 
     override var view: FirmwareUpdateMvp.View? = null
     override var model: ViewModel? = null
 
     private var infoViewModel: FirmwareUpdateInfoViewModel? = null
+    private var isUpdateFlowStarted = false
+    private var latestFirmware: Firmware? = null
 
     override fun register(view: FirmwareUpdateMvp.View, model: ViewModel?) {
         super.register(view, model)
@@ -30,8 +43,10 @@ class FirmwareUpdateDialogPresenter(
                 getSystemId({
                     viewModel.robotName.value = it
                 }, ::readError)
-                getFirmwareRevision({
-                    viewModel.firmwareVersion.value = resourceResolver.string(R.string.firmware_current_version, it)
+                getFirmwareRevision({ version ->
+                    viewModel.firmwareVersionCode = version
+                    viewModel.firmwareVersion.value =
+                        resourceResolver.string(R.string.firmware_current_version, version)
                 }, ::readError)
                 getHardwareRevision({
                     viewModel.hardwareVersion.value = resourceResolver.string(R.string.firmware_hardware_version, it)
@@ -57,32 +72,74 @@ class FirmwareUpdateDialogPresenter(
                 getMotorBattery({ percentage ->
                     viewModel.batteryMotor.value =
                         resourceResolver.string(R.string.firmware_motor_battery, percentage.toString())
-                    viewModel.updateTextVisible.value = false
-                    viewModel.loadingTextVisible.value = false
-                    viewModel.infoTextsVisible.value = true
+
+                    if (!isUpdateFlowStarted) {
+                        viewModel.updateTextVisible.value = false
+                        viewModel.loadingTextVisible.value = false
+                        viewModel.infoTextsVisible.value = true
+                    }
                 }, ::readError)
             }
         }
     }
 
     override fun onCheckForUpdatesClicked() {
-        // TODO Load latest firmware version and add progress
-        infoViewModel?.updateTextVisible?.value = true
-        infoViewModel?.loadingTextVisible?.value = false
-        infoViewModel?.infoTextsVisible?.value = false
-        infoViewModel?.updateText?.value = resourceResolver.string(R.string.firmware_update_download_ready, "1.5.6")
-        view?.activateInfoFace(DialogButton(R.string.firmware_update_download, R.drawable.ic_download_update, true) {
-            // TODO Start update
-            view?.activateLoadingFace()
-        })
+        isUpdateFlowStarted = true
+        interactor.execute { firmware ->
+            latestFirmware = firmware
+            infoViewModel?.updateTextVisible?.value = true
+            infoViewModel?.loadingTextVisible?.value = false
+            infoViewModel?.infoTextsVisible?.value = false
+
+            if (firmware.filename == infoViewModel?.firmwareVersionCode) {
+                onLatestFirmwareUsed()
+            } else {
+                onFirmwareUpdateAvailable()
+            }
+        }
+    }
+
+    private fun onFirmwareUpdateAvailable() {
+        infoViewModel?.updateText?.value =
+            resourceResolver.string(R.string.firmware_update_download_ready, latestFirmware?.filename ?: "")
+        view?.activateInfoFace(
+            DialogButton(R.string.firmware_update_download, R.drawable.ic_download_update, true) {
+                updateFirmware()
+            })
+    }
+
+    private fun onLatestFirmwareUsed() {
+        infoViewModel?.updateText?.value = resourceResolver.string(R.string.firmware_update_latest_used)
+        view?.activateInfoFace(
+            DialogButton(R.string.done, R.drawable.ic_check, true) {
+                view?.closeDialog()
+            }
+        )
     }
 
     override fun retryFirmwareUpdate() {
-        // TODO restart firmware update
-        view?.activateLoadingFace()
+        updateFirmware()
     }
 
+    @Suppress("UnusedPrivateMember")
     private fun readError(throwable: Throwable) {
-        throwable.printStackTrace()
+        if (!isUpdateFlowStarted) {
+            errorHandler.onError()
+        }
+    }
+
+    private fun updateFirmware() {
+        latestFirmware?.url?.let { firmwareUrl ->
+            view?.activateLoadingFace()
+            fileDownloader.downloadFirestoreFile(FIRMWARE_FILENAME, firmwareUrl) { firmwareUri ->
+                bluetoothManager.getConfigurationService().updateFirmware(firmwareUri,
+                    onSuccess = {
+                        view?.activateSuccessFace()
+                    },
+                    onError = {
+                        view?.activateErrorFace()
+                    })
+            }
+        }
     }
 }
