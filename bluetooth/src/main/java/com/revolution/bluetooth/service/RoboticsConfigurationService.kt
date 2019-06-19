@@ -21,8 +21,8 @@ class RoboticsConfigurationService : RoboticsBLEService() {
     companion object {
         const val SERVICE_ID = "97148a03-5b9d-11e9-8647-d663bd873d93"
 
-        const val FUNCTION_TYPE_FIRMWARE = 1.toByte()
-        const val FUNCTION_TYPE_FRAMEWORK = 2.toByte()
+        const val FUNCTION_TYPE_FRAMEWORK = 1.toByte()
+        const val FUNCTION_TYPE_FIRMWARE = 2.toByte()
         const val FUNCTION_TYPE_CONFIGURATION = 3.toByte()
         const val FUNCTION_TYPE_TESTKIT = 4.toByte()
 
