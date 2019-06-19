@@ -81,6 +81,10 @@ class MainActivity : AppCompatActivity(), KodeinAware, Navigator.NavigationEvent
         }
     }
 
+    override fun onNavigationEvent(targetId: Int) {
+        navController.navigate(targetId)
+    }
+
     override fun onNavigationEvent(navDirections: NavDirections) {
         navController.navigate(navDirections)
     }

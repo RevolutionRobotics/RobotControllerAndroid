@@ -21,7 +21,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
             binding?.toolbarViewModel = CommunityToolbarViewModel(resourceResolver)
         }
 
-    override fun openCommunity() {
+    override fun openCommunityForums() {
         // TODO open community here
     }
 }

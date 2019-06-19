@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 
 class CommunityViewModel(private val presenter: CommunityMvp.Presenter) : ViewModel() {
 
-    fun openCommunity() {
-        presenter.openCommunity()
+    fun openCommunityForums() {
+        presenter.openCommunityForums()
     }
 }
