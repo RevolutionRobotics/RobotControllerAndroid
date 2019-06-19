@@ -6,6 +6,7 @@ import android.webkit.WebView
 import com.crashlytics.android.Crashlytics
 import com.google.firebase.FirebaseApp
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.storage.FirebaseStorage
 import com.revolution.robotics.core.kodein.createAppModule
 import com.revolution.robotics.core.kodein.createDbModule
 import com.revolution.robotics.core.kodein.createInteractorModule
@@ -29,6 +30,8 @@ class RoboticsApplication : Application(), KodeinAware {
     */
 
     companion object {
+        const val DOWNLOAD_RETRY_TIME = 15000L
+
         lateinit var kodein: Kodein
     }
     // Challenge group items
@@ -49,6 +52,7 @@ class RoboticsApplication : Application(), KodeinAware {
         }
         FirebaseApp.initializeApp(this)
         FirebaseDatabase.getInstance().setPersistenceEnabled(true)
+        FirebaseStorage.getInstance().maxDownloadRetryTimeMillis = DOWNLOAD_RETRY_TIME
         RoboticsApplication.kodein = kodein
         if (0 != applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE) {
             WebView.setWebContentsDebuggingEnabled(true)

@@ -16,6 +16,7 @@ import com.revolution.robotics.core.interactor.firebase.FirebaseProgramDownloade
 import com.revolution.robotics.core.interactor.firebase.ProgramsInteractor
 import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.features.controllers.ControllerType
+import com.revolution.robotics.features.shared.ErrorHandler
 
 class BuildRobotPresenter(
     private val buildStepInteractor: BuildStepInteractor,
@@ -26,7 +27,8 @@ class BuildRobotPresenter(
     private val programsInteractor: ProgramsInteractor,
     private val navigator: Navigator,
     private val dialogEventBus: DialogEventBus,
-    private val firebaseProgramDownloader: FirebaseProgramDownloader
+    private val firebaseProgramDownloader: FirebaseProgramDownloader,
+    private val errorHandler: ErrorHandler
 ) : BuildRobotMvp.Presenter {
 
     override var view: BuildRobotMvp.View? = null
@@ -83,7 +85,7 @@ class BuildRobotPresenter(
 
     private fun downloadControllerInfos(configurationId: Int) {
         controllerInteractor.configurationId = configurationId.toString()
-        controllerInteractor.execute { controllers ->
+        controllerInteractor.execute(onResponse = { controllers ->
             this.controllers = controllers
             val programIds = mutableListOf<String>()
             controllers.forEach { controller ->
@@ -94,20 +96,29 @@ class BuildRobotPresenter(
                 }
             }
             downloadPrograms(programIds)
-        }
+        }, onError = {
+            errorHandler.onError()
+            dialogEventBus.publish(DialogEvent.ROBOT_CREATE_ERROR)
+        })
     }
 
     private fun downloadPrograms(ids: List<String>) {
         programsInteractor.programIds = ids
-        programsInteractor.execute { programs ->
+        programsInteractor.execute(onResponse = { programs ->
             downloadProgramFiles(programs)
-        }
+        }, onError = {
+            errorHandler.onError()
+            dialogEventBus.publish(DialogEvent.ROBOT_CREATE_ERROR)
+        })
     }
 
     private fun downloadProgramFiles(programs: List<Program>) {
-        firebaseProgramDownloader.downloadProgramFiles(programs) {
+        firebaseProgramDownloader.downloadProgramFiles(programs, onResponse = {
             createLocalObjects(configuration, controllers, programs, it)
-        }
+        }, onError = {
+            errorHandler.onError()
+            dialogEventBus.publish(DialogEvent.ROBOT_CREATE_ERROR)
+        })
     }
 
     private fun createLocalObjects(
@@ -118,10 +129,13 @@ class BuildRobotPresenter(
     ) {
         userRobot?.let { userRobot ->
             saveUserRobotInteractor.userRobot = userRobot
-            saveUserRobotInteractor.execute { savedRobot ->
+            saveUserRobotInteractor.execute(onResponse = { savedRobot ->
                 this.userRobot = savedRobot
                 assignConfig(configuration, controllers, programs, programFiles)
-            }
+            }, onError = {
+                errorHandler.onError()
+                dialogEventBus.publish(DialogEvent.ROBOT_CREATE_ERROR)
+            })
         }
     }
 
@@ -137,10 +151,13 @@ class BuildRobotPresenter(
         assignConfigToRobotInteractor.programLocalFiles = programFiles
         userRobot?.let { userRobot ->
             assignConfigToRobotInteractor.userRobot = userRobot
-            assignConfigToRobotInteractor.execute { savedRobot ->
+            assignConfigToRobotInteractor.execute(onResponse = { savedRobot ->
                 this.userRobot = savedRobot
                 dialogEventBus.publish(DialogEvent.ROBOT_CREATED)
-            }
+            }, onError = {
+                errorHandler.onError()
+                dialogEventBus.publish(DialogEvent.ROBOT_CREATE_ERROR)
+            })
         }
     }
 }

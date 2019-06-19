@@ -67,7 +67,8 @@ class FirebaseProgramDownloader(
     }
 
     private fun sendOnError(throwable: Throwable) {
-        onError?.invoke(throwable) ?: errorHandler.onError()
+        errorHandler.onError()
+        onError?.invoke(throwable)
         xml = null
         python = null
         onError = null

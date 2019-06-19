@@ -21,9 +21,12 @@ class TestBuildDialogPresenter(
     override var model: ViewModel? = null
 
     override fun sendTestCode(code: String) {
-        firebaseFileDownloader.downloadFirestoreFile(TEST_CODE_FILE_NAME, code) {
+        firebaseFileDownloader.downloadFirestoreFile(TEST_CODE_FILE_NAME, code, onResponse = {
             uploadTestCode(it)
-        }
+        }, onError = {
+            errorHandler.onError(R.string.error_test_code_upload)
+            view?.showTips()
+        })
     }
 
     private fun uploadTestCode(fileUri: Uri) {

@@ -132,7 +132,7 @@ class FirmwareUpdateDialogPresenter(
     private fun updateFirmware() {
         latestFirmware?.url?.let { firmwareUrl ->
             view?.activateLoadingFace()
-            fileDownloader.downloadFirestoreFile(FIRMWARE_FILENAME, firmwareUrl) { firmwareUri ->
+            fileDownloader.downloadFirestoreFile(FIRMWARE_FILENAME, firmwareUrl, { firmwareUri ->
                 bluetoothManager.getConfigurationService().updateFramework(firmwareUri,
                     onSuccess = {
                         isUpdateFlowStarted = false
@@ -141,7 +141,9 @@ class FirmwareUpdateDialogPresenter(
                     onError = {
                         view?.activateErrorFace()
                     })
-            }
+            }, {
+                view?.activateErrorFace()
+            })
         }
     }
 }
