@@ -175,7 +175,8 @@
 
     <!-- SCREEN: BUILD ROBOT -->
     <dimen name="build_robot_parts_wrapper_width">112dp</dimen>
-    <dimen name="build_robot_part_image_size">52dp</dimen>
+    <dimen name="build_robot_part_image_size_height">52dp</dimen>
+    <dimen name="build_robot_part_image_size_width">110dp</dimen>
     <dimen name="drawer_config_width">214dp</dimen>
 
     <!-- SCREEN: CONFIGURE -->
