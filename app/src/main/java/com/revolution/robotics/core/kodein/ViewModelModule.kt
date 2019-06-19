@@ -7,6 +7,7 @@ import com.revolution.robotics.features.challenges.challengeGroup.ChallengeGroup
 import com.revolution.robotics.features.challenges.challengeList.ChallengeListViewModel
 import com.revolution.robotics.features.coding.CodingViewModel
 import com.revolution.robotics.features.coding.programs.ProgramsViewModel
+import com.revolution.robotics.features.community.CommunityViewModel
 import com.revolution.robotics.features.configure.ConfigureViewModel
 import com.revolution.robotics.features.configure.connections.ConfigureConnectionsViewModel
 import com.revolution.robotics.features.configure.controller.program.priority.ProgramPriorityViewModel
@@ -53,4 +54,5 @@ fun createViewModelModule() =
         bind<ChallengeListViewModel>() with p { ChallengeListViewModel() }
         bind<ChallengeDetailViewModel>() with p { ChallengeDetailViewModel() }
         bind<ProgramsViewModel>() with p { ProgramsViewModel(i()) }
+        bind<CommunityViewModel>() with p { CommunityViewModel(i()) }
     }
