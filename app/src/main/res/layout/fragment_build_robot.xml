@@ -12,7 +12,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/grey_56">
+
 
         <com.revolution.robotics.views.toolbar.RoboticsToolbar
                 android:id="@+id/toolbar"
@@ -55,15 +57,6 @@
                 android:text="@{viewModel.step}"
                 android:layout_marginEnd="@dimen/dimen_8dp"/>
 
-        <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/bg_glow"
-                app:layout_constraintTop_toBottomOf="@id/toolbar"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
-
         <com.revolution.robotics.views.slider.BuildStepSliderView
                 android:id="@+id/seekbar"
                 android:layout_width="match_parent"
@@ -104,8 +97,8 @@
 
             <ImageView
                     android:id="@+id/part_image"
-                    android:layout_width="@dimen/build_robot_part_image_size"
-                    android:layout_height="@dimen/build_robot_part_image_size"
+                    android:layout_width="@dimen/build_robot_part_image_size_width"
+                    android:layout_height="@dimen/build_robot_part_image_size_height"
                     android:scaleType="centerInside"
                     app:firebaseImageUrl="@{viewModel.partImage}"
                     app:errorDrawable="@{@drawable/ic_image_not_found_dark}"/>
@@ -119,8 +112,8 @@
 
             <ImageView
                     android:id="@+id/part_2_image"
-                    android:layout_width="@dimen/build_robot_part_image_size"
-                    android:layout_height="@dimen/build_robot_part_image_size"
+                    android:layout_width="@dimen/build_robot_part_image_size_width"
+                    android:layout_height="@dimen/build_robot_part_image_size_height"
                     android:scaleType="centerInside"
                     android:layout_marginTop="@dimen/dimen_16dp"
                     app:firebaseImageUrl="@{viewModel.part2Image}"
