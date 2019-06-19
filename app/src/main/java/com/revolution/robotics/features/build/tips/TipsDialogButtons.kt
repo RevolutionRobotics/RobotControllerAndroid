@@ -24,9 +24,10 @@ fun createTipsDialogButtons(source: TestDialog.Source, dialogController: DialogC
 
     return mutableListOf(
         firstButton,
-        DialogButton(R.string.tips_dialog_button_community, R.drawable.ic_community) {
-            // TODO open community here
-        },
+        DialogButton(
+            R.string.tips_dialog_button_community,
+            R.drawable.ic_community
+        ) { dialogController.navigateToCommunity() },
         DialogButton(
             R.string.tips_dialog_button_try_again,
             R.drawable.ic_retry,

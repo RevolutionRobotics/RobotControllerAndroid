@@ -51,7 +51,7 @@ class BlockOptionsDialog :
                 },
                 DialogButton(R.string.dialog_block_options_help, R.drawable.ic_community) {
                     dismissAllowingStateLoss()
-                    // TODO open community
+                    // TODO navigate to the help page of the block
                 },
                 DialogButton(R.string.dialog_block_options_duplicate, R.drawable.ic_copy, true) {
                     confirmResult(createResponse(ACTION_DUPLICATE))

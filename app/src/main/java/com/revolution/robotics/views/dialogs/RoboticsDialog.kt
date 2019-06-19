@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.revolution.robotics.BaseDialog
 import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
+import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.databinding.DialogRoboticsCoreBinding
 import org.kodein.di.KodeinAware
 import org.kodein.di.LateInitKodein
@@ -20,10 +21,11 @@ abstract class RoboticsDialog : BaseDialog() {
 
     var kodein = LateInitKodein()
     val dialogEventBus: DialogEventBus by kodein.instance()
+    val navigator: Navigator by kodein.instance()
 
     protected lateinit var binding: DialogRoboticsCoreBinding
-    protected lateinit var activeFace: DialogFace<*>
 
+    private lateinit var activeFace: DialogFace<*>
     private val dialogButtonHelper = DialogButtonHelper()
 
     override fun onCreate(savedInstanceState: Bundle?) {
