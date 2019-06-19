@@ -31,6 +31,7 @@ class FirmwareUpdateDialogPresenter(
 
     override fun register(view: FirmwareUpdateMvp.View, model: ViewModel?) {
         super.register(view, model)
+        isUpdateFlowStarted = false
         infoViewModel = FirmwareUpdateInfoViewModel().apply {
             view.setInfoViewModel(this)
         }
@@ -132,8 +133,9 @@ class FirmwareUpdateDialogPresenter(
         latestFirmware?.url?.let { firmwareUrl ->
             view?.activateLoadingFace()
             fileDownloader.downloadFirestoreFile(FIRMWARE_FILENAME, firmwareUrl) { firmwareUri ->
-                bluetoothManager.getConfigurationService().updateFirmware(firmwareUri,
+                bluetoothManager.getConfigurationService().updateFramework(firmwareUri,
                     onSuccess = {
+                        isUpdateFlowStarted = false
                         view?.activateSuccessFace()
                     },
                     onError = {
