@@ -73,15 +73,13 @@ class ConfigurationBuilder {
                 ).forEachIndexed { index, binding -> binding?.let { put(buttonToJson(it, data.sources, index)) } }
                 controller.backgroundBindings.forEach { put(backgroundProgramToJson(it, data.sources)) }
 
-                put(
-                    joystickToJson(
-                        if (controller.userController.type == Controller.TYPE_DRIVER) {
-                            ConfigurationConstants.DRIVE_TYPE_LEVERS
-                        } else {
-                            ConfigurationConstants.DRIVE_TYPE_JOYSTICK
-                        }
-                    )
-                )
+                val driveType =
+                    if (controller.userController.type == Controller.TYPE_DRIVER) {
+                        ConfigurationConstants.DRIVE_TYPE_LEVERS
+                    } else {
+                        ConfigurationConstants.DRIVE_TYPE_JOYSTICK
+                    }
+                put(joystickToJson(driveType, controller.userController.joystickPriority))
             }
 
             return JSONObject().apply {
@@ -134,9 +132,7 @@ class ConfigurationBuilder {
             put(Key.ASSIGNMENTS, assignmentWrapper)
         }
 
-    // TODO remove this suppress
-    @Suppress("MagicNumber")
-    private fun joystickToJson(driveType: String) =
+    private fun joystickToJson(driveType: String, priority: Int) =
         JSONObject().apply {
             put(Key.BUILTIN_SCRIPT_NAME, driveType)
             val joystick = JSONObject().apply {
@@ -145,8 +141,7 @@ class ConfigurationBuilder {
                         put(0)
                         put(1)
                     })
-                // TODO add priority to joystick channels (X,Y)
-                put(Key.PRIORITY, 999)
+                put(Key.PRIORITY, priority)
             }
             val analog = JSONArray().apply { put(joystick) }
             val analogWrapper = JSONObject().apply { put(Key.ANALOG, analog) }
