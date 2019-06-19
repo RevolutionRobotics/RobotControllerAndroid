@@ -8,6 +8,7 @@ import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.databinding.FragmentAboutBinding
+import com.revolution.robotics.features.shared.ErrorHandler
 import org.kodein.di.erased.instance
 
 class AboutFragment :
@@ -18,6 +19,7 @@ class AboutFragment :
 
     private val presenter: AboutMvp.Presenter by kodein.instance()
     private val resourceResolver: ResourceResolver by kodein.instance()
+    private val errorHandler: ErrorHandler by kodein.instance()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -35,7 +37,8 @@ class AboutFragment :
         try {
             requireActivity().startActivity(intent)
         } catch (exception: ActivityNotFoundException) {
-            // TODO Error handling
+            // TODO add custom error message
+            errorHandler.onError()
         }
     }
 }

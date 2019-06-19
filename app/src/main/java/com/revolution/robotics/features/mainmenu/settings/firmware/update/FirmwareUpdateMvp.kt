@@ -12,6 +12,7 @@ interface FirmwareUpdateMvp : Mvp {
         fun activateLoadingFace()
         fun activateSuccessFace()
         fun activateErrorFace()
+        fun closeDialog()
     }
 
     interface Presenter : Mvp.Presenter<View, ViewModel> {

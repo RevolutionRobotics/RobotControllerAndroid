@@ -49,6 +49,7 @@ import com.revolution.robotics.core.interactor.firebase.BuildStepInteractor
 import com.revolution.robotics.core.interactor.firebase.ChallengeCategoriesInteractor
 import com.revolution.robotics.core.interactor.firebase.ConfigurationInteractor
 import com.revolution.robotics.core.interactor.firebase.ControllerInteractor
+import com.revolution.robotics.core.interactor.firebase.FirmwareInteractor
 import com.revolution.robotics.core.interactor.firebase.ProgramInteractor
 import com.revolution.robotics.core.interactor.firebase.ProgramsInteractor
 import com.revolution.robotics.core.interactor.firebase.RobotInteractor
@@ -157,6 +158,7 @@ fun createInteractorModule() =
         bind<SaveUserProgramsInteractor>() with p { SaveUserProgramsInteractor(i()) }
         bind<GetFullConfigurationInteractor>() with p { GetFullConfigurationInteractor(i(), i(), i(), i()) }
         bind<GetUserProgramInteractor>() with p { GetUserProgramInteractor(i()) }
+        bind<FirmwareInteractor>() with p { FirmwareInteractor() }
     }
 
 @Suppress("LongMethod")
@@ -176,9 +178,9 @@ fun createPresenterModule() =
         bind<ConfigureControllersMvp.Presenter>() with s { ConfigureControllersPresenter(i(), i(), i(), i(), i()) }
         bind<SettingsMvp.Presenter>() with s { SettingsPresenter(i(), i()) }
         bind<AboutMvp.Presenter>() with s { AboutPresenter(i(), i()) }
-        bind<FirmwareMvp.Presenter>() with s { FirmwareUpdatePresenter(i()) }
+        bind<FirmwareMvp.Presenter>() with s { FirmwareUpdatePresenter(i(), i()) }
         bind<PlayMvp.Presenter>() with s { PlayPresenter(i()) }
-        bind<FirmwareUpdateMvp.Presenter>() with s { FirmwareUpdateDialogPresenter(i(), i()) }
+        bind<FirmwareUpdateMvp.Presenter>() with s { FirmwareUpdateDialogPresenter(i(), i(), i(), i(), i()) }
         bind<TypeSelectorMvp.Presenter>() with s { TypeSelectorPresenter(i(), i()) }
         bind<SetupMvp.Presenter>() with s { SetupPresenter(i(), i(), i()) }
         bind<ProgramSelectorMvp.Presenter>() with s { ProgramSelectorPresenter(i(), i(), i(), i()) }

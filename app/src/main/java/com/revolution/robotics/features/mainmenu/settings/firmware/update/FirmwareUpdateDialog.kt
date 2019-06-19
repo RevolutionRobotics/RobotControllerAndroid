@@ -2,6 +2,7 @@ package com.revolution.robotics.features.mainmenu.settings.firmware.update
 
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager
 import com.revolution.robotics.views.dialogs.DialogButton
 import com.revolution.robotics.views.dialogs.DialogFace
 import com.revolution.robotics.views.dialogs.RoboticsDialog
@@ -24,11 +25,13 @@ class FirmwareUpdateDialog : RoboticsDialog(), FirmwareUpdateMvp.View {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // The faces have only viewModels
+        activity?.window?.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         presenter.register(this, null)
     }
 
     override fun onDestroyView() {
         presenter.unregister()
+        activity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         super.onDestroyView()
     }
 
@@ -54,6 +57,10 @@ class FirmwareUpdateDialog : RoboticsDialog(), FirmwareUpdateMvp.View {
 
     override fun activateErrorFace() {
         activateFace(dialogFaces.first { it is FirmwareUpdateFailedDialogFace })
+    }
+
+    override fun closeDialog() {
+        dismissAllowingStateLoss()
     }
 
     fun retryFirmwareUpload() {

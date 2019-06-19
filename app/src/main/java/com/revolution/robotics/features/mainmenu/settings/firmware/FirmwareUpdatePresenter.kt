@@ -2,8 +2,12 @@ package com.revolution.robotics.features.mainmenu.settings.firmware
 
 import com.revolution.robotics.features.bluetooth.BluetoothConnectionListener
 import com.revolution.robotics.features.bluetooth.BluetoothManager
+import com.revolution.robotics.features.shared.ErrorHandler
 
-class FirmwareUpdatePresenter(private val bluetoothManager: BluetoothManager) : FirmwareMvp.Presenter,
+class FirmwareUpdatePresenter(
+    private val bluetoothManager: BluetoothManager,
+    private val errorHandler: ErrorHandler
+) : FirmwareMvp.Presenter,
     BluetoothConnectionListener {
 
     override var view: FirmwareMvp.View? = null
@@ -22,11 +26,12 @@ class FirmwareUpdatePresenter(private val bluetoothManager: BluetoothManager) : 
     override fun onBluetoothConnectionStateChanged(connected: Boolean, serviceDiscovered: Boolean) {
         model?.hasConnectedRobot?.value = connected && serviceDiscovered
         if (connected && serviceDiscovered) {
-            bluetoothManager.getDeviceInfoService().getSystemId({
-                model?.robotName?.value = it
-            }, {
-                // TODO Error handling
-            })
+            bluetoothManager.getDeviceInfoService().getSystemId(
+                onCompleted = {
+                    model?.robotName?.value = it
+                }, onError = {
+                    errorHandler.onError()
+                })
         }
     }
 

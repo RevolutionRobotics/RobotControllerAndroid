@@ -19,4 +19,6 @@ class FirmwareUpdateInfoViewModel : ViewModel() {
     val loadingTextVisible = MutableLiveData<Boolean>()
     val infoTextsVisible = MutableLiveData<Boolean>()
     val updateText = MutableLiveData<String>()
+
+    var firmwareVersionCode: String? = null
 }
