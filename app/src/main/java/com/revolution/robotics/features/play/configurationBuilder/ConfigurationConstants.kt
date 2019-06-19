@@ -7,6 +7,9 @@ class ConfigurationConstants private constructor() {
     // Utility class
 
     companion object {
+        const val DRIVE_TYPE_JOYSTICK = "drive_joystick"
+        const val DRIVE_TYPE_LEVERS = "drive_2sticks"
+
         const val INVALID_DATA = -1
 
         private val CONSTANTS = hashMapOf(

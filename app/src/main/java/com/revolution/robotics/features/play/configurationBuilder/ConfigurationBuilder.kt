@@ -11,11 +11,6 @@ import org.json.JSONObject
 
 class ConfigurationBuilder {
 
-    companion object {
-        private const val DRIVE_TYPE_JOYSTICK = "drive_joystick"
-        private const val DRIVE_TYPE_LEVERS = "drive_2sticks"
-    }
-
     private enum class Key(val jsonKey: String? = null) {
         ROBOT_CONFIG("robotConfig"),
         MOTORS,
@@ -81,9 +76,9 @@ class ConfigurationBuilder {
                 put(
                     joystickToJson(
                         if (controller.userController.type == Controller.TYPE_DRIVER) {
-                            DRIVE_TYPE_LEVERS
+                            ConfigurationConstants.DRIVE_TYPE_LEVERS
                         } else {
-                            DRIVE_TYPE_JOYSTICK
+                            ConfigurationConstants.DRIVE_TYPE_JOYSTICK
                         }
                     )
                 )
