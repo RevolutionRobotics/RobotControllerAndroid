@@ -40,6 +40,10 @@ class BuildFinishedDialog : RoboticsDialog(), BuildFinishedMvp.View {
         activateFace(dialogFaces[1])
     }
 
+    override fun hideDialog() {
+        dismissAllowingStateLoss()
+    }
+
     class BuildFinishedLoadingDialogFace(dialog: RoboticsDialog) :
         DialogFace<DialogFaceBuildRobotLoadingBinding>(R.layout.dialog_face_build_robot_loading, dialog)
 

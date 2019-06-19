@@ -7,6 +7,7 @@ interface BuildFinishedMvp : Mvp {
 
     interface View : Mvp.View {
         fun showBuildFinishedDialogFace()
+        fun hideDialog()
     }
 
     interface Presenter : Mvp.Presenter<View, ViewModel> {

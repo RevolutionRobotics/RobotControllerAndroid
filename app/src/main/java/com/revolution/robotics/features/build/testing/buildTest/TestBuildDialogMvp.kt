@@ -7,6 +7,7 @@ interface TestBuildDialogMvp : Mvp {
     interface View : Mvp.View {
         fun dismiss()
         fun activateBuildFace()
+        fun showTips()
     }
 
     interface Presenter : Mvp.Presenter<View, ViewModel> {

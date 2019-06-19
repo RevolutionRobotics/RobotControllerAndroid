@@ -31,6 +31,8 @@ class BuildFinishedPresenter(
     override fun onDialogEvent(event: DialogEvent) {
         if (event == DialogEvent.ROBOT_CREATED) {
             view?.showBuildFinishedDialogFace()
+        } else if (event == DialogEvent.ROBOT_CREATE_ERROR) {
+            view?.hideDialog()
         }
     }
 }
