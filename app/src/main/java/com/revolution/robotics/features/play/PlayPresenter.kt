@@ -1,11 +1,16 @@
 package com.revolution.robotics.features.play
 
-import com.revolution.bluetooth.communication.RoboticsDeviceConnector
 import com.revolution.bluetooth.service.RoboticsLiveControllerService
+import com.revolution.robotics.core.interactor.CreateConfigurationFileInteractor
 import com.revolution.robotics.core.interactor.GetFullConfigurationInteractor
+import com.revolution.robotics.features.bluetooth.BluetoothManager
+import com.revolution.robotics.features.shared.ErrorHandler
 
 class PlayPresenter(
-    private val interactor: GetFullConfigurationInteractor
+    private val getConfigurationInteractor: GetFullConfigurationInteractor,
+    private val createConfigurationFileInteractor: CreateConfigurationFileInteractor,
+    private val bluetoothManager: BluetoothManager,
+    private val errorHandler: ErrorHandler
 ) : PlayMvp.Presenter {
 
     companion object {
@@ -23,15 +28,22 @@ class PlayPresenter(
     }
 
     override fun loadConfiguration(configId: Int) {
-        interactor.userConfigId = configId
-        interactor.execute { result ->
-            view?.onControllerLoaded(result.first, result.second)
+        getConfigurationInteractor.userConfigId = configId
+        getConfigurationInteractor.execute { result ->
+            createConfigurationFileInteractor.controllerData = result
+            createConfigurationFileInteractor.execute { configurationUri ->
+                bluetoothManager.getConfigurationService().sendConfiguration(configurationUri,
+                    onSuccess = {
+                        liveControllerService = bluetoothManager.bleConnectionHandler.liveControllerService
+                        liveControllerService?.start()
+                        view?.onControllerLoaded(result)
+                    },
+                    onError = {
+                        view?.onControllerLoadingError()
+                        errorHandler.onError()
+                    })
+            }
         }
-    }
-
-    override fun onDeviceConnected(handler: RoboticsDeviceConnector) {
-        liveControllerService = handler.liveControllerService
-        liveControllerService?.start()
     }
 
     override fun onDeviceDisconnected() {

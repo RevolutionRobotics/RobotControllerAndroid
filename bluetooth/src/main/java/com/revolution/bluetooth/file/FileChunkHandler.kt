@@ -9,7 +9,6 @@ class FileChunkHandler {
     var currentIndex = 0
 
     fun init(file: Uri, chunkLength: Int, firstByte: Byte) {
-
         chunks.clear()
         currentIndex = 0
 

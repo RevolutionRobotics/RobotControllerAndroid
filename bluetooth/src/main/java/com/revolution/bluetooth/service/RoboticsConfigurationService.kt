@@ -9,6 +9,7 @@ import com.revolution.bluetooth.exception.BLEConnectionException
 import com.revolution.bluetooth.exception.BLEException
 import com.revolution.bluetooth.exception.BLELongMessageIsAlreadyRunning
 import com.revolution.bluetooth.exception.BLELongMessageValidationException
+import com.revolution.bluetooth.exception.BLEMessageInterruptedException
 import com.revolution.bluetooth.exception.BLESendingTimeoutException
 import com.revolution.bluetooth.file.FileChunkHandler
 import com.revolution.bluetooth.file.MD5Checker
@@ -125,7 +126,7 @@ class RoboticsConfigurationService : RoboticsBLEService() {
         uploadStarted = true
         currentFile?.let { currentFile ->
             val md5 = fileMD5 ?: md5Checker.calculateMD5Hash(currentFile)
-            Log.e("TEST", "MD5: ${Base64.encodeToString(md5, Base64.DEFAULT)}")
+            Log.e(TAG, "MD5: ${Base64.encodeToString(md5, Base64.DEFAULT)}")
             ByteArray(MD5_LENGTH + 1).apply {
                 set(0, MESSAGE_TYPE_INIT)
                 for (index in 0 until MD5_LENGTH) {
@@ -163,9 +164,11 @@ class RoboticsConfigurationService : RoboticsBLEService() {
         service?.getCharacteristic(CHARACTERISTIC)?.let { characteristic ->
             characteristic.writeType = BluetoothGattCharacteristic.WRITE_TYPE_DEFAULT
             characteristic.value = byteArray
-            val value = bluetoothGatt?.writeCharacteristic(characteristic) ?: false
-            Log.d(TAG, "Write message sent $value  ${byteArray.toStringCustom()}")
-            value
+            val wasMessageSent = bluetoothGatt?.writeCharacteristic(characteristic) ?: false
+            Log.d(TAG, "Write message sent $wasMessageSent  ${byteArray.toStringCustom()}")
+            if (!wasMessageSent) {
+                onError(BLEMessageInterruptedException())
+            }
         }
     }
 
@@ -177,9 +180,7 @@ class RoboticsConfigurationService : RoboticsBLEService() {
             return false
         }
         if (status != BluetoothGatt.GATT_SUCCESS) {
-            Log.d(TAG, "Bluetooth error: $status")
-            error?.invoke(BLEConnectionException(status))
-            resetVariables()
+            onError(BLEConnectionException(status))
             return false
         }
 
@@ -202,12 +203,14 @@ class RoboticsConfigurationService : RoboticsBLEService() {
             }
             STATUS_VALIDATION -> handleValidationStatus()
             STATUS_READY -> handleReadyStatus(characteristic)
-            STATUS_VALIDATION_ERROR -> {
-                Log.d(TAG, "Error --> send error event")
-                error?.invoke(BLELongMessageValidationException())
-                resetVariables()
-            }
+            STATUS_VALIDATION_ERROR -> onError(BLELongMessageValidationException())
         }
+    }
+
+    private fun onError(exception: BLEException) {
+        Log.d(TAG, "Error --> send error event")
+        error?.invoke(exception)
+        resetVariables()
     }
 
     private fun handleValidationStatus() {
@@ -216,8 +219,7 @@ class RoboticsConfigurationService : RoboticsBLEService() {
             readStatus()
             validationCounter++
         } else {
-            error?.invoke(BLESendingTimeoutException())
-            resetVariables()
+            onError(BLESendingTimeoutException())
         }
     }
 

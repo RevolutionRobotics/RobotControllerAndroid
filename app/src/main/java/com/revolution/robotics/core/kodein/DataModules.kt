@@ -22,6 +22,7 @@ import com.revolution.robotics.core.domain.local.UserControllerDao
 import com.revolution.robotics.core.domain.local.UserProgramDao
 import com.revolution.robotics.core.domain.local.UserRobotDao
 import com.revolution.robotics.core.interactor.AssignConfigToRobotInteractor
+import com.revolution.robotics.core.interactor.CreateConfigurationFileInteractor
 import com.revolution.robotics.core.interactor.DeleteRobotInteractor
 import com.revolution.robotics.core.interactor.DuplicateUserRobotInteractor
 import com.revolution.robotics.core.interactor.FirebaseInitInteractor
@@ -163,6 +164,7 @@ fun createInteractorModule() =
         bind<GetUserProgramInteractor>() with p { GetUserProgramInteractor(i()) }
         bind<FirmwareInteractor>() with p { FirmwareInteractor() }
         bind<PortTestFileCreatorInteractor>() with p { PortTestFileCreatorInteractor(i()) }
+        bind<CreateConfigurationFileInteractor>() with p { CreateConfigurationFileInteractor(i()) }
     }
 
 @Suppress("LongMethod")
@@ -182,8 +184,8 @@ fun createPresenterModule() =
         bind<SettingsMvp.Presenter>() with s { SettingsPresenter(i(), i()) }
         bind<AboutMvp.Presenter>() with s { AboutPresenter(i(), i()) }
         bind<FirmwareMvp.Presenter>() with s { FirmwareUpdatePresenter(i(), i()) }
-        bind<PlayMvp.Presenter>() with s { PlayPresenter(i()) }
         bind<FirmwareUpdateMvp.Presenter>() with s { FirmwareUpdateDialogPresenter(i(), i(), i(), i(), i()) }
+        bind<PlayMvp.Presenter>() with s { PlayPresenter(i(), i(), i(), i()) }
         bind<TypeSelectorMvp.Presenter>() with s { TypeSelectorPresenter(i(), i()) }
         bind<SetupMvp.Presenter>() with s { SetupPresenter(i(), i(), i()) }
         bind<ProgramSelectorMvp.Presenter>() with s { ProgramSelectorPresenter(i(), i(), i(), i()) }
