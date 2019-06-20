@@ -6,12 +6,10 @@ import com.revolution.robotics.core.domain.remote.Milestone
 import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.core.extensions.withArguments
 import com.revolution.robotics.core.utils.BundleArgumentDelegate
-import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.databinding.DialogChapterFinishedBinding
 import com.revolution.robotics.views.dialogs.DialogButton
 import com.revolution.robotics.views.dialogs.DialogFace
 import com.revolution.robotics.views.dialogs.RoboticsDialog
-import org.kodein.di.erased.instance
 
 class ChapterFinishedDialog : RoboticsDialog() {
 
@@ -24,8 +22,6 @@ class ChapterFinishedDialog : RoboticsDialog() {
             it.milestone = milestone
         }
     }
-
-    private val navigator: Navigator by kodein.instance()
 
     override val hasCloseButton = true
     override val dialogFaces: List<DialogFace<*>> = listOf(ChapterFinishedDialogFace())
