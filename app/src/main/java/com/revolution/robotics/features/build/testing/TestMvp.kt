@@ -10,6 +10,6 @@ interface TestMvp : Mvp {
     }
 
     interface Presenter : Mvp.Presenter<View, ViewModel> {
-        fun uploadTest(assetName: String)
+        fun uploadTest(assetName: String, replaceablePairs: List<Pair<String, String>>)
     }
 }

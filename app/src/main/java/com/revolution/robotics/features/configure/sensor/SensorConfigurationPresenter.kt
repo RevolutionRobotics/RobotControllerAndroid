@@ -136,11 +136,21 @@ class SensorConfigurationPresenter(
     override fun onTestButtonClicked() {
         if (bluetoothManager.isConnected) {
             if (model?.bumperButton?.isSelected?.get() == true) {
-                view?.showDialog(BumperTestDialog())
+                view?.showDialog(
+                    BumperTestDialog.newInstance(
+                        (userConfigurationStorage.userConfiguration?.mappingId?.getSensorPortIndex(portName)
+                            ?: 0).toString()
+                    )
+                )
             }
 
             if (model?.ultrasoundButton?.isSelected?.get() == true) {
-                view?.showDialog(UltrasonicTestDialog())
+                view?.showDialog(
+                    UltrasonicTestDialog.newInstance(
+                        (userConfigurationStorage.userConfiguration?.mappingId?.getSensorPortIndex(portName)
+                            ?: 0).toString()
+                    )
+                )
             }
         } else {
             bluetoothManager.startConnectionFlow()

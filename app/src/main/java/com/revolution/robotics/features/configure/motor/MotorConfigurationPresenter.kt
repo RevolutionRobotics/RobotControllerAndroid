@@ -6,6 +6,7 @@ import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.features.bluetooth.BluetoothManager
 import com.revolution.robotics.features.build.testing.DrivetrainTestDialog
 import com.revolution.robotics.features.build.testing.MotorTestDialog
+import com.revolution.robotics.features.build.testing.TestDialog
 import com.revolution.robotics.features.configure.ConfigurationEventBus
 import com.revolution.robotics.features.configure.MotorPort
 import com.revolution.robotics.features.configure.UserConfigurationStorage
@@ -92,16 +93,41 @@ class MotorConfigurationPresenter(
     override fun onTestButtonClicked() {
         if (bluetoothManager.isConnected) {
             if (model?.driveTrainButton?.isSelected?.get() == true) {
-                view?.showDialog(DrivetrainTestDialog())
+                view?.showDialog(generateDriveTrainDialog())
             }
 
             if (model?.motorButton?.isSelected?.get() == true) {
-                view?.showDialog(MotorTestDialog())
+                view?.showDialog(generateMotorDialog())
             }
         } else {
             bluetoothManager.startConnectionFlow()
         }
     }
+
+    private fun generateDriveTrainDialog() = DrivetrainTestDialog.newInstance(
+        (userConfigurationStorage.userConfiguration?.mappingId?.getMotorPortIndex(portName)
+            ?: 0).toString(),
+        if (model?.clockwiseButton?.isSelected?.get() == true) {
+            TestDialog.VALUE_CLOCKWISE
+        } else {
+            TestDialog.VALUE_COUNTER_CLOCKWISE
+        },
+        if (model?.sideLeftButton?.isSelected?.get() == true) {
+            TestDialog.VALUE_SIDE_LEFT
+        } else {
+            TestDialog.VALUE_SIDE_RIGHT
+        }
+    )
+
+    private fun generateMotorDialog() = MotorTestDialog.newInstance(
+        (userConfigurationStorage.userConfiguration?.mappingId?.getMotorPortIndex(portName)
+            ?: 0).toString(),
+        if (model?.motorClockwiseButton?.isSelected?.get() == true) {
+            TestDialog.VALUE_CLOCKWISE
+        } else {
+            TestDialog.VALUE_COUNTER_CLOCKWISE
+        }
+    )
 
     private fun setDrivetrainValues(motor: Motor) {
         motor.apply {

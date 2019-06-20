@@ -37,6 +37,7 @@ import com.revolution.robotics.core.interactor.GetUserProgramsInteractor
 import com.revolution.robotics.core.interactor.GetUserRobotInteractor
 import com.revolution.robotics.core.interactor.LocalFileLoader
 import com.revolution.robotics.core.interactor.LocalFileSaver
+import com.revolution.robotics.core.interactor.PortTestFileCreatorInteractor
 import com.revolution.robotics.core.interactor.RemoveUserControllerInteractor
 import com.revolution.robotics.core.interactor.RemoveUserProgramInteractor
 import com.revolution.robotics.core.interactor.SaveUserChallengeCategoryInteractor
@@ -161,6 +162,7 @@ fun createInteractorModule() =
         bind<GetFullConfigurationInteractor>() with p { GetFullConfigurationInteractor(i(), i(), i(), i()) }
         bind<GetUserProgramInteractor>() with p { GetUserProgramInteractor(i()) }
         bind<FirmwareInteractor>() with p { FirmwareInteractor() }
+        bind<PortTestFileCreatorInteractor>() with p { PortTestFileCreatorInteractor(i()) }
     }
 
 @Suppress("LongMethod")
