@@ -17,7 +17,7 @@ class ConnectionTipsDialogFace(dialog: RoboticsDialog) : TipsDialogFace(TestDial
     )
     override val dialogFaceButtons = mutableListOf(
         DialogButton(R.string.tips_dialog_button_community, R.drawable.ic_community) {
-            // TODO open community
+            dialog.navigator.navigate(R.id.toCommunity)
         },
         DialogButton(R.string.connection_failed_try_again_button_title, R.drawable.ic_retry, true) {
             dialog.dismiss()

@@ -16,6 +16,10 @@ class Navigator {
         }
     }
 
+    fun navigate(targetId: Int) {
+        listener?.onNavigationEvent(targetId)
+    }
+
     fun navigate(navDirections: NavDirections) {
         listener?.onNavigationEvent(navDirections)
     }
@@ -30,6 +34,7 @@ class Navigator {
     }
 
     interface NavigationEventListener {
+        fun onNavigationEvent(targetId: Int)
         fun onNavigationEvent(navDirections: NavDirections)
         fun back(count: Int)
         fun popUntil(vararg fragmentId: Int)

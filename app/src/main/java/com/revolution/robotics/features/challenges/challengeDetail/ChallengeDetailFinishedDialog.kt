@@ -5,12 +5,10 @@ import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.remote.Challenge
 import com.revolution.robotics.core.extensions.withArguments
 import com.revolution.robotics.core.utils.BundleArgumentDelegate
-import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.databinding.DialogChallengeDetailFinishedBinding
 import com.revolution.robotics.views.dialogs.DialogButton
 import com.revolution.robotics.views.dialogs.DialogFace
 import com.revolution.robotics.views.dialogs.RoboticsDialog
-import org.kodein.di.erased.instance
 
 sealed class ChallengeDetailFinishedDialog(hasNextButton: Boolean) : RoboticsDialog() {
 
@@ -18,8 +16,6 @@ sealed class ChallengeDetailFinishedDialog(hasNextButton: Boolean) : RoboticsDia
         protected var Bundle.challenge: Challenge by BundleArgumentDelegate.Parcelable("challenge")
         protected var Bundle.categoryId: String by BundleArgumentDelegate.String("categoryId")
     }
-
-    private val navigator: Navigator by kodein.instance()
 
     override val hasCloseButton: Boolean = false
     override val dialogFaces: List<DialogFace<*>> = listOf(ChallengeDetailFinishedDialogFace(this))

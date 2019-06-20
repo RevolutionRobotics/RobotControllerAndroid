@@ -1,5 +1,6 @@
 package com.revolution.robotics.features.build.testing
 
+import com.revolution.robotics.R
 import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.features.build.tips.DialogController
 import com.revolution.robotics.features.build.tips.TipsDialogFace
@@ -22,6 +23,10 @@ abstract class TestDialog : RoboticsDialog(), DialogController {
 
     override fun onRetryClicked() {
         activateFace(dialogFaces.first())
+    }
+
+    override fun navigateToCommunity() {
+        navigator.navigate(R.id.toCommunity)
     }
 
     override fun publishDialogEvent(event: DialogEvent) {

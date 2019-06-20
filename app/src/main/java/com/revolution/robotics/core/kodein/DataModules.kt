@@ -76,6 +76,8 @@ import com.revolution.robotics.features.coding.programs.ProgramsMvp
 import com.revolution.robotics.features.coding.programs.ProgramsPresenter
 import com.revolution.robotics.features.coding.saveProgram.SaveProgramMvp
 import com.revolution.robotics.features.coding.saveProgram.SaveProgramPresenter
+import com.revolution.robotics.features.community.CommunityMvp
+import com.revolution.robotics.features.community.CommunityPresenter
 import com.revolution.robotics.features.configure.ConfigureMvp
 import com.revolution.robotics.features.configure.ConfigurePresenter
 import com.revolution.robotics.features.configure.connections.ConfigureConnectionsMvp
@@ -200,6 +202,7 @@ fun createPresenterModule() =
         bind<TestBuildDialogMvp.Presenter>() with s { TestBuildDialogPresenter(i(), i(), i()) }
         bind<VariableOptionsMvp.Presenter>() with s { VariableOptionsPresenter() }
         bind<SaveProgramMvp.Presenter>() with s { SaveProgramPresenter(i(), i()) }
+        bind<CommunityMvp.Presenter>() with s { CommunityPresenter() }
     }
 
 fun createDbModule(context: Context) =

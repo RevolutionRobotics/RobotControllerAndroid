@@ -279,4 +279,8 @@
     <dimen name="coding_program_title_width">166dp</dimen>
     <dimen name="coding_program_title_height">40dp</dimen>
     <dimen name="donut_checkbox_size">18dp</dimen>
+
+    <!-- SCREEN: COMMUNITY -->
+    <dimen name="community_button_width">226dp</dimen>
+
 </resources>

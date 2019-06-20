@@ -2,6 +2,7 @@ package com.revolution.robotics.features.build.testing.buildTest
 
 import android.os.Bundle
 import android.view.View
+import com.revolution.robotics.R
 import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.core.extensions.withArguments
 import com.revolution.robotics.core.utils.BundleArgumentDelegate
@@ -65,6 +66,10 @@ class TestBuildDialog : RoboticsDialog(), DialogController, TestBuildDialogMvp.V
         arguments?.let {
             presenter.sendTestCode(it.code)
         }
+    }
+
+    override fun navigateToCommunity() {
+        navigator.navigate(R.id.toCommunity)
     }
 
     override fun publishDialogEvent(event: DialogEvent) {

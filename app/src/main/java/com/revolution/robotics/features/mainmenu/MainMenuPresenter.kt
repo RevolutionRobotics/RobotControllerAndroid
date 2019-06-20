@@ -1,5 +1,6 @@
 package com.revolution.robotics.features.mainmenu
 
+import com.revolution.robotics.R
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.core.utils.AppPrefs
 import com.revolution.robotics.core.utils.Navigator
@@ -38,7 +39,7 @@ class MainMenuPresenter(
     }
 
     override fun onCommunityClicked() {
-        // navigator.navigate(MainMenuFragmentDirections.toCommunity())
+        navigator.navigate(R.id.toCommunity)
     }
 
     override fun onSettingsClicked() {
