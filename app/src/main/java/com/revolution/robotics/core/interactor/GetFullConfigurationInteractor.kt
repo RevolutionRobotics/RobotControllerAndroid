@@ -29,11 +29,15 @@ class GetFullConfigurationInteractor(
             val pythonFile = controller.programs[programName]
             val file = File(pythonFile?.python)
             if (file.exists()) {
-                // TODO escape python source
-                sources[programName] = file.readText()
+                sources[programName] = file.readText().escapePythonSource()
             }
         }
 
         return FullControllerData(config, controller, sources)
     }
+
+    private fun String.escapePythonSource() =
+        this.replace(Regex("(${'"'})"), "\\\"")
+            .replace(Regex("[\r\n]+"), "\n")
+            .replace(Regex("[\t]"), "\\\t")
 }
