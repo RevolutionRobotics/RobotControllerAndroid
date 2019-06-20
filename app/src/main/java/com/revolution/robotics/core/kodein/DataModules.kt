@@ -37,6 +37,7 @@ import com.revolution.robotics.core.interactor.GetUserProgramsInteractor
 import com.revolution.robotics.core.interactor.GetUserRobotInteractor
 import com.revolution.robotics.core.interactor.LocalFileLoader
 import com.revolution.robotics.core.interactor.LocalFileSaver
+import com.revolution.robotics.core.interactor.PortTestFileCreatorInteractor
 import com.revolution.robotics.core.interactor.RemoveUserControllerInteractor
 import com.revolution.robotics.core.interactor.RemoveUserProgramInteractor
 import com.revolution.robotics.core.interactor.SaveUserChallengeCategoryInteractor
@@ -58,10 +59,10 @@ import com.revolution.robotics.features.build.BuildRobotMvp
 import com.revolution.robotics.features.build.BuildRobotPresenter
 import com.revolution.robotics.features.build.buildFinished.BuildFinishedMvp
 import com.revolution.robotics.features.build.buildFinished.BuildFinishedPresenter
-import com.revolution.robotics.features.build.chapterFinished.ChapterFinishedMvp
-import com.revolution.robotics.features.build.chapterFinished.ChapterFinishedPresenter
 import com.revolution.robotics.features.build.connect.availableRobotsFace.ConnectMvp
 import com.revolution.robotics.features.build.connect.availableRobotsFace.ConnectPresenter
+import com.revolution.robotics.features.build.testing.TestMvp
+import com.revolution.robotics.features.build.testing.TestPresenter
 import com.revolution.robotics.features.build.testing.buildTest.TestBuildDialogMvp
 import com.revolution.robotics.features.build.testing.buildTest.TestBuildDialogPresenter
 import com.revolution.robotics.features.challenges.challengeDetail.ChallengeDetailMvp
@@ -161,6 +162,7 @@ fun createInteractorModule() =
         bind<GetFullConfigurationInteractor>() with p { GetFullConfigurationInteractor(i(), i(), i(), i()) }
         bind<GetUserProgramInteractor>() with p { GetUserProgramInteractor(i()) }
         bind<FirmwareInteractor>() with p { FirmwareInteractor() }
+        bind<PortTestFileCreatorInteractor>() with p { PortTestFileCreatorInteractor(i()) }
     }
 
 @Suppress("LongMethod")
@@ -169,13 +171,12 @@ fun createPresenterModule() =
         bind<MainMenuMvp.Presenter>() with s { MainMenuPresenter(i(), i(), i()) }
         bind<WhoToBuildMvp.Presenter>() with s { WhoToBuildPresenter(i(), i(), i(), i(), i()) }
         bind<MyRobotsMvp.Presenter>() with s { MyRobotsPresenter(i(), i(), i(), i(), i()) }
-        bind<ChapterFinishedMvp.Presenter>() with s { ChapterFinishedPresenter(i()) }
         bind<BuildRobotMvp.Presenter>() with s { BuildRobotPresenter(i(), i(), i(), i(), i(), i(), i(), i(), i(), i()) }
         bind<ConnectMvp.Presenter>() with s { ConnectPresenter(i(), i()) }
         bind<ConfigureMvp.Presenter>() with s { ConfigurePresenter(i(), i(), i(), i(), i()) }
         bind<ConfigureConnectionsMvp.Presenter>() with s { ConfigureConnectionsPresenter(i(), i(), i()) }
-        bind<MotorConfigurationMvp.Presenter>() with s { MotorConfigurationPresenter(i(), i(), i(), i()) }
-        bind<SensorConfigurationMvp.Presenter>() with s { SensorConfigurationPresenter(i(), i(), i(), i()) }
+        bind<MotorConfigurationMvp.Presenter>() with s { MotorConfigurationPresenter(i(), i(), i(), i(), i()) }
+        bind<SensorConfigurationMvp.Presenter>() with s { SensorConfigurationPresenter(i(), i(), i(), i(), i()) }
         bind<BuildFinishedMvp.Presenter>() with s { BuildFinishedPresenter(i(), i()) }
         bind<ConfigureControllersMvp.Presenter>() with s { ConfigureControllersPresenter(i(), i(), i(), i(), i()) }
         bind<SettingsMvp.Presenter>() with s { SettingsPresenter(i(), i()) }
@@ -203,6 +204,7 @@ fun createPresenterModule() =
         bind<VariableOptionsMvp.Presenter>() with s { VariableOptionsPresenter() }
         bind<SaveProgramMvp.Presenter>() with s { SaveProgramPresenter(i(), i()) }
         bind<CommunityMvp.Presenter>() with s { CommunityPresenter() }
+        bind<TestMvp.Presenter>() with s { TestPresenter(i(), i(), i()) }
     }
 
 fun createDbModule(context: Context) =

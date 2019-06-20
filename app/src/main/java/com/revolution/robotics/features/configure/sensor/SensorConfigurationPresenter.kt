@@ -3,6 +3,7 @@ package com.revolution.robotics.features.configure.sensor
 import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.remote.Sensor
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
+import com.revolution.robotics.features.bluetooth.BluetoothManager
 import com.revolution.robotics.features.build.testing.BumperTestDialog
 import com.revolution.robotics.features.build.testing.UltrasonicTestDialog
 import com.revolution.robotics.features.configure.ConfigurationEventBus
@@ -16,6 +17,7 @@ class SensorConfigurationPresenter(
     private val resourceResolver: ResourceResolver,
     private val configurationEventBus: ConfigurationEventBus,
     private val userConfigurationStorage: UserConfigurationStorage,
+    private val bluetoothManager: BluetoothManager,
     private val errorHandler: ErrorHandler
 ) : SensorConfigurationMvp.Presenter {
 
@@ -132,12 +134,26 @@ class SensorConfigurationPresenter(
     }
 
     override fun onTestButtonClicked() {
-        if (model?.bumperButton?.isSelected?.get() == true) {
-            view?.showDialog(BumperTestDialog())
-        }
+        if (bluetoothManager.isConnected) {
+            if (model?.bumperButton?.isSelected?.get() == true) {
+                view?.showDialog(
+                    BumperTestDialog.newInstance(
+                        (userConfigurationStorage.userConfiguration?.mappingId?.getSensorPortIndex(portName)
+                            ?: 0).toString()
+                    )
+                )
+            }
 
-        if (model?.ultrasoundButton?.isSelected?.get() == true) {
-            view?.showDialog(UltrasonicTestDialog())
+            if (model?.ultrasoundButton?.isSelected?.get() == true) {
+                view?.showDialog(
+                    UltrasonicTestDialog.newInstance(
+                        (userConfigurationStorage.userConfiguration?.mappingId?.getSensorPortIndex(portName)
+                            ?: 0).toString()
+                    )
+                )
+            }
+        } else {
+            bluetoothManager.startConnectionFlow()
         }
     }
 

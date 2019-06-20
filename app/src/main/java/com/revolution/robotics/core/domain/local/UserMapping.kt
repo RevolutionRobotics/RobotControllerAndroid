@@ -31,6 +31,26 @@ class UserMapping(var userConfigId: Int = 0) : PortMapping(), Parcelable {
         }
     }
 
+    @Suppress("MagicNumber")
+    fun getMotorPortIndex(motorPort: String?): Int = when (motorPort) {
+        "M1" -> 1
+        "M2" -> 2
+        "M3" -> 3
+        "M4" -> 4
+        "M5" -> 5
+        "M6" -> 6
+        else -> -1
+    }
+
+    @Suppress("MagicNumber")
+    fun getSensorPortIndex(sensorPort: String?): Int = when (sensorPort) {
+        "S1" -> 1
+        "S2" -> 2
+        "S3" -> 3
+        "S4" -> 4
+        else -> -1
+    }
+
     fun getVariables() = listOfNotNull(
         S1?.variableName,
         S2?.variableName,

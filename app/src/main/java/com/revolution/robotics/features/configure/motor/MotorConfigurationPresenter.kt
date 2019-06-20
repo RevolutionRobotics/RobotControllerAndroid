@@ -3,8 +3,10 @@ package com.revolution.robotics.features.configure.motor
 import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.remote.Motor
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
+import com.revolution.robotics.features.bluetooth.BluetoothManager
 import com.revolution.robotics.features.build.testing.DrivetrainTestDialog
 import com.revolution.robotics.features.build.testing.MotorTestDialog
+import com.revolution.robotics.features.build.testing.TestDialog
 import com.revolution.robotics.features.configure.ConfigurationEventBus
 import com.revolution.robotics.features.configure.MotorPort
 import com.revolution.robotics.features.configure.UserConfigurationStorage
@@ -16,6 +18,7 @@ class MotorConfigurationPresenter(
     private val resourceResolver: ResourceResolver,
     private val configurationEventBus: ConfigurationEventBus,
     private val userConfigurationStorage: UserConfigurationStorage,
+    private val bluetoothManager: BluetoothManager,
     private val errorHandler: ErrorHandler
 ) : MotorConfigurationMvp.Presenter {
 
@@ -88,14 +91,43 @@ class MotorConfigurationPresenter(
     }
 
     override fun onTestButtonClicked() {
-        if (model?.driveTrainButton?.isSelected?.get() == true) {
-            view?.showDialog(DrivetrainTestDialog())
-        }
+        if (bluetoothManager.isConnected) {
+            if (model?.driveTrainButton?.isSelected?.get() == true) {
+                view?.showDialog(generateDriveTrainDialog())
+            }
 
-        if (model?.motorButton?.isSelected?.get() == true) {
-            view?.showDialog(MotorTestDialog())
+            if (model?.motorButton?.isSelected?.get() == true) {
+                view?.showDialog(generateMotorDialog())
+            }
+        } else {
+            bluetoothManager.startConnectionFlow()
         }
     }
+
+    private fun generateDriveTrainDialog() = DrivetrainTestDialog.newInstance(
+        (userConfigurationStorage.userConfiguration?.mappingId?.getMotorPortIndex(portName)
+            ?: 0).toString(),
+        if (model?.clockwiseButton?.isSelected?.get() == true) {
+            TestDialog.VALUE_CLOCKWISE
+        } else {
+            TestDialog.VALUE_COUNTER_CLOCKWISE
+        },
+        if (model?.sideLeftButton?.isSelected?.get() == true) {
+            TestDialog.VALUE_SIDE_LEFT
+        } else {
+            TestDialog.VALUE_SIDE_RIGHT
+        }
+    )
+
+    private fun generateMotorDialog() = MotorTestDialog.newInstance(
+        (userConfigurationStorage.userConfiguration?.mappingId?.getMotorPortIndex(portName)
+            ?: 0).toString(),
+        if (model?.motorClockwiseButton?.isSelected?.get() == true) {
+            TestDialog.VALUE_CLOCKWISE
+        } else {
+            TestDialog.VALUE_COUNTER_CLOCKWISE
+        }
+    )
 
     private fun setDrivetrainValues(motor: Motor) {
         motor.apply {

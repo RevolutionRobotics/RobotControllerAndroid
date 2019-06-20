@@ -43,9 +43,7 @@ class TestBuildDialog : RoboticsDialog(), DialogController, TestBuildDialogMvp.V
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         presenter.register(this, null)
-        arguments?.let {
-            presenter.sendTestCode(it.code)
-        }
+        arguments?.let { presenter.sendTestCode(it.code) }
     }
 
     override fun onDestroyView() {
@@ -63,9 +61,7 @@ class TestBuildDialog : RoboticsDialog(), DialogController, TestBuildDialogMvp.V
 
     override fun onRetryClicked() {
         activateFace(dialogFaces.first())
-        arguments?.let {
-            presenter.sendTestCode(it.code)
-        }
+        arguments?.let { presenter.sendTestCode(it.code) }
     }
 
     override fun navigateToCommunity() {
