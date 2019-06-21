@@ -67,8 +67,7 @@ fun loadFirebaseImage(imageView: ImageView, reference: StorageReference, errorDr
 fun loadFirebaseImage(imageView: ImageView, gsUrl: String?, errorDrawable: Drawable?, animate: Boolean?) {
     if (!gsUrl.isNullOrEmpty()) {
         GlideApp.with(imageView)
-            // TODO Remove fix storage url
-            .load(FirebaseStorage.getInstance("gs://revolutionrobotics-afeb5.appspot.com").getReferenceFromUrl(gsUrl))
+            .load(FirebaseStorage.getInstance().getReferenceFromUrl(gsUrl))
             .apply {
                 if (errorDrawable == null) {
                     error(R.drawable.ic_image_not_found)
