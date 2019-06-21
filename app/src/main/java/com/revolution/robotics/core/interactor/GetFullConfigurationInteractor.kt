@@ -1,5 +1,6 @@
 package com.revolution.robotics.core.interactor
 
+import android.util.Base64
 import com.revolution.robotics.core.domain.local.UserBackgroundProgramBindingDao
 import com.revolution.robotics.core.domain.local.UserConfigurationDao
 import com.revolution.robotics.core.domain.local.UserControllerDao
@@ -29,15 +30,13 @@ class GetFullConfigurationInteractor(
             val pythonFile = controller.programs[programName]
             val file = File(pythonFile?.python)
             if (file.exists()) {
-                sources[programName] = file.readText().escapePythonSource()
+                sources[programName] = file.readText().encode()
             }
         }
 
         return FullControllerData(config, controller, sources)
     }
 
-    private fun String.escapePythonSource() =
-        this.replace(Regex("(${'"'})"), "\\\"")
-            .replace(Regex("[\r\n]+"), "\n")
-            .replace(Regex("[\t]"), "\\\t")
+    private fun String.encode() =
+        String(Base64.encode(toByteArray(), Base64.NO_WRAP))
 }
