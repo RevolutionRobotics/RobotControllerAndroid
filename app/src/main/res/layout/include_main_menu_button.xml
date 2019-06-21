@@ -32,7 +32,7 @@
         <ImageView android:layout_width="match_parent"
                    android:layout_height="0dp"
                    android:layout_weight="1"
-                   tools:src="@drawable/ic_robots"
+                   tools:src="@drawable/robots"
                    app:localResource="@{viewModel.image}"
                    android:layout_marginBottom="20dp"/>
 
