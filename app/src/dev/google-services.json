@@ -8,12 +8,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:753863076984:android:d73de4f842046935",
+        "mobilesdk_app_id": "1:753863076984:android:720f166751ac8f99",
         "android_client_info": {
-          "package_name": "com.revolution.robotics.dev"
+          "package_name": "com.revolution.robotics"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "753863076984-h4nktqi28b1fufegftaa3ugku1prnpc8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCK9lpyWV9el5TKHZ2RWTSFarzXBA8wIDo"
@@ -25,6 +30,121 @@
             {
               "client_id": "753863076984-h4nktqi28b1fufegftaa3ugku1prnpc8.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "753863076984-s1udf7usncm581i0cg0ajc32jkbjch7m.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.revolutionrobotics.RevolutionRobotics.dev.development.sc"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:753863076984:android:d73de4f842046935",
+        "android_client_info": {
+          "package_name": "com.revolution.robotics.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "753863076984-h4nktqi28b1fufegftaa3ugku1prnpc8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCK9lpyWV9el5TKHZ2RWTSFarzXBA8wIDo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "753863076984-h4nktqi28b1fufegftaa3ugku1prnpc8.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "753863076984-s1udf7usncm581i0cg0ajc32jkbjch7m.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.revolutionrobotics.RevolutionRobotics.dev.development.sc"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:753863076984:android:14cc132ebd2afb85",
+        "android_client_info": {
+          "package_name": "org.revolutionrobotics.robotcontroller"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "753863076984-h4nktqi28b1fufegftaa3ugku1prnpc8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCK9lpyWV9el5TKHZ2RWTSFarzXBA8wIDo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "753863076984-h4nktqi28b1fufegftaa3ugku1prnpc8.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "753863076984-s1udf7usncm581i0cg0ajc32jkbjch7m.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.revolutionrobotics.RevolutionRobotics.dev.development.sc"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:753863076984:android:1763c893b2cee6a0",
+        "android_client_info": {
+          "package_name": "org.revolutionrobotics.robotcontroller.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "753863076984-h4nktqi28b1fufegftaa3ugku1prnpc8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCK9lpyWV9el5TKHZ2RWTSFarzXBA8wIDo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "753863076984-h4nktqi28b1fufegftaa3ugku1prnpc8.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "753863076984-s1udf7usncm581i0cg0ajc32jkbjch7m.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.revolutionrobotics.RevolutionRobotics.dev.development.sc"
+              }
             }
           ]
         }
