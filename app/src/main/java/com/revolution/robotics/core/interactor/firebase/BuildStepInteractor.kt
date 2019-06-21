@@ -9,8 +9,8 @@ class BuildStepInteractor : FirebaseListInteractor<BuildStep>() {
 
     var robotId = 0
 
-    override val genericTypeIndicator: GenericTypeIndicator<ArrayList<BuildStep>> =
-        object : GenericTypeIndicator<ArrayList<BuildStep>>() {}
+    override val genericTypeIndicator: GenericTypeIndicator<Map<String, BuildStep>> =
+        object : GenericTypeIndicator<Map<String, BuildStep>>() {}
 
     override fun getDatabaseReference(database: FirebaseDatabase): Query = database.getReference("buildStep")
 

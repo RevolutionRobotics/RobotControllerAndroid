@@ -7,8 +7,8 @@ import com.revolution.robotics.core.domain.remote.ChallengeCategory
 
 class ChallengeCategoriesInteractor : FirebaseListInteractor<ChallengeCategory>() {
 
-    override val genericTypeIndicator: GenericTypeIndicator<ArrayList<ChallengeCategory>> =
-        object : GenericTypeIndicator<ArrayList<ChallengeCategory>>() {}
+    override val genericTypeIndicator: GenericTypeIndicator<Map<String, ChallengeCategory>> =
+        object : GenericTypeIndicator<Map<String, ChallengeCategory>>() {}
 
     override fun filter(item: ChallengeCategory): Boolean = true
 
