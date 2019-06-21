@@ -8,21 +8,21 @@ class MainMenuViewModel(private val presenter: MainMenuMvp.Presenter) : ViewMode
     val robotButton = MainMenuButtonViewModel(
         R.string.menu_robots,
         R.drawable.bg_card_border_red_selector,
-        R.drawable.ic_robots,
+        R.drawable.robots,
         presenter::navigateToMyRobots
     )
 
     val codingButton = MainMenuButtonViewModel(
         R.string.menu_coding,
         R.drawable.bg_card_border_yellow_selector,
-        R.drawable.ic_programs,
+        R.drawable.programs,
         presenter::navigateToCoding
     )
 
     val challengesButton = MainMenuButtonViewModel(
         R.string.menu_challenges,
         R.drawable.bg_card_border_blue_selector,
-        R.drawable.ic_challenges,
+        R.drawable.challenges,
         presenter::navigateToChallengeList
     )
 
