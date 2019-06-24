@@ -51,6 +51,10 @@ class TestBuildDialog : RoboticsDialog(), DialogController, TestBuildDialogMvp.V
         super.onDestroyView()
     }
 
+    override fun showTips() {
+        activateFace(dialogFaces.first { it is TipsDialogFace })
+    }
+
     override fun activateBuildFace() {
         activateFace(dialogFaces.first { it is TestBuildDialogFace })
     }
@@ -60,7 +64,7 @@ class TestBuildDialog : RoboticsDialog(), DialogController, TestBuildDialogMvp.V
     }
 
     override fun onRetryClicked() {
-        activateFace(dialogFaces.first())
+        activateFace(dialogFaces.first { it is TestLoadingDialogFace })
         arguments?.let { presenter.sendTestCode(it.code) }
     }
 
@@ -70,9 +74,5 @@ class TestBuildDialog : RoboticsDialog(), DialogController, TestBuildDialogMvp.V
 
     override fun publishDialogEvent(event: DialogEvent) {
         dialogEventBus.publish(event)
-    }
-
-    override fun showTips() {
-        activateFace(dialogFaces[2])
     }
 }

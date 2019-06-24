@@ -7,7 +7,7 @@ import com.revolution.robotics.views.dialogs.DialogFace
 import com.revolution.robotics.views.dialogs.RoboticsDialog
 
 open class TipsDialogFace(
-    source: TestDialog.Source,
+    source: TestDialog.Source?,
     dialogController: DialogController?,
     dialog: RoboticsDialog? = null
 ) :

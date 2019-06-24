@@ -5,25 +5,26 @@ import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.features.build.testing.TestDialog
 import com.revolution.robotics.views.dialogs.DialogButton
 
-fun createTipsDialogButtons(source: TestDialog.Source, dialogController: DialogController): MutableList<DialogButton> {
+fun createTipsDialogButtons(source: TestDialog.Source?, dialogController: DialogController): MutableList<DialogButton> {
     val firstButton =
-        if (source == TestDialog.Source.BUILD) {
-            DialogButton(R.string.tips_dialog_button_skip_testing, R.drawable.ic_skip, false, true) {
-                dialogController.publishDialogEvent(DialogEvent.SKIP_TESTING)
-                dialogController.onCancelClicked()
-            }
-        } else {
-            DialogButton(
-                R.string.tips_dialog_button_reconfigure,
-                R.drawable.ic_build,
-                false,
-                true,
-                dialogController::onCancelClicked
-            )
+        when (source) {
+            TestDialog.Source.BUILD ->
+                DialogButton(R.string.tips_dialog_button_skip_testing, R.drawable.ic_skip, false, true) {
+                    dialogController.publishDialogEvent(DialogEvent.SKIP_TESTING)
+                    dialogController.onCancelClicked()
+                }
+            TestDialog.Source.CONFIGURE ->
+                DialogButton(
+                    R.string.tips_dialog_button_reconfigure,
+                    R.drawable.ic_build,
+                    false,
+                    true,
+                    dialogController::onCancelClicked
+                )
+            else -> null
         }
 
-    return mutableListOf(
-        firstButton,
+    val result = mutableListOf(
         DialogButton(
             R.string.tips_dialog_button_community,
             R.drawable.ic_community
@@ -36,4 +37,7 @@ fun createTipsDialogButtons(source: TestDialog.Source, dialogController: DialogC
             dialogController::onRetryClicked
         )
     )
+    firstButton?.let { result.add(0, it) }
+
+    return result
 }

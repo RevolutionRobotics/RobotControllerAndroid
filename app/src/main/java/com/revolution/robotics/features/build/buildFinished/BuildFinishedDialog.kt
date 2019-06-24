@@ -37,7 +37,7 @@ class BuildFinishedDialog : RoboticsDialog(), BuildFinishedMvp.View {
     }
 
     override fun showBuildFinishedDialogFace() {
-        activateFace(dialogFaces[1])
+        activateFace(dialogFaces.first { it is BuildFinishedDialogFace })
     }
 
     override fun hideDialog() {

@@ -8,11 +8,13 @@ import androidx.core.content.ContextCompat
 import com.revolution.robotics.R
 import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.databinding.DialogTurnOnTheBrainBinding
+import com.revolution.robotics.features.build.tips.DialogController
+import com.revolution.robotics.features.build.tips.TipsDialogFace
 import com.revolution.robotics.views.dialogs.DialogButton
 import com.revolution.robotics.views.dialogs.DialogFace
 import com.revolution.robotics.views.dialogs.RoboticsDialog
 
-class TurnOnTheBrainDialog : RoboticsDialog() {
+class TurnOnTheBrainDialog : RoboticsDialog(), DialogController {
 
     companion object {
         fun newInstance() = TurnOnTheBrainDialog()
@@ -20,34 +22,53 @@ class TurnOnTheBrainDialog : RoboticsDialog() {
 
     override val hasCloseButton = true
     override val dialogFaces: List<DialogFace<*>> = listOf(
-        TurnOnTheBrainDialogFace()
+        TurnOnTheBrainDialogFace(),
+        TipsDialogFace(null, this, this)
     )
+    override val dialogButtons = emptyList<DialogButton>()
 
-    override val dialogButtons = listOf(
-        DialogButton(R.string.build_robot_later, R.drawable.ic_clock) {
-            dialog.dismiss()
-            dialogEventBus.publish(DialogEvent.BRAIN_NOT_TURNED_ON)
-        },
-        DialogButton(R.string.build_robot_tips, R.drawable.ic_tips) {
-            // TODO show tips
-        },
-        DialogButton(R.string.build_robot_start, R.drawable.ic_play, true) {
-            val bluetoothManager = requireContext().getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
-            if (bluetoothManager.adapter.isEnabled) {
-                dialog.dismiss()
-                dialogEventBus.publish(DialogEvent.BRAIN_TURNED_ON)
-            } else {
-                ContextCompat.startActivity(requireContext(), Intent().apply {
-                    action = Settings.ACTION_BLUETOOTH_SETTINGS
-                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                }, null)
-            }
-        }
-    )
+    override fun navigateToCommunity() {
+        navigator.navigate(R.id.toCommunity)
+    }
+
+    override fun publishDialogEvent(event: DialogEvent) {
+        dialogEventBus.publish(event)
+    }
+
+    override fun onCancelClicked() {
+        onDialogCloseButtonClicked()
+    }
+
+    override fun onRetryClicked() {
+        activateFace(dialogFaces.first { it is TurnOnTheBrainDialogFace })
+    }
 
     override fun onDialogCloseButtonClicked() {
         dialogEventBus.publish(DialogEvent.BRAIN_NOT_TURNED_ON)
     }
 
-    class TurnOnTheBrainDialogFace : DialogFace<DialogTurnOnTheBrainBinding>(R.layout.dialog_turn_on_the_brain)
+    inner class TurnOnTheBrainDialogFace : DialogFace<DialogTurnOnTheBrainBinding>(R.layout.dialog_turn_on_the_brain) {
+
+        override val dialogFaceButtons = mutableListOf(
+            DialogButton(R.string.build_robot_later, R.drawable.ic_clock) {
+                dismiss()
+                dialogEventBus.publish(DialogEvent.BRAIN_NOT_TURNED_ON)
+            },
+            DialogButton(R.string.build_robot_tips, R.drawable.ic_tips) {
+                activateFace(dialogFaces.first { it is TipsDialogFace })
+            },
+            DialogButton(R.string.build_robot_start, R.drawable.ic_play, true) {
+                val bluetoothManager = requireContext().getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
+                if (bluetoothManager.adapter.isEnabled) {
+                    dismiss()
+                    dialogEventBus.publish(DialogEvent.BRAIN_TURNED_ON)
+                } else {
+                    ContextCompat.startActivity(requireContext(), Intent().apply {
+                        action = Settings.ACTION_BLUETOOTH_SETTINGS
+                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    }, null)
+                }
+            }
+        )
+    }
 }

@@ -6,7 +6,6 @@ import com.revolution.robotics.R
 import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.core.utils.BundleArgumentDelegate
 import com.revolution.robotics.features.build.tips.DialogController
-import com.revolution.robotics.features.build.tips.TipsDialogFace
 import com.revolution.robotics.views.dialogs.DialogButton
 import com.revolution.robotics.views.dialogs.RoboticsDialog
 import org.kodein.di.erased.instance
@@ -47,10 +46,6 @@ abstract class TestDialog : RoboticsDialog(), DialogController, TestMvp.View {
     override fun onDestroyView() {
         presenter.unregister()
         super.onDestroyView()
-    }
-
-    override fun showTips() {
-        activateFace(dialogFaces.first { it is TipsDialogFace })
     }
 
     override fun onCancelClicked() {
