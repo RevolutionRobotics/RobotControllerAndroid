@@ -43,7 +43,7 @@
                 android:layout_marginTop="@dimen/dimen_16dp"
                 android:text="@{viewModel.title}"
                 tools:text="In this challenge, you’ll learn a simple way to use gears to make your wheels rotate faster."
-                app:visible="@{safeUnbox(!viewModel.isPartStep)}"/>
+                app:visible="@{!safeUnbox(viewModel.isPartStep)}"/>
 
         <ImageView
                 android:layout_width="wrap_content"
@@ -57,7 +57,7 @@
                 app:layout_constraintBottom_toTopOf="@id/slider_challenge_detail"
                 tools:src="@drawable/img_logo"
                 app:firebaseImageUrl="@{viewModel.image}"
-                app:visible="@{safeUnbox(!viewModel.isPartStep)}"/>
+                app:visible="@{!safeUnbox(viewModel.isPartStep)}"/>
 
         <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_parts"

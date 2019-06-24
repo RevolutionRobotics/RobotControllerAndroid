@@ -5,6 +5,7 @@ import androidx.room.Dao
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.Index
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.PrimaryKey
@@ -18,7 +19,8 @@ import kotlinx.android.parcel.Parcelize
         parentColumns = arrayOf("instanceId"),
         childColumns = arrayOf("robotId"),
         onDelete = ForeignKey.CASCADE
-    )]
+    )],
+    indices = [Index(value = ["robotId"])]
 )
 @Suppress("DataClassContainsFunctions")
 @Parcelize
@@ -50,7 +52,7 @@ interface UserControllerDao {
     @Query("SELECT * FROM UserController WHERE robotId=:robotId ORDER BY lastModified")
     fun getUserControllersForRobot(robotId: Int): List<UserController>
 
-    @Insert(onConflict = OnConflictStrategy.FAIL)
+    @Insert(onConflict = OnConflictStrategy.ABORT)
     fun saveUserController(userController: UserController): Long
 
     @Update

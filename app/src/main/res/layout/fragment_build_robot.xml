@@ -108,7 +108,7 @@
                     android:layout_height="@dimen/dimen_1dp"
                     android:background="@color/grey_6d"
                     android:layout_marginTop="@dimen/dimen_16dp"
-                    app:gone="@{!viewModel.hasTwoParts}"/>
+                    app:gone="@{!safeUnbox(viewModel.hasTwoParts)}"/>
 
             <ImageView
                     android:id="@+id/part_2_image"
@@ -118,7 +118,7 @@
                     android:layout_marginTop="@dimen/dimen_16dp"
                     app:firebaseImageUrl="@{viewModel.part2Image}"
                     app:errorDrawable="@{@drawable/ic_image_not_found_dark}"
-                    app:gone="@{!viewModel.hasTwoParts}"/>
+                    app:gone="@{!safeUnbox(viewModel.hasTwoParts)}"/>
 
         </LinearLayout>
 

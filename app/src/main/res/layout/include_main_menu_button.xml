@@ -14,9 +14,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:background="@drawable/card_border_red"
-            android:clickable="@{onClickEnabled}"
+            android:clickable="@{safeUnbox(onClickEnabled)}"
             android:onClick="@{() -> viewModel.onClick.invoke()}"
-            android:translationZ="@{translationZ}"
+            android:translationZ="@{safeUnbox(translationZ)}"
             tools:layout_width="120dp"
             tools:layout_height="160dp">
 
