@@ -7,8 +7,8 @@ import com.revolution.robotics.core.domain.remote.Robot
 
 class RobotInteractor : FirebaseListInteractor<Robot>() {
 
-    override val genericTypeIndicator: GenericTypeIndicator<Map<String, Robot>> =
-        object : GenericTypeIndicator<Map<String, Robot>>() {}
+    override val genericTypeIndicator: GenericTypeIndicator<HashMap<String, @JvmSuppressWildcards Robot>> =
+        object : GenericTypeIndicator<HashMap<String, Robot>>() {}
 
     override fun getDatabaseReference(database: FirebaseDatabase): Query = database.getReference("robot")
 

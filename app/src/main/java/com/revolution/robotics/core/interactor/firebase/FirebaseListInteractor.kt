@@ -6,7 +6,7 @@ import com.revolution.robotics.core.domain.remote.FirebaseException
 
 abstract class FirebaseListInteractor<T> : FirebaseInteractor<List<T>>() {
 
-    abstract val genericTypeIndicator: GenericTypeIndicator<Map<String, T>>
+    abstract val genericTypeIndicator: GenericTypeIndicator<HashMap<String, @JvmSuppressWildcards T>>
 
     override fun onDataChange(snapShot: DataSnapshot) {
         val response = snapShot.getValue(genericTypeIndicator)

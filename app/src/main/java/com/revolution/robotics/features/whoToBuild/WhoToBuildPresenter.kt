@@ -87,7 +87,7 @@ class WhoToBuildPresenter(
             BuildStatus.IN_PROGRESS,
             BuildRobotFragment.DEFAULT_STARTING_INDEX,
             Date(System.currentTimeMillis()),
-            robot.configurationId,
+            0,
             robot.name,
             robot.coverImage,
             robot.description

@@ -7,10 +7,10 @@ import com.revolution.robotics.core.domain.remote.BuildStep
 
 class BuildStepInteractor : FirebaseListInteractor<BuildStep>() {
 
-    var robotId = 0
+    lateinit var robotId: String
 
-    override val genericTypeIndicator: GenericTypeIndicator<Map<String, BuildStep>> =
-        object : GenericTypeIndicator<Map<String, BuildStep>>() {}
+    override val genericTypeIndicator: GenericTypeIndicator<HashMap<String, @JvmSuppressWildcards BuildStep>> =
+        object : GenericTypeIndicator<HashMap<String, BuildStep>>() {}
 
     override fun getDatabaseReference(database: FirebaseDatabase): Query = database.getReference("buildStep")
 

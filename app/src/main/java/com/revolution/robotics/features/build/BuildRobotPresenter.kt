@@ -14,6 +14,7 @@ import com.revolution.robotics.core.interactor.firebase.ConfigurationInteractor
 import com.revolution.robotics.core.interactor.firebase.ControllerInteractor
 import com.revolution.robotics.core.interactor.firebase.FirebaseProgramDownloader
 import com.revolution.robotics.core.interactor.firebase.ProgramsInteractor
+import com.revolution.robotics.core.interactor.firebase.RobotInteractor
 import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.features.controllers.ControllerType
 import com.revolution.robotics.features.shared.ErrorHandler
@@ -25,6 +26,7 @@ class BuildRobotPresenter(
     private val configurationInteractor: ConfigurationInteractor,
     private val controllerInteractor: ControllerInteractor,
     private val programsInteractor: ProgramsInteractor,
+    private val robotInteractor: RobotInteractor,
     private val navigator: Navigator,
     private val dialogEventBus: DialogEventBus,
     private val firebaseProgramDownloader: FirebaseProgramDownloader,
@@ -38,7 +40,7 @@ class BuildRobotPresenter(
     private var controllers: List<Controller>? = null
     private var userRobot: UserRobot? = null
 
-    override fun loadBuildSteps(robotId: Int) {
+    override fun loadBuildSteps(robotId: String) {
         buildStepInteractor.robotId = robotId
         buildStepInteractor.execute { steps ->
             view?.onBuildStepsLoaded(steps)
@@ -70,10 +72,14 @@ class BuildRobotPresenter(
         if (createDefaultConfig) {
             view?.onRobotSaveStarted()
             this.userRobot = userRobot
-            configurationInteractor.configId = userRobot.configurationId
-            configurationInteractor.execute { config ->
-                configuration = config
-                downloadControllerInfos(config.id)
+            robotInteractor.execute { robots ->
+                robots.find { it.id == userRobot.id }?.let { robot ->
+                    configurationInteractor.configId = robot.configurationId ?: ""
+                    configurationInteractor.execute { config ->
+                        configuration = config
+                        downloadControllerInfos(config.id ?: "")
+                    }
+                }
             }
         } else {
             saveUserRobotInteractor.userRobot = userRobot
@@ -83,8 +89,8 @@ class BuildRobotPresenter(
         }
     }
 
-    private fun downloadControllerInfos(configurationId: Int) {
-        controllerInteractor.configurationId = configurationId.toString()
+    private fun downloadControllerInfos(configurationId: String) {
+        controllerInteractor.configurationId = configurationId
         controllerInteractor.execute(onResponse = { controllers ->
             this.controllers = controllers
             val programIds = mutableListOf<String>()

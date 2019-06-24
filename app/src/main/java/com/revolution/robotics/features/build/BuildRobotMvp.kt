@@ -13,7 +13,7 @@ interface BuildRobotMvp : Mvp {
 
     interface Presenter : Mvp.Presenter<View, BuildRobotViewModel> {
         fun saveUserRobot(userRobot: UserRobot, createDefaultConfig: Boolean)
-        fun loadBuildSteps(robotId: Int)
+        fun loadBuildSteps(robotId: String)
         fun letsDrive()
     }
 }

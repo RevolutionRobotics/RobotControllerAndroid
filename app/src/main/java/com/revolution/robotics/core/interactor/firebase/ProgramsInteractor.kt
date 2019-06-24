@@ -6,8 +6,8 @@ import com.google.firebase.database.Query
 import com.revolution.robotics.core.domain.remote.Program
 
 class ProgramsInteractor : FirebaseListInteractor<Program>() {
-    override val genericTypeIndicator: GenericTypeIndicator<Map<String, Program>> =
-        object : GenericTypeIndicator<Map<String, Program>>() {}
+    override val genericTypeIndicator: GenericTypeIndicator<HashMap<String, @JvmSuppressWildcards Program>> =
+        object : GenericTypeIndicator<HashMap<String, Program>>() {}
 
     lateinit var programIds: List<String>
     private var downloadAllPrograms = false

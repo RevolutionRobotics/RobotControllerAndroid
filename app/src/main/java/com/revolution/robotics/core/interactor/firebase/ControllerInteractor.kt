@@ -7,8 +7,8 @@ import com.revolution.robotics.core.domain.remote.Controller
 
 class ControllerInteractor : FirebaseListInteractor<Controller>() {
 
-    override val genericTypeIndicator: GenericTypeIndicator<Map<String, Controller>> =
-        object : GenericTypeIndicator<Map<String, Controller>>() {}
+    override val genericTypeIndicator: GenericTypeIndicator<HashMap<String, @JvmSuppressWildcards  Controller>> =
+        object : GenericTypeIndicator<HashMap<String, Controller>>() {}
 
     lateinit var configurationId: String
 

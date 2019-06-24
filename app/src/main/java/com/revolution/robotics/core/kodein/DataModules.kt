@@ -173,7 +173,21 @@ fun createPresenterModule() =
         bind<MainMenuMvp.Presenter>() with s { MainMenuPresenter(i(), i(), i()) }
         bind<WhoToBuildMvp.Presenter>() with s { WhoToBuildPresenter(i(), i(), i(), i(), i()) }
         bind<MyRobotsMvp.Presenter>() with s { MyRobotsPresenter(i(), i(), i(), i(), i()) }
-        bind<BuildRobotMvp.Presenter>() with s { BuildRobotPresenter(i(), i(), i(), i(), i(), i(), i(), i(), i(), i()) }
+        bind<BuildRobotMvp.Presenter>() with s {
+            BuildRobotPresenter(
+                i(),
+                i(),
+                i(),
+                i(),
+                i(),
+                i(),
+                i(),
+                i(),
+                i(),
+                i(),
+                i()
+            )
+        }
         bind<ConnectMvp.Presenter>() with s { ConnectPresenter(i(), i()) }
         bind<ConfigureMvp.Presenter>() with s { ConfigurePresenter(i(), i(), i(), i(), i()) }
         bind<ConfigureConnectionsMvp.Presenter>() with s { ConfigureConnectionsPresenter(i(), i(), i()) }

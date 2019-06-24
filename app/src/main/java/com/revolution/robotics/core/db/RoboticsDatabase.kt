@@ -24,7 +24,7 @@ import com.revolution.robotics.core.domain.local.UserRobotDao
         UserBackgroundProgramBinding::class,
         UserProgram::class,
         UserChallengeCategory::class],
-    version = 19,
+    version = 20,
     exportSchema = false
 )
 @TypeConverters(Converters::class)
