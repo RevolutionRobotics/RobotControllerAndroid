@@ -54,6 +54,7 @@ class CodingPresenter(
     override fun setSavedProgramData(userProgram: UserProgram) {
         this.userProgram = userProgram
         model?.programName?.set(userProgram.name)
+        model?.userProgram = userProgram
     }
 
     override fun removeProgram(userProgram: UserProgram) {
