@@ -7,5 +7,4 @@ interface DialogController {
     fun publishDialogEvent(event: DialogEvent)
     fun onCancelClicked()
     fun onRetryClicked()
-    fun showTips()
 }

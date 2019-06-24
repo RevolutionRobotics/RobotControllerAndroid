@@ -40,7 +40,7 @@ class FirmwareUpdateDialog : RoboticsDialog(), FirmwareUpdateMvp.View {
             dialogFaceButtons.clear()
             dialogFaceButtons.add(button)
         }
-        activateFace(dialogFaces[0])
+        activateFace(dialogFaces.first { it is FirmwareUpdateInfoFace })
     }
 
     override fun setInfoViewModel(viewModel: FirmwareUpdateInfoViewModel) {

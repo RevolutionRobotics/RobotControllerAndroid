@@ -5,7 +5,6 @@ import com.revolution.robotics.databinding.DialogConfirmBinding
 import com.revolution.robotics.utils.ConfirmDialog
 import org.kodein.di.erased.instance
 
-// TODO update disconnect button
 class BluetoothDisconnectDialog : ConfirmDialog(R.string.disconnect_modal_disconnect) {
 
     companion object {

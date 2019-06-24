@@ -58,10 +58,10 @@ class AboutViewModel(private val presenter: AboutMvp.Presenter) : ViewModel() {
     }
 
     fun onPrivacyPolicyClicked() {
-        // TODO Open privacy policy
+        presenter.onPrivacyPolicyClicked()
     }
 
     fun onTermsAndConditionClicked() {
-        // TODO Open terms
+        presenter.onTermsAndConditionsClicked()
     }
 }

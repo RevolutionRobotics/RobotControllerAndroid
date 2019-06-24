@@ -35,7 +35,7 @@ abstract class RoboticsDialog : BaseDialog() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DialogRoboticsCoreBinding.inflate(inflater, container, false)
-        activateFace(dialogFaces[0])
+        activateFace(dialogFaces.first())
 
         binding.background = dialogBackgroundConfig.create()
         binding.viewModel = RoboticsDialogViewModel(hasCloseButton) {

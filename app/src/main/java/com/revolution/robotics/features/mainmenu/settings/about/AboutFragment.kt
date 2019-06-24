@@ -37,8 +37,7 @@ class AboutFragment :
         try {
             requireActivity().startActivity(intent)
         } catch (exception: ActivityNotFoundException) {
-            // TODO add custom error message
-            errorHandler.onError()
+            errorHandler.onError(R.string.error_cannot_open_url)
         }
     }
 }
