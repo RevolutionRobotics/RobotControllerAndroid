@@ -9,6 +9,7 @@ import com.revolution.robotics.blockly.JavascriptPromptDialog
 import com.revolution.robotics.core.extensions.withArguments
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.core.utils.BundleArgumentDelegate
+import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.databinding.BlocklyDialogBlockOptionsBinding
 import com.revolution.robotics.views.ChippedEditTextViewModel
 import com.revolution.robotics.views.dialogs.DialogButton
@@ -39,6 +40,7 @@ class BlockOptionsDialog :
     override val hasTitle = true
 
     private val resourceResolver: ResourceResolver by kodein.instance()
+    private val navigator: Navigator by kodein.instance()
     private val dialogButtonHelper = DialogButtonHelper()
 
     private var wasResultConfirmed = false
@@ -51,7 +53,7 @@ class BlockOptionsDialog :
                 },
                 DialogButton(R.string.dialog_block_options_help, R.drawable.ic_community) {
                     dismissAllowingStateLoss()
-                    // TODO navigate to the help page of the block
+                    navigator.navigate(R.id.toCommunity)
                 },
                 DialogButton(R.string.dialog_block_options_duplicate, R.drawable.ic_copy, true) {
                     confirmResult(createResponse(ACTION_DUPLICATE))
