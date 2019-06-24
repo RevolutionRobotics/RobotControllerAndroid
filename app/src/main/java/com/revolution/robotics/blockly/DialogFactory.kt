@@ -45,22 +45,22 @@ class DialogFactory(
     override fun showOptionSelector(
         title: String,
         blocklyOptions: List<BlocklyOption>,
-        default: BlocklyOption?,
+        defaultValue: BlocklyOption?,
         result: JsPromptResult
     ) {
         javascriptResultHandler.registerResult(result)
-        val options = blocklyOptions.map { blocklyOption -> blocklyOption.toOption(default, resourceResolver) }
+        val options = blocklyOptions.map { blocklyOption -> blocklyOption.toOption(defaultValue, resourceResolver) }
         OptionSelectorDialog.newInstance(title, options).show(fragmentManager)
     }
 
-    override fun showColorPicker(title: String, colors: List<String>, selectedColor: String, result: JsPromptResult) {
+    override fun showColorPicker(title: String, colors: List<String>, defaultValue: String, result: JsPromptResult) {
         javascriptResultHandler.registerResult(result)
-        ColorPickerDialog.newInstance(title, colors, selectedColor).show(fragmentManager)
+        ColorPickerDialog.newInstance(title, colors, defaultValue).show(fragmentManager)
     }
 
-    override fun showSoundPicker(title: String, selectedSound: String?, result: JsPromptResult) {
+    override fun showSoundPicker(title: String, defaultValue: String?, result: JsPromptResult) {
         javascriptResultHandler.registerResult(result)
-        SoundPickerDialog.newInstance(title, selectedSound).show(fragmentManager)
+        SoundPickerDialog.newInstance(title, defaultValue).show(fragmentManager)
     }
 
     override fun showBlockOptionsDialog(title: String, comment: String, result: JsPromptResult) {
@@ -83,7 +83,7 @@ class DialogFactory(
         TextInputDialog.newInstance(title, defaultValue).show(fragmentManager)
     }
 
-    override fun showDonutSelector(defaultSelection: String, isMultiSelection: Boolean, result: JsPromptResult) {
+    override fun showDonutSelector(defaultValue: String, isMultiSelection: Boolean, result: JsPromptResult) {
         javascriptResultHandler.registerResult(result)
         val selectionType =
             if (isMultiSelection) {
@@ -91,7 +91,7 @@ class DialogFactory(
             } else {
                 DonutSelectorDialog.DonutSelectionType.SINGLE
             }
-        DonutSelectorDialog.newInstance(selectionType, defaultSelection).show(fragmentManager)
+        DonutSelectorDialog.newInstance(selectionType, defaultValue).show(fragmentManager)
     }
 
     private fun BlocklyOption.toOption(defaultOption: BlocklyOption?, resourceResolver: ResourceResolver): Option {
