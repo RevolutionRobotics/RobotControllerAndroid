@@ -21,6 +21,8 @@ class BlocklyView @JvmOverloads constructor(context: Context, attrs: AttributeSe
     private companion object {
         const val BRIDGE_NAME = "NativeBridge"
         const val USER_AGENT = "Android-Blockly"
+
+        private const val HTML_PATH = "file:///android_asset/blockly/webview.html"
     }
 
     private var javascriptInterface = IOJavascriptInterface(context)
@@ -32,9 +34,9 @@ class BlocklyView @JvmOverloads constructor(context: Context, attrs: AttributeSe
     }
 
     @Suppress("JavascriptInterface")
-    fun init(htmlPath: String, dialogFactory: DialogFactory) {
+    fun init(dialogFactory: DialogFactory) {
         webChromeClient = BlocklyWebChromeClient(dialogFactory, this)
-        loadUrl(htmlPath)
+        loadUrl(HTML_PATH)
         addJavascriptInterface(javascriptInterface, BRIDGE_NAME)
     }
 
@@ -55,12 +57,6 @@ class BlocklyView @JvmOverloads constructor(context: Context, attrs: AttributeSe
     fun clearWorkspace() {
         loadUrl("javascript:clearWorkspace()")
     }
-
-    /*
-    fun closeToolbox() {
-        loadUrl("javascript:closeToolbox()")
-    }
-    */
 
     override fun onBlocklyLoaded() {
         isBlocklyLoaded = true
