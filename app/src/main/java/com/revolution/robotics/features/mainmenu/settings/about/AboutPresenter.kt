@@ -13,10 +13,16 @@ class AboutPresenter(
     private val applicationContextProvider: ApplicationContextProvider
 ) : AboutMvp.Presenter {
 
+    // TODO remove this suppress when the urls are finalised
+    @Suppress("StringLiteralDuplication")
     companion object {
         private const val FACEBOOK = "https://www.facebook.com/RevoRobotics"
         private const val INSTAGRAM = "https://www.instagram.com/revorobotics"
         private const val WEBPAGE = "https://www.revolutionrobotics.org/"
+        // TODO update PP url
+        private const val PRIVACY_POLICY = "https://www.revolutionrobotics.org/"
+        // TODO update T&C url
+        private const val TERMS_AND_CONDITIONS = "https://www.revolutionrobotics.org/"
     }
 
     override var view: AboutMvp.View? = null
@@ -45,5 +51,13 @@ class AboutPresenter(
             data = Uri.fromParts("package", applicationContextProvider.applicationContext.packageName, null)
             view?.openIntent(this)
         }
+    }
+
+    override fun onPrivacyPolicyClicked() {
+        view?.openIntent(Intent(Intent.ACTION_VIEW, Uri.parse(PRIVACY_POLICY)))
+    }
+
+    override fun onTermsAndConditionsClicked() {
+        view?.openIntent(Intent(Intent.ACTION_VIEW, Uri.parse(TERMS_AND_CONDITIONS)))
     }
 }

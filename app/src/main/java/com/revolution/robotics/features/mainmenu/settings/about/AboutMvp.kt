@@ -13,7 +13,8 @@ interface AboutMvp : Mvp {
         fun onFacebookClicked()
         fun onInstagramClicked()
         fun onWebsiteClicked()
-
         fun onPermissionLayoutClicked()
+        fun onPrivacyPolicyClicked()
+        fun onTermsAndConditionsClicked()
     }
 }
