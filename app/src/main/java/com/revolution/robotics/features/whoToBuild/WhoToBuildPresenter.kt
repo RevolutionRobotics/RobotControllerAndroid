@@ -38,7 +38,8 @@ class WhoToBuildPresenter(
         robotsInteractor.execute { response ->
             model?.apply {
                 currentPosition.set(0)
-                robotsList.value = response.map { robot -> RobotsItem(robot, this@WhoToBuildPresenter) }
+                robotsList.value =
+                    response.map { robot -> RobotsItem(robot, this@WhoToBuildPresenter) }.sortedBy { it.robot.order }
                 robotsList.value?.firstOrNull()?.isSelected?.set(true)
                 updateButtonsVisibility(0)
                 view?.onRobotsLoaded()

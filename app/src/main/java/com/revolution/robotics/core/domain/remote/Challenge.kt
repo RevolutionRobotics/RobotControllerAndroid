@@ -7,5 +7,5 @@ import kotlinx.android.parcel.Parcelize
 data class Challenge(
     var id: String? = null,
     var name: String? = null,
-    var challengeSteps: List<ChallengeStep> = emptyList()
+    var challengeSteps: HashMap<String, ChallengeStep> = hashMapOf()
 ) : Parcelable

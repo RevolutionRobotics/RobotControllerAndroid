@@ -25,8 +25,8 @@ class ChallengeDetailPresenter(
     override fun setChallenge(challenge: Challenge, categoryId: String?) {
         this.categoryId = categoryId
         this.challengeId = challenge.id
-        view?.initSlider(challenge.challengeSteps, this)
-        setChallengeStep(challenge.challengeSteps.first())
+        view?.initSlider(challenge.challengeSteps.toList().map { it.second }, this)
+        setChallengeStep(challenge.challengeSteps.toList().map { it.second }.first())
     }
 
     override fun onChallengeStepSelected(challengeStep: ChallengeStep, fromUser: Boolean) {
@@ -45,9 +45,9 @@ class ChallengeDetailPresenter(
                 image.value = null
                 title.value = null
                 isPartStep.value = true
-                parts.value = challengeStep.parts.map {
-                    ChallengePartItemViewModel(it)
-                }
+                parts.value = challengeStep.parts.toList().sortedBy { it.second.order }.map {
+                    ChallengePartItemViewModel(it.second)
+                }.sortedBy { it.part.order }
             }
         }
     }
@@ -59,11 +59,13 @@ class ChallengeDetailPresenter(
     private fun saveProgress(currentProgress: Int) {
         getCategoriesInteractor.execute { categories ->
             categories.find { it.id == categoryId }?.let { category ->
-                category.challenges.indexOfFirst { it.id == challengeId }.let { index ->
+                category.challenges.toList().map { it.second }.indexOfFirst { it.id == challengeId }.let { index ->
                     if (index + 1 > currentProgress) {
                         saveProgress(categoryId, index + 1)
                     }
-                    view?.showChallengeFinishedDialog(category.challenges.getOrNull(index + 1))
+                    view?.showChallengeFinishedDialog(category.challenges
+                        .toList().map { it.second }.getOrNull(index + 1)
+                    )
                 }
             }
         }

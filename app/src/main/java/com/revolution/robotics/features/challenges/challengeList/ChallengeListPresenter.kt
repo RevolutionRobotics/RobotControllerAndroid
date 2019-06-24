@@ -23,7 +23,7 @@ class ChallengeListPresenter(
         getUserChallengeCategoriesInteractor.execute { userCategories ->
             model?.description?.value = challengeCategory.description
             val progress = userCategories.find { it.challengeCategoryId == challengeCategory.id }?.progress ?: 0
-            model?.items?.value = challengeCategory.challenges.mapIndexed { index, challenge ->
+            model?.items?.value = challengeCategory.challenges.toList().map { it.second }.mapIndexed { index, challenge ->
                 ChallengeListItem(
                     name = challenge.name ?: "",
                     position = "${index + 1}.",
