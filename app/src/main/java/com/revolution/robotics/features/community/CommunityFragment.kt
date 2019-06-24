@@ -48,8 +48,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
         try {
             requireActivity().startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(COMMUNITY_FORUMS_URL)))
         } catch (exception: ActivityNotFoundException) {
-            // TODO add custom error message
-            errorHandler.onError()
+            errorHandler.onError(R.string.error_cannot_open_url)
         }
     }
 }

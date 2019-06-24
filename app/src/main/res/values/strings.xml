@@ -355,6 +355,7 @@
     <string name="error_general">Something went wrong, please try again</string>
     <string name="error_test_code_upload">Test code upload error</string>
     <string name="error_program_already_in_use">Program name is already in use.</string>
+    <string name="error_cannot_open_url">You do not seem to have any browsers installed to open this</string>
     
     <string name="priority_drivetrain_item">Drivetrain</string>
 
