@@ -11,7 +11,7 @@ import com.revolution.robotics.core.utils.UserProgramFileNameGenerator
 import com.revolution.robotics.features.coding.programs.ProgramsDialog
 import com.revolution.robotics.features.coding.python.PythonDialog
 import com.revolution.robotics.features.coding.saveProgram.SaveProgramDialog
-import org.revolution.blockly.view.jsInterface.BlocklyJavascriptListener
+import org.revolution.blockly.view.jsInterface.SaveBlocklyListener
 import java.util.concurrent.TimeUnit
 
 @Suppress("TooManyFunctions")
@@ -92,7 +92,7 @@ class CodingPresenter(
     }
 
     override fun showPythonCode() {
-        view?.getPythonCodeFromBlockly(object : BlocklyJavascriptListener {
+        view?.getPythonCodeFromBlockly(object : SaveBlocklyListener {
             override fun onPythonProgramSaved(file: String) {
                 view?.showDialog(PythonDialog.newInstance(file))
             }

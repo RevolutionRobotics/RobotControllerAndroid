@@ -6,7 +6,7 @@ import android.webkit.JavascriptInterface
 class IOJavascriptInterface(ctx: Context) : BlocklyJavascriptInterface {
 
     private var context: Context? = ctx
-    var listener: BlocklyJavascriptListener? = null
+    var listener: SaveBlocklyListener? = null
 
     @JavascriptInterface
     fun onPythonProgramSaved(file: String) {

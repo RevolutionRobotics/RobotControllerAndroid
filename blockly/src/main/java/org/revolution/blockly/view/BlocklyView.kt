@@ -3,8 +3,8 @@ package org.revolution.blockly.view
 import android.content.Context
 import android.util.AttributeSet
 import android.webkit.WebView
-import org.revolution.blockly.view.jsInterface.BlocklyJavascriptListener
 import org.revolution.blockly.view.jsInterface.IOJavascriptInterface
+import org.revolution.blockly.view.jsInterface.SaveBlocklyListener
 
 @Suppress("SetJavaScriptEnabled")
 class BlocklyView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
@@ -45,17 +45,17 @@ class BlocklyView @JvmOverloads constructor(context: Context, attrs: AttributeSe
         super.onDetachedFromWindow()
     }
 
+    fun clearWorkspace() {
+        loadUrl("javascript:clearWorkspace()")
+    }
+
     fun loadProgram(xml: String) {
         loadUrl("javascript:loadXMLProgram(`$xml}`)")
     }
 
-    fun saveProgram(listener: BlocklyJavascriptListener) {
+    fun saveProgram(listener: SaveBlocklyListener) {
         javascriptInterface.listener = listener
         loadUrl("javascript:saveProgram()")
-    }
-
-    fun clearWorkspace() {
-        loadUrl("javascript:clearWorkspace()")
     }
 
     override fun onBlocklyLoaded() {

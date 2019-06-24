@@ -22,7 +22,7 @@ import com.revolution.robotics.features.controllers.programInfo.ProgramDialog
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 import org.kodein.di.erased.instance
 import org.revolution.blockly.view.BlocklyLoadedListener
-import org.revolution.blockly.view.jsInterface.BlocklyJavascriptListener
+import org.revolution.blockly.view.jsInterface.SaveBlocklyListener
 
 class CodingFragment : BaseFragment<FragmentCodingBinding, CodingViewModel>(R.layout.fragment_coding), CodingMvp.View,
     DialogEventBus.Listener, BlocklyLoadedListener {
@@ -79,7 +79,7 @@ class CodingFragment : BaseFragment<FragmentCodingBinding, CodingViewModel>(R.la
         }
     }
 
-    override fun getPythonCodeFromBlockly(listener: BlocklyJavascriptListener) {
+    override fun getPythonCodeFromBlockly(listener: SaveBlocklyListener) {
         binding?.viewBlockly?.saveProgram(listener)
     }
 
