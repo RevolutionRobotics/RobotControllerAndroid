@@ -172,13 +172,14 @@ class SensorConfigurationPresenter(
                     model?.ultrasoundButton?.isSelected?.get() == true -> Sensor.TYPE_ULTRASONIC
                     else -> null
                 }
-                variableName =
+
                     if (model?.emptyButton?.isSelected?.get() == true) {
-                        ""
+                        variableName = null
+                        configurationEventBus.publishSensorUpdateEvent(SensorPort(null, portName))
                     } else {
-                        this@SensorConfigurationPresenter.variableName
+                        variableName = this@SensorConfigurationPresenter.variableName
+                        configurationEventBus.publishSensorUpdateEvent(SensorPort(this, portName))
                     }
-                configurationEventBus.publishSensorUpdateEvent(SensorPort(this, portName))
             }
         }
     }
