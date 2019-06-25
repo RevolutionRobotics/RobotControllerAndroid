@@ -45,7 +45,7 @@
         <action android:id="@+id/toBuildRobot"
                 app:destination="@id/buildRobotFragment"/>
         <action android:id="@+id/toConfigure"
-                app:destination="@id/configureFragment"/>
+                app:destination="@id/configureFragment" app:popUpTo="@+id/myRobotsFragment"/>
     </fragment>
 
     <fragment android:id="@+id/buildRobotFragment"
