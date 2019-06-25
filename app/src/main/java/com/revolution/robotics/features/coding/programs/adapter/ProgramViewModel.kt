@@ -5,7 +5,6 @@ import com.revolution.robotics.core.domain.local.UserProgram
 import com.revolution.robotics.core.extensions.formatYearMonthDay
 import com.revolution.robotics.features.coding.programs.ProgramsMvp
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
-import java.util.Date
 
 class ProgramViewModel(private val program: UserProgram, private val presenter: ProgramsMvp.Presenter) {
 
@@ -21,7 +20,7 @@ class ProgramViewModel(private val program: UserProgram, private val presenter: 
 
     val programName = program.name
     val background = ProgramViewModel.background
-    val formattedDate = Date(program.lastModified).formatYearMonthDay()
+    val formattedDate = program.lastModified.formatYearMonthDay()
 
     fun onProgramClicked() {
         presenter.onProgramSelected(program)
