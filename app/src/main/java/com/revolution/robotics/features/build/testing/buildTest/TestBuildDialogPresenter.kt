@@ -3,14 +3,16 @@ package com.revolution.robotics.features.build.testing.buildTest
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import com.revolution.robotics.R
-import com.revolution.robotics.core.interactor.firebase.FirebaseFileDownloader
+import com.revolution.robotics.core.interactor.LocalFileSaver
+import com.revolution.robotics.core.kodein.utils.ApplicationContextProvider
 import com.revolution.robotics.features.bluetooth.BluetoothManager
 import com.revolution.robotics.features.shared.ErrorHandler
 
 class TestBuildDialogPresenter(
     private val bluetoothManager: BluetoothManager,
-    private val firebaseFileDownloader: FirebaseFileDownloader,
-    private val errorHandler: ErrorHandler
+    private val errorHandler: ErrorHandler,
+    private val localFileSaver: LocalFileSaver,
+    private val applicationContextProvider: ApplicationContextProvider
 ) : TestBuildDialogMvp.Presenter {
 
     companion object {
@@ -21,12 +23,11 @@ class TestBuildDialogPresenter(
     override var model: ViewModel? = null
 
     override fun sendTestCode(code: String) {
-        firebaseFileDownloader.downloadFirestoreFile(TEST_CODE_FILE_NAME, code, onResponse = {
+        localFileSaver.content = code
+        localFileSaver.filePath = "${applicationContextProvider.applicationContext.filesDir}/$TEST_CODE_FILE_NAME"
+        localFileSaver.execute {
             uploadTestCode(it)
-        }, onError = {
-            errorHandler.onError(R.string.error_test_code_upload)
-            view?.showTips()
-        })
+        }
     }
 
     private fun uploadTestCode(fileUri: Uri) {
@@ -36,7 +37,7 @@ class TestBuildDialogPresenter(
             },
             onError = {
                 errorHandler.onError(R.string.error_test_code_upload)
-                view?.dismiss()
+                view?.showTips()
             })
     }
 }

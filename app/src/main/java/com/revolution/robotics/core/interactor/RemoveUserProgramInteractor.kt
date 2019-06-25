@@ -4,7 +4,6 @@ import com.revolution.robotics.core.domain.local.UserBackgroundProgramBindingDao
 import com.revolution.robotics.core.domain.local.UserButtonMapping
 import com.revolution.robotics.core.domain.local.UserControllerDao
 import com.revolution.robotics.core.domain.local.UserProgramDao
-import java.io.File
 
 class RemoveUserProgramInteractor(
     private val userProgramDao: UserProgramDao,
@@ -20,15 +19,6 @@ class RemoveUserProgramInteractor(
             controllerDao.updateUserController(controller)
         }
         backgroundProgramBindingDao.removeBackgroundProgram(userProgramName)
-        userProgramDao.getUserProgram(userProgramName)?.let { program ->
-            program.xml?.let { xml ->
-                File(xml).delete()
-            }
-
-            program.python?.let { python ->
-                File(python).delete()
-            }
-        }
         userProgramDao.removeUserProgram(userProgramName)
     }
 
