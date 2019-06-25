@@ -11,6 +11,7 @@ class ChallengeCategoriesInteractor : FirebaseListInteractor<ChallengeCategory>(
         object : GenericTypeIndicator<HashMap<String, ChallengeCategory>>() {}
 
     override fun filter(item: ChallengeCategory): Boolean = true
+    override fun order(list: List<ChallengeCategory>): List<ChallengeCategory> = list.sortedBy { it.order }
 
     override fun getDatabaseReference(database: FirebaseDatabase): Query = database.getReference("challengeCategory")
 }

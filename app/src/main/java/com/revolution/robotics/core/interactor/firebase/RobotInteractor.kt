@@ -11,6 +11,7 @@ class RobotInteractor : FirebaseListInteractor<Robot>() {
         object : GenericTypeIndicator<HashMap<String, Robot>>() {}
 
     override fun getDatabaseReference(database: FirebaseDatabase): Query = database.getReference("robot")
+    override fun order(list: List<Robot>): List<Robot> = list.sortedBy { it.order }
 
     override fun filter(item: Robot) = true
 }

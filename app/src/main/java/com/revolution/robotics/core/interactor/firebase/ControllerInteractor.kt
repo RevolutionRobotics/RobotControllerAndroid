@@ -15,5 +15,6 @@ class ControllerInteractor : FirebaseListInteractor<Controller>() {
     override fun getDatabaseReference(database: FirebaseDatabase): Query =
         database.getReference("controller")
 
+    override fun order(list: List<Controller>): List<Controller> = list.sortedBy { it.lastModified }
     override fun filter(item: Controller): Boolean = item.configurationId == configurationId
 }

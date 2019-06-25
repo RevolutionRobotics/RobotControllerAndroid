@@ -15,4 +15,5 @@ class BuildStepInteractor : FirebaseListInteractor<BuildStep>() {
     override fun getDatabaseReference(database: FirebaseDatabase): Query = database.getReference("buildStep")
 
     override fun filter(item: BuildStep) = item.robotId == robotId
+    override fun order(list: List<BuildStep>): List<BuildStep> = list.sortedBy { it.stepNumber }
 }

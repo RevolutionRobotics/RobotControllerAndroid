@@ -9,5 +9,6 @@ data class ChallengeStep(
     var title: String? = null,
     var description: String? = null,
     var image: String? = null,
+    var order: Int = 0,
     var parts: HashMap<String, Part> = hashMapOf()
 ) : Parcelable

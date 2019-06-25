@@ -13,6 +13,7 @@ class ProgramsInteractor : FirebaseListInteractor<Program>() {
     private var downloadAllPrograms = false
 
     override fun filter(item: Program): Boolean = programIds.contains(item.id) || downloadAllPrograms
+    override fun order(list: List<Program>): List<Program> = list.sortedBy { it.lastModified }
 
     override fun getDatabaseReference(database: FirebaseDatabase): Query = database.getReference("program")
 

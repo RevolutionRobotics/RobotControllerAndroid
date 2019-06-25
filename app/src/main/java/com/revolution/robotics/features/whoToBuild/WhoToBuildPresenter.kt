@@ -39,7 +39,7 @@ class WhoToBuildPresenter(
             model?.apply {
                 currentPosition.set(0)
                 robotsList.value =
-                    response.map { robot -> RobotsItem(robot, this@WhoToBuildPresenter) }.sortedBy { it.robot.order }
+                    response.map { robot -> RobotsItem(robot, this@WhoToBuildPresenter) }
                 robotsList.value?.firstOrNull()?.isSelected?.set(true)
                 updateButtonsVisibility(0)
                 view?.onRobotsLoaded()

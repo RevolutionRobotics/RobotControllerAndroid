@@ -25,8 +25,8 @@ class ChallengeDetailPresenter(
     override fun setChallenge(challenge: Challenge, categoryId: String?) {
         this.categoryId = categoryId
         this.challengeId = challenge.id
-        view?.initSlider(challenge.challengeSteps.toList().map { it.second }, this)
-        setChallengeStep(challenge.challengeSteps.toList().map { it.second }.first())
+        view?.initSlider(challenge.challengeSteps.toList().map { it.second }.sortedBy { it.order }, this)
+        setChallengeStep(challenge.challengeSteps.toList().map { it.second }.sortedBy { it.order }.first())
     }
 
     override fun onChallengeStepSelected(challengeStep: ChallengeStep, fromUser: Boolean) {
