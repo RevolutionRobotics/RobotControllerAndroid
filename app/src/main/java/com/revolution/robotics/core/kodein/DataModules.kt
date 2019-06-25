@@ -173,21 +173,7 @@ fun createPresenterModule() =
         bind<MainMenuMvp.Presenter>() with s { MainMenuPresenter(i(), i(), i()) }
         bind<WhoToBuildMvp.Presenter>() with s { WhoToBuildPresenter(i(), i(), i(), i(), i()) }
         bind<MyRobotsMvp.Presenter>() with s { MyRobotsPresenter(i(), i(), i(), i(), i()) }
-        bind<BuildRobotMvp.Presenter>() with s {
-            BuildRobotPresenter(
-                i(),
-                i(),
-                i(),
-                i(),
-                i(),
-                i(),
-                i(),
-                i(),
-                i(),
-                i(),
-                i()
-            )
-        }
+        bind<BuildRobotMvp.Presenter>() with s { BuildRobotPresenter(i(), i(), i(), i(), i(), i(), i(), i(), i(), i()) }
         bind<ConnectMvp.Presenter>() with s { ConnectPresenter(i(), i()) }
         bind<ConfigureMvp.Presenter>() with s { ConfigurePresenter(i(), i(), i(), i(), i()) }
         bind<ConfigureConnectionsMvp.Presenter>() with s { ConfigureConnectionsPresenter(i(), i(), i()) }
@@ -205,7 +191,7 @@ fun createPresenterModule() =
         bind<ProgramSelectorMvp.Presenter>() with s { ProgramSelectorPresenter(i(), i(), i(), i()) }
         bind<ProgramPriorityMvp.Presenter>() with s { ProgramPriorityPresenter(i(), i(), i(), i()) }
         bind<ButtonlessProgramSelectorMvp.Presenter>() with s { ButtonlessProgramSelectorPresenter(i(), i(), i(), i()) }
-        bind<SplashMvp.Presenter>() with s { SplashPresenter(i(), i(), i(), i(), i()) }
+        bind<SplashMvp.Presenter>() with s { SplashPresenter(i()) }
         bind<ChallengeGroupMvp.Presenter>() with s { ChallengeGroupPresenter(i(), i(), i()) }
         bind<ChallengeListMvp.Presenter>() with s { ChallengeListPresenter(i(), i()) }
         bind<ChallengeDetailMvp.Presenter>() with s { ChallengeDetailPresenter(i(), i(), i()) }
@@ -214,9 +200,9 @@ fun createPresenterModule() =
         bind<ColorPickerMvp.Presenter>() with s { ColorPickerPresenter() }
         bind<SoundPickerMvp.Presenter>() with s { SoundPickerPresenter(i()) }
         bind<SliderMvp.Presenter>() with s { SliderPresenter() }
-        bind<CodingMvp.Presenter>() with s { CodingPresenter(i(), i(), i(), i(), i(), i()) }
+        bind<CodingMvp.Presenter>() with s { CodingPresenter(i(), i(), i()) }
         bind<ProgramsMvp.Presenter>() with s { ProgramsPresenter(i()) }
-        bind<TestBuildDialogMvp.Presenter>() with s { TestBuildDialogPresenter(i(), i(), i()) }
+        bind<TestBuildDialogMvp.Presenter>() with s { TestBuildDialogPresenter(i(), i(), i(), i()) }
         bind<VariableOptionsMvp.Presenter>() with s { VariableOptionsPresenter() }
         bind<SaveProgramMvp.Presenter>() with s { SaveProgramPresenter(i(), i()) }
         bind<CommunityMvp.Presenter>() with s { CommunityPresenter() }

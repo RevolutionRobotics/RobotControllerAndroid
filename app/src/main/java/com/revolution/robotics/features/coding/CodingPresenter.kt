@@ -3,7 +3,6 @@ package com.revolution.robotics.features.coding
 import android.util.Base64
 import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.local.UserProgram
-import com.revolution.robotics.core.interactor.LocalFileLoader
 import com.revolution.robotics.core.interactor.RemoveUserProgramInteractor
 import com.revolution.robotics.core.interactor.SaveUserProgramInteractor
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
@@ -17,7 +16,6 @@ import java.util.concurrent.TimeUnit
 class CodingPresenter(
     private val removeUserProgramInteractor: RemoveUserProgramInteractor,
     private val saveUserProgramInteractor: SaveUserProgramInteractor,
-    private val localFileLoader: LocalFileLoader,
     private val resourceResolver: ResourceResolver
 ) : CodingMvp.Presenter {
 
@@ -33,10 +31,7 @@ class CodingPresenter(
         model?.userProgram = userProgram
         model?.programName?.set(userProgram.name)
         userProgram.xml?.let { xmlFile ->
-            localFileLoader.filePath = xmlFile
-            localFileLoader.execute { xml ->
-                view?.loadProgramIntoTheBlockly(xml)
-            }
+            view?.loadProgramIntoTheBlockly(String(Base64.decode(xmlFile, Base64.NO_WRAP)))
         }
     }
 

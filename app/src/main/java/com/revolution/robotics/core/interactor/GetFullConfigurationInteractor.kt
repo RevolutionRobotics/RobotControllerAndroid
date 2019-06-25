@@ -25,7 +25,7 @@ class GetFullConfigurationInteractor(
         }
         val sources = HashMap<String, String>()
         controller?.programs?.keys?.forEach { programName ->
-            sources[programName] = controller.programs[programName]
+            sources[programName] = controller.programs[programName]?.python ?: ""
         }
 
         return FullControllerData(config, controller, sources)
