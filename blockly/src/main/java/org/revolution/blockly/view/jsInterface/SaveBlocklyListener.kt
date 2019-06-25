@@ -1,6 +1,6 @@
 package org.revolution.blockly.view.jsInterface
 
-interface BlocklyJavascriptListener {
+interface SaveBlocklyListener {
 
     fun onPythonProgramSaved(file: String)
 

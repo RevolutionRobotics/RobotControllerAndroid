@@ -46,11 +46,17 @@ abstract class JavascriptPromptDialog<B : ViewDataBinding>(@LayoutRes private va
 
     override fun onDismiss(dialog: DialogInterface?) {
         javascriptResultHandler.cancelResult()
+        javascriptResultHandler.cancelPromptResult()
         super.onDismiss(dialog)
     }
 
-    override fun confirmResult(result: String) {
-        javascriptResultHandler.confirmResult(result)
+    override fun confirmResult() {
+        javascriptResultHandler.confirmResult()
+        dismissAllowingStateLoss()
+    }
+
+    override fun confirmPromptResult(result: String) {
+        javascriptResultHandler.confirmPromptResult(result)
         dismissAllowingStateLoss()
     }
 }

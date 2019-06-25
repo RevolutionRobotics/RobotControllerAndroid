@@ -75,7 +75,7 @@ class SoundPickerDialog :
         if (fileName == null) {
             dismissAllowingStateLoss()
         } else {
-            confirmResult(fileName)
+            confirmPromptResult(fileName)
         }
     }
 }

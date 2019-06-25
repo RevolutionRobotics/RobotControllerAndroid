@@ -50,7 +50,7 @@ class DialpadViewModel(private val dialogInterface: BlocklyDialogInterface) : Vi
     }
 
     fun onOkClicked() {
-        result.get()?.let { dialogInterface.confirmResult(it) }
+        result.get()?.let { dialogInterface.confirmPromptResult(it) }
     }
 
     @Suppress("SwallowedException")

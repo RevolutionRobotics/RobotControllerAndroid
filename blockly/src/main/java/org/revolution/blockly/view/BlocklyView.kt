@@ -3,8 +3,8 @@ package org.revolution.blockly.view
 import android.content.Context
 import android.util.AttributeSet
 import android.webkit.WebView
-import org.revolution.blockly.view.jsInterface.BlocklyJavascriptListener
 import org.revolution.blockly.view.jsInterface.IOJavascriptInterface
+import org.revolution.blockly.view.jsInterface.SaveBlocklyListener
 
 @Suppress("SetJavaScriptEnabled")
 class BlocklyView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
@@ -21,6 +21,8 @@ class BlocklyView @JvmOverloads constructor(context: Context, attrs: AttributeSe
     private companion object {
         const val BRIDGE_NAME = "NativeBridge"
         const val USER_AGENT = "Android-Blockly"
+
+        private const val HTML_PATH = "file:///android_asset/blockly/webview.html"
     }
 
     private var javascriptInterface = IOJavascriptInterface(context)
@@ -32,9 +34,9 @@ class BlocklyView @JvmOverloads constructor(context: Context, attrs: AttributeSe
     }
 
     @Suppress("JavascriptInterface")
-    fun init(htmlPath: String, dialogFactory: DialogFactory) {
+    fun init(dialogFactory: DialogFactory) {
         webChromeClient = BlocklyWebChromeClient(dialogFactory, this)
-        loadUrl(htmlPath)
+        loadUrl(HTML_PATH)
         addJavascriptInterface(javascriptInterface, BRIDGE_NAME)
     }
 
@@ -43,24 +45,18 @@ class BlocklyView @JvmOverloads constructor(context: Context, attrs: AttributeSe
         super.onDetachedFromWindow()
     }
 
-    fun loadProgram(xml: String) {
-        loadUrl("javascript:loadXMLProgram(`$xml}`)")
-    }
-
-    fun saveProgram(listener: BlocklyJavascriptListener) {
-        javascriptInterface.listener = listener
-        loadUrl("javascript:saveProgram()")
-    }
-
     fun clearWorkspace() {
         loadUrl("javascript:clearWorkspace()")
     }
 
-    /*
-    fun closeToolbox() {
-        loadUrl("javascript:closeToolbox()")
+    fun loadProgram(xml: String) {
+        loadUrl("javascript:loadXMLProgram(`$xml}`)")
     }
-    */
+
+    fun saveProgram(listener: SaveBlocklyListener) {
+        javascriptInterface.listener = listener
+        loadUrl("javascript:saveProgram()")
+    }
 
     override fun onBlocklyLoaded() {
         isBlocklyLoaded = true

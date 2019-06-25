@@ -1,25 +1,28 @@
 package org.revolution.blockly.view
 
 import android.webkit.JsPromptResult
+import android.webkit.JsResult
 import org.revolution.blockly.BlocklyOption
 import org.revolution.blockly.BlocklyVariable
 
-@Suppress("ComplexInterface")
+@Suppress("ComplexInterface", "TooManyFunctions")
 interface DialogFactory {
 
+    fun showAlertDialog(message: String, result: JsResult)
+    fun showConfirmationDialog(message: String, result: JsResult)
     fun showDirectionSelectorDialog(defaultValue: String, result: JsPromptResult)
     fun showSlider(title: String, maxValue: Int, defaultValue: Int, result: JsPromptResult)
     fun showDialpad(defaultValue: Double, result: JsPromptResult)
-    fun showColorPicker(title: String, colors: List<String>, selectedColor: String, result: JsPromptResult)
-    fun showSoundPicker(title: String, selectedSound: String?, result: JsPromptResult)
+    fun showColorPicker(title: String, colors: List<String>, defaultValue: String, result: JsPromptResult)
+    fun showSoundPicker(title: String, defaultValue: String?, result: JsPromptResult)
     fun showBlockOptionsDialog(title: String, comment: String, result: JsPromptResult)
     fun showTextInput(title: String, defaultValue: String?, result: JsPromptResult)
-    fun showDonutSelector(defaultSelection: String, isMultiSelection: Boolean, result: JsPromptResult)
+    fun showDonutSelector(defaultValue: String, isMultiSelection: Boolean, result: JsPromptResult)
 
     fun showOptionSelector(
         title: String,
         blocklyOptions: List<BlocklyOption>,
-        default: BlocklyOption?,
+        defaultValue: BlocklyOption?,
         result: JsPromptResult
     )
 

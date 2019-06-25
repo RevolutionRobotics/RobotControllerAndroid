@@ -1,6 +1,7 @@
 package org.revolution.blockly.view
 
 import android.webkit.JsPromptResult
+import android.webkit.JsResult
 import android.webkit.WebChromeClient
 import android.webkit.WebView
 import org.json.JSONObject
@@ -44,6 +45,16 @@ class BlocklyWebChromeClient(
         if (newProgress == PROGRESS_COMPLETE) {
             listener.onBlocklyLoaded()
         }
+    }
+
+    override fun onJsAlert(view: WebView, url: String, message: String?, result: JsResult): Boolean {
+        message?.let { dialogFactory.showAlertDialog(it, result) }
+        return true
+    }
+
+    override fun onJsConfirm(view: WebView, url: String, message: String?, result: JsResult): Boolean {
+        message?.let { dialogFactory.showConfirmationDialog(it, result) }
+        return true
     }
 
     override fun onJsPrompt(

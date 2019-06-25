@@ -3,7 +3,7 @@ package com.revolution.robotics.features.coding
 import com.revolution.robotics.BaseDialog
 import com.revolution.robotics.core.Mvp
 import com.revolution.robotics.core.domain.local.UserProgram
-import org.revolution.blockly.view.jsInterface.BlocklyJavascriptListener
+import org.revolution.blockly.view.jsInterface.SaveBlocklyListener
 
 interface CodingMvp : Mvp {
 
@@ -11,12 +11,12 @@ interface CodingMvp : Mvp {
         fun showDialog(baseDialog: BaseDialog)
         fun loadProgramIntoTheBlockly(xml: String)
         fun clearBlocklyWorkspace()
-        fun getPythonCodeFromBlockly(listener: BlocklyJavascriptListener)
+        fun getPythonCodeFromBlockly(listener: SaveBlocklyListener)
         fun onProgramSaved()
         fun onToolbarBackPressed()
     }
 
-    interface Presenter : Mvp.Presenter<View, CodingViewModel>, BlocklyJavascriptListener {
+    interface Presenter : Mvp.Presenter<View, CodingViewModel>, SaveBlocklyListener {
         fun showProgramsDialog()
         fun showSaveProgramDialog(userProgram: UserProgram?)
         fun setSavedProgramData(userProgram: UserProgram)

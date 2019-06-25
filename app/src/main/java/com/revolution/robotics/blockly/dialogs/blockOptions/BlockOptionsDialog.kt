@@ -49,14 +49,14 @@ class BlockOptionsDialog :
         super.onCreateView(inflater, container, savedInstanceState).apply {
             dialogButtonHelper.createButtons(binding.buttonContainer, setOf(
                 DialogButton(R.string.dialog_block_options_delete, R.drawable.ic_delete) {
-                    confirmResult(createResponse(ACTION_DELETE))
+                    confirmPromptResult(createResponse(ACTION_DELETE))
                 },
                 DialogButton(R.string.dialog_block_options_help, R.drawable.ic_community) {
                     dismissAllowingStateLoss()
                     navigator.navigate(R.id.toCommunity)
                 },
                 DialogButton(R.string.dialog_block_options_duplicate, R.drawable.ic_copy, true) {
-                    confirmResult(createResponse(ACTION_DUPLICATE))
+                    confirmPromptResult(createResponse(ACTION_DUPLICATE))
                 }
             ))
             title.set(arguments?.title)
@@ -76,13 +76,13 @@ class BlockOptionsDialog :
 
     override fun onDismiss(dialog: DialogInterface?) {
         if (!wasResultConfirmed) {
-            confirmResult(createResponse(ACTION_COMMENT))
+            confirmPromptResult(createResponse(ACTION_COMMENT))
         }
     }
 
-    override fun confirmResult(result: String) {
+    override fun confirmPromptResult(result: String) {
         wasResultConfirmed = true
-        super.confirmResult(result)
+        super.confirmPromptResult(result)
     }
 
     private fun createResponse(action: String) =
