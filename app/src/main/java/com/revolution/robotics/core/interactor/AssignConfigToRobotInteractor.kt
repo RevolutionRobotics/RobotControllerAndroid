@@ -131,8 +131,8 @@ class AssignConfigToRobotInteractor(
                 remoteProgram.description,
                 remoteProgram.lastModified,
                 currentProgram?.name ?: remoteProgram.name ?: "",
-                currentProgram?.python ?: "",
-                currentProgram?.xml ?: "",
+                remoteProgram.python,
+                remoteProgram.xml,
                 remoteProgram.variables,
                 remoteProgram.id
             )
