@@ -56,7 +56,7 @@ class DonutSelectorDialog :
 
     override fun onSelectionChanged(index: Int, value: Boolean) {
         if (selectionType == DonutSelectionType.SINGLE) {
-            confirmResult("${index + 1}")
+            confirmPromptResult("${index + 1}")
         } else {
             binding.check.isChecked = binding.donut.getSelection().all { it }
         }
@@ -74,6 +74,6 @@ class DonutSelectorDialog :
             .filter { it.second }
             .map { it.first }
             .joinToString(",")
-        confirmResult(result)
+        confirmPromptResult(result)
     }
 }

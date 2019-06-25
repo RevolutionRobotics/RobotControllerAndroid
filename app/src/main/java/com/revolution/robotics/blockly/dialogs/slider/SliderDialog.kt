@@ -54,6 +54,6 @@ class SliderDialog : JavascriptPromptDialog<BlocklyDialogSliderBinding>(R.layout
     }
 
     override fun onDoneClicked() {
-        confirmResult(binding.label.text.toString())
+        confirmPromptResult(binding.label.text.toString())
     }
 }

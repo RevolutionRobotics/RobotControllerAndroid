@@ -46,6 +46,6 @@ class DirectionSelectorDialog :
     }
 
     override fun onDirectionSelected(direction: Direction) {
-        confirmResult(direction.value)
+        confirmPromptResult(direction.value)
     }
 }

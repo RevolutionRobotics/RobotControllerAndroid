@@ -35,6 +35,6 @@ class OptionSelectorViewModel(val options: List<Option>, private val dialogInter
         }
 
     fun onOptionClicked(index: Int) {
-        getOption(index)?.let { option -> dialogInterface.confirmResult(option.value) }
+        getOption(index)?.let { option -> dialogInterface.confirmPromptResult(option.value) }
     }
 }

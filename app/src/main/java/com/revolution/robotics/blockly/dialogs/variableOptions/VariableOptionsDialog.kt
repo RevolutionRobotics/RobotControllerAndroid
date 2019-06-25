@@ -53,7 +53,7 @@ class VariableOptionsDialog :
                     if (selectedVariable == null) {
                         dismissAllowingStateLoss()
                     } else {
-                        confirmResult(createResponse(ACTION_DELETE_VARIABLE, selectedVariable))
+                        confirmPromptResult(createResponse(ACTION_DELETE_VARIABLE, selectedVariable))
                     }
                 }
             ))
@@ -78,7 +78,7 @@ class VariableOptionsDialog :
     }
 
     override fun onVariableSelected(variableKey: String) {
-        confirmResult(createResponse(ACTION_CHANGE_VARIABLE, variableKey))
+        confirmPromptResult(createResponse(ACTION_CHANGE_VARIABLE, variableKey))
     }
 
     private fun createResponse(action: String, variableKey: String) =

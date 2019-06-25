@@ -10,5 +10,6 @@ interface BlocklyDialogInterface {
     val title: ObservableField<String>
 
     fun dismiss()
-    fun confirmResult(result: String)
+    fun confirmResult()
+    fun confirmPromptResult(result: String)
 }

@@ -40,7 +40,7 @@ class TextInputDialog : JavascriptPromptDialog<BlocklyDialogTextInputBinding>(R.
                     dismissAllowingStateLoss()
                 },
                 DialogButton(R.string.done, R.drawable.ic_check, true) {
-                    confirmResult(binding.text.getContent())
+                    confirmPromptResult(binding.text.getContent())
                 }
             ))
             title.set(arguments?.title)

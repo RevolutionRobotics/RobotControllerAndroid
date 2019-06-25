@@ -62,6 +62,6 @@ class ColorPickerDialog :
     }
 
     override fun onColorSelected(color: ColorOption) {
-        confirmResult(color.color)
+        confirmPromptResult(color.color)
     }
 }

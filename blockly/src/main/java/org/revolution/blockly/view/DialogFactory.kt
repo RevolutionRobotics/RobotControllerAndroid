@@ -1,12 +1,15 @@
 package org.revolution.blockly.view
 
 import android.webkit.JsPromptResult
+import android.webkit.JsResult
 import org.revolution.blockly.BlocklyOption
 import org.revolution.blockly.BlocklyVariable
 
 @Suppress("ComplexInterface")
 interface DialogFactory {
 
+    fun showAlertDialog(message: String, result: JsResult)
+    fun showConfirmationDialog(message: String, result: JsResult)
     fun showDirectionSelectorDialog(defaultValue: String, result: JsPromptResult)
     fun showSlider(title: String, maxValue: Int, defaultValue: Int, result: JsPromptResult)
     fun showDialpad(defaultValue: Double, result: JsPromptResult)
