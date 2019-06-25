@@ -100,7 +100,7 @@ class ConfigurationBuilder {
             if (motor != null) {
                 put(Key.NAME, motor.variableName)
                 put(Key.TYPE, ConfigurationConstants.get(motor.type))
-                put(Key.DIRECTION, ConfigurationConstants.get(motor.direction))
+                put(Key.DIRECTION, ConfigurationConstants.get(motor.rotation))
                 put(Key.SIDE, ConfigurationConstants.get(motor.side))
             }
         }

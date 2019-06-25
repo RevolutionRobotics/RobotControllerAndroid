@@ -5,7 +5,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Motor(
-    var direction: String? = null,
+    var rotation: String? = null,
     var side: String? = null,
     var testCodeId: Int = 0,
     var type: String? = null,

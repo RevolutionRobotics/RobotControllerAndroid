@@ -48,8 +48,8 @@ class MotorConfigurationButtonHandler(private val model: MotorConfigurationViewM
 
             clockwiseButton.isVisible.set(true)
             counterClockwiseButton.isVisible.set(true)
-            clockwiseButton.isSelected.set(motor.direction == Motor.DIRECTION_CLOCKWISE)
-            counterClockwiseButton.isSelected.set(motor.direction != Motor.DIRECTION_CLOCKWISE)
+            clockwiseButton.isSelected.set(motor.rotation == Motor.DIRECTION_CLOCKWISE)
+            counterClockwiseButton.isSelected.set(motor.rotation != Motor.DIRECTION_CLOCKWISE)
 
             setDoneButton()
             setTestButton(true)
@@ -63,9 +63,9 @@ class MotorConfigurationButtonHandler(private val model: MotorConfigurationViewM
             motorButton.isSelected.set(true)
 
             motorClockwiseButton.isVisible.set(true)
-            motorClockwiseButton.isSelected.set(motor.direction == Motor.DIRECTION_CLOCKWISE)
+            motorClockwiseButton.isSelected.set(motor.rotation == Motor.DIRECTION_CLOCKWISE)
             motorCounterClockwiseButton.isVisible.set(true)
-            motorCounterClockwiseButton.isSelected.set(motor.direction != Motor.DIRECTION_CLOCKWISE)
+            motorCounterClockwiseButton.isSelected.set(motor.rotation != Motor.DIRECTION_CLOCKWISE)
 
             setDoneButton()
             setTestButton(true)
