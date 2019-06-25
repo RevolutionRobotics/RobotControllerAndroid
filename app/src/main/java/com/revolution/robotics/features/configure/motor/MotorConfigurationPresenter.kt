@@ -185,12 +185,13 @@ class MotorConfigurationPresenter(
                     else -> setEmptyValues(this)
                 }
 
-                variableName = if (model?.emptyButton?.isSelected?.get() == true) {
-                    ""
+                if (model?.emptyButton?.isSelected?.get() == true) {
+                    variableName = null
+                    configurationEventBus.publishMotorUpdateEvent(MotorPort(null, portName))
                 } else {
-                    this@MotorConfigurationPresenter.variableName
+                    variableName = this@MotorConfigurationPresenter.variableName
+                    configurationEventBus.publishMotorUpdateEvent(MotorPort(this, portName))
                 }
-                configurationEventBus.publishMotorUpdateEvent(MotorPort(this, portName))
             }
         }
     }

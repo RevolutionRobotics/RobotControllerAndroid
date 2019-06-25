@@ -48,7 +48,9 @@ abstract class BaseFragment<B : ViewDataBinding, V : ViewModel>(@LayoutRes priva
     }
 
     fun showDialog(baseDialog: BaseDialog) {
-        baseDialog.show(fragmentManager)
+        if (!isStateSaved) {
+            baseDialog.show(fragmentManager)
+        }
     }
 
     open fun onBackPressed() = false
