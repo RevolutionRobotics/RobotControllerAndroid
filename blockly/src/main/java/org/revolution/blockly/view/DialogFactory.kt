@@ -5,7 +5,7 @@ import android.webkit.JsResult
 import org.revolution.blockly.BlocklyOption
 import org.revolution.blockly.BlocklyVariable
 
-@Suppress("ComplexInterface")
+@Suppress("ComplexInterface", "TooManyFunctions")
 interface DialogFactory {
 
     fun showAlertDialog(message: String, result: JsResult)

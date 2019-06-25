@@ -24,6 +24,7 @@ import org.kodein.di.erased.instance
 import org.revolution.blockly.view.BlocklyLoadedListener
 import org.revolution.blockly.view.jsInterface.SaveBlocklyListener
 
+@Suppress("TooManyFunctions")
 class CodingFragment : BaseFragment<FragmentCodingBinding, CodingViewModel>(R.layout.fragment_coding), CodingMvp.View,
     DialogEventBus.Listener, BlocklyLoadedListener {
 
