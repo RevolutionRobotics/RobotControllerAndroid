@@ -27,7 +27,7 @@ class OptionSelectorDialog :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         arguments?.let { arguments ->
-            binding.viewModel = OptionSelectorViewModel(arguments.options, this)
+            binding.viewModel = OptionSelectorViewModel(arguments.options, blocklyResultHolder, this)
             title.set(arguments.title)
         }
     }

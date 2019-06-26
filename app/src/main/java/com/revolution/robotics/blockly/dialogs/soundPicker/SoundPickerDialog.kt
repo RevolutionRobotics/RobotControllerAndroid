@@ -14,6 +14,7 @@ import com.revolution.robotics.core.utils.BundleArgumentDelegate
 import com.revolution.robotics.databinding.BlocklyDialogSoundPickerBinding
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 import org.kodein.di.erased.instance
+import org.revolution.blockly.view.result.SoundResult
 
 class SoundPickerDialog :
     JavascriptPromptDialog<BlocklyDialogSoundPickerBinding>(R.layout.blockly_dialog_sound_picker), SoundPickerMvp.View {
@@ -72,10 +73,9 @@ class SoundPickerDialog :
     }
 
     override fun onSoundConfirmed(fileName: String?) {
-        if (fileName == null) {
-            dismissAllowingStateLoss()
-        } else {
-            confirmPromptResult(fileName)
+        if (fileName != null) {
+            (blocklyResultHolder.result as? SoundResult)?.confirm(fileName)
         }
+        dismissAllowingStateLoss()
     }
 }

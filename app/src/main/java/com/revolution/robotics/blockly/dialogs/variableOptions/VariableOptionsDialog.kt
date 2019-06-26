@@ -14,26 +14,23 @@ import com.revolution.robotics.core.utils.BundleArgumentDelegate
 import com.revolution.robotics.databinding.BlocklyDialogVariableOptionsBinding
 import com.revolution.robotics.views.dialogs.DialogButton
 import com.revolution.robotics.views.dialogs.DialogButtonHelper
-import org.json.JSONObject
 import org.kodein.di.erased.instance
 import org.revolution.blockly.BlocklyVariable
+import org.revolution.blockly.view.result.VariableResult
 
 class VariableOptionsDialog :
     JavascriptPromptDialog<BlocklyDialogVariableOptionsBinding>(R.layout.blockly_dialog_variable_options),
     VariableOptionsMvp.View {
 
     companion object {
-        private const val ACTION_CHANGE_VARIABLE = "SET_VARIABLE_ID"
-        private const val ACTION_DELETE_VARIABLE = "DELETE_VARIABLE_ID"
-
         private var Bundle.title by BundleArgumentDelegate.String("title")
-        private var Bundle.selectedVariableKey by BundleArgumentDelegate.String("selected-variable")
+        private var Bundle.selectedVariable by BundleArgumentDelegate.Parcelable<BlocklyVariable>("selected-variable")
         private var Bundle.variables by BundleArgumentDelegate.Parcelable<BlocklyVariableList>("variables")
 
-        fun newInstance(title: String, defaultValue: String, variables: List<BlocklyVariable>) =
+        fun newInstance(title: String, defaultValue: BlocklyVariable?, variables: List<BlocklyVariable>) =
             VariableOptionsDialog().withArguments { bundle ->
                 bundle.title = title
-                bundle.selectedVariableKey = defaultValue
+                defaultValue?.let { bundle.selectedVariable = it }
                 bundle.variables = BlocklyVariableList().apply { addAll(variables) }
             }
     }
@@ -49,12 +46,11 @@ class VariableOptionsDialog :
         super.onCreateView(inflater, container, savedInstanceState).apply {
             dialogButtonHelper.createButtons(binding.buttonContainer, setOf(
                 DialogButton(R.string.dialog_variable_options_delete, R.drawable.ic_delete) {
-                    val selectedVariable = arguments?.selectedVariableKey
-                    if (selectedVariable == null) {
-                        dismissAllowingStateLoss()
-                    } else {
-                        confirmPromptResult(createResponse(ACTION_DELETE_VARIABLE, selectedVariable))
+                    val selectedVariable = arguments?.selectedVariable
+                    if (selectedVariable != null) {
+                        (blocklyResultHolder.result as? VariableResult)?.confirmDeleteVariable(selectedVariable)
                     }
+                    dismissAllowingStateLoss()
                 }
             ))
             title.set(arguments?.title)
@@ -66,7 +62,7 @@ class VariableOptionsDialog :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         presenter.register(this, null)
-        val selectedKey = arguments?.selectedVariableKey
+        val selectedKey = arguments?.selectedVariable?.key
         arguments?.variables?.map { VariableViewModel(it, it.key == selectedKey, presenter) }?.let {
             adapter.setItems(it)
         }
@@ -77,13 +73,8 @@ class VariableOptionsDialog :
         super.onDestroyView()
     }
 
-    override fun onVariableSelected(variableKey: String) {
-        confirmPromptResult(createResponse(ACTION_CHANGE_VARIABLE, variableKey))
+    override fun onVariableSelected(variable: BlocklyVariable) {
+        (blocklyResultHolder.result as? VariableResult)?.confirmChangeVariable(variable)
+        dismissAllowingStateLoss()
     }
-
-    private fun createResponse(action: String, variableKey: String) =
-        JSONObject().apply {
-            put("type", action)
-            put("payload", variableKey)
-        }.toString()
 }

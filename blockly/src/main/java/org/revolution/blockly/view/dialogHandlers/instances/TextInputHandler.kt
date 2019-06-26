@@ -6,6 +6,7 @@ import org.revolution.blockly.view.DialogFactory
 import org.revolution.blockly.view.dialogHandlers.JsPromptHandler
 import org.revolution.blockly.view.dialogHandlers.defaultInput
 import org.revolution.blockly.view.dialogHandlers.title
+import org.revolution.blockly.view.result.TextResult
 
 class TextInputHandler : JsPromptHandler {
 
@@ -14,6 +15,6 @@ class TextInputHandler : JsPromptHandler {
                 message == "variable"
 
     override fun handleRequest(request: JSONObject, dialogFactory: DialogFactory, result: JsPromptResult) {
-        dialogFactory.showTextInput(request.title(), request.defaultInput(), result)
+        dialogFactory.showTextInput(request.title(), request.defaultInput(), TextResult(result))
     }
 }

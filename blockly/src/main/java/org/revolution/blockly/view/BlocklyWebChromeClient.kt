@@ -16,6 +16,7 @@ import org.revolution.blockly.view.dialogHandlers.instances.SliderHandler
 import org.revolution.blockly.view.dialogHandlers.instances.SoundPickerHandler
 import org.revolution.blockly.view.dialogHandlers.instances.TextInputHandler
 import org.revolution.blockly.view.dialogHandlers.instances.VariableOptionsHandler
+import org.revolution.blockly.view.result.ConfirmResult
 
 class BlocklyWebChromeClient(
     private val dialogFactory: DialogFactory,
@@ -48,12 +49,12 @@ class BlocklyWebChromeClient(
     }
 
     override fun onJsAlert(view: WebView, url: String, message: String?, result: JsResult): Boolean {
-        message?.let { dialogFactory.showAlertDialog(it, result) }
+        message?.let { dialogFactory.showAlertDialog(it, ConfirmResult(result)) }
         return true
     }
 
     override fun onJsConfirm(view: WebView, url: String, message: String?, result: JsResult): Boolean {
-        message?.let { dialogFactory.showConfirmationDialog(it, result) }
+        message?.let { dialogFactory.showConfirmationDialog(it, ConfirmResult(result)) }
         return true
     }
 

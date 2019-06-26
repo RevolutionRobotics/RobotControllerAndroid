@@ -3,9 +3,15 @@ package com.revolution.robotics.blockly.dialogs.optionSelector
 import androidx.lifecycle.ViewModel
 import com.revolution.robotics.R
 import com.revolution.robotics.blockly.dialogs.BlocklyDialogInterface
+import com.revolution.robotics.blockly.utils.BlocklyResultHolder
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
+import org.revolution.blockly.view.result.OptionResult
 
-class OptionSelectorViewModel(val options: List<Option>, private val dialogInterface: BlocklyDialogInterface) :
+class OptionSelectorViewModel(
+    val options: List<Option>,
+    private val resultHolder: BlocklyResultHolder,
+    private val dialogInterface: BlocklyDialogInterface
+) :
     ViewModel() {
 
     companion object {
@@ -35,6 +41,9 @@ class OptionSelectorViewModel(val options: List<Option>, private val dialogInter
         }
 
     fun onOptionClicked(index: Int) {
-        getOption(index)?.let { option -> dialogInterface.confirmPromptResult(option.value) }
+        getOption(index)?.let { option ->
+            (resultHolder.result as? OptionResult)?.confirm(option.value)
+            dialogInterface.dismiss()
+        }
     }
 }

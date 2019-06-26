@@ -7,12 +7,18 @@ import org.revolution.blockly.view.dialogHandlers.JsPromptHandler
 import org.revolution.blockly.view.dialogHandlers.defaultValue
 import org.revolution.blockly.view.dialogHandlers.maxValue
 import org.revolution.blockly.view.dialogHandlers.title
+import org.revolution.blockly.view.result.SliderResult
 
 class SliderHandler : JsPromptHandler {
 
     override fun canHandleRequest(message: String) = message.contains("_slider")
 
     override fun handleRequest(request: JSONObject, dialogFactory: DialogFactory, result: JsPromptResult) {
-        dialogFactory.showSlider(request.title(), request.maxValue(), request.defaultValue("0").toInt(), result)
+        dialogFactory.showSlider(
+            request.title(),
+            request.maxValue(),
+            request.defaultValue("0").toInt(),
+            SliderResult(result)
+        )
     }
 }

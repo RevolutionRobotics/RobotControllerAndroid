@@ -30,7 +30,7 @@ class DialpadDialog : JavascriptPromptDialog<BlocklyDialogDialpadBinding>(R.layo
     override fun dialogWidth() = R.dimen.dialog_dialpad_width
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.viewModel = DialpadViewModel(this)
+        binding.viewModel = DialpadViewModel(blocklyResultHolder, this)
         (binding.root as ConstraintLayout).children.forEach { child ->
             if (child is TextView && child.tag != null) {
                 child.text = "${child.tag}"

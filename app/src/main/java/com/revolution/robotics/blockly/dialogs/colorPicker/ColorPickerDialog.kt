@@ -13,6 +13,7 @@ import com.revolution.robotics.core.extensions.withArguments
 import com.revolution.robotics.core.utils.BundleArgumentDelegate
 import com.revolution.robotics.databinding.BlocklyDialogColorPickerBinding
 import org.kodein.di.erased.instance
+import org.revolution.blockly.view.result.ColorResult
 
 class ColorPickerDialog :
     JavascriptPromptDialog<BlocklyDialogColorPickerBinding>(R.layout.blockly_dialog_color_picker), ColorPickerMvp.View {
@@ -62,6 +63,7 @@ class ColorPickerDialog :
     }
 
     override fun onColorSelected(color: ColorOption) {
-        confirmPromptResult(color.color)
+        (blocklyResultHolder.result as? ColorResult)?.confirm(color.color)
+        dismissAllowingStateLoss()
     }
 }

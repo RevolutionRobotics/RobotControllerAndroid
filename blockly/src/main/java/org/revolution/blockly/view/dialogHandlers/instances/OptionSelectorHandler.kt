@@ -7,6 +7,7 @@ import org.revolution.blockly.view.dialogHandlers.JsPromptHandler
 import org.revolution.blockly.view.dialogHandlers.defaultOption
 import org.revolution.blockly.view.dialogHandlers.options
 import org.revolution.blockly.view.dialogHandlers.title
+import org.revolution.blockly.view.result.OptionResult
 
 class OptionSelectorHandler : JsPromptHandler {
 
@@ -16,6 +17,11 @@ class OptionSelectorHandler : JsPromptHandler {
                 message == "logic_compare.op"
 
     override fun handleRequest(request: JSONObject, dialogFactory: DialogFactory, result: JsPromptResult) {
-        dialogFactory.showOptionSelector(request.title(), request.options(), request.defaultOption(), result)
+        dialogFactory.showOptionSelector(
+            request.title(),
+            request.options(),
+            request.defaultOption(),
+            OptionResult(result)
+        )
     }
 }

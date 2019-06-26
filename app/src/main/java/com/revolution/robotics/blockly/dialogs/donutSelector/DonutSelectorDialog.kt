@@ -9,6 +9,7 @@ import com.revolution.robotics.core.utils.BundleArgumentDelegate
 import com.revolution.robotics.databinding.BlocklyDialogDonutSelectorBinding
 import com.revolution.robotics.views.DonutSelectorView
 import org.kodein.di.erased.instance
+import org.revolution.blockly.view.result.DonutResult
 
 class DonutSelectorDialog :
     JavascriptPromptDialog<BlocklyDialogDonutSelectorBinding>(R.layout.blockly_dialog_donut_selector),
@@ -56,7 +57,8 @@ class DonutSelectorDialog :
 
     override fun onSelectionChanged(index: Int, value: Boolean) {
         if (selectionType == DonutSelectionType.SINGLE) {
-            confirmPromptResult("${index + 1}")
+            (blocklyResultHolder.result as? DonutResult)?.confirm(index + 1)
+            dismissAllowingStateLoss()
         } else {
             binding.check.isChecked = binding.donut.getSelection().all { it }
         }
@@ -73,7 +75,9 @@ class DonutSelectorDialog :
             .mapIndexed { index, value -> index + 1 to value }
             .filter { it.second }
             .map { it.first }
-            .joinToString(",")
-        confirmPromptResult(result)
+            .toIntArray()
+
+        (blocklyResultHolder.result as? DonutResult)?.confirm(result)
+        dismissAllowingStateLoss()
     }
 }
