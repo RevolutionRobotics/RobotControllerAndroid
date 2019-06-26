@@ -24,4 +24,5 @@
     <color name="golden_rod">#f8bc08</color>
 
     <color name="transparent">#00000000</color>
+    <color name="bluetooth_blue">#0082FC</color>
 </resources>

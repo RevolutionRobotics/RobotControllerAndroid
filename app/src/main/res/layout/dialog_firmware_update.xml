@@ -200,7 +200,7 @@
                 android:text="@{viewModel.updateText}"
                 app:visible="@{safeUnbox(viewModel.updateTextVisible)}"
                 tools:text="New update (3.2.0.0) is available to download"
-                android:drawableStart="@drawable/ic_check"/>
+                android:drawableStart="@drawable/ic_warning_16dp"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
