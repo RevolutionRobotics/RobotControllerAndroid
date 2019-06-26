@@ -19,6 +19,7 @@ class PlayPresenter(
 
     override var view: PlayMvp.View? = null
     override var model: PlayViewModel? = null
+    override var toolbarViewModel: PlayToolbarViewModel? = null
 
     private var liveControllerService: RoboticsLiveControllerService? = null
 
@@ -30,6 +31,7 @@ class PlayPresenter(
     override fun loadConfiguration(configId: Int) {
         getConfigurationInteractor.userConfigId = configId
         getConfigurationInteractor.execute { result ->
+            toolbarViewModel?.title?.set(result.controller?.userController?.name)
             createConfigurationFileInteractor.controllerData = result
             createConfigurationFileInteractor.execute { configurationUri ->
                 bluetoothManager.getConfigurationService().sendConfiguration(configurationUri,
