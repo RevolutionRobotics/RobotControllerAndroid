@@ -47,7 +47,7 @@ class DrivetrainTestDialog : TestDialog() {
     override fun generateReplaceablePairs(): List<Pair<String, String>> {
         val replaceablePairs = mutableListOf<Pair<String, String>>()
         arguments?.let { bundle ->
-            replaceablePairs.add(REPLACEABLE_TEXT_MOTOR to (bundle.portNumber.toInt() - 1).toString())
+            replaceablePairs.add(REPLACEABLE_TEXT_MOTOR to bundle.portNumber)
             replaceablePairs.add(REPLACEABLE_TEXT_MOTOR_DIR to bundle.motorDirection)
             replaceablePairs.add(REPLACEABLE_TEXT_MOTOR_SIDE to bundle.side)
         }

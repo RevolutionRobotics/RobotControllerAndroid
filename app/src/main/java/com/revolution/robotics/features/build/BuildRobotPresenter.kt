@@ -1,6 +1,5 @@
 package com.revolution.robotics.features.build
 
-import com.revolution.robotics.core.domain.local.ProgramLocalFiles
 import com.revolution.robotics.core.domain.local.UserRobot
 import com.revolution.robotics.core.domain.remote.Configuration
 import com.revolution.robotics.core.domain.remote.Controller
@@ -12,8 +11,8 @@ import com.revolution.robotics.core.interactor.SaveUserRobotInteractor
 import com.revolution.robotics.core.interactor.firebase.BuildStepInteractor
 import com.revolution.robotics.core.interactor.firebase.ConfigurationInteractor
 import com.revolution.robotics.core.interactor.firebase.ControllerInteractor
-import com.revolution.robotics.core.interactor.firebase.FirebaseProgramDownloader
 import com.revolution.robotics.core.interactor.firebase.ProgramsInteractor
+import com.revolution.robotics.core.interactor.firebase.RobotInteractor
 import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.features.controllers.ControllerType
 import com.revolution.robotics.features.shared.ErrorHandler
@@ -25,9 +24,9 @@ class BuildRobotPresenter(
     private val configurationInteractor: ConfigurationInteractor,
     private val controllerInteractor: ControllerInteractor,
     private val programsInteractor: ProgramsInteractor,
+    private val robotInteractor: RobotInteractor,
     private val navigator: Navigator,
     private val dialogEventBus: DialogEventBus,
-    private val firebaseProgramDownloader: FirebaseProgramDownloader,
     private val errorHandler: ErrorHandler
 ) : BuildRobotMvp.Presenter {
 
@@ -38,7 +37,7 @@ class BuildRobotPresenter(
     private var controllers: List<Controller>? = null
     private var userRobot: UserRobot? = null
 
-    override fun loadBuildSteps(robotId: Int) {
+    override fun loadBuildSteps(robotId: String) {
         buildStepInteractor.robotId = robotId
         buildStepInteractor.execute { steps ->
             view?.onBuildStepsLoaded(steps)
@@ -70,10 +69,14 @@ class BuildRobotPresenter(
         if (createDefaultConfig) {
             view?.onRobotSaveStarted()
             this.userRobot = userRobot
-            configurationInteractor.configId = userRobot.configurationId
-            configurationInteractor.execute { config ->
-                configuration = config
-                downloadControllerInfos(config.id)
+            robotInteractor.execute { robots ->
+                robots.find { it.id == userRobot.id }?.let { robot ->
+                    configurationInteractor.configId = robot.configurationId ?: ""
+                    configurationInteractor.execute { config ->
+                        configuration = config
+                        downloadControllerInfos(config.id ?: "")
+                    }
+                }
             }
         } else {
             saveUserRobotInteractor.userRobot = userRobot
@@ -83,8 +86,8 @@ class BuildRobotPresenter(
         }
     }
 
-    private fun downloadControllerInfos(configurationId: Int) {
-        controllerInteractor.configurationId = configurationId.toString()
+    private fun downloadControllerInfos(configurationId: String) {
+        controllerInteractor.configurationId = configurationId
         controllerInteractor.execute(onResponse = { controllers ->
             this.controllers = controllers
             val programIds = mutableListOf<String>()
@@ -105,16 +108,7 @@ class BuildRobotPresenter(
     private fun downloadPrograms(ids: List<String>) {
         programsInteractor.programIds = ids
         programsInteractor.execute(onResponse = { programs ->
-            downloadProgramFiles(programs)
-        }, onError = {
-            errorHandler.onError()
-            dialogEventBus.publish(DialogEvent.ROBOT_CREATE_ERROR)
-        })
-    }
-
-    private fun downloadProgramFiles(programs: List<Program>) {
-        firebaseProgramDownloader.downloadProgramFiles(programs, onResponse = {
-            createLocalObjects(configuration, controllers, programs, it)
+            createLocalObjects(configuration, controllers, programs)
         }, onError = {
             errorHandler.onError()
             dialogEventBus.publish(DialogEvent.ROBOT_CREATE_ERROR)
@@ -124,14 +118,13 @@ class BuildRobotPresenter(
     private fun createLocalObjects(
         configuration: Configuration?,
         controllers: List<Controller>?,
-        programs: List<Program>,
-        programFiles: List<ProgramLocalFiles>
+        programs: List<Program>
     ) {
         userRobot?.let { userRobot ->
             saveUserRobotInteractor.userRobot = userRobot
             saveUserRobotInteractor.execute(onResponse = { savedRobot ->
                 this.userRobot = savedRobot
-                assignConfig(configuration, controllers, programs, programFiles)
+                assignConfig(configuration, controllers, programs)
             }, onError = {
                 errorHandler.onError()
                 dialogEventBus.publish(DialogEvent.ROBOT_CREATE_ERROR)
@@ -142,13 +135,11 @@ class BuildRobotPresenter(
     private fun assignConfig(
         configuration: Configuration?,
         controllers: List<Controller>?,
-        programs: List<Program>,
-        programFiles: List<ProgramLocalFiles>
+        programs: List<Program>
     ) {
         assignConfigToRobotInteractor.controllers = controllers
         assignConfigToRobotInteractor.configuration = configuration
         assignConfigToRobotInteractor.programs = programs
-        assignConfigToRobotInteractor.programLocalFiles = programFiles
         userRobot?.let { userRobot ->
             assignConfigToRobotInteractor.userRobot = userRobot
             assignConfigToRobotInteractor.execute(onResponse = { savedRobot ->

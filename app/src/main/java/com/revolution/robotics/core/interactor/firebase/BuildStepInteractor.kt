@@ -7,12 +7,13 @@ import com.revolution.robotics.core.domain.remote.BuildStep
 
 class BuildStepInteractor : FirebaseListInteractor<BuildStep>() {
 
-    var robotId = 0
+    lateinit var robotId: String
 
-    override val genericTypeIndicator: GenericTypeIndicator<ArrayList<BuildStep>> =
-        object : GenericTypeIndicator<ArrayList<BuildStep>>() {}
+    override val genericTypeIndicator: GenericTypeIndicator<HashMap<String, @JvmSuppressWildcards BuildStep>> =
+        object : GenericTypeIndicator<HashMap<String, BuildStep>>() {}
 
     override fun getDatabaseReference(database: FirebaseDatabase): Query = database.getReference("buildStep")
 
     override fun filter(item: BuildStep) = item.robotId == robotId
+    override fun order(list: List<BuildStep>): List<BuildStep> = list.sortedBy { it.stepNumber }
 }

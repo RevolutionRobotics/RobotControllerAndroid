@@ -23,21 +23,23 @@ class ChallengeListPresenter(
         getUserChallengeCategoriesInteractor.execute { userCategories ->
             model?.description?.value = challengeCategory.description
             val progress = userCategories.find { it.challengeCategoryId == challengeCategory.id }?.progress ?: 0
-            model?.items?.value = challengeCategory.challenges.mapIndexed { index, challenge ->
-                ChallengeListItem(
-                    name = challenge.name ?: "",
-                    position = "${index + 1}.",
-                    challenge = challenge,
-                    isLineVisible = index < challengeCategory.challenges.size - 1,
-                    isBottomItem = index % 2 != 0,
-                    backgroundResource = getBackgroundResource(index, progress),
-                    textColor = getTextColor(index, progress),
-                    indexTextColor = getIndexTextColor(index, progress),
-                    lineBackground = getLineBackground(index, progress),
-                    onClickEnabled = index <= progress,
-                    presenter = this
-                )
-            }
+            model?.items?.value =
+                challengeCategory.challenges.toList().map { it.second }.sortedBy { it.order }
+                    .mapIndexed { index, challenge ->
+                        ChallengeListItem(
+                            name = challenge.name ?: "",
+                            position = "${index + 1}.",
+                            challenge = challenge,
+                            isLineVisible = index < challengeCategory.challenges.size - 1,
+                            isBottomItem = index % 2 != 0,
+                            backgroundResource = getBackgroundResource(index, progress),
+                            textColor = getTextColor(index, progress),
+                            indexTextColor = getIndexTextColor(index, progress),
+                            lineBackground = getLineBackground(index, progress),
+                            onClickEnabled = index <= progress,
+                            presenter = this
+                        )
+                    }
         }
     }
 

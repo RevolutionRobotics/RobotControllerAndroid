@@ -16,7 +16,7 @@ import java.util.Date
 @Suppress("DataClassContainsFunctions")
 data class UserRobot(
     @PrimaryKey(autoGenerate = true) var instanceId: Int = 0,
-    var id: Int = 0,
+    var id: String? = null,
     var buildStatus: BuildStatus? = null,
     var actualBuildStep: Int = 0,
     var lastModified: Date? = null,
@@ -26,7 +26,7 @@ data class UserRobot(
     var description: String? = null
 ) : Parcelable {
 
-    fun isCustomBuild() = id == 0
+    fun isCustomBuild() = id == null
 }
 
 @Dao

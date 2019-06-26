@@ -1,54 +1,42 @@
 {
   "project_info": {
-    "project_number": "753863076984",
-    "firebase_url": "https://revolutionrobotics-afeb5.firebaseio.com",
-    "project_id": "revolutionrobotics-afeb5",
-    "storage_bucket": "revolutionrobotics-afeb5.appspot.com"
+    "project_number": "624142968056",
+    "firebase_url": "https://revolutionroboticsprod.firebaseio.com",
+    "project_id": "revolutionroboticsprod",
+    "storage_bucket": "revolutionroboticsprod.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:753863076984:android:720f166751ac8f99",
+        "mobilesdk_app_id": "1:624142968056:android:14cc132ebd2afb85",
         "android_client_info": {
-          "package_name": "com.revolution.robotics"
+          "package_name": "org.revolutionrobotics.robotcontroller"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "624142968056-3r47vbfau41q88ei79jijhd7jbaf424b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
-          "current_key": "AIzaSyCK9lpyWV9el5TKHZ2RWTSFarzXBA8wIDo"
+          "current_key": "AIzaSyDcxpoY5hIjahziYUrQcuc-V0QHxBIWsj8"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "753863076984-h4nktqi28b1fufegftaa3ugku1prnpc8.apps.googleusercontent.com",
+              "client_id": "624142968056-3r47vbfau41q88ei79jijhd7jbaf424b.apps.googleusercontent.com",
               "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:753863076984:android:d73de4f842046935",
-        "android_client_info": {
-          "package_name": "com.revolution.robotics.dev"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyCK9lpyWV9el5TKHZ2RWTSFarzXBA8wIDo"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
+            },
             {
-              "client_id": "753863076984-h4nktqi28b1fufegftaa3ugku1prnpc8.apps.googleusercontent.com",
-              "client_type": 3
+              "client_id": "624142968056-d1cdf8e21abmopkut60hv71mi0lu78mp.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.revolutionrobotics.robotcontroller"
+              }
             }
           ]
         }

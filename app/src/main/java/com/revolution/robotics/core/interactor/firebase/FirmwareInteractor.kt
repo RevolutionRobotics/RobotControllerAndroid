@@ -7,8 +7,8 @@ import com.revolution.robotics.core.domain.remote.Firmware
 
 class FirmwareInteractor : FirebaseSingleObjectInteractor<Firmware>() {
 
-    override val genericTypeIndicator: GenericTypeIndicator<ArrayList<Firmware>> =
-        object : GenericTypeIndicator<ArrayList<Firmware>>() {}
+    override val genericTypeIndicator: GenericTypeIndicator<HashMap<String, Firmware>> =
+        object : GenericTypeIndicator<HashMap<String, Firmware>>() {}
 
     override fun getDatabaseReference(database: FirebaseDatabase): Query = database.getReference("firmware")
 }

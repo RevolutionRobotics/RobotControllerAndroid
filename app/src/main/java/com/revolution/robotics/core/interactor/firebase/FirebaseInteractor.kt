@@ -10,7 +10,7 @@ import org.kodein.di.erased.instance
 
 abstract class FirebaseInteractor<T> : ValueEventListener {
 
-    private val db = FirebaseDatabase.getInstance("https://revolutionrobotics-afeb5.firebaseio.com/")
+    private val db = FirebaseDatabase.getInstance()
     private val errorHandler: ErrorHandler by RoboticsApplication.kodein.instance()
 
     var onResponse: ((data: T) -> Unit)? = null

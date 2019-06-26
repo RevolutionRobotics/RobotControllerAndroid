@@ -51,7 +51,7 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
         }
 
         presenter.register(this, viewModel)
-        presenter.loadBuildSteps(arguments?.robot?.id ?: 0)
+        presenter.loadBuildSteps(arguments?.robot?.id ?: "")
 
         dialogEventBus.register(this)
         bluetoothManager.startConnectionFlow()

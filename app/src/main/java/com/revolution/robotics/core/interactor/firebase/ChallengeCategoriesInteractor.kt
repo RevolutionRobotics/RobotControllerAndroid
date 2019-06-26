@@ -7,10 +7,11 @@ import com.revolution.robotics.core.domain.remote.ChallengeCategory
 
 class ChallengeCategoriesInteractor : FirebaseListInteractor<ChallengeCategory>() {
 
-    override val genericTypeIndicator: GenericTypeIndicator<ArrayList<ChallengeCategory>> =
-        object : GenericTypeIndicator<ArrayList<ChallengeCategory>>() {}
+    override val genericTypeIndicator: GenericTypeIndicator<HashMap<String, @JvmSuppressWildcards ChallengeCategory>> =
+        object : GenericTypeIndicator<HashMap<String, ChallengeCategory>>() {}
 
     override fun filter(item: ChallengeCategory): Boolean = true
+    override fun order(list: List<ChallengeCategory>): List<ChallengeCategory> = list.sortedBy { it.order }
 
     override fun getDatabaseReference(database: FirebaseDatabase): Query = database.getReference("challengeCategory")
 }

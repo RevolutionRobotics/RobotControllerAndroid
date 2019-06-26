@@ -9,14 +9,14 @@ import com.revolution.robotics.core.domain.remote.Configuration
 
 class ConfigurationInteractor : FirebaseCustomObjectReadInteractor<Configuration>() {
 
-    var configId = 0
+    lateinit var configId: String
 
     override fun convert(snapShot: DataSnapshot) = Configuration().apply {
         val gson = Gson()
         val json = gson.toJson(snapShot.value)
-        val list: List<Configuration> =
-            gson.fromJson(json, object : TypeToken<List<Configuration>>() {}.type) ?: emptyList()
-        return list.first { it.id == configId }
+        val list: HashMap<String, Configuration> =
+            gson.fromJson(json, object : TypeToken<HashMap<String, Configuration>>() {}.type) ?: hashMapOf()
+        return list.toList().first { it.second.id == configId }.second
     }
 
     override fun getDatabaseReference(database: FirebaseDatabase): Query =

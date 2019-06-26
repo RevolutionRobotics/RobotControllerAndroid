@@ -30,7 +30,9 @@ class FirebaseFileDownloader(
     ) {
         this.onResponse = onResponse
         this.onError = onError
-        val reference = FirebaseStorage.getInstance().getReferenceFromUrl(gsUrl)
+
+        val reference =
+            FirebaseStorage.getInstance().getReferenceFromUrl(gsUrl)
         val outputFile = File("${applicationContextProvider.applicationContext.filesDir}/$outputFileName")
         reference.getFile(outputFile).addOnSuccessListener {
             this.onResponse?.invoke(Uri.fromFile(outputFile))

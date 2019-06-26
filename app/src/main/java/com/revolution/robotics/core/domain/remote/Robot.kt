@@ -5,11 +5,12 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Robot(
-    var id: Int = 0,
+    var id: String? = null,
     var name: String? = null,
+    var order: Int = 0,
     var description: String? = null,
     var coverImage: String? = null,
-    var configurationId: Int = 0,
+    var configurationId: String? = null,
     var defaultProgram: String? = null,
     var buildTime: String? = null
 ) : Parcelable
