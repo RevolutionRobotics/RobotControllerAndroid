@@ -47,8 +47,9 @@ class FirmwareUpdateDialogPresenter(
                 getHardwareRevision({
                     viewModel.hardwareVersion.value = resourceResolver.string(R.string.firmware_hardware_version, it)
                 }, ::readError)
-                getSoftwareRevision({version ->
-                    viewModel.softwareVersion.value = resourceResolver.string(R.string.firmware_software_version, version)
+                getSoftwareRevision({ version ->
+                    viewModel.softwareVersion.value =
+                        resourceResolver.string(R.string.firmware_software_version, version)
                     viewModel.firmwareVersionCode = version
                     viewModel.firmwareVersion.value =
                         resourceResolver.string(R.string.firmware_current_version, version)

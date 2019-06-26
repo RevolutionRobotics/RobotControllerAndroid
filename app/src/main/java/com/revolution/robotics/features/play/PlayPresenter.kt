@@ -43,7 +43,7 @@ class PlayPresenter(
         createConfigurationFileInteractor.controllerData = controllerData
         createConfigurationFileInteractor.execute { configurationUri ->
             view?.let {
-                sendConfiguration(configurationUri)
+                sendConfiguration(configurationUri, controllerData)
             }
         }
     }

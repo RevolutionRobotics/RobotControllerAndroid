@@ -2,7 +2,6 @@ package com.revolution.robotics.features.configure.motor
 
 import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.remote.Motor
-import com.revolution.robotics.features.configure.UserConfigurationStorage
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 
 @Suppress("TooManyFunctions")

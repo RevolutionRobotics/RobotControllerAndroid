@@ -42,7 +42,7 @@ class UserConfigurationStorage(
 
     fun getDefaultDrivetrainName(): String {
         var count = 0
-        userConfiguration?.mappingId?.let {mapping ->
+        userConfiguration?.mappingId?.let { mapping ->
             if (mapping.M1?.type == Motor.TYPE_DRIVETRAIN) count++
             if (mapping.M2?.type == Motor.TYPE_DRIVETRAIN) count++
             if (mapping.M3?.type == Motor.TYPE_DRIVETRAIN) count++
