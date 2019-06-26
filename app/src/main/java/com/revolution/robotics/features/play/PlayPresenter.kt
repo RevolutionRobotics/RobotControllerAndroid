@@ -72,7 +72,7 @@ class PlayPresenter(
     }
 
     override fun onJoystickYAxisChanged(value: Int) {
-        liveControllerService?.updateYDirection(DIRECTION_VALUE_MAX - value)
+        liveControllerService?.updateYDirection(DIRECTION_VALUE_MAX - value - 1)
     }
 
     override fun onButtonPressed(ordinal: Int) {
