@@ -67,7 +67,7 @@ class MotorConfigurationPresenter(
     }
 
     override fun onDrivetrainButtonClicked() {
-        buttonHandler?.onDrivetrainButtonClicked()
+        buttonHandler?.onDrivetrainButtonClicked(userConfigurationStorage.getDefaultDrivetrainName())
     }
 
     override fun onMotorClicked() {
