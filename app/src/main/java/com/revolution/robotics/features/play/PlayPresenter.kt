@@ -1,5 +1,6 @@
 package com.revolution.robotics.features.play
 
+import android.net.Uri
 import com.revolution.bluetooth.service.RoboticsLiveControllerService
 import com.revolution.robotics.core.interactor.CreateConfigurationFileInteractor
 import com.revolution.robotics.core.interactor.GetFullConfigurationInteractor
@@ -19,6 +20,7 @@ class PlayPresenter(
 
     override var view: PlayMvp.View? = null
     override var model: PlayViewModel? = null
+    override var toolbarViewModel: PlayToolbarViewModel? = null
 
     private var liveControllerService: RoboticsLiveControllerService? = null
 
@@ -30,20 +32,35 @@ class PlayPresenter(
     override fun loadConfiguration(configId: Int) {
         getConfigurationInteractor.userConfigId = configId
         getConfigurationInteractor.execute { result ->
-            createConfigurationFileInteractor.controllerData = result
-            createConfigurationFileInteractor.execute { configurationUri ->
-                bluetoothManager.getConfigurationService().sendConfiguration(configurationUri,
-                    onSuccess = {
-                        liveControllerService = bluetoothManager.bleConnectionHandler.liveControllerService
-                        liveControllerService?.start()
-                        view?.onControllerLoaded(result)
-                    },
-                    onError = {
-                        view?.onControllerLoadingError()
-                        errorHandler.onError()
-                    })
+            toolbarViewModel?.title?.set(result.controller?.userController?.name)
+            view?.let {
+                createConfigurationFile(result)
             }
         }
+    }
+
+    private fun createConfigurationFile(controllerData: FullControllerData) {
+        createConfigurationFileInteractor.controllerData = controllerData
+        createConfigurationFileInteractor.execute { configurationUri ->
+            view?.let {
+                sendConfiguration(configurationUri, controllerData)
+            }
+        }
+    }
+
+    private fun sendConfiguration(configurationFile: Uri, controllerData: FullControllerData) {
+        bluetoothManager.getConfigurationService().sendConfiguration(configurationFile,
+            onSuccess = {
+                view?.apply {
+                    onControllerLoaded(controllerData)
+                    liveControllerService = bluetoothManager.bleConnectionHandler.liveControllerService
+                    liveControllerService?.start()
+                }
+            },
+            onError = {
+                view?.onControllerLoadingError()
+                errorHandler.onError()
+            })
     }
 
     override fun onDeviceDisconnected() {
@@ -55,7 +72,7 @@ class PlayPresenter(
     }
 
     override fun onJoystickYAxisChanged(value: Int) {
-        liveControllerService?.updateYDirection(DIRECTION_VALUE_MAX - value)
+        liveControllerService?.updateYDirection(DIRECTION_VALUE_MAX - value - 1)
     }
 
     override fun onButtonPressed(ordinal: Int) {

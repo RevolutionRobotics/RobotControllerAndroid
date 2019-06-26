@@ -8,6 +8,7 @@ import com.revolution.robotics.core.domain.local.UserMapping
 import com.revolution.robotics.core.domain.local.UserProgram
 import com.revolution.robotics.core.domain.local.UserProgramBinding
 import com.revolution.robotics.core.domain.local.UserRobot
+import com.revolution.robotics.core.domain.remote.Motor
 import com.revolution.robotics.core.interactor.SaveUserControllerInteractor
 import com.revolution.robotics.core.interactor.UpdateUserRobotInteractor
 import com.revolution.robotics.features.configure.controller.ControllerButton
@@ -37,6 +38,19 @@ class UserConfigurationStorage(
                 updateUserRobotInteractor.execute()
             }
         }
+    }
+
+    fun getDefaultDrivetrainName(): String {
+        var count = 0
+        userConfiguration?.mappingId?.let { mapping ->
+            if (mapping.M1?.type == Motor.TYPE_DRIVETRAIN) count++
+            if (mapping.M2?.type == Motor.TYPE_DRIVETRAIN) count++
+            if (mapping.M3?.type == Motor.TYPE_DRIVETRAIN) count++
+            if (mapping.M4?.type == Motor.TYPE_DRIVETRAIN) count++
+            if (mapping.M5?.type == Motor.TYPE_DRIVETRAIN) count++
+            if (mapping.M6?.type == Motor.TYPE_DRIVETRAIN) count++
+        }
+        return "drivetrain${count + 1}"
     }
 
     fun updateSensorPort(sensorPort: SensorPort) {

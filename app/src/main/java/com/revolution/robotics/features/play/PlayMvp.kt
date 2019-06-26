@@ -10,6 +10,9 @@ interface PlayMvp : Mvp {
     }
 
     interface Presenter : Mvp.Presenter<View, PlayViewModel> {
+
+        var toolbarViewModel: PlayToolbarViewModel?
+
         fun loadConfiguration(configId: Int)
         fun onDeviceDisconnected()
         fun onJoystickXAxisChanged(value: Int)

@@ -44,16 +44,15 @@ class FirmwareUpdateDialogPresenter(
                 getSystemId({
                     viewModel.robotName.value = it
                 }, ::readError)
-                getFirmwareRevision({ version ->
-                    viewModel.firmwareVersionCode = version
-                    viewModel.firmwareVersion.value =
-                        resourceResolver.string(R.string.firmware_current_version, version)
-                }, ::readError)
                 getHardwareRevision({
                     viewModel.hardwareVersion.value = resourceResolver.string(R.string.firmware_hardware_version, it)
                 }, ::readError)
-                getSoftwareRevision({
-                    viewModel.softwareVersion.value = resourceResolver.string(R.string.firmware_software_version, it)
+                getSoftwareRevision({ version ->
+                    viewModel.softwareVersion.value =
+                        resourceResolver.string(R.string.firmware_software_version, version)
+                    viewModel.firmwareVersionCode = version
+                    viewModel.firmwareVersion.value =
+                        resourceResolver.string(R.string.firmware_current_version, version)
                 }, ::readError)
                 getSerialNumber({
                     viewModel.serialNumber.value = resourceResolver.string(R.string.firmware_serial_number, it)

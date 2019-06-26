@@ -5,7 +5,9 @@ import com.revolution.robotics.core.domain.remote.Motor
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 
 @Suppress("TooManyFunctions")
-class MotorConfigurationButtonHandler(private val model: MotorConfigurationViewModel) {
+class MotorConfigurationButtonHandler(
+    private val model: MotorConfigurationViewModel
+) {
     private val chippedConfigDoneEnabled = ChippedBoxConfig.Builder()
         .backgroundColorResource(R.color.grey_28)
         .borderColorResource(R.color.white)
@@ -84,12 +86,13 @@ class MotorConfigurationButtonHandler(private val model: MotorConfigurationViewM
         }
     }
 
-    fun onDrivetrainButtonClicked() {
+    fun onDrivetrainButtonClicked(defaultName: String) {
         model.apply {
             editTextModel.value = editTextModel.value?.apply {
                 enabled = true
             }
             clearVisibilitiesAndSelections()
+            editTextModel.value?.text = defaultName
             driveTrainButton.isSelected.set(true)
 
             sideLeftButton.isVisible.set(true)

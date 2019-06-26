@@ -40,7 +40,8 @@ abstract class PlayFragment : BaseFragment<FragmentPlayCoreBinding, PlayViewMode
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding?.toolbarViewModel = PlayToolbarViewModel(resourceResolver)
+        presenter.toolbarViewModel = PlayToolbarViewModel(resourceResolver)
+        binding?.toolbarViewModel = presenter.toolbarViewModel
 
         bluetoothManager.registerListener(this)
         if (!bluetoothManager.isConnected) {
