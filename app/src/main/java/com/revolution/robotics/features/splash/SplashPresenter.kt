@@ -17,7 +17,7 @@ class SplashPresenter(
     override fun register(view: SplashMvp.View, model: ViewModel?) {
         super.register(view, model)
         firebaseInitInteractor.execute {
-            programsInteractor.downloadAllPrograms {programs ->
+            programsInteractor.downloadAllPrograms { programs ->
                 this.view?.startApp()
                 saveUserProgramsInteractor.programs = programs
                 saveUserProgramsInteractor.execute()
