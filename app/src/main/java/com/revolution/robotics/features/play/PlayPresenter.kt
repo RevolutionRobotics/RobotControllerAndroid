@@ -1,5 +1,6 @@
 package com.revolution.robotics.features.play
 
+import android.net.Uri
 import com.revolution.bluetooth.service.RoboticsLiveControllerService
 import com.revolution.robotics.core.interactor.CreateConfigurationFileInteractor
 import com.revolution.robotics.core.interactor.GetFullConfigurationInteractor
@@ -32,20 +33,34 @@ class PlayPresenter(
         getConfigurationInteractor.userConfigId = configId
         getConfigurationInteractor.execute { result ->
             toolbarViewModel?.title?.set(result.controller?.userController?.name)
-            createConfigurationFileInteractor.controllerData = result
-            createConfigurationFileInteractor.execute { configurationUri ->
-                bluetoothManager.getConfigurationService().sendConfiguration(configurationUri,
-                    onSuccess = {
-                        liveControllerService = bluetoothManager.bleConnectionHandler.liveControllerService
-                        liveControllerService?.start()
-                        view?.onControllerLoaded(result)
-                    },
-                    onError = {
-                        view?.onControllerLoadingError()
-                        errorHandler.onError()
-                    })
+            view?.let {
+                createConfigurationFile(result)
             }
         }
+    }
+
+    private fun createConfigurationFile(controllerData: FullControllerData) {
+        createConfigurationFileInteractor.controllerData = controllerData
+        createConfigurationFileInteractor.execute { configurationUri ->
+            view?.let {
+                sendConfiguration(configurationUri)
+            }
+        }
+    }
+
+    private fun sendConfiguration(configurationFile: Uri, controllerData: FullControllerData) {
+        bluetoothManager.getConfigurationService().sendConfiguration(configurationFile,
+            onSuccess = {
+                view?.apply {
+                    onControllerLoaded(controllerData)
+                    liveControllerService = bluetoothManager.bleConnectionHandler.liveControllerService
+                    liveControllerService?.start()
+                }
+            },
+            onError = {
+                view?.onControllerLoadingError()
+                errorHandler.onError()
+            })
     }
 
     override fun onDeviceDisconnected() {
