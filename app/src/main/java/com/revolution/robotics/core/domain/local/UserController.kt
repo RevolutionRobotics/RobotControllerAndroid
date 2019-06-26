@@ -38,6 +38,27 @@ data class UserController(
 ) : Parcelable {
 
     fun getMappingList() = listOf(mapping?.b1, mapping?.b2, mapping?.b3, mapping?.b4, mapping?.b5, mapping?.b6)
+
+    fun removeProgramMapping(programName: String) {
+        if (mapping?.b1?.programName == programName) {
+            mapping?.b1 = null
+        }
+        if (mapping?.b2?.programName == programName) {
+            mapping?.b2 = null
+        }
+        if (mapping?.b3?.programName == programName) {
+            mapping?.b3 = null
+        }
+        if (mapping?.b4?.programName == programName) {
+            mapping?.b4 = null
+        }
+        if (mapping?.b5?.programName == programName) {
+            mapping?.b5 = null
+        }
+        if (mapping?.b6?.programName == programName) {
+            mapping?.b6 = null
+        }
+    }
 }
 
 @Dao
