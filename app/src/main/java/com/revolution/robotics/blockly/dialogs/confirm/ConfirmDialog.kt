@@ -10,6 +10,7 @@ import com.revolution.robotics.core.utils.BundleArgumentDelegate
 import com.revolution.robotics.databinding.BlocklyDialogConfirmBinding
 import com.revolution.robotics.views.dialogs.DialogButton
 import com.revolution.robotics.views.dialogs.DialogButtonHelper
+import org.revolution.blockly.view.result.ConfirmResult
 
 class ConfirmDialog : JavascriptPromptDialog<BlocklyDialogConfirmBinding>(R.layout.blockly_dialog_confirm) {
 
@@ -44,7 +45,8 @@ class ConfirmDialog : JavascriptPromptDialog<BlocklyDialogConfirmBinding>(R.layo
                 null
             },
             DialogButton(R.string.ok, R.drawable.ic_check, true) {
-                confirmResult()
+                (blocklyResultHolder.result as? ConfirmResult)?.confirm()
+                dismissAllowingStateLoss()
             }
         ).toSet()
 }

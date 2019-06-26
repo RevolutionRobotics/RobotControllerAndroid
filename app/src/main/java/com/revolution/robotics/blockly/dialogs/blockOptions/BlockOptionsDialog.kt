@@ -14,18 +14,14 @@ import com.revolution.robotics.databinding.BlocklyDialogBlockOptionsBinding
 import com.revolution.robotics.views.ChippedEditTextViewModel
 import com.revolution.robotics.views.dialogs.DialogButton
 import com.revolution.robotics.views.dialogs.DialogButtonHelper
-import org.json.JSONObject
 import org.kodein.di.erased.instance
+import org.revolution.blockly.view.result.BlockOptionResult
 
 class BlockOptionsDialog :
     JavascriptPromptDialog<BlocklyDialogBlockOptionsBinding>(R.layout.blockly_dialog_block_options) {
 
     companion object {
         private const val COMMENT_MAX_LENGTH = 80
-
-        private const val ACTION_DELETE = "DELETE_BLOCK"
-        private const val ACTION_DUPLICATE = "DUPLICATE_BLOCK"
-        private const val ACTION_COMMENT = "ADD_COMMENT"
 
         private var Bundle.title by BundleArgumentDelegate.String("title")
         private var Bundle.comment by BundleArgumentDelegate.StringNullable("comment")
@@ -49,14 +45,18 @@ class BlockOptionsDialog :
         super.onCreateView(inflater, container, savedInstanceState).apply {
             dialogButtonHelper.createButtons(binding.buttonContainer, setOf(
                 DialogButton(R.string.dialog_block_options_delete, R.drawable.ic_delete) {
-                    confirmPromptResult(createResponse(ACTION_DELETE))
+                    (blocklyResultHolder.result as? BlockOptionResult)?.confirmDelete()
+                    wasResultConfirmed = true
+                    dismissAllowingStateLoss()
                 },
                 DialogButton(R.string.dialog_block_options_help, R.drawable.ic_community) {
                     dismissAllowingStateLoss()
                     navigator.navigate(R.id.toCommunity)
                 },
                 DialogButton(R.string.dialog_block_options_duplicate, R.drawable.ic_copy, true) {
-                    confirmPromptResult(createResponse(ACTION_DUPLICATE))
+                    (blocklyResultHolder.result as? BlockOptionResult)?.confirmDuplicate()
+                    wasResultConfirmed = true
+                    dismissAllowingStateLoss()
                 }
             ))
             title.set(arguments?.title)
@@ -76,18 +76,7 @@ class BlockOptionsDialog :
 
     override fun onDismiss(dialog: DialogInterface?) {
         if (!wasResultConfirmed) {
-            confirmPromptResult(createResponse(ACTION_COMMENT))
+            (blocklyResultHolder.result as? BlockOptionResult)?.confirmComment(binding.comment.getContent())
         }
     }
-
-    override fun confirmPromptResult(result: String) {
-        wasResultConfirmed = true
-        super.confirmPromptResult(result)
-    }
-
-    private fun createResponse(action: String) =
-        JSONObject().apply {
-            put("type", action)
-            put("payload", binding.comment.getContent())
-        }.toString()
 }

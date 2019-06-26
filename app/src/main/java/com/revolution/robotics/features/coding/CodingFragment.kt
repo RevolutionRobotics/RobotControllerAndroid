@@ -8,7 +8,7 @@ import androidx.core.view.postDelayed
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
 import com.revolution.robotics.blockly.DialogFactory
-import com.revolution.robotics.blockly.utils.JavascriptResultHandler
+import com.revolution.robotics.blockly.utils.BlocklyResultHolder
 import com.revolution.robotics.core.domain.local.UserProgram
 import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
@@ -36,7 +36,7 @@ class CodingFragment : BaseFragment<FragmentCodingBinding, CodingViewModel>(R.la
     override val viewModelClass: Class<CodingViewModel> = CodingViewModel::class.java
 
     private val presenter: CodingMvp.Presenter by kodein.instance()
-    private val javascriptResultHandler: JavascriptResultHandler by kodein.instance()
+    private val blocklyResultHolder: BlocklyResultHolder by kodein.instance()
     private val resourceResolver: ResourceResolver by kodein.instance()
     private val dialogEventBus: DialogEventBus by kodein.instance()
     private val navigator: Navigator by kodein.instance()
@@ -52,7 +52,7 @@ class CodingFragment : BaseFragment<FragmentCodingBinding, CodingViewModel>(R.la
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding?.viewBlockly?.apply {
-            init(DialogFactory(javascriptResultHandler, resourceResolver, fragmentManager))
+            init(DialogFactory(blocklyResultHolder, resourceResolver, fragmentManager))
             listener = this@CodingFragment
         }
         presenter.register(this, viewModel)

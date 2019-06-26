@@ -8,6 +8,7 @@ import com.revolution.robotics.core.extensions.withArguments
 import com.revolution.robotics.core.utils.BundleArgumentDelegate
 import com.revolution.robotics.databinding.BlocklyDialogDirectionSelectorBinding
 import org.kodein.di.erased.instance
+import org.revolution.blockly.view.result.DirectionResult
 
 class DirectionSelectorDialog :
     JavascriptPromptDialog<BlocklyDialogDirectionSelectorBinding>(R.layout.blockly_dialog_direction_selector),
@@ -46,6 +47,12 @@ class DirectionSelectorDialog :
     }
 
     override fun onDirectionSelected(direction: Direction) {
-        confirmPromptResult(direction.value)
+        when (direction) {
+            Direction.FORWARD -> (blocklyResultHolder.result as? DirectionResult)?.confirmForward()
+            Direction.BACKWARD -> (blocklyResultHolder.result as? DirectionResult)?.confirmBackward()
+            Direction.TURN_LEFT -> (blocklyResultHolder.result as? DirectionResult)?.confirmTurnLeft()
+            Direction.TURN_RIGHT -> (blocklyResultHolder.result as? DirectionResult)?.confirmTurnRight()
+        }
+        dismissAllowingStateLoss()
     }
 }

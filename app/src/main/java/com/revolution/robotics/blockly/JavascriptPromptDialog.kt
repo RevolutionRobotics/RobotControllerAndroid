@@ -11,7 +11,7 @@ import androidx.databinding.ObservableInt
 import androidx.databinding.ViewDataBinding
 import com.revolution.robotics.BaseDialog
 import com.revolution.robotics.blockly.dialogs.BlocklyDialogInterface
-import com.revolution.robotics.blockly.utils.JavascriptResultHandler
+import com.revolution.robotics.blockly.utils.BlocklyResultHolder
 import com.revolution.robotics.core.extensions.onPropertyChanged
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.databinding.BlocklyDialogCoreBinding
@@ -28,7 +28,7 @@ abstract class JavascriptPromptDialog<B : ViewDataBinding>(@LayoutRes private va
     override val title = ObservableField<String>("")
 
     protected val kodein = LateInitKodein()
-    private val javascriptResultHandler: JavascriptResultHandler by kodein.instance()
+    protected val blocklyResultHolder: BlocklyResultHolder by kodein.instance()
     private val resourceResolver: ResourceResolver by kodein.instance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,18 +45,7 @@ abstract class JavascriptPromptDialog<B : ViewDataBinding>(@LayoutRes private va
         }.root
 
     override fun onDismiss(dialog: DialogInterface?) {
-        javascriptResultHandler.cancelResult()
-        javascriptResultHandler.cancelPromptResult()
+        blocklyResultHolder.result?.cancel()
         super.onDismiss(dialog)
-    }
-
-    override fun confirmResult() {
-        javascriptResultHandler.confirmResult()
-        dismissAllowingStateLoss()
-    }
-
-    override fun confirmPromptResult(result: String) {
-        javascriptResultHandler.confirmPromptResult(result)
-        dismissAllowingStateLoss()
     }
 }

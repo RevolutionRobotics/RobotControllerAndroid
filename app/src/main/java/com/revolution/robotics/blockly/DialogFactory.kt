@@ -1,7 +1,5 @@
 package com.revolution.robotics.blockly
 
-import android.webkit.JsPromptResult
-import android.webkit.JsResult
 import androidx.fragment.app.FragmentManager
 import com.revolution.robotics.blockly.dialogs.blockOptions.BlockOptionsDialog
 import com.revolution.robotics.blockly.dialogs.colorPicker.ColorPickerDialog
@@ -16,41 +14,52 @@ import com.revolution.robotics.blockly.dialogs.slider.SliderDialog
 import com.revolution.robotics.blockly.dialogs.soundPicker.SoundPickerDialog
 import com.revolution.robotics.blockly.dialogs.textInput.TextInputDialog
 import com.revolution.robotics.blockly.dialogs.variableOptions.VariableOptionsDialog
-import com.revolution.robotics.blockly.utils.JavascriptResultHandler
+import com.revolution.robotics.blockly.utils.BlocklyResultHolder
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import org.revolution.blockly.BlocklyOption
 import org.revolution.blockly.BlocklyVariable
 import org.revolution.blockly.view.DialogFactory
+import org.revolution.blockly.view.result.BlockOptionResult
+import org.revolution.blockly.view.result.ColorResult
+import org.revolution.blockly.view.result.ConfirmResult
+import org.revolution.blockly.view.result.DialpadResult
+import org.revolution.blockly.view.result.DirectionResult
+import org.revolution.blockly.view.result.DonutResult
+import org.revolution.blockly.view.result.OptionResult
+import org.revolution.blockly.view.result.SliderResult
+import org.revolution.blockly.view.result.SoundResult
+import org.revolution.blockly.view.result.TextResult
+import org.revolution.blockly.view.result.VariableResult
 
 @Suppress("TooManyFunctions")
 class DialogFactory(
-    private val javascriptResultHandler: JavascriptResultHandler,
+    private val blocklyResultHolder: BlocklyResultHolder,
     private val resourceResolver: ResourceResolver,
     private val fragmentManager: FragmentManager?
 ) : DialogFactory {
 
-    override fun showAlertDialog(message: String, result: JsResult) {
-        javascriptResultHandler.register(result)
+    override fun showAlertDialog(message: String, result: ConfirmResult) {
+        blocklyResultHolder.result = result
         ConfirmDialog.newInstance(message, false).show(fragmentManager)
     }
 
-    override fun showConfirmationDialog(message: String, result: JsResult) {
-        javascriptResultHandler.register(result)
+    override fun showConfirmationDialog(message: String, result: ConfirmResult) {
+        blocklyResultHolder.result = result
         ConfirmDialog.newInstance(message, true).show(fragmentManager)
     }
 
-    override fun showDirectionSelectorDialog(defaultValue: String, result: JsPromptResult) {
-        javascriptResultHandler.register(result)
+    override fun showDirectionSelectorDialog(defaultValue: String, result: DirectionResult) {
+        blocklyResultHolder.result = result
         DirectionSelectorDialog.newInstance(Direction.getByValue(defaultValue)).show(fragmentManager)
     }
 
-    override fun showDialpad(defaultValue: Double, result: JsPromptResult) {
-        javascriptResultHandler.register(result)
+    override fun showDialpad(defaultValue: Double, result: DialpadResult) {
+        blocklyResultHolder.result = result
         DialpadDialog.newInstance(defaultValue).show(fragmentManager)
     }
 
-    override fun showSlider(title: String, maxValue: Int, defaultValue: Int, result: JsPromptResult) {
-        javascriptResultHandler.register(result)
+    override fun showSlider(title: String, maxValue: Int, defaultValue: Int, result: SliderResult) {
+        blocklyResultHolder.result = result
         SliderDialog.newInstance(title, maxValue, defaultValue).show(fragmentManager)
     }
 
@@ -58,45 +67,45 @@ class DialogFactory(
         title: String,
         blocklyOptions: List<BlocklyOption>,
         defaultValue: BlocklyOption?,
-        result: JsPromptResult
+        result: OptionResult
     ) {
-        javascriptResultHandler.register(result)
+        blocklyResultHolder.result = result
         val options = blocklyOptions.map { blocklyOption -> blocklyOption.toOption(defaultValue, resourceResolver) }
         OptionSelectorDialog.newInstance(title, options).show(fragmentManager)
     }
 
-    override fun showColorPicker(title: String, colors: List<String>, defaultValue: String, result: JsPromptResult) {
-        javascriptResultHandler.register(result)
+    override fun showColorPicker(title: String, colors: List<String>, defaultValue: String, result: ColorResult) {
+        blocklyResultHolder.result = result
         ColorPickerDialog.newInstance(title, colors, defaultValue).show(fragmentManager)
     }
 
-    override fun showSoundPicker(title: String, defaultValue: String?, result: JsPromptResult) {
-        javascriptResultHandler.register(result)
+    override fun showSoundPicker(title: String, defaultValue: String?, result: SoundResult) {
+        blocklyResultHolder.result = result
         SoundPickerDialog.newInstance(title, defaultValue).show(fragmentManager)
     }
 
-    override fun showBlockOptionsDialog(title: String, comment: String, result: JsPromptResult) {
-        javascriptResultHandler.register(result)
+    override fun showBlockOptionsDialog(title: String, comment: String, result: BlockOptionResult) {
+        blocklyResultHolder.result = result
         BlockOptionsDialog.newInstance(title, comment).show(fragmentManager)
     }
 
     override fun showVariableOptionsDialog(
         title: String,
-        selectedKey: String,
+        defaultValue: BlocklyVariable?,
         variables: List<BlocklyVariable>,
-        result: JsPromptResult
+        result: VariableResult
     ) {
-        javascriptResultHandler.register(result)
-        VariableOptionsDialog.newInstance(title, selectedKey, variables).show(fragmentManager)
+        blocklyResultHolder.result = result
+        VariableOptionsDialog.newInstance(title, defaultValue, variables).show(fragmentManager)
     }
 
-    override fun showTextInput(title: String, defaultValue: String?, result: JsPromptResult) {
-        javascriptResultHandler.register(result)
+    override fun showTextInput(title: String, defaultValue: String?, result: TextResult) {
+        blocklyResultHolder.result = result
         TextInputDialog.newInstance(title, defaultValue).show(fragmentManager)
     }
 
-    override fun showDonutSelector(defaultValue: String, isMultiSelection: Boolean, result: JsPromptResult) {
-        javascriptResultHandler.register(result)
+    override fun showDonutSelector(defaultValue: String, isMultiSelection: Boolean, result: DonutResult) {
+        blocklyResultHolder.result = result
         val selectionType =
             if (isMultiSelection) {
                 DonutSelectorDialog.DonutSelectionType.MULTI

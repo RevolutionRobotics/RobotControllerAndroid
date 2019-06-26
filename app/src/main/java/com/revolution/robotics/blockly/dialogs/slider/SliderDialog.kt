@@ -10,6 +10,7 @@ import com.revolution.robotics.core.extensions.withArguments
 import com.revolution.robotics.core.utils.BundleArgumentDelegate
 import com.revolution.robotics.databinding.BlocklyDialogSliderBinding
 import org.kodein.di.erased.instance
+import org.revolution.blockly.view.result.SliderResult
 
 class SliderDialog : JavascriptPromptDialog<BlocklyDialogSliderBinding>(R.layout.blockly_dialog_slider),
     SliderMvp.View {
@@ -54,6 +55,7 @@ class SliderDialog : JavascriptPromptDialog<BlocklyDialogSliderBinding>(R.layout
     }
 
     override fun onDoneClicked() {
-        confirmPromptResult(binding.label.text.toString())
+        (blocklyResultHolder.result as? SliderResult)?.confirm(binding.slider.progress)
+        dismissAllowingStateLoss()
     }
 }

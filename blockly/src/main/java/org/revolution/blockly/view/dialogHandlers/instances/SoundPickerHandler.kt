@@ -6,12 +6,13 @@ import org.revolution.blockly.view.DialogFactory
 import org.revolution.blockly.view.dialogHandlers.JsPromptHandler
 import org.revolution.blockly.view.dialogHandlers.defaultKey
 import org.revolution.blockly.view.dialogHandlers.title
+import org.revolution.blockly.view.result.SoundResult
 
 class SoundPickerHandler : JsPromptHandler {
 
     override fun canHandleRequest(message: String) = message == "play_tune.in_sound"
 
     override fun handleRequest(request: JSONObject, dialogFactory: DialogFactory, result: JsPromptResult) {
-        dialogFactory.showSoundPicker(request.title(), request.defaultKey(), result)
+        dialogFactory.showSoundPicker(request.title(), request.defaultKey(), SoundResult(result))
     }
 }

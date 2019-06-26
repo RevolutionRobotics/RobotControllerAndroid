@@ -2,7 +2,7 @@ package com.revolution.robotics.core.kodein
 
 import android.content.Context
 import com.revolution.bluetooth.communication.RoboticsDeviceConnector
-import com.revolution.robotics.blockly.utils.JavascriptResultHandler
+import com.revolution.robotics.blockly.utils.BlocklyResultHolder
 import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
 import com.revolution.robotics.core.interactor.firebase.FirebaseFileDownloader
 import com.revolution.robotics.core.interactor.firebase.FirebaseProgramDownloader
@@ -25,7 +25,7 @@ fun createMainModule() =
         // Singletons
         bind<DynamicPermissionHandler>() with s { DynamicPermissionHandler() }
         bind<Navigator>() with s { Navigator() }
-        bind<JavascriptResultHandler>() with s { JavascriptResultHandler() }
+        bind<BlocklyResultHolder>() with s { BlocklyResultHolder() }
         bind<DialogEventBus>() with s { DialogEventBus() }
         bind<ConfigurationEventBus>() with s { ConfigurationEventBus() }
         bind<BluetoothManager>() with s { BluetoothManager(kodein) }

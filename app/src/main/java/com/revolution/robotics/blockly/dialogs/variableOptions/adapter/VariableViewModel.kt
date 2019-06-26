@@ -32,6 +32,6 @@ class VariableViewModel(
     val background = if (selected) SELECTED_BACKGROUND else BACKGROUND
 
     fun onVariableClicked() {
-        presenter.onVariableSelected(variable.key)
+        presenter.onVariableSelected(variable)
     }
 }

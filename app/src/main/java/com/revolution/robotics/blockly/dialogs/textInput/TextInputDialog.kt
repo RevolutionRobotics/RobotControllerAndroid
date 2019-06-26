@@ -11,6 +11,7 @@ import com.revolution.robotics.databinding.BlocklyDialogTextInputBinding
 import com.revolution.robotics.views.ChippedEditTextViewModel
 import com.revolution.robotics.views.dialogs.DialogButton
 import com.revolution.robotics.views.dialogs.DialogButtonHelper
+import org.revolution.blockly.view.result.TextResult
 
 class TextInputDialog : JavascriptPromptDialog<BlocklyDialogTextInputBinding>(R.layout.blockly_dialog_text_input) {
 
@@ -40,7 +41,8 @@ class TextInputDialog : JavascriptPromptDialog<BlocklyDialogTextInputBinding>(R.
                     dismissAllowingStateLoss()
                 },
                 DialogButton(R.string.done, R.drawable.ic_check, true) {
-                    confirmPromptResult(binding.text.getContent())
+                    (blocklyResultHolder.result as? TextResult)?.confirm(binding.text.getContent())
+                    dismissAllowingStateLoss()
                 }
             ))
             title.set(arguments?.title)

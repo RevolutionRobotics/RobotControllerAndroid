@@ -4,9 +4,14 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModel
 import com.revolution.robotics.R
 import com.revolution.robotics.blockly.dialogs.BlocklyDialogInterface
+import com.revolution.robotics.blockly.utils.BlocklyResultHolder
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
+import org.revolution.blockly.view.result.DialpadResult
 
-class DialpadViewModel(private val dialogInterface: BlocklyDialogInterface) : ViewModel() {
+class DialpadViewModel(
+    private val blocklyResultHolder: BlocklyResultHolder,
+    private val dialogInterface: BlocklyDialogInterface
+) : ViewModel() {
 
     val result = ObservableField<String>()
 
@@ -50,7 +55,8 @@ class DialpadViewModel(private val dialogInterface: BlocklyDialogInterface) : Vi
     }
 
     fun onOkClicked() {
-        result.get()?.let { dialogInterface.confirmPromptResult(it) }
+        (blocklyResultHolder.result as? DialpadResult)?.confirm(result.get()?.toDouble() ?: 0.0)
+        dialogInterface.dismiss()
     }
 
     @Suppress("SwallowedException")
