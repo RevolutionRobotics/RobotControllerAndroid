@@ -1,5 +1,6 @@
 package com.revolution.robotics.features.challenges.challengeDetail
 
+import com.revolution.robotics.core.domain.local.ChallengeType
 import com.revolution.robotics.core.domain.local.UserChallengeCategory
 import com.revolution.robotics.core.domain.remote.Challenge
 import com.revolution.robotics.core.domain.remote.ChallengeStep
@@ -36,18 +37,21 @@ class ChallengeDetailPresenter(
     private fun setChallengeStep(challengeStep: ChallengeStep) {
         toolbarViewModel?.title?.set(challengeStep.title)
         model?.apply {
-            if (challengeStep.parts.isEmpty()) {
-                image.value = challengeStep.image
-                title.value = challengeStep.description
-                isPartStep.value = false
-                parts.value = emptyList()
-            } else {
-                image.value = null
-                title.value = null
-                isPartStep.value = true
-                parts.value = challengeStep.parts.toList().sortedBy { it.second.order }.map {
-                    ChallengePartItemViewModel(it.second)
-                }.sortedBy { it.part.order }
+            when (val challengeType = ChallengeType.fromId(challengeStep.challengeType)) {
+                ChallengeType.HORIZONTAL, ChallengeType.VERTICAL, ChallengeType.ZOOMABLE -> {
+                    image.value = challengeStep.image
+                    title.value = challengeStep.description
+                    type.value = challengeType
+                    parts.value = emptyList()
+                }
+                ChallengeType.PART_LIST -> {
+                    image.value = null
+                    title.value = null
+                    type.value = ChallengeType.PART_LIST
+                    parts.value = challengeStep.parts.toList().sortedBy { it.second.order }.map {
+                        ChallengePartItemViewModel(it.second)
+                    }.sortedBy { it.part.order }
+                }
             }
         }
     }
