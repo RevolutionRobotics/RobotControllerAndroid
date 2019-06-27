@@ -13,6 +13,7 @@ interface PlayMvp : Mvp {
 
         var toolbarViewModel: PlayToolbarViewModel?
 
+        fun loadControllerName(configId: Int)
         fun loadConfiguration(configId: Int)
         fun onDeviceDisconnected()
         fun onJoystickXAxisChanged(value: Int)

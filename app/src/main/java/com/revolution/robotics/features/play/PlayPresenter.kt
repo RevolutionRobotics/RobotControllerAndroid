@@ -3,6 +3,7 @@ package com.revolution.robotics.features.play
 import android.net.Uri
 import com.revolution.bluetooth.service.RoboticsLiveControllerService
 import com.revolution.robotics.core.interactor.CreateConfigurationFileInteractor
+import com.revolution.robotics.core.interactor.GetControllerNameInteractor
 import com.revolution.robotics.core.interactor.GetFullConfigurationInteractor
 import com.revolution.robotics.features.bluetooth.BluetoothManager
 import com.revolution.robotics.features.shared.ErrorHandler
@@ -10,6 +11,7 @@ import com.revolution.robotics.features.shared.ErrorHandler
 class PlayPresenter(
     private val getConfigurationInteractor: GetFullConfigurationInteractor,
     private val createConfigurationFileInteractor: CreateConfigurationFileInteractor,
+    private val getControllerNameInteractor: GetControllerNameInteractor,
     private val bluetoothManager: BluetoothManager,
     private val errorHandler: ErrorHandler
 ) : PlayMvp.Presenter {
@@ -23,6 +25,13 @@ class PlayPresenter(
     override var toolbarViewModel: PlayToolbarViewModel? = null
 
     private var liveControllerService: RoboticsLiveControllerService? = null
+
+    override fun loadControllerName(configId: Int) {
+        getControllerNameInteractor.configurationId = configId
+        getControllerNameInteractor.execute {
+            toolbarViewModel?.title?.set(it)
+        }
+    }
 
     override fun unregister(view: PlayMvp.View?) {
         liveControllerService?.stop()
