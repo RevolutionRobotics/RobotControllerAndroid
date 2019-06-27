@@ -2,14 +2,15 @@ package com.revolution.robotics.features.build.testing.buildTest
 
 import android.os.Bundle
 import android.view.View
-import com.revolution.robotics.R
 import com.revolution.robotics.core.eventBus.dialog.DialogEvent
+import com.revolution.robotics.core.extensions.openUrl
 import com.revolution.robotics.core.extensions.withArguments
 import com.revolution.robotics.core.utils.BundleArgumentDelegate
 import com.revolution.robotics.features.build.testing.TestDialog
 import com.revolution.robotics.features.build.testing.TestLoadingDialogFace
 import com.revolution.robotics.features.build.tips.DialogController
 import com.revolution.robotics.features.build.tips.TipsDialogFace
+import com.revolution.robotics.features.shared.ErrorHandler
 import com.revolution.robotics.views.dialogs.DialogButton
 import com.revolution.robotics.views.dialogs.DialogFace
 import com.revolution.robotics.views.dialogs.RoboticsDialog
@@ -21,6 +22,9 @@ class TestBuildDialog : RoboticsDialog(), DialogController, TestBuildDialogMvp.V
         var Bundle.image: String by BundleArgumentDelegate.String("image")
         var Bundle.description: String by BundleArgumentDelegate.String("description")
         var Bundle.code: String by BundleArgumentDelegate.String("code")
+
+        // TODO Add final community url
+        const val COMMUNITY_URL = "https://revolutionrobotics.org"
 
         fun newInstance(image: String, description: String, code: String) =
             TestBuildDialog().withArguments { arguments ->
@@ -39,6 +43,7 @@ class TestBuildDialog : RoboticsDialog(), DialogController, TestBuildDialogMvp.V
     override val dialogButtons = emptyList<DialogButton>()
 
     private val presenter: TestBuildDialogMvp.Presenter by kodein.instance()
+    private val errorHandler: ErrorHandler by kodein.instance()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -69,7 +74,7 @@ class TestBuildDialog : RoboticsDialog(), DialogController, TestBuildDialogMvp.V
     }
 
     override fun navigateToCommunity() {
-        navigator.navigate(R.id.toCommunity)
+        requireActivity().openUrl(COMMUNITY_URL, errorHandler)
     }
 
     override fun publishDialogEvent(event: DialogEvent) {
