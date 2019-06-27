@@ -98,6 +98,7 @@ class RoboticsDeviceConnector : BluetoothGattCallback() {
 
     fun disconnect() {
         isConnected = false
+        isServiceDiscovered = false
         roboticEventSerializer.clear()
         connectionListeners.forEach {
             it.onConnectionStateChanged(false, false)

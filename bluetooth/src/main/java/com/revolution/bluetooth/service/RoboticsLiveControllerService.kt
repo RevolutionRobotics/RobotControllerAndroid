@@ -48,6 +48,7 @@ class RoboticsLiveControllerService : RoboticsBLEService() {
     }
 
     fun start() {
+        stop()
         isRunning = true
         var counter = 0
         schedulerJob = GlobalScope.launch {
