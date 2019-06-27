@@ -63,12 +63,14 @@ class ChallengeDetailPresenter(
     private fun saveProgress(currentProgress: Int) {
         getCategoriesInteractor.execute { categories ->
             categories.find { it.id == categoryId }?.let { category ->
-                category.challenges.toList().map { it.second }.indexOfFirst { it.id == challengeId }.let { index ->
+                category.challenges.toList().sortedBy { it.second.order }.map { it.second }
+                    .indexOfFirst { it.id == challengeId }.let { index ->
                     if (index + 1 > currentProgress) {
                         saveProgress(categoryId, index + 1)
                     }
-                    view?.showChallengeFinishedDialog(category.challenges
-                        .toList().map { it.second }.getOrNull(index + 1)
+                    view?.showChallengeFinishedDialog(
+                        category.challenges
+                            .toList().sortedBy { it.second.order }.map { it.second }.getOrNull(index + 1)
                     )
                 }
             }
