@@ -97,7 +97,5 @@ class TutorialViewModel(private val resourceResolver: ResourceResolver, private 
         presenter.onTutorialButtonClicked()
     }
 
-    fun onOverlayClicked() {
-        onNextButtonClicked()
-    }
+    fun onOverlayClicked() {}
 }
