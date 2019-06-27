@@ -7,12 +7,16 @@ import android.provider.Settings
 import androidx.core.content.ContextCompat
 import com.revolution.robotics.R
 import com.revolution.robotics.core.eventBus.dialog.DialogEvent
+import com.revolution.robotics.core.extensions.openUrl
 import com.revolution.robotics.databinding.DialogTurnOnTheBrainBinding
+import com.revolution.robotics.features.build.testing.buildTest.TestBuildDialog
 import com.revolution.robotics.features.build.tips.DialogController
 import com.revolution.robotics.features.build.tips.TipsDialogFace
+import com.revolution.robotics.features.shared.ErrorHandler
 import com.revolution.robotics.views.dialogs.DialogButton
 import com.revolution.robotics.views.dialogs.DialogFace
 import com.revolution.robotics.views.dialogs.RoboticsDialog
+import org.kodein.di.erased.instance
 
 class TurnOnTheBrainDialog : RoboticsDialog(), DialogController {
 
@@ -20,6 +24,7 @@ class TurnOnTheBrainDialog : RoboticsDialog(), DialogController {
         fun newInstance() = TurnOnTheBrainDialog()
     }
 
+    private val errorHandler: ErrorHandler by kodein.instance()
     override val hasCloseButton = true
     override val dialogFaces: List<DialogFace<*>> = listOf(
         TurnOnTheBrainDialogFace(),
@@ -28,7 +33,7 @@ class TurnOnTheBrainDialog : RoboticsDialog(), DialogController {
     override val dialogButtons = emptyList<DialogButton>()
 
     override fun navigateToCommunity() {
-        navigator.navigate(R.id.toCommunity)
+        requireActivity().openUrl(TestBuildDialog.COMMUNITY_URL, errorHandler)
     }
 
     override fun publishDialogEvent(event: DialogEvent) {
@@ -51,7 +56,7 @@ class TurnOnTheBrainDialog : RoboticsDialog(), DialogController {
 
         override val dialogFaceButtons = mutableListOf(
             DialogButton(R.string.build_robot_later, R.drawable.ic_clock) {
-                dismiss()
+                dismissAllowingStateLoss()
                 dialogEventBus.publish(DialogEvent.BRAIN_NOT_TURNED_ON)
             },
             DialogButton(R.string.build_robot_tips, R.drawable.ic_tips) {
@@ -60,7 +65,7 @@ class TurnOnTheBrainDialog : RoboticsDialog(), DialogController {
             DialogButton(R.string.build_robot_start, R.drawable.ic_play, true) {
                 val bluetoothManager = requireContext().getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
                 if (bluetoothManager.adapter.isEnabled) {
-                    dismiss()
+                    dismissAllowingStateLoss()
                     dialogEventBus.publish(DialogEvent.BRAIN_TURNED_ON)
                 } else {
                     ContextCompat.startActivity(requireContext(), Intent().apply {

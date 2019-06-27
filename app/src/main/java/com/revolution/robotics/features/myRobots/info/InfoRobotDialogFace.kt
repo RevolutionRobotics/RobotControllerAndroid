@@ -19,7 +19,7 @@ class InfoRobotDialogFace(dialog: RoboticsDialog, showEditButton: Boolean) :
             (dialog as? InfoRobotDialog)?.activateDeleteFace()
         },
         DialogButton(R.string.info_robot_duplicate, R.drawable.ic_copy) {
-            dialog.dismiss()
+            dialog.dismissAllowingStateLoss()
             dialog.dialogEventBus.publish(DialogEvent.DUPLICATE_ROBOT.apply {
                 extras.putParcelable(KEY_ROBOT, dialog.arguments?.getParcelable<UserRobot>(KEY_ROBOT))
             })

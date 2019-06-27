@@ -21,7 +21,7 @@ class ConnectionFailedDialog : RoboticsDialog() {
     )
     override val dialogButtons = listOf(
         DialogButton(R.string.connection_failed_skip_button_title, R.drawable.ic_skip) {
-            dialog.dismiss()
+            dismissAllowingStateLoss()
         }
     )
 

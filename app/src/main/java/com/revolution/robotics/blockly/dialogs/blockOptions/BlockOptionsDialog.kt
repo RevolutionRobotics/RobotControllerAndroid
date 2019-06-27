@@ -6,11 +6,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.revolution.robotics.R
 import com.revolution.robotics.blockly.JavascriptPromptDialog
+import com.revolution.robotics.core.extensions.openUrl
 import com.revolution.robotics.core.extensions.withArguments
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.core.utils.BundleArgumentDelegate
-import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.databinding.BlocklyDialogBlockOptionsBinding
+import com.revolution.robotics.features.build.testing.buildTest.TestBuildDialog
+import com.revolution.robotics.features.shared.ErrorHandler
 import com.revolution.robotics.views.ChippedEditTextViewModel
 import com.revolution.robotics.views.dialogs.DialogButton
 import com.revolution.robotics.views.dialogs.DialogButtonHelper
@@ -36,7 +38,7 @@ class BlockOptionsDialog :
     override val hasTitle = true
 
     private val resourceResolver: ResourceResolver by kodein.instance()
-    private val navigator: Navigator by kodein.instance()
+    private val errorHandler: ErrorHandler by kodein.instance()
     private val dialogButtonHelper = DialogButtonHelper()
 
     private var wasResultConfirmed = false
@@ -50,8 +52,8 @@ class BlockOptionsDialog :
                     dismissAllowingStateLoss()
                 },
                 DialogButton(R.string.dialog_block_options_help, R.drawable.ic_community) {
+                    requireActivity().openUrl(TestBuildDialog.COMMUNITY_URL, errorHandler)
                     dismissAllowingStateLoss()
-                    navigator.navigate(R.id.toCommunity)
                 },
                 DialogButton(R.string.dialog_block_options_duplicate, R.drawable.ic_copy, true) {
                     (blocklyResultHolder.result as? BlockOptionResult)?.confirmDuplicate()

@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
-import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.core.utils.BundleArgumentDelegate
 import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.databinding.FragmentPlayCoreBinding
@@ -25,7 +24,6 @@ abstract class PlayFragment : BaseFragment<FragmentPlayCoreBinding, PlayViewMode
     override val viewModelClass = PlayViewModel::class.java
 
     protected val presenter: PlayMvp.Presenter by kodein.instance()
-    private val resourceResolver: ResourceResolver by kodein.instance()
     private val bluetoothManager: BluetoothManager by kodein.instance()
     private val navigator: Navigator by kodein.instance()
 
@@ -40,8 +38,11 @@ abstract class PlayFragment : BaseFragment<FragmentPlayCoreBinding, PlayViewMode
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        presenter.toolbarViewModel = PlayToolbarViewModel(resourceResolver)
+        presenter.toolbarViewModel = PlayToolbarViewModel()
         binding?.toolbarViewModel = presenter.toolbarViewModel
+        arguments?.let {
+            presenter.loadControllerName(it.configId)
+        }
 
         bluetoothManager.registerListener(this)
         if (!bluetoothManager.isConnected) {

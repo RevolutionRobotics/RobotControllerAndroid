@@ -49,7 +49,7 @@ class SaveProgramDialog : SaveDialog(), SaveProgramMvp.View {
     }
 
     override fun saveProgram(userProgram: UserProgram) {
-        dismiss()
+        dismissAllowingStateLoss()
         dialogEventBus.publish(DialogEvent.SAVE_PROGRAM.apply {
             extras.userProgram = userProgram
         })

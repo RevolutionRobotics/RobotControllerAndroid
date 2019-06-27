@@ -56,7 +56,7 @@ class DialpadViewModel(
 
     fun onOkClicked() {
         (blocklyResultHolder.result as? DialpadResult)?.confirm(result.get()?.toDouble() ?: 0.0)
-        dialogInterface.dismiss()
+        dialogInterface.dismissAllowingStateLoss()
     }
 
     @Suppress("SwallowedException")

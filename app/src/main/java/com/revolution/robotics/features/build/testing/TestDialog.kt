@@ -2,10 +2,13 @@ package com.revolution.robotics.features.build.testing
 
 import android.os.Bundle
 import android.view.View
-import com.revolution.robotics.R
 import com.revolution.robotics.core.eventBus.dialog.DialogEvent
+import com.revolution.robotics.core.extensions.openUrl
 import com.revolution.robotics.core.utils.BundleArgumentDelegate
+import com.revolution.robotics.features.bluetooth.BluetoothManager
+import com.revolution.robotics.features.build.testing.buildTest.TestBuildDialog
 import com.revolution.robotics.features.build.tips.DialogController
+import com.revolution.robotics.features.shared.ErrorHandler
 import com.revolution.robotics.views.dialogs.DialogButton
 import com.revolution.robotics.views.dialogs.RoboticsDialog
 import org.kodein.di.erased.instance
@@ -37,6 +40,8 @@ abstract class TestDialog : RoboticsDialog(), DialogController, TestMvp.View {
     abstract val testFileName: String
 
     private val presenter: TestMvp.Presenter by kodein.instance()
+    private val errorHandler: ErrorHandler by kodein.instance()
+    private val bluetoothManager: BluetoothManager by kodein.instance()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         presenter.register(this, null)
@@ -53,12 +58,17 @@ abstract class TestDialog : RoboticsDialog(), DialogController, TestMvp.View {
     }
 
     override fun onRetryClicked() {
-        presenter.uploadTest(testFileName, generateReplaceablePairs())
-        activateFace(dialogFaces.first())
+        if (bluetoothManager.isServiceDiscovered) {
+            presenter.uploadTest(testFileName, generateReplaceablePairs())
+            activateFace(dialogFaces.first())
+        } else {
+            dismissAllowingStateLoss()
+            bluetoothManager.startConnectionFlow()
+        }
     }
 
     override fun navigateToCommunity() {
-        navigator.navigate(R.id.toCommunity)
+        requireActivity().openUrl(TestBuildDialog.COMMUNITY_URL, errorHandler)
     }
 
     override fun publishDialogEvent(event: DialogEvent) {

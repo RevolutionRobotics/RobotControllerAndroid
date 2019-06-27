@@ -6,6 +6,7 @@ import com.revolution.robotics.core.Mvp
 interface AboutMvp : Mvp {
 
     interface View : Mvp.View {
+        fun openUrl(url: String)
         fun openIntent(intent: Intent)
     }
 

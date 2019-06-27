@@ -28,6 +28,9 @@ open class BaseDialog : DialogFragment() {
 
     open fun dialogWidth() = R.dimen.dialog_width
 
-    fun show(fragmentManager: FragmentManager?) =
-        show(fragmentManager, this.javaClass.simpleName)
+    fun show(fragmentManager: FragmentManager?) {
+        if (!isStateSaved) {
+            show(fragmentManager, this.javaClass.simpleName)
+        }
+    }
 }

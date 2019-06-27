@@ -1,7 +1,9 @@
 package com.revolution.robotics.features.mainmenu.settings.firmware.update
 
 import com.revolution.robotics.R
+import com.revolution.robotics.core.extensions.openUrl
 import com.revolution.robotics.databinding.DialogFirmwareUpdateFailedBinding
+import com.revolution.robotics.features.build.testing.buildTest.TestBuildDialog
 import com.revolution.robotics.views.dialogs.DialogButton
 import com.revolution.robotics.views.dialogs.DialogFace
 
@@ -15,7 +17,7 @@ class FirmwareUpdateFailedDialogFace(dialog: FirmwareUpdateDialog) : DialogFace<
             dialog.dismissAllowingStateLoss()
         },
         DialogButton(R.string.firmware_update_failed_update_community_button, R.drawable.ic_tips, true) {
-            dialog.navigator.navigate(R.id.toCommunity)
+            dialog.requireActivity().openUrl(TestBuildDialog.COMMUNITY_URL)
         },
         DialogButton(R.string.firmware_update_failed_update_try_again_button, R.drawable.ic_retry, true) {
             dialog.retryFirmwareUpload()

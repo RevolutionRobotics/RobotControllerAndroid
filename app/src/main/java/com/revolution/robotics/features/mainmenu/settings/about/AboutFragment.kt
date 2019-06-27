@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
+import com.revolution.robotics.core.extensions.openUrl
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.databinding.FragmentAboutBinding
 import com.revolution.robotics.features.shared.ErrorHandler
@@ -39,5 +40,9 @@ class AboutFragment :
         } catch (exception: ActivityNotFoundException) {
             errorHandler.onError(R.string.error_cannot_open_url)
         }
+    }
+
+    override fun openUrl(url: String) {
+        requireActivity().openUrl(url, errorHandler)
     }
 }

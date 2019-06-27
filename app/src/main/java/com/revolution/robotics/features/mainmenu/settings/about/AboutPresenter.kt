@@ -34,15 +34,15 @@ class AboutPresenter(
     }
 
     override fun onFacebookClicked() {
-        view?.openIntent(Intent(Intent.ACTION_VIEW, Uri.parse(FACEBOOK)))
+        view?.openUrl(FACEBOOK)
     }
 
     override fun onInstagramClicked() {
-        view?.openIntent(Intent(Intent.ACTION_VIEW, Uri.parse(INSTAGRAM)))
+        view?.openUrl(INSTAGRAM)
     }
 
     override fun onWebsiteClicked() {
-        view?.openIntent(Intent(Intent.ACTION_VIEW, Uri.parse(WEBPAGE)))
+        view?.openUrl(WEBPAGE)
     }
 
     override fun onPermissionLayoutClicked() {
@@ -54,10 +54,10 @@ class AboutPresenter(
     }
 
     override fun onPrivacyPolicyClicked() {
-        view?.openIntent(Intent(Intent.ACTION_VIEW, Uri.parse(PRIVACY_POLICY)))
+        view?.openUrl(PRIVACY_POLICY)
     }
 
     override fun onTermsAndConditionsClicked() {
-        view?.openIntent(Intent(Intent.ACTION_VIEW, Uri.parse(TERMS_AND_CONDITIONS)))
+        view?.openUrl(TERMS_AND_CONDITIONS)
     }
 }

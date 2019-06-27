@@ -27,7 +27,7 @@ class SaveControllerDialog : SaveDialog() {
     override val dialogFaces: List<DialogFace<*>> = listOf(dialogFace)
 
     override fun onDoneClicked() {
-        dismiss()
+        dismissAllowingStateLoss()
         dialogEventBus.publish(DialogEvent.SAVE_CONTROLLER.apply {
             extras.description = dialogFace.getDescription()
             extras.name = dialogFace.getName()

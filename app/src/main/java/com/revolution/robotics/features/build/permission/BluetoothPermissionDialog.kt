@@ -31,7 +31,7 @@ class BluetoothPermissionDialog : RoboticsDialog(), DynamicPermissionListener {
     )
 
     override fun onAllPermissionsGranted() {
-        dialog.dismiss()
+        dismissAllowingStateLoss()
         dialogEventBus.publish(DialogEvent.PERMISSION_GRANTED)
     }
 

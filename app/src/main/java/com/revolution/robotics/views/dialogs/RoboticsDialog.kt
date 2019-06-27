@@ -39,7 +39,7 @@ abstract class RoboticsDialog : BaseDialog() {
 
         binding.background = dialogBackgroundConfig.create()
         binding.viewModel = RoboticsDialogViewModel(hasCloseButton) {
-            dialog.dismiss()
+            dismissAllowingStateLoss()
             onDialogCloseButtonClicked()
         }
         return binding.root
