@@ -21,11 +21,11 @@ sealed class ChallengeDetailFinishedDialog(hasNextButton: Boolean) : RoboticsDia
     override val dialogFaces: List<DialogFace<*>> = listOf(ChallengeDetailFinishedDialogFace(this))
     override val dialogButtons: MutableList<DialogButton> = mutableListOf(
         DialogButton(R.string.challenge_finished_dialog_button_home, R.drawable.ic_home, false) {
-            dismiss()
+            dismissAllowingStateLoss()
             navigator.popUntil(R.id.mainMenuFragment)
         },
         DialogButton(R.string.challenge_finished_dialog_button_challenge_list, R.drawable.ic_cup, false) {
-            dismiss()
+            dismissAllowingStateLoss()
             navigator.popUntil(R.id.challengeListFragment)
         }
     )
@@ -38,7 +38,7 @@ sealed class ChallengeDetailFinishedDialog(hasNextButton: Boolean) : RoboticsDia
                     R.drawable.ic_next_challenge,
                     true
                 ) {
-                    dismiss()
+                    dismissAllowingStateLoss()
                     arguments?.let { arguments ->
                         navigator.navigate(
                             ChallengeDetailFragmentDirections.toNextChallenge(

@@ -34,7 +34,7 @@
         <ImageView
                 android:id="@+id/close"
                 app:visible="@{dialogInterface.hasCloseButton}"
-                android:onClick="@{() -> dialogInterface.dismiss()}"
+                android:onClick="@{() -> dialogInterface.dismissAllowingStateLoss()}"
                 android:background="?attr/selectableItemBackground"
                 android:layout_margin="@dimen/dimen_4dp"
                 android:layout_width="@dimen/dimen_32dp"

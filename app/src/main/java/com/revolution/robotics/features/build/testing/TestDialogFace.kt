@@ -15,7 +15,7 @@ abstract class TestDialogFace(dialog: RoboticsDialog) :
     override val dialogFaceButtons = mutableListOf(
         DialogButton(R.string.testing_negative_button_title, R.drawable.ic_close, false, true, ::showTipsFace),
         DialogButton(R.string.testing_positive_button_title, R.drawable.ic_check, true, true) {
-            dialog.dismiss()
+            dialog.dismissAllowingStateLoss()
             dialog.dialogEventBus.publish(DialogEvent.TEST_WORKS)
         }
     )

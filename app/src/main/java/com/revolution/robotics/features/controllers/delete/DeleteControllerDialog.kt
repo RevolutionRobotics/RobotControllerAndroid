@@ -19,10 +19,10 @@ class DeleteControllerDialog : RoboticsDialog() {
     )
     override val dialogButtons = listOf(
         DialogButton(R.string.delete_controller_cancel, R.drawable.ic_close) {
-            dialog.dismiss()
+            dismissAllowingStateLoss()
         },
         DialogButton(R.string.delete_controller_confirm, R.drawable.ic_delete, true) {
-            dialog.dismiss()
+            dismissAllowingStateLoss()
             dialogEventBus.publish(DialogEvent.DELETE_CONTROLLER)
         }
     )

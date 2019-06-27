@@ -43,7 +43,7 @@ class OptionSelectorViewModel(
     fun onOptionClicked(index: Int) {
         getOption(index)?.let { option ->
             (resultHolder.result as? OptionResult)?.confirm(option.value)
-            dialogInterface.dismiss()
+            dialogInterface.dismissAllowingStateLoss()
         }
     }
 }

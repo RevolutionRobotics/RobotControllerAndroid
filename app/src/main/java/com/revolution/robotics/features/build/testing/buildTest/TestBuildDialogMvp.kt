@@ -5,7 +5,7 @@ import com.revolution.robotics.core.Mvp
 
 interface TestBuildDialogMvp : Mvp {
     interface View : Mvp.View {
-        fun dismiss()
+        fun dismissAllowingStateLoss()
         fun activateBuildFace()
         fun showTips()
     }

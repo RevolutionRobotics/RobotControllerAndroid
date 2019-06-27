@@ -9,5 +9,5 @@ interface BlocklyDialogInterface {
     val titleResource: ObservableInt
     val title: ObservableField<String>
 
-    fun dismiss()
+    fun dismissAllowingStateLoss()
 }

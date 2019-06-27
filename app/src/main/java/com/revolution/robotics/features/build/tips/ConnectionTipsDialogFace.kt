@@ -20,7 +20,7 @@ class ConnectionTipsDialogFace(dialog: RoboticsDialog) : TipsDialogFace(TestDial
             dialog.navigator.navigate(R.id.toCommunity)
         },
         DialogButton(R.string.connection_failed_try_again_button_title, R.drawable.ic_retry, true) {
-            dialog.dismiss()
+            dialog.dismissAllowingStateLoss()
             dialog.dialogEventBus.publish(DialogEvent.ROBOT_RECONNECT)
         }
     )

@@ -51,7 +51,7 @@ class TurnOnTheBrainDialog : RoboticsDialog(), DialogController {
 
         override val dialogFaceButtons = mutableListOf(
             DialogButton(R.string.build_robot_later, R.drawable.ic_clock) {
-                dismiss()
+                dismissAllowingStateLoss()
                 dialogEventBus.publish(DialogEvent.BRAIN_NOT_TURNED_ON)
             },
             DialogButton(R.string.build_robot_tips, R.drawable.ic_tips) {
@@ -60,7 +60,7 @@ class TurnOnTheBrainDialog : RoboticsDialog(), DialogController {
             DialogButton(R.string.build_robot_start, R.drawable.ic_play, true) {
                 val bluetoothManager = requireContext().getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
                 if (bluetoothManager.adapter.isEnabled) {
-                    dismiss()
+                    dismissAllowingStateLoss()
                     dialogEventBus.publish(DialogEvent.BRAIN_TURNED_ON)
                 } else {
                     ContextCompat.startActivity(requireContext(), Intent().apply {

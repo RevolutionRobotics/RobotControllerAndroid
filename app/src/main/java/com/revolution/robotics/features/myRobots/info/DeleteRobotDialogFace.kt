@@ -11,10 +11,10 @@ class DeleteRobotDialogFace(dialog: RoboticsDialog) :
     DialogFace<DialogDeleteRobotBinding>(R.layout.dialog_delete_robot, dialog) {
     override val dialogFaceButtons: MutableList<DialogButton> =
         mutableListOf(DialogButton(R.string.cancel, R.drawable.ic_close) {
-            dialog.dismiss()
+            dialog.dismissAllowingStateLoss()
         },
             DialogButton(R.string.delete_robot_confirm, R.drawable.ic_delete, true) {
-                dialog.dismiss()
+                dialog.dismissAllowingStateLoss()
                 dialog.dialogEventBus.publish(DialogEvent.DELETE_ROBOT.apply {
                     extras.putParcelable(
                         InfoRobotDialog.KEY_ROBOT,
