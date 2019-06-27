@@ -5,6 +5,7 @@ import android.view.View
 import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.core.extensions.openUrl
 import com.revolution.robotics.core.utils.BundleArgumentDelegate
+import com.revolution.robotics.features.bluetooth.BluetoothManager
 import com.revolution.robotics.features.build.testing.buildTest.TestBuildDialog
 import com.revolution.robotics.features.build.tips.DialogController
 import com.revolution.robotics.features.shared.ErrorHandler
@@ -40,6 +41,7 @@ abstract class TestDialog : RoboticsDialog(), DialogController, TestMvp.View {
 
     private val presenter: TestMvp.Presenter by kodein.instance()
     private val errorHandler: ErrorHandler by kodein.instance()
+    private val bluetoothManager: BluetoothManager by kodein.instance()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         presenter.register(this, null)
@@ -56,8 +58,13 @@ abstract class TestDialog : RoboticsDialog(), DialogController, TestMvp.View {
     }
 
     override fun onRetryClicked() {
-        presenter.uploadTest(testFileName, generateReplaceablePairs())
-        activateFace(dialogFaces.first())
+        if (bluetoothManager.isServiceDiscovered) {
+            presenter.uploadTest(testFileName, generateReplaceablePairs())
+            activateFace(dialogFaces.first())
+        } else {
+            dismissAllowingStateLoss()
+            bluetoothManager.startConnectionFlow()
+        }
     }
 
     override fun navigateToCommunity() {
