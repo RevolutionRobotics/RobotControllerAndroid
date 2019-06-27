@@ -166,7 +166,7 @@ fun createInteractorModule() =
         bind<FirmwareInteractor>() with p { FirmwareInteractor() }
         bind<PortTestFileCreatorInteractor>() with p { PortTestFileCreatorInteractor(i()) }
         bind<CreateConfigurationFileInteractor>() with p { CreateConfigurationFileInteractor(i()) }
-        bind<GetControllerNameInteractor>() with p {GetControllerNameInteractor(i(), i())}
+        bind<GetControllerNameInteractor>() with p { GetControllerNameInteractor(i(), i()) }
     }
 
 @Suppress("LongMethod")
