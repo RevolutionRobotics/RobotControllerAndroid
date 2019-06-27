@@ -6,6 +6,7 @@ import com.revolution.robotics.core.domain.local.UserConfigurationDao
 import com.revolution.robotics.core.domain.local.UserController
 import com.revolution.robotics.core.domain.local.UserControllerDao
 import com.revolution.robotics.core.domain.local.UserRobotDao
+import java.util.concurrent.TimeUnit
 
 class SaveUserControllerInteractor(
     private val userControllerDao: UserControllerDao,
@@ -18,6 +19,7 @@ class SaveUserControllerInteractor(
     lateinit var backgroundProgramBindings: List<UserBackgroundProgramBinding>
 
     override fun getData(): UserController {
+        userController.lastModified = System.currentTimeMillis() / TimeUnit.SECONDS.toMillis(1)
         if (userController.id == 0) {
             userControllerDao.saveUserController(userController).apply {
                 userController.id = this.toInt()

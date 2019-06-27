@@ -32,7 +32,7 @@ interface UserProgramDao {
     @Query("SELECT * FROM UserProgram WHERE name=:name")
     fun getUserProgram(name: String): UserProgram?
 
-    @Query("SELECT * FROM UserProgram")
+    @Query("SELECT * FROM UserProgram ORDER BY lastModified DESC")
     fun getAllPrograms(): List<UserProgram>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

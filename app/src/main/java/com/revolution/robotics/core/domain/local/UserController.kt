@@ -70,7 +70,7 @@ interface UserControllerDao {
     @Query("SELECT * FROM UserController WHERE id=:id")
     fun getUserController(id: Int): UserController?
 
-    @Query("SELECT * FROM UserController WHERE robotId=:robotId ORDER BY lastModified")
+    @Query("SELECT * FROM UserController WHERE robotId=:robotId ORDER BY lastModified DESC")
     fun getUserControllersForRobot(robotId: Int): List<UserController>
 
     @Insert(onConflict = OnConflictStrategy.ABORT)
