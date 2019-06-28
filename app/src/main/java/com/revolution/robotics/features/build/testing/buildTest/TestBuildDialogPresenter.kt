@@ -1,6 +1,7 @@
 package com.revolution.robotics.features.build.testing.buildTest
 
 import android.net.Uri
+import android.util.Base64
 import androidx.lifecycle.ViewModel
 import com.revolution.robotics.R
 import com.revolution.robotics.core.interactor.LocalFileSaver
@@ -23,7 +24,7 @@ class TestBuildDialogPresenter(
     override var model: ViewModel? = null
 
     override fun sendTestCode(code: String) {
-        localFileSaver.content = code
+        localFileSaver.content = String(Base64.decode(code, Base64.NO_WRAP))
         localFileSaver.filePath = "${applicationContextProvider.applicationContext.filesDir}/$TEST_CODE_FILE_NAME"
         localFileSaver.execute {
             uploadTestCode(it)
