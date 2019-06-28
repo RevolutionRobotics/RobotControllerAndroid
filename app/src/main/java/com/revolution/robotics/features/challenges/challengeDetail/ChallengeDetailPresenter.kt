@@ -38,8 +38,16 @@ class ChallengeDetailPresenter(
         toolbarViewModel?.title?.set(challengeStep.title)
         model?.apply {
             when (val challengeType = ChallengeType.fromId(challengeStep.challengeType)) {
-                ChallengeType.HORIZONTAL, ChallengeType.VERTICAL, ChallengeType.ZOOMABLE -> {
+                ChallengeType.HORIZONTAL, ChallengeType.VERTICAL -> {
                     image.value = challengeStep.image
+                    zoomableImage.value = null
+                    title.value = challengeStep.description
+                    type.value = challengeType
+                    parts.value = emptyList()
+                }
+                ChallengeType.ZOOMABLE -> {
+                    zoomableImage.value = challengeStep.image
+                    image.value = null
                     title.value = challengeStep.description
                     type.value = challengeType
                     parts.value = emptyList()
@@ -65,14 +73,14 @@ class ChallengeDetailPresenter(
             categories.find { it.id == categoryId }?.let { category ->
                 category.challenges.toList().sortedBy { it.second.order }.map { it.second }
                     .indexOfFirst { it.id == challengeId }.let { index ->
-                    if (index + 1 > currentProgress) {
-                        saveProgress(categoryId, index + 1)
+                        if (index + 1 > currentProgress) {
+                            saveProgress(categoryId, index + 1)
+                        }
+                        view?.showChallengeFinishedDialog(
+                            category.challenges
+                                .toList().sortedBy { it.second.order }.map { it.second }.getOrNull(index + 1)
+                        )
                     }
-                    view?.showChallengeFinishedDialog(
-                        category.challenges
-                            .toList().sortedBy { it.second.order }.map { it.second }.getOrNull(index + 1)
-                    )
-                }
             }
         }
     }

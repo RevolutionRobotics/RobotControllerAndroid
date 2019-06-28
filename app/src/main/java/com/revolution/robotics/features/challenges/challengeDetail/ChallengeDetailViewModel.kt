@@ -8,6 +8,7 @@ import com.revolution.robotics.features.challenges.challengeDetail.adapter.Chall
 class ChallengeDetailViewModel : ViewModel() {
     val title = MutableLiveData<String?>()
     val image = MutableLiveData<String?>()
+    val zoomableImage = MutableLiveData<String?>()
     val type = MutableLiveData<ChallengeType>()
     val parts = MutableLiveData<List<ChallengePartItemViewModel>>()
 }
