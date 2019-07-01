@@ -97,8 +97,6 @@ class ConfigureControllersPresenter(
 
     override fun deleteController(controllerId: Int, selectedPosition: Int) {
         deleteControllerInteractor.controllerId = controllerId
-        deleteControllerInteractor.execute()
-        currentPosition = selectedPosition
         userConfigurationStorage.apply {
             if (userConfiguration?.controller == controllerId) {
                 userConfiguration?.controller = null
@@ -107,6 +105,8 @@ class ConfigureControllersPresenter(
             }
         }
 
+        deleteControllerInteractor.execute()
+        currentPosition = selectedPosition
         model?.controllersList?.apply {
             get()?.toMutableList()?.apply {
                 removeAll { it.userController.id == controllerId }
