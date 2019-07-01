@@ -17,10 +17,10 @@ class BlockOptionResult(result: JsPromptResult) : BlocklyResult(result) {
     fun confirmDuplicate() =
         confirm(ACTION_DUPLICATE)
 
-    fun confirmComment(comment: String) =
+    fun confirmComment(comment: String?) =
         confirm(ACTION_COMMENT, comment)
 
-    private fun confirm(action: String, payload: String = "") =
+    private fun confirm(action: String, payload: String? = "") =
         confirmResult(
             JSONObject().apply {
                 put("type", action)
