@@ -25,7 +25,7 @@ abstract class JavascriptPromptDialog<B : ViewDataBinding>(@LayoutRes private va
     lateinit var binding: B
 
     override val titleResource = ObservableInt()
-    override val title = ObservableField<String>("")
+    override val title = ObservableField("")
 
     protected val kodein = LateInitKodein()
     protected val blocklyResultHolder: BlocklyResultHolder by kodein.instance()

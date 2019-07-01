@@ -8,7 +8,6 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.revolution.robotics.core.domain.remote.BuildStep
 import com.revolution.robotics.core.extensions.visible
 import com.revolution.robotics.databinding.SliderBuildStepBinding
-import kotlinx.android.synthetic.main.dialog_connect.view.progress
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein

@@ -31,7 +31,6 @@ class RoboticsApplication : Application(), KodeinAware {
 
         lateinit var kodein: Kodein
     }
-    // Challenge group items
 
     override var kodein = Kodein {
         import(createMainModule())

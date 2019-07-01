@@ -11,6 +11,8 @@ import android.view.View
 import com.revolution.robotics.R
 import com.revolution.robotics.core.extensions.color
 import com.revolution.robotics.core.extensions.dimension
+import kotlin.math.max
+import kotlin.math.min
 
 @Suppress("ClickableViewAccessibility")
 class LeverView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
@@ -97,5 +99,5 @@ class LeverView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
         ((this + FLOAT_CENTER) * PlayPresenter.DIRECTION_VALUE_MAX).toInt()
 
     private fun Float.limit(limit: Float) =
-        Math.min(Math.max(this, -limit), limit)
+        min(max(this, -limit), limit)
 }

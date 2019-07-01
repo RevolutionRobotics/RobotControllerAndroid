@@ -18,7 +18,7 @@ class SliderDialogViewModel(val maxValue: Int, private val presenter: SliderMvp.
     }
 
     val background = BACKGROUND
-    val labelText = ObservableField<String>("0")
+    val labelText = ObservableField("0")
 
     fun onDoneClicked() {
         presenter.onDoneClicked()

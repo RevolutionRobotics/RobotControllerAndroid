@@ -36,7 +36,7 @@ sealed class PreferenceFieldDelegate<T>(
 
         override fun getValue(thisRef: Any, property: KProperty<*>) = preferences.getInt(key, defaultValue)
 
-        override fun setValue(thisRef: Any, property: KProperty<*>, value: kotlin.Int) =
+        override fun setValue(thisRef: Any, property: KProperty<*>, value: Int) =
             preferences.edit().putInt(key, value).apply()
     }
 

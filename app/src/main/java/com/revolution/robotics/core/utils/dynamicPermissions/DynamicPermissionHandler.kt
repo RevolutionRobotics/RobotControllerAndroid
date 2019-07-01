@@ -55,7 +55,7 @@ class DynamicPermissionHandler {
         fun request(activity: Activity) {
             val currentRequestCode = handler?.requestCode ?: 0
             handler?.let { handler ->
-                handler.requests.set(currentRequestCode, this)
+                handler.requests[currentRequestCode] = this
                 handler.requestCode++
             }
 
