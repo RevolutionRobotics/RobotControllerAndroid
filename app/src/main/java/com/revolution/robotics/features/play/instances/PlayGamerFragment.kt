@@ -8,6 +8,8 @@ import com.revolution.robotics.features.play.PlayFragment
 
 class PlayGamerFragment : PlayFragment(), JoystickView.JoystickEventListener {
 
+    override val reverseYAxis: Boolean = true
+
     private lateinit var contentBinding: FragmentPlayGamerBinding
 
     override fun createContentView(inflater: LayoutInflater, container: ViewGroup?) {

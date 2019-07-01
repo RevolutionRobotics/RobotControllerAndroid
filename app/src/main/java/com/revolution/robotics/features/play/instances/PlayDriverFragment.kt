@@ -9,6 +9,8 @@ class PlayDriverFragment : PlayFragment() {
 
     private lateinit var contentBinding: FragmentPlayDriverBinding
 
+    override val reverseYAxis: Boolean = false
+
     override fun createContentView(inflater: LayoutInflater, container: ViewGroup?) {
         contentBinding = FragmentPlayDriverBinding.inflate(inflater, container, true).apply {
             viewModel = this@PlayDriverFragment.viewModel

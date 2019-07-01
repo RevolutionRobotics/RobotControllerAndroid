@@ -10,6 +10,8 @@ class PlayMultitaskerFragment : PlayFragment(), JoystickView.JoystickEventListen
 
     private lateinit var contentBinding: FragmentPlayMultitaskerBinding
 
+    override val reverseYAxis: Boolean = true
+
     override fun createContentView(inflater: LayoutInflater, container: ViewGroup?) {
         contentBinding = FragmentPlayMultitaskerBinding.inflate(inflater, container, true)
         contentBinding.viewModel = viewModel

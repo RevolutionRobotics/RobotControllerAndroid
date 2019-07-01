@@ -12,6 +12,7 @@ interface PlayMvp : Mvp {
     interface Presenter : Mvp.Presenter<View, PlayViewModel> {
 
         var toolbarViewModel: PlayToolbarViewModel?
+        var reverseYAxis: Boolean
 
         fun loadControllerName(configId: Int)
         fun loadConfiguration(configId: Int)

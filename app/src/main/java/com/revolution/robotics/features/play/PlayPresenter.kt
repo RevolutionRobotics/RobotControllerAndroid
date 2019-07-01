@@ -23,6 +23,7 @@ class PlayPresenter(
     override var view: PlayMvp.View? = null
     override var model: PlayViewModel? = null
     override var toolbarViewModel: PlayToolbarViewModel? = null
+    override var reverseYAxis: Boolean = false
 
     private var liveControllerService: RoboticsLiveControllerService? = null
 
@@ -81,7 +82,11 @@ class PlayPresenter(
     }
 
     override fun onJoystickYAxisChanged(value: Int) {
-        liveControllerService?.updateYDirection(DIRECTION_VALUE_MAX - value - 1)
+        if (reverseYAxis) {
+            liveControllerService?.updateYDirection(DIRECTION_VALUE_MAX - value - 1)
+        } else {
+            liveControllerService?.updateYDirection(value)
+        }
     }
 
     override fun onButtonPressed(ordinal: Int) {
