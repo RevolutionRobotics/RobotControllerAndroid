@@ -40,7 +40,10 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
     private var currentBuildStep: BuildStep? = null
     private var wasRobotFinished = false
 
+    private var isBackPressingEnabled = false
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        isBackPressingEnabled = false
         binding?.apply {
             toolbarViewModel = BuildRobotToolbarViewModel()
             background = ChippedBoxConfig.Builder()
@@ -54,18 +57,26 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
         presenter.loadBuildSteps(arguments?.robot?.id ?: "")
 
         dialogEventBus.register(this)
-        bluetoothManager.startConnectionFlow()
+        if (!bluetoothManager.isConnected) {
+            bluetoothManager.startConnectionFlow()
+        }
     }
 
-    override fun onStop() {
-        if (!wasRobotFinished) {
+    override fun goBack() {
+        isBackPressingEnabled = true
+        activity?.onBackPressed()
+    }
+
+    override fun onBackPressed(): Boolean {
+        if (!wasRobotFinished && !isBackPressingEnabled) {
             arguments?.robot?.apply {
                 actualBuildStep = currentBuildStep?.stepNumber ?: DEFAULT_STARTING_INDEX
                 lastModified = Date(System.currentTimeMillis())
                 presenter.saveUserRobot(this, false)
             }
+            return true
         }
-        super.onStop()
+        return false
     }
 
     override fun onDestroyView() {
