@@ -9,9 +9,9 @@ import com.revolution.robotics.R
 import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.core.extensions.openUrl
 import com.revolution.robotics.databinding.DialogTurnOnTheBrainBinding
-import com.revolution.robotics.features.build.testing.buildTest.TestBuildDialog
 import com.revolution.robotics.features.build.tips.DialogController
 import com.revolution.robotics.features.build.tips.TipsDialogFace
+import com.revolution.robotics.features.community.CommunityFragment
 import com.revolution.robotics.features.shared.ErrorHandler
 import com.revolution.robotics.views.dialogs.DialogButton
 import com.revolution.robotics.views.dialogs.DialogFace
@@ -33,7 +33,7 @@ class TurnOnTheBrainDialog : RoboticsDialog(), DialogController {
     override val dialogButtons = emptyList<DialogButton>()
 
     override fun navigateToCommunity() {
-        requireActivity().openUrl(TestBuildDialog.COMMUNITY_URL, errorHandler)
+        requireActivity().openUrl(CommunityFragment.COMMUNITY_FORUMS_URL, errorHandler)
     }
 
     override fun publishDialogEvent(event: DialogEvent) {
