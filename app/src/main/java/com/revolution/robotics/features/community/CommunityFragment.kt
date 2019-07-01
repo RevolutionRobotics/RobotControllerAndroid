@@ -18,8 +18,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
     CommunityMvp.View {
 
     companion object {
-        // TODO update community forums url
-        private const val COMMUNITY_FORUMS_URL = "https://www.revolutionrobotics.org/"
+        const val COMMUNITY_FORUMS_URL = "https://revolutionrobotics.discourse.group/"
     }
 
     override val viewModelClass = CommunityViewModel::class.java

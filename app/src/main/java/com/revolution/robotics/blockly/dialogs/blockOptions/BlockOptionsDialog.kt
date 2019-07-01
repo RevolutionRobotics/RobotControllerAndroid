@@ -11,7 +11,7 @@ import com.revolution.robotics.core.extensions.withArguments
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.core.utils.BundleArgumentDelegate
 import com.revolution.robotics.databinding.BlocklyDialogBlockOptionsBinding
-import com.revolution.robotics.features.build.testing.buildTest.TestBuildDialog
+import com.revolution.robotics.features.community.CommunityFragment
 import com.revolution.robotics.features.shared.ErrorHandler
 import com.revolution.robotics.views.ChippedEditTextViewModel
 import com.revolution.robotics.views.dialogs.DialogButton
@@ -52,7 +52,7 @@ class BlockOptionsDialog :
                     dismissAllowingStateLoss()
                 },
                 DialogButton(R.string.dialog_block_options_help, R.drawable.ic_community) {
-                    requireActivity().openUrl(TestBuildDialog.COMMUNITY_URL, errorHandler)
+                    requireActivity().openUrl(CommunityFragment.COMMUNITY_FORUMS_URL, errorHandler)
                     dismissAllowingStateLoss()
                 },
                 DialogButton(R.string.dialog_block_options_duplicate, R.drawable.ic_copy, true) {
