@@ -6,7 +6,7 @@ import androidx.annotation.StringRes
 data class DialogButton(
     @StringRes val text: Int,
     @DrawableRes val icon: Int,
-    val isHighlighted: Boolean = false,
+    var isHighlighted: Boolean = false,
     val isEnabledOnStart: Boolean = true,
     val onClick: () -> Unit
 ) {

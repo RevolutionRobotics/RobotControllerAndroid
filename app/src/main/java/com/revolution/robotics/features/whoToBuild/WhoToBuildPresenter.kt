@@ -1,6 +1,5 @@
 package com.revolution.robotics.features.whoToBuild
 
-import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.PortMapping
 import com.revolution.robotics.core.domain.local.BuildStatus
 import com.revolution.robotics.core.domain.local.UserRobot
@@ -10,7 +9,6 @@ import com.revolution.robotics.core.extensions.isEmptyOrNull
 import com.revolution.robotics.core.interactor.AssignConfigToRobotInteractor
 import com.revolution.robotics.core.interactor.SaveUserRobotInteractor
 import com.revolution.robotics.core.interactor.firebase.RobotInteractor
-import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.features.build.BuildRobotFragment
 import com.revolution.robotics.features.whoToBuild.adapter.RobotsItem
@@ -21,8 +19,7 @@ class WhoToBuildPresenter(
     private val robotsInteractor: RobotInteractor,
     private val assignConfigToRobotInteractor: AssignConfigToRobotInteractor,
     private val saveUserRobotInteractor: SaveUserRobotInteractor,
-    private val navigator: Navigator,
-    private val resourceResolver: ResourceResolver
+    private val navigator: Navigator
 ) :
     WhoToBuildMvp.Presenter {
 
@@ -100,7 +97,7 @@ class WhoToBuildPresenter(
         val userRobot = UserRobot(
             buildStatus = BuildStatus.INVALID_CONFIGURATION,
             lastModified = Date(System.currentTimeMillis()),
-            name = resourceResolver.string(R.string.build_robot_custom_default_name)
+            name = ""
         )
         saveUserRobotInteractor.userRobot = userRobot
         saveUserRobotInteractor.execute { savedRobot ->

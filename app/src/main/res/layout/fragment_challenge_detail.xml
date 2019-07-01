@@ -55,6 +55,7 @@
                 android:fontFamily="@font/barlow_regular"
                 android:layout_marginStart="@dimen/dimen_64dp"
                 android:layout_marginEnd="@dimen/dimen_64dp"
+                android:gravity="center_horizontal"
                 android:layout_marginTop="@dimen/dimen_16dp"
                 android:text="@{viewModel.title}"
                 app:visible="@{viewModel.type == ChallengeType.VERTICAL}"
@@ -84,8 +85,8 @@
         <TextView
                 android:id="@+id/txt_title_horizontal"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/toolbar"
+                android:layout_height="0dp"
+                app:layout_constraintTop_toTopOf="@id/img_horizontal"
                 app:layout_constraintBottom_toTopOf="@id/slider_challenge_detail"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/guideline_center"
@@ -94,12 +95,13 @@
                 android:fontFamily="@font/barlow_regular"
                 android:layout_marginStart="@dimen/dimen_16dp"
                 android:layout_marginEnd="@dimen/dimen_16dp"
-                android:layout_marginTop="@dimen/dimen_16dp"
+                android:layout_marginTop="@dimen/dimen_8dp"
                 android:text="@{viewModel.title}"
                 app:visible="@{viewModel.type == ChallengeType.HORIZONTAL}"
                 tools:text="In this challenge, you’ll learn a simple way to use gears to make your wheels rotate faster."/>
 
         <ImageView
+                android:id="@+id/img_horizontal"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
