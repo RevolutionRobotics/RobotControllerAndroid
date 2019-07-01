@@ -30,7 +30,8 @@ class AboutPresenter(
 
     override fun register(view: AboutMvp.View, model: AboutViewModel?) {
         super.register(view, model)
-        model?.versionText?.value = "${resourceResolver.string(R.string.about_version)} ${BuildConfig.VERSION_NAME}"
+        model?.versionText?.value =
+            "${resourceResolver.string(R.string.about_version)} ${BuildConfig.VERSION_NAME}/${BuildConfig.VERSION_CODE}"
     }
 
     override fun onFacebookClicked() {
