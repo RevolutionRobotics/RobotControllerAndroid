@@ -27,11 +27,13 @@ class ButtonlessProgramSelectorPresenter(
 
     private var allPrograms: List<ButtonlessProgramViewModel>? = null
     private var programs: MutableList<ButtonlessProgramViewModel> = mutableListOf()
-    private var onlyShowCompatiblePrograms = SHOW_COMPATIBLE_PROGRAMS_ONLY_BY_DEFAULT
+    private var onlyShowCompatiblePrograms: Boolean? = null
 
     override fun register(view: ButtonlessProgramSelectorMvp.View, model: ButtonlessProgramSelectorViewModel?) {
         super.register(view, model)
-        setShowOnlyCompatiblePrograms(SHOW_COMPATIBLE_PROGRAMS_ONLY_BY_DEFAULT)
+        if (onlyShowCompatiblePrograms == null) {
+            setShowOnlyCompatiblePrograms(SHOW_COMPATIBLE_PROGRAMS_ONLY_BY_DEFAULT)
+        }
         loadPrograms()
     }
 
@@ -52,8 +54,6 @@ class ButtonlessProgramSelectorPresenter(
                 programs.clear()
                 programs.addAll(this)
             }
-            model?.programOrderingHandler?.currentOrder =
-                ProgramOrderingHandler.OrderBy.DATE to ProgramOrderingHandler.Order.ASCENDING
             orderAndFilterPrograms()
             setOrderingIcons()
         }
@@ -105,7 +105,7 @@ class ButtonlessProgramSelectorPresenter(
     private fun orderAndFilterPrograms() {
         model?.let { model ->
             val filteredPrograms =
-                if (onlyShowCompatiblePrograms) {
+                if (onlyShowCompatiblePrograms == true) {
                     programs.filter { compatibleProgramFilterer.isProgramCompatible(it.program) }
                 } else {
                     allPrograms ?: emptyList()
@@ -116,7 +116,7 @@ class ButtonlessProgramSelectorPresenter(
             model.items.value = programs
             model.isEmpty.set(programs.isEmpty())
             model.emptyText.set(
-                if (onlyShowCompatiblePrograms) {
+                if (onlyShowCompatiblePrograms == true) {
                     R.string.buttonless_program_selector_compatible_empty
                 } else {
                     R.string.buttonless_program_selector_empty
@@ -126,8 +126,10 @@ class ButtonlessProgramSelectorPresenter(
     }
 
     override fun onShowCompatibleProgramsButtonClicked() {
-        setShowOnlyCompatiblePrograms(!onlyShowCompatiblePrograms)
-        updateOrderingAndFiltering()
+        onlyShowCompatiblePrograms?.let {onlyShowCompatiblePrograms ->
+            setShowOnlyCompatiblePrograms(!onlyShowCompatiblePrograms)
+            updateOrderingAndFiltering()
+        }
     }
 
     override fun onNextButtonClicked() {
