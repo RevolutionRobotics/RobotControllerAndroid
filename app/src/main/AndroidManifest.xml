@@ -5,6 +5,7 @@
     <uses-feature android:name="android.hardware.bluetooth_le" android:required="true"/>
 
     <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application android:label="@string/app_name"
@@ -25,7 +26,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".MainActivity" android:screenOrientation="landscape"/>
+        <activity android:name=".MainActivity" android:screenOrientation="landscape"
+                  android:configChanges="screenSize|screenLayout|orientation"/>
 
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~ PROVIDERS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <provider
