@@ -12,8 +12,8 @@ class PlayDriverFragment : PlayFragment() {
     override fun createContentView(inflater: LayoutInflater, container: ViewGroup?) {
         contentBinding = FragmentPlayDriverBinding.inflate(inflater, container, true).apply {
             viewModel = this@PlayDriverFragment.viewModel
-            leverLeft.onAxisChanged { y -> presenter.onJoystickYAxisChanged(y) }
-            leverRight.onAxisChanged { x -> presenter.onJoystickXAxisChanged(x) }
+            leverLeft.onAxisChanged { y -> presenter.onJoystickXAxisChanged(y) }
+            leverRight.onAxisChanged { x -> presenter.onJoystickYAxisChanged(x) }
         }
     }
 
