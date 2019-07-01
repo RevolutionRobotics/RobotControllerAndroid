@@ -9,7 +9,6 @@ import com.revolution.robotics.core.kodein.utils.ApplicationContextProvider
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.core.utils.AppPrefs
 import com.revolution.robotics.core.utils.Navigator
-import com.revolution.robotics.core.utils.UserProgramFileNameGenerator
 import com.revolution.robotics.core.utils.dynamicPermissions.DynamicPermissionHandler
 import com.revolution.robotics.features.bluetooth.BluetoothManager
 import com.revolution.robotics.features.configure.ConfigurationEventBus
@@ -40,5 +39,4 @@ fun createAppModule(context: Context) =
         bind<AppPrefs>() with s { AppPrefs(context) }
         bind<ErrorHandler>() with s { ErrorHandler() }
         bind<FirebaseFileDownloader>() with p { FirebaseFileDownloader(i(), i()) }
-        bind<UserProgramFileNameGenerator>() with p { UserProgramFileNameGenerator(i()) }
     }

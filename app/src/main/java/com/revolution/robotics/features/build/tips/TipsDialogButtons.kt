@@ -9,7 +9,10 @@ fun createTipsDialogButtons(source: TestDialog.Source?, dialogController: Dialog
     val firstButton =
         when (source) {
             TestDialog.Source.BUILD ->
-                DialogButton(R.string.tips_dialog_button_skip_testing, R.drawable.ic_skip, false, true) {
+                DialogButton(R.string.tips_dialog_button_skip_testing, R.drawable.ic_skip,
+                    isHighlighted = false,
+                    isEnabledOnStart = true
+                ) {
                     dialogController.publishDialogEvent(DialogEvent.SKIP_TESTING)
                     dialogController.onCancelClicked()
                 }
@@ -17,9 +20,9 @@ fun createTipsDialogButtons(source: TestDialog.Source?, dialogController: Dialog
                 DialogButton(
                     R.string.tips_dialog_button_reconfigure,
                     R.drawable.ic_build,
-                    false,
-                    true,
-                    dialogController::onCancelClicked
+                    isHighlighted = false,
+                    isEnabledOnStart = true,
+                    onClick = dialogController::onCancelClicked
                 )
             else -> null
         }
@@ -32,9 +35,9 @@ fun createTipsDialogButtons(source: TestDialog.Source?, dialogController: Dialog
         DialogButton(
             R.string.tips_dialog_button_try_again,
             R.drawable.ic_retry,
-            true,
-            true,
-            dialogController::onRetryClicked
+            isHighlighted = true,
+            isEnabledOnStart = true,
+            onClick = dialogController::onRetryClicked
         )
     )
     firstButton?.let { result.add(0, it) }

@@ -10,6 +10,9 @@ import androidx.appcompat.widget.AppCompatSeekBar
 import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.remote.BuildStep
 import com.revolution.robotics.core.extensions.dimensionAsFloat
+import kotlin.math.max
+import kotlin.math.min
+import kotlin.math.roundToInt
 
 class RoboticsSeekBar @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) :
     AppCompatSeekBar(context, attrs) {
@@ -29,7 +32,7 @@ class RoboticsSeekBar @JvmOverloads constructor(context: Context, attrs: Attribu
     private val milestoneRects: MutableList<RectF> = mutableListOf()
 
     init {
-        thumbOffset = Math.round(thumbWidth / 2.0f)
+        thumbOffset = (thumbWidth / 2.0f).roundToInt()
     }
 
     fun setBuildSteps(steps: List<BuildStep>, startIndex: Int = 0) {
@@ -42,24 +45,24 @@ class RoboticsSeekBar @JvmOverloads constructor(context: Context, attrs: Attribu
     }
 
     fun selectNext() {
-        progress = Math.min(max, progress + 1)
+        progress = min(max, progress + 1)
     }
 
     fun selectPrevious() {
-        progress = Math.max(0, progress - 1)
+        progress = max(0, progress - 1)
     }
 
     private fun calculateMilestoneRect(steps: List<BuildStep>) {
         milestoneRects.clear()
         val stepWidth = (width - (paddingLeft + paddingRight)) / (steps.size - 1).toFloat()
-        val leftMilestoneMargin = Math.max((stepWidth - maxWidth) / 2.0f, 0.0f)
+        val leftMilestoneMargin = max((stepWidth - maxWidth) / 2.0f, 0.0f)
         steps.forEachIndexed { index, buildStep ->
             if (buildStep.milestone != null) {
                 milestoneRects.add(
                     RectF(
                         paddingLeft + (index - 1) * stepWidth + leftMilestoneMargin + stepWidth / 2.0f,
                         topMilestonePadding,
-                        paddingLeft + (index - 1) * stepWidth + Math.min(
+                        paddingLeft + (index - 1) * stepWidth + min(
                             stepWidth,
                             maxWidth
                         ) + leftMilestoneMargin + stepWidth / 2.0f,

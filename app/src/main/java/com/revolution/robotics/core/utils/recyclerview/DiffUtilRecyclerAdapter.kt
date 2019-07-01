@@ -10,7 +10,7 @@ abstract class DiffUtilRecyclerAdapter<T : DiffUtilRecyclerAdapter.BaseListViewM
     private val asyncListDiffer by lazy {
         AsyncListDiffer(
             AdapterListUpdateCallback(this),
-            AsyncDifferConfig.Builder<T>(object : DiffUtil.ItemCallback<T>() {
+            AsyncDifferConfig.Builder(object : DiffUtil.ItemCallback<T>() {
                 override fun areItemsTheSame(oldItem: T, newItem: T): Boolean = oldItem.idField == newItem.idField
 
                 override fun areContentsTheSame(oldItem: T, newItem: T): Boolean = oldItem == newItem

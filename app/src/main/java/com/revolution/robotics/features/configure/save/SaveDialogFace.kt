@@ -15,9 +15,6 @@ abstract class SaveDialogFace : DialogFace<DialogSaveBinding>(R.layout.dialog_sa
     abstract val descriptionTitleResource: Int
     abstract val descriptionHintResource: Int
 
-    var currentName = ""
-    var currentDescription = ""
-
     open val onNameChangedCallbacks: (() -> Unit)? = null
     open val onDescriptionChangedCallbacks: (() -> Unit)? = null
 

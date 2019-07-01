@@ -56,5 +56,5 @@ class SoundPickerPresenter(
     }
 
     private fun getFilePath(fileName: String) =
-        "$FOLDER_SOUNDS/${fileName}$EXTENSION_MP3"
+        "$FOLDER_SOUNDS/$fileName$EXTENSION_MP3"
 }

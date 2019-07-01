@@ -10,6 +10,6 @@ enum class ConnectionState(val id: Int) {
 
     companion object {
         fun parseConnectionId(id: Int): ConnectionState =
-            ConnectionState.values().find { it.id == id } ?: throw IllegalArgumentException("Invalid id $id")
+            values().find { it.id == id } ?: throw IllegalArgumentException("Invalid id $id")
     }
 }

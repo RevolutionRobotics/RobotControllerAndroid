@@ -31,11 +31,7 @@ class ConfigurationBuilder {
         BACKGROUND;
 
         override fun toString() =
-            if (jsonKey == null) {
-                Regex("[^A-Za-z]").replace(super.toString(), "").toLowerCase()
-            } else {
-                jsonKey
-            }
+            jsonKey ?: Regex("[^A-Za-z]").replace(super.toString(), "").toLowerCase()
     }
 
     @Suppress("ComplexMethod")
