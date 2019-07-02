@@ -11,7 +11,7 @@ import org.revolution.blockly.view.result.ColorResult
 
 class ColorPickerHandler : JsPromptHandler {
 
-    override fun canHandleRequest(message: String) = message == "colour_picker.colour"
+    override fun canHandleRequest(message: String) = message.contains("colour_picker.colour")
 
     override fun handleRequest(request: JSONObject, dialogFactory: DialogFactory, result: JsPromptResult) {
         dialogFactory.showColorPicker(request.title(), request.colors(), request.defaultKey(), ColorResult(result))
