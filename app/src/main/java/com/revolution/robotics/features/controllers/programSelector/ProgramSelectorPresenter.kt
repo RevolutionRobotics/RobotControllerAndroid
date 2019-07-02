@@ -84,7 +84,7 @@ class ProgramSelectorPresenter(
     }
 
     override fun showCompatibleProgramsClicked() {
-        onlyShowCompatiblePrograms?.let {onlyShowCompatiblePrograms ->
+        onlyShowCompatiblePrograms?.let { onlyShowCompatiblePrograms ->
             setShowOnlyCompatiblePrograms(!onlyShowCompatiblePrograms)
             updateOrderingAndFiltering()
         }

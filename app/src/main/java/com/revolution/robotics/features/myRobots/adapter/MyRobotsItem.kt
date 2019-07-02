@@ -36,7 +36,6 @@ data class MyRobotsItem(
             else -> R.string.my_robots_play_button
         }
 
-
     fun onItemClicked() {
         if (isSelected.get()) {
             onPlayClicked()

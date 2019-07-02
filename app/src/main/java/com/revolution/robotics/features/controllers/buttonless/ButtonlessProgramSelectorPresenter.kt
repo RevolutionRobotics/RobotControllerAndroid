@@ -126,7 +126,7 @@ class ButtonlessProgramSelectorPresenter(
     }
 
     override fun onShowCompatibleProgramsButtonClicked() {
-        onlyShowCompatiblePrograms?.let {onlyShowCompatiblePrograms ->
+        onlyShowCompatiblePrograms?.let { onlyShowCompatiblePrograms ->
             setShowOnlyCompatiblePrograms(!onlyShowCompatiblePrograms)
             updateOrderingAndFiltering()
         }
