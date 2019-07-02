@@ -19,6 +19,10 @@ class CodingPresenter(
     private val resourceResolver: ResourceResolver
 ) : CodingMvp.Presenter {
 
+    companion object {
+        private const val EMPTY_XML = "<xml xmlns=\"http://www.w3.org/1999/xhtml\"></xml>"
+    }
+
     override var view: CodingMvp.View? = null
     override var model: CodingViewModel? = null
 
@@ -113,13 +117,14 @@ class CodingPresenter(
     override fun onBackPressed() {
         view?.getDataFromBlocklyView(object : SaveBlocklyListener {
             override fun onXMLProgramSaved(file: String) {
+
                 view?.onBackPressed(
                     String(
                         Base64.encode(
                             file.toByteArray(),
                             Base64.NO_WRAP
                         )
-                    ) != model?.userProgram?.xml
+                    ) != model?.userProgram?.xml && file != EMPTY_XML
                 )
             }
 

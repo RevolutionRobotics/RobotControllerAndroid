@@ -11,6 +11,7 @@ import com.revolution.robotics.core.domain.remote.Milestone
 import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
 import com.revolution.robotics.core.utils.BundleArgumentDelegate
+import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.databinding.FragmentBuildRobotBinding
 import com.revolution.robotics.features.bluetooth.BluetoothManager
 import com.revolution.robotics.features.build.buildFinished.BuildFinishedDialog
@@ -35,15 +36,13 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
     private val presenter: BuildRobotMvp.Presenter by kodein.instance()
     private val dialogEventBus: DialogEventBus by kodein.instance()
     private val bluetoothManager: BluetoothManager by kodein.instance()
+    private val navigator: Navigator by kodein.instance()
 
     private var buildStepCount = 0
     private var currentBuildStep: BuildStep? = null
     private var wasRobotFinished = false
 
-    private var isBackPressingEnabled = false
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        isBackPressingEnabled = false
         binding?.apply {
             toolbarViewModel = BuildRobotToolbarViewModel()
             background = ChippedBoxConfig.Builder()
@@ -63,12 +62,11 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
     }
 
     override fun goBack() {
-        isBackPressingEnabled = true
-        activity?.onBackPressed()
+        navigator.back(1)
     }
 
     override fun onBackPressed(): Boolean {
-        if (!wasRobotFinished && !isBackPressingEnabled) {
+        if (!wasRobotFinished) {
             arguments?.robot?.apply {
                 actualBuildStep = currentBuildStep?.stepNumber ?: DEFAULT_STARTING_INDEX
                 lastModified = Date(System.currentTimeMillis())

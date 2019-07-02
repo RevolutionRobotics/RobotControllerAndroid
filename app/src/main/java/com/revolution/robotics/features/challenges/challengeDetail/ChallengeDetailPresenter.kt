@@ -9,8 +9,7 @@ import com.revolution.robotics.core.interactor.SaveUserChallengeCategoryInteract
 import com.revolution.robotics.core.interactor.firebase.ChallengeCategoriesInteractor
 import com.revolution.robotics.features.challenges.challengeDetail.adapter.ChallengePartItemViewModel
 
-class
-ChallengeDetailPresenter(
+class ChallengeDetailPresenter(
     private val saveUserChallengeCategoryInteractor: SaveUserChallengeCategoryInteractor,
     private val getCategoriesInteractor: ChallengeCategoriesInteractor,
     private val getUserChallengeCategoriesInteractor: GetUserChallengeCategoriesInteractor
