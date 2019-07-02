@@ -7,6 +7,7 @@ import com.revolution.robotics.core.interactor.GetControllerNameInteractor
 import com.revolution.robotics.core.interactor.GetFullConfigurationInteractor
 import com.revolution.robotics.features.bluetooth.BluetoothManager
 import com.revolution.robotics.features.shared.ErrorHandler
+import kotlin.math.max
 
 class PlayPresenter(
     private val getConfigurationInteractor: GetFullConfigurationInteractor,
@@ -24,6 +25,7 @@ class PlayPresenter(
     override var model: PlayViewModel? = null
     override var toolbarViewModel: PlayToolbarViewModel? = null
     override var reverseYAxis: Boolean = false
+    override var reverseXAxis: Boolean = false
 
     private var liveControllerService: RoboticsLiveControllerService? = null
 
@@ -78,12 +80,16 @@ class PlayPresenter(
     }
 
     override fun onJoystickXAxisChanged(value: Int) {
-        liveControllerService?.updateXDirection(value)
+        if (reverseXAxis) {
+            liveControllerService?.updateXDirection(max(0, DIRECTION_VALUE_MAX - value - 1))
+        } else {
+            liveControllerService?.updateXDirection(value)
+        }
     }
 
     override fun onJoystickYAxisChanged(value: Int) {
         if (reverseYAxis) {
-            liveControllerService?.updateYDirection(DIRECTION_VALUE_MAX - value - 1)
+            liveControllerService?.updateYDirection(max(0, DIRECTION_VALUE_MAX - value - 1))
         } else {
             liveControllerService?.updateYDirection(value)
         }

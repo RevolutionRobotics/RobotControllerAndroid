@@ -33,6 +33,7 @@ abstract class PlayFragment : BaseFragment<FragmentPlayCoreBinding, PlayViewMode
     abstract fun getContentBinding(): ViewDataBinding?
 
     abstract val reverseYAxis: Boolean
+    abstract val reverseXAxis: Boolean
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val root = super.onCreateView(inflater, container, savedInstanceState)
@@ -44,6 +45,7 @@ abstract class PlayFragment : BaseFragment<FragmentPlayCoreBinding, PlayViewMode
         activity?.window?.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         presenter.toolbarViewModel = PlayToolbarViewModel()
         presenter.reverseYAxis = reverseYAxis
+        presenter.reverseXAxis = reverseXAxis
         binding?.toolbarViewModel = presenter.toolbarViewModel
         arguments?.let {
             presenter.loadControllerName(it.configId)

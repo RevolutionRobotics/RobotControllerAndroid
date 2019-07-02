@@ -13,6 +13,7 @@ interface PlayMvp : Mvp {
 
         var toolbarViewModel: PlayToolbarViewModel?
         var reverseYAxis: Boolean
+        var reverseXAxis: Boolean
 
         fun loadControllerName(configId: Int)
         fun loadConfiguration(configId: Int)
