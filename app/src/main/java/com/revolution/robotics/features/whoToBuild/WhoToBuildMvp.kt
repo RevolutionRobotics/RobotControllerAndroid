@@ -2,6 +2,7 @@ package com.revolution.robotics.features.whoToBuild
 
 import com.revolution.robotics.core.Mvp
 import com.revolution.robotics.core.domain.remote.Robot
+import com.revolution.robotics.features.whoToBuild.adapter.RobotsItem
 
 interface WhoToBuildMvp : Mvp {
     interface View : Mvp.View {
@@ -16,5 +17,6 @@ interface WhoToBuildMvp : Mvp {
         fun previousButtonClick()
         fun onRobotSelected(robot: Robot)
         fun onBuildYourOwnSelected()
+        fun onDisabledItemClicked(robotsItem: RobotsItem)
     }
 }

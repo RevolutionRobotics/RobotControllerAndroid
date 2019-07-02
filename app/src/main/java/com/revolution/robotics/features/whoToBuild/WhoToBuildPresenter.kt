@@ -105,6 +105,15 @@ class WhoToBuildPresenter(
         }
     }
 
+    override fun onDisabledItemClicked(robotsItem: RobotsItem) {
+        val index = model?.robotsList?.value?.indexOf(robotsItem) ?: 0
+        if (index < model?.robotsList?.value?.indexOfFirst { it.isSelected.get() } ?: 0) {
+            view?.showPreviousRobot()
+        } else {
+            view?.showNextRobot()
+        }
+    }
+
     private fun assignEmptyConfig(userRobot: UserRobot) {
         assignConfigToRobotInteractor.userRobot = userRobot
         assignConfigToRobotInteractor.configuration = Configuration(mapping = PortMapping())

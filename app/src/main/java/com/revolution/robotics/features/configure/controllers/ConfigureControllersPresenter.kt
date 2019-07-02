@@ -150,6 +150,15 @@ class ConfigureControllersPresenter(
         )
     }
 
+    override fun onDisabledItemCLicked(item: ControllersItem) {
+        val index = model?.controllersList?.get()?.indexOf(item) ?: 0
+        if (index < model?.controllersList?.get()?.indexOfFirst { it.isSelected.get() } ?: 0) {
+            view?.showPreviousRobot()
+        } else {
+            view?.showNextRobot()
+        }
+    }
+
     override fun onItemSelectionChanged(item: ControllersItem) {
         model?.controllersList?.get()?.forEach {
             it.isCurrentlyActive.set(it == item)

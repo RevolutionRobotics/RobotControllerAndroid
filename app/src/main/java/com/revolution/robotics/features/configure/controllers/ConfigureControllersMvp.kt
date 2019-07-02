@@ -25,5 +25,6 @@ interface ConfigureControllersMvp : Mvp {
         fun onEditSelected(item: ControllersItem)
         fun onDeleteSelected(item: ControllersItem)
         fun onInfoSelected(item: ControllersItem)
+        fun onDisabledItemCLicked(item: ControllersItem)
     }
 }

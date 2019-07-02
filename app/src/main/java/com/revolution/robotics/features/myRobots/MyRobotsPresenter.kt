@@ -154,4 +154,13 @@ class MyRobotsPresenter(
         model?.currentPosition?.set(0)
         view?.onRobotsChanged()
     }
+
+    override fun onDisabledItemClicked(userRobot: UserRobot) {
+        val index = model?.robotsList?.get()?.indexOfFirst { it.robot == userRobot } ?: 0
+        if (index < model?.currentPosition?.get() ?: 0) {
+            view?.showPreviousRobot()
+        } else {
+            view?.showNextRobot()
+        }
+    }
 }
