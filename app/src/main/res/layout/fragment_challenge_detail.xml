@@ -117,12 +117,12 @@
 
         <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_parts"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="0dp"
                 app:visible="@{viewModel.type == ChallengeType.PART_LIST}"
-                android:paddingStart="@dimen/dimen_64dp"
-                android:paddingEnd="@dimen/dimen_64dp"
-                android:paddingTop="@dimen/dimen_4dp"
+                android:paddingStart="@dimen/dimen_8dp"
+                android:paddingEnd="@dimen/dimen_8dp"
+                android:paddingTop="@dimen/dimen_8dp"
                 android:paddingBottom="@dimen/dimen_20dp"
                 android:clipToPadding="false"
                 app:challengeParts="@{viewModel.parts}"
