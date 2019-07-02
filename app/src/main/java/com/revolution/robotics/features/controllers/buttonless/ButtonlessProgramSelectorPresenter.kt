@@ -82,22 +82,22 @@ class ButtonlessProgramSelectorPresenter(
                 dateOrderIconColor.set(R.color.robotics_red)
 
                 if (programOrderingHandler.currentOrder.second == ProgramOrderingHandler.Order.ASCENDING) {
-                    dateOrderIcon.set(R.drawable.sort_date_down)
-                } else {
                     dateOrderIcon.set(R.drawable.ic_sort_date_up)
+                } else {
+                    dateOrderIcon.set(R.drawable.sort_date_down)
                 }
-                alphabeticalOderIcon.set(R.drawable.sort_name_down_red)
+                alphabeticalOderIcon.set(R.drawable.sort_name_up)
             } else {
                 nameOrderIconColor.set(R.color.robotics_red)
                 dateOrderIconColor.set(R.color.white)
 
                 if (programOrderingHandler.currentOrder.second == ProgramOrderingHandler.Order.ASCENDING) {
-                    alphabeticalOderIcon.set(R.drawable.sort_name_down_red)
-                } else {
                     alphabeticalOderIcon.set(R.drawable.sort_name_up)
+                } else {
+                    alphabeticalOderIcon.set(R.drawable.sort_name_down_red)
                 }
 
-                dateOrderIcon.set(R.drawable.ic_sort_date_up)
+                dateOrderIcon.set(R.drawable.sort_date_down)
             }
         }
     }
