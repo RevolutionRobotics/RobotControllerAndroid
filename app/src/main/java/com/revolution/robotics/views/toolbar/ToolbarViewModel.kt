@@ -6,6 +6,7 @@ abstract class ToolbarViewModel {
 
     val title = ObservableField<String?>()
 
+    abstract val isBluetoothIconVisible: Boolean
     abstract val isLogoVisible: Boolean
     abstract val hasBackOption: Boolean
     abstract val options: List<ToolbarOption>

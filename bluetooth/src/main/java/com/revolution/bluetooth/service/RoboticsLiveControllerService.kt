@@ -8,7 +8,6 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.UUID
-import kotlin.experimental.and
 import kotlin.experimental.or
 
 @Suppress("TooManyFunctions")
@@ -82,16 +81,8 @@ class RoboticsLiveControllerService : RoboticsBLEService() {
         this.y = y.toByte()
     }
 
-    fun changeButtonState(@IntRange(from = 0, to = 8) buttonIndex: Int, pressed: Boolean) {
-        buttonByte = if (pressed) {
-            buttonByte or getMaskBasedOnIndex(buttonIndex)
-        } else {
-            buttonByte and (MAX_BYTE_MASK - getMaskBasedOnIndex(buttonIndex)).toByte()
-        }
-    }
-
-    fun negateButtonState(@IntRange(from = 0, to = 8) buttonIndex: Int) {
-        changeButtonState(buttonIndex, getMaskBasedOnIndex(buttonIndex) and buttonByte == 0.toByte())
+    fun onButtonPressed(@IntRange(from = 0, to = 8) buttonIndex: Int) {
+        buttonByte = buttonByte or getMaskBasedOnIndex(buttonIndex)
     }
 
     private fun getMaskBasedOnIndex(buttonIndex: Int) = (2 pow buttonIndex).toByte()
@@ -101,6 +92,7 @@ class RoboticsLiveControllerService : RoboticsBLEService() {
         this[POSITION_X_COORD] = x
         this[POSITION_Y_COORD] = y
         this[POSITION_BUTTON] = buttonByte
+        buttonByte = 0
     }
 
     @Suppress("UnusedPrivateMember")

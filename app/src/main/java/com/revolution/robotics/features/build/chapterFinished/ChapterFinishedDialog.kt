@@ -26,10 +26,6 @@ class ChapterFinishedDialog : RoboticsDialog() {
     override val hasCloseButton = true
     override val dialogFaces: List<DialogFace<*>> = listOf(ChapterFinishedDialogFace())
     override val dialogButtons: List<DialogButton> = listOf(
-        DialogButton(R.string.build_chapter_finish_dialog_button_home, R.drawable.ic_home) {
-            dismissAllowingStateLoss()
-            navigator.popUntil(R.id.mainMenuFragment)
-        },
         DialogButton(R.string.build_chapter_finish_dialog_button_next_chapter, R.drawable.ic_skip) {
             dismissAllowingStateLoss()
             dialogEventBus.publish(DialogEvent.SKIP_TESTING)

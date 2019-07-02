@@ -6,7 +6,6 @@ import com.revolution.robotics.core.interactor.GetUserProgramsInteractor
 import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.features.configure.UserConfigurationStorage
 import com.revolution.robotics.features.configure.controller.CompatibleProgramFilterer
-import com.revolution.robotics.features.controllers.ProgramOrderingHandler
 import com.revolution.robotics.features.controllers.programInfo.ProgramDialog
 import com.revolution.robotics.features.controllers.programSelector.adapter.ProgramViewModel
 
@@ -26,11 +25,13 @@ class ProgramSelectorPresenter(
 
     private var allPrograms: List<UserProgram>? = null
     private var programs: List<UserProgram> = ArrayList()
-    private var onlyShowCompatiblePrograms = SHOW_COMPATIBLE_PROGRAMS_ONLY_BY_DEFAULT
+    private var onlyShowCompatiblePrograms: Boolean? = null
 
     override fun register(view: ProgramSelectorMvp.View, model: ProgramSelectorViewModel?) {
         super.register(view, model)
-        setShowOnlyCompatiblePrograms(SHOW_COMPATIBLE_PROGRAMS_ONLY_BY_DEFAULT)
+        if (onlyShowCompatiblePrograms == null) {
+            setShowOnlyCompatiblePrograms(SHOW_COMPATIBLE_PROGRAMS_ONLY_BY_DEFAULT)
+        }
         loadPrograms()
     }
 
@@ -45,8 +46,6 @@ class ProgramSelectorPresenter(
                 }
             }
             programs = ArrayList<UserProgram>().apply { allPrograms?.let { addAll(it) } }
-            model?.programOrderingHandler?.currentOrder =
-                ProgramOrderingHandler.OrderBy.NAME to ProgramOrderingHandler.Order.ASCENDING
             orderAndFilterPrograms()
             onProgramsChanged()
         }
@@ -71,7 +70,7 @@ class ProgramSelectorPresenter(
     private fun orderAndFilterPrograms() {
         model?.let { model ->
             val filteredPrograms =
-                if (onlyShowCompatiblePrograms) {
+                if (onlyShowCompatiblePrograms == true) {
                     compatibleProgramFilterer.getCompatibleProgramsOnly(allPrograms ?: emptyList())
                 } else {
                     allPrograms ?: emptyList()
@@ -85,8 +84,10 @@ class ProgramSelectorPresenter(
     }
 
     override fun showCompatibleProgramsClicked() {
-        setShowOnlyCompatiblePrograms(!onlyShowCompatiblePrograms)
-        updateOrderingAndFiltering()
+        onlyShowCompatiblePrograms?.let { onlyShowCompatiblePrograms ->
+            setShowOnlyCompatiblePrograms(!onlyShowCompatiblePrograms)
+            updateOrderingAndFiltering()
+        }
     }
 
     override fun onProgramSelected(userProgram: UserProgram) {
@@ -100,7 +101,7 @@ class ProgramSelectorPresenter(
     private fun onProgramsChanged() {
         model?.isEmpty?.set(programs.isEmpty())
         model?.emptyText?.set(
-            if (onlyShowCompatiblePrograms) {
+            if (onlyShowCompatiblePrograms == true) {
                 R.string.program_selector_empty_compatible
             } else {
                 R.string.program_selector_empty

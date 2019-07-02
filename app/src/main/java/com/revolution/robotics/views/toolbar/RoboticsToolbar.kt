@@ -17,6 +17,7 @@ import com.revolution.robotics.core.extensions.invisible
 import com.revolution.robotics.core.extensions.makeConnections
 import com.revolution.robotics.core.extensions.setAppearance
 import com.revolution.robotics.databinding.ViewToolbarBinding
+import com.revolution.robotics.features.bluetooth.BluetoothStatusImageView
 
 @Suppress("UnnecessaryApply")
 class RoboticsToolbar @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
@@ -39,9 +40,12 @@ class RoboticsToolbar @JvmOverloads constructor(context: Context, attrs: Attribu
         }
     var hasFakeIcon = false
     private var lastIconAddedId = 0
+    private val bluetoothView: BluetoothStatusImageView
 
     init {
-        ViewToolbarBinding.inflate(LayoutInflater.from(context), this, true)
+        ViewToolbarBinding.inflate(LayoutInflater.from(context), this, true).apply {
+            bluetoothView = bluetoothIcon
+        }
     }
 
     private val logo = AppCompatImageView(context).apply {
@@ -100,24 +104,40 @@ class RoboticsToolbar @JvmOverloads constructor(context: Context, attrs: Attribu
         addView(this, R.dimen.toolbar_icon_size.toDimension(), R.dimen.toolbar_icon_size.toDimension())
         makeConnections { connections ->
             if (lastIconAddedId == 0) {
-                connections.connect(id, ConstraintSet.END, lastIconAddedId, ConstraintSet.END)
+                connections.connect(
+                    id,
+                    ConstraintSet.END,
+                    if (viewModel?.isBluetoothIconVisible == true) bluetoothView.id else lastIconAddedId,
+                    if (viewModel?.isBluetoothIconVisible == true) ConstraintSet.START else ConstraintSet.END
+                )
             } else {
                 connections.connect(id, ConstraintSet.END, lastIconAddedId, ConstraintSet.START)
             }
             connections.connect(id, ConstraintSet.TOP, R.id.header_background, ConstraintSet.TOP)
             connections.connect(id, ConstraintSet.BOTTOM, R.id.header_background, ConstraintSet.BOTTOM)
         }
-        layoutParams = (layoutParams as MarginLayoutParams).apply {
-            marginEnd = (if (isFirst && hasFakeIcon) R.dimen.dimen_64dp else R.dimen.dimen_24dp).toDimension()
-            setPadding(
-                R.dimen.dimen_8dp.toDimension(),
-                R.dimen.dimen_8dp.toDimension(),
-                R.dimen.dimen_8dp.toDimension(),
-                R.dimen.dimen_8dp.toDimension()
-            )
-        }
+        setButtonPaddings(this, isFirst)
         setOnClickListener { option.onClick.invoke() }
         lastIconAddedId = id
+    }
+
+    private fun setButtonPaddings(appCompatImageView: AppCompatImageView, isFirst: Boolean) {
+        appCompatImageView.apply {
+            layoutParams = (layoutParams as MarginLayoutParams).apply {
+                marginEnd =
+                    (if (isFirst && hasFakeIcon && viewModel?.isBluetoothIconVisible == false) {
+                        R.dimen.dimen_64dp
+                    } else {
+                        R.dimen.dimen_24dp
+                    }).toDimension()
+                setPadding(
+                    R.dimen.dimen_8dp.toDimension(),
+                    R.dimen.dimen_8dp.toDimension(),
+                    R.dimen.dimen_8dp.toDimension(),
+                    R.dimen.dimen_8dp.toDimension()
+                )
+            }
+        }
     }
 
     private fun Int.toDimension() = context.dimension(this)

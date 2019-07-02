@@ -7,6 +7,7 @@ import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.remote.Challenge
 import com.revolution.robotics.core.domain.remote.ChallengeStep
+import com.revolution.robotics.core.extensions.integer
 import com.revolution.robotics.core.extensions.withArguments
 import com.revolution.robotics.core.utils.BundleArgumentDelegate
 import com.revolution.robotics.databinding.FragmentChallengeDetailBinding
@@ -21,7 +22,6 @@ class ChallengeDetailFragment :
     companion object {
         private var Bundle.challenge: Challenge by BundleArgumentDelegate.Parcelable("challenge")
         private var Bundle.categoryId: String by BundleArgumentDelegate.String("categoryId")
-        const val SPAN_COUNT = 4
 
         fun newInstance(challenge: Challenge, categoryId: String) = ChallengeListFragment().withArguments { bundle ->
             bundle.challenge = challenge
@@ -42,7 +42,8 @@ class ChallengeDetailFragment :
                 presenter.toolbarViewModel = this
             }
             recyclerParts.adapter = adapter
-            recyclerParts.layoutManager = GridLayoutManager(context, SPAN_COUNT)
+            recyclerParts.layoutManager =
+                GridLayoutManager(context, requireContext().integer(R.integer.challenge_span_count))
         }
 
         arguments?.let {

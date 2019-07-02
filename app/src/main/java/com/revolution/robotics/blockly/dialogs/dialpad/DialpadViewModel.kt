@@ -55,7 +55,8 @@ class DialpadViewModel(
     }
 
     fun onOkClicked() {
-        (blocklyResultHolder.result as? DialpadResult)?.confirm(result.get()?.toDouble() ?: 0.0)
+        val doubleResult = if (result.get().isNullOrEmpty()) 0.0 else result.get()?.toDouble() ?: 0.0
+        (blocklyResultHolder.result as? DialpadResult)?.confirm(doubleResult)
         dialogInterface.dismissAllowingStateLoss()
     }
 

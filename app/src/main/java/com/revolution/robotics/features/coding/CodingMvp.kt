@@ -11,9 +11,10 @@ interface CodingMvp : Mvp {
         fun showDialog(baseDialog: BaseDialog)
         fun loadProgramIntoTheBlockly(xml: String)
         fun clearBlocklyWorkspace()
-        fun getPythonCodeFromBlockly(listener: SaveBlocklyListener)
+        fun getDataFromBlocklyView(listener: SaveBlocklyListener)
         fun onProgramSaved()
         fun onToolbarBackPressed()
+        fun onBackPressed(showDialog: Boolean)
     }
 
     interface Presenter : Mvp.Presenter<View, CodingViewModel>, SaveBlocklyListener {

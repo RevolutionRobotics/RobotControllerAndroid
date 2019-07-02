@@ -105,10 +105,13 @@ class MotorConfigurationButtonHandler(
         }
     }
 
-    fun onMotorClicked() {
+    fun onMotorClicked(variableName: String?) {
         model.apply {
             editTextModel.value = editTextModel.value?.apply {
                 enabled = true
+            }
+            variableName?.let {
+                editTextModel.value?.text = it
             }
             clearVisibilitiesAndSelections()
             motorButton.isSelected.set(true)

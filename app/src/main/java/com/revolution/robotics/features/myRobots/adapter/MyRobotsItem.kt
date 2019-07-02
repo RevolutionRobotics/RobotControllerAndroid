@@ -36,12 +36,24 @@ data class MyRobotsItem(
             else -> R.string.my_robots_play_button
         }
 
+    fun onItemClicked() {
+        if (isSelected.get()) {
+            onPlayClicked()
+        } else {
+            onDisabledItemClicked()
+        }
+    }
+
     fun onPlayClicked() {
         if (isUnderConstruction) {
             presenter.onContinueBuildingSelected(robot)
         } else {
             presenter.onPlaySelected(robot.configurationId)
         }
+    }
+
+    fun onDisabledItemClicked() {
+        presenter.onDisabledItemClicked(robot)
     }
 
     fun onMoreInfoClicked() {

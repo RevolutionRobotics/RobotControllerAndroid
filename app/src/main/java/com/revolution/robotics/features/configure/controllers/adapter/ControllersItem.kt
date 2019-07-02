@@ -25,18 +25,36 @@ class ControllersItem(
     val isCurrentlyActive = ObservableBoolean(isCurrentlyActive)
 
     fun onSelectClicked() {
-        presenter.onItemSelectionChanged(this)
+        if (isSelected.get()) {
+            if (!isCurrentlyActive.get()) {
+                presenter.onItemSelectionChanged(this)
+            }
+        } else {
+            presenter.onDisabledItemCLicked(this)
+        }
     }
 
     fun onEditClicked() {
-        presenter.onEditSelected(this)
+        if (isSelected.get()) {
+            presenter.onEditSelected(this)
+        } else {
+            presenter.onDisabledItemCLicked(this)
+        }
     }
 
     fun onDeleteClicked() {
-        presenter.onDeleteSelected(this)
+        if (isSelected.get()) {
+            presenter.onDeleteSelected(this)
+        } else {
+            presenter.onDisabledItemCLicked(this)
+        }
     }
 
     fun onInfoClicked() {
-        presenter.onInfoSelected(this)
+        if (isSelected.get()) {
+            presenter.onInfoSelected(this)
+        } else {
+            presenter.onDisabledItemCLicked(this)
+        }
     }
 }

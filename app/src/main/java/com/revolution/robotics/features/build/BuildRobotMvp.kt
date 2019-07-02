@@ -9,6 +9,7 @@ interface BuildRobotMvp : Mvp {
     interface View : Mvp.View {
         fun onBuildStepsLoaded(steps: List<BuildStep>)
         fun onRobotSaveStarted()
+        fun goBack()
     }
 
     interface Presenter : Mvp.Presenter<View, BuildRobotViewModel> {

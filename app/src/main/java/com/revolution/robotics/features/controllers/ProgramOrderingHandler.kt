@@ -7,7 +7,7 @@ class ProgramOrderingHandler {
     enum class OrderBy { NAME, DATE }
     enum class Order { ASCENDING, DESCENDING }
 
-    var currentOrder = OrderBy.NAME to Order.ASCENDING
+    var currentOrder = OrderBy.DATE to Order.DESCENDING
 
     fun onOrderByNameClicked() {
         currentOrder =

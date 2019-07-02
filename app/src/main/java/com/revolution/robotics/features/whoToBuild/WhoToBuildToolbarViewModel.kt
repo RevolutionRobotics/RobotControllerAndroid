@@ -3,9 +3,9 @@ package com.revolution.robotics.features.whoToBuild
 import com.revolution.robotics.R
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.views.toolbar.ToolbarOption
-import com.revolution.robotics.views.toolbar.ToolbarViewModel
+import com.revolution.robotics.views.toolbar.RoboticsBluetoothToolbarViewModel
 
-class WhoToBuildToolbarViewModel(resourceResolver: ResourceResolver) : ToolbarViewModel() {
+class WhoToBuildToolbarViewModel(resourceResolver: ResourceResolver) : RoboticsBluetoothToolbarViewModel() {
 
     override val isLogoVisible = false
     override val hasBackOption = true

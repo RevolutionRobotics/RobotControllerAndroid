@@ -115,9 +115,7 @@ class MyRobotsPresenter(
 
     override fun onMoreInfoClicked(userRobot: UserRobot) {
         view?.showDialog(
-            if (userRobot.buildStatus == BuildStatus.INVALID_CONFIGURATION ||
-                userRobot.buildStatus == BuildStatus.COMPLETED
-            ) {
+            if (userRobot.buildStatus == BuildStatus.COMPLETED) {
                 InfoRobotDialog.Edit.newInstance(userRobot)
             } else {
                 InfoRobotDialog.Normal.newInstance(userRobot)
@@ -155,5 +153,14 @@ class MyRobotsPresenter(
         }
         model?.currentPosition?.set(0)
         view?.onRobotsChanged()
+    }
+
+    override fun onDisabledItemClicked(userRobot: UserRobot) {
+        val index = model?.robotsList?.get()?.indexOfFirst { it.robot == userRobot } ?: 0
+        if (index < model?.currentPosition?.get() ?: 0) {
+            view?.showPreviousRobot()
+        } else {
+            view?.showNextRobot()
+        }
     }
 }

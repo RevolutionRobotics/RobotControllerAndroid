@@ -78,7 +78,8 @@ class BlockOptionsDialog :
 
     override fun onDismiss(dialog: DialogInterface?) {
         if (!wasResultConfirmed) {
-            (blocklyResultHolder.result as? BlockOptionResult)?.confirmComment(binding.comment.getContent())
+            val comment = if (binding.comment.getContent().isEmpty()) null else binding.comment.getContent()
+            (blocklyResultHolder.result as? BlockOptionResult)?.confirmComment(comment)
         }
     }
 }

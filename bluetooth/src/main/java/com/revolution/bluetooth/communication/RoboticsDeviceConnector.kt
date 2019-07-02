@@ -1,10 +1,12 @@
 package com.revolution.bluetooth.communication
 
+import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothGatt
 import android.bluetooth.BluetoothGattCallback
 import android.bluetooth.BluetoothGattCharacteristic
 import android.content.Context
+import android.content.IntentFilter
 import com.revolution.bluetooth.domain.ConnectionState
 import com.revolution.bluetooth.domain.Device
 import com.revolution.bluetooth.exception.BLEConnectionException
@@ -36,8 +38,10 @@ class RoboticsDeviceConnector : BluetoothGattCallback() {
     private var connectionListeners = mutableSetOf<RoboticsConnectionStatusListener>()
     private var isConnected = false
     private var isServiceDiscovered = false
+    private var context: Context? = null
 
     private val roboticEventSerializer = RoboticsEventSerializer()
+    private val bluetoothBroadcastReceiver = RoboticsBluetoothBroadcastReceiver(this)
 
     val deviceService: RoboticsDeviceService
         get() {
@@ -80,11 +84,14 @@ class RoboticsDeviceConnector : BluetoothGattCallback() {
         onDisconnected: () -> Unit,
         onError: (exception: BLEException) -> Unit
     ) {
+        disconnect()
         this.device = device.bluetoothDevice
         this.onConnected = onConnected
         this.onDisconnected = onDisconnected
         this.onError = onError
         this.device?.connectGatt(context, true, this)
+        this.context = context
+        context.registerReceiver(bluetoothBroadcastReceiver, IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED))
     }
 
     fun registerConnectionListener(listener: RoboticsConnectionStatusListener) {
@@ -101,7 +108,7 @@ class RoboticsDeviceConnector : BluetoothGattCallback() {
         isServiceDiscovered = false
         roboticEventSerializer.clear()
         connectionListeners.forEach {
-            it.onConnectionStateChanged(false, false)
+            it.onConnectionStateChanged(connected = false, serviceDiscovered = false)
         }
         services.forEach {
             it.disconnect()
@@ -110,6 +117,8 @@ class RoboticsDeviceConnector : BluetoothGattCallback() {
         gattConnection?.close()
         gattConnection = null
         device = null
+        context?.unregisterReceiver(bluetoothBroadcastReceiver)
+        this.context = null
     }
 
     override fun onConnectionStateChange(gatt: BluetoothGatt?, status: Int, newState: Int) {

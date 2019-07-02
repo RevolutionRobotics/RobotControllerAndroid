@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import androidx.databinding.ViewDataBinding
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
@@ -31,6 +32,9 @@ abstract class PlayFragment : BaseFragment<FragmentPlayCoreBinding, PlayViewMode
 
     abstract fun getContentBinding(): ViewDataBinding?
 
+    abstract val reverseYAxis: Boolean
+    abstract val reverseXAxis: Boolean
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val root = super.onCreateView(inflater, container, savedInstanceState)
         createContentView(inflater, binding?.contentWrapper)
@@ -38,7 +42,10 @@ abstract class PlayFragment : BaseFragment<FragmentPlayCoreBinding, PlayViewMode
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        activity?.window?.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         presenter.toolbarViewModel = PlayToolbarViewModel()
+        presenter.reverseYAxis = reverseYAxis
+        presenter.reverseXAxis = reverseXAxis
         binding?.toolbarViewModel = presenter.toolbarViewModel
         arguments?.let {
             presenter.loadControllerName(it.configId)
@@ -54,6 +61,7 @@ abstract class PlayFragment : BaseFragment<FragmentPlayCoreBinding, PlayViewMode
     override fun onDestroyView() {
         presenter.unregister()
         bluetoothManager.unregisterListener(this)
+        activity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         super.onDestroyView()
     }
 

@@ -17,5 +17,11 @@ data class RobotsItem(
     val defaultResource = R.drawable.robots_card_border_grey
     var isSelected: ObservableBoolean = ObservableBoolean(false)
 
-    fun onClicked() = presenter.onRobotSelected(robot)
+    fun onClicked() {
+        if (isSelected.get()) {
+            presenter.onRobotSelected(robot)
+        } else {
+            presenter.onDisabledItemClicked(this)
+        }
+    }
 }

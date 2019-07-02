@@ -24,5 +24,6 @@ interface MyRobotsMvp : Mvp {
         fun duplicateRobot(userRobot: UserRobot)
         fun onMoreInfoClicked(userRobot: UserRobot)
         fun deleteRobot(userRobot: UserRobot, selectedPosition: Int)
+        fun onDisabledItemClicked(userRobot: UserRobot)
     }
 }

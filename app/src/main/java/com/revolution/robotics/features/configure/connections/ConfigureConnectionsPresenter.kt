@@ -7,6 +7,8 @@ import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.local.UserConfiguration
 import com.revolution.robotics.core.domain.remote.Motor
 import com.revolution.robotics.core.domain.remote.Sensor
+import com.revolution.robotics.core.eventBus.dialog.DialogEvent
+import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.features.configure.ConfigurationEventBus
 import com.revolution.robotics.features.configure.MotorPort
@@ -17,9 +19,11 @@ import com.revolution.robotics.features.configure.UserConfigurationStorage
 class ConfigureConnectionsPresenter(
     private val openConfigurationEventBus: ConfigurationEventBus,
     private val resourceResolver: ResourceResolver,
+    private val dialogEventBus: DialogEventBus,
     private val userConfigurationStorage: UserConfigurationStorage
 ) :
-    ConfigureConnectionsMvp.Presenter {
+    ConfigureConnectionsMvp.Presenter, DialogEventBus.Listener {
+
     override var model: ConfigureConnectionsViewModel? = null
     override var view: ConfigureConnectionsMvp.View? = null
 
@@ -30,12 +34,23 @@ class ConfigureConnectionsPresenter(
         super.register(view, model)
         userConfiguration = userConfigurationStorage.userConfiguration?.apply {
             setConfiguration(this)
+            model?.firebaseImageUrl?.value = userConfigurationStorage.robot?.coverImage
+            model?.robotId?.value = userConfigurationStorage.robot?.instanceId
         }
+        dialogEventBus.register(this)
     }
 
     override fun unregister(view: ConfigureConnectionsMvp.View?) {
         selectedPort = null
+        dialogEventBus.unregister(this)
         super.unregister(view)
+    }
+
+    override fun onDialogEvent(event: DialogEvent) {
+        if (event == DialogEvent.ROBOT_IMAGE_CHANGED) {
+            model?.firebaseImageUrl?.value = model?.firebaseImageUrl?.value
+            model?.robotId?.value = model?.robotId?.value
+        }
     }
 
     override fun setConfiguration(userConfiguration: UserConfiguration) {
