@@ -80,7 +80,7 @@ class CodingFragment : BaseFragment<FragmentCodingBinding, CodingViewModel>(R.la
         }
     }
 
-    override fun getPythonCodeFromBlockly(listener: SaveBlocklyListener) {
+    override fun getDataFromBlocklyView(listener: SaveBlocklyListener) {
         binding?.viewBlockly?.saveProgram(listener)
     }
 
@@ -94,8 +94,16 @@ class CodingFragment : BaseFragment<FragmentCodingBinding, CodingViewModel>(R.la
         onBackPressed()
     }
 
+    override fun onBackPressed(showDialog: Boolean) {
+        if (showDialog) {
+            LeaveProgramDialog.newInstance().show(fragmentManager)
+        } else {
+            navigator.back(1)
+        }
+    }
+
     override fun onBackPressed(): Boolean {
-        LeaveProgramDialog.newInstance().show(fragmentManager)
+        presenter.onBackPressed()
         return true
     }
 

@@ -22,7 +22,7 @@ class CodingPresenter(
     override var view: CodingMvp.View? = null
     override var model: CodingViewModel? = null
 
-    private var userProgram: UserProgram? = null
+    private var userProgramForSave: UserProgram? = null
     private var pythonSaved = false
     private var xmlSaved = false
     private var variablesSaved = false
@@ -44,7 +44,7 @@ class CodingPresenter(
     }
 
     override fun setSavedProgramData(userProgram: UserProgram) {
-        this.userProgram = userProgram
+        this.userProgramForSave = userProgram
         model?.programName?.set(userProgram.name)
         model?.userProgram = userProgram
     }
@@ -60,19 +60,19 @@ class CodingPresenter(
     }
 
     override fun onPythonProgramSaved(file: String) {
-        userProgram?.python = String(Base64.encode(file.toByteArray(), Base64.NO_WRAP))
+        userProgramForSave?.python = String(Base64.encode(file.toByteArray(), Base64.NO_WRAP))
         pythonSaved = true
         saveUserProgramWhenEveryDataIsReady()
     }
 
     override fun onXMLProgramSaved(file: String) {
-        userProgram?.xml = String(Base64.encode(file.toByteArray(), Base64.NO_WRAP))
+        userProgramForSave?.xml = String(Base64.encode(file.toByteArray(), Base64.NO_WRAP))
         xmlSaved = true
         saveUserProgramWhenEveryDataIsReady()
     }
 
     override fun showPythonCode() {
-        view?.getPythonCodeFromBlockly(object : SaveBlocklyListener {
+        view?.getDataFromBlocklyView(object : SaveBlocklyListener {
             override fun onPythonProgramSaved(file: String) {
                 view?.showDialog(PythonDialog.newInstance(file))
             }
@@ -84,7 +84,7 @@ class CodingPresenter(
     }
 
     override fun onVariablesExported(variables: String) {
-        userProgram?.variables =
+        userProgramForSave?.variables =
             if (variables.isEmpty()) {
                 emptyList()
             } else {
@@ -96,7 +96,7 @@ class CodingPresenter(
 
     private fun saveUserProgramWhenEveryDataIsReady() {
         if (pythonSaved && xmlSaved && variablesSaved) {
-            userProgram?.let { userProgram ->
+            userProgramForSave?.let { userProgram ->
                 userProgram.lastModified = System.currentTimeMillis() / TimeUnit.SECONDS.toMillis(1)
                 saveUserProgramInteractor.userProgram = userProgram
                 saveUserProgramInteractor.clearRemoteId = true
@@ -111,6 +111,21 @@ class CodingPresenter(
     }
 
     override fun onBackPressed() {
-        view?.onToolbarBackPressed()
+        view?.getDataFromBlocklyView(object : SaveBlocklyListener {
+            override fun onXMLProgramSaved(file: String) {
+                view?.onBackPressed(
+                    String(
+                        Base64.encode(
+                            file.toByteArray(),
+                            Base64.NO_WRAP
+                        )
+                    ) != model?.userProgram?.xml
+                )
+            }
+
+            override fun onPythonProgramSaved(file: String) = Unit
+
+            override fun onVariablesExported(variables: String) = Unit
+        })
     }
 }
