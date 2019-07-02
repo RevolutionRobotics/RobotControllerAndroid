@@ -30,6 +30,8 @@ class MotorConfigurationPresenter(
     private var portName: String? = null
     private var variableName: String? = null
 
+    private var previousMotorVariableName: String? = null
+
     override fun register(view: MotorConfigurationMvp.View, model: MotorConfigurationViewModel?) {
         super.register(view, model)
         model?.let {
@@ -43,6 +45,7 @@ class MotorConfigurationPresenter(
     }
 
     override fun setMotor(motor: Motor, portName: String) {
+        previousMotorVariableName = null
         this.motor = motor
         this.portName = portName
         model?.editTextModel?.value = ChippedEditTextViewModel(
@@ -67,11 +70,14 @@ class MotorConfigurationPresenter(
     }
 
     override fun onDrivetrainButtonClicked() {
+        if (motor?.type == Motor.TYPE_MOTOR) {
+            previousMotorVariableName = variableName
+        }
         buttonHandler?.onDrivetrainButtonClicked(userConfigurationStorage.getDefaultDrivetrainName())
     }
 
     override fun onMotorClicked() {
-        buttonHandler?.onMotorClicked()
+        buttonHandler?.onMotorClicked(previousMotorVariableName)
     }
 
     override fun onLeftSideClicked() {
