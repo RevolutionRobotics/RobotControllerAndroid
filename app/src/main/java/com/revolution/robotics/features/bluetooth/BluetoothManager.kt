@@ -57,7 +57,7 @@ class BluetoothManager(private var kodein: Kodein) : RoboticsConnectionStatusLis
 
     fun shutDown() {
         activity = null
-        listeners.forEach { it.onBluetoothConnectionStateChanged(false, false) }
+        listeners.forEach { it.onBluetoothConnectionStateChanged(connected = false, serviceDiscovered = false) }
         bleConnectionHandler.disconnect()
         bleConnectionHandler.unregisterConnectionListener(this)
         isConnected = false

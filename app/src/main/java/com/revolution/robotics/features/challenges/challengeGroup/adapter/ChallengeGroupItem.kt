@@ -2,6 +2,7 @@ package com.revolution.robotics.features.challenges.challengeGroup.adapter
 
 import com.revolution.robotics.core.domain.remote.ChallengeCategory
 import com.revolution.robotics.features.challenges.challengeGroup.ChallengeGroupMvp
+import kotlin.math.min
 
 @Suppress("DataClassContainsFunctions")
 data class ChallengeGroupItem(
@@ -18,7 +19,7 @@ data class ChallengeGroupItem(
     }
 
     fun getStepsText() = "$currentChallenge / $totalChallenge"
-    fun getStepsProgress() = Math.min(ALMOST_100, currentChallenge.toFloat() / totalChallenge)
+    fun getStepsProgress() = min(ALMOST_100, currentChallenge.toFloat() / totalChallenge)
     fun isComplete() = currentChallenge == totalChallenge
     fun onItemClicked() {
         presenter.onItemClicked(challengeCategory)

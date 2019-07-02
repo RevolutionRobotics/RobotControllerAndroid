@@ -18,7 +18,7 @@ class AboutPresenter(
     companion object {
         private const val FACEBOOK = "https://www.facebook.com/RevoRobotics"
         private const val INSTAGRAM = "https://www.instagram.com/revorobotics"
-        private const val WEBPAGE = "https://www.revolutionrobotics.org/"
+        private const val WEB_PAGE = "https://www.revolutionrobotics.org/"
         // TODO update PP url
         private const val PRIVACY_POLICY = "https://www.revolutionrobotics.org/"
         // TODO update T&C url
@@ -42,7 +42,7 @@ class AboutPresenter(
     }
 
     override fun onWebsiteClicked() {
-        view?.openUrl(WEBPAGE)
+        view?.openUrl(WEB_PAGE)
     }
 
     override fun onPermissionLayoutClicked() {

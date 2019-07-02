@@ -142,7 +142,10 @@ class ConfigureConnectionsPresenter(
         port: MutableLiveData<RobotPartModel>
     ): RobotPartModel? =
         when {
-            selectedPort == port -> RobotPartModel(portName, R.color.white, getSensorDrawable(sensor), true, true) {
+            selectedPort == port -> RobotPartModel(portName, R.color.white, getSensorDrawable(sensor),
+                isActive = true,
+                isSelected = true
+            ) {
                 handlePortSelection(port)
                 openSensorDrawer(sensor, resourceResolver.string(portName))
             }
@@ -150,13 +153,16 @@ class ConfigureConnectionsPresenter(
                 portName,
                 R.color.grey_6d,
                 getSensorDrawable(null),
-                false,
-                false
+                isActive = false,
+                isSelected = false
             ) {
                 handlePortSelection(port)
                 openSensorDrawer(sensor, resourceResolver.string(portName))
             }
-            else -> RobotPartModel(portName, R.color.golden_rod, getSensorDrawable(sensor), true, false) {
+            else -> RobotPartModel(portName, R.color.golden_rod, getSensorDrawable(sensor),
+                isActive = true,
+                isSelected = false
+            ) {
                 handlePortSelection(port)
                 openSensorDrawer(sensor, resourceResolver.string(portName))
             }
@@ -168,7 +174,10 @@ class ConfigureConnectionsPresenter(
         port: MutableLiveData<RobotPartModel>
     ): RobotPartModel? =
         when {
-            selectedPort == port -> RobotPartModel(portName, R.color.white, getMotorDrawable(motor), true, true) {
+            selectedPort == port -> RobotPartModel(portName, R.color.white, getMotorDrawable(motor),
+                isActive = true,
+                isSelected = true
+            ) {
                 handlePortSelection(port)
                 openMotorDrawer(motor, resourceResolver.string(portName))
             }
@@ -176,13 +185,16 @@ class ConfigureConnectionsPresenter(
                 portName,
                 R.color.grey_6d,
                 getMotorDrawable(null),
-                false,
-                false
+                isActive = false,
+                isSelected = false
             ) {
                 handlePortSelection(port)
                 openMotorDrawer(motor, resourceResolver.string(portName))
             }
-            else -> RobotPartModel(portName, R.color.robotics_red, getMotorDrawable(motor), true, false) {
+            else -> RobotPartModel(portName, R.color.robotics_red, getMotorDrawable(motor),
+                isActive = true,
+                isSelected = false
+            ) {
                 handlePortSelection(port)
                 openMotorDrawer(motor, resourceResolver.string(portName))
             }
