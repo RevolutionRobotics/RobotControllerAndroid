@@ -9,6 +9,7 @@ import com.revolution.robotics.core.domain.local.UserProgram
 import com.revolution.robotics.core.domain.local.UserProgramBinding
 import com.revolution.robotics.core.domain.local.UserRobot
 import com.revolution.robotics.core.domain.remote.Motor
+import com.revolution.robotics.core.domain.remote.Sensor
 import com.revolution.robotics.core.interactor.SaveUserControllerInteractor
 import com.revolution.robotics.core.interactor.UpdateUserRobotInteractor
 import com.revolution.robotics.features.configure.controller.ControllerButton
@@ -51,6 +52,41 @@ class UserConfigurationStorage(
             if (mapping.M6?.type == Motor.TYPE_DRIVETRAIN) count++
         }
         return "drivetrain${count + 1}"
+    }
+
+    fun getDefaultMotorName(): String {
+        var count = 0
+        userConfiguration?.mappingId?.let { mapping ->
+            if (mapping.M1?.type == Motor.TYPE_MOTOR) count++
+            if (mapping.M2?.type == Motor.TYPE_MOTOR) count++
+            if (mapping.M3?.type == Motor.TYPE_MOTOR) count++
+            if (mapping.M4?.type == Motor.TYPE_MOTOR) count++
+            if (mapping.M5?.type == Motor.TYPE_MOTOR) count++
+            if (mapping.M6?.type == Motor.TYPE_MOTOR) count++
+        }
+        return "motor${count + 1}"
+    }
+
+    fun getDefaultUltrasonicName(): String {
+        var count = 0
+        userConfiguration?.mappingId?.let { mapping ->
+            if (mapping.S1?.type == Sensor.TYPE_ULTRASONIC) count++
+            if (mapping.S2?.type == Sensor.TYPE_ULTRASONIC) count++
+            if (mapping.S3?.type == Sensor.TYPE_ULTRASONIC) count++
+            if (mapping.S4?.type == Sensor.TYPE_ULTRASONIC) count++
+        }
+        return "ultrasonic${count + 1}"
+    }
+
+    fun getDefaultBumperName(): String {
+        var count = 0
+        userConfiguration?.mappingId?.let { mapping ->
+            if (mapping.S1?.type == Sensor.TYPE_BUMPER) count++
+            if (mapping.S2?.type == Sensor.TYPE_BUMPER) count++
+            if (mapping.S3?.type == Sensor.TYPE_BUMPER) count++
+            if (mapping.S4?.type == Sensor.TYPE_BUMPER) count++
+        }
+        return "bumper${count + 1}"
     }
 
     fun updateSensorPort(sensorPort: SensorPort) {
