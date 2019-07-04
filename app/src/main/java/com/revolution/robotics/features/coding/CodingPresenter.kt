@@ -117,7 +117,6 @@ class CodingPresenter(
     override fun onBackPressed() {
         view?.getDataFromBlocklyView(object : SaveBlocklyListener {
             override fun onXMLProgramSaved(file: String) {
-
                 view?.onBackPressed(
                     String(
                         Base64.encode(

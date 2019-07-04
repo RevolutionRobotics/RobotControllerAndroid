@@ -50,6 +50,11 @@ class ButtonlessProgramSelectorFragment :
         super.onDestroyView()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.clearLists()
+    }
+
     override fun onDialogEvent(event: DialogEvent) {
         if (event == DialogEvent.EDIT_PROGRAM) {
             val program = event.extras.getParcelable<UserProgram>(ProgramDialog.KEY_PROGRAM)
