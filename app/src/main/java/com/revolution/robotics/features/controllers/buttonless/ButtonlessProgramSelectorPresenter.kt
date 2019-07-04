@@ -37,7 +37,16 @@ class ButtonlessProgramSelectorPresenter(
         loadPrograms()
     }
 
+    override fun clearLists() {
+        allPrograms = null
+        programs.clear()
+    }
+
     private fun loadPrograms() {
+        if (allPrograms != null) {
+            return
+        }
+
         getUserProgramsInteractor.execute { result ->
             val boundPrograms = userConfigurationStorage.getBoundButtonPrograms()
             allPrograms = result.filter { program ->
