@@ -33,7 +33,7 @@
                 android:layout_marginEnd="@dimen/dimen_64dp"
                 android:layout_marginTop="4dp"
                 android:textColor="@color/white"
-                android:text="@{viewModel.description}"
+                app:formattedText="@{viewModel.description}"
                 android:textSize="14sp"
                 android:fontFamily="@font/barlow_regular"/>
 
