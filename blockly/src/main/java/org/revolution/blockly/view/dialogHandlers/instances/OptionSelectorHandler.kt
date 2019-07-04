@@ -13,8 +13,8 @@ class OptionSelectorHandler : JsPromptHandler {
 
     override fun canHandleRequest(message: String) =
         message.endsWith("_selector") ||
-                message == "logic_boolean.bool" ||
-                message == "logic_compare.op"
+                message.endsWith("logic_boolean.bool") ||
+                message.endsWith("logic_compare.op")
 
     override fun handleRequest(request: JSONObject, dialogFactory: DialogFactory, result: JsPromptResult) {
         dialogFactory.showOptionSelector(
