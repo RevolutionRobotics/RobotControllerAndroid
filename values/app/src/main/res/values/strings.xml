@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <string name="app_name">Robotics</string>
+  <string name="ok">OK</string>
+  <string name="cancel">Cancel</string>
+  <string name="next">Next</string>
+  <string name="done">Done</string>
+  <string name="menu_robots">robots</string>
+  <string name="menu_coding">programs</string>
+  <string name="menu_challenges">challenges</string>
+  <string name="my_robots_title">Your robots</string>
+  <string name="my_robots_build_new">build new</string>
+  <string name="who_to_build_title">Choose your robot to build!</string>
+  <string name="who_to_build_build_your_own">build your own</string>
+  <string name="who_to_build_searching_title">Searching for robots in the area</string>
+  <string name="permission_bluetooth_title">Bluetooth permissions</string>
+  <string name="permission_bluetooth_description">We need your location permissions to search for bluetooth devices.
+        We can explain here how is this exactly working
+    </string>
+  <string name="permission_bluetooth_agree">Agree and continue</string>
+  <string name="disconnect_modal_disconnect">Disconnect</string>
+  <string name="disconnect_modal_description">Would you like to disconnect from the robot?</string>
+  <string name="connection_successful_message">Connection has been established</string>
+  <string name="connection_failed_message">Connection failed</string>
+  <string name="connection_failed_subtitle">What to do?</string>
+  <string name="connection_failed_skip_button_title">Skip connection</string>
+  <string name="connection_failed_tips_button_title">Tips</string>
+  <string name="connection_failed_try_again_button_title">Try again</string>
+  <string name="build_robot_turn_on_the_brain_instruction">To take control, switch the brain on</string>
+  <string name="build_robot_turn_on_the_brain_tip">Once it is ready, tap start</string>
+  <string name="build_robot_later">Later</string>
+  <string name="build_robot_tips">Tips</string>
+  <string name="build_robot_start">Start</string>
+  <string name="untitled_robot_name">Untitled robot</string>
+  <string name="build_robot_loading_title">Creating your robot</string>
+  <string name="build_robot_loading_description">Please wait</string>
+  <string name="my_robots_play_button">Play!</string>
+  <string name="my_robots_under_construction_button">Continue building</string>
+  <string name="my_robots_under_construction_button_custom">Continue editing</string>
+  <string name="my_robots_under_construction">under construction</string>
+  <string name="dialog_robot_info_edit">Let’s edit the configuration to play with this robot!</string>
+  <string name="duplicated_robot_name_suffix">Copy</string>
+  <string name="delete_robot_description">Are you sure you want to delete this robot?</string>
+  <string name="delete_robot_confirm">Delete</string>
+  <string name="info_robot_delete">Delete</string>
+  <string name="info_robot_duplicate">Duplicate</string>
+  <string name="info_robot_edit">Edit</string>
+  <string name="build_chapter_finish_dialog_title">Chapter finished</string>
+  <string name="build_chapter_finish_dialog_description">Well done!</string>
+  <string name="build_chapter_finish_dialog_button_home">Home</string>
+  <string name="build_chapter_finish_dialog_button_next_chapter">Test later</string>
+  <string name="build_chapter_finish_dialog_button_test">Test now</string>
+  <string name="camera_dialog_title">Robot\'s profile picture</string>
+  <string name="camera_dialog_delete_title">Delete</string>
+  <string name="camera_dialog_new_photo_title">Take new photo</string>
+  <string name="tips_dialog_title">Tips</string>
+  <string name="tips_dialog_sub_title">Try to…</string>
+  <string name="tips_dialog_button_reconfigure">Reconfigure</string>
+  <string name="tips_dialog_button_skip_testing">Skip testing</string>
+  <string name="tips_dialog_button_community">Community</string>
+  <string name="tips_dialog_button_try_again">Try again</string>
+  <string name="tips_dialog_placeholder_1">Lorem ipsum dolor sit amet, eu commodo numquam comprehensam vel. Quo cu
+        alia placerat.
+    </string>
+  <string name="tips_dialog_placeholder_2">Per graece denique invidunt ei. Case ullum euripidis duo eu.</string>
+  <string name="tips_dialog_placeholder_3">Eos meis quidam omnesque et. Essent blandit ius ut, no ius melius
+        sanctus.
+    </string>
+  <string name="tips_dialog_placeholder_4">Get help from the Community!</string>
+  <string name="testing_negative_button_title">Not really</string>
+  <string name="testing_positive_button_title">Works fine!</string>
+  <string name="testing_title">Testing</string>
+  <string name="testing_question">Looking good?</string>
+  <string name="testing_drivetrain_test">Robot moves back and forth and reaches initial position.</string>
+  <string name="testing_motor_test">The attached motor does a half rotation back and forth and reaches initial
+        position.
+    </string>
+  <string name="testing_bumper_test">Move your hand in front of the robot and gently push it. If the sensor detects
+        it, the LED lights of the robot will turn green, otherwise turn red.
+    </string>
+  <string name="testing_ultrasonic_test">Move your hand in front of the robot. If the sensor detects it, the LED
+        lights of the robot will turn green, otherwise turn red.
+    </string>
+  <string name="build_robot_finished_title">All set!</string>
+  <string name="build_robot_finished_description">Your robot is ready to drive!</string>
+  <string name="build_robot_finished_button">Let\'s drive</string>
+  <string name="configure_connection_tab_title">Connections</string>
+  <string name="configure_controller_tab_title">Controllers</string>
+  <string name="configure_connections_missing_part_name" translatable="false">MS</string>
+  <string name="configure_connections_button_M1" translatable="false">M1</string>
+  <string name="configure_connections_button_M2" translatable="false">M2</string>
+  <string name="configure_connections_button_M3" translatable="false">M3</string>
+  <string name="configure_connections_button_M4" translatable="false">M4</string>
+  <string name="configure_connections_button_M5" translatable="false">M5</string>
+  <string name="configure_connections_button_M6" translatable="false">M6</string>
+  <string name="configure_connections_button_S1" translatable="false">S1</string>
+  <string name="configure_connections_button_S2" translatable="false">S2</string>
+  <string name="configure_connections_button_S3" translatable="false">S3</string>
+  <string name="configure_connections_button_S4" translatable="false">S4</string>
+  <string name="controller_selected">Selected</string>
+  <string name="controller_choose_this">Choose this!</string>
+  <string name="controller_create_new">create new</string>
+  <string name="delete_controller_description">Are you sure you want to delete this controller?</string>
+  <string name="delete_controller_confirm">Delete</string>
+  <string name="delete_controller_cancel">Cancel</string>
+  <string name="controller_info_dialog_button_text">Got it</string>
+  <string name="controller_info_dialog_description">Lorem ipsum dolor sit amet, eu commodo numquam comprehensam vel.
+        Quo cu alia placerat. Per graece denique invidunt ei.
+    </string>
+  <string name="configure_motor_name_inputfield_title">Name</string>
+  <string name="configure_motor_empty_button_title">Empty</string>
+  <string name="configure_motor_drivetrain_button_title">Drivetrain</string>
+  <string name="configure_motor_motor_button_title">Motor</string>
+  <string name="configure_motor_left_button_title">Left</string>
+  <string name="configure_motor_right_button_title">Right</string>
+  <string name="configure_motor_counterclockwise_button_title">Counter clockwise</string>
+  <string name="configure_motor_clockwise_button_title">Clockwise</string>
+  <string name="configure_motor_done_button_title">Done</string>
+  <string name="configure_sensor_bumper_button_title">Bumper</string>
+  <string name="configure_sensor_ultrasound_button_title">Ultrasonic</string>
+  <string name="configure_motor_test_button_title">Test</string>
+  <string name="controller_selector_title">Choose your controller!</string>
+  <string name="controller_type_gamer">gamer</string>
+  <string name="controller_type_multitasker">multi-tasker</string>
+  <string name="controller_type_driver">driver</string>
+  <string name="controller_setup_screen_title">Assign programs to buttons!</string>
+  <string name="controller_setup_empty">empty</string>
+  <string name="most_recent_show_more">Show more</string>
+  <string name="most_recent_empty">No additional compatible program to assign. Let\'s build one under Programs!
+    </string>
+  <string name="program_info_edit_program">Edit program</string>
+  <string name="program_info_compatibility_issue">Description of compatibility issue. Lorem ipsum dolor sit amet, eu
+        commodo numquam comprehensam vel. Quo cu alia placerat. Per graece denique.
+    </string>
+  <string name="program_info_compatibility_issue_positive_button">Got it</string>
+  <string name="program_info_remove_button">Remove program</string>
+  <string name="program_info_add_button">Add program</string>
+  <string name="program_info_delete_program">Delete program</string>
+  <string name="program_info_load_program">Load program</string>
+  <string name="save_robot_dialog_title">The robot is ready, name it!</string>
+  <string name="save_robot_dialog_name_title">Robot name</string>
+  <string name="save_robot_dialog_description_hint">Add a hint to remember when to use the robot!</string>
+  <string name="save_robot_dialog_name_hint">Tap here and name the robot!</string>
+  <string name="save_controller_dialog_title">Name your controller!</string>
+  <string name="save_controller_dialog_name_title">Controller name</string>
+  <string name="save_controller_dialog_description_hint">Add a hint to remember when to use this controller!</string>
+  <string name="save_controller_dialog_name_hint">Tap here and name the controller!</string>
+  <string name="save_dialog_done">Done</string>
+  <string name="save_dialog_description_title">Description</string>
+  <string name="dialog_save_program_title">The program is ready, name it!</string>
+  <string name="dialog_save_program_name">Program name</string>
+  <string name="dialog_save_program_name_hint">Tap here to name it!</string>
+  <string name="dialog_save_program_description">Description</string>
+  <string name="dialog_save_program_description_hint">Tap here and add a hint to remember when to use it!</string>
+  <string name="play_screen_title">Play!</string>
+  <string name="challenges_screen_title">Challenges</string>
+  <string name="challenge_finished_dialog_title">Challenge accomplished!</string>
+  <string name="challenge_finished_dialog_latest_title">Challenge section accomplished, \n well done!</string>
+  <string name="challenge_finished_dialog_button_home">Home</string>
+  <string name="challenge_finished_dialog_button_challenge_list">Challenge list</string>
+  <string name="challenge_finished_dialog_button_next">Next challenge</string>
+  <string name="program_selector_title">Choose a program!</string>
+  <string name="program_selector_order_by_name">Name</string>
+  <string name="program_selector_order_by_date">Modified</string>
+  <string name="program_selector_empty_compatible">No additional compatible program to assign.\n Let\'s build one
+        under Programs!
+    </string>
+  <string name="program_selector_empty">No additional program to assign.\n Let\'s build one under Programs!</string>
+  <string name="program_selector_show_compatible_programs">show compatible programs only</string>
+  <string name="program_selector_show_all_programs">show all programs</string>
+  <string name="buttonless_program_selector_title">Add buttonless programs running in the background</string>
+  <string name="buttonless_program_select_all_checkbox">Select all</string>
+  <string name="buttonless_program_show_compatible_programs">Show compatible programs only</string>
+  <string name="buttonless_program_show_all_programs">Show all programs</string>
+  <string name="buttonless_program_selector_empty">No additional compatible program to assign.\n Let\'s build one
+        under Programs!
+    </string>
+  <string name="buttonless_program_selector_compatible_empty">No additional program to assign.\n Let\'s build one
+        under Programs!
+    </string>
+  <string name="program_priority_screen_title">Create priority order for the programs</string>
+  <string name="settings_screen_title">Settings</string>
+  <string name="settings_reset_tutorial">Reset tutorial</string>
+  <string name="settings_firmware_update">Firmware update</string>
+  <string name="settings_about_applications">About application</string>
+  <string name="about_screen_title">About application</string>
+  <string name="revolution_webpage">revolutionrobotics.org</string>
+  <string name="about_permissions_title">Permissions</string>
+  <string name="about_permissions_instruction">To modify them, please open the main Settings app on your device.
+    </string>
+  <string name="about_privacy_policy_button_title">Privacy policy</string>
+  <string name="about_terms_conditions_button_title"><![CDATA[Terms & conditions]]></string>
+  <string name="about_version">Version</string>
+  <string name="firmware_new_connection_button">Connect to new brain</string>
+  <string name="firmware_check_for_updates">Check for updates</string>
+  <string name="firmware_screen_title">Firmware update</string>
+  <string name="firmware_loading">Loading…</string>
+  <string name="firmware_hardware_version">Hardware version: %1$s</string>
+  <string name="firmware_model_number">Model number: %1$s</string>
+  <string name="firmware_software_version">Software version: %1$s</string>
+  <string name="firmware_serial_number">Serial number: %1$s</string>
+  <string name="firmware_manufacturer_name">Manufacturer name: %1$s</string>
+  <string name="firmware_main_battery">Main battery: %1$s %%</string>
+  <string name="firmware_motor_battery">Motor battery: %1$s %%</string>
+  <string name="firmware_current_version">Current framework version %1$s</string>
+  <string name="firmware_update_download_ready">New update (%1$s) is available to download</string>
+  <string name="firmware_update_latest_used">You have the latest firmware version</string>
+  <string name="firmware_update_download">Download and update</string>
+  <string name="firmware_download_info">Downloading &amp; updating</string>
+  <string name="firmware_please_wait">Please wait</string>
+  <string name="firmware_successful_update">Successful update</string>
+  <string name="firmware_done_button">Done</string>
+  <string name="firmware_update_failed_title">Update failed</string>
+  <string name="firmware_update_failed_tips_title">Try to…</string>
+  <string name="firmware_update_failed_tips">- Lorem ipsum dolor sit amet, eu commodo numquam comprehensam vel. Quo cu
+        alia placerat.\n
+        - Per graece denique invidunt ei. Case ullum euripidis duo eu.\n
+        - Eos meis quidam omnesque et. Essent blandit ius ut, no ius melius sanctus.\n
+        - Get help from the Community!
+    </string>
+  <string name="firmware_update_failed_update_later_button">Update later</string>
+  <string name="firmware_update_failed_update_community_button">Community</string>
+  <string name="firmware_update_failed_update_try_again_button">Try again</string>
+  <string name="program_title_default">Untitled program</string>
+  <string name="dialog_programs_title">Programs</string>
+  <string name="title_python_code">Generated python code</string>
+  <string name="program_confirm_title">Would you like to leave the editor?</string>
+  <string name="program_confirm_description">All your unsaved changes will be lost.</string>
+  <string name="program_confirm_positive">Leave</string>
+  <string name="dialog_block_options_delete">Delete block</string>
+  <string name="dialog_block_options_help">Get help</string>
+  <string name="dialog_block_options_duplicate">Duplicate</string>
+  <string name="dialog_block_options_comment_title">Note</string>
+  <string name="dialog_block_options_comment_description">Tap here and add a comment!</string>
+  <string name="dialog_variable_options_delete">Delete variable</string>
+  <string name="blockly_dialog_choose_a_direction">Choose a direction!</string>
+  <string name="blockly_donut_selector_select_all">Select all\"</string>
+  <string name="community_title">Community</string>
+  <string name="community_content_title">Share or get help</string>
+  <string name="community_content_description">Description of the forum with benefits</string>
+  <string name="community_begin_button">Begin!</string>
+  <string name="tutorial_reset_success">Successful tutorial reset</string>
+  <string name="tutorial_robots_title">Under robots, you can…</string>
+  <string name="tutorial_robots_description">- Lorem ipsum dolor sit amet, eu commodo numquam comprehensam vel. Quo cu
+        alia placerat.\n - Per graece denique invidunt ei. Case ullum euripidis duo e \n - Eos meis quidam omnesque et.
+        Essent blandit ius ut, no ius melius sanctus.
+    </string>
+  <string name="tutorial_programs_title">Under programs, you can…</string>
+  <string name="tutorial_programs_description">- Lorem ipsum dolor sit amet, eu commodo numquam comprehensam vel. Quo
+        cu
+        alia placerat.\n - Per graece denique invidunt ei. Case ullum euripidis duo e \n - Eos meis quidam omnesque et.
+        Essent blandit ius ut, no ius melius sanctus.
+    </string>
+  <string name="tutorial_challenges_title">Under challanges, you can…</string>
+  <string name="tutorial_challenges_description">- Lorem ipsum dolor sit amet, eu commodo numquam comprehensam vel.
+        Quo cu
+        alia placerat.\n - Per graece denique invidunt ei. Case ullum euripidis duo e \n - Eos meis quidam omnesque et.
+        Essent blandit ius ut, no ius melius sanctus.
+    </string>
+  <string name="tutorial_settings_title">Under settings…</string>
+  <string name="tutorial_settings_description">- Lorem ipsum dolor sit amet, eu commodo numquam comprehensam vel. Quo
+        cu
+        alia placerat.\n - Per graece denique invidunt ei. Case ullum euripidis duo e \n - Eos meis quidam omnesque et.
+        Essent blandit ius ut, no ius melius sanctus.
+    </string>
+  <string name="tutorial_community_title">Under community…</string>
+  <string name="tutorial_community_description">- New lorem ipsum dolor sit amet, eu commodo numquam comprehensam vel. Quo
+        cu
+        alia placerat.\n - Per graece denique invidunt ei. Case ullum euripidis duo e \n - Eos meis quidam omnesque et.
+        Essent blandit ius ut, no ius melius sanctus.
+    </string>
+  <string name="tutorial_button_finish">Finish</string>
+  <string name="tutorial_button_skip">Skip</string>
+  <string name="build_test_download_info">Downloading &amp; updating</string>
+  <string name="build_test_please_wait">Please wait</string>
+  <string name="error_variable_already_in_use">Variable name is already in use</string>
+  <string name="error_general">Something went wrong, please try again</string>
+  <string name="error_test_code_upload">Test code upload error</string>
+  <string name="error_program_already_in_use">Program name is already in use.</string>
+  <string name="error_cannot_open_url">You do not seem to have any browsers installed to open this</string>
+  <string name="priority_drivetrain_item">Drivetrain</string>
+</resources>
