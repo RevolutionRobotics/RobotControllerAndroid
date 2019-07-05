@@ -14,6 +14,7 @@ import com.revolution.robotics.features.controllers.ControllerType
 import com.revolution.robotics.features.controllers.programInfo.ProgramDialog
 import java.util.Collections
 
+@Suppress("TooManyFunctions")
 class ProgramPriorityPresenter(
     private val userConfigurationStorage: UserConfigurationStorage,
     private val dialogEventBus: DialogEventBus,
