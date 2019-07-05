@@ -23,6 +23,7 @@ interface ConfigureControllersMvp : Mvp {
         fun onCreateNewClick()
         fun deleteController(controllerId: Int, selectedPosition: Int)
         fun onItemSelectionChanged(item: ControllersItem)
+        fun play(item: ControllersItem)
         fun onEditSelected(item: ControllersItem)
         fun onDeleteSelected(item: ControllersItem)
         fun onInfoSelected(item: ControllersItem)

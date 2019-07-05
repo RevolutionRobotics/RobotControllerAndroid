@@ -131,7 +131,7 @@
     <string name="configure_connections_button_S4" translatable="false">S4</string>
 
     <!-- Configure Controllers -->
-    <string name="controller_selected">Selected</string>
+    <string name="controller_selected">Play</string>
     <string name="controller_choose_this">Choose this!</string>
     <string name="controller_create_new">create new</string>
     <string name="delete_controller_description">Are you sure you want to delete this controller?</string>

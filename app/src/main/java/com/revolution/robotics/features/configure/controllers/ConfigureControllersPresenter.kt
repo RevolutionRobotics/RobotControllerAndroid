@@ -64,6 +64,35 @@ class ConfigureControllersPresenter(
         }
     }
 
+    override fun play(item: ControllersItem) {
+        userControllerInteractor.id = item.userController.id
+        userControllerInteractor.execute { controllerWithPrograms ->
+            userConfigurationStorage.controllerHolder = controllerWithPrograms
+            ControllerType.fromId(item.userController.type)?.apply {
+                when (this) {
+                    ControllerType.GAMER ->
+                        navigator.navigate(
+                            ConfigureFragmentDirections.toPlayGamer(
+                                userConfigurationStorage.userConfiguration?.id ?: 0
+                            )
+                        )
+                    ControllerType.MULTITASKER ->
+                        navigator.navigate(
+                            ConfigureFragmentDirections.toPlayMultitasker(
+                                userConfigurationStorage.userConfiguration?.id ?: 0
+                            )
+                        )
+                    ControllerType.DRIVER ->
+                        navigator.navigate(
+                            ConfigureFragmentDirections.toPlayDriver(
+                                userConfigurationStorage.userConfiguration?.id ?: 0
+                            )
+                        )
+                }
+            }
+        }
+    }
+
     override fun onPageSelected(position: Int) {
         model?.run {
             val list = controllersList.get() ?: return
