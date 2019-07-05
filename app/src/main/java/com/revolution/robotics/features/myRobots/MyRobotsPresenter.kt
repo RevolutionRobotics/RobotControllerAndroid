@@ -126,7 +126,9 @@ class MyRobotsPresenter(
 
     override fun onMoreInfoClicked(userRobot: UserRobot) {
         view?.showDialog(
-            if (userRobot.buildStatus == BuildStatus.COMPLETED) {
+            if (userRobot.buildStatus == BuildStatus.COMPLETED ||
+                userRobot.buildStatus == BuildStatus.INVALID_CONFIGURATION
+            ) {
                 InfoRobotDialog.Edit.newInstance(userRobot)
             } else {
                 InfoRobotDialog.Normal.newInstance(userRobot)
