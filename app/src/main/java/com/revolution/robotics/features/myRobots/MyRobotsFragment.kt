@@ -52,6 +52,11 @@ class MyRobotsFragment : BaseFragment<FragmentMyRobotsBinding, MyRobotsViewModel
         super.onDestroyView()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.clearEmptyNavigationFlag()
+    }
+
     override fun onRobotsChanged() {
         adapter.notifyDataSetChanged()
         binding?.myRobotsViewpager?.reInitTransformerWithDelay(viewModel?.currentPosition?.get() ?: 0)

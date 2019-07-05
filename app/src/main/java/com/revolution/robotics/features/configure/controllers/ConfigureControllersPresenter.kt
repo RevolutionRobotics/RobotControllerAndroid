@@ -30,6 +30,8 @@ class ConfigureControllersPresenter(
     var currentRobotId = 0
     var itemCount = 0
 
+    private var isEmptyNavigationHappened = false
+
     override fun loadControllers(robotId: Int) {
         if (currentRobotId != robotId) {
             currentRobotId = robotId
@@ -55,7 +57,8 @@ class ConfigureControllersPresenter(
             }
             view?.onControllersChanged(currentPosition)
 
-            if (itemCount == 0) {
+            if (itemCount == 0 && !isEmptyNavigationHappened) {
+                isEmptyNavigationHappened = true
                 onCreateNewClick()
             }
         }
@@ -73,6 +76,10 @@ class ConfigureControllersPresenter(
                 updateButtonsVisibility(position)
             }
         }
+    }
+
+    override fun clearEmptyNavigationFlag() {
+        isEmptyNavigationHappened = false
     }
 
     private fun updateButtonsVisibility(position: Int) {

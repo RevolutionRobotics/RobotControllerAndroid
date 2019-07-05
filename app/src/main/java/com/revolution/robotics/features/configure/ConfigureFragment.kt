@@ -16,6 +16,7 @@ import com.revolution.robotics.core.utils.CameraHelper
 import com.revolution.robotics.databinding.FragmentConfigureBinding
 import com.revolution.robotics.features.configure.connections.ConfigureConnectionsFragment
 import com.revolution.robotics.features.configure.controllers.ConfigureControllersFragment
+import com.revolution.robotics.features.configure.controllers.ConfigureControllersMvp
 import com.revolution.robotics.features.configure.save.SaveRobotDialog
 import org.kodein.di.erased.instance
 
@@ -30,6 +31,7 @@ class ConfigureFragment : BaseFragment<FragmentConfigureBinding, ConfigureViewMo
 
     override val viewModelClass: Class<ConfigureViewModel> = ConfigureViewModel::class.java
     private val presenter: ConfigureMvp.Presenter by kodein.instance()
+    private val controllerPresenter: ConfigureControllersMvp.Presenter by kodein.instance()
     private val userConfigurationStorage: UserConfigurationStorage by kodein.instance()
     private lateinit var cameraHelper: CameraHelper
 
@@ -65,6 +67,11 @@ class ConfigureFragment : BaseFragment<FragmentConfigureBinding, ConfigureViewMo
         presenter.unregister()
         binding?.drawerConfiguration?.removeDrawerListener(this)
         super.onDestroyView()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        controllerPresenter.clearEmptyNavigationFlag()
     }
 
     override fun openMotorConfig(motorPort: MotorPort) {

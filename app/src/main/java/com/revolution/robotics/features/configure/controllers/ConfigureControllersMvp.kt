@@ -15,6 +15,7 @@ interface ConfigureControllersMvp : Mvp {
 
     @Suppress("ComplexInterface")
     interface Presenter : Mvp.Presenter<View, ConfigureControllersViewModel> {
+        fun clearEmptyNavigationFlag()
         fun loadControllers(robotId: Int)
         fun onPageSelected(position: Int)
         fun nextButtonClick()
