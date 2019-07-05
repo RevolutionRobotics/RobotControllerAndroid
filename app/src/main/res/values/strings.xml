@@ -147,7 +147,7 @@
     <!--- Configuration Slider Motor-->
     <string name="configure_motor_name_inputfield_title">Name</string>
     <string name="configure_motor_empty_button_title">Empty</string>
-    <string name="configure_motor_drivetrain_button_title">Drivetrain</string>
+    <string name="configure_motor_drivetrain_button_title">Drive</string>
     <string name="configure_motor_motor_button_title">Motor</string>
     <string name="configure_motor_left_button_title">Left</string>
     <string name="configure_motor_right_button_title">Right</string>
@@ -356,7 +356,7 @@
     <string name="error_program_already_in_use">Program name is already in use.</string>
     <string name="error_cannot_open_url">You do not seem to have any browsers installed to open this</string>
     
-    <string name="priority_drivetrain_item">Drivetrain</string>
+    <string name="priority_drivetrain_item">Drive</string>
     <string name="error_disabled_permission">Please enable location permission for the Revolution Robotics app!</string>
 
 </resources>

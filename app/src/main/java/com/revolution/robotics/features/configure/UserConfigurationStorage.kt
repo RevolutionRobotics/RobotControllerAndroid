@@ -51,7 +51,7 @@ class UserConfigurationStorage(
             if (mapping.M5?.type == Motor.TYPE_DRIVETRAIN) count++
             if (mapping.M6?.type == Motor.TYPE_DRIVETRAIN) count++
         }
-        return "drivetrain${count + 1}"
+        return "drive${count + 1}"
     }
 
     fun getDefaultMotorName(): String {
