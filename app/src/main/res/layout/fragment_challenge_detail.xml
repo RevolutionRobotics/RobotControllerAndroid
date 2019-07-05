@@ -57,7 +57,7 @@
                 android:layout_marginEnd="@dimen/dimen_64dp"
                 android:gravity="center_horizontal"
                 android:layout_marginTop="@dimen/dimen_16dp"
-                android:text="@{viewModel.title}"
+                app:formattedText="@{viewModel.title}"
                 app:visible="@{viewModel.type == ChallengeType.VERTICAL}"
                 tools:text="In this challenge, you’ll learn a simple way to use gears to make your wheels rotate faster."/>
 
@@ -96,7 +96,7 @@
                 android:layout_marginStart="@dimen/dimen_16dp"
                 android:layout_marginEnd="@dimen/dimen_16dp"
                 android:layout_marginTop="@dimen/dimen_8dp"
-                android:text="@{viewModel.title}"
+                app:formattedText="@{viewModel.title}"
                 app:visible="@{viewModel.type == ChallengeType.HORIZONTAL}"
                 tools:text="In this challenge, you’ll learn a simple way to use gears to make your wheels rotate faster."/>
 
