@@ -2,11 +2,13 @@ package com.revolution.robotics.features.configure.motor
 
 import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.remote.Motor
+import com.revolution.robotics.features.configure.UserConfigurationStorage
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 
 @Suppress("TooManyFunctions")
 class MotorConfigurationButtonHandler(
-    private val model: MotorConfigurationViewModel
+    private val model: MotorConfigurationViewModel,
+    private val userConfigurationStorage: UserConfigurationStorage
 ) {
     private val chippedConfigDoneEnabled = ChippedBoxConfig.Builder()
         .backgroundColorResource(R.color.grey_28)
@@ -31,6 +33,8 @@ class MotorConfigurationButtonHandler(
         .create()
 
     private var variableName: String? = null
+    private var previousMotorName: String? = null
+    private var previousDrivetrainName: String? = null
 
     fun setVariableName(name: String?) {
         variableName = name
@@ -40,6 +44,7 @@ class MotorConfigurationButtonHandler(
     fun initDrivetrain(motor: Motor) {
         model.apply {
             variableName = motor.variableName
+            previousDrivetrainName = motor.variableName
             clearVisibilitiesAndSelections()
             driveTrainButton.isSelected.set(true)
 
@@ -61,6 +66,7 @@ class MotorConfigurationButtonHandler(
     fun initMotor(motor: Motor) {
         model.apply {
             variableName = motor.variableName
+            previousMotorName = motor.variableName
             clearVisibilitiesAndSelections()
             motorButton.isSelected.set(true)
 
@@ -76,6 +82,13 @@ class MotorConfigurationButtonHandler(
 
     fun onEmptyButtonClicked() {
         model.apply {
+            if (driveTrainButton.isSelected.get()) {
+                previousDrivetrainName = variableName
+            }
+            if (motorButton.isSelected.get()) {
+                previousMotorName = variableName
+            }
+
             editTextModel.value = editTextModel.value?.apply {
                 enabled = false
             }
@@ -86,13 +99,15 @@ class MotorConfigurationButtonHandler(
         }
     }
 
-    fun onDrivetrainButtonClicked(defaultName: String) {
+    fun onDrivetrainButtonClicked() {
         model.apply {
             editTextModel.value = editTextModel.value?.apply {
                 enabled = true
             }
+            if (motorButton.isSelected.get()) {
+                previousMotorName = variableName
+            }
             clearVisibilitiesAndSelections()
-            editTextModel.value?.text = defaultName
             driveTrainButton.isSelected.set(true)
 
             sideLeftButton.isVisible.set(true)
@@ -100,19 +115,21 @@ class MotorConfigurationButtonHandler(
             sideRightButton.isSelected.set(false)
             sideRightButton.isVisible.set(true)
 
+            editTextModel.value?.text = previousDrivetrainName ?: userConfigurationStorage.getDefaultDrivetrainName()
             setDoneButton()
             setTestButton(false)
         }
     }
 
-    fun onMotorClicked(variableName: String?) {
+    fun onMotorClicked() {
         model.apply {
             editTextModel.value = editTextModel.value?.apply {
                 enabled = true
             }
-            variableName?.let {
-                editTextModel.value?.text = it
+            if (driveTrainButton.isSelected.get()) {
+                previousDrivetrainName = variableName
             }
+
             clearVisibilitiesAndSelections()
             motorButton.isSelected.set(true)
 
@@ -120,6 +137,8 @@ class MotorConfigurationButtonHandler(
             motorClockwiseButton.isVisible.set(true)
             motorCounterClockwiseButton.isSelected.set(false)
             motorCounterClockwiseButton.isVisible.set(true)
+
+            editTextModel.value?.text = previousMotorName ?: userConfigurationStorage.getDefaultMotorName()
 
             setDoneButton()
             setTestButton(false)
