@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.pm.PackageManager
 import android.util.SparseArray
 import androidx.core.app.ActivityCompat
+import androidx.core.app.ActivityCompat.shouldShowRequestPermissionRationale
 import androidx.core.content.ContextCompat
 import androidx.core.util.set
 
@@ -23,7 +24,12 @@ class DynamicPermissionHandler {
     fun permissions(permissions: List<String>) =
         PermissionRequest(this, permissions.toMutableList())
 
-    fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray,
+        activity: Activity
+    ) {
         requests[requestCode]?.let { currentRequest ->
             val permissionsDenied = mutableListOf<String>()
             permissions.forEachIndexed { index, permission ->
@@ -35,7 +41,9 @@ class DynamicPermissionHandler {
             if (permissionsDenied.isEmpty()) {
                 currentRequest.listener?.onAllPermissionsGranted()
             } else {
-                currentRequest.listener?.onPermissionDenied(permissionsDenied.toList())
+                currentRequest.listener?.onPermissionDenied(
+                    permissionsDenied.toList(),
+                    permissions.any { !shouldShowRequestPermissionRationale(activity, it) })
             }
         }
     }

@@ -357,5 +357,6 @@
     <string name="error_cannot_open_url">You do not seem to have any browsers installed to open this</string>
     
     <string name="priority_drivetrain_item">Drivetrain</string>
+    <string name="error_disabled_permission">Please enable location permission for the Revolution Robotics app!</string>
 
 </resources>

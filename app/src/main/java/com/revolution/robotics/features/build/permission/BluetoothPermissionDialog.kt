@@ -1,5 +1,6 @@
 package com.revolution.robotics.features.build.permission
 
+import android.widget.Toast
 import com.revolution.robotics.R
 import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.core.utils.dynamicPermissions.BluetoothConnectionFlowHelper
@@ -35,7 +36,11 @@ class BluetoothPermissionDialog : RoboticsDialog(), DynamicPermissionListener {
         dialogEventBus.publish(DialogEvent.PERMISSION_GRANTED)
     }
 
-    override fun onPermissionDenied(deniedPermissions: List<String>) = Unit
+    override fun onPermissionDenied(deniedPermissions: List<String>, showErrorMessage: Boolean) {
+        if (showErrorMessage) {
+            Toast.makeText(requireContext(), R.string.error_disabled_permission, Toast.LENGTH_LONG).show()
+        }
+    }
 
     class PermissionDialogFace : DialogFace<DialogBluetoothPermissionBinding>(R.layout.dialog_bluetooth_permission)
 }
