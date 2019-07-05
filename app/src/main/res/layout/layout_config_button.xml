@@ -30,7 +30,7 @@
                 android:gravity="center_horizontal"
                 android:fontFamily="@font/jura_bold"
                 android:layout_marginTop="4dp"
-                android:textSize="8sp"
+                android:textSize="10sp"
                 android:text="@{viewModel.name}"/>
 
     </LinearLayout>
