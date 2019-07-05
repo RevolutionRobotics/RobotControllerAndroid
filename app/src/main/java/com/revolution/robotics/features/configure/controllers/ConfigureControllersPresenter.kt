@@ -54,6 +54,10 @@ class ConfigureControllersPresenter(
                 itemCount = controllers.size
             }
             view?.onControllersChanged(currentPosition)
+
+            if (itemCount == 0) {
+                onCreateNewClick()
+            }
         }
     }
 
