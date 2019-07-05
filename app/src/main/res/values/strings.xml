@@ -359,5 +359,8 @@
     
     <string name="priority_drivetrain_item">Drive</string>
     <string name="error_disabled_permission">Please enable location permission for the Revolution Robotics app!</string>
+    <string name="dialog_load_program_confirm_button_positive">Open programs</string>
+    <string name="dialog_load_program_confirm_title">Would you like to load another program?</string>
+    <string name="dialog_load_program_confirm_description">All your unsaved changes will be lost</string>
 
 </resources>

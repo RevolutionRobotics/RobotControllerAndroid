@@ -135,6 +135,7 @@ class CodingFragment : BaseFragment<FragmentCodingBinding, CodingViewModel>(R.la
             }
             DialogEvent.PROGRAM_CONFIRM_CLOSE ->
                 navigator.back()
+            DialogEvent.PROGRAM_CONFIRM_LOAD -> showDialog(ProgramsDialog.newInstance())
             else -> Unit
         }
     }
