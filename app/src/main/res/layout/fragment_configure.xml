@@ -72,7 +72,7 @@
                     app:layout_constraintTop_toTopOf="@id/configureScreenNavGuide"
                     app:layout_constraintHorizontal_chainStyle="packed"
                     android:textSize="@dimen/configure_button_text_size"
-                    android:text="@string/configure_controller_tab_title"
+                    app:customTextRes="@{viewModel.controllerTabText}"
                     android:onClick="@{()->viewModel.onControllerSelected()}"
                     android:textAllCaps="false"
                     android:paddingTop="@dimen/configure_button_vertical_padding"

@@ -1,6 +1,8 @@
 package com.revolution.robotics.features.configure.controllers
 
 import com.revolution.robotics.core.domain.local.BuildStatus
+import com.revolution.robotics.core.eventBus.dialog.DialogEvent
+import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
 import com.revolution.robotics.core.extensions.formatYearMonthDay
 import com.revolution.robotics.core.extensions.isEmptyOrNull
 import com.revolution.robotics.core.interactor.GetUserControllerInteractor
@@ -20,7 +22,8 @@ class ConfigureControllersPresenter(
     private val controllersInteractor: GetUserControllersInteractor,
     private val userControllerInteractor: GetUserControllerInteractor,
     private val userConfigurationStorage: UserConfigurationStorage,
-    private val deleteControllerInteractor: RemoveUserControllerInteractor
+    private val deleteControllerInteractor: RemoveUserControllerInteractor,
+    private val dialogEventBus: DialogEventBus
 ) : ConfigureControllersMvp.Presenter {
 
     override var view: ConfigureControllersMvp.View? = null
@@ -141,7 +144,9 @@ class ConfigureControllersPresenter(
             if (userConfiguration?.controller == controllerId) {
                 userConfiguration?.controller = null
                 robot?.buildStatus = BuildStatus.INVALID_CONFIGURATION
-                updateRobot()
+                updateRobot {
+                    dialogEventBus.publish(DialogEvent.DEFAULT_CONTROLLER_CHANGED)
+                }
             }
         }
 
@@ -203,6 +208,8 @@ class ConfigureControllersPresenter(
         model?.controllersList?.get()?.forEach {
             it.isCurrentlyActive.set(it == item)
         }
-        userConfigurationStorage.changeController(item.userController.id)
+        userConfigurationStorage.changeController(item.userController.id) {
+            dialogEventBus.publish(DialogEvent.DEFAULT_CONTROLLER_CHANGED)
+        }
     }
 }

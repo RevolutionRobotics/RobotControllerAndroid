@@ -43,6 +43,15 @@ fun setRobotsViewPagerItems(viewPager: ViewPager, itemList: List<Any>?) {
     }
 }
 
+@BindingAdapter("customTextRes")
+fun setText(textView: TextView, textResource: Int?) {
+    if (textResource == null || textResource == 0) {
+        textView.text = ""
+    } else {
+        textView.setText(textResource)
+    }
+}
+
 @BindingAdapter("textColorResource")
 fun setTextColor(textView: TextView, @ColorRes color: Int) {
     if (color != 0) {

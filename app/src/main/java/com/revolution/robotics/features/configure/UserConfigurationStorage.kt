@@ -30,12 +30,14 @@ class UserConfigurationStorage(
 
     fun isUsedVariableName(name: String, portName: String): Boolean = collectVariableNames(portName).contains(name)
 
-    fun updateRobot() {
+    fun updateRobot(finished: (() -> Unit)? = null) {
         userConfiguration?.let { config ->
             robot?.let { robot ->
                 updateUserRobotInteractor.userConfiguration = config
                 updateUserRobotInteractor.userRobot = robot
-                updateUserRobotInteractor.execute()
+                updateUserRobotInteractor.execute(onResponse = {
+                    finished?.invoke()
+                }, onError = { finished?.invoke() })
             }
         }
     }
@@ -84,9 +86,9 @@ class UserConfigurationStorage(
         updateRobot()
     }
 
-    fun changeController(controllerId: Int) {
+    fun changeController(controllerId: Int, finished: (() -> Unit)? = null) {
         userConfiguration?.controller = controllerId
-        updateRobot()
+        updateRobot(finished)
     }
 
     fun addButtonProgram(userProgram: UserProgram, buttonName: ControllerButton) {
@@ -199,27 +201,31 @@ class UserConfigurationStorage(
         updateRobot()
     }
 
-    fun setControllerName(name: String, description: String) {
+    fun setControllerName(name: String, description: String, finished: () -> Unit) {
         controllerHolder?.userController?.name = name
         controllerHolder?.userController?.description = description
-        updateUserController()
+        updateUserController(finished)
     }
 
-    private fun updateUserController() {
+    private fun updateUserController(finished: (() -> Unit)? = null) {
         controllerHolder?.userController?.let { userController ->
             saveUserControllerInteractor.userController = userController
             saveUserControllerInteractor.backgroundProgramBindings = controllerHolder?.backgroundBindings ?: emptyList()
             userController.robotId = robot?.instanceId ?: 0
-            saveUserControllerInteractor.execute { controller ->
+            saveUserControllerInteractor.execute(onResponse = { controller ->
                 if (userConfiguration?.controller == null || userConfiguration?.controller == -1) {
                     userConfiguration?.controller = controller.id
                     val hasAssignedPort = !userConfiguration?.mappingId?.getVariables()?.firstOrNull().isNullOrEmpty()
                     if (hasAssignedPort) {
                         robot?.buildStatus = BuildStatus.COMPLETED
-                        updateRobot()
+                        updateRobot(finished)
                     }
+                } else {
+                    finished?.invoke()
                 }
-            }
+            }, onError = {
+                finished?.invoke()
+            })
         }
     }
 

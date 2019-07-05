@@ -29,7 +29,8 @@ enum class DialogEvent {
     ROBOT_CREATED,
     ROBOT_CREATE_ERROR,
     PROGRAM_CONFIRM_CLOSE,
-    ROBOT_IMAGE_CHANGED;
+    ROBOT_IMAGE_CHANGED,
+    DEFAULT_CONTROLLER_CHANGED;
 
     val extras = Bundle()
 }

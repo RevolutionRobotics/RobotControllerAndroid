@@ -6,7 +6,6 @@ import com.revolution.robotics.core.domain.local.UserProgram
 import com.revolution.robotics.core.domain.local.UserProgramBinding
 import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
-import com.revolution.robotics.core.interactor.SaveUserControllerInteractor
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.features.configure.UserConfigurationStorage
@@ -17,7 +16,6 @@ import java.util.Collections
 
 class ProgramPriorityPresenter(
     private val userConfigurationStorage: UserConfigurationStorage,
-    private val saveUserControllerInteractor: SaveUserControllerInteractor,
     private val dialogEventBus: DialogEventBus,
     private val resourceResolver: ResourceResolver,
     private val navigator: Navigator
@@ -75,15 +73,13 @@ class ProgramPriorityPresenter(
                 userConfigurationStorage.controllerHolder?.userController?.joystickPriority = item.position
             }
         }
-        userConfigurationStorage.controllerHolder?.backgroundBindings?.let {
-            saveUserControllerInteractor.backgroundProgramBindings = it
-        }
         userConfigurationStorage.setControllerName(
             name,
             description
-        )
-        userConfigurationStorage.controllerHolder = null
-        navigator.popUntil(R.id.configureFragment)
+        ) {
+            userConfigurationStorage.controllerHolder = null
+            navigator.popUntil(R.id.configureFragment)
+        }
     }
 
     override fun onItemMoved(from: Int, to: Int) {
