@@ -13,7 +13,7 @@ interface ConfigureControllersMvp : Mvp {
         fun showDeleteControllerDialog(controllerId: Int)
     }
 
-    @Suppress("ComplexInterface")
+    @Suppress("ComplexInterface", "TooManyFunctions")
     interface Presenter : Mvp.Presenter<View, ConfigureControllersViewModel> {
         fun clearEmptyNavigationFlag()
         fun loadControllers(robotId: Int)
