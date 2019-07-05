@@ -2,13 +2,11 @@ package com.revolution.robotics.features.configure.motor
 
 import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.remote.Motor
-import com.revolution.robotics.features.configure.UserConfigurationStorage
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 
 @Suppress("TooManyFunctions")
 class MotorConfigurationButtonHandler(
-    private val model: MotorConfigurationViewModel,
-    private val userConfigurationStorage: UserConfigurationStorage
+    private val model: MotorConfigurationViewModel
 ) {
     private val chippedConfigDoneEnabled = ChippedBoxConfig.Builder()
         .backgroundColorResource(R.color.grey_28)
@@ -35,13 +33,15 @@ class MotorConfigurationButtonHandler(
     private var variableName: String? = null
     private var previousMotorName: String? = null
     private var previousDrivetrainName: String? = null
+    private var portNumber = 0
 
     fun setVariableName(name: String?) {
         variableName = name
         setDoneButton()
     }
 
-    fun initDrivetrain(motor: Motor) {
+    fun initDrivetrain(motor: Motor, portNumber: Int) {
+        this.portNumber = portNumber
         model.apply {
             variableName = motor.variableName
             previousDrivetrainName = motor.variableName
@@ -63,7 +63,8 @@ class MotorConfigurationButtonHandler(
         }
     }
 
-    fun initMotor(motor: Motor) {
+    fun initMotor(motor: Motor, portNumber: Int) {
+        this.portNumber = portNumber
         model.apply {
             variableName = motor.variableName
             previousMotorName = motor.variableName
@@ -78,6 +79,11 @@ class MotorConfigurationButtonHandler(
             setDoneButton()
             setTestButton(true)
         }
+    }
+
+    fun initEmptyState(portNumber: Int) {
+        this.portNumber = portNumber
+        onEmptyButtonClicked()
     }
 
     fun onEmptyButtonClicked() {
@@ -115,7 +121,7 @@ class MotorConfigurationButtonHandler(
             sideRightButton.isSelected.set(false)
             sideRightButton.isVisible.set(true)
 
-            editTextModel.value?.text = previousDrivetrainName ?: userConfigurationStorage.getDefaultDrivetrainName()
+            editTextModel.value?.text = previousDrivetrainName ?: "drive$portNumber"
             setDoneButton()
             setTestButton(false)
         }
@@ -138,7 +144,7 @@ class MotorConfigurationButtonHandler(
             motorCounterClockwiseButton.isSelected.set(false)
             motorCounterClockwiseButton.isVisible.set(true)
 
-            editTextModel.value?.text = previousMotorName ?: userConfigurationStorage.getDefaultMotorName()
+            editTextModel.value?.text = previousMotorName ?: "motor$portNumber"
 
             setDoneButton()
             setTestButton(false)

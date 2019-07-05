@@ -114,8 +114,9 @@
     <string name="build_robot_finished_button">Let\'s drive</string>
 
     <!-- Configure -->
-    <string name="configure_connection_tab_title">Connections</string>
-    <string name="configure_controller_tab_title">Controllers</string>
+    <string name="configure_connection_tab_title">Configure</string>
+    <string name="configure_controller_tab_title">Controller</string>
+    <string name="configure_controller_tab_title_without_controller">Controller ⚠️</string>
 
     <!-- Configure Connections -->
     <string name="configure_connections_missing_part_name" translatable="false">MS</string>
@@ -131,7 +132,7 @@
     <string name="configure_connections_button_S4" translatable="false">S4</string>
 
     <!-- Configure Controllers -->
-    <string name="controller_selected">Selected</string>
+    <string name="controller_selected">Play</string>
     <string name="controller_choose_this">Choose this!</string>
     <string name="controller_create_new">create new</string>
     <string name="delete_controller_description">Are you sure you want to delete this controller?</string>
@@ -147,7 +148,7 @@
     <!--- Configuration Slider Motor-->
     <string name="configure_motor_name_inputfield_title">Name</string>
     <string name="configure_motor_empty_button_title">Empty</string>
-    <string name="configure_motor_drivetrain_button_title">Drivetrain</string>
+    <string name="configure_motor_drivetrain_button_title">Drive</string>
     <string name="configure_motor_motor_button_title">Motor</string>
     <string name="configure_motor_left_button_title">Left</string>
     <string name="configure_motor_right_button_title">Right</string>
@@ -155,7 +156,7 @@
     <string name="configure_motor_clockwise_button_title">Clockwise</string>
     <string name="configure_motor_done_button_title">Done</string>
     <string name="configure_sensor_bumper_button_title">Bumper</string>
-    <string name="configure_sensor_ultrasound_button_title">Ultrasonic</string>
+    <string name="configure_sensor_ultrasound_button_title">Distance</string>
     <string name="configure_motor_test_button_title">Test</string>
 
     <!-- Controller Type Selector -->
@@ -356,6 +357,10 @@
     <string name="error_program_already_in_use">Program name is already in use.</string>
     <string name="error_cannot_open_url">You do not seem to have any browsers installed to open this</string>
     
-    <string name="priority_drivetrain_item">Drivetrain</string>
+    <string name="priority_drivetrain_item">Drive</string>
+    <string name="error_disabled_permission">Please enable location permission for the Revolution Robotics app!</string>
+    <string name="dialog_load_program_confirm_button_positive">Open programs</string>
+    <string name="dialog_load_program_confirm_title">Would you like to load another program?</string>
+    <string name="dialog_load_program_confirm_description">All your unsaved changes will be lost</string>
 
 </resources>

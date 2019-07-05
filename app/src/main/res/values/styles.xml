@@ -35,7 +35,7 @@
         <item name="android:textColorHint">@color/grey_8e</item>
         <item name="android:textCursorDrawable">@null</item>
         <item name="android:fontFamily">font/barlow_medium</item>
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">16sp</item>
     </style>
 
     <style name="ProgramButtonLabel">

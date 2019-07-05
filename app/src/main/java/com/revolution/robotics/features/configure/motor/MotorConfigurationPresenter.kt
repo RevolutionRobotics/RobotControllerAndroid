@@ -34,7 +34,7 @@ class MotorConfigurationPresenter(
         super.register(view, model)
 
         model?.let {
-            buttonHandler = MotorConfigurationButtonHandler(it, userConfigurationStorage)
+            buttonHandler = MotorConfigurationButtonHandler(it)
         }
     }
 
@@ -56,10 +56,11 @@ class MotorConfigurationPresenter(
             digits = UserConfigurationStorage.ALLOWED_DIGITS_REGEXP
         )
 
+        val portNumber = portName.substring(1, 2).toInt()
         when (motor.type) {
-            Motor.TYPE_MOTOR -> buttonHandler?.initMotor(motor)
-            Motor.TYPE_DRIVETRAIN -> buttonHandler?.initDrivetrain(motor)
-            else -> buttonHandler?.onEmptyButtonClicked()
+            Motor.TYPE_MOTOR -> buttonHandler?.initMotor(motor, portNumber)
+            Motor.TYPE_DRIVETRAIN -> buttonHandler?.initDrivetrain(motor, portNumber)
+            else -> buttonHandler?.initEmptyState(portNumber)
         }
     }
 

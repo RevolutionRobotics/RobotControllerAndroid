@@ -8,7 +8,6 @@ import com.revolution.robotics.core.domain.local.UserMapping
 import com.revolution.robotics.core.domain.local.UserProgram
 import com.revolution.robotics.core.domain.local.UserProgramBinding
 import com.revolution.robotics.core.domain.local.UserRobot
-import com.revolution.robotics.core.domain.remote.Motor
 import com.revolution.robotics.core.domain.remote.Sensor
 import com.revolution.robotics.core.interactor.SaveUserControllerInteractor
 import com.revolution.robotics.core.interactor.UpdateUserRobotInteractor
@@ -31,40 +30,16 @@ class UserConfigurationStorage(
 
     fun isUsedVariableName(name: String, portName: String): Boolean = collectVariableNames(portName).contains(name)
 
-    fun updateRobot() {
+    fun updateRobot(finished: (() -> Unit)? = null) {
         userConfiguration?.let { config ->
             robot?.let { robot ->
                 updateUserRobotInteractor.userConfiguration = config
                 updateUserRobotInteractor.userRobot = robot
-                updateUserRobotInteractor.execute()
+                updateUserRobotInteractor.execute(onResponse = {
+                    finished?.invoke()
+                }, onError = { finished?.invoke() })
             }
         }
-    }
-
-    fun getDefaultDrivetrainName(): String {
-        var count = 0
-        userConfiguration?.mappingId?.let { mapping ->
-            if (mapping.M1?.type == Motor.TYPE_DRIVETRAIN) count++
-            if (mapping.M2?.type == Motor.TYPE_DRIVETRAIN) count++
-            if (mapping.M3?.type == Motor.TYPE_DRIVETRAIN) count++
-            if (mapping.M4?.type == Motor.TYPE_DRIVETRAIN) count++
-            if (mapping.M5?.type == Motor.TYPE_DRIVETRAIN) count++
-            if (mapping.M6?.type == Motor.TYPE_DRIVETRAIN) count++
-        }
-        return "drivetrain${count + 1}"
-    }
-
-    fun getDefaultMotorName(): String {
-        var count = 0
-        userConfiguration?.mappingId?.let { mapping ->
-            if (mapping.M1?.type == Motor.TYPE_MOTOR) count++
-            if (mapping.M2?.type == Motor.TYPE_MOTOR) count++
-            if (mapping.M3?.type == Motor.TYPE_MOTOR) count++
-            if (mapping.M4?.type == Motor.TYPE_MOTOR) count++
-            if (mapping.M5?.type == Motor.TYPE_MOTOR) count++
-            if (mapping.M6?.type == Motor.TYPE_MOTOR) count++
-        }
-        return "motor${count + 1}"
     }
 
     fun getDefaultUltrasonicName(): String {
@@ -75,7 +50,11 @@ class UserConfigurationStorage(
             if (mapping.S3?.type == Sensor.TYPE_ULTRASONIC) count++
             if (mapping.S4?.type == Sensor.TYPE_ULTRASONIC) count++
         }
-        return "ultrasonic${count + 1}"
+        return if (count == 0) {
+            "distance"
+        } else {
+            "distance${count + 1}"
+        }
     }
 
     fun getDefaultBumperName(): String {
@@ -86,7 +65,11 @@ class UserConfigurationStorage(
             if (mapping.S3?.type == Sensor.TYPE_BUMPER) count++
             if (mapping.S4?.type == Sensor.TYPE_BUMPER) count++
         }
-        return "bumper${count + 1}"
+        return if (count == 0) {
+            "bumper"
+        } else {
+            "bumper${count + 1}"
+        }
     }
 
     fun updateSensorPort(sensorPort: SensorPort) {
@@ -103,9 +86,9 @@ class UserConfigurationStorage(
         updateRobot()
     }
 
-    fun changeController(controllerId: Int) {
+    fun changeController(controllerId: Int, finished: (() -> Unit)? = null) {
         userConfiguration?.controller = controllerId
-        updateRobot()
+        updateRobot(finished)
     }
 
     fun addButtonProgram(userProgram: UserProgram, buttonName: ControllerButton) {
@@ -218,27 +201,31 @@ class UserConfigurationStorage(
         updateRobot()
     }
 
-    fun setControllerName(name: String, description: String) {
+    fun setControllerName(name: String, description: String, finished: () -> Unit) {
         controllerHolder?.userController?.name = name
         controllerHolder?.userController?.description = description
-        updateUserController()
+        updateUserController(finished)
     }
 
-    private fun updateUserController() {
+    private fun updateUserController(finished: (() -> Unit)? = null) {
         controllerHolder?.userController?.let { userController ->
             saveUserControllerInteractor.userController = userController
             saveUserControllerInteractor.backgroundProgramBindings = controllerHolder?.backgroundBindings ?: emptyList()
             userController.robotId = robot?.instanceId ?: 0
-            saveUserControllerInteractor.execute { controller ->
+            saveUserControllerInteractor.execute(onResponse = { controller ->
                 if (userConfiguration?.controller == null || userConfiguration?.controller == -1) {
                     userConfiguration?.controller = controller.id
                     val hasAssignedPort = !userConfiguration?.mappingId?.getVariables()?.firstOrNull().isNullOrEmpty()
                     if (hasAssignedPort) {
                         robot?.buildStatus = BuildStatus.COMPLETED
-                        updateRobot()
+                        updateRobot(finished)
                     }
+                } else {
+                    finished?.invoke()
                 }
-            }
+            }, onError = {
+                finished?.invoke()
+            })
         }
     }
 

@@ -60,6 +60,7 @@ class ConfigurePresenter(
     }
 
     private fun onConfigurationLoaded(config: UserConfiguration?) {
+        setControllersTabName(config?.controller)
         userConfigurationStorage.userConfiguration = config
         config?.apply {
             if (selectedConfigId != config.id) {
@@ -89,6 +90,16 @@ class ConfigurePresenter(
                 event.extras.getString(SaveRobotDialog.KEY_DESCRIPTION) ?: ""
             )
             toolbarViewModel?.title?.set(event.extras.getString(SaveRobotDialog.KEY_NAME) ?: "")
+        } else if (event == DialogEvent.DEFAULT_CONTROLLER_CHANGED) {
+            setControllersTabName(userConfigurationStorage.userConfiguration?.controller)
+        }
+    }
+
+    private fun setControllersTabName(controller: Int?) {
+        if (controller == null) {
+            model?.controllerTabText?.value = R.string.configure_controller_tab_title_without_controller
+        } else {
+            model?.controllerTabText?.value = R.string.configure_controller_tab_title
         }
     }
 

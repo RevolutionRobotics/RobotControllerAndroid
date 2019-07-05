@@ -129,6 +129,12 @@
                 app:destination="@id/setupGamerFragment"/>
         <action android:id="@+id/toSetupMultitasker"
                 app:destination="@id/setupMultitaskerFragment"/>
+        <action android:id="@+id/toPlayMultitasker"
+                app:destination="@id/playMultitaskerFragment"/>
+        <action android:id="@+id/toPlayDriver"
+                app:destination="@id/playDriverFragment"/>
+        <action android:id="@+id/toPlayGamer"
+                app:destination="@id/playGamerFragment"/>
     </fragment>
 
     <!-- Controller setup -->

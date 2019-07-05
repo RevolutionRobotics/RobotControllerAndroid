@@ -40,7 +40,13 @@ class CodingPresenter(
     }
 
     override fun showProgramsDialog() {
-        view?.showDialog(ProgramsDialog.newInstance())
+        isProgramChanged { changed ->
+            if (changed) {
+                view?.showDialog(LoadProgramConfirmDialog.newInstance())
+            } else {
+                view?.showDialog(ProgramsDialog.newInstance())
+            }
+        }
     }
 
     override fun showSaveProgramDialog(userProgram: UserProgram?) {
@@ -114,10 +120,10 @@ class CodingPresenter(
         }
     }
 
-    override fun onBackPressed() {
+    private fun isProgramChanged(callback: (changed: Boolean) -> Unit) {
         view?.getDataFromBlocklyView(object : SaveBlocklyListener {
             override fun onXMLProgramSaved(file: String) {
-                view?.onBackPressed(
+                callback.invoke(
                     String(
                         Base64.encode(
                             file.toByteArray(),
@@ -131,5 +137,9 @@ class CodingPresenter(
 
             override fun onVariablesExported(variables: String) = Unit
         })
+    }
+
+    override fun onBackPressed() {
+        isProgramChanged { view?.onBackPressed(it) }
     }
 }

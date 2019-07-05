@@ -26,7 +26,9 @@ class ControllersItem(
 
     fun onSelectClicked() {
         if (isSelected.get()) {
-            if (!isCurrentlyActive.get()) {
+            if (isCurrentlyActive.get()) {
+                presenter.play(this)
+            } else {
                 presenter.onItemSelectionChanged(this)
             }
         } else {

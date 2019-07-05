@@ -12,8 +12,9 @@ interface MyRobotsMvp : Mvp {
         fun showDialog(baseDialog: BaseDialog)
     }
 
-    @Suppress("ComplexInterface")
+    @Suppress("ComplexInterface", "TooManyFunctions")
     interface Presenter : Mvp.Presenter<View, MyRobotsViewModel> {
+        fun clearEmptyNavigationFlag()
         fun onPageSelected(position: Int)
         fun nextButtonClick()
         fun previousButtonClick()
