@@ -34,7 +34,7 @@ class MotorConfigurationPresenter(
         super.register(view, model)
 
         model?.let {
-            buttonHandler = MotorConfigurationButtonHandler(it, userConfigurationStorage)
+            buttonHandler = MotorConfigurationButtonHandler(it)
         }
     }
 
