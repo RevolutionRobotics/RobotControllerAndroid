@@ -8,27 +8,38 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="@dimen/size_challenge_part"
+            android:layout_width="match_parent"
             android:layout_height="@dimen/size_challenge_part"
             android:layout_marginStart="@dimen/dimen_16dp"
             android:layout_marginEnd="@dimen/dimen_16dp"
-            android:layout_marginBottom="@dimen/dimen_32dp"
-            android:background="@drawable/bg_challenge_part">
+            android:layout_marginBottom="@dimen/dimen_32dp">
+
+        <View
+                android:id="@+id/img_bg"
+                android:layout_width="@dimen/size_challenge_part"
+                android:layout_height="@dimen/size_challenge_part"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:background="@drawable/bg_challenge_part"/>
 
         <ImageView
                 android:id="@+id/img_part"
                 android:layout_width="@dimen/dimen_16dp"
                 android:layout_height="@dimen/dimen_16dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/img_bg"
+                app:layout_constraintEnd_toEndOf="@id/img_bg"
                 app:layout_constraintTop_toTopOf="parent"
                 app:firebaseImageUrl="@{viewModel.part.image}"
                 tools:src="@drawable/ic_check"
                 android:layout_marginTop="@dimen/dimen_16dp"/>
 
         <TextView
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@id/img_bg"
+                app:layout_constraintEnd_toEndOf="@id/img_bg"
                 android:layout_marginStart="@dimen/dimen_10dp"
                 tools:text="1x brain (powered on)"
                 android:textSize="10sp"

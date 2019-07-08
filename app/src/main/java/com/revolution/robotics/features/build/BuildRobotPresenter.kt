@@ -82,6 +82,7 @@ class BuildRobotPresenter(
             saveUserRobotInteractor.userRobot = userRobot
             saveUserRobotInteractor.execute { savedRobot ->
                 this.userRobot = savedRobot
+                view?.goBack()
             }
         }
     }

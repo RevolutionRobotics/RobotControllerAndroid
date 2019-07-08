@@ -1,9 +1,9 @@
 package com.revolution.robotics.features.play
 
 import com.revolution.robotics.views.toolbar.ToolbarOption
-import com.revolution.robotics.views.toolbar.ToolbarViewModel
+import com.revolution.robotics.views.toolbar.RoboticsBluetoothToolbarViewModel
 
-class PlayToolbarViewModel : ToolbarViewModel() {
+class PlayToolbarViewModel : RoboticsBluetoothToolbarViewModel() {
 
     override val isLogoVisible = false
     override val hasBackOption = true

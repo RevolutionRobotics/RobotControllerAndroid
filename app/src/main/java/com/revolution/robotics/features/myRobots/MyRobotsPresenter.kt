@@ -26,6 +26,8 @@ class MyRobotsPresenter(
     override var view: MyRobotsMvp.View? = null
     override var model: MyRobotsViewModel? = null
 
+    private var isEmptyNavigationHappened = false
+
     override fun register(view: MyRobotsMvp.View, model: MyRobotsViewModel?) {
         super.register(view, model)
         loadRobots()
@@ -46,7 +48,16 @@ class MyRobotsPresenter(
                 )
             }.toMutableList())
             view?.onRobotsChanged()
+
+            if (model?.robotsList?.get()?.isEmpty() == true && !isEmptyNavigationHappened) {
+                isEmptyNavigationHappened = true
+                navigateToWhoToBuild()
+            }
         }
+    }
+
+    override fun clearEmptyNavigationFlag() {
+        isEmptyNavigationHappened = false
     }
 
     override fun onPageSelected(position: Int) {
@@ -115,12 +126,12 @@ class MyRobotsPresenter(
 
     override fun onMoreInfoClicked(userRobot: UserRobot) {
         view?.showDialog(
-            if (userRobot.buildStatus == BuildStatus.INVALID_CONFIGURATION ||
-                userRobot.buildStatus == BuildStatus.COMPLETED
+            if (userRobot.buildStatus == BuildStatus.COMPLETED ||
+                userRobot.buildStatus == BuildStatus.INVALID_CONFIGURATION
             ) {
                 InfoRobotDialog.Edit.newInstance(userRobot)
             } else {
-                InfoRobotDialog.Normal.newInstance(userRobot)
+                InfoRobotDialog.InProgress.newInstance(userRobot)
             }
         )
     }
@@ -155,5 +166,14 @@ class MyRobotsPresenter(
         }
         model?.currentPosition?.set(0)
         view?.onRobotsChanged()
+    }
+
+    override fun onDisabledItemClicked(userRobot: UserRobot) {
+        val index = model?.robotsList?.get()?.indexOfFirst { it.robot == userRobot } ?: 0
+        if (index < model?.currentPosition?.get() ?: 0) {
+            view?.showPreviousRobot()
+        } else {
+            view?.showNextRobot()
+        }
     }
 }

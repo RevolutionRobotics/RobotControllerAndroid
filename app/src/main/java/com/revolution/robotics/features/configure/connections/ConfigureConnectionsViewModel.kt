@@ -15,4 +15,7 @@ class ConfigureConnectionsViewModel : ViewModel() {
     var partS2: MutableLiveData<RobotPartModel> = MutableLiveData()
     var partS3: MutableLiveData<RobotPartModel> = MutableLiveData()
     var partS4: MutableLiveData<RobotPartModel> = MutableLiveData()
+
+    var robotId: MutableLiveData<Int> = MutableLiveData()
+    var firebaseImageUrl: MutableLiveData<String?> = MutableLiveData()
 }

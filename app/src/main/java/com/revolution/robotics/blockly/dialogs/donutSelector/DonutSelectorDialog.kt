@@ -9,7 +9,7 @@ import com.revolution.robotics.core.utils.BundleArgumentDelegate
 import com.revolution.robotics.databinding.BlocklyDialogDonutSelectorBinding
 import com.revolution.robotics.views.DonutSelectorView
 import org.kodein.di.erased.instance
-import org.revolution.blockly.view.result.DonutResult
+import org.revolutionrobotics.robotcontroller.blocklysdk.view.result.DonutResult
 
 class DonutSelectorDialog :
     JavascriptPromptDialog<BlocklyDialogDonutSelectorBinding>(R.layout.blockly_dialog_donut_selector),

@@ -28,6 +28,9 @@ class SensorConfigurationPresenter(
     private var sensor: Sensor? = null
     private var variableName: String? = null
 
+    private var previousUltrasonicName: String? = null
+    private var previousBumperName: String? = null
+
     private val chippedConfigDoneEnabled = ChippedBoxConfig.Builder()
         .backgroundColorResource(R.color.grey_28)
         .borderColorResource(R.color.white)
@@ -53,6 +56,8 @@ class SensorConfigurationPresenter(
     override fun setSensor(sensor: Sensor, portName: String) {
         this.portName = portName
         this.sensor = sensor
+        previousUltrasonicName = null
+        previousBumperName = null
 
         model?.apply {
             editTextModel.value = ChippedEditTextViewModel(
@@ -92,6 +97,15 @@ class SensorConfigurationPresenter(
             editTextModel.value = editTextModel.value?.apply {
                 enabled = false
             }
+
+            if (bumperButton.isSelected.get()) {
+                previousBumperName = variableName
+            }
+
+            if (ultrasoundButton.isSelected.get()) {
+                previousUltrasonicName = variableName
+            }
+
             bumperButton.isSelected.set(false)
             ultrasoundButton.isSelected.set(false)
             emptyButton.isSelected.set(true)
@@ -105,11 +119,16 @@ class SensorConfigurationPresenter(
             editTextModel.value = editTextModel.value?.apply {
                 enabled = true
             }
+            if (ultrasoundButton.isSelected.get()) {
+                previousUltrasonicName = variableName
+            }
             bumperButton.isSelected.set(true)
             ultrasoundButton.isSelected.set(false)
             emptyButton.isSelected.set(false)
             setTestButton(true)
-            onVariableNameChanged(this@SensorConfigurationPresenter.variableName)
+            val newVariableName = previousBumperName ?: userConfigurationStorage.getDefaultBumperName()
+            editTextModel.value?.text = newVariableName
+            onVariableNameChanged(newVariableName)
         }
     }
 
@@ -118,11 +137,16 @@ class SensorConfigurationPresenter(
             editTextModel.value = editTextModel.value?.apply {
                 enabled = true
             }
+            if (bumperButton.isSelected.get()) {
+                previousBumperName = variableName
+            }
             bumperButton.isSelected.set(false)
             ultrasoundButton.isSelected.set(true)
             emptyButton.isSelected.set(false)
             setTestButton(true)
-            onVariableNameChanged(this@SensorConfigurationPresenter.variableName)
+            val newVariableName = previousUltrasonicName ?: userConfigurationStorage.getDefaultUltrasonicName()
+            editTextModel.value?.text = newVariableName
+            onVariableNameChanged(newVariableName)
         }
     }
 
@@ -173,13 +197,13 @@ class SensorConfigurationPresenter(
                     else -> null
                 }
 
-                    if (model?.emptyButton?.isSelected?.get() == true) {
-                        variableName = null
-                        configurationEventBus.publishSensorUpdateEvent(SensorPort(null, portName))
-                    } else {
-                        variableName = this@SensorConfigurationPresenter.variableName
-                        configurationEventBus.publishSensorUpdateEvent(SensorPort(this, portName))
-                    }
+                if (model?.emptyButton?.isSelected?.get() == true) {
+                    variableName = null
+                    configurationEventBus.publishSensorUpdateEvent(SensorPort(null, portName))
+                } else {
+                    variableName = this@SensorConfigurationPresenter.variableName
+                    configurationEventBus.publishSensorUpdateEvent(SensorPort(this, portName))
+                }
             }
         }
     }

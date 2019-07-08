@@ -173,16 +173,16 @@ fun createInteractorModule() =
 fun createPresenterModule() =
     Kodein.Module("PresenterModule") {
         bind<MainMenuMvp.Presenter>() with s { MainMenuPresenter(i(), i(), i()) }
-        bind<WhoToBuildMvp.Presenter>() with s { WhoToBuildPresenter(i(), i(), i(), i(), i()) }
+        bind<WhoToBuildMvp.Presenter>() with s { WhoToBuildPresenter(i(), i(), i(), i()) }
         bind<MyRobotsMvp.Presenter>() with s { MyRobotsPresenter(i(), i(), i(), i(), i()) }
         bind<BuildRobotMvp.Presenter>() with s { BuildRobotPresenter(i(), i(), i(), i(), i(), i(), i(), i(), i(), i()) }
         bind<ConnectMvp.Presenter>() with s { ConnectPresenter(i(), i()) }
         bind<ConfigureMvp.Presenter>() with s { ConfigurePresenter(i(), i(), i(), i(), i()) }
-        bind<ConfigureConnectionsMvp.Presenter>() with s { ConfigureConnectionsPresenter(i(), i(), i()) }
+        bind<ConfigureConnectionsMvp.Presenter>() with s { ConfigureConnectionsPresenter(i(), i(), i(), i()) }
         bind<MotorConfigurationMvp.Presenter>() with s { MotorConfigurationPresenter(i(), i(), i(), i(), i()) }
         bind<SensorConfigurationMvp.Presenter>() with s { SensorConfigurationPresenter(i(), i(), i(), i(), i()) }
         bind<BuildFinishedMvp.Presenter>() with s { BuildFinishedPresenter(i(), i()) }
-        bind<ConfigureControllersMvp.Presenter>() with s { ConfigureControllersPresenter(i(), i(), i(), i(), i()) }
+        bind<ConfigureControllersMvp.Presenter>() with s { ConfigureControllersPresenter(i(), i(), i(), i(), i(), i()) }
         bind<SettingsMvp.Presenter>() with s { SettingsPresenter(i(), i()) }
         bind<AboutMvp.Presenter>() with s { AboutPresenter(i(), i()) }
         bind<FirmwareMvp.Presenter>() with s { FirmwareUpdatePresenter(i(), i()) }

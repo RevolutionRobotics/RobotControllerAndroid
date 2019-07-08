@@ -6,7 +6,7 @@ import com.revolution.robotics.R
 import com.revolution.robotics.blockly.dialogs.BlocklyDialogInterface
 import com.revolution.robotics.blockly.utils.BlocklyResultHolder
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
-import org.revolution.blockly.view.result.DialpadResult
+import org.revolutionrobotics.robotcontroller.blocklysdk.view.result.DialpadResult
 
 class DialpadViewModel(
     private val blocklyResultHolder: BlocklyResultHolder,
@@ -55,7 +55,8 @@ class DialpadViewModel(
     }
 
     fun onOkClicked() {
-        (blocklyResultHolder.result as? DialpadResult)?.confirm(result.get()?.toDouble() ?: 0.0)
+        val doubleResult = if (result.get().isNullOrEmpty()) 0.0 else result.get()?.toDouble() ?: 0.0
+        (blocklyResultHolder.result as? DialpadResult)?.confirm(doubleResult)
         dialogInterface.dismissAllowingStateLoss()
     }
 

@@ -1,6 +1,8 @@
 package com.revolution.robotics.features.configure.controllers
 
 import com.revolution.robotics.core.domain.local.BuildStatus
+import com.revolution.robotics.core.eventBus.dialog.DialogEvent
+import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
 import com.revolution.robotics.core.extensions.formatYearMonthDay
 import com.revolution.robotics.core.extensions.isEmptyOrNull
 import com.revolution.robotics.core.interactor.GetUserControllerInteractor
@@ -20,7 +22,8 @@ class ConfigureControllersPresenter(
     private val controllersInteractor: GetUserControllersInteractor,
     private val userControllerInteractor: GetUserControllerInteractor,
     private val userConfigurationStorage: UserConfigurationStorage,
-    private val deleteControllerInteractor: RemoveUserControllerInteractor
+    private val deleteControllerInteractor: RemoveUserControllerInteractor,
+    private val dialogEventBus: DialogEventBus
 ) : ConfigureControllersMvp.Presenter {
 
     override var view: ConfigureControllersMvp.View? = null
@@ -29,6 +32,8 @@ class ConfigureControllersPresenter(
     var currentPosition = 0
     var currentRobotId = 0
     var itemCount = 0
+
+    private var isEmptyNavigationHappened = false
 
     override fun loadControllers(robotId: Int) {
         if (currentRobotId != robotId) {
@@ -54,6 +59,40 @@ class ConfigureControllersPresenter(
                 itemCount = controllers.size
             }
             view?.onControllersChanged(currentPosition)
+
+            if (itemCount == 0 && !isEmptyNavigationHappened) {
+                isEmptyNavigationHappened = true
+                onCreateNewClick()
+            }
+        }
+    }
+
+    override fun play(item: ControllersItem) {
+        userControllerInteractor.id = item.userController.id
+        userControllerInteractor.execute { controllerWithPrograms ->
+            userConfigurationStorage.controllerHolder = controllerWithPrograms
+            ControllerType.fromId(item.userController.type)?.apply {
+                when (this) {
+                    ControllerType.GAMER ->
+                        navigator.navigate(
+                            ConfigureFragmentDirections.toPlayGamer(
+                                userConfigurationStorage.userConfiguration?.id ?: 0
+                            )
+                        )
+                    ControllerType.MULTITASKER ->
+                        navigator.navigate(
+                            ConfigureFragmentDirections.toPlayMultitasker(
+                                userConfigurationStorage.userConfiguration?.id ?: 0
+                            )
+                        )
+                    ControllerType.DRIVER ->
+                        navigator.navigate(
+                            ConfigureFragmentDirections.toPlayDriver(
+                                userConfigurationStorage.userConfiguration?.id ?: 0
+                            )
+                        )
+                }
+            }
         }
     }
 
@@ -69,6 +108,10 @@ class ConfigureControllersPresenter(
                 updateButtonsVisibility(position)
             }
         }
+    }
+
+    override fun clearEmptyNavigationFlag() {
+        isEmptyNavigationHappened = false
     }
 
     private fun updateButtonsVisibility(position: Int) {
@@ -97,16 +140,18 @@ class ConfigureControllersPresenter(
 
     override fun deleteController(controllerId: Int, selectedPosition: Int) {
         deleteControllerInteractor.controllerId = controllerId
-        deleteControllerInteractor.execute()
-        currentPosition = selectedPosition
         userConfigurationStorage.apply {
             if (userConfiguration?.controller == controllerId) {
                 userConfiguration?.controller = null
                 robot?.buildStatus = BuildStatus.INVALID_CONFIGURATION
-                updateRobot()
+                updateRobot {
+                    dialogEventBus.publish(DialogEvent.DEFAULT_CONTROLLER_CHANGED)
+                }
             }
         }
 
+        deleteControllerInteractor.execute()
+        currentPosition = selectedPosition
         model?.controllersList?.apply {
             get()?.toMutableList()?.apply {
                 removeAll { it.userController.id == controllerId }
@@ -150,10 +195,21 @@ class ConfigureControllersPresenter(
         )
     }
 
+    override fun onDisabledItemCLicked(item: ControllersItem) {
+        val index = model?.controllersList?.get()?.indexOf(item) ?: 0
+        if (index < model?.controllersList?.get()?.indexOfFirst { it.isSelected.get() } ?: 0) {
+            view?.showPreviousRobot()
+        } else {
+            view?.showNextRobot()
+        }
+    }
+
     override fun onItemSelectionChanged(item: ControllersItem) {
         model?.controllersList?.get()?.forEach {
             it.isCurrentlyActive.set(it == item)
         }
-        userConfigurationStorage.changeController(item.userController.id)
+        userConfigurationStorage.changeController(item.userController.id) {
+            dialogEventBus.publish(DialogEvent.DEFAULT_CONTROLLER_CHANGED)
+        }
     }
 }

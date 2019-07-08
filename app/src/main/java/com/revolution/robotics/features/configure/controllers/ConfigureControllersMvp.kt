@@ -13,8 +13,9 @@ interface ConfigureControllersMvp : Mvp {
         fun showDeleteControllerDialog(controllerId: Int)
     }
 
-    @Suppress("ComplexInterface")
+    @Suppress("ComplexInterface", "TooManyFunctions")
     interface Presenter : Mvp.Presenter<View, ConfigureControllersViewModel> {
+        fun clearEmptyNavigationFlag()
         fun loadControllers(robotId: Int)
         fun onPageSelected(position: Int)
         fun nextButtonClick()
@@ -22,8 +23,10 @@ interface ConfigureControllersMvp : Mvp {
         fun onCreateNewClick()
         fun deleteController(controllerId: Int, selectedPosition: Int)
         fun onItemSelectionChanged(item: ControllersItem)
+        fun play(item: ControllersItem)
         fun onEditSelected(item: ControllersItem)
         fun onDeleteSelected(item: ControllersItem)
         fun onInfoSelected(item: ControllersItem)
+        fun onDisabledItemCLicked(item: ControllersItem)
     }
 }

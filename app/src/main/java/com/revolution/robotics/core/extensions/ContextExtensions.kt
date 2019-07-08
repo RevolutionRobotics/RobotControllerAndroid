@@ -5,6 +5,7 @@ import androidx.annotation.ColorRes
 import androidx.annotation.DimenRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.FontRes
+import androidx.annotation.IntegerRes
 import androidx.annotation.StringRes
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
@@ -18,6 +19,8 @@ fun Context.dimension(@DimenRes dimensionId: Int) = resources.getDimensionPixelS
 fun Context.dimensionAsFloat(@DimenRes dimensionId: Int) = resources.getDimension(dimensionId)
 
 fun Context.drawable(@DrawableRes drawableId: Int) = AppCompatResources.getDrawable(this, drawableId)
+
+fun Context.integer(@IntegerRes resId: Int) = resources.getInteger(resId)
 
 fun Context.font(@FontRes fontId: Int) =
     ResourcesCompat.getFont(this, fontId) ?: throw IllegalArgumentException("Font doesn't exist")

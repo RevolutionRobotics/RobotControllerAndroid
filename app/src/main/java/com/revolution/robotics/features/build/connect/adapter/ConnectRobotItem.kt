@@ -1,11 +1,11 @@
 package com.revolution.robotics.features.build.connect.adapter
 
 import androidx.lifecycle.MutableLiveData
-import com.revolution.bluetooth.domain.Device
 import com.revolution.robotics.R
 import com.revolution.robotics.core.utils.recyclerview.DiffUtilRecyclerAdapter
 import com.revolution.robotics.features.build.connect.availableRobotsFace.ConnectMvp
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
+import org.revolutionrobotics.robotcontroller.bluetooth.domain.Device
 
 @Suppress("DataClassContainsFunctions")
 data class ConnectRobotItem(val device: Device, private val presenter: ConnectMvp.Presenter) :

@@ -45,18 +45,6 @@
                 app:layout_constraintGuide_begin="@dimen/toolbar_header_height"
                 android:orientation="horizontal"/>
 
-        <com.revolution.robotics.features.bluetooth.BluetoothStatusImageView
-                android:id="@+id/bluetooth_icon"
-                android:layout_width="@dimen/dimen_40dp"
-                android:layout_height="@dimen/dimen_40dp"
-                android:scaleType="centerInside"
-                android:padding="@dimen/dimen_2dp"
-                android:src="@drawable/ic_bluetooth"
-                app:layout_constraintTop_toTopOf="@id/toolbar"
-                app:layout_constraintBottom_toBottomOf="@id/toolbar_body_bottom"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginEnd="@dimen/dimen_8dp"/>
-
         <TextView
                 android:id="@+id/steps"
                 android:layout_width="@dimen/build_robot_parts_wrapper_width"
@@ -66,9 +54,9 @@
                 android:textColor="@color/white"
                 app:layout_constraintTop_toTopOf="@id/toolbar"
                 app:layout_constraintBottom_toBottomOf="@id/toolbar_body_bottom"
-                app:layout_constraintEnd_toEndOf="@id/bluetooth_icon"
+                app:layout_constraintEnd_toEndOf="parent"
                 android:text="@{viewModel.step}"
-                android:layout_marginEnd="@dimen/dimen_8dp"/>
+                android:layout_marginEnd="@dimen/dimen_48dp"/>
 
         <com.revolution.robotics.views.slider.BuildStepSliderView
                 android:id="@+id/seekbar"

@@ -12,8 +12,9 @@ interface MyRobotsMvp : Mvp {
         fun showDialog(baseDialog: BaseDialog)
     }
 
-    @Suppress("ComplexInterface")
+    @Suppress("ComplexInterface", "TooManyFunctions")
     interface Presenter : Mvp.Presenter<View, MyRobotsViewModel> {
+        fun clearEmptyNavigationFlag()
         fun onPageSelected(position: Int)
         fun nextButtonClick()
         fun previousButtonClick()
@@ -24,5 +25,6 @@ interface MyRobotsMvp : Mvp {
         fun duplicateRobot(userRobot: UserRobot)
         fun onMoreInfoClicked(userRobot: UserRobot)
         fun deleteRobot(userRobot: UserRobot, selectedPosition: Int)
+        fun onDisabledItemClicked(userRobot: UserRobot)
     }
 }

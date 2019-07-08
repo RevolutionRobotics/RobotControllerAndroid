@@ -283,4 +283,6 @@
     <!-- SCREEN: COMMUNITY -->
     <dimen name="community_button_width">226dp</dimen>
 
+    <integer name="challenge_span_count">4</integer>
+
 </resources>

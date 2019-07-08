@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import com.revolution.robotics.R
+import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.core.extensions.withArguments
 import com.revolution.robotics.core.utils.BundleArgumentDelegate
 import com.revolution.robotics.core.utils.CameraHelper
@@ -71,11 +72,13 @@ class RobotPictureDialog : RoboticsDialog() {
         }
 
         fun onImageDeleted() {
+            dialogEventBus.publish(DialogEvent.ROBOT_IMAGE_CHANGED)
             binding?.viewModel?.image?.set(null)
         }
 
         fun onCameraCaptured(openCameraIfFileDoesNotExist: Boolean) {
             val imageFile = cameraHelper.getImageFile(requireContext())
+            dialogEventBus.publish(DialogEvent.ROBOT_IMAGE_CHANGED)
             if (imageFile.exists()) {
                 binding?.viewModel?.image?.set(imageFile)
             } else if (openCameraIfFileDoesNotExist) {

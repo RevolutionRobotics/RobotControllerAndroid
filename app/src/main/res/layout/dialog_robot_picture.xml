@@ -33,7 +33,7 @@
                 android:padding="@dimen/camera_placeholder_padding"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:src="@drawable/robot_placeholder"
+                android:src="@drawable/ic_image_not_found"
                 android:scaleType="centerInside"
                 app:invisible="@{!viewModel.showPlaceholder}"
                 android:layout_marginTop="@dimen/dimen_16dp"

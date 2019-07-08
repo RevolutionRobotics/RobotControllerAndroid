@@ -17,7 +17,7 @@ import com.revolution.robotics.views.ChippedEditTextViewModel
 import com.revolution.robotics.views.dialogs.DialogButton
 import com.revolution.robotics.views.dialogs.DialogButtonHelper
 import org.kodein.di.erased.instance
-import org.revolution.blockly.view.result.BlockOptionResult
+import org.revolutionrobotics.robotcontroller.blocklysdk.view.result.BlockOptionResult
 
 class BlockOptionsDialog :
     JavascriptPromptDialog<BlocklyDialogBlockOptionsBinding>(R.layout.blockly_dialog_block_options) {
@@ -78,7 +78,8 @@ class BlockOptionsDialog :
 
     override fun onDismiss(dialog: DialogInterface?) {
         if (!wasResultConfirmed) {
-            (blocklyResultHolder.result as? BlockOptionResult)?.confirmComment(binding.comment.getContent())
+            val comment = if (binding.comment.getContent().isEmpty()) null else binding.comment.getContent()
+            (blocklyResultHolder.result as? BlockOptionResult)?.confirmComment(comment)
         }
     }
 }

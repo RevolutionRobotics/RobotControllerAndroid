@@ -15,8 +15,8 @@ import com.revolution.robotics.databinding.BlocklyDialogVariableOptionsBinding
 import com.revolution.robotics.views.dialogs.DialogButton
 import com.revolution.robotics.views.dialogs.DialogButtonHelper
 import org.kodein.di.erased.instance
-import org.revolution.blockly.BlocklyVariable
-import org.revolution.blockly.view.result.VariableResult
+import org.revolutionrobotics.robotcontroller.blocklysdk.BlocklyVariable
+import org.revolutionrobotics.robotcontroller.blocklysdk.view.result.VariableResult
 
 class VariableOptionsDialog :
     JavascriptPromptDialog<BlocklyDialogVariableOptionsBinding>(R.layout.blockly_dialog_variable_options),

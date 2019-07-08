@@ -8,6 +8,7 @@ import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 
 class ConfigureViewModel(private val presenter: ConfigureMvp.Presenter) : ViewModel() {
 
+    val controllerTabText = MutableLiveData<Int>()
     var connectionTextColorRes: MutableLiveData<Int> = MutableLiveData()
     var controllerTextColorRes: MutableLiveData<Int> = MutableLiveData()
     var connectionBackgroundConfig: MutableLiveData<ChippedBoxConfig> = MutableLiveData()

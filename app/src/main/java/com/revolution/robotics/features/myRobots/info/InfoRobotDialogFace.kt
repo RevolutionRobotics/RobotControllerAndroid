@@ -11,7 +11,7 @@ import com.revolution.robotics.views.dialogs.DialogButton
 import com.revolution.robotics.views.dialogs.DialogFace
 import com.revolution.robotics.views.dialogs.RoboticsDialog
 
-class InfoRobotDialogFace(dialog: RoboticsDialog, showEditButton: Boolean) :
+class InfoRobotDialogFace(dialog: RoboticsDialog, openBuildFlow: Boolean) :
     DialogFace<DialogRobotInfoBinding>(R.layout.dialog_robot_info, dialog) {
 
     override val dialogFaceButtons: MutableList<DialogButton> = mutableListOf(
@@ -23,16 +23,14 @@ class InfoRobotDialogFace(dialog: RoboticsDialog, showEditButton: Boolean) :
             dialog.dialogEventBus.publish(DialogEvent.DUPLICATE_ROBOT.apply {
                 extras.putParcelable(KEY_ROBOT, dialog.arguments?.getParcelable<UserRobot>(KEY_ROBOT))
             })
-        }).apply {
-        if (showEditButton) {
-            add(DialogButton(R.string.info_robot_edit, R.drawable.ic_edit, true) {
-                dialog.dismiss()
-                dialog.dialogEventBus.publish(DialogEvent.EDIT_ROBOT.apply {
+        },
+        DialogButton(R.string.info_robot_edit, R.drawable.ic_edit, true) {
+            dialog.dismissAllowingStateLoss()
+            dialog.dialogEventBus.publish(
+                (if (openBuildFlow) DialogEvent.OPEN_BUILD_FLOW else DialogEvent.EDIT_ROBOT).apply {
                     extras.putParcelable(KEY_ROBOT, dialog.arguments?.getParcelable<UserRobot>(KEY_ROBOT))
                 })
-            })
-        }
-    }
+        })
 
     override fun onActivated() {
         super.onActivated()

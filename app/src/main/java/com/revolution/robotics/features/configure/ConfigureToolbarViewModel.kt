@@ -1,15 +1,15 @@
 package com.revolution.robotics.features.configure
 
 import com.revolution.robotics.R
+import com.revolution.robotics.views.toolbar.RoboticsBluetoothToolbarViewModel
 import com.revolution.robotics.views.toolbar.ToolbarOption
-import com.revolution.robotics.views.toolbar.ToolbarViewModel
 
-class ConfigureToolbarViewModel(presenter: ConfigureMvp.Presenter) : ToolbarViewModel() {
+class ConfigureToolbarViewModel(presenter: ConfigureMvp.Presenter) : RoboticsBluetoothToolbarViewModel() {
 
     override val isLogoVisible = false
     override val hasBackOption = true
     override val options = listOf(
         ToolbarOption(R.drawable.ic_camera, presenter::onRobotImageClicked),
-        ToolbarOption(R.drawable.ic_save, presenter::saveConfiguration)
+        ToolbarOption(R.drawable.ic_edit, presenter::saveConfiguration)
     )
 }

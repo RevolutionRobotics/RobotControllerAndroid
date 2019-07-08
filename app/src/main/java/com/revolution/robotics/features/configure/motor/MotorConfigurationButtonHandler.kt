@@ -31,15 +31,20 @@ class MotorConfigurationButtonHandler(
         .create()
 
     private var variableName: String? = null
+    private var previousMotorName: String? = null
+    private var previousDrivetrainName: String? = null
+    private var portNumber = 0
 
     fun setVariableName(name: String?) {
         variableName = name
         setDoneButton()
     }
 
-    fun initDrivetrain(motor: Motor) {
+    fun initDrivetrain(motor: Motor, portNumber: Int) {
+        this.portNumber = portNumber
         model.apply {
             variableName = motor.variableName
+            previousDrivetrainName = motor.variableName
             clearVisibilitiesAndSelections()
             driveTrainButton.isSelected.set(true)
 
@@ -58,9 +63,11 @@ class MotorConfigurationButtonHandler(
         }
     }
 
-    fun initMotor(motor: Motor) {
+    fun initMotor(motor: Motor, portNumber: Int) {
+        this.portNumber = portNumber
         model.apply {
             variableName = motor.variableName
+            previousMotorName = motor.variableName
             clearVisibilitiesAndSelections()
             motorButton.isSelected.set(true)
 
@@ -74,8 +81,20 @@ class MotorConfigurationButtonHandler(
         }
     }
 
+    fun initEmptyState(portNumber: Int) {
+        this.portNumber = portNumber
+        onEmptyButtonClicked()
+    }
+
     fun onEmptyButtonClicked() {
         model.apply {
+            if (driveTrainButton.isSelected.get()) {
+                previousDrivetrainName = variableName
+            }
+            if (motorButton.isSelected.get()) {
+                previousMotorName = variableName
+            }
+
             editTextModel.value = editTextModel.value?.apply {
                 enabled = false
             }
@@ -86,13 +105,15 @@ class MotorConfigurationButtonHandler(
         }
     }
 
-    fun onDrivetrainButtonClicked(defaultName: String) {
+    fun onDrivetrainButtonClicked() {
         model.apply {
             editTextModel.value = editTextModel.value?.apply {
                 enabled = true
             }
+            if (motorButton.isSelected.get()) {
+                previousMotorName = variableName
+            }
             clearVisibilitiesAndSelections()
-            editTextModel.value?.text = defaultName
             driveTrainButton.isSelected.set(true)
 
             sideLeftButton.isVisible.set(true)
@@ -100,6 +121,7 @@ class MotorConfigurationButtonHandler(
             sideRightButton.isSelected.set(false)
             sideRightButton.isVisible.set(true)
 
+            editTextModel.value?.text = previousDrivetrainName ?: "drive$portNumber"
             setDoneButton()
             setTestButton(false)
         }
@@ -110,6 +132,10 @@ class MotorConfigurationButtonHandler(
             editTextModel.value = editTextModel.value?.apply {
                 enabled = true
             }
+            if (driveTrainButton.isSelected.get()) {
+                previousDrivetrainName = variableName
+            }
+
             clearVisibilitiesAndSelections()
             motorButton.isSelected.set(true)
 
@@ -117,6 +143,8 @@ class MotorConfigurationButtonHandler(
             motorClockwiseButton.isVisible.set(true)
             motorCounterClockwiseButton.isSelected.set(false)
             motorCounterClockwiseButton.isVisible.set(true)
+
+            editTextModel.value?.text = previousMotorName ?: "motor$portNumber"
 
             setDoneButton()
             setTestButton(false)

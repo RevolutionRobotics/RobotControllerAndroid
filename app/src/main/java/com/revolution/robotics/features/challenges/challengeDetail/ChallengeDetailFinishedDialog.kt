@@ -66,6 +66,10 @@ sealed class ChallengeDetailFinishedDialog(hasNextButton: Boolean) : RoboticsDia
         companion object {
             fun newInstance() = Latest()
         }
+
+        init {
+            dialogButtons[1].isHighlighted = true
+        }
     }
 
     class Intermediate : ChallengeDetailFinishedDialog(true) {

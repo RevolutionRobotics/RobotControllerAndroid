@@ -9,7 +9,7 @@ import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.features.coding.programs.ProgramsDialog
 import com.revolution.robotics.features.coding.python.PythonDialog
 import com.revolution.robotics.features.coding.saveProgram.SaveProgramDialog
-import org.revolution.blockly.view.jsInterface.SaveBlocklyListener
+import org.revolutionrobotics.robotcontroller.blocklysdk.view.jsInterface.SaveBlocklyListener
 import java.util.concurrent.TimeUnit
 
 @Suppress("TooManyFunctions")
@@ -19,10 +19,14 @@ class CodingPresenter(
     private val resourceResolver: ResourceResolver
 ) : CodingMvp.Presenter {
 
+    companion object {
+        private const val EMPTY_XML = "<xml xmlns=\"http://www.w3.org/1999/xhtml\"></xml>"
+    }
+
     override var view: CodingMvp.View? = null
     override var model: CodingViewModel? = null
 
-    private var userProgram: UserProgram? = null
+    private var userProgramForSave: UserProgram? = null
     private var pythonSaved = false
     private var xmlSaved = false
     private var variablesSaved = false
@@ -36,7 +40,13 @@ class CodingPresenter(
     }
 
     override fun showProgramsDialog() {
-        view?.showDialog(ProgramsDialog.newInstance())
+        isProgramChanged { changed ->
+            if (changed) {
+                view?.showDialog(LoadProgramConfirmDialog.newInstance())
+            } else {
+                view?.showDialog(ProgramsDialog.newInstance())
+            }
+        }
     }
 
     override fun showSaveProgramDialog(userProgram: UserProgram?) {
@@ -44,7 +54,7 @@ class CodingPresenter(
     }
 
     override fun setSavedProgramData(userProgram: UserProgram) {
-        this.userProgram = userProgram
+        this.userProgramForSave = userProgram
         model?.programName?.set(userProgram.name)
         model?.userProgram = userProgram
     }
@@ -60,19 +70,19 @@ class CodingPresenter(
     }
 
     override fun onPythonProgramSaved(file: String) {
-        userProgram?.python = String(Base64.encode(file.toByteArray(), Base64.NO_WRAP))
+        userProgramForSave?.python = String(Base64.encode(file.toByteArray(), Base64.NO_WRAP))
         pythonSaved = true
         saveUserProgramWhenEveryDataIsReady()
     }
 
     override fun onXMLProgramSaved(file: String) {
-        userProgram?.xml = String(Base64.encode(file.toByteArray(), Base64.NO_WRAP))
+        userProgramForSave?.xml = String(Base64.encode(file.toByteArray(), Base64.NO_WRAP))
         xmlSaved = true
         saveUserProgramWhenEveryDataIsReady()
     }
 
     override fun showPythonCode() {
-        view?.getPythonCodeFromBlockly(object : SaveBlocklyListener {
+        view?.getDataFromBlocklyView(object : SaveBlocklyListener {
             override fun onPythonProgramSaved(file: String) {
                 view?.showDialog(PythonDialog.newInstance(file))
             }
@@ -84,7 +94,7 @@ class CodingPresenter(
     }
 
     override fun onVariablesExported(variables: String) {
-        userProgram?.variables =
+        userProgramForSave?.variables =
             if (variables.isEmpty()) {
                 emptyList()
             } else {
@@ -96,7 +106,7 @@ class CodingPresenter(
 
     private fun saveUserProgramWhenEveryDataIsReady() {
         if (pythonSaved && xmlSaved && variablesSaved) {
-            userProgram?.let { userProgram ->
+            userProgramForSave?.let { userProgram ->
                 userProgram.lastModified = System.currentTimeMillis() / TimeUnit.SECONDS.toMillis(1)
                 saveUserProgramInteractor.userProgram = userProgram
                 saveUserProgramInteractor.clearRemoteId = true
@@ -110,7 +120,26 @@ class CodingPresenter(
         }
     }
 
+    private fun isProgramChanged(callback: (changed: Boolean) -> Unit) {
+        view?.getDataFromBlocklyView(object : SaveBlocklyListener {
+            override fun onXMLProgramSaved(file: String) {
+                callback.invoke(
+                    String(
+                        Base64.encode(
+                            file.toByteArray(),
+                            Base64.NO_WRAP
+                        )
+                    ) != model?.userProgram?.xml && file != EMPTY_XML
+                )
+            }
+
+            override fun onPythonProgramSaved(file: String) = Unit
+
+            override fun onVariablesExported(variables: String) = Unit
+        })
+    }
+
     override fun onBackPressed() {
-        view?.onToolbarBackPressed()
+        isProgramChanged { view?.onBackPressed(it) }
     }
 }

@@ -102,7 +102,7 @@ class MainActivity : AppCompatActivity(), KodeinAware, Navigator.NavigationEvent
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) =
-        dynamicPermissionHandler.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        dynamicPermissionHandler.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
 
     private class WindowHideHandler(activity: MainActivity) : Handler() {
         private val mActivity: WeakReference<MainActivity> = WeakReference(activity)
