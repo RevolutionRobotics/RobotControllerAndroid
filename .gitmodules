@@ -4,9 +4,9 @@
 [submodule "android-quality-config"]
 	path = android-quality-config
 	url = git@gitlab.supercharge.io:code-quality/android-quality-config.git
-[submodule "blockly-android"]
-	path = blocklyRobotics
-	url = git@gitlab.supercharge.io:revolutionrobotics/blockly-android.git
-[submodule "blockly-bluetooth"]
+[submodule "bluetoothRobotics"]
 	path = bluetoothRobotics
 	url = git@gitlab.supercharge.io:revolutionrobotics/bluetooth-android.git
+[submodule "blocklyRobotics"]
+	path = blocklyRobotics
+	url = git@gitlab.supercharge.io:revolutionrobotics/blockly-android.git
