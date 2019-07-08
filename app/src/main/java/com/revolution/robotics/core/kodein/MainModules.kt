@@ -1,7 +1,6 @@
 package com.revolution.robotics.core.kodein
 
 import android.content.Context
-import com.revolution.bluetooth.communication.RoboticsDeviceConnector
 import com.revolution.robotics.blockly.utils.BlocklyResultHolder
 import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
 import com.revolution.robotics.core.interactor.firebase.FirebaseFileDownloader
@@ -17,6 +16,7 @@ import com.revolution.robotics.features.configure.controller.CompatibleProgramFi
 import com.revolution.robotics.features.shared.ErrorHandler
 import org.kodein.di.Kodein
 import org.kodein.di.erased.bind
+import org.revolutionrobotics.robotcontroller.bluetooth.communication.RoboticsDeviceConnector
 
 fun createMainModule() =
     Kodein.Module("MainModule") {

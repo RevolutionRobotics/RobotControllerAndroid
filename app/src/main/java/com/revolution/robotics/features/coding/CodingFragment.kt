@@ -21,8 +21,8 @@ import com.revolution.robotics.features.coding.saveProgram.SaveProgramDialog
 import com.revolution.robotics.features.controllers.programInfo.ProgramDialog
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 import org.kodein.di.erased.instance
-import org.revolution.blockly.view.BlocklyLoadedListener
-import org.revolution.blockly.view.jsInterface.SaveBlocklyListener
+import org.revolutionrobotics.robotcontroller.blocklysdk.view.BlocklyLoadedListener
+import org.revolutionrobotics.robotcontroller.blocklysdk.view.jsInterface.SaveBlocklyListener
 
 @Suppress("TooManyFunctions")
 class CodingFragment : BaseFragment<FragmentCodingBinding, CodingViewModel>(R.layout.fragment_coding), CodingMvp.View,

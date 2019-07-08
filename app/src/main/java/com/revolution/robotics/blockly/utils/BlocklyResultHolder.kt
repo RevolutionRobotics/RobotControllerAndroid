@@ -1,6 +1,6 @@
 package com.revolution.robotics.blockly.utils
 
-import org.revolution.blockly.view.result.BlocklyResult
+import org.revolutionrobotics.robotcontroller.blocklysdk.view.result.BlocklyResult
 
 class BlocklyResultHolder {
 
