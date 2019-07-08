@@ -7,6 +7,7 @@ import org.kodein.di.erased.instance
 import org.revolutionrobotics.robotcontroller.bluetooth.communication.RoboticsConnectionStatusListener
 import org.revolutionrobotics.robotcontroller.bluetooth.communication.RoboticsDeviceConnector
 
+@Suppress("TooManyFunctions")
 class BluetoothManager(private var kodein: Kodein) : RoboticsConnectionStatusListener {
 
     private var activity: FragmentActivity? = null
