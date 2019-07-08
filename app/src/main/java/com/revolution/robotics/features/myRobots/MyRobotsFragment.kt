@@ -12,6 +12,7 @@ import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
 import com.revolution.robotics.core.extensions.waitForLayout
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
+import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.databinding.FragmentMyRobotsBinding
 import com.revolution.robotics.features.myRobots.adapter.MyRobotsCarouselAdapter
 import com.revolution.robotics.features.myRobots.info.InfoRobotDialog
@@ -27,6 +28,7 @@ class MyRobotsFragment : BaseFragment<FragmentMyRobotsBinding, MyRobotsViewModel
     private val resourceResolver: ResourceResolver by kodein.instance()
     private val presenter: MyRobotsMvp.Presenter by kodein.instance()
     private val dialogEventBus: DialogEventBus by kodein.instance()
+    private val navigator: Navigator by kodein.instance()
 
     private lateinit var adapter: MyRobotsCarouselAdapter
 
@@ -84,6 +86,13 @@ class MyRobotsFragment : BaseFragment<FragmentMyRobotsBinding, MyRobotsViewModel
             DialogEvent.DELETE_ROBOT -> handleDeleteRobotEvent(event)
             DialogEvent.EDIT_ROBOT -> handleEditRobot(event)
             DialogEvent.DUPLICATE_ROBOT -> handleDuplicateRobotEvent(event)
+            DialogEvent.OPEN_BUILD_FLOW -> navigator.navigate(
+                MyRobotsFragmentDirections.toBuildRobot(
+                    event.extras.getParcelable(
+                        InfoRobotDialog.KEY_ROBOT
+                    )
+                )
+            )
             else -> Unit
         }
     }
