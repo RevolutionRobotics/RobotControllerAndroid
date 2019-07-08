@@ -14,7 +14,7 @@ import com.revolution.robotics.core.utils.BundleArgumentDelegate
 import com.revolution.robotics.databinding.BlocklyDialogSoundPickerBinding
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 import org.kodein.di.erased.instance
-import org.revolution.blockly.view.result.SoundResult
+import org.revolutionrobotics.robotcontroller.blocklysdk.view.result.SoundResult
 
 class SoundPickerDialog :
     JavascriptPromptDialog<BlocklyDialogSoundPickerBinding>(R.layout.blockly_dialog_sound_picker), SoundPickerMvp.View {

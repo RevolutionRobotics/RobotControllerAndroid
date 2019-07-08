@@ -6,7 +6,7 @@ import com.revolution.robotics.R
 import com.revolution.robotics.blockly.dialogs.BlocklyDialogInterface
 import com.revolution.robotics.blockly.utils.BlocklyResultHolder
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
-import org.revolution.blockly.view.result.DialpadResult
+import org.revolutionrobotics.robotcontroller.blocklysdk.view.result.DialpadResult
 
 class DialpadViewModel(
     private val blocklyResultHolder: BlocklyResultHolder,

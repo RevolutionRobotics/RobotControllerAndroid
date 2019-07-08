@@ -9,7 +9,7 @@ import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.features.coding.programs.ProgramsDialog
 import com.revolution.robotics.features.coding.python.PythonDialog
 import com.revolution.robotics.features.coding.saveProgram.SaveProgramDialog
-import org.revolution.blockly.view.jsInterface.SaveBlocklyListener
+import org.revolutionrobotics.robotcontroller.blocklysdk.view.jsInterface.SaveBlocklyListener
 import java.util.concurrent.TimeUnit
 
 @Suppress("TooManyFunctions")

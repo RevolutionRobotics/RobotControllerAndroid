@@ -1,11 +1,11 @@
 package com.revolution.robotics.features.bluetooth
 
 import androidx.fragment.app.FragmentActivity
-import com.revolution.bluetooth.communication.RoboticsConnectionStatusListener
-import com.revolution.bluetooth.communication.RoboticsDeviceConnector
 import com.revolution.robotics.core.utils.dynamicPermissions.BluetoothConnectionFlowHelper
 import org.kodein.di.Kodein
 import org.kodein.di.erased.instance
+import org.revolutionrobotics.robotcontroller.bluetooth.communication.RoboticsConnectionStatusListener
+import org.revolutionrobotics.robotcontroller.bluetooth.communication.RoboticsDeviceConnector
 
 class BluetoothManager(private var kodein: Kodein) : RoboticsConnectionStatusListener {
 

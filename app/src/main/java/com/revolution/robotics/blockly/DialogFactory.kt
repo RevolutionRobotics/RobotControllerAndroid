@@ -16,20 +16,20 @@ import com.revolution.robotics.blockly.dialogs.textInput.TextInputDialog
 import com.revolution.robotics.blockly.dialogs.variableOptions.VariableOptionsDialog
 import com.revolution.robotics.blockly.utils.BlocklyResultHolder
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
-import org.revolution.blockly.BlocklyOption
-import org.revolution.blockly.BlocklyVariable
-import org.revolution.blockly.view.DialogFactory
-import org.revolution.blockly.view.result.BlockOptionResult
-import org.revolution.blockly.view.result.ColorResult
-import org.revolution.blockly.view.result.ConfirmResult
-import org.revolution.blockly.view.result.DialpadResult
-import org.revolution.blockly.view.result.DirectionResult
-import org.revolution.blockly.view.result.DonutResult
-import org.revolution.blockly.view.result.OptionResult
-import org.revolution.blockly.view.result.SliderResult
-import org.revolution.blockly.view.result.SoundResult
-import org.revolution.blockly.view.result.TextResult
-import org.revolution.blockly.view.result.VariableResult
+import org.revolutionrobotics.robotcontroller.blocklysdk.BlocklyOption
+import org.revolutionrobotics.robotcontroller.blocklysdk.BlocklyVariable
+import org.revolutionrobotics.robotcontroller.blocklysdk.view.DialogFactory
+import org.revolutionrobotics.robotcontroller.blocklysdk.view.result.BlockOptionResult
+import org.revolutionrobotics.robotcontroller.blocklysdk.view.result.ColorResult
+import org.revolutionrobotics.robotcontroller.blocklysdk.view.result.ConfirmResult
+import org.revolutionrobotics.robotcontroller.blocklysdk.view.result.DialpadResult
+import org.revolutionrobotics.robotcontroller.blocklysdk.view.result.DirectionResult
+import org.revolutionrobotics.robotcontroller.blocklysdk.view.result.DonutResult
+import org.revolutionrobotics.robotcontroller.blocklysdk.view.result.OptionResult
+import org.revolutionrobotics.robotcontroller.blocklysdk.view.result.SliderResult
+import org.revolutionrobotics.robotcontroller.blocklysdk.view.result.SoundResult
+import org.revolutionrobotics.robotcontroller.blocklysdk.view.result.TextResult
+import org.revolutionrobotics.robotcontroller.blocklysdk.view.result.VariableResult
 
 @Suppress("TooManyFunctions")
 class DialogFactory(

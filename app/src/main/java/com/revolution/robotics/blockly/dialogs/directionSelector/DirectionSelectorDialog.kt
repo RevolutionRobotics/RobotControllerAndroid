@@ -8,7 +8,7 @@ import com.revolution.robotics.core.extensions.withArguments
 import com.revolution.robotics.core.utils.BundleArgumentDelegate
 import com.revolution.robotics.databinding.BlocklyDialogDirectionSelectorBinding
 import org.kodein.di.erased.instance
-import org.revolution.blockly.view.result.DirectionResult
+import org.revolutionrobotics.robotcontroller.blocklysdk.view.result.DirectionResult
 
 class DirectionSelectorDialog :
     JavascriptPromptDialog<BlocklyDialogDirectionSelectorBinding>(R.layout.blockly_dialog_direction_selector),
