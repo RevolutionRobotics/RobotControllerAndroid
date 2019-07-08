@@ -27,7 +27,7 @@ class InfoRobotDialogFace(dialog: RoboticsDialog, openBuildFlow: Boolean) :
         DialogButton(R.string.info_robot_edit, R.drawable.ic_edit, true) {
             dialog.dismissAllowingStateLoss()
             dialog.dialogEventBus.publish(
-                (if (openBuildFlow) DialogEvent.EDIT_ROBOT else DialogEvent.OPEN_BUILD_FLOW).apply {
+                (if (openBuildFlow) DialogEvent.OPEN_BUILD_FLOW else DialogEvent.EDIT_ROBOT).apply {
                     extras.putParcelable(KEY_ROBOT, dialog.arguments?.getParcelable<UserRobot>(KEY_ROBOT))
                 })
         })

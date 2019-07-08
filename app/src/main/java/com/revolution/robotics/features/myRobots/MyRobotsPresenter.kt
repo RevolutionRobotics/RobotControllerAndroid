@@ -131,7 +131,7 @@ class MyRobotsPresenter(
             ) {
                 InfoRobotDialog.Edit.newInstance(userRobot)
             } else {
-                InfoRobotDialog.Normal.newInstance(userRobot)
+                InfoRobotDialog.InProgress.newInstance(userRobot)
             }
         )
     }
