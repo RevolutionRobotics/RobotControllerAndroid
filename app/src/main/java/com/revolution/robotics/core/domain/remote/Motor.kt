@@ -19,6 +19,6 @@ data class Motor(
         const val DIRECTION_COUNTER_CLOCKWISE = "counterclockwise"
 
         const val TYPE_MOTOR = "motor"
-        const val TYPE_DRIVETRAIN = "drivetrain"
+        const val TYPE_DRIVETRAIN = "drive"
     }
 }
