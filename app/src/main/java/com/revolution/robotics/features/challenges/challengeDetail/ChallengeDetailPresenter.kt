@@ -20,8 +20,8 @@ class ChallengeDetailPresenter(
     override var model: ChallengeDetailViewModel? = null
     override var toolbarViewModel: ChallengeDetailToolbarViewModel? = null
 
-    var categoryId: String? = null
-    var challengeId: String? = null
+    private var categoryId: String? = null
+    private var challengeId: String? = null
 
     override fun setChallenge(challenge: Challenge, categoryId: String?) {
         this.categoryId = categoryId

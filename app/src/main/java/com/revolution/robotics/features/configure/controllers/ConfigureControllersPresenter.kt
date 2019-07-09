@@ -29,9 +29,9 @@ class ConfigureControllersPresenter(
     override var view: ConfigureControllersMvp.View? = null
     override var model: ConfigureControllersViewModel? = null
 
-    var currentPosition = 0
-    var currentRobotId = 0
-    var itemCount = 0
+    private var currentPosition = 0
+    private var currentRobotId = 0
+    private var itemCount = 0
 
     private var isEmptyNavigationHappened = false
 

@@ -23,7 +23,7 @@ class DuplicateUserRobotInteractor(
 ) : Interactor<UserRobot>() {
 
     lateinit var currentRobot: UserRobot
-    var selectedControllerId = -1
+    private var selectedControllerId = -1
 
     override fun getData(): UserRobot {
         val robotCopy = currentRobot.copy()
