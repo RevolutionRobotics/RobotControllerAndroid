@@ -16,7 +16,7 @@ class ChallengeListPresenter(
     override var view: ChallengeListMvp.View? = null
     override var model: ChallengeListViewModel? = null
 
-    var categoryId: String? = null
+    private var categoryId: String? = null
 
     override fun setChallengeCategory(challengeCategory: ChallengeCategory) {
         categoryId = challengeCategory.id
