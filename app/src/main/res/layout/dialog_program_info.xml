@@ -24,7 +24,6 @@
                 app:layout_constraintVertical_chainStyle="packed"
                 android:layout_marginTop="@dimen/dimen_24dp"
                 android:text="@{viewModel.name}"
-                android:textAllCaps="true"
                 android:fontFamily="@font/jura_bold"
                 android:textSize="20sp"
                 android:textColor="@color/white"/>
