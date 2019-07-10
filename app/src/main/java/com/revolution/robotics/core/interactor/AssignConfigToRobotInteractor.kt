@@ -128,9 +128,9 @@ class AssignConfigToRobotInteractor(
                 currentProgram
             }
             val newProgram = UserProgram(
-                remoteProgram.description,
+                remoteProgram.description?.getLocalizedString() ?: "",
                 remoteProgram.lastModified,
-                currentProgram?.name ?: remoteProgram.name ?: "",
+                currentProgram?.name ?: remoteProgram.name?.getLocalizedString() ?: "",
                 remoteProgram.python,
                 remoteProgram.xml,
                 remoteProgram.variables,
@@ -159,9 +159,9 @@ class AssignConfigToRobotInteractor(
     private fun createUserController(controller: Controller) = UserController(
         id = 0,
         robotId = userRobot.instanceId,
-        name = controller.name,
+        name = controller.name?.getLocalizedString() ?: "",
         type = controller.type,
-        description = controller.description,
+        description = controller.description?.getLocalizedString() ?: "",
         lastModified = controller.lastModified,
         mapping = UserButtonMapping(),
         joystickPriority = controller.joystickPriority?.toInt() ?: 0

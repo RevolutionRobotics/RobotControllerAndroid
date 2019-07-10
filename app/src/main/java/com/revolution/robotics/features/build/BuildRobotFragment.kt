@@ -90,7 +90,7 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
                     event.extras.getParcelable<Milestone>(ChapterFinishedDialog.KEY_MILESTONE)?.let { milestone ->
                         TestBuildDialog.newInstance(
                             milestone.testImage ?: "",
-                            milestone.testDescription ?: "",
+                            milestone.testDescription?.getLocalizedString() ?: "",
                             milestone.testCode ?: ""
                         ).show(
                             fragmentManager

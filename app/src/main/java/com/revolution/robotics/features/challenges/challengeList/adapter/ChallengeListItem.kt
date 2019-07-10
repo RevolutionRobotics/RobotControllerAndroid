@@ -1,10 +1,11 @@
 package com.revolution.robotics.features.challenges.challengeList.adapter
 
 import com.revolution.robotics.core.domain.remote.Challenge
+import com.revolution.robotics.core.domain.remote.LocalizedString
 import com.revolution.robotics.features.challenges.challengeList.ChallengeListMvp
 
 class ChallengeListItem(
-    val name: String,
+    val name: LocalizedString?,
     val position: String,
     val challenge: Challenge,
     val lineBackground: Int,

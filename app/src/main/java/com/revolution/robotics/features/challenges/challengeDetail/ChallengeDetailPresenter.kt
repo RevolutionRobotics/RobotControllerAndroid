@@ -35,7 +35,7 @@ class ChallengeDetailPresenter(
     }
 
     private fun setChallengeStep(challengeStep: ChallengeStep) {
-        toolbarViewModel?.title?.set(challengeStep.title)
+        toolbarViewModel?.title?.set(challengeStep.title?.getLocalizedString() ?: "")
         model?.apply {
             when (val challengeType = ChallengeType.fromId(challengeStep.challengeType)) {
                 ChallengeType.HORIZONTAL, ChallengeType.VERTICAL -> {

@@ -86,9 +86,9 @@ class WhoToBuildPresenter(
             BuildRobotFragment.DEFAULT_STARTING_INDEX,
             Date(System.currentTimeMillis()),
             0,
-            robot.name,
+            robot.name?.getLocalizedString() ?: "",
             robot.coverImage,
-            robot.description
+            robot.description?.getLocalizedString() ?: ""
         )
         navigator.navigate(WhoToBuildFragmentDirections.toBuildRobot(userRobot))
     }

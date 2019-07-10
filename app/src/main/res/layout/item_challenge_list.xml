@@ -41,7 +41,7 @@
                 app:layout_constraintTop_toTopOf="@id/background"
                 android:layout_marginTop="@dimen/dimen_32dp"
                 app:textColorResource="@{viewModel.textColor}"
-                android:text="@{viewModel.name}"
+                app:localizedFirebaseText="@{viewModel.name}"
                 android:textSize="12sp"
                 android:gravity="center_horizontal"
                 android:fontFamily="@font/barlow_bold"

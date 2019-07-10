@@ -27,7 +27,7 @@ class ChallengeListPresenter(
                 challengeCategory.challenges.toList().map { it.second }.sortedBy { it.order }
                     .mapIndexed { index, challenge ->
                         ChallengeListItem(
-                            name = challenge.name ?: "",
+                            name = challenge.name,
                             position = "${index + 1}.",
                             challenge = challenge,
                             isLineVisible = index < challengeCategory.challenges.size - 1,

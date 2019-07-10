@@ -38,7 +38,7 @@ class ChallengeListFragment :
         }
         presenter.register(this, viewModel)
         arguments?.let { arguments ->
-            binding?.toolbarViewModel?.title?.set(arguments.challenge.name)
+            binding?.toolbarViewModel?.title?.set(arguments.challenge.name?.getLocalizedString() ?: "")
             presenter.setChallengeCategory(arguments.challenge)
         }
     }

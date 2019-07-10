@@ -26,7 +26,7 @@ class ChallengeGroupPresenter(
             model?.items?.value = groups.map { remoteCategory ->
                 ChallengeGroupItem(
                     iconUrl = remoteCategory.image ?: "",
-                    name = remoteCategory.name ?: "",
+                    name = remoteCategory.name,
                     currentChallenge = userCategories.find { it.challengeCategoryId == remoteCategory.id }?.progress
                         ?: 0,
                     totalChallenge = remoteCategory.challenges.size,

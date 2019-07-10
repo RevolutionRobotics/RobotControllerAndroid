@@ -12,9 +12,9 @@ class SaveUserProgramsInteractor(private val userProgramDao: UserProgramDao) : I
         programs.forEach { remoteProgram ->
             userProgramDao.saveUserProgram(
                 UserProgram(
-                    remoteProgram.description,
+                    remoteProgram.description?.getLocalizedString() ?: "",
                     remoteProgram.lastModified,
-                    remoteProgram.name ?: "",
+                    remoteProgram.name?.getLocalizedString() ?: "",
                     remoteProgram.python ?: "",
                     remoteProgram.xml ?: "",
                     remoteProgram.variables,
