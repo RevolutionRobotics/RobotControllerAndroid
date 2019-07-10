@@ -43,6 +43,11 @@ class ProgramSelectorFragment :
         super.onDestroyView()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.clearSelectionStates()
+    }
+
     override fun onProgramsChanged(programs: List<ProgramViewModel>) {
         adapter.setItems(programs)
         binding?.apply {

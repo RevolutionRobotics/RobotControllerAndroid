@@ -52,7 +52,7 @@ class ButtonlessProgramSelectorFragment :
 
     override fun onDestroy() {
         super.onDestroy()
-        presenter.clearLists()
+        presenter.clearSelections()
     }
 
     override fun onDialogEvent(event: DialogEvent) {
