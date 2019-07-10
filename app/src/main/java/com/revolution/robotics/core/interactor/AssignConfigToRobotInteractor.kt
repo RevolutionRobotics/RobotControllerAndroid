@@ -142,7 +142,7 @@ class AssignConfigToRobotInteractor(
     }
 
     private fun createUserConfiguration(configuration: Configuration) =
-        UserConfiguration(0, -1, UserMapping().apply {
+        UserConfiguration(0, null, UserMapping().apply {
             M1 = configuration.mapping?.M1
             M2 = configuration.mapping?.M2
             M3 = configuration.mapping?.M3
