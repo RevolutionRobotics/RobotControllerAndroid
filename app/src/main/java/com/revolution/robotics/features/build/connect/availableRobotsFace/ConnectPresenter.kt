@@ -37,9 +37,9 @@ class ConnectPresenter(
 
     override fun onItemClicked(robot: ConnectRobotItem) {
         if (!isConnectionInProgress) {
+            bleDeviceDiscoverer.stopDiscovering()
             isConnectionInProgress = true
             robot.setSelected(true)
-            bleDeviceDiscoverer.stopDiscovering()
             bleHandler.connect(applicationContextProvider.applicationContext, robot.device,
                 onConnected = {
                     view?.onConnectionSuccess()
