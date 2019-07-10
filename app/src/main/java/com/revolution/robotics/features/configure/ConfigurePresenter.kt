@@ -124,6 +124,7 @@ class ConfigurePresenter(
     }
 
     override fun clearStorage() {
+        selectedConfigId = -1
         userConfigurationStorage.userConfiguration = null
         userConfigurationStorage.controllerHolder = null
     }
