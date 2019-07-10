@@ -17,7 +17,7 @@ class FirmwareUpdateInfoFace(dialog: FirmwareUpdateDialog) :
     private val presenter: FirmwareUpdateMvp.Presenter by kodein.instance()
 
     override val dialogFaceButtons: MutableList<DialogButton> =
-        mutableListOf(DialogButton(R.string.firmware_check_for_updates, R.drawable.ic_check, true) {
+        mutableListOf(DialogButton(R.string.firmware_check_for_updates, R.drawable.ic_retry, true) {
             presenter.onCheckForUpdatesClicked()
         })
 
