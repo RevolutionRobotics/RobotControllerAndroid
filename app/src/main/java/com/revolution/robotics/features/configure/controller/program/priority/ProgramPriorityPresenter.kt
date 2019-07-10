@@ -108,7 +108,7 @@ class ProgramPriorityPresenter(
 
     private fun getDefaultControllerNameBasedOnType(): String =
         ControllerType.fromId(userConfigurationStorage.controllerHolder?.userController?.type)?.nameRes?.let {
-            resourceResolver.string(it)?.capitalize()
+            resourceResolver.string(it)
         } ?: ""
 
     private fun generateItems(
@@ -132,8 +132,13 @@ class ProgramPriorityPresenter(
         controllerWithPrograms.userController.getMappingList().forEach { binding ->
             addItemFromButtonBinding(binding, items, programs)
         }
-
-        items.add(JoystickBindingItem(controllerWithPrograms.userController.joystickPriority, 0L))
+        val joystickPriority =
+            if (controllerWithPrograms.userController.joystickPriority == 0) {
+                -2
+            } else {
+                controllerWithPrograms.userController.joystickPriority
+            }
+        items.add(JoystickBindingItem(joystickPriority, 0L))
         return items.sortedWith(compareBy<BindingItem> { it.priority }.thenBy { it.lastModified })
     }
 
