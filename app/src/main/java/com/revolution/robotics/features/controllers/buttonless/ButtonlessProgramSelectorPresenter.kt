@@ -37,7 +37,10 @@ class ButtonlessProgramSelectorPresenter(
         loadPrograms()
     }
 
-    override fun clearLists() {
+    override fun clearSelections() {
+        onlyShowCompatiblePrograms = null
+        model?.programOrderingHandler?.currentOrder =
+            ProgramOrderingHandler.OrderBy.DATE to ProgramOrderingHandler.Order.DESCENDING
         allPrograms = null
         programs.clear()
     }
