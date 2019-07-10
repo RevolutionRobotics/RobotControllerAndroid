@@ -174,9 +174,7 @@
 
     <!-- Program info -->
     <string name="program_info_edit_program">Edit program</string>
-    <string name="program_info_compatibility_issue">Description of compatibility issue. Lorem ipsum dolor sit amet, eu
-        commodo numquam comprehensam vel. Quo cu alia placerat. Per graece denique.
-    </string>
+    <string name="program_info_compatibility_issue">This program is not compatible with the current configuration.</string>
     <string name="program_info_compatibility_issue_positive_button">Got it</string>
     <string name="program_info_remove_button">Remove program</string>
     <string name="program_info_add_button">Add program</string>
