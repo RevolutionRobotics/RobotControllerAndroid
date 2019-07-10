@@ -23,6 +23,10 @@ class ProgramPriorityPresenter(
 ) :
     ProgramPriorityMvp.Presenter, DialogEventBus.Listener {
 
+    private companion object {
+        const val DEFAULT_DRIVE_PRIORITY = -2
+    }
+
     override var view: ProgramPriorityMvp.View? = null
     override var model: ProgramPriorityViewModel? = null
 
@@ -134,7 +138,7 @@ class ProgramPriorityPresenter(
         }
         val joystickPriority =
             if (controllerWithPrograms.userController.joystickPriority == 0) {
-                -2
+                DEFAULT_DRIVE_PRIORITY
             } else {
                 controllerWithPrograms.userController.joystickPriority
             }
