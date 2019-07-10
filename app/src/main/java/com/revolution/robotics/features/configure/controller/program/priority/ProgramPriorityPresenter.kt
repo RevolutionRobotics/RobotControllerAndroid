@@ -23,6 +23,10 @@ class ProgramPriorityPresenter(
 ) :
     ProgramPriorityMvp.Presenter, DialogEventBus.Listener {
 
+    private companion object {
+        const val DEFAULT_DRIVE_PRIORITY = -2
+    }
+
     override var view: ProgramPriorityMvp.View? = null
     override var model: ProgramPriorityViewModel? = null
 
@@ -108,7 +112,7 @@ class ProgramPriorityPresenter(
 
     private fun getDefaultControllerNameBasedOnType(): String =
         ControllerType.fromId(userConfigurationStorage.controllerHolder?.userController?.type)?.nameRes?.let {
-            resourceResolver.string(it)?.capitalize()
+            resourceResolver.string(it)
         } ?: ""
 
     private fun generateItems(
@@ -132,8 +136,13 @@ class ProgramPriorityPresenter(
         controllerWithPrograms.userController.getMappingList().forEach { binding ->
             addItemFromButtonBinding(binding, items, programs)
         }
-
-        items.add(JoystickBindingItem(controllerWithPrograms.userController.joystickPriority, 0L))
+        val joystickPriority =
+            if (controllerWithPrograms.userController.joystickPriority == 0) {
+                DEFAULT_DRIVE_PRIORITY
+            } else {
+                controllerWithPrograms.userController.joystickPriority
+            }
+        items.add(JoystickBindingItem(joystickPriority, 0L))
         return items.sortedWith(compareBy<BindingItem> { it.priority }.thenBy { it.lastModified })
     }
 

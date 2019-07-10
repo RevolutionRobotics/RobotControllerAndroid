@@ -174,9 +174,7 @@
 
     <!-- Program info -->
     <string name="program_info_edit_program">Edit program</string>
-    <string name="program_info_compatibility_issue">Description of compatibility issue. Lorem ipsum dolor sit amet, eu
-        commodo numquam comprehensam vel. Quo cu alia placerat. Per graece denique.
-    </string>
+    <string name="program_info_compatibility_issue">This program is not compatible with the current configuration.</string>
     <string name="program_info_compatibility_issue_positive_button">Got it</string>
     <string name="program_info_remove_button">Remove program</string>
     <string name="program_info_add_button">Add program</string>
@@ -254,7 +252,7 @@
     <string name="about_version">Version</string>
 
     <!-- Firmware update -->
-    <string name="firmware_new_connection_button">Connect to new brain</string>
+    <string name="firmware_new_connection_button">connect to new brain</string>
     <string name="firmware_check_for_updates">Check for updates</string>
     <string name="firmware_screen_title">Firmware update</string>
     <string name="firmware_loading">Loading…</string>
