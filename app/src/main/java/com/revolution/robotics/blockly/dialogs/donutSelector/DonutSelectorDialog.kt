@@ -34,7 +34,7 @@ class DonutSelectorDialog :
     override val hasTitle = false
 
     private val presenter: DonutSelectorMvp.Presenter by kodein.instance()
-    var selectionType = DonutSelectionType.SINGLE
+    private var selectionType = DonutSelectionType.SINGLE
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         presenter.register(this, null)

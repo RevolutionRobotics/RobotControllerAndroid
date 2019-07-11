@@ -6,6 +6,7 @@ import com.revolution.robotics.core.interactor.GetUserProgramsInteractor
 import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.features.configure.UserConfigurationStorage
 import com.revolution.robotics.features.configure.controller.CompatibleProgramFilterer
+import com.revolution.robotics.features.controllers.ProgramOrderingHandler
 import com.revolution.robotics.features.controllers.programInfo.ProgramDialog
 import com.revolution.robotics.features.controllers.programSelector.adapter.ProgramViewModel
 
@@ -17,7 +18,7 @@ class ProgramSelectorPresenter(
 ) : ProgramSelectorMvp.Presenter {
 
     companion object {
-        private const val SHOW_COMPATIBLE_PROGRAMS_ONLY_BY_DEFAULT = true
+        private const val SHOW_COMPATIBLE_PROGRAMS_ONLY_BY_DEFAULT = false
     }
 
     override var view: ProgramSelectorMvp.View? = null
@@ -33,6 +34,12 @@ class ProgramSelectorPresenter(
             setShowOnlyCompatiblePrograms(SHOW_COMPATIBLE_PROGRAMS_ONLY_BY_DEFAULT)
         }
         loadPrograms()
+    }
+
+    override fun clearSelectionStates() {
+        onlyShowCompatiblePrograms = null
+        model?.programOrderingHandler?.currentOrder =
+            ProgramOrderingHandler.OrderBy.DATE to ProgramOrderingHandler.Order.DESCENDING
     }
 
     private fun loadPrograms() {

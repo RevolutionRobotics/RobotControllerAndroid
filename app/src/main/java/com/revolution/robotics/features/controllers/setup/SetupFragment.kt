@@ -110,15 +110,14 @@ abstract class SetupFragment :
     }
 
     override fun onDialogEvent(event: DialogEvent) {
-        if (event == DialogEvent.ADD_PROGRAM) {
-            addProgram(event.program())
-        } else if (event == DialogEvent.REMOVE_PROGRAM) {
-            removeSelectedProgram()
-        } else if (event == DialogEvent.EDIT_PROGRAM) {
-            event.program().let { program ->
+        when (event) {
+            DialogEvent.ADD_PROGRAM -> addProgram(event.program())
+            DialogEvent.REMOVE_PROGRAM -> removeSelectedProgram()
+            DialogEvent.EDIT_PROGRAM -> event.program().let { program ->
                 storage.programBeingEdited = program
                 navigateToEditProgram(program)
             }
+            else -> Unit
         }
     }
 

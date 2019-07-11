@@ -1,6 +1,5 @@
 package com.revolution.robotics.features.configure.controllers
 
-import com.revolution.robotics.core.domain.local.BuildStatus
 import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
 import com.revolution.robotics.core.extensions.formatYearMonthDay
@@ -29,9 +28,9 @@ class ConfigureControllersPresenter(
     override var view: ConfigureControllersMvp.View? = null
     override var model: ConfigureControllersViewModel? = null
 
-    var currentPosition = 0
-    var currentRobotId = 0
-    var itemCount = 0
+    private var currentPosition = 0
+    private var currentRobotId = 0
+    private var itemCount = 0
 
     private var isEmptyNavigationHappened = false
 
@@ -142,10 +141,16 @@ class ConfigureControllersPresenter(
         deleteControllerInteractor.controllerId = controllerId
         userConfigurationStorage.apply {
             if (userConfiguration?.controller == controllerId) {
-                userConfiguration?.controller = null
-                robot?.buildStatus = BuildStatus.INVALID_CONFIGURATION
+                userConfiguration?.controller =
+                    model?.controllersList?.get()?.firstOrNull { it.userController.id != controllerId }
+                        ?.let { controllerItem ->
+                            controllerItem.isCurrentlyActive.set(true)
+                            controllerItem.userController.id
+                        }
                 updateRobot {
-                    dialogEventBus.publish(DialogEvent.DEFAULT_CONTROLLER_CHANGED)
+                    if (userConfiguration?.controller == null) {
+                        dialogEventBus.publish(DialogEvent.DEFAULT_CONTROLLER_CHANGED)
+                    }
                 }
             }
         }

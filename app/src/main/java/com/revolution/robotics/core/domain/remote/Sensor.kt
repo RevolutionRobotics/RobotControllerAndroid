@@ -10,6 +10,6 @@ data class Sensor(
 ) : Parcelable {
     companion object {
         const val TYPE_BUMPER = "bumper"
-        const val TYPE_ULTRASONIC = "ultrasonic"
+        const val TYPE_ULTRASONIC = "distance"
     }
 }

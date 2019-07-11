@@ -37,7 +37,6 @@ import com.revolution.robotics.core.interactor.GetUserControllersInteractor
 import com.revolution.robotics.core.interactor.GetUserProgramInteractor
 import com.revolution.robotics.core.interactor.GetUserProgramsInteractor
 import com.revolution.robotics.core.interactor.GetUserRobotInteractor
-import com.revolution.robotics.core.interactor.LocalFileLoader
 import com.revolution.robotics.core.interactor.LocalFileSaver
 import com.revolution.robotics.core.interactor.PortTestFileCreatorInteractor
 import com.revolution.robotics.core.interactor.RemoveUserControllerInteractor
@@ -56,7 +55,6 @@ import com.revolution.robotics.core.interactor.firebase.FirmwareInteractor
 import com.revolution.robotics.core.interactor.firebase.ProgramInteractor
 import com.revolution.robotics.core.interactor.firebase.ProgramsInteractor
 import com.revolution.robotics.core.interactor.firebase.RobotInteractor
-import com.revolution.robotics.core.interactor.firebase.TestCodeInteractor
 import com.revolution.robotics.features.build.BuildRobotMvp
 import com.revolution.robotics.features.build.BuildRobotPresenter
 import com.revolution.robotics.features.build.buildFinished.BuildFinishedMvp
@@ -134,7 +132,6 @@ fun createInteractorModule() =
         bind<RobotInteractor>() with p { RobotInteractor() }
         bind<BuildStepInteractor>() with p { BuildStepInteractor() }
         bind<ConfigurationInteractor>() with p { ConfigurationInteractor() }
-        bind<TestCodeInteractor>() with p { TestCodeInteractor() }
         bind<GetUserRobotInteractor>() with p { GetUserRobotInteractor(i()) }
         bind<AssignConfigToRobotInteractor>() with p { AssignConfigToRobotInteractor(i(), i(), i(), i(), i()) }
         bind<UpdateUserRobotInteractor>() with p { UpdateUserRobotInteractor(i(), i()) }
@@ -158,7 +155,6 @@ fun createInteractorModule() =
         bind<FirebaseInitInteractor>() with p { FirebaseInitInteractor() }
         bind<SaveUserRobotInteractor>() with p { SaveUserRobotInteractor(i()) }
         bind<DuplicateUserRobotInteractor>() with p { DuplicateUserRobotInteractor(i(), i(), i(), i(), i(), i()) }
-        bind<LocalFileLoader>() with p { LocalFileLoader() }
         bind<LocalFileSaver>() with p { LocalFileSaver() }
         bind<SaveUserProgramsInteractor>() with p { SaveUserProgramsInteractor(i()) }
         bind<GetFullConfigurationInteractor>() with p { GetFullConfigurationInteractor(i(), i(), i(), i()) }

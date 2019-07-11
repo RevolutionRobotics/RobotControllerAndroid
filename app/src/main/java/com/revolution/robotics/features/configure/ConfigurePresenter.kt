@@ -27,8 +27,8 @@ class ConfigurePresenter(
 
     var userRobot: UserRobot? = null
 
-    var selectedTab = ConfigurationTabs.CONNECTIONS
-    var selectedConfigId = -1
+    private var selectedTab = ConfigurationTabs.CONNECTIONS
+    private var selectedConfigId = -1
 
     override fun register(view: ConfigureMvp.View, model: ConfigureViewModel?) {
         super.register(view, model)
@@ -124,6 +124,7 @@ class ConfigurePresenter(
     }
 
     override fun clearStorage() {
+        selectedConfigId = -1
         userConfigurationStorage.userConfiguration = null
         userConfigurationStorage.controllerHolder = null
     }

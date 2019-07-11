@@ -18,6 +18,6 @@ interface ButtonlessProgramSelectorMvp : Mvp {
         fun onProgramSelected(viewModel: ButtonlessProgramViewModel)
         fun onInfoButtonClicked(userProgram: UserProgram)
         fun onProgramEdited(userProgram: UserProgram)
-        fun clearLists()
+        fun clearSelections()
     }
 }

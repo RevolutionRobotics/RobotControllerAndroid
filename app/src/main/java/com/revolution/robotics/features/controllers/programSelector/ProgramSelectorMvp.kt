@@ -17,5 +17,6 @@ interface ProgramSelectorMvp : Mvp {
         fun updateOrderingAndFiltering()
         fun showCompatibleProgramsClicked()
         fun onProgramSelected(userProgram: UserProgram)
+        fun clearSelectionStates()
     }
 }

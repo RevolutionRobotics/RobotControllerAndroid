@@ -44,7 +44,7 @@ data class MyRobotsItem(
         }
     }
 
-    fun onPlayClicked() {
+    private fun onPlayClicked() {
         if (isUnderConstruction) {
             presenter.onContinueBuildingSelected(robot)
         } else {
@@ -52,7 +52,7 @@ data class MyRobotsItem(
         }
     }
 
-    fun onDisabledItemClicked() {
+    private fun onDisabledItemClicked() {
         presenter.onDisabledItemClicked(robot)
     }
 

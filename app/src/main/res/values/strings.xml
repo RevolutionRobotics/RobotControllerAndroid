@@ -174,9 +174,7 @@
 
     <!-- Program info -->
     <string name="program_info_edit_program">Edit program</string>
-    <string name="program_info_compatibility_issue">Description of compatibility issue. Lorem ipsum dolor sit amet, eu
-        commodo numquam comprehensam vel. Quo cu alia placerat. Per graece denique.
-    </string>
+    <string name="program_info_compatibility_issue">This program is not compatible with the current configuration.</string>
     <string name="program_info_compatibility_issue_positive_button">Got it</string>
     <string name="program_info_remove_button">Remove program</string>
     <string name="program_info_add_button">Add program</string>
@@ -254,7 +252,7 @@
     <string name="about_version">Version</string>
 
     <!-- Firmware update -->
-    <string name="firmware_new_connection_button">Connect to new brain</string>
+    <string name="firmware_new_connection_button">connect to new brain</string>
     <string name="firmware_check_for_updates">Check for updates</string>
     <string name="firmware_screen_title">Firmware update</string>
     <string name="firmware_loading">Loading…</string>
@@ -267,7 +265,7 @@
     <string name="firmware_motor_battery">Motor battery: %1$s %%</string>
     <string name="firmware_current_version">Current framework version %1$s</string>
     <string name="firmware_update_download_ready">New update (%1$s) is available to download</string>
-    <string name="firmware_update_latest_used">You have the latest firmware version</string>
+    <string name="firmware_update_latest_used">You have the latest framework version</string>
     <string name="firmware_update_download">Download and update</string>
     <string name="firmware_download_info">Downloading &amp; updating</string>
     <string name="firmware_please_wait">Please wait</string>

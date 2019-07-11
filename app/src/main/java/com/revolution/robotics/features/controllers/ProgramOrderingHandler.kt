@@ -30,9 +30,9 @@ class ProgramOrderingHandler {
     fun getComparator() =
         if (currentOrder.first == OrderBy.NAME) {
             if (currentOrder.second == Order.ASCENDING) {
-                compareBy { it.name }
+                compareBy { it.name.toLowerCase() }
             } else {
-                compareByDescending { it.name }
+                compareByDescending { it.name.toLowerCase() }
             }
         } else {
             if (currentOrder.second == Order.ASCENDING) {
