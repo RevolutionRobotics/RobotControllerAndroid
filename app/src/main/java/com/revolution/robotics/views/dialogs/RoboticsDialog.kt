@@ -39,8 +39,9 @@ abstract class RoboticsDialog : BaseDialog() {
 
         binding.background = dialogBackgroundConfig.create()
         binding.viewModel = RoboticsDialogViewModel(hasCloseButton) {
-            dismissAllowingStateLoss()
-            onDialogCloseButtonClicked()
+            if (onDialogCloseButtonClicked()) {
+                dismissAllowingStateLoss()
+            }
         }
         return binding.root
     }
@@ -49,7 +50,7 @@ abstract class RoboticsDialog : BaseDialog() {
         dialogButtonHelper.updateButtonWeights(binding.buttonContainer)
     }
 
-    open fun onDialogCloseButtonClicked() = Unit
+    open fun onDialogCloseButtonClicked(): Boolean = true
 
     fun activateFace(dialogFace: DialogFace<*>) {
         binding.container.removeAllViews()
