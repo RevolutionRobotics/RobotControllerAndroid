@@ -10,3 +10,4 @@
 [submodule "blocklyRobotics"]
     path = blocklyRobotics
     url = git@github.com:RevolutionRobotics/RevolutionRoboticsBlocklyAndroid.git
+    branch = handover
