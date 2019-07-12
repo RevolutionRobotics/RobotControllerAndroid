@@ -31,10 +31,10 @@
                 app:layout_constraintBottom_toTopOf="@id/buttonM5"
                 app:robotId="@{viewModel.robotId}"
                 app:firebaseImageUrl="@{viewModel.firebaseImageUrl}"
-                app:errorDrawable="@{@drawable/configure_brain}"
+                app:errorDrawable="@{@drawable/bg_brain}"
                 android:layout_marginTop="@dimen/configure_connections_brain_horizontal_margin"
                 android:scaleType="fitCenter"
-                android:src="@drawable/configure_brain"
+                android:src="@drawable/bg_brain"
                 app:layout_constraintVertical_chainStyle="packed"
         />
 
