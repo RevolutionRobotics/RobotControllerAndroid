@@ -35,11 +35,13 @@ class PriorityProgramDelegateItem(
             val gestureDetector =
                 GestureDetector(binding.root.context, object : GestureDetector.SimpleOnGestureListener() {
                     override fun onLongPress(e: MotionEvent?) {
+                        this@apply.binding.viewModel?.isItemSelected?.set(true)
                         itemTouchHelper.startDrag(this@apply)
                     }
                 })
-            binding.imgReorder.setOnTouchListener { _, event ->
+            binding.root.setOnTouchListener { _, event ->
                 gestureDetector.onTouchEvent(event)
+                true
             }
         }
     }

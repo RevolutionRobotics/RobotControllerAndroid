@@ -1,6 +1,7 @@
 package com.revolution.robotics.features.configure.controller.program.priority
 
 import android.annotation.SuppressLint
+import android.view.GestureDetector
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.ViewGroup
@@ -30,11 +31,17 @@ class JoystickDelegateItem(
         val binding = ItemPriorityJoystickBinding.inflate(inflater, parent, false)
         binding.lifecycleOwner = lifecycleOwner
         return PriorityViewHolder(binding).apply {
-            binding.imgReorder.setOnTouchListener { _, event ->
-                if (event.action == MotionEvent.ACTION_DOWN) {
-                    itemTouchHelper.startDrag(this)
-                }
-                false
+
+            val gestureDetector =
+                GestureDetector(binding.root.context, object : GestureDetector.SimpleOnGestureListener() {
+                    override fun onLongPress(e: MotionEvent?) {
+                        this@apply.binding.viewModel?.isItemSelected?.set(true)
+                        itemTouchHelper.startDrag(this@apply)
+                    }
+                })
+            binding.root.setOnTouchListener { _, event ->
+                gestureDetector.onTouchEvent(event)
+                true
             }
         }
     }

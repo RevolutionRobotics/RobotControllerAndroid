@@ -1,5 +1,6 @@
 package com.revolution.robotics.features.configure.controller.program.priority
 
+import androidx.databinding.ObservableBoolean
 import com.revolution.robotics.R
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 
@@ -18,6 +19,17 @@ class ProgramPriorityJoystickViewModel(
         .clipLeftSide(true)
         .borderSize(R.dimen.dimen_1dp)
         .create()
+    val selectedBackground = ChippedBoxConfig.Builder()
+        .backgroundColorResource(R.color.grey_1d)
+        .borderColorResource(R.color.robotics_red)
+        .chipBottomLeft(true)
+        .chipTopRight(true)
+        .chipSize(R.dimen.dimen_6dp)
+        .clipLeftSide(true)
+        .borderSize(R.dimen.dimen_1dp)
+        .create()
+
+    val isItemSelected = ObservableBoolean(false)
     val positionText: String
         get() {
             return "$position."
