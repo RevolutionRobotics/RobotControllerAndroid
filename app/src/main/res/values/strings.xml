@@ -360,7 +360,8 @@
     <string name="dialog_load_program_confirm_button_positive">Open programs</string>
     <string name="dialog_load_program_confirm_title">Would you like to load another program?</string>
     <string name="dialog_load_program_confirm_description">All your unsaved changes will be lost</string>
-    <string name="framework_stop_confirmation_title">Would you like to stop the framework update?</string>
-    <string name="framework_confirmation_dialog_stop_button">Stop</string>
+    <string name="framework_stop_confirmation_title">Would you like to cancel the firmware update?</string>
+    <string name="framework_confirmation_dialog_yes_button">Yes</string>
+    <string name="framework_confirmation_dialog_no_button">No</string>
 
 </resources>

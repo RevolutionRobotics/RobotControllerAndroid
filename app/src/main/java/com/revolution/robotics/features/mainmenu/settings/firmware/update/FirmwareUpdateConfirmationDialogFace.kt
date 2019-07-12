@@ -11,10 +11,10 @@ class FirmwareUpdateConfirmationDialogFace(private val firmwareUpdateDialog: Fir
     ) {
 
     override val dialogFaceButtons: MutableList<DialogButton> =
-        mutableListOf(DialogButton(R.string.cancel, R.drawable.ic_close, false) {
+        mutableListOf(DialogButton(R.string.framework_confirmation_dialog_no_button, R.drawable.ic_close, false) {
             firmwareUpdateDialog.activateLoadingFace()
         },
-            DialogButton(R.string.framework_confirmation_dialog_stop_button, R.drawable.ic_retry, true) {
+            DialogButton(R.string.framework_confirmation_dialog_yes_button, R.drawable.ic_check, true) {
                 firmwareUpdateDialog.stopFrameworkUpdate()
             })
 }
