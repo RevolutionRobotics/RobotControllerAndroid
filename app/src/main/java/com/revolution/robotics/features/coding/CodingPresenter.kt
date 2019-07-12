@@ -27,6 +27,7 @@ class CodingPresenter(
     override var model: CodingViewModel? = null
 
     private var userProgramForSave: UserProgram? = null
+    private var actionIdAfterSave = -1
     private var pythonSaved = false
     private var xmlSaved = false
     private var variablesSaved = false
@@ -49,12 +50,13 @@ class CodingPresenter(
         }
     }
 
-    override fun showSaveProgramDialog(userProgram: UserProgram?) {
-        view?.showDialog(SaveProgramDialog.newInstance(userProgram))
+    override fun showSaveProgramDialog(userProgram: UserProgram?, actionIdAfterSave: Int) {
+        view?.showDialog(SaveProgramDialog.newInstance(userProgram, actionIdAfterSave))
     }
 
-    override fun setSavedProgramData(userProgram: UserProgram) {
+    override fun setSavedProgramData(userProgram: UserProgram, actionId: Int) {
         this.userProgramForSave = userProgram
+        actionIdAfterSave = actionId
         model?.programName?.set(userProgram.name)
         model?.userProgram = userProgram
     }
@@ -114,9 +116,18 @@ class CodingPresenter(
                     xmlSaved = false
                     pythonSaved = false
                     variablesSaved = false
+                    handleSaveAction(actionIdAfterSave)
+                    actionIdAfterSave = -1
                     view?.onProgramSaved()
                 }
             }
+        }
+    }
+
+    private fun handleSaveAction(actionId: Int) {
+        when (actionId) {
+            CodingFragment.ACTION_ID_LEAVE -> view?.onBackPressed(false)
+            CodingFragment.ACTION_ID_LOAD_PROGRAMS -> view?.showDialog(ProgramsDialog.newInstance())
         }
     }
 

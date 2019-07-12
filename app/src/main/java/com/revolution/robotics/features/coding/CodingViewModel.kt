@@ -23,7 +23,7 @@ class CodingViewModel(resourceResolver: ResourceResolver, private val presenter:
     }
 
     fun saveProgram() {
-        presenter.showSaveProgramDialog(userProgram)
+        presenter.showSaveProgramDialog(userProgram, -1)
     }
 
     fun onBackPressed() {

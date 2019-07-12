@@ -5,7 +5,10 @@ import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.databinding.DialogConfirmBinding
 import com.revolution.robotics.utils.ConfirmDialog
 
-class LeaveProgramDialog : ConfirmDialog(R.string.program_confirm_positive) {
+class LeaveProgramDialog : ConfirmDialog(
+    positiveButtonText = R.string.program_confirm_positive,
+    negativeButtonText = R.string.program_leave_confirmation_dialog_leave_button
+) {
 
     companion object {
         fun newInstance() = LeaveProgramDialog()
@@ -14,11 +17,14 @@ class LeaveProgramDialog : ConfirmDialog(R.string.program_confirm_positive) {
     override fun onActivated(binding: DialogConfirmBinding?) {
         binding?.apply {
             confirmTitle.setText(R.string.program_confirm_title)
-            confirmDescription.setText(R.string.program_confirm_description)
         }
     }
 
+    override fun onCancelled() {
+        dialogEventBus.publish(DialogEvent.PROGRAM_CONFIRM_CLOSE_WITHOUT_SAVE)
+    }
+
     override fun onConfirmed() {
-        dialogEventBus.publish(DialogEvent.PROGRAM_CONFIRM_CLOSE)
+        dialogEventBus.publish(DialogEvent.PROGRAM_CONFIRM_CLOSE_WITH_SAVE)
     }
 }

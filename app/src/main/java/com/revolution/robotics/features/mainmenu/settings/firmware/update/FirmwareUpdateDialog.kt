@@ -16,7 +16,8 @@ class FirmwareUpdateDialog : RoboticsDialog(), FirmwareUpdateMvp.View {
             FirmwareUpdateInfoFace(this),
             FirmwareUpdateLoadingDialogFace(this),
             FirmwareUpdateSuccessDialogFace(this),
-            FirmwareUpdateFailedDialogFace(this)
+            FirmwareUpdateFailedDialogFace(this),
+            FirmwareUpdateConfirmationDialogFace(this)
         )
     override val dialogButtons: List<DialogButton> = listOf()
 
@@ -43,19 +44,32 @@ class FirmwareUpdateDialog : RoboticsDialog(), FirmwareUpdateMvp.View {
         activateFace(dialogFaces.first { it is FirmwareUpdateInfoFace })
     }
 
+    override fun onDialogCloseButtonClicked(): Boolean {
+        activateFace(dialogFaces.first { it is FirmwareUpdateConfirmationDialogFace })
+        return false
+    }
+
+    fun stopFrameworkUpdate() {
+        presenter.stopFirmwareUpdate()
+        dismissAllowingStateLoss()
+    }
+
     override fun setInfoViewModel(viewModel: FirmwareUpdateInfoViewModel) {
         (dialogFaces[0] as FirmwareUpdateInfoFace).setViewModel(viewModel)
     }
 
     override fun activateLoadingFace() {
+        changeCancelableState(false)
         activateFace(dialogFaces.first { it is FirmwareUpdateLoadingDialogFace })
     }
 
     override fun activateSuccessFace() {
+        changeCancelableState(true)
         activateFace(dialogFaces.first { it is FirmwareUpdateSuccessDialogFace })
     }
 
     override fun activateErrorFace() {
+        changeCancelableState(true)
         activateFace(dialogFaces.first { it is FirmwareUpdateFailedDialogFace })
     }
 
@@ -65,5 +79,10 @@ class FirmwareUpdateDialog : RoboticsDialog(), FirmwareUpdateMvp.View {
 
     fun retryFirmwareUpload() {
         presenter.retryFirmwareUpdate()
+    }
+
+    private fun changeCancelableState(isCancelable: Boolean) {
+        dialog?.setCancelable(isCancelable)
+        dialog?.setCanceledOnTouchOutside(isCancelable)
     }
 }

@@ -19,8 +19,8 @@ interface CodingMvp : Mvp {
 
     interface Presenter : Mvp.Presenter<View, CodingViewModel>, SaveBlocklyListener {
         fun showProgramsDialog()
-        fun showSaveProgramDialog(userProgram: UserProgram?)
-        fun setSavedProgramData(userProgram: UserProgram)
+        fun showSaveProgramDialog(userProgram: UserProgram?, actionIdAfterSave: Int)
+        fun setSavedProgramData(userProgram: UserProgram, actionId: Int)
         fun removeProgram(userProgram: UserProgram)
         fun loadProgram(userProgram: UserProgram)
         fun showPythonCode()

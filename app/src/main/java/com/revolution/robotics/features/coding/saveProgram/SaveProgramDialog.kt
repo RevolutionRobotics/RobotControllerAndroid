@@ -17,12 +17,15 @@ class SaveProgramDialog : SaveDialog(), SaveProgramMvp.View {
 
     companion object {
         const val KEY_USER_PROGRAM = "userProgram"
+        const val KEY_ACTION_ID = "actionId"
 
         private var Bundle.userProgram by BundleArgumentDelegate.ParcelableNullable<UserProgram>(KEY_USER_PROGRAM)
+        private var Bundle.actionId by BundleArgumentDelegate.Int(KEY_ACTION_ID)
 
-        fun newInstance(userProgram: UserProgram?) =
+        fun newInstance(userProgram: UserProgram?, actionId: Int) =
             SaveProgramDialog().withArguments { bundle ->
                 bundle.userProgram = userProgram
+                bundle.actionId = actionId
             }
     }
 
@@ -52,6 +55,7 @@ class SaveProgramDialog : SaveDialog(), SaveProgramMvp.View {
         dismissAllowingStateLoss()
         dialogEventBus.publish(DialogEvent.SAVE_PROGRAM.apply {
             extras.userProgram = userProgram
+            extras.actionId = arguments?.actionId ?: -1
         })
     }
 

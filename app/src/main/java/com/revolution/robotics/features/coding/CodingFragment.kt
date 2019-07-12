@@ -30,6 +30,11 @@ class CodingFragment : BaseFragment<FragmentCodingBinding, CodingViewModel>(R.la
 
     companion object {
         private const val BLOCKLY_DELAY_MS = 125L
+
+        const val KEY_ACTION_ID_AFTER_SAVE = "actionId"
+        const val ACTION_ID_LEAVE = 1
+        const val ACTION_ID_LOAD_PROGRAMS = 2
+
         private var Bundle.program by BundleArgumentDelegate.ParcelableNullable<UserProgram>("program")
     }
 
@@ -129,13 +134,22 @@ class CodingFragment : BaseFragment<FragmentCodingBinding, CodingViewModel>(R.la
             DialogEvent.SAVE_PROGRAM -> {
                 val userProgram = event.extras.getParcelable<UserProgram?>(SaveProgramDialog.KEY_USER_PROGRAM)
                 userProgram?.let { program ->
-                    presenter.setSavedProgramData(program)
+                    presenter.setSavedProgramData(program, event.extras.getInt(SaveProgramDialog.KEY_ACTION_ID))
                     binding?.viewBlockly?.saveProgram(presenter)
                 }
             }
-            DialogEvent.PROGRAM_CONFIRM_CLOSE ->
-                navigator.back()
-            DialogEvent.PROGRAM_CONFIRM_LOAD -> showDialog(ProgramsDialog.newInstance())
+            DialogEvent.PROGRAM_CONFIRM_CLOSE_WITH_SAVE -> presenter.showSaveProgramDialog(
+                viewModel?.userProgram,
+                ACTION_ID_LEAVE
+            )
+            DialogEvent.PROGRAM_CONFIRM_LOAD_WITH_SAVE -> presenter.showSaveProgramDialog(
+                viewModel?.userProgram,
+                ACTION_ID_LOAD_PROGRAMS
+            )
+            DialogEvent.PROGRAM_CONFIRM_LOAD_WITHOUT_SAVE -> showDialog(
+                ProgramsDialog.newInstance()
+            )
+            DialogEvent.PROGRAM_CONFIRM_CLOSE_WITHOUT_SAVE -> onBackPressed(false)
             else -> Unit
         }
     }

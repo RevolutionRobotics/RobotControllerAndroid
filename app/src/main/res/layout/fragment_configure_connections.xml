@@ -21,7 +21,7 @@
                 android:src="@drawable/ic_configure_connections_glow"
         />
 
-        <com.revolution.robotics.views.RemoteImageView
+        <ImageView
                 android:id="@+id/brainImage"
                 android:layout_width="@dimen/configure_connections_brain_width"
                 android:layout_height="@dimen/configure_connections_brain_height"
@@ -29,12 +29,9 @@
                 app:layout_constraintStart_toStartOf="@id/buttonM2"
                 app:layout_constraintEnd_toEndOf="@id/buttonM2"
                 app:layout_constraintBottom_toTopOf="@id/buttonM5"
-                app:robotId="@{viewModel.robotId}"
-                app:firebaseImageUrl="@{viewModel.firebaseImageUrl}"
-                app:errorDrawable="@{@drawable/configure_brain}"
                 android:layout_marginTop="@dimen/configure_connections_brain_horizontal_margin"
                 android:scaleType="fitCenter"
-                android:src="@drawable/configure_brain"
+                android:src="@drawable/bg_brain"
                 app:layout_constraintVertical_chainStyle="packed"
         />
 

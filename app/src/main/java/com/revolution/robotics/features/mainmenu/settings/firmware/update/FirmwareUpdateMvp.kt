@@ -18,5 +18,6 @@ interface FirmwareUpdateMvp : Mvp {
     interface Presenter : Mvp.Presenter<View, ViewModel> {
         fun onCheckForUpdatesClicked()
         fun retryFirmwareUpdate()
+        fun stopFirmwareUpdate()
     }
 }

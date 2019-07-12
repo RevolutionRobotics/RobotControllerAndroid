@@ -42,6 +42,9 @@ class ProgramPriorityFragment :
             override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
                 super.clearView(recyclerView, viewHolder)
                 presenter.onDragEnded()
+                (viewHolder as? JoystickDelegateItem.PriorityViewHolder)?.binding?.viewModel?.isItemSelected?.set(false)
+                (viewHolder as? PriorityProgramDelegateItem.PriorityViewHolder)
+                    ?.binding?.viewModel?.isItemSelected?.set(false)
                 adapter?.notifyItemRangeChanged(0, adapter?.itemCount ?: 0)
             }
         }
