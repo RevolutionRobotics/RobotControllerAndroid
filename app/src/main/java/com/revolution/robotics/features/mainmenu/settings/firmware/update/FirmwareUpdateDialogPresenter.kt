@@ -121,6 +121,12 @@ class FirmwareUpdateDialogPresenter(
         updateFirmware()
     }
 
+    override fun stopFirmwareUpdate() {
+        if (isUpdateFlowStarted) {
+            bluetoothManager.getConfigurationService().stop()
+        }
+    }
+
     @Suppress("UnusedPrivateMember")
     private fun readError(throwable: Throwable) {
         if (!isUpdateFlowStarted) {

@@ -48,8 +48,9 @@ class TurnOnTheBrainDialog : RoboticsDialog(), DialogController {
         activateFace(dialogFaces.first { it is TurnOnTheBrainDialogFace })
     }
 
-    override fun onDialogCloseButtonClicked() {
+    override fun onDialogCloseButtonClicked(): Boolean {
         dialogEventBus.publish(DialogEvent.BRAIN_NOT_TURNED_ON)
+        return true
     }
 
     inner class TurnOnTheBrainDialogFace : DialogFace<DialogTurnOnTheBrainBinding>(R.layout.dialog_turn_on_the_brain) {

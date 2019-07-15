@@ -34,7 +34,7 @@
                 android:layout_width="0dp"
                 android:layout_marginStart="@dimen/dimen_12dp"
                 android:layout_height="@dimen/dimen_40dp"
-                app:chippedBoxConfig="@{viewModel.background}"/>
+                app:chippedBoxConfig="@{viewModel.isItemSelected ? viewModel.selectedBackground : viewModel.background}"/>
 
         <ImageView
                 android:id="@+id/img_reorder"
