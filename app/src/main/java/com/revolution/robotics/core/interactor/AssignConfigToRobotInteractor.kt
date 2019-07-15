@@ -17,13 +17,15 @@ import com.revolution.robotics.core.domain.remote.Configuration
 import com.revolution.robotics.core.domain.remote.Controller
 import com.revolution.robotics.core.domain.remote.Program
 import com.revolution.robotics.core.domain.remote.ProgramBinding
+import com.revolution.robotics.core.kodein.utils.ResourceResolver
 
 class AssignConfigToRobotInteractor(
     private val userRobotDao: UserRobotDao,
     private val userConfigurationDao: UserConfigurationDao,
     private val controllerDao: UserControllerDao,
     private val saveProgramDao: UserProgramDao,
-    private val userBackgroundProgramBindingDao: UserBackgroundProgramBindingDao
+    private val userBackgroundProgramBindingDao: UserBackgroundProgramBindingDao,
+    private val resourceResolver: ResourceResolver
 ) : Interactor<UserRobot>() {
 
     lateinit var userRobot: UserRobot
@@ -128,9 +130,9 @@ class AssignConfigToRobotInteractor(
                 currentProgram
             }
             val newProgram = UserProgram(
-                remoteProgram.description?.getLocalizedString() ?: "",
+                remoteProgram.description?.getLocalizedString(resourceResolver) ?: "",
                 remoteProgram.lastModified,
-                currentProgram?.name ?: remoteProgram.name?.getLocalizedString() ?: "",
+                currentProgram?.name ?: remoteProgram.name?.getLocalizedString(resourceResolver) ?: "",
                 remoteProgram.python,
                 remoteProgram.xml,
                 remoteProgram.variables,
@@ -159,9 +161,9 @@ class AssignConfigToRobotInteractor(
     private fun createUserController(controller: Controller) = UserController(
         id = 0,
         robotId = userRobot.instanceId,
-        name = controller.name?.getLocalizedString() ?: "",
+        name = controller.name?.getLocalizedString(resourceResolver) ?: "",
         type = controller.type,
-        description = controller.description?.getLocalizedString() ?: "",
+        description = controller.description?.getLocalizedString(resourceResolver) ?: "",
         lastModified = controller.lastModified,
         mapping = UserButtonMapping(),
         joystickPriority = controller.joystickPriority?.toInt() ?: 0
