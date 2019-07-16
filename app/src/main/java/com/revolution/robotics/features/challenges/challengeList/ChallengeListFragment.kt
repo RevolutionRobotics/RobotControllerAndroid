@@ -7,6 +7,7 @@ import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.remote.ChallengeCategory
 import com.revolution.robotics.core.extensions.withArguments
+import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.core.utils.BundleArgumentDelegate
 import com.revolution.robotics.databinding.FragmentChallengeListBinding
 import com.revolution.robotics.features.challenges.challengeList.adapter.ChallengeListAdapter
@@ -27,6 +28,7 @@ class ChallengeListFragment :
     override val viewModelClass: Class<ChallengeListViewModel> = ChallengeListViewModel::class.java
 
     val presenter: ChallengeListMvp.Presenter by kodein.instance()
+    val resourceResolver: ResourceResolver by kodein.instance()
     val adapter = ChallengeListAdapter()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -38,7 +40,7 @@ class ChallengeListFragment :
         }
         presenter.register(this, viewModel)
         arguments?.let { arguments ->
-            binding?.toolbarViewModel?.title?.set(arguments.challenge.name)
+            binding?.toolbarViewModel?.title?.set(arguments.challenge.name?.getLocalizedString(resourceResolver) ?: "")
             presenter.setChallengeCategory(arguments.challenge)
         }
     }

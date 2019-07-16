@@ -133,7 +133,7 @@ fun createInteractorModule() =
         bind<BuildStepInteractor>() with p { BuildStepInteractor() }
         bind<ConfigurationInteractor>() with p { ConfigurationInteractor() }
         bind<GetUserRobotInteractor>() with p { GetUserRobotInteractor(i()) }
-        bind<AssignConfigToRobotInteractor>() with p { AssignConfigToRobotInteractor(i(), i(), i(), i(), i()) }
+        bind<AssignConfigToRobotInteractor>() with p { AssignConfigToRobotInteractor(i(), i(), i(), i(), i(), i()) }
         bind<UpdateUserRobotInteractor>() with p { UpdateUserRobotInteractor(i(), i()) }
         bind<GetAllUserRobotsInteractor>() with p { GetAllUserRobotsInteractor(i()) }
         bind<DeleteRobotInteractor>() with p { DeleteRobotInteractor(i(), i()) }
@@ -156,7 +156,7 @@ fun createInteractorModule() =
         bind<SaveUserRobotInteractor>() with p { SaveUserRobotInteractor(i()) }
         bind<DuplicateUserRobotInteractor>() with p { DuplicateUserRobotInteractor(i(), i(), i(), i(), i(), i()) }
         bind<LocalFileSaver>() with p { LocalFileSaver() }
-        bind<SaveUserProgramsInteractor>() with p { SaveUserProgramsInteractor(i()) }
+        bind<SaveUserProgramsInteractor>() with p { SaveUserProgramsInteractor(i(), i()) }
         bind<GetFullConfigurationInteractor>() with p { GetFullConfigurationInteractor(i(), i(), i(), i()) }
         bind<GetUserProgramInteractor>() with p { GetUserProgramInteractor(i()) }
         bind<FirmwareInteractor>() with p { FirmwareInteractor() }
@@ -169,7 +169,7 @@ fun createInteractorModule() =
 fun createPresenterModule() =
     Kodein.Module("PresenterModule") {
         bind<MainMenuMvp.Presenter>() with s { MainMenuPresenter(i(), i(), i()) }
-        bind<WhoToBuildMvp.Presenter>() with s { WhoToBuildPresenter(i(), i(), i(), i()) }
+        bind<WhoToBuildMvp.Presenter>() with s { WhoToBuildPresenter(i(), i(), i(), i(), i()) }
         bind<MyRobotsMvp.Presenter>() with s { MyRobotsPresenter(i(), i(), i(), i(), i()) }
         bind<BuildRobotMvp.Presenter>() with s { BuildRobotPresenter(i(), i(), i(), i(), i(), i(), i(), i(), i(), i()) }
         bind<ConnectMvp.Presenter>() with s { ConnectPresenter(i(), i()) }
@@ -192,7 +192,7 @@ fun createPresenterModule() =
         bind<SplashMvp.Presenter>() with s { SplashPresenter(i(), i(), i()) }
         bind<ChallengeGroupMvp.Presenter>() with s { ChallengeGroupPresenter(i(), i(), i()) }
         bind<ChallengeListMvp.Presenter>() with s { ChallengeListPresenter(i(), i()) }
-        bind<ChallengeDetailMvp.Presenter>() with s { ChallengeDetailPresenter(i(), i(), i()) }
+        bind<ChallengeDetailMvp.Presenter>() with s { ChallengeDetailPresenter(i(), i(), i(), i()) }
         bind<DirectionSelectorMvp.Presenter>() with s { DirectionSelectorPresenter() }
         bind<DonutSelectorMvp.Presenter>() with s { DonutSelectorPresenter() }
         bind<ColorPickerMvp.Presenter>() with s { ColorPickerPresenter() }

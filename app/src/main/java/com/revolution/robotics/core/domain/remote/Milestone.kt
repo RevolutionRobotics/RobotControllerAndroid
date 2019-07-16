@@ -6,7 +6,7 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class Milestone(
     var testImage: String? = null,
-    var testDescription: String? = null,
+    var testDescription: LocalizedString? = null,
     var testCode: String? = null,
     var type: String? = null
 ) : Parcelable

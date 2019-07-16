@@ -104,7 +104,7 @@
                     android:textSize="12sp"
                     android:textColor="@color/white"
                     android:fontFamily="@font/jura_bold"
-                    android:text="@{viewModel.name}"/>
+                    app:localizedFirebaseText="@{viewModel.name}"/>
 
             <TextView
                     android:id="@+id/steps"

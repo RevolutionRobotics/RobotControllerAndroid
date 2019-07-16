@@ -7,12 +7,14 @@ import com.revolution.robotics.core.domain.remote.ChallengeStep
 import com.revolution.robotics.core.interactor.GetUserChallengeCategoriesInteractor
 import com.revolution.robotics.core.interactor.SaveUserChallengeCategoryInteractor
 import com.revolution.robotics.core.interactor.firebase.ChallengeCategoriesInteractor
+import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.features.challenges.challengeDetail.adapter.ChallengePartItemViewModel
 
 class ChallengeDetailPresenter(
     private val saveUserChallengeCategoryInteractor: SaveUserChallengeCategoryInteractor,
     private val getCategoriesInteractor: ChallengeCategoriesInteractor,
-    private val getUserChallengeCategoriesInteractor: GetUserChallengeCategoriesInteractor
+    private val getUserChallengeCategoriesInteractor: GetUserChallengeCategoriesInteractor,
+    private val resourceResolver: ResourceResolver
 ) :
     ChallengeDetailMvp.Presenter, ChallengeDetailSlider.ChallengeStepSelectedListener {
 
@@ -35,7 +37,7 @@ class ChallengeDetailPresenter(
     }
 
     private fun setChallengeStep(challengeStep: ChallengeStep) {
-        toolbarViewModel?.title?.set(challengeStep.title)
+        toolbarViewModel?.title?.set(challengeStep.title?.getLocalizedString(resourceResolver) ?: "")
         model?.apply {
             when (val challengeType = ChallengeType.fromId(challengeStep.challengeType)) {
                 ChallengeType.HORIZONTAL, ChallengeType.VERTICAL -> {

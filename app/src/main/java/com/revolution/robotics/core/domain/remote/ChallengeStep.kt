@@ -6,8 +6,8 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class ChallengeStep(
     var id: String? = null,
-    var title: String? = null,
-    var description: String? = null,
+    var title: LocalizedString? = null,
+    var description: LocalizedString? = null,
     var image: String? = null,
     var order: Int = 0,
     var challengeType: String? = null,

@@ -6,6 +6,6 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class Part(
     var order: Int = 0,
-    var name: String? = null,
+    var name: LocalizedString? = null,
     var image: String? = null
 ) : Parcelable

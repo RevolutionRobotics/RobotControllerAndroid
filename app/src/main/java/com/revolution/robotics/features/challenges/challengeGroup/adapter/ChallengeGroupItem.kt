@@ -1,13 +1,14 @@
 package com.revolution.robotics.features.challenges.challengeGroup.adapter
 
 import com.revolution.robotics.core.domain.remote.ChallengeCategory
+import com.revolution.robotics.core.domain.remote.LocalizedString
 import com.revolution.robotics.features.challenges.challengeGroup.ChallengeGroupMvp
 import kotlin.math.min
 
 @Suppress("DataClassContainsFunctions")
 data class ChallengeGroupItem(
     val iconUrl: String,
-    val name: String,
+    val name: LocalizedString?,
     private val currentChallenge: Int,
     private val totalChallenge: Int,
     private val challengeCategory: ChallengeCategory,
