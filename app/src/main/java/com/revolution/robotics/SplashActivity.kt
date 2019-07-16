@@ -2,6 +2,7 @@ package com.revolution.robotics
 
 import android.app.Activity
 import android.content.Intent
+import android.widget.Toast
 import com.revolution.robotics.features.splash.SplashMvp
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
@@ -26,5 +27,9 @@ class SplashActivity : Activity(), KodeinAware, SplashMvp.View {
     override fun startApp() {
         startActivity(Intent(this, MainActivity::class.java))
         finish()
+    }
+
+    override fun showUpdateNeeded() {
+        Toast.makeText(this, "Update needed!", Toast.LENGTH_SHORT).show()
     }
 }
