@@ -10,6 +10,7 @@ import com.revolution.robotics.core.domain.remote.BuildStep
 import com.revolution.robotics.core.domain.remote.Milestone
 import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
+import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.core.utils.BundleArgumentDelegate
 import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.databinding.FragmentBuildRobotBinding
@@ -37,6 +38,7 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
     private val dialogEventBus: DialogEventBus by kodein.instance()
     private val bluetoothManager: BluetoothManager by kodein.instance()
     private val navigator: Navigator by kodein.instance()
+    private val resourceResolver: ResourceResolver by kodein.instance()
 
     private var buildStepCount = 0
     private var currentBuildStep: BuildStep? = null
@@ -90,7 +92,7 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
                     event.extras.getParcelable<Milestone>(ChapterFinishedDialog.KEY_MILESTONE)?.let { milestone ->
                         TestBuildDialog.newInstance(
                             milestone.testImage ?: "",
-                            milestone.testDescription ?: "",
+                            milestone.testDescription?.getLocalizedString(resourceResolver) ?: "",
                             milestone.testCode ?: ""
                         ).show(
                             fragmentManager

@@ -9,6 +9,7 @@ import com.revolution.robotics.core.extensions.isEmptyOrNull
 import com.revolution.robotics.core.interactor.AssignConfigToRobotInteractor
 import com.revolution.robotics.core.interactor.SaveUserRobotInteractor
 import com.revolution.robotics.core.interactor.firebase.RobotInteractor
+import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.features.build.BuildRobotFragment
 import com.revolution.robotics.features.whoToBuild.adapter.RobotsItem
@@ -19,6 +20,7 @@ class WhoToBuildPresenter(
     private val robotsInteractor: RobotInteractor,
     private val assignConfigToRobotInteractor: AssignConfigToRobotInteractor,
     private val saveUserRobotInteractor: SaveUserRobotInteractor,
+    private val resourceResolver: ResourceResolver,
     private val navigator: Navigator
 ) :
     WhoToBuildMvp.Presenter {
@@ -86,9 +88,9 @@ class WhoToBuildPresenter(
             BuildRobotFragment.DEFAULT_STARTING_INDEX,
             Date(System.currentTimeMillis()),
             0,
-            robot.name,
+            robot.name?.getLocalizedString(resourceResolver) ?: "",
             robot.coverImage,
-            robot.description
+            robot.description?.getLocalizedString(resourceResolver) ?: ""
         )
         navigator.navigate(WhoToBuildFragmentDirections.toBuildRobot(userRobot))
     }

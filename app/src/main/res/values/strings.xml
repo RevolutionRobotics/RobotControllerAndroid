@@ -366,4 +366,6 @@
     <string name="framework_confirmation_dialog_no_button">No</string>
     <string name="program_leave_confirmation_dialog_leave_button">Leave</string>
 
+    <string name="language_id">en</string>
+
 </resources>
