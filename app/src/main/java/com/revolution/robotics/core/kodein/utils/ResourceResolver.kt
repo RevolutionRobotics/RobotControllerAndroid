@@ -34,5 +34,4 @@ class ResourceResolver(val context: Context) {
 
     fun isInternetConnectionAvailable() =
         (context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).activeNetworkInfo != null
-
 }
