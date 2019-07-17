@@ -13,7 +13,8 @@ class FirebaseInitInteractor : Interactor<Unit>() {
             "program",
             "robot",
             "testCode",
-            "firmware"
+            "firmware",
+            "minVersion"
         )
 
     override fun getData() {

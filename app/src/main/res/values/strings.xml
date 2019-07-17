@@ -6,6 +6,12 @@
     <string name="next">Next</string>
     <string name="done">Done</string>
 
+    <!-- Force update -->
+    <string name="force_update_title">Update needed</string>
+    <string name="force_update_description">The application version you are using is no longer supported. Please update from the Play Store!</string>
+    <string name="force_update_exit_button_title">Quit</string>
+    <string name="force_update_update_button_title">Update</string>
+
     <!-- Main menu -->
     <string name="menu_robots">robots</string>
     <string name="menu_coding">programs</string>

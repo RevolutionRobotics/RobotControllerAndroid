@@ -47,14 +47,7 @@ import com.revolution.robotics.core.interactor.SaveUserProgramInteractor
 import com.revolution.robotics.core.interactor.SaveUserProgramsInteractor
 import com.revolution.robotics.core.interactor.SaveUserRobotInteractor
 import com.revolution.robotics.core.interactor.UpdateUserRobotInteractor
-import com.revolution.robotics.core.interactor.firebase.BuildStepInteractor
-import com.revolution.robotics.core.interactor.firebase.ChallengeCategoriesInteractor
-import com.revolution.robotics.core.interactor.firebase.ConfigurationInteractor
-import com.revolution.robotics.core.interactor.firebase.ControllerInteractor
-import com.revolution.robotics.core.interactor.firebase.FirmwareInteractor
-import com.revolution.robotics.core.interactor.firebase.ProgramInteractor
-import com.revolution.robotics.core.interactor.firebase.ProgramsInteractor
-import com.revolution.robotics.core.interactor.firebase.RobotInteractor
+import com.revolution.robotics.core.interactor.firebase.*
 import com.revolution.robotics.features.build.BuildRobotMvp
 import com.revolution.robotics.features.build.BuildRobotPresenter
 import com.revolution.robotics.features.build.buildFinished.BuildFinishedMvp
@@ -163,6 +156,7 @@ fun createInteractorModule() =
         bind<PortTestFileCreatorInteractor>() with p { PortTestFileCreatorInteractor(i()) }
         bind<CreateConfigurationFileInteractor>() with p { CreateConfigurationFileInteractor(i()) }
         bind<GetControllerNameInteractor>() with p { GetControllerNameInteractor(i(), i()) }
+        bind<ForceUpdateInteractor>() with p { ForceUpdateInteractor() }
     }
 
 @Suppress("LongMethod")
@@ -189,7 +183,7 @@ fun createPresenterModule() =
         bind<ProgramSelectorMvp.Presenter>() with s { ProgramSelectorPresenter(i(), i(), i(), i()) }
         bind<ProgramPriorityMvp.Presenter>() with s { ProgramPriorityPresenter(i(), i(), i(), i()) }
         bind<ButtonlessProgramSelectorMvp.Presenter>() with s { ButtonlessProgramSelectorPresenter(i(), i(), i(), i()) }
-        bind<SplashMvp.Presenter>() with s { SplashPresenter(i(), i(), i()) }
+        bind<SplashMvp.Presenter>() with s { SplashPresenter(i(), i(), i(), i()) }
         bind<ChallengeGroupMvp.Presenter>() with s { ChallengeGroupPresenter(i(), i(), i()) }
         bind<ChallengeListMvp.Presenter>() with s { ChallengeListPresenter(i(), i()) }
         bind<ChallengeDetailMvp.Presenter>() with s { ChallengeDetailPresenter(i(), i(), i(), i()) }
