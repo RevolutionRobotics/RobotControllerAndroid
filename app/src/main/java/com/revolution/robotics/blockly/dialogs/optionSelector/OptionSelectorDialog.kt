@@ -17,17 +17,20 @@ class OptionSelectorDialog :
     companion object {
         private var Bundle.title by BundleArgumentDelegate.String("title")
         private var Bundle.options by BundleArgumentDelegate.Parcelable<OptionList>("options")
+        private var Bundle.showLabels by BundleArgumentDelegate.Boolean("showLabels")
 
-        fun newInstance(title: String, options: List<Option>) =
+        fun newInstance(title: String, options: List<Option>, showLabels: Boolean) =
             OptionSelectorDialog().withArguments { bundle ->
                 bundle.title = title
+                bundle.showLabels = showLabels
                 bundle.options = OptionList().apply { addAll(options) }
             }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         arguments?.let { arguments ->
-            binding.viewModel = OptionSelectorViewModel(arguments.options, blocklyResultHolder, this)
+            binding.viewModel =
+                OptionSelectorViewModel(arguments.options, arguments.showLabels, blocklyResultHolder, this)
             title.set(arguments.title)
         }
     }
