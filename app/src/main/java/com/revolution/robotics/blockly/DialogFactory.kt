@@ -65,13 +65,14 @@ class DialogFactory(
 
     override fun showOptionSelector(
         title: String,
+        showLabels: Boolean,
         blocklyOptions: List<BlocklyOption>,
         defaultValue: BlocklyOption?,
         result: OptionResult
     ) {
         blocklyResultHolder.result = result
         val options = blocklyOptions.map { blocklyOption -> blocklyOption.toOption(defaultValue, resourceResolver) }
-        OptionSelectorDialog.newInstance(title, options).show(fragmentManager)
+        OptionSelectorDialog.newInstance(title, options, showLabels).show(fragmentManager)
     }
 
     override fun showColorPicker(title: String, colors: List<String>, defaultValue: String, result: ColorResult) {
@@ -99,9 +100,9 @@ class DialogFactory(
         VariableOptionsDialog.newInstance(title, defaultValue, variables).show(fragmentManager)
     }
 
-    override fun showTextInput(title: String, defaultValue: String?, result: TextResult) {
+    override fun showTextInput(title: String, subtitle: String?, defaultValue: String?, result: TextResult) {
         blocklyResultHolder.result = result
-        TextInputDialog.newInstance(title, defaultValue).show(fragmentManager)
+        TextInputDialog.newInstance(title, subtitle, defaultValue).show(fragmentManager)
     }
 
     override fun showDonutSelector(defaultValue: String, isMultiSelection: Boolean, result: DonutResult) {

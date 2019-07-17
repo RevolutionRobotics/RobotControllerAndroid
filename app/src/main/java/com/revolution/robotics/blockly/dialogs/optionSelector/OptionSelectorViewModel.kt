@@ -9,6 +9,7 @@ import org.revolutionrobotics.robotcontroller.blocklysdk.view.result.OptionResul
 
 class OptionSelectorViewModel(
     val options: List<Option>,
+    val showLabels: Boolean,
     private val resultHolder: BlocklyResultHolder,
     private val dialogInterface: BlocklyDialogInterface
 ) :
