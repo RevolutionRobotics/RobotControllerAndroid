@@ -21,7 +21,7 @@ class SplashPresenter(
         firebaseInitInteractor.execute {
             forceUpdateInteractor.checkUpdateNeeded { updateNeeded ->
                 if (updateNeeded) {
-                    this.view?.showUpdateNeeded()
+                    this.view?.showUpdateNeededDialog()
                 } else {
                     this.view?.startApp()
                     programsInteractor.downloadAllPrograms { programs ->

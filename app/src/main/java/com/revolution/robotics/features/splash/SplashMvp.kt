@@ -7,7 +7,7 @@ interface SplashMvp : Mvp {
 
     interface View : Mvp.View {
         fun startApp()
-        fun showUpdateNeeded()
+        fun showUpdateNeededDialog()
     }
 
     interface Presenter : Mvp.Presenter<View, ViewModel>
