@@ -373,5 +373,6 @@
     <string name="program_leave_confirmation_dialog_leave_button">Leave</string>
 
     <string name="language_id">en</string>
+    <string name="error_internet">Something went wrong, please check your internet connection</string>
 
 </resources>

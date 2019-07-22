@@ -20,11 +20,13 @@ class TextInputDialog : JavascriptPromptDialog<BlocklyDialogTextInputBinding>(R.
         private const val MAX_LENGTH = 40
 
         private var Bundle.title by BundleArgumentDelegate.String("title")
+        private var Bundle.subtitle by BundleArgumentDelegate.StringNullable("subtitle")
         private var Bundle.defaultValue by BundleArgumentDelegate.StringNullable("defaultValue")
 
-        fun newInstance(title: String, defaultValue: String? = null) =
+        fun newInstance(title: String, subtitle: String?, defaultValue: String? = null) =
             TextInputDialog().withArguments { bundle ->
                 bundle.title = title
+                bundle.subtitle = subtitle
                 bundle.defaultValue = defaultValue
             }
     }
@@ -48,7 +50,7 @@ class TextInputDialog : JavascriptPromptDialog<BlocklyDialogTextInputBinding>(R.
             title.set(arguments?.title)
             binding.text.setViewModel(
                 ChippedEditTextViewModel(
-                    title = arguments?.title,
+                    title = arguments?.subtitle ?: arguments?.title,
                     text = arguments?.defaultValue,
                     titleColor = R.color.white,
                     hintColor = R.color.grey_8e,

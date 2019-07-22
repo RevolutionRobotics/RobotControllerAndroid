@@ -39,6 +39,7 @@ class SliderDialog : JavascriptPromptDialog<BlocklyDialogSliderBinding>(R.layout
         arguments?.let { arguments ->
             title.set(arguments.title)
             binding.slider.apply {
+                max = arguments.maxValue
                 progress = arguments.defaultValue
                 progressDrawable.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN)
                 thumb.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN)

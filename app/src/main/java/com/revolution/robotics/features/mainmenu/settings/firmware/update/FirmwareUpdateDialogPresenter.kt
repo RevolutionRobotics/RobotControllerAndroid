@@ -84,6 +84,11 @@ class FirmwareUpdateDialogPresenter(
     }
 
     override fun onCheckForUpdatesClicked() {
+        if (!resourceResolver.isInternetConnectionAvailable()) {
+            errorHandler.onError(R.string.error_internet)
+            return
+        }
+
         isUpdateFlowStarted = true
         interactor.execute { firmware ->
             latestFirmware = firmware
