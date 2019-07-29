@@ -21,8 +21,4 @@ class MyRobotsViewModel(private val presenter: MyRobotsMvp.Presenter) : ViewMode
 
     fun nextButtonClick() = presenter.nextButtonClick()
     fun previousButtonClick() = presenter.previousButtonClick()
-
-    fun onBuildNewClicked() {
-        presenter.navigateToWhoToBuild()
-    }
 }
