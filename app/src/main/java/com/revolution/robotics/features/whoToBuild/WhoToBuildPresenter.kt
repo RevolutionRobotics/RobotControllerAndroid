@@ -12,6 +12,8 @@ import com.revolution.robotics.core.interactor.firebase.RobotInteractor
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.features.build.BuildRobotFragment
+import com.revolution.robotics.features.myRobots.adapter.MyRobotsAddItem
+import com.revolution.robotics.features.whoToBuild.adapter.RobotsBuildYourOwnItem
 import com.revolution.robotics.features.whoToBuild.adapter.RobotsItem
 import java.util.Date
 import kotlin.math.max
@@ -36,9 +38,11 @@ class WhoToBuildPresenter(
     private fun loadRobots() {
         robotsInteractor.execute { response ->
             model?.apply {
-                currentPosition.set(0)
+                currentPosition.set(if (response.isNotEmpty()) 1 else 0)
                 robotsList.value =
                     response.map { robot -> RobotsItem(robot, this@WhoToBuildPresenter) }
+                        .toMutableList()
+                        .apply { add(0, RobotsBuildYourOwnItem(this@WhoToBuildPresenter)) }
                 robotsList.value?.firstOrNull()?.isSelected?.set(true)
                 updateButtonsVisibility(0)
                 view?.onRobotsLoaded()

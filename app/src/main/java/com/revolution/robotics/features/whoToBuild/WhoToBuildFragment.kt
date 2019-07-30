@@ -11,7 +11,7 @@ import com.revolution.robotics.databinding.FragmentWhoToBuildBinding
 import com.revolution.robotics.features.whoToBuild.adapter.RobotsCarouselAdapter
 import com.revolution.robotics.views.carousel.initCarouselPadding
 import com.revolution.robotics.views.carousel.initCarouselVariables
-import com.revolution.robotics.views.carousel.initTransformerWithDelay
+import com.revolution.robotics.views.carousel.reInitTransformerWithDelay
 import org.kodein.di.erased.instance
 
 @Suppress("UnnecessaryApply")
@@ -46,7 +46,7 @@ class WhoToBuildFragment : BaseFragment<FragmentWhoToBuildBinding, WhoToBuildVie
 
     override fun onRobotsLoaded() {
         adapter.notifyDataSetChanged()
-        binding?.robotsViewpager?.initTransformerWithDelay()
+        binding?.robotsViewpager?.reInitTransformerWithDelay(viewModel?.currentPosition?.get() ?: 0)
     }
 
     override fun showNextRobot() {
