@@ -6,7 +6,7 @@ import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.local.UserController
 import com.revolution.robotics.features.configure.controllers.ConfigureControllersMvp
 
-class ControllersItem(
+open class ControllersItem(
     val userController: UserController,
     val name: String,
     @DrawableRes
@@ -23,6 +23,10 @@ class ControllersItem(
 
     var isSelected: ObservableBoolean = ObservableBoolean(false)
     val isCurrentlyActive = ObservableBoolean(isCurrentlyActive)
+
+    open fun onItemClicked() {
+        onSelectClicked()
+    }
 
     fun onSelectClicked() {
         if (isSelected.get()) {
