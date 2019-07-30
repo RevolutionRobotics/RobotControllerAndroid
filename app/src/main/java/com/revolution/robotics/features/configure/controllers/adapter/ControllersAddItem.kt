@@ -15,6 +15,10 @@ class ControllersAddItem(
     presenter
 ) {
     override fun onItemClicked() {
-        presenter.onCreateNewClick()
+        if (isSelected.get()) {
+            presenter.onCreateNewClick()
+        } else {
+            super.onItemClicked()
+        }
     }
 }

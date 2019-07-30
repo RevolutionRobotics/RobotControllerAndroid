@@ -25,19 +25,20 @@ open class ControllersItem(
     val isCurrentlyActive = ObservableBoolean(isCurrentlyActive)
 
     open fun onItemClicked() {
-        onSelectClicked()
-    }
-
-    fun onSelectClicked() {
         if (isSelected.get()) {
-            if (isCurrentlyActive.get()) {
-                presenter.play(this)
-            } else {
-                presenter.onItemSelectionChanged(this)
-            }
+            onSelectClicked()
         } else {
             presenter.onDisabledItemCLicked(this)
         }
+    }
+
+    fun onSelectClicked() {
+        if (isCurrentlyActive.get()) {
+            presenter.play(this)
+        } else {
+            presenter.onItemSelectionChanged(this)
+        }
+
     }
 
     fun onEditClicked() {
