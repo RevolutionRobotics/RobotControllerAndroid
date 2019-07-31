@@ -42,7 +42,7 @@
                     android:layout_marginStart="@dimen/configure_controllers_controller_content_horizontal_margin"
                     android:layout_marginEnd="@dimen/configure_controllers_controller_content_horizontal_margin"
                     android:gravity="center"
-                    android:text="Create new"
+                    android:text="@string/controller_create_new"
                     android:textColor="@color/white"
                     android:fontFamily="@font/jura_bold"
                     android:textSize="@dimen/configure_controllers_name_text_size"

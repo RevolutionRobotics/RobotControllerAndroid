@@ -40,7 +40,7 @@
                     android:layout_marginStart="@dimen/my_robots_content_horizontal_margin"
                     android:layout_marginEnd="@dimen/my_robots_content_horizontal_margin"
                     android:gravity="center"
-                    android:text="Create new"
+                    android:text="@string/my_robots_build_new"
                     android:textColor="@color/white"
                     android:fontFamily="@font/jura_bold"
                     android:textSize="@dimen/my_robots_robot_name_text_size"
