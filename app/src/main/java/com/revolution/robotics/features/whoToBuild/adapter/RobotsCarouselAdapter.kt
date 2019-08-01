@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
 import com.revolution.robotics.databinding.ItemRobotsBinding
+import com.revolution.robotics.databinding.ItemRobotsBuildYourOwnBinding
 import com.revolution.robotics.views.carousel.CarouselAdapter
 
 class RobotsCarouselAdapter : CarouselAdapter<RobotsItem>() {
@@ -13,9 +14,16 @@ class RobotsCarouselAdapter : CarouselAdapter<RobotsItem>() {
         data: RobotsItem,
         position: Int
     ): ViewDataBinding {
-        val binding = ItemRobotsBinding.inflate(inflater, parent, false)
-        binding.viewModel = data
-        data.isSelected.set(position == selectedPosition)
-        return binding
+        return if (data is RobotsBuildYourOwnItem) {
+            val binding = ItemRobotsBuildYourOwnBinding.inflate(inflater, parent, false)
+            binding.viewModel = data
+            data.isSelected.set(position == selectedPosition)
+            binding
+        } else {
+            val binding = ItemRobotsBinding.inflate(inflater, parent, false)
+            binding.viewModel = data
+            data.isSelected.set(position == selectedPosition)
+            binding
+        }
     }
 }

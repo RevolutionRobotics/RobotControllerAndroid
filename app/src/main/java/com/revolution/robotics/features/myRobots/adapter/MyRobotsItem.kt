@@ -8,7 +8,7 @@ import com.revolution.robotics.core.domain.local.UserRobot
 import com.revolution.robotics.features.myRobots.MyRobotsMvp
 
 @Suppress("DataClassContainsFunctions")
-data class MyRobotsItem(
+open class MyRobotsItem(
     val id: Int,
     val robot: UserRobot,
     val iconDescription: String,
@@ -36,7 +36,7 @@ data class MyRobotsItem(
             else -> R.string.my_robots_play_button
         }
 
-    fun onItemClicked() {
+    open fun onItemClicked() {
         if (isSelected.get()) {
             onPlayClicked()
         } else {

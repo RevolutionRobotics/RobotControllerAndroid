@@ -10,6 +10,7 @@ import com.revolution.robotics.core.interactor.GetAllUserRobotsInteractor
 import com.revolution.robotics.core.interactor.GetControllerTypeInteractor
 import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.features.controllers.ControllerType
+import com.revolution.robotics.features.myRobots.adapter.MyRobotsAddItem
 import com.revolution.robotics.features.myRobots.adapter.MyRobotsItem
 import com.revolution.robotics.features.myRobots.info.InfoRobotDialog
 import kotlin.math.max
@@ -36,7 +37,7 @@ class MyRobotsPresenter(
     private fun loadRobots() {
         getAllUserRobotsInteractor.execute { robots ->
             if (model?.robotsList?.get()?.size != robots.size) {
-                model?.currentPosition?.set(0)
+                model?.currentPosition?.set(if (robots.isNotEmpty()) 1 else 0 )
             }
             model?.robotsList?.set(robots.map { robot ->
                 MyRobotsItem(
@@ -46,7 +47,7 @@ class MyRobotsPresenter(
                     robot.buildStatus != BuildStatus.COMPLETED,
                     this
                 )
-            }.toMutableList())
+            }.toMutableList().also { it.add(0, MyRobotsAddItem(this)) })
             view?.onRobotsChanged()
 
             if (model?.robotsList?.get()?.isEmpty() == true && !isEmptyNavigationHappened) {

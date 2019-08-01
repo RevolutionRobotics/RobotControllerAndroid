@@ -6,7 +6,7 @@ import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.local.UserController
 import com.revolution.robotics.features.configure.controllers.ConfigureControllersMvp
 
-class ControllersItem(
+open class ControllersItem(
     val userController: UserController,
     val name: String,
     @DrawableRes
@@ -24,16 +24,21 @@ class ControllersItem(
     var isSelected: ObservableBoolean = ObservableBoolean(false)
     val isCurrentlyActive = ObservableBoolean(isCurrentlyActive)
 
-    fun onSelectClicked() {
+    open fun onItemClicked() {
         if (isSelected.get()) {
-            if (isCurrentlyActive.get()) {
-                presenter.play(this)
-            } else {
-                presenter.onItemSelectionChanged(this)
-            }
+            onSelectClicked()
         } else {
             presenter.onDisabledItemCLicked(this)
         }
+    }
+
+    fun onSelectClicked() {
+        if (isCurrentlyActive.get()) {
+            presenter.play(this)
+        } else {
+            presenter.onItemSelectionChanged(this)
+        }
+
     }
 
     fun onEditClicked() {

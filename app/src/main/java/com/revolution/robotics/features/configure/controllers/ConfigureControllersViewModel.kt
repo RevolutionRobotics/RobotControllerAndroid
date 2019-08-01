@@ -19,5 +19,4 @@ class ConfigureControllersViewModel(private val presenter: ConfigureControllersM
 
     fun nextButtonClick() = presenter.nextButtonClick()
     fun previousButtonClick() = presenter.previousButtonClick()
-    fun onCreateNewClick() = presenter.onCreateNewClick()
 }

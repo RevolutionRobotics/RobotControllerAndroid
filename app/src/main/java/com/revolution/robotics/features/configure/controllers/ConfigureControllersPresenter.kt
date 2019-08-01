@@ -11,6 +11,7 @@ import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.features.configure.ConfigureFragmentDirections
 import com.revolution.robotics.features.configure.UserConfigurationStorage
 import com.revolution.robotics.features.configure.controller.ControllerInfoDialog
+import com.revolution.robotics.features.configure.controllers.adapter.ControllersAddItem
 import com.revolution.robotics.features.configure.controllers.adapter.ControllersItem
 import com.revolution.robotics.features.controllers.ControllerType
 import kotlin.math.max
@@ -37,7 +38,6 @@ class ConfigureControllersPresenter(
     override fun loadControllers(robotId: Int) {
         if (currentRobotId != robotId) {
             currentRobotId = robotId
-            currentPosition = 0
         }
         controllersInteractor.robotId = robotId
         controllersInteractor.execute { controllers ->
@@ -51,10 +51,10 @@ class ConfigureControllersPresenter(
                         userConfigurationStorage.userConfiguration?.controller == controller.id,
                         this
                     )
-                }
+                }.toMutableList().apply { add(0, ControllersAddItem(this@ConfigureControllersPresenter)) }
             )
             if (itemCount != controllers.size) {
-                currentPosition = 0
+                currentPosition = if (controllers.isNotEmpty()) 1 else 0
                 itemCount = controllers.size
             }
             view?.onControllersChanged(currentPosition)
