@@ -183,7 +183,7 @@
                     android:background="@drawable/ic_your_robots_clipped_button_wide_bg_selector"
                     android:layout_marginStart="@dimen/my_robots_robot_delete_margin_start"
                     android:layout_marginEnd="@dimen/my_robots_robot_delete_margin_end"
-                    android:onClick="@{()-> viewModel.onMoreInfoClicked()}"
+                    android:onClick="@{()-> viewModel.onEditClicked()}"
                     android:enabled="@{viewModel.isSelected}"
                     android:stateListAnimator="@null"
                     app:layout_constraintHorizontal_chainStyle="spread"
