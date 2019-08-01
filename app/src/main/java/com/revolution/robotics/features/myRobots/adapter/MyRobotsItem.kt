@@ -56,6 +56,11 @@ open class MyRobotsItem(
         presenter.onDisabledItemClicked(robot)
     }
 
+    fun onItemLongClicked(): Boolean {
+        presenter.onMoreInfoClicked(robot)
+        return false
+    }
+
     fun onMoreInfoClicked() {
         presenter.onMoreInfoClicked(robot)
     }
