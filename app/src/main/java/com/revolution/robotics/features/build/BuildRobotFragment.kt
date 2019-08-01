@@ -58,7 +58,7 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
         presenter.loadBuildSteps(arguments?.robot?.id ?: "")
 
         dialogEventBus.register(this)
-        if (!bluetoothManager.isConnected) {
+        if (!bluetoothManager.isServiceDiscovered) {
             bluetoothManager.startConnectionFlow()
         }
     }
@@ -88,7 +88,7 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
     override fun onDialogEvent(event: DialogEvent) {
         when (event) {
             DialogEvent.CHAPTER_FINISHED ->
-                if (bluetoothManager.isConnected) {
+                if (bluetoothManager.isServiceDiscovered) {
                     event.extras.getParcelable<Milestone>(ChapterFinishedDialog.KEY_MILESTONE)?.let { milestone ->
                         TestBuildDialog.newInstance(
                             milestone.testImage ?: "",
