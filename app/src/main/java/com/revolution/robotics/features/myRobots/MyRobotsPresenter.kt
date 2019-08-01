@@ -36,7 +36,7 @@ class MyRobotsPresenter(
 
     private fun loadRobots() {
         getAllUserRobotsInteractor.execute { robots ->
-            if (model?.robotsList?.get()?.size != robots.size) {
+            if (model?.robotsList?.get()?.size != robots.size + 1) {
                 model?.currentPosition?.set(if (robots.isNotEmpty()) 1 else 0 )
             }
             model?.robotsList?.set(robots.map { robot ->

@@ -6,6 +6,7 @@ import com.revolution.robotics.core.domain.local.UserRobot
 import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
 import com.revolution.robotics.core.interactor.DeleteRobotInteractor
+import com.revolution.robotics.core.interactor.DuplicateUserRobotInteractor
 import com.revolution.robotics.core.interactor.GetUserConfigurationInteractor
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.core.utils.Navigator
@@ -16,6 +17,7 @@ import com.revolution.robotics.features.configure.save.SaveRobotDialog
 @Suppress("TooManyFunctions")
 class ConfigurePresenter(
     private val configurationEventBus: ConfigurationEventBus,
+    private val duplicateUserRobotInteractor: DuplicateUserRobotInteractor,
     private val deleteRobotInteractor: DeleteRobotInteractor,
     private val getUserConfigurationInteractor: GetUserConfigurationInteractor,
     private val dialogEventBus: DialogEventBus,
@@ -169,7 +171,12 @@ class ConfigurePresenter(
     }
 
     override fun onDuplicateClicked() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        userRobot?.let {
+            duplicateUserRobotInteractor.currentRobot = it
+            duplicateUserRobotInteractor.execute {
+                navigator.back()
+            }
+        }
     }
 
     override fun saveConfiguration() {
