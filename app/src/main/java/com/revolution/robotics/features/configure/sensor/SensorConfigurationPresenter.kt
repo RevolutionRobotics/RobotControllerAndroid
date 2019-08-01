@@ -95,6 +95,7 @@ class SensorConfigurationPresenter(
     override fun onEmptyButtonClicked() {
         model?.apply {
             editTextModel.value = editTextModel.value?.apply {
+                text = ""
                 enabled = false
             }
 

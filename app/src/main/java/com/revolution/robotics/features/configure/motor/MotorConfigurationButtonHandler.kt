@@ -97,6 +97,7 @@ class MotorConfigurationButtonHandler(
 
             editTextModel.value = editTextModel.value?.apply {
                 enabled = false
+                text = ""
             }
             clearVisibilitiesAndSelections()
             emptyButton.isSelected.set(true)
