@@ -11,6 +11,8 @@ import com.revolution.robotics.core.domain.local.UserConfiguration
 import com.revolution.robotics.core.domain.local.UserRobot
 import com.revolution.robotics.core.domain.remote.Motor
 import com.revolution.robotics.core.domain.remote.Sensor
+import com.revolution.robotics.core.eventBus.dialog.DialogEvent
+import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
 import com.revolution.robotics.core.utils.BundleArgumentDelegate
 import com.revolution.robotics.core.utils.CameraHelper
 import com.revolution.robotics.databinding.FragmentConfigureBinding
@@ -23,7 +25,7 @@ import org.kodein.di.erased.instance
 // There are 3 Unit empty functions so this can be ignored
 @Suppress("TooManyFunctions")
 class ConfigureFragment : BaseFragment<FragmentConfigureBinding, ConfigureViewModel>(R.layout.fragment_configure),
-    ConfigureMvp.View, DrawerLayout.DrawerListener {
+    ConfigureMvp.View, DrawerLayout.DrawerListener, DialogEventBus.Listener {
 
     companion object {
         val Bundle.userRobot: UserRobot by BundleArgumentDelegate.Parcelable("userRobot")
@@ -33,6 +35,7 @@ class ConfigureFragment : BaseFragment<FragmentConfigureBinding, ConfigureViewMo
     private val presenter: ConfigureMvp.Presenter by kodein.instance()
     private val controllerPresenter: ConfigureControllersMvp.Presenter by kodein.instance()
     private val userConfigurationStorage: UserConfigurationStorage by kodein.instance()
+    private val dialogEventBus: DialogEventBus by kodein.instance()
     private lateinit var cameraHelper: CameraHelper
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -46,6 +49,7 @@ class ConfigureFragment : BaseFragment<FragmentConfigureBinding, ConfigureViewMo
         cameraHelper = CameraHelper(arguments?.userRobot?.instanceId ?: 0)
 
         binding?.drawerConfiguration?.addDrawerListener(this)
+        dialogEventBus.register(this)
     }
 
     override fun hideDrawer() {
@@ -66,6 +70,7 @@ class ConfigureFragment : BaseFragment<FragmentConfigureBinding, ConfigureViewMo
     override fun onDestroyView() {
         presenter.unregister()
         binding?.drawerConfiguration?.removeDrawerListener(this)
+        dialogEventBus.unregister(this)
         super.onDestroyView()
     }
 
@@ -106,6 +111,13 @@ class ConfigureFragment : BaseFragment<FragmentConfigureBinding, ConfigureViewMo
     override fun onDrawerClosed(drawerView: View) {
         (fragmentManager?.findFragmentById(R.id.configureFragmentFrame) as? ConfigureConnectionsFragment)?.apply {
             clearSelection()
+        }
+    }
+
+    override fun onDialogEvent(event: DialogEvent) {
+        when (event) {
+            DialogEvent.DELETE_ROBOT -> presenter.deleteRobot()
+            else -> Unit
         }
     }
 
