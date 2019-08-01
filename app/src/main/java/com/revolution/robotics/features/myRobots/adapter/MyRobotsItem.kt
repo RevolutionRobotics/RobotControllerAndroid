@@ -61,7 +61,7 @@ open class MyRobotsItem(
         return false
     }
 
-    fun onMoreInfoClicked() {
-        presenter.onMoreInfoClicked(robot)
+    fun onEditClicked() {
+        presenter.onEditSelected(robot)
     }
 }
