@@ -5,9 +5,7 @@ import com.revolution.robotics.core.domain.local.UserConfiguration
 import com.revolution.robotics.core.domain.local.UserRobot
 import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
-import com.revolution.robotics.core.interactor.DeleteRobotInteractor
-import com.revolution.robotics.core.interactor.DuplicateUserRobotInteractor
-import com.revolution.robotics.core.interactor.GetUserConfigurationInteractor
+import com.revolution.robotics.core.interactor.*
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.features.configure.delete.DeleteRobotDialog
@@ -78,8 +76,8 @@ class ConfigurePresenter(
 
             if (selectedTab == ConfigurationTabs.CONNECTIONS) {
                 view?.showConnectionsScreen()
-            } else {
-                view?.showControllerScreen()
+            } else if (config.controller != null) {
+                view?.showControllerScreen(config.controller!!)
             }
         }
     }
@@ -127,7 +125,10 @@ class ConfigurePresenter(
     override fun onControllerTabSelected() {
         selectedTab = ConfigurationTabs.CONTROLLERS
         model?.setScreen(ConfigurationTabs.CONTROLLERS)
-        view?.showControllerScreen()
+        if (userConfigurationStorage.userConfiguration?.controller != null) {
+            view?.showControllerScreen(userConfigurationStorage.userConfiguration?.controller!!)
+        }
+
     }
 
     override fun clearStorage() {

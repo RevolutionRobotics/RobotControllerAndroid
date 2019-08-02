@@ -1,16 +1,8 @@
 package com.revolution.robotics.features.controllers.setup.instances
 
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import com.revolution.robotics.core.domain.local.UserProgram
-import com.revolution.robotics.core.utils.Navigator
-import com.revolution.robotics.databinding.FragmentControllerSetupDriverBinding
-import com.revolution.robotics.features.controllers.setup.SetupFragment
-import org.kodein.di.erased.instance
+class SetupDriverFragment {
 
-class SetupDriverFragment : SetupFragment() {
-
+    /*
     private lateinit var contentBinding: FragmentControllerSetupDriverBinding
     private val navigator: Navigator by kodein.instance()
 
@@ -33,5 +25,5 @@ class SetupDriverFragment : SetupFragment() {
 
     override fun onShowAllProgramsSelected() {
         navigator.navigate(SetupDriverFragmentDirections.toProgramSelector())
-    }
+    }*/
 }

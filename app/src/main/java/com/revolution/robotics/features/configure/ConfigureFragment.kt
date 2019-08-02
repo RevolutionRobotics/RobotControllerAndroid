@@ -17,9 +17,9 @@ import com.revolution.robotics.core.utils.BundleArgumentDelegate
 import com.revolution.robotics.core.utils.CameraHelper
 import com.revolution.robotics.databinding.FragmentConfigureBinding
 import com.revolution.robotics.features.configure.connections.ConfigureConnectionsFragment
-import com.revolution.robotics.features.configure.controllers.ConfigureControllersFragment
 import com.revolution.robotics.features.configure.controllers.ConfigureControllersMvp
 import com.revolution.robotics.features.configure.save.SaveRobotDialog
+import com.revolution.robotics.features.controllers.setup.SetupFragment
 import org.kodein.di.erased.instance
 
 // There are 3 Unit empty functions so this can be ignored
@@ -91,8 +91,8 @@ class ConfigureFragment : BaseFragment<FragmentConfigureBinding, ConfigureViewMo
         commitFragmentToFrame(ConfigureConnectionsFragment.newInstance())
     }
 
-    override fun showControllerScreen() {
-        commitFragmentToFrame(ConfigureControllersFragment.newInstance())
+    override fun showControllerScreen(controllerId: Int) {
+        commitFragmentToFrame(SetupFragment.newInstance(controllerId))
     }
 
     private fun commitFragmentToFrame(fragment: Fragment) {

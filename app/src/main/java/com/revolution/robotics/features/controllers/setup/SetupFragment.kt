@@ -17,36 +17,49 @@ import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
 import com.revolution.robotics.core.extensions.onEnd
 import com.revolution.robotics.core.extensions.onStart
 import com.revolution.robotics.core.extensions.visible
-import com.revolution.robotics.core.kodein.utils.ResourceResolver
+import com.revolution.robotics.core.extensions.withArguments
 import com.revolution.robotics.core.utils.BundleArgumentDelegate
+import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.databinding.FragmentControllerSetupCoreBinding
+import com.revolution.robotics.databinding.FragmentControllerSetupGamerBinding
 import com.revolution.robotics.features.configure.UserConfigurationStorage
 import com.revolution.robotics.features.configure.controller.ControllerButton
 import com.revolution.robotics.features.controllers.programInfo.ProgramDialog
+import com.revolution.robotics.features.controllers.setup.instances.SetupGamerFragmentDirections
 import com.revolution.robotics.features.controllers.setup.mostRecent.MostRecentProgramViewModel
 import org.kodein.di.erased.instance
 
 @Suppress("TooManyFunctions")
-abstract class SetupFragment :
+class SetupFragment :
     BaseFragment<FragmentControllerSetupCoreBinding, SetupViewModel>(R.layout.fragment_controller_setup_core),
     SetupMvp.View, DialogEventBus.Listener {
 
     companion object {
         private const val PROGRAM_SELECTOR_ANIMATION_DURATION_MS = 250L
-        private var Bundle.controllerId by BundleArgumentDelegate.Int("controllerId")
+
+        private var Bundle.controllerId by BundleArgumentDelegate.Int("controller")
+
+        fun newInstance(controllerId: Int) = SetupFragment().withArguments { bundle ->
+            bundle.controllerId = controllerId
+        }
     }
 
     override val viewModelClass = SetupViewModel::class.java
+    private lateinit var contentBinding: ViewDataBinding
 
     private val buttonNames = ControllerButton.values().toList()
     private val presenter: SetupMvp.Presenter by kodein.instance()
     private val dialogEventBus: DialogEventBus by kodein.instance()
-    private val resourceResolver: ResourceResolver by kodein.instance()
     private val storage: UserConfigurationStorage by kodein.instance()
+    private val navigator: Navigator by kodein.instance()
 
-    abstract fun createContentView(inflater: LayoutInflater, container: ViewGroup?): View
-
-    abstract fun getContentBinding(): ViewDataBinding?
+    private fun createContentView(inflater: LayoutInflater, container: ViewGroup?): View {
+        //TODO support driver too
+        contentBinding = FragmentControllerSetupGamerBinding.inflate(inflater, container, true).apply {
+            viewModel = this@SetupFragment.viewModel
+        }
+        return contentBinding.root
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val core = super.onCreateView(inflater, container, savedInstanceState)
@@ -59,7 +72,6 @@ abstract class SetupFragment :
         arguments?.controllerId?.let { presenter.loadControllerAndPrograms(it) }
         dialogEventBus.register(this)
         binding?.apply {
-            toolbarViewModel = SetupToolbarViewModel(resourceResolver)
             dimmer.setOnClickListener { hideProgramSelector() }
         }
         storage.controllerHolder?.programToBeAdded?.let { programToAdd -> addProgram(programToAdd) }
@@ -95,7 +107,7 @@ abstract class SetupFragment :
     }
 
     override fun updateContentBindings() {
-        getContentBinding()?.invalidateAll()
+        contentBinding.invalidateAll()
     }
 
     override fun onProgramSlotSelected(index: Int, mostRecent: MostRecentProgramViewModel?) {
@@ -165,6 +177,18 @@ abstract class SetupFragment :
             interpolator = AccelerateInterpolator()
             onEnd { this@disappearWithAnimation.visibility = View.INVISIBLE }
         })
+    }
+
+    override fun onShowAllProgramsSelected() {
+        navigator.navigate(SetupGamerFragmentDirections.toProgramSelector())
+    }
+
+    override fun navigateToBackgroundPrograms() {
+        navigator.navigate(SetupGamerFragmentDirections.toButtonlessProgramSelector())
+    }
+
+    override fun navigateToEditProgram(userProgram: UserProgram?) {
+        userProgram?.let { navigator.navigate(SetupGamerFragmentDirections.toCoding(it)) }
     }
 
     private fun DialogEvent.program() =

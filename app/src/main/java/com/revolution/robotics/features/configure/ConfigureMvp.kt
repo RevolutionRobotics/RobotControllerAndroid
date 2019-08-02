@@ -9,7 +9,7 @@ interface ConfigureMvp : Mvp {
     interface View : Mvp.View {
         fun showDialog(baseDialog: BaseDialog)
         fun showConnectionsScreen()
-        fun showControllerScreen()
+        fun showControllerScreen(controllerId: Int)
         fun openMotorConfig(motorPort: MotorPort)
         fun openSensorConfig(sensorPort: SensorPort)
         fun updateConfig(userConfiguration: UserConfiguration)
