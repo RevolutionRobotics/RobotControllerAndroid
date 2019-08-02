@@ -18,14 +18,6 @@ class TypeSelectorPresenter(
         storage.controllerHolder = UserControllerWithPrograms(UserController().apply {
             this.type = type.id
         }, mutableListOf(), HashMap())
-        navigator.navigate(
-            when (type) {
-                ControllerType.GAMER ->
-                    TypeSelectorFragmentDirections.toSetupGamer()
-                ControllerType.MULTITASKER ->
-                    TypeSelectorFragmentDirections.toSetupMultitasker()
-                ControllerType.DRIVER -> TypeSelectorFragmentDirections.toSetupDriver()
-            }
-        )
+        //navigator.navigate()
     }
 }

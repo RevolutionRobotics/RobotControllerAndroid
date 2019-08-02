@@ -22,10 +22,10 @@ import com.revolution.robotics.core.utils.BundleArgumentDelegate
 import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.databinding.FragmentControllerSetupCoreBinding
 import com.revolution.robotics.databinding.FragmentControllerSetupGamerBinding
+import com.revolution.robotics.features.configure.ConfigureFragmentDirections
 import com.revolution.robotics.features.configure.UserConfigurationStorage
 import com.revolution.robotics.features.configure.controller.ControllerButton
 import com.revolution.robotics.features.controllers.programInfo.ProgramDialog
-import com.revolution.robotics.features.controllers.setup.instances.SetupGamerFragmentDirections
 import com.revolution.robotics.features.controllers.setup.mostRecent.MostRecentProgramViewModel
 import org.kodein.di.erased.instance
 
@@ -180,15 +180,15 @@ class ConfigureControllerFragment :
     }
 
     override fun onShowAllProgramsSelected() {
-        navigator.navigate(SetupGamerFragmentDirections.toProgramSelector())
+        navigator.navigate(ConfigureFragmentDirections.toProgramSelector())
     }
 
     override fun navigateToBackgroundPrograms() {
-        navigator.navigate(SetupGamerFragmentDirections.toButtonlessProgramSelector())
+        navigator.navigate(ConfigureFragmentDirections.toButtonlessProgramSelector())
     }
 
     override fun navigateToEditProgram(userProgram: UserProgram?) {
-        userProgram?.let { navigator.navigate(SetupGamerFragmentDirections.toCoding(it)) }
+        userProgram?.let { navigator.navigate(ConfigureFragmentDirections.toCoding(it)) }
     }
 
     private fun DialogEvent.program() =
