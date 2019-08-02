@@ -3,7 +3,7 @@
 
     <data>
         <variable name="viewModel"
-                  type="com.revolution.robotics.features.controllers.setup.SetupViewModel"/>
+                  type="com.revolution.robotics.features.controllers.setup.ConfigureControllerViewModel"/>
         <variable name="mostRecent"
                   type="com.revolution.robotics.features.controllers.setup.mostRecent.MostRecentProgramViewModel"/>
     </data>

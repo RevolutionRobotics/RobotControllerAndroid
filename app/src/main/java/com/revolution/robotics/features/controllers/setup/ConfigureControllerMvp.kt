@@ -5,7 +5,7 @@ import com.revolution.robotics.core.Mvp
 import com.revolution.robotics.core.domain.local.UserProgram
 import com.revolution.robotics.features.controllers.setup.mostRecent.MostRecentProgramViewModel
 
-interface SetupMvp : Mvp {
+interface ConfigureControllerMvp : Mvp {
 
     interface View : Mvp.View {
         fun showDialog(baseDialog: BaseDialog)
@@ -17,7 +17,7 @@ interface SetupMvp : Mvp {
         fun removeSelectedProgram()
     }
 
-    interface Presenter : Mvp.Presenter<View, SetupViewModel> {
+    interface Presenter : Mvp.Presenter<View, ConfigureControllerViewModel> {
         fun loadControllerAndPrograms(controllerId: Int)
         fun onProgramSlotSelected(index: Int)
         fun showAllPrograms()

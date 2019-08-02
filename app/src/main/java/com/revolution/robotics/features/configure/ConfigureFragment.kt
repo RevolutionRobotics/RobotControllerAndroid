@@ -19,7 +19,7 @@ import com.revolution.robotics.databinding.FragmentConfigureBinding
 import com.revolution.robotics.features.configure.connections.ConfigureConnectionsFragment
 import com.revolution.robotics.features.configure.controllers.ConfigureControllersMvp
 import com.revolution.robotics.features.configure.save.SaveRobotDialog
-import com.revolution.robotics.features.controllers.setup.SetupFragment
+import com.revolution.robotics.features.controllers.setup.ConfigureControllerFragment
 import org.kodein.di.erased.instance
 
 // There are 3 Unit empty functions so this can be ignored
@@ -92,7 +92,7 @@ class ConfigureFragment : BaseFragment<FragmentConfigureBinding, ConfigureViewMo
     }
 
     override fun showControllerScreen(controllerId: Int) {
-        commitFragmentToFrame(SetupFragment.newInstance(controllerId))
+        commitFragmentToFrame(ConfigureControllerFragment.newInstance(controllerId))
     }
 
     private fun commitFragmentToFrame(fragment: Fragment) {

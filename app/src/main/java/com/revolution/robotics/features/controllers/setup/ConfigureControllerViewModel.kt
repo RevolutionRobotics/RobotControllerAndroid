@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.revolution.robotics.core.domain.local.UserProgram
 import com.revolution.robotics.features.configure.UserConfigurationStorage
 
-class SetupViewModel(private val presenter: SetupMvp.Presenter) : ViewModel() {
+class ConfigureControllerViewModel(private val presenter: ConfigureControllerMvp.Presenter) : ViewModel() {
 
     companion object {
         const val NO_PROGRAM_SELECTED = -1

@@ -30,25 +30,25 @@ import com.revolution.robotics.features.controllers.setup.mostRecent.MostRecentP
 import org.kodein.di.erased.instance
 
 @Suppress("TooManyFunctions")
-class SetupFragment :
-    BaseFragment<FragmentControllerSetupCoreBinding, SetupViewModel>(R.layout.fragment_controller_setup_core),
-    SetupMvp.View, DialogEventBus.Listener {
+class ConfigureControllerFragment :
+    BaseFragment<FragmentControllerSetupCoreBinding, ConfigureControllerViewModel>(R.layout.fragment_controller_setup_core),
+    ConfigureControllerMvp.View, DialogEventBus.Listener {
 
     companion object {
         private const val PROGRAM_SELECTOR_ANIMATION_DURATION_MS = 250L
 
         private var Bundle.controllerId by BundleArgumentDelegate.Int("controller")
 
-        fun newInstance(controllerId: Int) = SetupFragment().withArguments { bundle ->
+        fun newInstance(controllerId: Int) = ConfigureControllerFragment().withArguments { bundle ->
             bundle.controllerId = controllerId
         }
     }
 
-    override val viewModelClass = SetupViewModel::class.java
+    override val viewModelClass = ConfigureControllerViewModel::class.java
     private lateinit var contentBinding: ViewDataBinding
 
     private val buttonNames = ControllerButton.values().toList()
-    private val presenter: SetupMvp.Presenter by kodein.instance()
+    private val presenter: ConfigureControllerMvp.Presenter by kodein.instance()
     private val dialogEventBus: DialogEventBus by kodein.instance()
     private val storage: UserConfigurationStorage by kodein.instance()
     private val navigator: Navigator by kodein.instance()
@@ -56,7 +56,7 @@ class SetupFragment :
     private fun createContentView(inflater: LayoutInflater, container: ViewGroup?): View {
         //TODO support driver too
         contentBinding = FragmentControllerSetupGamerBinding.inflate(inflater, container, true).apply {
-            viewModel = this@SetupFragment.viewModel
+            viewModel = this@ConfigureControllerFragment.viewModel
         }
         return contentBinding.root
     }
@@ -103,7 +103,7 @@ class SetupFragment :
                 programSelector.disappearWithAnimation(R.anim.program_selector_disappear)
             }
         }
-        viewModel?.selectProgram(SetupViewModel.NO_PROGRAM_SELECTED)
+        viewModel?.selectProgram(ConfigureControllerViewModel.NO_PROGRAM_SELECTED)
     }
 
     override fun updateContentBindings() {
@@ -112,7 +112,7 @@ class SetupFragment :
 
     override fun onProgramSlotSelected(index: Int, mostRecent: MostRecentProgramViewModel?) {
         viewModel?.let { updateContentBindings() }
-        if (index != SetupViewModel.NO_PROGRAM_SELECTED) {
+        if (index != ConfigureControllerViewModel.NO_PROGRAM_SELECTED) {
             binding?.apply {
                 this.mostRecent = mostRecent
                 dimmer.appearWithAnimation(R.anim.dim_screen_appear)

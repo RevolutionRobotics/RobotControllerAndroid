@@ -1,10 +1,10 @@
 package com.revolution.robotics.features.controllers.setup.mostRecent
 
 import com.revolution.robotics.R
-import com.revolution.robotics.features.controllers.setup.SetupMvp
+import com.revolution.robotics.features.controllers.setup.ConfigureControllerMvp
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 
-class MostRecentProgramViewModel(private val items: List<MostRecentItem>, private val presenter: SetupMvp.Presenter) {
+class MostRecentProgramViewModel(private val items: List<MostRecentItem>, private val presenter: ConfigureControllerMvp.Presenter) {
 
     companion object {
         private val BACKGROUND_BASE = ChippedBoxConfig.Builder()
