@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:bind="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View"/>
+        <import type="com.revolution.robotics.features.controllers.ControllerType"/>
+
         <variable name="viewModel"
                   type="com.revolution.robotics.features.controllers.setup.ConfigureControllerViewModel"/>
         <variable name="mostRecent"
@@ -19,7 +23,17 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintBottom_toBottomOf="parent">
+
+            <include layout="@layout/fragment_controller_setup_gamer"
+                     bind:viewModel="@{viewModel}"
+                     android:visibility="@{viewModel.controllerType == ControllerType.GAMER ? View.VISIBLE : View.GONE}"/>
+
+            <include layout="@layout/fragment_controller_setup_driver"
+                     android:visibility="@{viewModel.controllerType == ControllerType.DRIVER ? View.VISIBLE : View.GONE}"
+                     bind:viewModel="@{viewModel}"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.revolution.robotics.views.RoboticsButton
                 android:layout_width="@dimen/robotics_button_width"

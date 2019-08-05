@@ -3,6 +3,7 @@ package com.revolution.robotics.features.controllers.setup
 import androidx.lifecycle.ViewModel
 import com.revolution.robotics.core.domain.local.UserProgram
 import com.revolution.robotics.features.configure.UserConfigurationStorage
+import com.revolution.robotics.features.controllers.ControllerType
 
 class ConfigureControllerViewModel(private val presenter: ConfigureControllerMvp.Presenter) : ViewModel() {
 
@@ -12,6 +13,7 @@ class ConfigureControllerViewModel(private val presenter: ConfigureControllerMvp
 
     private val programs = mutableListOf<UserProgram?>(null, null, null, null, null, null)
     var selectedProgram = NO_PROGRAM_SELECTED
+    var controllerType: ControllerType = ControllerType.DRIVER
 
     fun isProgramSelected(index: Int) = selectedProgram == index
 
@@ -39,6 +41,7 @@ class ConfigureControllerViewModel(private val presenter: ConfigureControllerMvp
     }
 
     fun restoreFromStorage(storage: UserConfigurationStorage) {
+        controllerType = ControllerType.fromId(storage.controllerHolder?.userController?.type)!!
         storage.getAllButtonPrograms().forEachIndexed { index, userProgramBinding ->
             userProgramBinding?.programName?.let { programId ->
                 programs[index] = storage.controllerHolder?.programs?.get(programId)

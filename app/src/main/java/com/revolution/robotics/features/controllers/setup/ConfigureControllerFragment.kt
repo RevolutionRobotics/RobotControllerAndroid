@@ -45,27 +45,12 @@ class ConfigureControllerFragment :
     }
 
     override val viewModelClass = ConfigureControllerViewModel::class.java
-    private lateinit var contentBinding: ViewDataBinding
 
     private val buttonNames = ControllerButton.values().toList()
     private val presenter: ConfigureControllerMvp.Presenter by kodein.instance()
     private val dialogEventBus: DialogEventBus by kodein.instance()
     private val storage: UserConfigurationStorage by kodein.instance()
     private val navigator: Navigator by kodein.instance()
-
-    private fun createContentView(inflater: LayoutInflater, container: ViewGroup?): View {
-        //TODO support driver too
-        contentBinding = FragmentControllerSetupGamerBinding.inflate(inflater, container, true).apply {
-            viewModel = this@ConfigureControllerFragment.viewModel
-        }
-        return contentBinding.root
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val core = super.onCreateView(inflater, container, savedInstanceState)
-        createContentView(inflater, binding?.contentWrapper)
-        return core
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         presenter.register(this, viewModel)
@@ -107,7 +92,7 @@ class ConfigureControllerFragment :
     }
 
     override fun updateContentBindings() {
-        contentBinding.invalidateAll()
+        binding?.invalidateAll()
     }
 
     override fun onProgramSlotSelected(index: Int, mostRecent: MostRecentProgramViewModel?) {

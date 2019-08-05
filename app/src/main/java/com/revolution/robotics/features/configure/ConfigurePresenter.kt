@@ -11,6 +11,7 @@ import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.features.configure.delete.DeleteRobotDialog
 import com.revolution.robotics.features.configure.robotPicture.RobotPictureDialog
 import com.revolution.robotics.features.configure.save.SaveRobotDialog
+import com.revolution.robotics.features.controllers.ControllerType
 
 @Suppress("TooManyFunctions")
 class ConfigurePresenter(
@@ -170,6 +171,13 @@ class ConfigurePresenter(
         }
         navigator.back()
     }
+
+    override fun onControllerTypeClicked() {
+        userConfigurationStorage.changeControllerType {
+            onControllerTabSelected()
+        }
+    }
+
 
     override fun onDuplicateClicked() {
         userRobot?.let {

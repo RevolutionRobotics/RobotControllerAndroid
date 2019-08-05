@@ -19,6 +19,7 @@ interface ConfigureMvp : Mvp {
 
     interface Presenter : Mvp.Presenter<View, ConfigureViewModel> {
         fun initUI(userRobot: UserRobot, toolbarViewModel: ConfigureToolbarViewModel)
+        fun onControllerTypeClicked()
         fun onDeleteClicked()
         fun deleteRobot()
         fun onDuplicateClicked()
