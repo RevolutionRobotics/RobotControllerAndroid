@@ -1,6 +1,7 @@
 package com.revolution.robotics.features.controllers.setup
 
 import com.revolution.robotics.core.domain.local.UserProgram
+import com.revolution.robotics.core.interactor.GetUserControllerInteractor
 import com.revolution.robotics.core.interactor.GetUserProgramsInteractor
 import com.revolution.robotics.features.configure.UserConfigurationStorage
 import com.revolution.robotics.features.configure.controller.CompatibleProgramFilterer
@@ -8,26 +9,32 @@ import com.revolution.robotics.features.controllers.programInfo.ProgramDialog
 import com.revolution.robotics.features.controllers.setup.mostRecent.MostRecentItem
 import com.revolution.robotics.features.controllers.setup.mostRecent.MostRecentProgramViewModel
 
-class SetupPresenter(
+class ConfigureControllerPresenter(
     private val getProgramsInteractor: GetUserProgramsInteractor,
     private val compatibleProgramFilterer: CompatibleProgramFilterer,
-    private val storage: UserConfigurationStorage
-) : SetupMvp.Presenter {
+    private val storage: UserConfigurationStorage,
+    private val userConfigurationStorage: UserConfigurationStorage,
+    private val userControllerInteractor: GetUserControllerInteractor
+) : ConfigureControllerMvp.Presenter {
 
     companion object {
         private const val MOST_RECENT_PROGRAM_COUNT = 5
         private const val INDEX_NOT_FOUND = -1
     }
 
-    override var view: SetupMvp.View? = null
-    override var model: SetupViewModel? = null
+    override var view: ConfigureControllerMvp.View? = null
+    override var model: ConfigureControllerViewModel? = null
 
     private val programs = ArrayList<UserProgram>()
 
     override fun loadControllerAndPrograms(controllerId: Int) {
-        model?.restoreFromStorage(storage)
-        view?.updateContentBindings()
-        loadPrograms()
+        userControllerInteractor.id = controllerId
+        userControllerInteractor.execute { controllerWithPrograms ->
+            userConfigurationStorage.controllerHolder = controllerWithPrograms
+            model?.restoreFromStorage(storage)
+            view?.updateContentBindings()
+            loadPrograms()
+        }
     }
 
     private fun loadPrograms() {
@@ -39,7 +46,7 @@ class SetupPresenter(
 
     override fun onProgramSlotSelected(index: Int) {
         val mostRecentViewModel =
-            if (index == SetupViewModel.NO_PROGRAM_SELECTED) {
+            if (index == ConfigureControllerViewModel.NO_PROGRAM_SELECTED) {
                 null
             } else {
                 val availablePrograms = programs.toMutableList()

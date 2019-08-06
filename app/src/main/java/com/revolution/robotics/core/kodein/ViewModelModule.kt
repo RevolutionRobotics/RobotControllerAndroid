@@ -16,7 +16,7 @@ import com.revolution.robotics.features.configure.motor.MotorConfigurationViewMo
 import com.revolution.robotics.features.configure.sensor.SensorConfigurationViewModel
 import com.revolution.robotics.features.controllers.buttonless.ButtonlessProgramSelectorViewModel
 import com.revolution.robotics.features.controllers.programSelector.ProgramSelectorViewModel
-import com.revolution.robotics.features.controllers.setup.SetupViewModel
+import com.revolution.robotics.features.controllers.setup.ConfigureControllerViewModel
 import com.revolution.robotics.features.controllers.typeSelector.TypeSelectorViewModel
 import com.revolution.robotics.features.mainmenu.MainMenuViewModel
 import com.revolution.robotics.features.mainmenu.settings.SettingsViewModel
@@ -47,7 +47,7 @@ fun createViewModelModule() =
         bind<FirmwareUpdateViewModel>() with p { FirmwareUpdateViewModel(i()) }
         bind<PlayViewModel>() with p { PlayViewModel(i()) }
         bind<TypeSelectorViewModel>() with p { TypeSelectorViewModel(i()) }
-        bind<SetupViewModel>() with p { SetupViewModel(i()) }
+        bind<ConfigureControllerViewModel>() with p { ConfigureControllerViewModel(i()) }
         bind<ProgramSelectorViewModel>() with p { ProgramSelectorViewModel(i()) }
         bind<ProgramPriorityViewModel>() with p { ProgramPriorityViewModel(i()) }
         bind<ButtonlessProgramSelectorViewModel>() with p { ButtonlessProgramSelectorViewModel(i()) }

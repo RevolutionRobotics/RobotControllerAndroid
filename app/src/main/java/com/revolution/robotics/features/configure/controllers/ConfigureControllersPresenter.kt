@@ -134,7 +134,7 @@ class ConfigureControllersPresenter(
     }
 
     override fun onCreateNewClick() {
-        navigator.navigate(ConfigureFragmentDirections.toControllerTypeSelector())
+        //navigator.navigate(ConfigureFragmentDirections.toControllerTypeSelector())
     }
 
     override fun deleteController(controllerId: Int, selectedPosition: Int) {
@@ -172,20 +172,20 @@ class ConfigureControllersPresenter(
     }
 
     override fun onEditSelected(item: ControllersItem) {
-        userControllerInteractor.id = item.userController.id
+        /*userControllerInteractor.id = item.userController.id
         userControllerInteractor.execute { controllerWithPrograms ->
             userConfigurationStorage.controllerHolder = controllerWithPrograms
             ControllerType.fromId(item.userController.type)?.apply {
                 when (this) {
                     ControllerType.GAMER ->
-                        navigator.navigate(ConfigureFragmentDirections.toSetupGamer())
+                        navigator.navigate(ConfigureFragmentDirections.toConfigureController())
                     ControllerType.MULTITASKER ->
-                        navigator.navigate(ConfigureFragmentDirections.toSetupMultitasker())
+                        navigator.navigate(ConfigureFragmentDirections.toConfigureController())
                     ControllerType.DRIVER ->
-                        navigator.navigate(ConfigureFragmentDirections.toSetupDriver())
+                        navigator.navigate(ConfigureFragmentDirections.toConfigureController())
                 }
             }
-        }
+        }*/
     }
 
     override fun onInfoSelected(item: ControllersItem) {

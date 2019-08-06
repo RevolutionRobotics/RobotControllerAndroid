@@ -12,6 +12,7 @@ import com.revolution.robotics.core.domain.remote.Sensor
 import com.revolution.robotics.core.interactor.SaveUserControllerInteractor
 import com.revolution.robotics.core.interactor.UpdateUserRobotInteractor
 import com.revolution.robotics.features.configure.controller.ControllerButton
+import com.revolution.robotics.features.controllers.ControllerType
 
 @Suppress("TooManyFunctions")
 class UserConfigurationStorage(
@@ -204,6 +205,11 @@ class UserConfigurationStorage(
     fun setControllerName(name: String, description: String, finished: () -> Unit) {
         controllerHolder?.userController?.name = name
         controllerHolder?.userController?.description = description
+        updateUserController(finished)
+    }
+
+    fun changeControllerType(finished: () -> Unit) {
+        controllerHolder?.userController?.type = if (controllerHolder?.userController?.type == ControllerType.DRIVER.id) ControllerType.GAMER.id else ControllerType.DRIVER.id
         updateUserController(finished)
     }
 

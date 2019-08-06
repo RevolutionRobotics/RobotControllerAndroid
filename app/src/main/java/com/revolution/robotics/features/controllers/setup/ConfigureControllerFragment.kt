@@ -17,9 +17,12 @@ import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
 import com.revolution.robotics.core.extensions.onEnd
 import com.revolution.robotics.core.extensions.onStart
 import com.revolution.robotics.core.extensions.visible
-import com.revolution.robotics.core.kodein.utils.ResourceResolver
+import com.revolution.robotics.core.extensions.withArguments
 import com.revolution.robotics.core.utils.BundleArgumentDelegate
+import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.databinding.FragmentControllerSetupCoreBinding
+import com.revolution.robotics.databinding.FragmentControllerSetupGamerBinding
+import com.revolution.robotics.features.configure.ConfigureFragmentDirections
 import com.revolution.robotics.features.configure.UserConfigurationStorage
 import com.revolution.robotics.features.configure.controller.ControllerButton
 import com.revolution.robotics.features.controllers.programInfo.ProgramDialog
@@ -27,39 +30,33 @@ import com.revolution.robotics.features.controllers.setup.mostRecent.MostRecentP
 import org.kodein.di.erased.instance
 
 @Suppress("TooManyFunctions")
-abstract class SetupFragment :
-    BaseFragment<FragmentControllerSetupCoreBinding, SetupViewModel>(R.layout.fragment_controller_setup_core),
-    SetupMvp.View, DialogEventBus.Listener {
+class ConfigureControllerFragment :
+    BaseFragment<FragmentControllerSetupCoreBinding, ConfigureControllerViewModel>(R.layout.fragment_controller_setup_core),
+    ConfigureControllerMvp.View, DialogEventBus.Listener {
 
     companion object {
         private const val PROGRAM_SELECTOR_ANIMATION_DURATION_MS = 250L
-        private var Bundle.controllerId by BundleArgumentDelegate.Int("controllerId")
+
+        private var Bundle.controllerId by BundleArgumentDelegate.Int("controller")
+
+        fun newInstance(controllerId: Int) = ConfigureControllerFragment().withArguments { bundle ->
+            bundle.controllerId = controllerId
+        }
     }
 
-    override val viewModelClass = SetupViewModel::class.java
+    override val viewModelClass = ConfigureControllerViewModel::class.java
 
     private val buttonNames = ControllerButton.values().toList()
-    private val presenter: SetupMvp.Presenter by kodein.instance()
+    private val presenter: ConfigureControllerMvp.Presenter by kodein.instance()
     private val dialogEventBus: DialogEventBus by kodein.instance()
-    private val resourceResolver: ResourceResolver by kodein.instance()
     private val storage: UserConfigurationStorage by kodein.instance()
-
-    abstract fun createContentView(inflater: LayoutInflater, container: ViewGroup?): View
-
-    abstract fun getContentBinding(): ViewDataBinding?
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val core = super.onCreateView(inflater, container, savedInstanceState)
-        createContentView(inflater, binding?.contentWrapper)
-        return core
-    }
+    private val navigator: Navigator by kodein.instance()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         presenter.register(this, viewModel)
         arguments?.controllerId?.let { presenter.loadControllerAndPrograms(it) }
         dialogEventBus.register(this)
         binding?.apply {
-            toolbarViewModel = SetupToolbarViewModel(resourceResolver)
             dimmer.setOnClickListener { hideProgramSelector() }
         }
         storage.controllerHolder?.programToBeAdded?.let { programToAdd -> addProgram(programToAdd) }
@@ -91,16 +88,16 @@ abstract class SetupFragment :
                 programSelector.disappearWithAnimation(R.anim.program_selector_disappear)
             }
         }
-        viewModel?.selectProgram(SetupViewModel.NO_PROGRAM_SELECTED)
+        viewModel?.selectProgram(ConfigureControllerViewModel.NO_PROGRAM_SELECTED)
     }
 
     override fun updateContentBindings() {
-        getContentBinding()?.invalidateAll()
+        binding?.invalidateAll()
     }
 
     override fun onProgramSlotSelected(index: Int, mostRecent: MostRecentProgramViewModel?) {
         viewModel?.let { updateContentBindings() }
-        if (index != SetupViewModel.NO_PROGRAM_SELECTED) {
+        if (index != ConfigureControllerViewModel.NO_PROGRAM_SELECTED) {
             binding?.apply {
                 this.mostRecent = mostRecent
                 dimmer.appearWithAnimation(R.anim.dim_screen_appear)
@@ -165,6 +162,18 @@ abstract class SetupFragment :
             interpolator = AccelerateInterpolator()
             onEnd { this@disappearWithAnimation.visibility = View.INVISIBLE }
         })
+    }
+
+    override fun onShowAllProgramsSelected() {
+        navigator.navigate(ConfigureFragmentDirections.toProgramSelector())
+    }
+
+    override fun navigateToBackgroundPrograms() {
+        navigator.navigate(ConfigureFragmentDirections.toButtonlessProgramSelector())
+    }
+
+    override fun navigateToEditProgram(userProgram: UserProgram?) {
+        userProgram?.let { navigator.navigate(ConfigureFragmentDirections.toCoding(it)) }
     }
 
     private fun DialogEvent.program() =
