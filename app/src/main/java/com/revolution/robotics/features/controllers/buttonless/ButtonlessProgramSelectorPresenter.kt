@@ -144,7 +144,7 @@ class ButtonlessProgramSelectorPresenter(
         }
     }
 
-    override fun onNextButtonClicked() {
+    override fun save() {
         val priorities = HashMap<String, Int>()
         programs.forEach { viewModel ->
             if (viewModel.selected.get()) {
@@ -162,8 +162,6 @@ class ButtonlessProgramSelectorPresenter(
                 )
             }
         }
-
-        navigator.navigate(ButtonlessProgramSelectorFragmentDirections.toProgramPriority())
     }
 
     override fun onSelectAllClicked(checked: Boolean) {

@@ -11,7 +11,6 @@ interface ButtonlessProgramSelectorMvp : Mvp {
     }
 
     interface Presenter : Mvp.Presenter<View, ButtonlessProgramSelectorViewModel> {
-        fun onNextButtonClicked()
         fun onSelectAllClicked(checked: Boolean)
         fun onShowCompatibleProgramsButtonClicked()
         fun updateOrderingAndFiltering()
@@ -19,5 +18,6 @@ interface ButtonlessProgramSelectorMvp : Mvp {
         fun onInfoButtonClicked(userProgram: UserProgram)
         fun onProgramEdited(userProgram: UserProgram)
         fun clearSelections()
+        fun save()
     }
 }

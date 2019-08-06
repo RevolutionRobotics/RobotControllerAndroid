@@ -70,4 +70,9 @@ class ButtonlessProgramSelectorFragment :
             ProgramDialog.CompatibilityIssue.newInstance(userProgram).show(fragmentManager)
         }
     }
+
+    override fun onBackPressed(): Boolean {
+        presenter.save()
+        return super.onBackPressed()
+    }
 }
