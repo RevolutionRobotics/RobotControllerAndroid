@@ -167,7 +167,7 @@ class ConfigurePresenter(
     }
 
     override fun onPriorityClicked() {
-        navigator.navigate(ConfigureFragmentDirections.toButtonlessProgramSelector())
+        navigator.navigate(ConfigureFragmentDirections.toProgramPriority())
     }
 
     override fun deleteRobot() {
