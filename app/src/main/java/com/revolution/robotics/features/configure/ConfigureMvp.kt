@@ -24,6 +24,8 @@ interface ConfigureMvp : Mvp {
         fun deleteRobot()
         fun onDuplicateClicked()
         fun onRobotImageClicked()
+        fun onBackgroundProgramsClicked()
+        fun onPriorityClicked()
         fun saveConfiguration()
         fun onConnectionsTabSelected()
         fun onControllerTabSelected()

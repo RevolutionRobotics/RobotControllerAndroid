@@ -83,10 +83,6 @@ class ConfigureControllerPresenter(
         view?.onShowAllProgramsSelected()
     }
 
-    override fun onControllerSetupFinished() {
-        view?.navigateToBackgroundPrograms()
-    }
-
     override fun onProgramEdited(program: UserProgram) {
         if (!compatibleProgramFilterer.isProgramCompatible(program)) {
             val index = model?.getProgramIndex(program)

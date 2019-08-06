@@ -168,10 +168,6 @@ class ConfigureControllerFragment :
         navigator.navigate(ConfigureFragmentDirections.toProgramSelector())
     }
 
-    override fun navigateToBackgroundPrograms() {
-        navigator.navigate(ConfigureFragmentDirections.toButtonlessProgramSelector())
-    }
-
     override fun navigateToEditProgram(userProgram: UserProgram?) {
         userProgram?.let { navigator.navigate(ConfigureFragmentDirections.toCoding(it)) }
     }

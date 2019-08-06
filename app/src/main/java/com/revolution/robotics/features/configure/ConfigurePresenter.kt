@@ -160,7 +160,14 @@ class ConfigurePresenter(
 
     override fun onDeleteClicked() {
         userRobot?.let { view?.showDialog(DeleteRobotDialog.newInstance(it)) }
+    }
 
+    override fun onBackgroundProgramsClicked() {
+        navigator.navigate(ConfigureFragmentDirections.toButtonlessProgramSelector())
+    }
+
+    override fun onPriorityClicked() {
+        navigator.navigate(ConfigureFragmentDirections.toButtonlessProgramSelector())
     }
 
     override fun deleteRobot() {
