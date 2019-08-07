@@ -58,9 +58,10 @@ class ButtonlessProgramSelectorPresenter(
                 ButtonlessProgramViewModel(userProgram, this).apply {
                     selected.set(userConfigurationStorage.controllerHolder?.backgroundBindings?.find
                     { it.programId == userProgram.name } != null && compatibleProgramFilterer.isProgramCompatible(
-                        userProgram
+                        userProgram,
+                        userConfigurationStorage.userConfiguration
                     ))
-                    enabled.set(compatibleProgramFilterer.isProgramCompatible(userProgram))
+                    enabled.set(compatibleProgramFilterer.isProgramCompatible(userProgram, userConfigurationStorage.userConfiguration))
                 }
             }.apply {
                 programs.clear()
@@ -118,7 +119,7 @@ class ButtonlessProgramSelectorPresenter(
         model?.let { model ->
             val filteredPrograms =
                 if (onlyShowCompatiblePrograms == true) {
-                    programs.filter { compatibleProgramFilterer.isProgramCompatible(it.program) }
+                    programs.filter { compatibleProgramFilterer.isProgramCompatible(it.program, userConfigurationStorage.userConfiguration) }
                 } else {
                     allPrograms ?: emptyList()
                 }
@@ -166,23 +167,23 @@ class ButtonlessProgramSelectorPresenter(
 
     override fun onSelectAllClicked(checked: Boolean) {
         programs.forEach {
-            it.selected.set(compatibleProgramFilterer.isProgramCompatible(it.program) && checked)
+            it.selected.set(compatibleProgramFilterer.isProgramCompatible(it.program, userConfigurationStorage.userConfiguration) && checked)
         }
     }
 
     override fun onProgramSelected(viewModel: ButtonlessProgramViewModel) {
-        if (compatibleProgramFilterer.isProgramCompatible(viewModel.program)) {
+        if (compatibleProgramFilterer.isProgramCompatible(viewModel.program, userConfigurationStorage.userConfiguration)) {
             viewModel.selected.set(!viewModel.selected.get())
         }
     }
 
     override fun onInfoButtonClicked(userProgram: UserProgram) {
-        view?.showUserProgramDialog(userProgram, compatibleProgramFilterer.isProgramCompatible(userProgram))
+        view?.showUserProgramDialog(userProgram, compatibleProgramFilterer.isProgramCompatible(userProgram, userConfigurationStorage.userConfiguration))
     }
 
     override fun onProgramEdited(userProgram: UserProgram) {
         val viewModel = programs.find { it.program == userProgram }
-        if (viewModel?.selected?.get() == true && !compatibleProgramFilterer.isProgramCompatible(userProgram)) {
+        if (viewModel?.selected?.get() == true && !compatibleProgramFilterer.isProgramCompatible(userProgram, userConfigurationStorage.userConfiguration)) {
             viewModel.selected.set(false)
         }
     }

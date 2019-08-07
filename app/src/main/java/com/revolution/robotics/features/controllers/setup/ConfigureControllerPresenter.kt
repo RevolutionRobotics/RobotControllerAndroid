@@ -40,7 +40,7 @@ class ConfigureControllerPresenter(
     private fun loadPrograms() {
         getProgramsInteractor.execute { result ->
             programs.clear()
-            programs.addAll(compatibleProgramFilterer.getCompatibleProgramsOnly(result))
+            programs.addAll(compatibleProgramFilterer.getCompatibleProgramsOnly(result, storage.userConfiguration))
         }
     }
 
@@ -84,7 +84,7 @@ class ConfigureControllerPresenter(
     }
 
     override fun onProgramEdited(program: UserProgram) {
-        if (!compatibleProgramFilterer.isProgramCompatible(program)) {
+        if (!compatibleProgramFilterer.isProgramCompatible(program, userConfigurationStorage.userConfiguration)) {
             val index = model?.getProgramIndex(program)
             if (index != null && index != INDEX_NOT_FOUND) {
                 model?.selectedProgram = index + 1

@@ -78,7 +78,7 @@ class ProgramSelectorPresenter(
         model?.let { model ->
             val filteredPrograms =
                 if (onlyShowCompatiblePrograms == true) {
-                    compatibleProgramFilterer.getCompatibleProgramsOnly(allPrograms ?: emptyList())
+                    compatibleProgramFilterer.getCompatibleProgramsOnly(allPrograms ?: emptyList(), storage.userConfiguration)
                 } else {
                     allPrograms ?: emptyList()
                 }
@@ -98,7 +98,7 @@ class ProgramSelectorPresenter(
     }
 
     override fun onProgramSelected(userProgram: UserProgram) {
-        if (compatibleProgramFilterer.isProgramCompatible(userProgram)) {
+        if (compatibleProgramFilterer.isProgramCompatible(userProgram, storage.userConfiguration)) {
             view?.showDialog(ProgramDialog.Add.newInstance(userProgram))
         } else {
             view?.showDialog(ProgramDialog.CompatibilityIssue.newInstance(userProgram))
