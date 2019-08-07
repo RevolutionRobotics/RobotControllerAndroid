@@ -93,7 +93,7 @@ class MotorConfigurationPresenter(
     }
 
     override fun onTestButtonClicked() {
-        if (bluetoothManager.isConnected) {
+        if (bluetoothManager.isServiceDiscovered) {
             if (model?.driveTrainButton?.isSelected?.get() == true) {
                 view?.showDialog(generateDriveTrainDialog())
             }

@@ -158,7 +158,7 @@ class SensorConfigurationPresenter(
     }
 
     override fun onTestButtonClicked() {
-        if (bluetoothManager.isConnected) {
+        if (bluetoothManager.isServiceDiscovered) {
             if (model?.bumperButton?.isSelected?.get() == true) {
                 view?.showDialog(
                     BumperTestDialog.newInstance(
