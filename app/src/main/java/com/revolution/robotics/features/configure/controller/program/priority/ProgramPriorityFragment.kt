@@ -61,6 +61,11 @@ class ProgramPriorityFragment :
         binding?.toolbarViewModel = ProgramPriorityToolbarViewModel(resourceResolver)
     }
 
+    override fun onBackPressed(): Boolean {
+        presenter.save()
+        return super.onBackPressed()
+    }
+
     override fun onDestroyView() {
         presenter.unregister()
         binding?.recyclerPriority?.adapter = null
