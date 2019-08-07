@@ -36,10 +36,6 @@ class ConfigureControllerViewModel(private val presenter: ConfigureControllerMvp
         presenter.onProgramSlotSelected(index)
     }
 
-    fun onControllerSetupFinished() {
-        presenter.onControllerSetupFinished()
-    }
-
     fun restoreFromStorage(storage: UserConfigurationStorage) {
         controllerType = ControllerType.fromId(storage.controllerHolder?.userController?.type)!!
         storage.getAllButtonPrograms().forEachIndexed { index, userProgramBinding ->

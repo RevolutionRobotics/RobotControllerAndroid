@@ -49,7 +49,7 @@ fun createViewModelModule() =
         bind<TypeSelectorViewModel>() with p { TypeSelectorViewModel(i()) }
         bind<ConfigureControllerViewModel>() with p { ConfigureControllerViewModel(i()) }
         bind<ProgramSelectorViewModel>() with p { ProgramSelectorViewModel(i()) }
-        bind<ProgramPriorityViewModel>() with p { ProgramPriorityViewModel(i()) }
+        bind<ProgramPriorityViewModel>() with p { ProgramPriorityViewModel() }
         bind<ButtonlessProgramSelectorViewModel>() with p { ButtonlessProgramSelectorViewModel(i()) }
         bind<ChallengeListViewModel>() with p { ChallengeListViewModel() }
         bind<ChallengeDetailViewModel>() with p { ChallengeDetailViewModel() }

@@ -181,7 +181,7 @@ fun createPresenterModule() =
         bind<TypeSelectorMvp.Presenter>() with s { TypeSelectorPresenter(i(), i()) }
         bind<ConfigureControllerMvp.Presenter>() with s { ConfigureControllerPresenter(i(), i(), i(), i(), i()) }
         bind<ProgramSelectorMvp.Presenter>() with s { ProgramSelectorPresenter(i(), i(), i(), i()) }
-        bind<ProgramPriorityMvp.Presenter>() with s { ProgramPriorityPresenter(i(), i(), i(), i()) }
+        bind<ProgramPriorityMvp.Presenter>() with s { ProgramPriorityPresenter(i(), i()) }
         bind<ButtonlessProgramSelectorMvp.Presenter>() with s { ButtonlessProgramSelectorPresenter(i(), i(), i(), i()) }
         bind<SplashMvp.Presenter>() with s { SplashPresenter(i(), i(), i(), i()) }
         bind<ChallengeGroupMvp.Presenter>() with s { ChallengeGroupPresenter(i(), i(), i()) }

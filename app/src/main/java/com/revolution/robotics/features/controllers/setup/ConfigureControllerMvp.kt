@@ -12,7 +12,6 @@ interface ConfigureControllerMvp : Mvp {
         fun updateContentBindings()
         fun onProgramSlotSelected(index: Int, mostRecent: MostRecentProgramViewModel?)
         fun onShowAllProgramsSelected()
-        fun navigateToBackgroundPrograms()
         fun navigateToEditProgram(userProgram: UserProgram?)
         fun removeSelectedProgram()
     }
@@ -21,7 +20,6 @@ interface ConfigureControllerMvp : Mvp {
         fun loadControllerAndPrograms(controllerId: Int)
         fun onProgramSlotSelected(index: Int)
         fun showAllPrograms()
-        fun onControllerSetupFinished()
         fun addProgram(program: UserProgram)
         fun removeProgram(program: UserProgram)
         fun onProgramEdited(program: UserProgram)

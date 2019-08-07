@@ -131,6 +131,8 @@
                 app:destination="@id/buttonlessProgramSelectorFragment"/>
         <action android:id="@+id/toCoding" app:destination="@id/codingFragment"/>
         <action android:id="@+id/toProgramSelector" app:destination="@id/program_selector"/>
+        <action android:id="@+id/toProgramPriority"
+                app:destination="@id/programPriorityFragment"/>
     </fragment>
 
     <!-- Controller setup -->

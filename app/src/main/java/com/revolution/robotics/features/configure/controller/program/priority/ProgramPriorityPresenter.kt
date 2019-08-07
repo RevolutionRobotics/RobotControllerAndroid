@@ -4,24 +4,17 @@ import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.local.UserControllerWithPrograms
 import com.revolution.robotics.core.domain.local.UserProgram
 import com.revolution.robotics.core.domain.local.UserProgramBinding
-import com.revolution.robotics.core.eventBus.dialog.DialogEvent
-import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
-import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.features.configure.UserConfigurationStorage
-import com.revolution.robotics.features.configure.save.SaveControllerDialog
-import com.revolution.robotics.features.controllers.ControllerType
 import com.revolution.robotics.features.controllers.programInfo.ProgramDialog
-import java.util.Collections
+import java.util.*
 
 @Suppress("TooManyFunctions")
 class ProgramPriorityPresenter(
     private val userConfigurationStorage: UserConfigurationStorage,
-    private val dialogEventBus: DialogEventBus,
-    private val resourceResolver: ResourceResolver,
     private val navigator: Navigator
 ) :
-    ProgramPriorityMvp.Presenter, DialogEventBus.Listener {
+    ProgramPriorityMvp.Presenter {
 
     private companion object {
         const val DEFAULT_DRIVE_PRIORITY = -2
@@ -34,7 +27,6 @@ class ProgramPriorityPresenter(
 
     override fun register(view: ProgramPriorityMvp.View, model: ProgramPriorityViewModel?) {
         super.register(view, model)
-        dialogEventBus.register(this)
         userConfigurationStorage.controllerHolder?.apply {
             viewModels.clear()
             viewModels.addAll(generateItems(this, programs).mapIndexed { index, bindingItem ->
@@ -48,27 +40,13 @@ class ProgramPriorityPresenter(
         }
     }
 
-    override fun unregister(view: ProgramPriorityMvp.View?) {
-        dialogEventBus.unregister(this)
-        super.unregister(view)
-    }
-
     override fun onDragEnded() {
         viewModels.forEachIndexed { index, programPriorityItemViewModel ->
             programPriorityItemViewModel.position = index + 1
         }
     }
 
-    override fun onDialogEvent(event: DialogEvent) {
-        if (event == DialogEvent.SAVE_CONTROLLER) {
-            saveController(
-                event.extras.getString(SaveControllerDialog.KEY_NAME) ?: "",
-                event.extras.getString(SaveControllerDialog.KEY_DESCRIPTION) ?: ""
-            )
-        }
-    }
-
-    private fun saveController(name: String, description: String) {
+    override fun save() {
         viewModels.forEach { item ->
             if (item is ProgramPriorityItemViewModel) {
                 item.userProgramBindingItem.userProgram?.let {
@@ -77,13 +55,6 @@ class ProgramPriorityPresenter(
             } else if (item is ProgramPriorityJoystickViewModel) {
                 userConfigurationStorage.controllerHolder?.userController?.joystickPriority = item.position
             }
-        }
-        userConfigurationStorage.setControllerName(
-            name,
-            description
-        ) {
-            userConfigurationStorage.controllerHolder = null
-            navigator.popUntil(R.id.configureFragment)
         }
     }
 
@@ -102,18 +73,6 @@ class ProgramPriorityPresenter(
     override fun onInfoButtonClicked(item: ProgramPriorityItemViewModel) {
         item.userProgramBindingItem.userProgram?.let { view?.showDialog(ProgramDialog.InfoNoEdit.newInstance(it)) }
     }
-
-    override fun onDoneButtonClicked() {
-        val name =
-            userConfigurationStorage.controllerHolder?.userController?.name ?: getDefaultControllerNameBasedOnType()
-        val description = userConfigurationStorage.controllerHolder?.userController?.description ?: ""
-        view?.showDialog(SaveControllerDialog.newInstance(name, description))
-    }
-
-    private fun getDefaultControllerNameBasedOnType(): String =
-        ControllerType.fromId(userConfigurationStorage.controllerHolder?.userController?.type)?.nameRes?.let {
-            resourceResolver.string(it)
-        } ?: ""
 
     private fun generateItems(
         controllerWithPrograms: UserControllerWithPrograms,
