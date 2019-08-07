@@ -11,7 +11,6 @@ import com.revolution.robotics.features.community.CommunityViewModel
 import com.revolution.robotics.features.configure.ConfigureViewModel
 import com.revolution.robotics.features.configure.connections.ConfigureConnectionsViewModel
 import com.revolution.robotics.features.configure.controller.program.priority.ProgramPriorityViewModel
-import com.revolution.robotics.features.configure.controllers.ConfigureControllersViewModel
 import com.revolution.robotics.features.configure.motor.MotorConfigurationViewModel
 import com.revolution.robotics.features.configure.sensor.SensorConfigurationViewModel
 import com.revolution.robotics.features.controllers.buttonless.ButtonlessProgramSelectorViewModel
@@ -39,7 +38,6 @@ fun createViewModelModule() =
         bind<BuildRobotViewModel>() with p { BuildRobotViewModel(i()) }
         bind<ConfigureViewModel>() with p { ConfigureViewModel(i()) }
         bind<ConfigureConnectionsViewModel>() with p { ConfigureConnectionsViewModel() }
-        bind<ConfigureControllersViewModel>() with p { ConfigureControllersViewModel(i()) }
         bind<MotorConfigurationViewModel>() with p { MotorConfigurationViewModel(i()) }
         bind<SensorConfigurationViewModel>() with p { SensorConfigurationViewModel(i()) }
         bind<SettingsViewModel>() with p { SettingsViewModel(i()) }

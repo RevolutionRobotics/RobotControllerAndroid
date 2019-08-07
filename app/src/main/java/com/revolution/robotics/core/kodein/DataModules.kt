@@ -33,7 +33,7 @@ import com.revolution.robotics.core.interactor.GetFullConfigurationInteractor
 import com.revolution.robotics.core.interactor.GetUserChallengeCategoriesInteractor
 import com.revolution.robotics.core.interactor.GetUserConfigurationInteractor
 import com.revolution.robotics.core.interactor.GetUserControllerInteractor
-import com.revolution.robotics.core.interactor.GetUserControllersInteractor
+import com.revolution.robotics.core.interactor.GetUserControllerForUserRobotInteractor
 import com.revolution.robotics.core.interactor.GetUserProgramInteractor
 import com.revolution.robotics.core.interactor.GetUserProgramsInteractor
 import com.revolution.robotics.core.interactor.GetUserRobotInteractor
@@ -78,8 +78,6 @@ import com.revolution.robotics.features.configure.connections.ConfigureConnectio
 import com.revolution.robotics.features.configure.connections.ConfigureConnectionsPresenter
 import com.revolution.robotics.features.configure.controller.program.priority.ProgramPriorityMvp
 import com.revolution.robotics.features.configure.controller.program.priority.ProgramPriorityPresenter
-import com.revolution.robotics.features.configure.controllers.ConfigureControllersMvp
-import com.revolution.robotics.features.configure.controllers.ConfigureControllersPresenter
 import com.revolution.robotics.features.configure.motor.MotorConfigurationMvp
 import com.revolution.robotics.features.configure.motor.MotorConfigurationPresenter
 import com.revolution.robotics.features.configure.sensor.SensorConfigurationMvp
@@ -135,7 +133,7 @@ fun createInteractorModule() =
         bind<ProgramInteractor>() with p { ProgramInteractor() }
         bind<ProgramsInteractor>() with p { ProgramsInteractor() }
         bind<ChallengeCategoriesInteractor>() with p { ChallengeCategoriesInteractor() }
-        bind<GetUserControllersInteractor>() with p { GetUserControllersInteractor(i()) }
+        bind<GetUserControllerForUserRobotInteractor>() with p { GetUserControllerForUserRobotInteractor(i()) }
         bind<GetUserControllerInteractor>() with p { GetUserControllerInteractor(i(), i(), i()) }
         bind<RemoveUserControllerInteractor>() with p { RemoveUserControllerInteractor(i()) }
         bind<SaveUserControllerInteractor>() with p { SaveUserControllerInteractor(i(), i(), i(), i()) }
@@ -168,11 +166,10 @@ fun createPresenterModule() =
         bind<BuildRobotMvp.Presenter>() with s { BuildRobotPresenter(i(), i(), i(), i(), i(), i(), i(), i(), i(), i()) }
         bind<ConnectMvp.Presenter>() with s { ConnectPresenter(i(), i()) }
         bind<ConfigureMvp.Presenter>() with s { ConfigurePresenter(i(), i(), i(), i(), i(), i(), i(), i()) }
-        bind<ConfigureConnectionsMvp.Presenter>() with s { ConfigureConnectionsPresenter(i(), i(), i(), i()) }
+        bind<ConfigureConnectionsMvp.Presenter>() with s { ConfigureConnectionsPresenter(i(), i(), i(), i(), i()) }
         bind<MotorConfigurationMvp.Presenter>() with s { MotorConfigurationPresenter(i(), i(), i(), i(), i()) }
         bind<SensorConfigurationMvp.Presenter>() with s { SensorConfigurationPresenter(i(), i(), i(), i(), i()) }
         bind<BuildFinishedMvp.Presenter>() with s { BuildFinishedPresenter(i(), i()) }
-        bind<ConfigureControllersMvp.Presenter>() with s { ConfigureControllersPresenter(i(), i(), i(), i(), i(), i()) }
         bind<SettingsMvp.Presenter>() with s { SettingsPresenter(i(), i()) }
         bind<AboutMvp.Presenter>() with s { AboutPresenter(i(), i()) }
         bind<FirmwareMvp.Presenter>() with s { FirmwareUpdatePresenter(i(), i()) }

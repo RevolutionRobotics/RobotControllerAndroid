@@ -76,7 +76,7 @@ class ConfigurePresenter(
             model?.setScreen(selectedTab)
 
             if (selectedTab == ConfigurationTabs.CONNECTIONS) {
-                view?.showConnectionsScreen()
+                view?.showConnectionsScreen(selectedConfigId)
             } else if (config.controller != null) {
                 view?.showControllerScreen(config.controller!!)
             }
@@ -120,7 +120,7 @@ class ConfigurePresenter(
     override fun onConnectionsTabSelected() {
         selectedTab = ConfigurationTabs.CONNECTIONS
         model?.setScreen(ConfigurationTabs.CONNECTIONS)
-        view?.showConnectionsScreen()
+        view?.showConnectionsScreen(selectedConfigId)
     }
 
     override fun onControllerTabSelected() {

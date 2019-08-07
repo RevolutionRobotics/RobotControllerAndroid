@@ -9,5 +9,5 @@ class GetUserRobotInteractor(private val userRobotDao: UserRobotDao) : Interacto
     var robotId: Int = 0
     var buildStatus = BuildStatus.INITIAL
 
-    override fun getData() = userRobotDao.getRobotByStatus(robotId, buildStatus)
+    override fun getData() = userRobotDao.getRobotById(robotId)
 }

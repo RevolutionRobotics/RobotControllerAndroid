@@ -8,7 +8,7 @@ import com.revolution.robotics.core.domain.local.UserRobot
 interface ConfigureMvp : Mvp {
     interface View : Mvp.View {
         fun showDialog(baseDialog: BaseDialog)
-        fun showConnectionsScreen()
+        fun showConnectionsScreen(configId: Int)
         fun showControllerScreen(controllerId: Int)
         fun openMotorConfig(motorPort: MotorPort)
         fun openSensorConfig(sensorPort: SensorPort)
