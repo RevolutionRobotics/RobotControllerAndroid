@@ -1,18 +1,10 @@
 package com.revolution.robotics.features.configure
 
-import com.revolution.robotics.core.domain.local.BuildStatus
-import com.revolution.robotics.core.domain.local.UserBackgroundProgramBinding
-import com.revolution.robotics.core.domain.local.UserConfiguration
-import com.revolution.robotics.core.domain.local.UserControllerWithPrograms
-import com.revolution.robotics.core.domain.local.UserMapping
-import com.revolution.robotics.core.domain.local.UserProgram
-import com.revolution.robotics.core.domain.local.UserProgramBinding
-import com.revolution.robotics.core.domain.local.UserRobot
+import com.revolution.robotics.core.domain.local.*
 import com.revolution.robotics.core.domain.remote.Sensor
 import com.revolution.robotics.core.interactor.SaveUserControllerInteractor
 import com.revolution.robotics.core.interactor.UpdateUserRobotInteractor
 import com.revolution.robotics.features.configure.controller.ControllerButton
-import com.revolution.robotics.features.controllers.ControllerType
 
 @Suppress("TooManyFunctions")
 class UserConfigurationStorage(
@@ -71,25 +63,6 @@ class UserConfigurationStorage(
         } else {
             "bumper${count + 1}"
         }
-    }
-
-    fun updateSensorPort(sensorPort: SensorPort) {
-        userConfiguration?.let { config ->
-            config.mappingId?.updateSensorPort(sensorPort)
-        }
-        updateRobot()
-    }
-
-    fun updateMotorPort(motorPort: MotorPort) {
-        userConfiguration?.let { config ->
-            config.mappingId?.updateMotorPort(motorPort)
-        }
-        updateRobot()
-    }
-
-    fun changeController(controllerId: Int, finished: (() -> Unit)? = null) {
-        userConfiguration?.controller = controllerId
-        updateRobot(finished)
     }
 
     fun addButtonProgram(userProgram: UserProgram, buttonName: ControllerButton) {
@@ -194,23 +167,6 @@ class UserConfigurationStorage(
             }
         }
         updateUserController()
-    }
-
-    fun setRobotName(name: String, description: String) {
-        robot?.name = name
-        robot?.description = description
-        updateRobot()
-    }
-
-    fun setControllerName(name: String, description: String, finished: () -> Unit) {
-        controllerHolder?.userController?.name = name
-        controllerHolder?.userController?.description = description
-        updateUserController(finished)
-    }
-
-    fun changeControllerType(finished: () -> Unit) {
-        controllerHolder?.userController?.type = if (controllerHolder?.userController?.type == ControllerType.DRIVER.id) ControllerType.GAMER.id else ControllerType.DRIVER.id
-        updateUserController(finished)
     }
 
     private fun updateUserController(finished: (() -> Unit)? = null) {

@@ -18,7 +18,7 @@ interface ConfigureMvp : Mvp {
     }
 
     interface Presenter : Mvp.Presenter<View, ConfigureViewModel> {
-        fun initUI(userRobot: UserRobot, toolbarViewModel: ConfigureToolbarViewModel)
+        fun loadRobot(robotId: Int, toolbarViewModel: ConfigureToolbarViewModel)
         fun onControllerTypeClicked()
         fun onDeleteClicked()
         fun deleteRobot()
@@ -26,9 +26,8 @@ interface ConfigureMvp : Mvp {
         fun onRobotImageClicked()
         fun onBackgroundProgramsClicked()
         fun onPriorityClicked()
-        fun saveConfiguration()
+        fun editRobotDetails()
         fun onConnectionsTabSelected()
         fun onControllerTabSelected()
-        fun clearStorage()
     }
 }

@@ -27,24 +27,22 @@ class ConfigureFragment : BaseFragment<FragmentConfigureBinding, ConfigureViewMo
     ConfigureMvp.View, DrawerLayout.DrawerListener, DialogEventBus.Listener {
 
     companion object {
-        val Bundle.userRobot: UserRobot by BundleArgumentDelegate.Parcelable("userRobot")
+        val Bundle.robotId: Int by BundleArgumentDelegate.Int("robotId")
     }
 
     override val viewModelClass: Class<ConfigureViewModel> = ConfigureViewModel::class.java
     private val presenter: ConfigureMvp.Presenter by kodein.instance()
-    private val userConfigurationStorage: UserConfigurationStorage by kodein.instance()
     private val dialogEventBus: DialogEventBus by kodein.instance()
     private lateinit var cameraHelper: CameraHelper
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         presenter.register(this, viewModel)
-        userConfigurationStorage.robot = arguments?.userRobot
-        arguments?.let { arguments ->
+        arguments?.robotId?.let { robotId ->
             binding?.toolbarViewModel = ConfigureToolbarViewModel(presenter).apply {
-                presenter.initUI(arguments.userRobot, this)
+                presenter.loadRobot(robotId, this)
             }
+            cameraHelper = CameraHelper(robotId)
         }
-        cameraHelper = CameraHelper(arguments?.userRobot?.instanceId ?: 0)
 
         binding?.drawerConfiguration?.addDrawerListener(this)
         dialogEventBus.register(this)
@@ -61,7 +59,6 @@ class ConfigureFragment : BaseFragment<FragmentConfigureBinding, ConfigureViewMo
             hideDrawer()
             true
         } else {
-            presenter.clearStorage()
             false
         }
 

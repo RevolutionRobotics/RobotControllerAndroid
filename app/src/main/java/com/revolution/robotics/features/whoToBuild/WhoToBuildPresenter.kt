@@ -150,7 +150,7 @@ class WhoToBuildPresenter(
         saveUserControllerInteractor.userController = controller
         saveUserControllerInteractor.backgroundProgramBindings = emptyList()
         saveUserControllerInteractor.execute {
-            navigator.navigate(WhoToBuildFragmentDirections.toConfigure(userRobot))
+            navigator.navigate(WhoToBuildFragmentDirections.toConfigure(userRobot.instanceId))
         }
     }
 }

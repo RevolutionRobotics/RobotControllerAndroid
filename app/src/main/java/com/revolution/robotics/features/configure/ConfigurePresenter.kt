@@ -15,12 +15,15 @@ import com.revolution.robotics.features.controllers.ControllerType
 
 @Suppress("TooManyFunctions")
 class ConfigurePresenter(
+    private val getUserRobotInteractor: GetUserRobotInteractor,
     private val configurationEventBus: ConfigurationEventBus,
     private val duplicateUserRobotInteractor: DuplicateUserRobotInteractor,
     private val deleteRobotInteractor: DeleteRobotInteractor,
+    private val updateUserRobotInteractor: UpdateUserRobotInteractor,
     private val getUserConfigurationInteractor: GetUserConfigurationInteractor,
+    private val getUserControllerInteractor: GetUserControllerInteractor,
+    private val saveUserControllerInteractor: SaveUserControllerInteractor,
     private val dialogEventBus: DialogEventBus,
-    private val userConfigurationStorage: UserConfigurationStorage,
     private val resourceResolver: ResourceResolver,
     private val navigator: Navigator
 ) : ConfigureMvp.Presenter,
@@ -32,9 +35,9 @@ class ConfigurePresenter(
     private var toolbarViewModel: ConfigureToolbarViewModel? = null
 
     var userRobot: UserRobot? = null
+    var userConfiguration: UserConfiguration? = null
 
     private var selectedTab = ConfigurationTabs.CONNECTIONS
-    private var selectedConfigId = -1
 
     override fun register(view: ConfigureMvp.View, model: ConfigureViewModel?) {
         super.register(view, model)
@@ -42,43 +45,41 @@ class ConfigurePresenter(
         dialogEventBus.register(this)
     }
 
-    override fun initUI(userRobot: UserRobot, toolbarViewModel: ConfigureToolbarViewModel) {
-        this.userRobot = userRobot
-        this.toolbarViewModel = toolbarViewModel
-        toolbarViewModel.title.set(
-            if (userRobot.name.isNullOrEmpty()) {
-                resourceResolver.string(R.string.untitled_robot_name)
-            } else {
-                userRobot.name
-            }
-        )
+    override fun loadRobot(robotId: Int, toolbarViewModel: ConfigureToolbarViewModel) {
+        getUserRobotInteractor.robotId = robotId
+        getUserRobotInteractor.execute { userRobot ->
+            userRobot?.let {
+                this.userRobot = it
+                this.toolbarViewModel = toolbarViewModel
+                toolbarViewModel.title.set(
+                    if (it.name.isNullOrEmpty()) {
+                        resourceResolver.string(R.string.untitled_robot_name)
+                    } else {
+                        it.name
+                    }
+                )
 
-        if (userConfigurationStorage.userConfiguration == null ||
-            userConfigurationStorage.userConfiguration?.id != userRobot.configurationId
-        ) {
-            getUserConfigurationInteractor.userConfigId = userRobot.configurationId
-            getUserConfigurationInteractor.execute { config ->
-                onConfigurationLoaded(config)
+                getUserConfigurationInteractor.userConfigId = it.configurationId
+                getUserConfigurationInteractor.execute { config ->
+                    onConfigurationLoaded(config)
+                }
             }
-        } else {
-            onConfigurationLoaded(userConfigurationStorage.userConfiguration)
         }
     }
 
     private fun onConfigurationLoaded(config: UserConfiguration?) {
         setControllersTabName(config?.controller)
-        userConfigurationStorage.userConfiguration = config
         config?.apply {
-            if (selectedConfigId != config.id) {
+            if (config.id != userConfiguration?.id ) {
                 selectedTab = ConfigurationTabs.CONNECTIONS
-                selectedConfigId = config.id
+                userConfiguration = config
             }
             model?.setScreen(selectedTab)
 
             if (selectedTab == ConfigurationTabs.CONNECTIONS) {
-                view?.showConnectionsScreen(selectedConfigId)
-            } else if (config.controller != null) {
-                view?.showControllerScreen(config.controller!!)
+                view?.showConnectionsScreen(config.id)
+            } else {
+                config.controller?.let { view?.showControllerScreen(it) }
             }
         }
     }
@@ -91,13 +92,13 @@ class ConfigurePresenter(
 
     override fun onDialogEvent(event: DialogEvent) {
         if (event == DialogEvent.SAVE_ROBOT) {
-            userConfigurationStorage.setRobotName(
-                event.extras.getString(SaveRobotDialog.KEY_NAME) ?: "",
-                event.extras.getString(SaveRobotDialog.KEY_DESCRIPTION) ?: ""
-            )
-            toolbarViewModel?.title?.set(event.extras.getString(SaveRobotDialog.KEY_NAME) ?: "")
-        } else if (event == DialogEvent.DEFAULT_CONTROLLER_CHANGED) {
-            setControllersTabName(userConfigurationStorage.userConfiguration?.controller)
+            userRobot?.let {
+                it.name = event.extras.getString(SaveRobotDialog.KEY_NAME) ?: ""
+                it.description = event.extras.getString(SaveRobotDialog.KEY_DESCRIPTION) ?: ""
+                save {
+                    toolbarViewModel?.title?.set(event.extras.getString(SaveRobotDialog.KEY_NAME) ?: "")
+                }
+            }
         }
     }
 
@@ -118,40 +119,39 @@ class ConfigurePresenter(
     }
 
     override fun onConnectionsTabSelected() {
-        selectedTab = ConfigurationTabs.CONNECTIONS
-        model?.setScreen(ConfigurationTabs.CONNECTIONS)
-        view?.showConnectionsScreen(selectedConfigId)
+        userConfiguration?.let { config ->
+            selectedTab = ConfigurationTabs.CONNECTIONS
+            model?.setScreen(ConfigurationTabs.CONNECTIONS)
+            view?.showConnectionsScreen(config.id)
+        }
     }
 
     override fun onControllerTabSelected() {
         selectedTab = ConfigurationTabs.CONTROLLERS
         model?.setScreen(ConfigurationTabs.CONTROLLERS)
-        if (userConfigurationStorage.userConfiguration?.controller != null) {
-            view?.showControllerScreen(userConfigurationStorage.userConfiguration?.controller!!)
+        if (userConfiguration?.controller != null) {
+            view?.showControllerScreen(userConfiguration?.controller!!)
         }
-
-    }
-
-    override fun clearStorage() {
-        selectedConfigId = -1
-        userConfigurationStorage.userConfiguration = null
-        userConfigurationStorage.controllerHolder = null
     }
 
     override fun onMotorConfigChangedEvent(event: MotorPort) {
-        userConfigurationStorage.updateMotorPort(event)
-        userConfigurationStorage.userConfiguration?.let {
-            view?.updateConfig(it)
+        userConfiguration?.let { config ->
+            config.mappingId?.updateMotorPort(event)
+            save {
+                view?.updateConfig(config)
+                view?.hideDrawer()
+            }
         }
-        view?.hideDrawer()
     }
 
     override fun onSensorConfigChangedEvent(event: SensorPort) {
-        userConfigurationStorage.updateSensorPort(event)
-        userConfigurationStorage.userConfiguration?.let {
-            view?.updateConfig(it)
+        userConfiguration?.let { config ->
+            config.mappingId?.updateSensorPort(event)
+            save {
+                view?.updateConfig(config)
+                view?.hideDrawer()
+            }
         }
-        view?.hideDrawer()
     }
 
     override fun onRobotImageClicked() {
@@ -180,8 +180,17 @@ class ConfigurePresenter(
     }
 
     override fun onControllerTypeClicked() {
-        userConfigurationStorage.changeControllerType {
-            onControllerTabSelected()
+        userConfiguration?.controller?.let { controllerId ->
+            getUserControllerInteractor.id = controllerId
+            getUserControllerInteractor.execute { controller ->
+                controller.userController.type =
+                    if (controller.userController.type == ControllerType.DRIVER.id) ControllerType.GAMER.id else ControllerType.DRIVER.id
+                saveUserControllerInteractor.userController = controller.userController
+                saveUserControllerInteractor.backgroundProgramBindings =  controller.backgroundBindings
+                saveUserControllerInteractor.execute {
+                    onControllerTabSelected()
+                }
+            }
         }
     }
 
@@ -195,9 +204,21 @@ class ConfigurePresenter(
         }
     }
 
-    override fun saveConfiguration() {
+    override fun editRobotDetails() {
         userRobot?.let { robot ->
             view?.showSaveDialog(robot.name ?: "", robot.description ?: "")
+        }
+    }
+
+    fun save(finished: (() -> Unit)? = null) {
+        userConfiguration?.let { config ->
+            userRobot?.let { robot ->
+                updateUserRobotInteractor.userConfiguration = config
+                updateUserRobotInteractor.userRobot = robot
+                updateUserRobotInteractor.execute(onResponse = {
+                    finished?.invoke()
+                }, onError = { finished?.invoke() })
+            }
         }
     }
 }
