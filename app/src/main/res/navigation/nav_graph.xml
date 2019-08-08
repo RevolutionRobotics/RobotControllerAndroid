@@ -145,14 +145,14 @@
     <fragment android:id="@+id/buttonlessProgramSelectorFragment"
               android:name="com.revolution.robotics.features.controllers.buttonless.ButtonlessProgramSelectorFragment"
               android:label="ButtonlessProgramSelectorFragment">
-        <action android:id="@+id/toProgramPriority"
-                app:destination="@id/programPriorityFragment"/>
         <action android:id="@+id/toCoding"
                 app:destination="@id/codingFragment"/>
     </fragment>
     <fragment android:id="@+id/programPriorityFragment"
               android:name="com.revolution.robotics.features.configure.controller.program.priority.ProgramPriorityFragment"
-              android:label="ProgramPriorityFragment"/>
+              android:label="ProgramPriorityFragment">
+        <argument android:name="controllerId" app:argType="integer"/>
+    </fragment>
 
     <!-- Settings -->
     <fragment android:id="@+id/settingFragment"

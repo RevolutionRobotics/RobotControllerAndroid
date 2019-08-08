@@ -70,7 +70,7 @@ class ConfigurePresenter(
     private fun onConfigurationLoaded(config: UserConfiguration?) {
         setControllersTabName(config?.controller)
         config?.apply {
-            if (config.id != userConfiguration?.id ) {
+            if (config.id != userConfiguration?.id) {
                 selectedTab = ConfigurationTabs.CONNECTIONS
                 userConfiguration = config
             }
@@ -167,7 +167,7 @@ class ConfigurePresenter(
     }
 
     override fun onPriorityClicked() {
-        navigator.navigate(ConfigureFragmentDirections.toProgramPriority())
+        userConfiguration?.controller?.let { navigator.navigate(ConfigureFragmentDirections.toProgramPriority(it)) }
     }
 
     override fun deleteRobot() {
@@ -186,7 +186,7 @@ class ConfigurePresenter(
                 controller.userController.type =
                     if (controller.userController.type == ControllerType.DRIVER.id) ControllerType.GAMER.id else ControllerType.DRIVER.id
                 saveUserControllerInteractor.userController = controller.userController
-                saveUserControllerInteractor.backgroundProgramBindings =  controller.backgroundBindings
+                saveUserControllerInteractor.backgroundProgramBindings = controller.backgroundBindings
                 saveUserControllerInteractor.execute {
                     onControllerTabSelected()
                 }
