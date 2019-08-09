@@ -9,7 +9,7 @@ interface ConfigureMvp : Mvp {
     interface View : Mvp.View {
         fun showDialog(baseDialog: BaseDialog)
         fun showConnectionsScreen(configId: Int)
-        fun showControllerScreen(controllerId: Int)
+        fun showControllerScreen(configId: Int)
         fun openMotorConfig(motorPort: MotorPort)
         fun openSensorConfig(sensorPort: SensorPort)
         fun updateConfig(userConfiguration: UserConfiguration)
@@ -29,5 +29,6 @@ interface ConfigureMvp : Mvp {
         fun editRobotDetails()
         fun onConnectionsTabSelected()
         fun onControllerTabSelected()
+        fun updateRobotName(name: String, description: String)
     }
 }

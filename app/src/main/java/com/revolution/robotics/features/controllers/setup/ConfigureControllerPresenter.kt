@@ -1,20 +1,22 @@
 package com.revolution.robotics.features.controllers.setup
 
 import com.revolution.robotics.core.domain.local.UserProgram
-import com.revolution.robotics.core.interactor.GetUserControllerInteractor
+import com.revolution.robotics.core.interactor.GetFullConfigurationInteractor
 import com.revolution.robotics.core.interactor.GetUserProgramsInteractor
-import com.revolution.robotics.features.configure.UserConfigurationStorage
+import com.revolution.robotics.core.interactor.SaveUserControllerInteractor
 import com.revolution.robotics.features.configure.controller.CompatibleProgramFilterer
+import com.revolution.robotics.features.configure.controller.ControllerButton
 import com.revolution.robotics.features.controllers.programInfo.ProgramDialog
 import com.revolution.robotics.features.controllers.setup.mostRecent.MostRecentItem
 import com.revolution.robotics.features.controllers.setup.mostRecent.MostRecentProgramViewModel
+import com.revolution.robotics.features.play.FullControllerData
 
 class ConfigureControllerPresenter(
-    private val getProgramsInteractor: GetUserProgramsInteractor,
+    private val getFullConfigurationInteractor: GetFullConfigurationInteractor,
     private val compatibleProgramFilterer: CompatibleProgramFilterer,
-    private val storage: UserConfigurationStorage,
-    private val userConfigurationStorage: UserConfigurationStorage,
-    private val userControllerInteractor: GetUserControllerInteractor
+    private val getUserProgramsInteractor: GetUserProgramsInteractor,
+    private val saveUserControllerInteractor: SaveUserControllerInteractor
+
 ) : ConfigureControllerMvp.Presenter {
 
     companion object {
@@ -22,61 +24,114 @@ class ConfigureControllerPresenter(
         private const val INDEX_NOT_FOUND = -1
     }
 
+    private val buttonNames = ControllerButton.values().toList()
+
     override var view: ConfigureControllerMvp.View? = null
     override var model: ConfigureControllerViewModel? = null
 
-    private val programs = ArrayList<UserProgram>()
+    private var configId: Int = -1
+    private val allPrograms = ArrayList<UserProgram>()
 
-    override fun loadControllerAndPrograms(controllerId: Int) {
-        userControllerInteractor.id = controllerId
-        userControllerInteractor.execute { controllerWithPrograms ->
-            userConfigurationStorage.controllerHolder = controllerWithPrograms
-            model?.restoreFromStorage(storage)
+
+    override fun loadControllerAndPrograms(configId: Int) {
+        this.configId = configId
+        getFullConfigurationInteractor.userConfigId = configId
+        getFullConfigurationInteractor.execute { fullControllerData ->
+            fullControllerData.controller?.let { model?.update(it) }
             view?.updateContentBindings()
             loadPrograms()
         }
     }
 
     private fun loadPrograms() {
-        getProgramsInteractor.execute { result ->
-            programs.clear()
-            programs.addAll(compatibleProgramFilterer.getCompatibleProgramsOnly(result, storage.userConfiguration))
+        getUserProgramsInteractor.execute { result ->
+            allPrograms.clear()
+            allPrograms.addAll(result)
         }
     }
 
     override fun onProgramSlotSelected(index: Int) {
-        val mostRecentViewModel =
-            if (index == ConfigureControllerViewModel.NO_PROGRAM_SELECTED) {
-                null
-            } else {
-                val availablePrograms = programs.toMutableList()
-                storage.getBoundButtonPrograms().forEach { boundProgram ->
-                    availablePrograms.removeAll { it.name == boundProgram.programName }
-                }
-                storage.controllerHolder?.backgroundBindings?.forEach { backgroundBinding ->
-                    availablePrograms.removeAll { it.name == backgroundBinding.programId }
-                }
+        getFullConfigurationInteractor.userConfigId = configId
+        getFullConfigurationInteractor.execute { fullConfig ->
+            fullConfig.controller?.let { model?.update(it) }
+            view?.updateContentBindings()
+            var programs =
+                compatibleProgramFilterer.getCompatibleProgramsOnly(allPrograms, fullConfig.userConfiguration)
+            val mostRecentViewModel =
+                if (index == ConfigureControllerViewModel.NO_PROGRAM_SELECTED) {
+                    null
+                } else {
+                    val availablePrograms = programs.toMutableList()
+                    fullConfig?.controller?.userController?.getBoundButtonPrograms()?.forEach { boundProgram ->
+                        availablePrograms.removeAll { it.name == boundProgram.programName }
+                    }
+                    fullConfig?.controller?.backgroundBindings?.forEach { backgroundBinding ->
+                        availablePrograms.removeAll { it.name == backgroundBinding.programId }
+                    }
 
-                var mostRecentPrograms = availablePrograms.sortedBy { it.lastModified }.reversed()
-                if (mostRecentPrograms.size > MOST_RECENT_PROGRAM_COUNT) {
-                    mostRecentPrograms = mostRecentPrograms.subList(0, MOST_RECENT_PROGRAM_COUNT)
-                }
-                val mostRecentItems = mostRecentPrograms.map { MostRecentItem(it) }.toMutableList()
-                model?.getProgram(index)?.let { boundProgram ->
-                    mostRecentItems.add(0, MostRecentItem(boundProgram, true))
-                }
+                    var mostRecentPrograms = availablePrograms.sortedBy { it.lastModified }.reversed()
+                    if (mostRecentPrograms.size > MOST_RECENT_PROGRAM_COUNT) {
+                        mostRecentPrograms = mostRecentPrograms.subList(0, MOST_RECENT_PROGRAM_COUNT)
+                    }
+                    val mostRecentItems = mostRecentPrograms.map { MostRecentItem(it) }.toMutableList()
+                    model?.getProgram(index)?.let { boundProgram ->
+                        mostRecentItems.add(0, MostRecentItem(boundProgram, true))
+                    }
 
-                MostRecentProgramViewModel(mostRecentItems, this)
+                    MostRecentProgramViewModel(mostRecentItems, this)
+                }
+            view?.onProgramSlotSelected(index, mostRecentViewModel)
+        }
+    }
+
+
+    override fun onProgramSelected(program: UserProgram, isBound: Boolean) {
+        if (isBound) {
+            view?.showDialog(ProgramDialog.Remove.newInstance(program))
+        } else {
+            view?.showDialog(ProgramDialog.Add.newInstance(program))
+        }
+    }
+
+    override fun addProgram(userProgram: UserProgram) {
+        getFullConfigurationInteractor.userConfigId = configId
+        getFullConfigurationInteractor.execute { fullControllerData ->
+            model?.selectedProgram?.let {
+                fullControllerData.controller?.addButtonProgram(
+                    userProgram,
+                    buttonNames[it - 1]
+                )
+                save(fullControllerData)
+                model?.onProgramSet(userProgram)
+                view?.hideProgramSelector()
             }
-        view?.onProgramSlotSelected(index, mostRecentViewModel)
+        }
     }
 
-    override fun addProgram(program: UserProgram) {
-        view?.showDialog(ProgramDialog.Add.newInstance(program))
+    override fun removeProgram() {
+        getFullConfigurationInteractor.userConfigId = configId
+        getFullConfigurationInteractor.execute { fullControllerData ->
+            model?.selectedProgram?.let {
+                fullControllerData.controller?.removeButtonProgram(
+                    buttonNames[it - 1]
+                )
+                save(fullControllerData)
+                model?.onProgramSet(null)
+                view?.hideProgramSelector()
+            }
+        }
     }
 
-    override fun removeProgram(program: UserProgram) {
-        view?.showDialog(ProgramDialog.Remove.newInstance(program))
+    private fun save(fullControllerData: FullControllerData, finished: (() -> Unit)? = null) {
+        fullControllerData.controller?.userController?.let { userController ->
+            saveUserControllerInteractor.userController = userController
+            saveUserControllerInteractor.backgroundProgramBindings = fullControllerData.controller?.backgroundBindings
+            saveUserControllerInteractor.execute(onResponse = {
+                finished?.invoke()
+            }, onError = {
+                finished?.invoke()
+            })
+        }
     }
 
     override fun showAllPrograms() {
@@ -84,11 +139,14 @@ class ConfigureControllerPresenter(
     }
 
     override fun onProgramEdited(program: UserProgram) {
-        if (!compatibleProgramFilterer.isProgramCompatible(program, userConfigurationStorage.userConfiguration)) {
-            val index = model?.getProgramIndex(program)
-            if (index != null && index != INDEX_NOT_FOUND) {
-                model?.selectedProgram = index + 1
-                view?.removeSelectedProgram()
+        getFullConfigurationInteractor.userConfigId = configId
+        getFullConfigurationInteractor.execute { result ->
+            if (!compatibleProgramFilterer.isProgramCompatible(program, result.userConfiguration)) {
+                val index = model?.getProgramIndex(program)
+                if (index != null && index != INDEX_NOT_FOUND) {
+                    model?.selectedProgram = index + 1
+                    removeProgram()
+                }
             }
         }
     }

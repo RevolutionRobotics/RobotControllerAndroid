@@ -2,12 +2,14 @@ package com.revolution.robotics.features.configure
 
 import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.local.UserConfiguration
+import com.revolution.robotics.core.domain.local.UserProgram
 import com.revolution.robotics.core.domain.local.UserRobot
 import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
 import com.revolution.robotics.core.interactor.*
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.core.utils.Navigator
+import com.revolution.robotics.features.configure.controller.ControllerButton
 import com.revolution.robotics.features.configure.delete.DeleteRobotDialog
 import com.revolution.robotics.features.configure.robotPicture.RobotPictureDialog
 import com.revolution.robotics.features.configure.save.SaveRobotDialog
@@ -79,9 +81,13 @@ class ConfigurePresenter(
             if (selectedTab == ConfigurationTabs.CONNECTIONS) {
                 view?.showConnectionsScreen(config.id)
             } else {
-                config.controller?.let { view?.showControllerScreen(it) }
+                view?.showControllerScreen(config.id)
             }
         }
+    }
+
+    override fun updateRobotName(name: String, description: String) {
+
     }
 
     override fun unregister(view: ConfigureMvp.View?) {
@@ -129,8 +135,8 @@ class ConfigurePresenter(
     override fun onControllerTabSelected() {
         selectedTab = ConfigurationTabs.CONTROLLERS
         model?.setScreen(ConfigurationTabs.CONTROLLERS)
-        if (userConfiguration?.controller != null) {
-            view?.showControllerScreen(userConfiguration?.controller!!)
+        if (userConfiguration != null) {
+            view?.showControllerScreen(userConfiguration!!.id)
         }
     }
 

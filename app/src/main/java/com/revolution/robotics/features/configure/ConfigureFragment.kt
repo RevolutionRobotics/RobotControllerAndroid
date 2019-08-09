@@ -77,12 +77,12 @@ class ConfigureFragment : BaseFragment<FragmentConfigureBinding, ConfigureViewMo
         binding?.drawerConfiguration?.setSensor(sensorPort.sensor ?: Sensor(), sensorPort.portName ?: "")
     }
 
-    override fun showConnectionsScreen(configurationId: Int) {
-        commitFragmentToFrame(ConfigureConnectionsFragment.newInstance(configurationId))
+    override fun showConnectionsScreen(configId: Int) {
+        commitFragmentToFrame(ConfigureConnectionsFragment.newInstance(configId))
     }
 
-    override fun showControllerScreen(controllerId: Int) {
-        commitFragmentToFrame(ConfigureControllerFragment.newInstance(controllerId))
+    override fun showControllerScreen(configId: Int) {
+        commitFragmentToFrame(ConfigureControllerFragment.newInstance(configId))
     }
 
     private fun commitFragmentToFrame(fragment: Fragment) {

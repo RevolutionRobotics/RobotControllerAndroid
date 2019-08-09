@@ -39,6 +39,8 @@ data class UserController(
 
     fun getMappingList() = listOf(mapping?.b1, mapping?.b2, mapping?.b3, mapping?.b4, mapping?.b5, mapping?.b6)
 
+    fun getBoundButtonPrograms() = getMappingList().filterNotNull()
+
     fun removeProgramMapping(programName: String) {
         if (mapping?.b1?.programName == programName) {
             mapping?.b1 = null

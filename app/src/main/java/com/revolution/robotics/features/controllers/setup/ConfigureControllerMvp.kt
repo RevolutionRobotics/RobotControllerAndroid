@@ -13,15 +13,16 @@ interface ConfigureControllerMvp : Mvp {
         fun onProgramSlotSelected(index: Int, mostRecent: MostRecentProgramViewModel?)
         fun onShowAllProgramsSelected()
         fun navigateToEditProgram(userProgram: UserProgram?)
-        fun removeSelectedProgram()
+        fun hideProgramSelector()
     }
 
     interface Presenter : Mvp.Presenter<View, ConfigureControllerViewModel> {
-        fun loadControllerAndPrograms(controllerId: Int)
+        fun loadControllerAndPrograms(configId: Int)
         fun onProgramSlotSelected(index: Int)
         fun showAllPrograms()
+        fun onProgramSelected(program: UserProgram, isBound: Boolean)
         fun addProgram(program: UserProgram)
-        fun removeProgram(program: UserProgram)
+        fun removeProgram()
         fun onProgramEdited(program: UserProgram)
     }
 }

@@ -37,34 +37,26 @@ class ConfigureControllerFragment :
     companion object {
         private const val PROGRAM_SELECTOR_ANIMATION_DURATION_MS = 250L
 
-        private var Bundle.controllerId by BundleArgumentDelegate.Int("controller")
+        private var Bundle.configId by BundleArgumentDelegate.Int("configId")
 
-        fun newInstance(controllerId: Int) = ConfigureControllerFragment().withArguments { bundle ->
-            bundle.controllerId = controllerId
+        fun newInstance(configId: Int) = ConfigureControllerFragment().withArguments { bundle ->
+            bundle.configId = configId
         }
     }
 
     override val viewModelClass = ConfigureControllerViewModel::class.java
 
-    private val buttonNames = ControllerButton.values().toList()
     private val presenter: ConfigureControllerMvp.Presenter by kodein.instance()
     private val dialogEventBus: DialogEventBus by kodein.instance()
-    private val storage: UserConfigurationStorage by kodein.instance()
     private val navigator: Navigator by kodein.instance()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         presenter.register(this, viewModel)
-        arguments?.controllerId?.let { presenter.loadControllerAndPrograms(it) }
+        arguments?.configId?.let { presenter.loadControllerAndPrograms(it) }
         dialogEventBus.register(this)
         binding?.apply {
             dimmer.setOnClickListener { hideProgramSelector() }
         }
-        storage.controllerHolder?.programToBeAdded?.let { programToAdd -> addProgram(programToAdd) }
-        storage.controllerHolder?.programToBeAdded = null
-
-        storage.programBeingEdited?.let { presenter.onProgramEdited(it) }
-        storage.programBeingEdited = null
-        hideProgramSelector()
     }
 
     override fun onDestroyView() {
@@ -81,7 +73,7 @@ class ConfigureControllerFragment :
             super.onBackPressed()
         }
 
-    private fun hideProgramSelector() {
+    override fun hideProgramSelector() {
         binding?.apply {
             if (dimmer.visible) {
                 dimmer.disappearWithAnimation(R.anim.dim_screen_disappear)
@@ -108,31 +100,14 @@ class ConfigureControllerFragment :
 
     override fun onDialogEvent(event: DialogEvent) {
         when (event) {
-            DialogEvent.ADD_PROGRAM -> addProgram(event.program())
-            DialogEvent.REMOVE_PROGRAM -> removeSelectedProgram()
+            DialogEvent.ADD_PROGRAM -> presenter.addProgram(event.program())
+            DialogEvent.REMOVE_PROGRAM -> presenter.removeProgram()
             DialogEvent.EDIT_PROGRAM -> event.program().let { program ->
-                storage.programBeingEdited = program
+                //storage.programBeingEdited = program
                 navigateToEditProgram(program)
             }
             else -> Unit
-        }
-    }
 
-    override fun removeSelectedProgram() {
-        viewModel?.selectedProgram?.let { selectedProgram ->
-            storage.removeButtonProgram(buttonNames[selectedProgram - 1])
-            viewModel?.onProgramSet(null)
-            hideProgramSelector()
-        }
-    }
-
-    private fun addProgram(program: UserProgram?) {
-        program?.let { userProgram ->
-            viewModel?.selectedProgram?.let { selectedProgram ->
-                storage.addButtonProgram(userProgram, buttonNames[selectedProgram - 1])
-                viewModel?.onProgramSet(userProgram)
-                hideProgramSelector()
-            }
         }
     }
 
