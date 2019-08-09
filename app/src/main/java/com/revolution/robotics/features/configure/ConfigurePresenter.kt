@@ -86,10 +86,6 @@ class ConfigurePresenter(
         }
     }
 
-    override fun updateRobotName(name: String, description: String) {
-
-    }
-
     override fun unregister(view: ConfigureMvp.View?) {
         configurationEventBus.unregister(this)
         dialogEventBus.unregister(this)

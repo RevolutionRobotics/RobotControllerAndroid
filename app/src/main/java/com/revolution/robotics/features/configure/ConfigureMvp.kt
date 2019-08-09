@@ -29,6 +29,5 @@ interface ConfigureMvp : Mvp {
         fun editRobotDetails()
         fun onConnectionsTabSelected()
         fun onControllerTabSelected()
-        fun updateRobotName(name: String, description: String)
     }
 }
