@@ -28,6 +28,7 @@ class ConfigureFragment : BaseFragment<FragmentConfigureBinding, ConfigureViewMo
 
     companion object {
         val Bundle.robotId: Int by BundleArgumentDelegate.Int("robotId")
+        const val ALLOWED_DIGITS_REGEXP = "[a-zA-Z0-9]+"
     }
 
     override val viewModelClass: Class<ConfigureViewModel> = ConfigureViewModel::class.java
@@ -69,12 +70,12 @@ class ConfigureFragment : BaseFragment<FragmentConfigureBinding, ConfigureViewMo
         super.onDestroyView()
     }
 
-    override fun openMotorConfig(motorPort: MotorPort) {
-        binding?.drawerConfiguration?.setMotor(motorPort.motor ?: Motor(), motorPort.portName ?: "")
+    override fun openMotorConfig(configId: Int, motorPort: MotorPort) {
+        binding?.drawerConfiguration?.setMotor(configId, motorPort.motor ?: Motor(), motorPort.portName ?: "")
     }
 
-    override fun openSensorConfig(sensorPort: SensorPort) {
-        binding?.drawerConfiguration?.setSensor(sensorPort.sensor ?: Sensor(), sensorPort.portName ?: "")
+    override fun openSensorConfig(configId: Int, sensorPort: SensorPort) {
+        binding?.drawerConfiguration?.setSensor(configId, sensorPort.sensor ?: Sensor(), sensorPort.portName ?: "")
     }
 
     override fun showConnectionsScreen(configId: Int) {

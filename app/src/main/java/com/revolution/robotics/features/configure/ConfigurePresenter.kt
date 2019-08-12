@@ -113,11 +113,15 @@ class ConfigurePresenter(
     }
 
     override fun onOpenMotorConfigEvent(event: MotorPort) {
-        view?.openMotorConfig(event)
+        userConfiguration?.let { config ->
+            view?.openMotorConfig(config.id, event)
+        }
     }
 
     override fun onOpenSensorConfigEvent(event: SensorPort) {
-        view?.openSensorConfig(event)
+        userConfiguration?.let { config ->
+            view?.openSensorConfig(config.id, event)
+        }
     }
 
     override fun onConnectionsTabSelected() {
