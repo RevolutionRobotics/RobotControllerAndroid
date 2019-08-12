@@ -103,7 +103,6 @@ class ConfigureControllerFragment :
             DialogEvent.ADD_PROGRAM -> presenter.addProgram(event.program())
             DialogEvent.REMOVE_PROGRAM -> presenter.removeProgram()
             DialogEvent.EDIT_PROGRAM -> event.program().let { program ->
-                //storage.programBeingEdited = program
                 navigateToEditProgram(program)
             }
             else -> Unit
@@ -139,8 +138,8 @@ class ConfigureControllerFragment :
         })
     }
 
-    override fun onShowAllProgramsSelected() {
-        navigator.navigate(ConfigureFragmentDirections.toProgramSelector())
+    override fun showAllPrograms(controllerButton: ControllerButton, configId: Int) {
+        navigator.navigate(ConfigureFragmentDirections.toProgramSelector(controllerButton, configId))
     }
 
     override fun navigateToEditProgram(userProgram: UserProgram?) {

@@ -2,18 +2,21 @@ package com.revolution.robotics.features.controllers.programSelector
 
 import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.local.UserProgram
+import com.revolution.robotics.core.interactor.AssignProgramToButtonInteractor
+import com.revolution.robotics.core.interactor.GetFullConfigurationInteractor
 import com.revolution.robotics.core.interactor.GetUserProgramsInteractor
 import com.revolution.robotics.core.utils.Navigator
-import com.revolution.robotics.features.configure.UserConfigurationStorage
 import com.revolution.robotics.features.configure.controller.CompatibleProgramFilterer
+import com.revolution.robotics.features.configure.controller.ControllerButton
 import com.revolution.robotics.features.controllers.ProgramOrderingHandler
 import com.revolution.robotics.features.controllers.programInfo.ProgramDialog
 import com.revolution.robotics.features.controllers.programSelector.adapter.ProgramViewModel
 
 class ProgramSelectorPresenter(
     private val getUserProgramsInteractor: GetUserProgramsInteractor,
+    private val getFullConfigurationInteractor: GetFullConfigurationInteractor,
     private val compatibleProgramFilterer: CompatibleProgramFilterer,
-    private val storage: UserConfigurationStorage,
+    private val assignProgramToButtonInteractor: AssignProgramToButtonInteractor,
     private val navigator: Navigator
 ) : ProgramSelectorMvp.Presenter {
 
@@ -28,12 +31,14 @@ class ProgramSelectorPresenter(
     private var programs: List<UserProgram> = ArrayList()
     private var onlyShowCompatiblePrograms: Boolean? = null
 
+    private var controllerButton: ControllerButton? = null
+    private var userConfigurationId: Int = -1
+
     override fun register(view: ProgramSelectorMvp.View, model: ProgramSelectorViewModel?) {
         super.register(view, model)
         if (onlyShowCompatiblePrograms == null) {
             setShowOnlyCompatiblePrograms(SHOW_COMPATIBLE_PROGRAMS_ONLY_BY_DEFAULT)
         }
-        loadPrograms()
     }
 
     override fun clearSelectionStates() {
@@ -42,19 +47,24 @@ class ProgramSelectorPresenter(
             ProgramOrderingHandler.OrderBy.DATE to ProgramOrderingHandler.Order.DESCENDING
     }
 
-    private fun loadPrograms() {
-        getUserProgramsInteractor.execute { result ->
-            allPrograms = result.toMutableList().apply {
-                storage.getBoundButtonPrograms().forEach { boundProgram ->
-                    removeAll { it.name == boundProgram.programName }
+    override fun loadPrograms(controllerButton: ControllerButton, configurationId: Int) {
+        this.controllerButton = controllerButton
+        this.userConfigurationId = configurationId
+        getFullConfigurationInteractor.userConfigId = configurationId
+        getFullConfigurationInteractor.execute { fullControllerData ->
+            getUserProgramsInteractor.execute { userPrograms ->
+                allPrograms = userPrograms.toMutableList().apply {
+                    fullControllerData.controller?.userController?.getBoundButtonPrograms()?.forEach { boundProgram ->
+                        removeAll { it.name == boundProgram.programName }
+                    }
+                    fullControllerData.controller?.backgroundBindings?.forEach { backgroundBinding ->
+                        removeAll { it.name == backgroundBinding.programId }
+                    }
                 }
-                storage.controllerHolder?.backgroundBindings?.forEach { backgroundBinding ->
-                    removeAll { it.name == backgroundBinding.programId }
-                }
+                programs = ArrayList<UserProgram>().apply { allPrograms?.let { addAll(it) } }
+                orderAndFilterPrograms()
+                onProgramsChanged()
             }
-            programs = ArrayList<UserProgram>().apply { allPrograms?.let { addAll(it) } }
-            orderAndFilterPrograms()
-            onProgramsChanged()
         }
     }
 
@@ -75,14 +85,20 @@ class ProgramSelectorPresenter(
     }
 
     private fun orderAndFilterPrograms() {
-        model?.let { model ->
-            val filteredPrograms =
-                if (onlyShowCompatiblePrograms == true) {
-                    compatibleProgramFilterer.getCompatibleProgramsOnly(allPrograms ?: emptyList(), storage.userConfiguration)
-                } else {
-                    allPrograms ?: emptyList()
-                }
-            programs = filteredPrograms.sortedWith(model.programOrderingHandler.getComparator())
+        getFullConfigurationInteractor.userConfigId = userConfigurationId
+        getFullConfigurationInteractor.execute {
+            model?.let { model ->
+                val filteredPrograms =
+                    if (onlyShowCompatiblePrograms == true) {
+                        compatibleProgramFilterer.getCompatibleProgramsOnly(
+                            allPrograms ?: emptyList(),
+                            it.userConfiguration
+                        )
+                    } else {
+                        allPrograms ?: emptyList()
+                    }
+                programs = filteredPrograms.sortedWith(model.programOrderingHandler.getComparator())
+            }
         }
     }
 
@@ -98,10 +114,22 @@ class ProgramSelectorPresenter(
     }
 
     override fun onProgramSelected(userProgram: UserProgram) {
-        if (compatibleProgramFilterer.isProgramCompatible(userProgram, storage.userConfiguration)) {
-            view?.showDialog(ProgramDialog.Add.newInstance(userProgram))
-        } else {
-            view?.showDialog(ProgramDialog.CompatibilityIssue.newInstance(userProgram))
+        getFullConfigurationInteractor.userConfigId = userConfigurationId
+        getFullConfigurationInteractor.execute {
+            if (compatibleProgramFilterer.isProgramCompatible(userProgram, it.userConfiguration)) {
+                view?.showDialog(ProgramDialog.Add.newInstance(userProgram))
+            } else {
+                view?.showDialog(ProgramDialog.CompatibilityIssue.newInstance(userProgram))
+            }
+        }
+    }
+
+    override fun addProgram(userProgram: UserProgram) {
+        assignProgramToButtonInteractor.userConfigurationId = userConfigurationId
+        assignProgramToButtonInteractor.userProgram = userProgram
+        assignProgramToButtonInteractor.button = controllerButton
+        assignProgramToButtonInteractor.execute {
+            navigator.back()
         }
     }
 

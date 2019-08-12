@@ -135,7 +135,9 @@ class ConfigureControllerPresenter(
     }
 
     override fun showAllPrograms() {
-        view?.onShowAllProgramsSelected()
+        model?.selectedProgram?.let {
+            view?.showAllPrograms(buttonNames[it - 1], configId)
+        }
     }
 
     override fun onProgramEdited(program: UserProgram) {

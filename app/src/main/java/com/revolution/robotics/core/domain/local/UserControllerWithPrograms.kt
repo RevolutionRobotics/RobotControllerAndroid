@@ -5,8 +5,7 @@ import com.revolution.robotics.features.configure.controller.ControllerButton
 data class UserControllerWithPrograms(
     var userController: UserController,
     var backgroundBindings: MutableList<UserBackgroundProgramBinding>,
-    var programs: HashMap<String, UserProgram>,
-    var programToBeAdded: UserProgram? = null
+    var programs: HashMap<String, UserProgram>
 ) {
     fun addButtonProgram(userProgram: UserProgram, buttonName: ControllerButton) {
         when (buttonName) {

@@ -11,6 +11,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.PrimaryKey
 import androidx.room.Query
 import androidx.room.Update
+import com.revolution.robotics.features.configure.controller.ControllerButton
 import kotlinx.android.parcel.Parcelize
 
 @Entity(
@@ -59,6 +60,28 @@ data class UserController(
         }
         if (mapping?.b6?.programName == programName) {
             mapping?.b6 = null
+        }
+    }
+
+    fun addButtonProgram(userProgram: UserProgram, buttonName: ControllerButton) {
+        when (buttonName) {
+            ControllerButton.B1 -> mapping?.b1 = UserProgramBinding(0, id, userProgram.name, -1)
+            ControllerButton.B2 -> mapping?.b2 = UserProgramBinding(0, id, userProgram.name, -1)
+            ControllerButton.B3 -> mapping?.b3 = UserProgramBinding(0, id, userProgram.name, -1)
+            ControllerButton.B4 -> mapping?.b4 = UserProgramBinding(0, id, userProgram.name, -1)
+            ControllerButton.B5 -> mapping?.b5 = UserProgramBinding(0, id, userProgram.name, -1)
+            ControllerButton.B6 -> mapping?.b6 = UserProgramBinding(0, id, userProgram.name, -1)
+        }
+    }
+
+    fun removeButtonProgram(buttonName: ControllerButton) {
+        when (buttonName) {
+            ControllerButton.B1 -> mapping?.b1 = null
+            ControllerButton.B2 -> mapping?.b2 = null
+            ControllerButton.B3 -> mapping?.b3 = null
+            ControllerButton.B4 -> mapping?.b4 = null
+            ControllerButton.B5 -> mapping?.b5 = null
+            ControllerButton.B6 -> mapping?.b6 = null
         }
     }
 }
