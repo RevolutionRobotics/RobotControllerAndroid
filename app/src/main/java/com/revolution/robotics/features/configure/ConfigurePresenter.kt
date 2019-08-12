@@ -169,7 +169,7 @@ class ConfigurePresenter(
     }
 
     override fun onBackgroundProgramsClicked() {
-        navigator.navigate(ConfigureFragmentDirections.toButtonlessProgramSelector())
+        userConfiguration?.let { navigator.navigate(ConfigureFragmentDirections.toButtonlessProgramSelector(it.id)) }
     }
 
     override fun onPriorityClicked() {

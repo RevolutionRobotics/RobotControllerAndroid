@@ -147,6 +147,7 @@
               android:label="ButtonlessProgramSelectorFragment">
         <action android:id="@+id/toCoding"
                 app:destination="@id/codingFragment"/>
+        <argument android:name="configuration" app:argType="integer"/>
     </fragment>
     <fragment android:id="@+id/programPriorityFragment"
               android:name="com.revolution.robotics.features.configure.controller.program.priority.ProgramPriorityFragment"
