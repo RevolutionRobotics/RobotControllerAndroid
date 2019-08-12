@@ -1,23 +1,22 @@
 package com.revolution.robotics.features.controllers.setup
 
 import com.revolution.robotics.core.domain.local.UserProgram
+import com.revolution.robotics.core.interactor.AssignProgramToButtonInteractor
 import com.revolution.robotics.core.interactor.GetFullConfigurationInteractor
 import com.revolution.robotics.core.interactor.GetUserProgramsInteractor
-import com.revolution.robotics.core.interactor.SaveUserControllerInteractor
 import com.revolution.robotics.features.configure.controller.CompatibleProgramFilterer
 import com.revolution.robotics.features.configure.controller.ControllerButton
 import com.revolution.robotics.features.controllers.programInfo.ProgramDialog
 import com.revolution.robotics.features.controllers.setup.mostRecent.MostRecentItem
 import com.revolution.robotics.features.controllers.setup.mostRecent.MostRecentProgramViewModel
-import com.revolution.robotics.features.play.FullControllerData
 
 class ConfigureControllerPresenter(
     private val getFullConfigurationInteractor: GetFullConfigurationInteractor,
     private val compatibleProgramFilterer: CompatibleProgramFilterer,
     private val getUserProgramsInteractor: GetUserProgramsInteractor,
-    private val saveUserControllerInteractor: SaveUserControllerInteractor
+    private val assignProgramToButtonInteractor: AssignProgramToButtonInteractor
 
-) : ConfigureControllerMvp.Presenter {
+    ) : ConfigureControllerMvp.Presenter {
 
     companion object {
         private const val MOST_RECENT_PROGRAM_COUNT = 5
@@ -94,14 +93,11 @@ class ConfigureControllerPresenter(
     }
 
     override fun addProgram(userProgram: UserProgram) {
-        getFullConfigurationInteractor.userConfigId = configId
-        getFullConfigurationInteractor.execute { fullControllerData ->
-            model?.selectedProgram?.let {
-                fullControllerData.controller?.addButtonProgram(
-                    userProgram,
-                    buttonNames[it - 1]
-                )
-                save(fullControllerData)
+        model?.selectedProgram?.let {
+            assignProgramToButtonInteractor.userConfigurationId = configId
+            assignProgramToButtonInteractor.button = buttonNames[model?.selectedProgram!! - 1]
+            assignProgramToButtonInteractor.userProgram = userProgram
+            assignProgramToButtonInteractor.execute {
                 model?.onProgramSet(userProgram)
                 view?.hideProgramSelector()
             }
@@ -109,28 +105,14 @@ class ConfigureControllerPresenter(
     }
 
     override fun removeProgram() {
-        getFullConfigurationInteractor.userConfigId = configId
-        getFullConfigurationInteractor.execute { fullControllerData ->
-            model?.selectedProgram?.let {
-                fullControllerData.controller?.removeButtonProgram(
-                    buttonNames[it - 1]
-                )
-                save(fullControllerData)
+        model?.selectedProgram?.let {
+            assignProgramToButtonInteractor.userConfigurationId = configId
+            assignProgramToButtonInteractor.button = buttonNames[model?.selectedProgram!! - 1]
+            assignProgramToButtonInteractor.userProgram = null
+            assignProgramToButtonInteractor.execute {
                 model?.onProgramSet(null)
                 view?.hideProgramSelector()
             }
-        }
-    }
-
-    private fun save(fullControllerData: FullControllerData, finished: (() -> Unit)? = null) {
-        fullControllerData.controller?.userController?.let { userController ->
-            saveUserControllerInteractor.userController = userController
-            saveUserControllerInteractor.backgroundProgramBindings = fullControllerData.controller?.backgroundBindings
-            saveUserControllerInteractor.execute(onResponse = {
-                finished?.invoke()
-            }, onError = {
-                finished?.invoke()
-            })
         }
     }
 
