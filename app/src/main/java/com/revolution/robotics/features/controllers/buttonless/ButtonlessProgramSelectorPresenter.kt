@@ -156,7 +156,7 @@ class ButtonlessProgramSelectorPresenter(
             updateOrderingAndFiltering()
         }
     }
-
+ó
     fun save() {
         userConfiguration?.id?.let { configurationId ->
             getFullConfigurationInteractor.userConfigId = configurationId

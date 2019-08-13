@@ -65,12 +65,12 @@ data class UserController(
 
     fun addButtonProgram(userProgram: UserProgram, buttonName: ControllerButton) {
         when (buttonName) {
-            ControllerButton.B1 -> mapping?.b1 = UserProgramBinding(0, id, userProgram.name, -1)
-            ControllerButton.B2 -> mapping?.b2 = UserProgramBinding(0, id, userProgram.name, -1)
-            ControllerButton.B3 -> mapping?.b3 = UserProgramBinding(0, id, userProgram.name, -1)
-            ControllerButton.B4 -> mapping?.b4 = UserProgramBinding(0, id, userProgram.name, -1)
-            ControllerButton.B5 -> mapping?.b5 = UserProgramBinding(0, id, userProgram.name, -1)
-            ControllerButton.B6 -> mapping?.b6 = UserProgramBinding(0, id, userProgram.name, -1)
+            ControllerButton.B1 -> mapping?.b1 = UserProgramBinding(0, id, userProgram.name, nextPriority())
+            ControllerButton.B2 -> mapping?.b2 = UserProgramBinding(0, id, userProgram.name, nextPriority())
+            ControllerButton.B3 -> mapping?.b3 = UserProgramBinding(0, id, userProgram.name, nextPriority())
+            ControllerButton.B4 -> mapping?.b4 = UserProgramBinding(0, id, userProgram.name, nextPriority())
+            ControllerButton.B5 -> mapping?.b5 = UserProgramBinding(0, id, userProgram.name, nextPriority())
+            ControllerButton.B6 -> mapping?.b6 = UserProgramBinding(0, id, userProgram.name, nextPriority())
         }
     }
 
@@ -84,6 +84,15 @@ data class UserController(
             ControllerButton.B6 -> mapping?.b6 = null
         }
     }
+
+    private fun nextPriority() = (listOfNotNull(
+        mapping?.b1?.priority,
+        mapping?.b2?.priority,
+        mapping?.b3?.priority,
+        mapping?.b4?.priority,
+        mapping?.b5?.priority,
+        mapping?.b6?.priority
+    ).max() ?: 0) + 1
 }
 
 @Dao
