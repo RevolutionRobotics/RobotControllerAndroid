@@ -14,6 +14,7 @@ import com.revolution.robotics.features.configure.delete.DeleteRobotDialog
 import com.revolution.robotics.features.configure.robotPicture.RobotPictureDialog
 import com.revolution.robotics.features.configure.save.SaveRobotDialog
 import com.revolution.robotics.features.controllers.ControllerType
+import com.revolution.robotics.features.myRobots.MyRobotsFragmentDirections
 
 @Suppress("TooManyFunctions")
 class ConfigurePresenter(
@@ -213,6 +214,20 @@ class ConfigurePresenter(
     override fun editRobotDetails() {
         userRobot?.let { robot ->
             view?.showSaveDialog(robot.name ?: "", robot.description ?: "")
+        }
+    }
+
+    override fun play() {
+        userConfiguration?.controller?.let { controllerId ->
+            getUserControllerInteractor.id = controllerId
+            getUserControllerInteractor.execute { controller ->
+                when (controller.userController.type) {
+                    ControllerType.GAMER.id ->
+                        navigator.navigate(MyRobotsFragmentDirections.toPlayGamer(userConfiguration?.id!!))
+                    ControllerType.DRIVER.id ->
+                        navigator.navigate(MyRobotsFragmentDirections.toPlayDriver(userConfiguration?.id!!))
+                }
+            }
         }
     }
 

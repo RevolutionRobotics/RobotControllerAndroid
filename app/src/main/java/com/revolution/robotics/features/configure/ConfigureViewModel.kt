@@ -70,4 +70,6 @@ class ConfigureViewModel(private val presenter: ConfigureMvp.Presenter) : ViewMo
     fun onConnectionsSelected() = presenter.onConnectionsTabSelected()
 
     fun onControllerSelected() = presenter.onControllerTabSelected()
+
+    fun play() = presenter.play()
 }
