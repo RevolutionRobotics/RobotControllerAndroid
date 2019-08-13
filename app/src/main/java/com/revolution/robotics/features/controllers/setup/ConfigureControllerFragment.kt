@@ -1,14 +1,11 @@
 package com.revolution.robotics.features.controllers.setup
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.AnimationUtils
 import android.view.animation.DecelerateInterpolator
 import androidx.annotation.AnimRes
-import androidx.databinding.ViewDataBinding
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.local.UserProgram
@@ -21,9 +18,7 @@ import com.revolution.robotics.core.extensions.withArguments
 import com.revolution.robotics.core.utils.BundleArgumentDelegate
 import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.databinding.FragmentControllerSetupCoreBinding
-import com.revolution.robotics.databinding.FragmentControllerSetupGamerBinding
 import com.revolution.robotics.features.configure.ConfigureFragmentDirections
-import com.revolution.robotics.features.configure.UserConfigurationStorage
 import com.revolution.robotics.features.configure.controller.ControllerButton
 import com.revolution.robotics.features.controllers.programInfo.ProgramDialog
 import com.revolution.robotics.features.controllers.setup.mostRecent.MostRecentProgramViewModel

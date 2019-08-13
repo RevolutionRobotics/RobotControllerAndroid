@@ -1,10 +1,8 @@
 package com.revolution.robotics.features.controllers.setup
 
 import androidx.lifecycle.ViewModel
-import com.revolution.robotics.core.domain.local.UserController
 import com.revolution.robotics.core.domain.local.UserControllerWithPrograms
 import com.revolution.robotics.core.domain.local.UserProgram
-import com.revolution.robotics.features.configure.UserConfigurationStorage
 import com.revolution.robotics.features.controllers.ControllerType
 
 class ConfigureControllerViewModel(private val presenter: ConfigureControllerMvp.Presenter) : ViewModel() {

@@ -11,7 +11,6 @@ import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.core.utils.dynamicPermissions.DynamicPermissionHandler
 import com.revolution.robotics.features.bluetooth.BluetoothManager
 import com.revolution.robotics.features.configure.ConfigurationEventBus
-import com.revolution.robotics.features.configure.UserConfigurationStorage
 import com.revolution.robotics.features.configure.controller.CompatibleProgramFilterer
 import com.revolution.robotics.features.shared.ErrorHandler
 import org.kodein.di.Kodein
@@ -28,7 +27,6 @@ fun createMainModule() =
         bind<ConfigurationEventBus>() with s { ConfigurationEventBus() }
         bind<BluetoothManager>() with s { BluetoothManager(kodein) }
         bind<RoboticsDeviceConnector>() with s { RoboticsDeviceConnector() }
-        bind<UserConfigurationStorage>() with s { UserConfigurationStorage(i(), i()) }
         bind<CompatibleProgramFilterer>() with p { CompatibleProgramFilterer() }
     }
 
