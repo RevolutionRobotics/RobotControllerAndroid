@@ -96,7 +96,7 @@ class MotorConfigurationPresenter(
     }
 
     override fun onTestButtonClicked() {
-        if (bluetoothManager.isConnected) {
+        if (bluetoothManager.isServiceDiscovered) {
             getUserConfigurationInteractor.userConfigId = configId
             getUserConfigurationInteractor.execute { userConfiguration ->
                 if (model?.driveTrainButton?.isSelected?.get() == true && userConfiguration?.mappingId?.getMotorPortIndex(

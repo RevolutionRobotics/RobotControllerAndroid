@@ -98,6 +98,7 @@ class SensorConfigurationPresenter(
     override fun onEmptyButtonClicked() {
         model?.apply {
             editTextModel.value = editTextModel.value?.apply {
+                text = ""
                 enabled = false
             }
 
@@ -168,7 +169,7 @@ class SensorConfigurationPresenter(
     }
 
     override fun onTestButtonClicked() {
-        if (bluetoothManager.isConnected) {
+        if (bluetoothManager.isServiceDiscovered) {
             getUserConfigurationInteractor.userConfigId = configId
             getUserConfigurationInteractor.execute { userConfiguration ->
                 if (model?.bumperButton?.isSelected?.get() == true) {

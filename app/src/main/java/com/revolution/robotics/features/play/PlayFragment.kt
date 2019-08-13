@@ -52,7 +52,7 @@ abstract class PlayFragment : BaseFragment<FragmentPlayCoreBinding, PlayViewMode
         }
 
         bluetoothManager.registerListener(this)
-        if (!bluetoothManager.isConnected) {
+        if (!bluetoothManager.isServiceDiscovered) {
             bluetoothManager.startConnectionFlow()
         }
         presenter.register(this, viewModel)
