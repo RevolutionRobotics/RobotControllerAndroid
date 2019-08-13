@@ -18,6 +18,6 @@ interface ButtonlessProgramSelectorMvp : Mvp {
         fun onInfoButtonClicked(userProgram: UserProgram)
         fun onProgramEdited(userProgram: UserProgram)
         fun clearSelections()
-        fun save()
+        fun load(userConfigurationId: Int)
     }
 }

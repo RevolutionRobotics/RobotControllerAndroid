@@ -1,20 +1,18 @@
 package com.revolution.robotics.features.configure.controller.program.priority
 
-import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.local.UserControllerWithPrograms
 import com.revolution.robotics.core.domain.local.UserProgram
 import com.revolution.robotics.core.domain.local.UserProgramBinding
-import com.revolution.robotics.core.utils.Navigator
-import com.revolution.robotics.features.configure.UserConfigurationStorage
+import com.revolution.robotics.core.interactor.GetUserControllerInteractor
+import com.revolution.robotics.core.interactor.SaveUserControllerInteractor
 import com.revolution.robotics.features.controllers.programInfo.ProgramDialog
 import java.util.*
 
 @Suppress("TooManyFunctions")
 class ProgramPriorityPresenter(
-    private val userConfigurationStorage: UserConfigurationStorage,
-    private val navigator: Navigator
-) :
-    ProgramPriorityMvp.Presenter {
+    private val getUserControllerInteractor: GetUserControllerInteractor,
+    private val  saveUserControllerInteractor: SaveUserControllerInteractor
+) :ProgramPriorityMvp.Presenter {
 
     private companion object {
         const val DEFAULT_DRIVE_PRIORITY = -2
@@ -25,19 +23,25 @@ class ProgramPriorityPresenter(
 
     private val viewModels = mutableListOf<PriorityItem>()
 
-    override fun register(view: ProgramPriorityMvp.View, model: ProgramPriorityViewModel?) {
-        super.register(view, model)
-        userConfigurationStorage.controllerHolder?.apply {
-            viewModels.clear()
-            viewModels.addAll(generateItems(this, programs).mapIndexed { index, bindingItem ->
-                if (bindingItem is UserProgramBindingItem) {
-                    ProgramPriorityItemViewModel(bindingItem, index + 1, this@ProgramPriorityPresenter)
-                } else {
-                    ProgramPriorityJoystickViewModel(index + 1)
-                }
-            })
-            model?.items?.value = viewModels
+    private var controllerWithPrograms: UserControllerWithPrograms? = null
+
+    override fun loadPrograms(controllerId: Int) {
+        getUserControllerInteractor.id = controllerId
+        getUserControllerInteractor.execute {
+            controllerWithPrograms = it
+            controllerWithPrograms?.apply {
+                viewModels.clear()
+                viewModels.addAll(generateItems(this, programs).mapIndexed { index, bindingItem ->
+                    if (bindingItem is UserProgramBindingItem) {
+                        ProgramPriorityItemViewModel(bindingItem, index + 1, this@ProgramPriorityPresenter)
+                    } else {
+                        ProgramPriorityJoystickViewModel(index + 1)
+                    }
+                })
+                model?.items?.value = viewModels
+            }
         }
+
     }
 
     override fun onDragEnded() {
@@ -50,10 +54,27 @@ class ProgramPriorityPresenter(
         viewModels.forEach { item ->
             if (item is ProgramPriorityItemViewModel) {
                 item.userProgramBindingItem.userProgram?.let {
-                    userConfigurationStorage.setPriority(it, item.position)
+                    setPriority(it, item.position)
                 }
             } else if (item is ProgramPriorityJoystickViewModel) {
-                userConfigurationStorage.controllerHolder?.userController?.joystickPriority = item.position
+                controllerWithPrograms?.userController?.joystickPriority = item.position
+            }
+        }
+        controllerWithPrograms?.userController?.let { userController ->
+            saveUserControllerInteractor.userController = userController
+            saveUserControllerInteractor.backgroundProgramBindings = controllerWithPrograms?.backgroundBindings ?: emptyList()
+            saveUserControllerInteractor.execute()
+        }
+    }
+
+    private fun setPriority(userProgram: UserProgram, priority: Int) {
+        controllerWithPrograms?.backgroundBindings?.find { it.programId == userProgram.name }?.let {
+            it.priority = priority
+        }
+
+        controllerWithPrograms?.userController?.getMappingList()?.forEach { binding ->
+            if (binding?.programName == userProgram.name) {
+                binding.priority = priority
             }
         }
     }

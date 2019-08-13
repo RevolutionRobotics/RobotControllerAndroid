@@ -11,7 +11,7 @@ interface SensorConfigurationMvp : Mvp {
     }
 
     interface Presenter : Mvp.Presenter<View, SensorConfigurationViewModel> {
-        fun setSensor(sensor: Sensor, portName: String)
+        fun setSensor(configId: Int, sensor: Sensor, portName: String)
         fun onEmptyButtonClicked()
         fun onBumperButtonClicked()
         fun onUltrasoundButtonClicked()

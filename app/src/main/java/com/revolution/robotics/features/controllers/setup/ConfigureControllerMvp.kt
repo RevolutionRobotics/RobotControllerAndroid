@@ -3,6 +3,7 @@ package com.revolution.robotics.features.controllers.setup
 import com.revolution.robotics.BaseDialog
 import com.revolution.robotics.core.Mvp
 import com.revolution.robotics.core.domain.local.UserProgram
+import com.revolution.robotics.features.configure.controller.ControllerButton
 import com.revolution.robotics.features.controllers.setup.mostRecent.MostRecentProgramViewModel
 
 interface ConfigureControllerMvp : Mvp {
@@ -11,17 +12,18 @@ interface ConfigureControllerMvp : Mvp {
         fun showDialog(baseDialog: BaseDialog)
         fun updateContentBindings()
         fun onProgramSlotSelected(index: Int, mostRecent: MostRecentProgramViewModel?)
-        fun onShowAllProgramsSelected()
+        fun showAllPrograms(controllerButton: ControllerButton, configId: Int)
         fun navigateToEditProgram(userProgram: UserProgram?)
-        fun removeSelectedProgram()
+        fun hideProgramSelector()
     }
 
     interface Presenter : Mvp.Presenter<View, ConfigureControllerViewModel> {
-        fun loadControllerAndPrograms(controllerId: Int)
+        fun loadControllerAndPrograms(configId: Int)
         fun onProgramSlotSelected(index: Int)
         fun showAllPrograms()
+        fun onProgramSelected(program: UserProgram, isBound: Boolean)
         fun addProgram(program: UserProgram)
-        fun removeProgram(program: UserProgram)
+        fun removeProgram()
         fun onProgramEdited(program: UserProgram)
     }
 }

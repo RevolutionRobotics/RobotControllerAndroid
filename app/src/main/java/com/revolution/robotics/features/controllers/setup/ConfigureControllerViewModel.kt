@@ -1,8 +1,8 @@
 package com.revolution.robotics.features.controllers.setup
 
 import androidx.lifecycle.ViewModel
+import com.revolution.robotics.core.domain.local.UserControllerWithPrograms
 import com.revolution.robotics.core.domain.local.UserProgram
-import com.revolution.robotics.features.configure.UserConfigurationStorage
 import com.revolution.robotics.features.controllers.ControllerType
 
 class ConfigureControllerViewModel(private val presenter: ConfigureControllerMvp.Presenter) : ViewModel() {
@@ -36,11 +36,11 @@ class ConfigureControllerViewModel(private val presenter: ConfigureControllerMvp
         presenter.onProgramSlotSelected(index)
     }
 
-    fun restoreFromStorage(storage: UserConfigurationStorage) {
-        controllerType = ControllerType.fromId(storage.controllerHolder?.userController?.type)!!
-        storage.getAllButtonPrograms().forEachIndexed { index, userProgramBinding ->
+    fun update(userControllerWithPrograms: UserControllerWithPrograms) {
+        controllerType = ControllerType.fromId(userControllerWithPrograms.userController.type)!!
+        userControllerWithPrograms.userController.getMappingList().forEachIndexed { index, userProgramBinding ->
             userProgramBinding?.programName?.let { programId ->
-                programs[index] = storage.controllerHolder?.programs?.get(programId)
+                programs[index] = userControllerWithPrograms.programs[programId]
             }
         }
     }

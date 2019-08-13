@@ -119,7 +119,7 @@
     <fragment android:id="@+id/configureFragment"
               android:name="com.revolution.robotics.features.configure.ConfigureFragment"
               android:label="ConfigureFragment">
-        <argument android:name="userRobot" app:argType="com.revolution.robotics.core.domain.local.UserRobot"/>
+        <argument android:name="robotId" app:argType="integer"/>
 
         <action android:id="@+id/toPlayMultitasker"
                 app:destination="@id/playMultitaskerFragment"/>
@@ -141,18 +141,21 @@
               android:label="ProgramSelectorFragment ">
         <action android:id="@+id/toCoding"
                 app:destination="@id/codingFragment"/>
+        <argument android:name="selectedButton" app:argType="com.revolution.robotics.features.configure.controller.ControllerButton"/>
+        <argument android:name="configId" app:argType="integer"/>
     </fragment>
     <fragment android:id="@+id/buttonlessProgramSelectorFragment"
               android:name="com.revolution.robotics.features.controllers.buttonless.ButtonlessProgramSelectorFragment"
               android:label="ButtonlessProgramSelectorFragment">
-        <action android:id="@+id/toProgramPriority"
-                app:destination="@id/programPriorityFragment"/>
         <action android:id="@+id/toCoding"
                 app:destination="@id/codingFragment"/>
+        <argument android:name="configuration" app:argType="integer"/>
     </fragment>
     <fragment android:id="@+id/programPriorityFragment"
               android:name="com.revolution.robotics.features.configure.controller.program.priority.ProgramPriorityFragment"
-              android:label="ProgramPriorityFragment"/>
+              android:label="ProgramPriorityFragment">
+        <argument android:name="controllerId" app:argType="integer"/>
+    </fragment>
 
     <!-- Settings -->
     <fragment android:id="@+id/settingFragment"

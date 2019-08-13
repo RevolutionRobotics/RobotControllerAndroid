@@ -15,7 +15,6 @@ import com.revolution.robotics.core.interactor.firebase.RobotInteractor
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.features.build.BuildRobotFragment
-import com.revolution.robotics.features.configure.UserConfigurationStorage
 import com.revolution.robotics.features.controllers.ControllerType
 import com.revolution.robotics.features.whoToBuild.adapter.RobotsBuildYourOwnItem
 import com.revolution.robotics.features.whoToBuild.adapter.RobotsItem
@@ -36,7 +35,6 @@ class WhoToBuildPresenter(
     private val saveUserRobotInteractor: SaveUserRobotInteractor,
     private val saveUserControllerInteractor: SaveUserControllerInteractor,
     private val resourceResolver: ResourceResolver,
-    private val userConfigurationStorage: UserConfigurationStorage,
     private val navigator: Navigator
 ) :
     WhoToBuildMvp.Presenter {
@@ -146,11 +144,10 @@ class WhoToBuildPresenter(
 
     private fun createNewController(userRobot: UserRobot) {
         val controller = UserController(robotId = userRobot.instanceId, type = ControllerType.GAMER.id)
-        userConfigurationStorage.controllerHolder = UserControllerWithPrograms(controller, mutableListOf(), HashMap())
         saveUserControllerInteractor.userController = controller
         saveUserControllerInteractor.backgroundProgramBindings = emptyList()
         saveUserControllerInteractor.execute {
-            navigator.navigate(WhoToBuildFragmentDirections.toConfigure(userRobot))
+            navigator.navigate(WhoToBuildFragmentDirections.toConfigure(userRobot.instanceId))
         }
     }
 }

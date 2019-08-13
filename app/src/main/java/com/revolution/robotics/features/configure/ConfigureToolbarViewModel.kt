@@ -15,6 +15,6 @@ class ConfigureToolbarViewModel(presenter: ConfigureMvp.Presenter) : RoboticsBlu
         ToolbarOption(R.drawable.ic_delete, presenter::onDeleteClicked),
         ToolbarOption(R.drawable.ic_copy, presenter::onDuplicateClicked),
         ToolbarOption(R.drawable.ic_camera, presenter::onRobotImageClicked),
-        ToolbarOption(R.drawable.ic_edit, presenter::saveConfiguration)
+        ToolbarOption(R.drawable.ic_edit, presenter::editRobotDetails)
     )
 }

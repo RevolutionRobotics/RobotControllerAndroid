@@ -4,7 +4,10 @@ import com.revolution.robotics.R
 import com.revolution.robotics.features.controllers.setup.ConfigureControllerMvp
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 
-class MostRecentProgramViewModel(private val items: List<MostRecentItem>, private val presenter: ConfigureControllerMvp.Presenter) {
+class MostRecentProgramViewModel(
+    private val items: List<MostRecentItem>,
+    private val presenter: ConfigureControllerMvp.Presenter
+) {
 
     companion object {
         private val BACKGROUND_BASE = ChippedBoxConfig.Builder()
@@ -50,11 +53,7 @@ class MostRecentProgramViewModel(private val items: List<MostRecentItem>, privat
 
     fun onProgramClicked(index: Int) {
         getItem(index)?.let { item ->
-            if (item.isBound) {
-                presenter.removeProgram(item.program)
-            } else {
-                presenter.addProgram(item.program)
-            }
+            presenter.onProgramSelected(item.program, item.isBound)
         }
     }
 }

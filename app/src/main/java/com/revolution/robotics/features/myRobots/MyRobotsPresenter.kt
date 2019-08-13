@@ -115,14 +115,14 @@ class MyRobotsPresenter(
 
     override fun onContinueBuildingSelected(robot: UserRobot) {
         if (robot.isCustomBuild() || robot.buildStatus == BuildStatus.INVALID_CONFIGURATION) {
-            navigator.navigate(MyRobotsFragmentDirections.toConfigure(robot))
+            navigator.navigate(MyRobotsFragmentDirections.toConfigure(robot.instanceId))
         } else {
             navigator.navigate(MyRobotsFragmentDirections.toBuildRobot(robot))
         }
     }
 
     override fun onEditSelected(userRobot: UserRobot) {
-        navigator.navigate(MyRobotsFragmentDirections.toConfigure(userRobot))
+        navigator.navigate(MyRobotsFragmentDirections.toConfigure(userRobot.instanceId))
     }
 
     override fun onMoreInfoClicked(userRobot: UserRobot) {

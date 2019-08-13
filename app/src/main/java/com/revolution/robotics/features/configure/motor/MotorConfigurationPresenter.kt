@@ -2,14 +2,15 @@ package com.revolution.robotics.features.configure.motor
 
 import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.remote.Motor
+import com.revolution.robotics.core.interactor.GetUserConfigurationInteractor
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.features.bluetooth.BluetoothManager
 import com.revolution.robotics.features.build.testing.DrivetrainTestDialog
 import com.revolution.robotics.features.build.testing.MotorTestDialog
 import com.revolution.robotics.features.build.testing.TestDialog
 import com.revolution.robotics.features.configure.ConfigurationEventBus
+import com.revolution.robotics.features.configure.ConfigureFragment
 import com.revolution.robotics.features.configure.MotorPort
-import com.revolution.robotics.features.configure.UserConfigurationStorage
 import com.revolution.robotics.features.shared.ErrorHandler
 import com.revolution.robotics.views.ChippedEditTextViewModel
 
@@ -17,7 +18,7 @@ import com.revolution.robotics.views.ChippedEditTextViewModel
 class MotorConfigurationPresenter(
     private val resourceResolver: ResourceResolver,
     private val configurationEventBus: ConfigurationEventBus,
-    private val userConfigurationStorage: UserConfigurationStorage,
+    private val getUserConfigurationInteractor: GetUserConfigurationInteractor,
     private val bluetoothManager: BluetoothManager,
     private val errorHandler: ErrorHandler
 ) : MotorConfigurationMvp.Presenter {
@@ -26,6 +27,7 @@ class MotorConfigurationPresenter(
     override var model: MotorConfigurationViewModel? = null
 
     private var buttonHandler: MotorConfigurationButtonHandler? = null
+    private var configId: Int = -1
     private var motor: Motor? = null
     private var portName: String? = null
     private var variableName: String? = null
@@ -43,9 +45,10 @@ class MotorConfigurationPresenter(
         buttonHandler?.setVariableName(name)
     }
 
-    override fun setMotor(motor: Motor, portName: String) {
+    override fun setMotor(configId: Int, motor: Motor, portName: String) {
         this.motor = motor
         this.portName = portName
+        this.configId = configId
         model?.editTextModel?.value = ChippedEditTextViewModel(
             title = "$portName - ${resourceResolver.string(R.string.configure_motor_name_inputfield_title)}",
             text = motor.variableName,
@@ -53,7 +56,7 @@ class MotorConfigurationPresenter(
             backgroundColor = R.color.grey_28,
             textColor = R.color.white,
             titleColor = R.color.white,
-            digits = UserConfigurationStorage.ALLOWED_DIGITS_REGEXP
+            digits = ConfigureFragment.ALLOWED_DIGITS_REGEXP
         )
 
         val portNumber = portName.substring(1, 2).toInt()
@@ -94,21 +97,29 @@ class MotorConfigurationPresenter(
 
     override fun onTestButtonClicked() {
         if (bluetoothManager.isConnected) {
-            if (model?.driveTrainButton?.isSelected?.get() == true) {
-                view?.showDialog(generateDriveTrainDialog())
-            }
+            getUserConfigurationInteractor.userConfigId = configId
+            getUserConfigurationInteractor.execute { userConfiguration ->
+                if (model?.driveTrainButton?.isSelected?.get() == true && userConfiguration?.mappingId?.getMotorPortIndex(
+                        portName
+                    ) != null
+                ) {
+                    view?.showDialog(generateDriveTrainDialog(userConfiguration.mappingId?.getMotorPortIndex(portName)!!))
+                }
 
-            if (model?.motorButton?.isSelected?.get() == true) {
-                view?.showDialog(generateMotorDialog())
+                if (model?.motorButton?.isSelected?.get() == true && userConfiguration?.mappingId?.getMotorPortIndex(
+                        portName
+                    ) != null
+                ) {
+                    view?.showDialog(generateMotorDialog(userConfiguration.mappingId?.getMotorPortIndex(portName)!!))
+                }
             }
         } else {
             bluetoothManager.startConnectionFlow()
         }
     }
 
-    private fun generateDriveTrainDialog() = DrivetrainTestDialog.newInstance(
-        (userConfigurationStorage.userConfiguration?.mappingId?.getMotorPortIndex(portName)
-            ?: 0).toString(),
+    private fun generateDriveTrainDialog(portIndex: Int) = DrivetrainTestDialog.newInstance(
+        (portIndex).toString(),
         if (model?.clockwiseButton?.isSelected?.get() == true) {
             TestDialog.VALUE_CLOCKWISE
         } else {
@@ -121,9 +132,8 @@ class MotorConfigurationPresenter(
         }
     )
 
-    private fun generateMotorDialog() = MotorTestDialog.newInstance(
-        (userConfigurationStorage.userConfiguration?.mappingId?.getMotorPortIndex(portName)
-            ?: 0).toString(),
+    private fun generateMotorDialog(portIndex: Int) = MotorTestDialog.newInstance(
+        (portIndex).toString(),
         if (model?.motorClockwiseButton?.isSelected?.get() == true) {
             TestDialog.VALUE_CLOCKWISE
         } else {
@@ -173,26 +183,29 @@ class MotorConfigurationPresenter(
     }
 
     override fun onDoneButtonClicked() {
-        motor?.apply {
-            if (userConfigurationStorage.isUsedVariableName(
-                    this@MotorConfigurationPresenter.variableName ?: "",
-                    portName ?: ""
-                )
-            ) {
-                errorHandler.onError(R.string.error_variable_already_in_use)
-            } else {
-                when {
-                    model?.driveTrainButton?.isSelected?.get() == true -> setDrivetrainValues(this)
-                    model?.motorButton?.isSelected?.get() == true -> setMotorValues(this)
-                    else -> setEmptyValues(this)
-                }
-
-                if (model?.emptyButton?.isSelected?.get() == true) {
-                    variableName = null
-                    configurationEventBus.publishMotorUpdateEvent(MotorPort(null, portName))
+        getUserConfigurationInteractor.userConfigId = configId
+        getUserConfigurationInteractor.execute { userConfiguration ->
+            motor?.apply {
+                if (userConfiguration?.mappingId != null && userConfiguration.mappingId!!.isUsedVariableName(
+                        this@MotorConfigurationPresenter.variableName ?: "",
+                        portName ?: ""
+                    )
+                ) {
+                    errorHandler.onError(R.string.error_variable_already_in_use)
                 } else {
-                    variableName = this@MotorConfigurationPresenter.variableName
-                    configurationEventBus.publishMotorUpdateEvent(MotorPort(this, portName))
+                    when {
+                        model?.driveTrainButton?.isSelected?.get() == true -> setDrivetrainValues(this)
+                        model?.motorButton?.isSelected?.get() == true -> setMotorValues(this)
+                        else -> setEmptyValues(this)
+                    }
+
+                    if (model?.emptyButton?.isSelected?.get() == true) {
+                        variableName = null
+                        configurationEventBus.publishMotorUpdateEvent(MotorPort(null, portName))
+                    } else {
+                        variableName = this@MotorConfigurationPresenter.variableName
+                        configurationEventBus.publishMotorUpdateEvent(MotorPort(this, portName))
+                    }
                 }
             }
         }
