@@ -113,16 +113,20 @@ class MyRobotsPresenter(
         }
     }
 
-    override fun onContinueBuildingSelected(robot: UserRobot) {
-        if (robot.isCustomBuild() || robot.buildStatus == BuildStatus.INVALID_CONFIGURATION) {
-            navigator.navigate(MyRobotsFragmentDirections.toConfigure(robot.instanceId))
+    override fun onContinueBuildingSelected(userRobot: UserRobot) {
+        if (userRobot.isCustomBuild() || userRobot.buildStatus == BuildStatus.INVALID_CONFIGURATION) {
+            navigator.navigate(MyRobotsFragmentDirections.toConfigure(userRobot.instanceId))
         } else {
-            navigator.navigate(MyRobotsFragmentDirections.toBuildRobot(robot))
+            navigator.navigate(MyRobotsFragmentDirections.toBuildRobot(userRobot))
         }
     }
 
     override fun onEditSelected(userRobot: UserRobot) {
-        navigator.navigate(MyRobotsFragmentDirections.toConfigure(userRobot.instanceId))
+        if (userRobot.isCustomBuild() || userRobot.buildStatus == BuildStatus.INVALID_CONFIGURATION) {
+            navigator.navigate(MyRobotsFragmentDirections.toConfigure(userRobot.instanceId))
+        } else {
+            navigator.navigate(MyRobotsFragmentDirections.toBuildRobot(userRobot))
+        }
     }
 
     override fun onMoreInfoClicked(userRobot: UserRobot) {

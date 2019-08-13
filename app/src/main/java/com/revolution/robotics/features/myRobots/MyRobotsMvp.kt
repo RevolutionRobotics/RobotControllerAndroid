@@ -20,7 +20,7 @@ interface MyRobotsMvp : Mvp {
         fun previousButtonClick()
         fun navigateToWhoToBuild()
         fun onPlaySelected(configId: Int)
-        fun onContinueBuildingSelected(robot: UserRobot)
+        fun onContinueBuildingSelected(userRobot: UserRobot)
         fun onEditSelected(userRobot: UserRobot)
         fun duplicateRobot(userRobot: UserRobot)
         fun onMoreInfoClicked(userRobot: UserRobot)
