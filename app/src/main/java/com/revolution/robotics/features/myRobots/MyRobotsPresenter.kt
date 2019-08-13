@@ -37,7 +37,7 @@ class MyRobotsPresenter(
     private fun loadRobots() {
         getAllUserRobotsInteractor.execute { robots ->
             if (model?.robotsList?.get()?.size != robots.size + 1) {
-                model?.currentPosition?.set(if (robots.isNotEmpty()) 1 else 0 )
+                model?.currentPosition?.set(if (robots.isNotEmpty()) 1 else 0)
             }
             model?.robotsList?.set(robots.map { robot ->
                 MyRobotsItem(
@@ -122,7 +122,9 @@ class MyRobotsPresenter(
     }
 
     override fun onEditSelected(userRobot: UserRobot) {
-        if (userRobot.isCustomBuild() || userRobot.buildStatus == BuildStatus.INVALID_CONFIGURATION) {
+        if (userRobot.buildStatus == BuildStatus.COMPLETED ||
+            userRobot.buildStatus == BuildStatus.INVALID_CONFIGURATION
+        ) {
             navigator.navigate(MyRobotsFragmentDirections.toConfigure(userRobot.instanceId))
         } else {
             navigator.navigate(MyRobotsFragmentDirections.toBuildRobot(userRobot))
