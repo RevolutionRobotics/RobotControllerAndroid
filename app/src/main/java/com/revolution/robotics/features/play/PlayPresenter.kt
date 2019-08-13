@@ -32,7 +32,7 @@ class PlayPresenter(
     override fun loadControllerName(configId: Int) {
         getControllerNameInteractor.configurationId = configId
         getControllerNameInteractor.execute {
-            toolbarViewModel?.title?.set(it)
+            toolbarViewModel?.title?.set(it ?: "")
         }
     }
 

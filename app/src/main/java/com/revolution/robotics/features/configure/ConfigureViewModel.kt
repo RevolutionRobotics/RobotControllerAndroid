@@ -13,6 +13,7 @@ class ConfigureViewModel(private val presenter: ConfigureMvp.Presenter) : ViewMo
     var controllerTextColorRes: MutableLiveData<Int> = MutableLiveData()
     var connectionBackgroundConfig: MutableLiveData<ChippedBoxConfig> = MutableLiveData()
     var controllerBackgroundConfig: MutableLiveData<ChippedBoxConfig> = MutableLiveData()
+    var playAvailable: MutableLiveData<Boolean> = MutableLiveData()
 
     companion object {
         @ColorRes

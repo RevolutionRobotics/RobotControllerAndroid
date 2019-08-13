@@ -1,6 +1,7 @@
 package com.revolution.robotics.features.configure
 
 import com.revolution.robotics.R
+import com.revolution.robotics.core.domain.local.BuildStatus
 import com.revolution.robotics.core.domain.local.UserConfiguration
 import com.revolution.robotics.core.domain.local.UserProgram
 import com.revolution.robotics.core.domain.local.UserRobot
@@ -54,6 +55,7 @@ class ConfigurePresenter(
             userRobot?.let {
                 this.userRobot = it
                 this.toolbarViewModel = toolbarViewModel
+                this.model?.playAvailable?.value = userRobot.buildStatus == BuildStatus.COMPLETED
                 toolbarViewModel.title.set(
                     if (it.name.isNullOrEmpty()) {
                         resourceResolver.string(R.string.untitled_robot_name)
