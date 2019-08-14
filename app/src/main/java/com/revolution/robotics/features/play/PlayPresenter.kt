@@ -2,17 +2,17 @@ package com.revolution.robotics.features.play
 
 import android.net.Uri
 import com.revolution.robotics.core.interactor.CreateConfigurationFileInteractor
-import com.revolution.robotics.core.interactor.GetControllerNameInteractor
 import com.revolution.robotics.core.interactor.GetFullConfigurationInteractor
+import com.revolution.robotics.core.interactor.GetUserRobotByConfigIdInteractor
 import com.revolution.robotics.features.bluetooth.BluetoothManager
 import com.revolution.robotics.features.shared.ErrorHandler
 import org.revolutionrobotics.robotcontroller.bluetooth.service.RoboticsLiveControllerService
 import kotlin.math.max
 
 class PlayPresenter(
+    private val getUserRobotByConfigIdInteractor: GetUserRobotByConfigIdInteractor,
     private val getConfigurationInteractor: GetFullConfigurationInteractor,
     private val createConfigurationFileInteractor: CreateConfigurationFileInteractor,
-    private val getControllerNameInteractor: GetControllerNameInteractor,
     private val bluetoothManager: BluetoothManager,
     private val errorHandler: ErrorHandler
 ) : PlayMvp.Presenter {
@@ -29,22 +29,21 @@ class PlayPresenter(
 
     private var liveControllerService: RoboticsLiveControllerService? = null
 
-    override fun loadControllerName(configId: Int) {
-        getControllerNameInteractor.configurationId = configId
-        getControllerNameInteractor.execute {
-            toolbarViewModel?.title?.set(it ?: "")
-        }
-    }
-
     override fun unregister(view: PlayMvp.View?) {
         liveControllerService?.stop()
         super.unregister(view)
     }
 
+    override fun loadRobotName(configId: Int) {
+        getUserRobotByConfigIdInteractor.configId = configId
+        getUserRobotByConfigIdInteractor.execute {
+            toolbarViewModel?.title?.set(it?.name ?: "")
+        }
+    }
+
     override fun loadConfiguration(configId: Int) {
         getConfigurationInteractor.userConfigId = configId
         getConfigurationInteractor.execute { result ->
-            toolbarViewModel?.title?.set(result.controller?.userController?.name)
             view?.let {
                 createConfigurationFile(result)
             }
