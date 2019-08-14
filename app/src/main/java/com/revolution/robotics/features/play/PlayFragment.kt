@@ -48,7 +48,7 @@ abstract class PlayFragment : BaseFragment<FragmentPlayCoreBinding, PlayViewMode
         presenter.reverseXAxis = reverseXAxis
         binding?.toolbarViewModel = presenter.toolbarViewModel
         arguments?.let {
-            presenter.loadControllerName(it.configId)
+            presenter.loadRobotName(it.configId)
         }
 
         bluetoothManager.registerListener(this)

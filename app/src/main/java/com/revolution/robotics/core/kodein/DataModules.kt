@@ -99,6 +99,7 @@ fun createInteractorModule() =
         bind<BuildStepInteractor>() with p { BuildStepInteractor() }
         bind<ConfigurationInteractor>() with p { ConfigurationInteractor() }
         bind<GetUserRobotInteractor>() with p { GetUserRobotInteractor(i()) }
+        bind<GetUserRobotByConfigIdInteractor>() with p { GetUserRobotByConfigIdInteractor(i()) }
         bind<AssignConfigToRobotInteractor>() with p { AssignConfigToRobotInteractor(i(), i(), i(), i(), i(), i()) }
         bind<UpdateUserRobotInteractor>() with p { UpdateUserRobotInteractor(i(), i()) }
         bind<GetAllUserRobotsInteractor>() with p { GetAllUserRobotsInteractor(i()) }
@@ -128,7 +129,6 @@ fun createInteractorModule() =
         bind<FirmwareInteractor>() with p { FirmwareInteractor() }
         bind<PortTestFileCreatorInteractor>() with p { PortTestFileCreatorInteractor(i()) }
         bind<CreateConfigurationFileInteractor>() with p { CreateConfigurationFileInteractor(i()) }
-        bind<GetControllerNameInteractor>() with p { GetControllerNameInteractor(i(), i()) }
         bind<ForceUpdateInteractor>() with p { ForceUpdateInteractor() }
         bind<AssignProgramToButtonInteractor>() with p { AssignProgramToButtonInteractor(i(), i()) }
     }
