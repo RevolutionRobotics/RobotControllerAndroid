@@ -97,7 +97,7 @@ class RoboticsToolbar @JvmOverloads constructor(context: Context, attrs: Attribu
     }
 
     private fun createOption(option: ToolbarOption, isFirst: Boolean) = AppCompatImageView(context).apply {
-        id = View.generateViewId()
+        id = option.id ?: View.generateViewId()
         setImageResource(option.icon)
         setBackgroundResource(R.drawable.bg_button_default)
         scaleType = ImageView.ScaleType.FIT_XY

@@ -1,7 +1,9 @@
 package com.revolution.robotics.features.configure
 
 import android.os.Bundle
+import android.view.MenuInflater
 import android.view.View
+import androidx.appcompat.widget.PopupMenu
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
@@ -114,6 +116,18 @@ class ConfigureFragment : BaseFragment<FragmentConfigureBinding, ConfigureViewMo
 
     override fun showSaveDialog(name: String, description: String) {
         SaveRobotDialog.newInstance(name, description).show(fragmentManager)
+    }
+
+    override fun showAdvancedSettingsPopup() {
+            activity?.let {activity ->
+                val overflowMenuButton : View? = binding?.root?.findViewById(ConfigureToolbarViewModel.OVERFLOW_ID)
+                overflowMenuButton?.let { view ->
+                    val popup = PopupMenu(activity, view)
+                    val inflater: MenuInflater = popup.menuInflater
+                    inflater.inflate(R.menu.configuration_overflow, popup.menu)
+                    popup.show()
+                }
+            }
     }
 
     override fun onDrawerSlide(drawerView: View, slideOffset: Float) = Unit

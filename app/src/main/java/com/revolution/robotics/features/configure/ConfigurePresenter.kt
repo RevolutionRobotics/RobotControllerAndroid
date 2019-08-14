@@ -203,6 +203,9 @@ class ConfigurePresenter(
         }
     }
 
+    override fun onAdvancedSettingsClicked() {
+        view?.showAdvancedSettingsPopup()
+    }
 
     override fun onDuplicateClicked() {
         userRobot?.let {

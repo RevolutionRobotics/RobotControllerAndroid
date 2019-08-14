@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/change_controller_type"
+          android:icon="@drawable/ic_controller"
+          android:title="Change controller type"/>
+    <item android:id="@+id/background_programs"
+          android:icon="@drawable/ic_background_program"
+          android:title="Background programs"/>
+    <item android:id="@+id/priority"
+          android:icon="@drawable/ic_priority"
+          android:title="Program priorities"/>
+</menu>
