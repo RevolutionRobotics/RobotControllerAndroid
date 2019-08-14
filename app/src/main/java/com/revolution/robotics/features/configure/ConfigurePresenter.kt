@@ -1,6 +1,7 @@
 package com.revolution.robotics.features.configure
 
 import com.revolution.robotics.R
+import com.revolution.robotics.core.domain.local.BuildStatus
 import com.revolution.robotics.core.domain.local.UserConfiguration
 import com.revolution.robotics.core.domain.local.UserProgram
 import com.revolution.robotics.core.domain.local.UserRobot
@@ -14,6 +15,7 @@ import com.revolution.robotics.features.configure.delete.DeleteRobotDialog
 import com.revolution.robotics.features.configure.robotPicture.RobotPictureDialog
 import com.revolution.robotics.features.configure.save.SaveRobotDialog
 import com.revolution.robotics.features.controllers.ControllerType
+import com.revolution.robotics.features.myRobots.MyRobotsFragmentDirections
 
 @Suppress("TooManyFunctions")
 class ConfigurePresenter(
@@ -53,6 +55,7 @@ class ConfigurePresenter(
             userRobot?.let {
                 this.userRobot = it
                 this.toolbarViewModel = toolbarViewModel
+                this.model?.playAvailable?.value = userRobot.buildStatus == BuildStatus.COMPLETED
                 toolbarViewModel.title.set(
                     if (it.name.isNullOrEmpty()) {
                         resourceResolver.string(R.string.untitled_robot_name)
@@ -213,6 +216,20 @@ class ConfigurePresenter(
     override fun editRobotDetails() {
         userRobot?.let { robot ->
             view?.showSaveDialog(robot.name ?: "", robot.description ?: "")
+        }
+    }
+
+    override fun play() {
+        userConfiguration?.controller?.let { controllerId ->
+            getUserControllerInteractor.id = controllerId
+            getUserControllerInteractor.execute { controller ->
+                when (controller.userController.type) {
+                    ControllerType.GAMER.id ->
+                        navigator.navigate(MyRobotsFragmentDirections.toPlayGamer(userConfiguration?.id!!))
+                    ControllerType.DRIVER.id ->
+                        navigator.navigate(MyRobotsFragmentDirections.toPlayDriver(userConfiguration?.id!!))
+                }
+            }
         }
     }
 

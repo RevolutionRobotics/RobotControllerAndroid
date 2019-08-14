@@ -5,6 +5,8 @@
         xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <import type="android.view.View"/>
+
         <variable name="viewModel"
                   type="com.revolution.robotics.features.configure.ConfigureViewModel"/>
         <variable name="toolbarViewModel"
@@ -92,6 +94,17 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     android:paddingBottom="@dimen/configure_fragment_frame_vertical_padding"
                     android:paddingTop="@dimen/configure_fragment_frame_vertical_padding"/>
+
+            <com.revolution.robotics.views.RoboticsButton
+                    android:layout_width="@dimen/robotics_button_width"
+                    android:layout_height="@dimen/robotics_button_height"
+                    android:layout_margin="@dimen/dimen_4dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:onClick="@{()->viewModel.play()}"
+                    app:text="@{@string/configure_play_button_text}"
+                    android:visibility="@{viewModel.playAvailable ? View.VISIBLE : View.GONE}"
+                    app:image="@{@drawable/ic_play}"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
