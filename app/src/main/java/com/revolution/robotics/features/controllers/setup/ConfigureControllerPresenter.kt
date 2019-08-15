@@ -4,6 +4,7 @@ import com.revolution.robotics.core.domain.local.UserProgram
 import com.revolution.robotics.core.interactor.AssignProgramToButtonInteractor
 import com.revolution.robotics.core.interactor.GetFullConfigurationInteractor
 import com.revolution.robotics.core.interactor.GetUserProgramsInteractor
+import com.revolution.robotics.features.configure.ConfigurationEventBus
 import com.revolution.robotics.features.configure.controller.CompatibleProgramFilterer
 import com.revolution.robotics.features.configure.controller.ControllerButton
 import com.revolution.robotics.features.controllers.programInfo.ProgramDialog
@@ -14,7 +15,8 @@ class ConfigureControllerPresenter(
     private val getFullConfigurationInteractor: GetFullConfigurationInteractor,
     private val compatibleProgramFilterer: CompatibleProgramFilterer,
     private val getUserProgramsInteractor: GetUserProgramsInteractor,
-    private val assignProgramToButtonInteractor: AssignProgramToButtonInteractor
+    private val assignProgramToButtonInteractor: AssignProgramToButtonInteractor,
+    private val configurationEventBus: ConfigurationEventBus
 
     ) : ConfigureControllerMvp.Presenter {
 
@@ -133,5 +135,9 @@ class ConfigureControllerPresenter(
                 }
             }
         }
+    }
+
+    override fun play() {
+        configurationEventBus.publishPlayEvent()
     }
 }

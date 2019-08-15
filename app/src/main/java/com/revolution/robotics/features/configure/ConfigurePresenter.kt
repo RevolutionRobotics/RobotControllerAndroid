@@ -55,7 +55,6 @@ class ConfigurePresenter(
             userRobot?.let {
                 this.userRobot = it
                 this.toolbarViewModel = toolbarViewModel
-                this.model?.playAvailable?.value = userRobot.buildStatus == BuildStatus.COMPLETED
                 toolbarViewModel.title.set(
                     if (it.name.isNullOrEmpty()) {
                         resourceResolver.string(R.string.untitled_robot_name)
@@ -219,7 +218,7 @@ class ConfigurePresenter(
         }
     }
 
-    override fun play() {
+    override fun onPlayEvent() {
         userConfiguration?.controller?.let { controllerId ->
             getUserControllerInteractor.id = controllerId
             getUserControllerInteractor.execute { controller ->

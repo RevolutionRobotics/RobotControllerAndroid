@@ -35,6 +35,16 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <com.revolution.robotics.views.RoboticsButton
+                android:layout_width="@dimen/robotics_button_width"
+                android:layout_height="@dimen/robotics_button_height"
+                android:layout_margin="@dimen/dimen_4dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:onClick="@{()->viewModel.play()}"
+                app:text="@{@string/configure_play_button_text}"
+                app:image="@{@drawable/ic_play}"/>
+
         <FrameLayout
                 android:id="@+id/dimmer"
                 android:visibility="invisible"

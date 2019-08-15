@@ -20,7 +20,7 @@ import com.revolution.robotics.features.configure.SensorPort
 class ConfigureConnectionsPresenter(
     private val getUserConfigurationInteractor: GetUserConfigurationInteractor,
     private val getUserRobotInteractor: GetUserRobotInteractor,
-    private val openConfigurationEventBus: ConfigurationEventBus,
+    private val configurationEventBus: ConfigurationEventBus,
     private val resourceResolver: ResourceResolver,
     private val dialogEventBus: DialogEventBus
 ) :
@@ -77,6 +77,10 @@ class ConfigureConnectionsPresenter(
         userConfiguration?.let {
             setConfiguration(it)
         }
+    }
+
+    override fun play() {
+        configurationEventBus.publishPlayEvent()
     }
 
     private fun setupSensors(model: ConfigureConnectionsViewModel) {
@@ -155,11 +159,11 @@ class ConfigureConnectionsPresenter(
     }
 
     private fun openMotorDrawer(motor: Motor?, portName: String?) {
-        openConfigurationEventBus.publishOpenMotorConfiguration(MotorPort(motor, portName))
+        configurationEventBus.publishOpenMotorConfiguration(MotorPort(motor, portName))
     }
 
     private fun openSensorDrawer(sensor: Sensor?, portName: String?) {
-        openConfigurationEventBus.publishOpenSensorConfiguration(SensorPort(sensor, portName))
+        configurationEventBus.publishOpenSensorConfiguration(SensorPort(sensor, portName))
     }
 
     private fun getRobotPartModel(
