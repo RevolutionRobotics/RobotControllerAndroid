@@ -11,5 +11,6 @@ interface ConfigureConnectionsMvp : Mvp {
         fun loadConfiguration(configurationId: Int)
         fun setConfiguration(userConfiguration: UserConfiguration)
         fun clearSelection()
+        fun play()
     }
 }

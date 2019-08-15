@@ -13,7 +13,7 @@ class ConfigureControllerViewModel(private val presenter: ConfigureControllerMvp
 
     private val programs = mutableListOf<UserProgram?>(null, null, null, null, null, null)
     var selectedProgram = NO_PROGRAM_SELECTED
-    var controllerType: ControllerType = ControllerType.DRIVER
+    var controllerType: ControllerType? = null
 
     fun isProgramSelected(index: Int) = selectedProgram == index
 
@@ -44,4 +44,6 @@ class ConfigureControllerViewModel(private val presenter: ConfigureControllerMvp
             }
         }
     }
+
+    fun play() = presenter.play()
 }
