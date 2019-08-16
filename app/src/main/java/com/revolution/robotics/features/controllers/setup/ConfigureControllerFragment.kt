@@ -134,7 +134,7 @@ class ConfigureControllerFragment :
     }
 
     override fun showAllPrograms(controllerButton: ControllerButton, configId: Int) {
-        navigator.navigate(ConfigureFragmentDirections.toProgramSelector(controllerButton, configId))
+        navigator.navigate(ConfigureFragmentDirections.toProgramSelector(controllerButton.name, configId))
     }
 
     override fun navigateToEditProgram(userProgram: UserProgram?) {
