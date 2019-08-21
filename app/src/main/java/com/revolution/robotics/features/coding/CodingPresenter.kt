@@ -21,6 +21,7 @@ class CodingPresenter(
 
     companion object {
         private const val EMPTY_XML = "<xml xmlns=\"http://www.w3.org/1999/xhtml\"></xml>"
+        private val REMOVE_ID_REGEXP = Regex("id=\"[^\"]*\"")
     }
 
     override var view: CodingMvp.View? = null
@@ -135,12 +136,12 @@ class CodingPresenter(
         view?.getDataFromBlocklyView(object : SaveBlocklyListener {
             override fun onXMLProgramSaved(file: String) {
                 callback.invoke(
-                    String(
-                        Base64.encode(
-                            file.toByteArray(),
+                    file.removeIds() != String(
+                        Base64.decode(
+                            model?.userProgram?.xml ?: "",
                             Base64.NO_WRAP
                         )
-                    ) != model?.userProgram?.xml && file != EMPTY_XML
+                    ).removeIds() && file != EMPTY_XML
                 )
             }
 
@@ -149,6 +150,8 @@ class CodingPresenter(
             override fun onVariablesExported(variables: String) = Unit
         })
     }
+
+    private fun String.removeIds(): String = this.replace(REMOVE_ID_REGEXP, "")
 
     override fun onBackPressed() {
         isProgramChanged { view?.onBackPressed(it) }
