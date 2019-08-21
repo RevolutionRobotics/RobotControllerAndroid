@@ -125,6 +125,13 @@
     <string name="configure_controller_tab_title_without_controller">Controller ⚠️</string>
     <string name="configure_play_button_text">Play</string>
 
+    <!-- Configuration -->
+    <string name="configure_change_controller_type">Change controller type</string>
+    <string name="configure_delete">Delete</string>
+    <string name="configure_duplicate">Duplicate</string>
+    <string name="configure_rename">Rename</string>
+    <string name="configure_change_image">Change image</string>
+
     <!-- Configure Connections -->
     <string name="configure_connections_missing_part_name" translatable="false">MS</string>
     <string name="configure_connections_button_M1" translatable="false">M1</string>
