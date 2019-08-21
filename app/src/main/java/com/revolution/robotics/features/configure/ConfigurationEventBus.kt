@@ -36,10 +36,17 @@ class ConfigurationEventBus {
         }
     }
 
+    fun publishPlayEvent() {
+        listeners.forEach { listener ->
+            listener.onPlayEvent()
+        }
+    }
+
     interface Listener {
         fun onMotorConfigChangedEvent(event: MotorPort)
         fun onSensorConfigChangedEvent(event: SensorPort)
         fun onOpenMotorConfigEvent(event: MotorPort)
         fun onOpenSensorConfigEvent(event: SensorPort)
+        fun onPlayEvent()
     }
 }

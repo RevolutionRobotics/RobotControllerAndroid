@@ -25,5 +25,6 @@ interface ConfigureControllerMvp : Mvp {
         fun addProgram(program: UserProgram)
         fun removeProgram()
         fun onProgramEdited(program: UserProgram)
+        fun play()
     }
 }

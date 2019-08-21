@@ -141,7 +141,7 @@
               android:label="ProgramSelectorFragment ">
         <action android:id="@+id/toCoding"
                 app:destination="@id/codingFragment"/>
-        <argument android:name="selectedButton" app:argType="com.revolution.robotics.features.configure.controller.ControllerButton"/>
+        <argument android:name="selectedButton" app:argType="string"/>
         <argument android:name="configId" app:argType="integer"/>
     </fragment>
     <fragment android:id="@+id/buttonlessProgramSelectorFragment"
