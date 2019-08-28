@@ -1,0 +1,113 @@
+buildscript {
+    repositories {
+        gradlePluginPortal()
+    }
+    dependencies {
+        classpath "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.0.0-RC14"
+        classpath "gradle.plugin.com.github.spotbugs:spotbugs-gradle-plugin:1.6.6"
+    }
+}
+
+apply plugin: 'checkstyle'
+apply plugin: com.github.spotbugs.SpotBugsPlugin
+apply plugin: 'pmd'
+apply plugin: io.gitlab.arturbosch.detekt.DetektPlugin
+
+checkstyle {
+    toolVersion = "8.19"
+}
+
+pmd {
+    toolVersion = '5.8.1'
+}
+
+spotbugs {
+    toolVersion = '3.1.12'
+}
+
+dependencies {
+    detektPlugins "io.gitlab.arturbosch.detekt:detekt-formatting:1.0.0-RC14"
+}
+
+tasks.withType(Checkstyle).configureEach {
+    ignoreFailures = false
+
+    configFile file("${project.code_quality_rootDir}/config/quality/checkstyle/checkstyle.xml")
+    configDir provider { file("${project.code_quality_rootDir}/config/quality/checkstyle") }
+
+    source 'src/main/java'
+    source 'src/test/java'
+
+    include '**/*.java'
+    exclude '**/generated/**'
+
+    reports {
+        xml.enabled = true
+        xml.destination = file("${project.buildDir}/reports/checkstyle/checkstyle.xml")
+
+        html.enabled = false
+        html.destination = file("${project.buildDir}/reports/checkstyle/checkstyle.html")
+    }
+
+    classpath = files()
+}
+
+tasks.withType(com.github.spotbugs.SpotBugsTask).configureEach {
+    ignoreFailures = false
+    effort = "max"
+    reportLevel = "high"
+    classes = files("${project.buildDir}/classes/java/").filter { it.exists() }
+    excludeFilter = new File("${project.code_quality_rootDir}/config/quality/spotbugs/spotbugs-filter.xml")
+
+    source 'src/main/java'
+    source 'src/test/java'
+
+    include '**/*.java'
+    exclude '**/generated/**'
+
+    reports {
+        xml.enabled = true
+        xml.destination = file("${project.buildDir}/reports/spotbugs/spotbugs.xml")
+
+        html.enabled = false
+        html.destination = file("${project.buildDir}/reports/spotbugs/spotbugs.html")
+    }
+
+    classpath = files()
+}
+
+tasks.withType(Pmd).configureEach {
+    ignoreFailures = false
+    ruleSetFiles = files("${project.code_quality_rootDir}/config/quality/pmd/pmd-ruleset.xml")
+
+    source 'src/main/java'
+    source 'src/test/java'
+
+    include '**/*.java'
+    exclude '**/generated/**'
+
+    reports {
+        xml.enabled = true
+        xml.destination = file("${project.buildDir}/reports/pmd/pmd.xml")
+
+        html.enabled = false
+        html.destination = file("${project.buildDir}/reports/pmd/pmd.html")
+    }
+}
+
+tasks.withType(io.gitlab.arturbosch.detekt.Detekt).configureEach {
+    input = files(files("src/main/kotlin").filter { it.exists() })
+    filters = '.*\\.java$,.*/generated/.*'
+
+    config = files("${project.code_quality_rootDir}/config/quality/detekt/detekt-config.yml")
+
+    reports {
+        html.enabled = true
+        html.destination = file("${project.buildDir}/reports/detekt/detekt-output.html")
+
+        xml.enabled = true
+        xml.destination = file("${project.buildDir}/reports/detekt/detekt-output.xml")
+    }
+}
+
+check.dependsOn 'detekt'

@@ -1,6 +1,3 @@
-[submodule "android-quality-config"]
-    path = android-quality-config
-    url = git@github.com:RevolutionRobotics/AndroidQualityConfig.git
 [submodule "blockly-js"]
     path = blockly-js
     url = git@github.com:RevolutionRobotics/RevolutionRoboticsBlocklyDistribution.git
