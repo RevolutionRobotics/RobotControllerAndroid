@@ -44,7 +44,7 @@ class MyRobotsPresenter(
                     robot.instanceId,
                     robot,
                     robot.lastModified?.formatYearMonthDay() ?: "",
-                    robot.buildStatus != BuildStatus.COMPLETED,
+                    robot.buildStatus == BuildStatus.IN_PROGRESS,
                     this
                 )
             }.toMutableList().also { it.add(0, MyRobotsAddItem(this)) })
@@ -114,31 +114,27 @@ class MyRobotsPresenter(
     }
 
     override fun onContinueBuildingSelected(userRobot: UserRobot) {
-        if (userRobot.isCustomBuild() || userRobot.buildStatus == BuildStatus.INVALID_CONFIGURATION) {
-            navigator.navigate(MyRobotsFragmentDirections.toConfigure(userRobot.instanceId))
-        } else {
+        if (userRobot.buildStatus == BuildStatus.IN_PROGRESS) {
             navigator.navigate(MyRobotsFragmentDirections.toBuildRobot(userRobot))
+        } else {
+            navigator.navigate(MyRobotsFragmentDirections.toConfigure(userRobot.instanceId))
         }
     }
 
     override fun onEditSelected(userRobot: UserRobot) {
-        if (userRobot.buildStatus == BuildStatus.COMPLETED ||
-            userRobot.buildStatus == BuildStatus.INVALID_CONFIGURATION
-        ) {
-            navigator.navigate(MyRobotsFragmentDirections.toConfigure(userRobot.instanceId))
-        } else {
+        if (userRobot.buildStatus == BuildStatus.IN_PROGRESS) {
             navigator.navigate(MyRobotsFragmentDirections.toBuildRobot(userRobot))
+        } else {
+            navigator.navigate(MyRobotsFragmentDirections.toConfigure(userRobot.instanceId))
         }
     }
 
     override fun onMoreInfoClicked(userRobot: UserRobot) {
         view?.showDialog(
-            if (userRobot.buildStatus == BuildStatus.COMPLETED ||
-                userRobot.buildStatus == BuildStatus.INVALID_CONFIGURATION
-            ) {
-                InfoRobotDialog.Edit.newInstance(userRobot)
-            } else {
+            if (userRobot.buildStatus == BuildStatus.IN_PROGRESS) {
                 InfoRobotDialog.InProgress.newInstance(userRobot)
+            } else {
+                InfoRobotDialog.Edit.newInstance(userRobot)
             }
         )
     }
@@ -164,7 +160,7 @@ class MyRobotsPresenter(
                         robot.instanceId,
                         robot,
                         robot.lastModified?.formatYearMonthDay() ?: "",
-                        robot.buildStatus != BuildStatus.COMPLETED,
+                        robot.buildStatus == BuildStatus.IN_PROGRESS,
                         this@MyRobotsPresenter
                     )
                 )

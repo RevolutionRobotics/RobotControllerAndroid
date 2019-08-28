@@ -113,7 +113,7 @@ class WhoToBuildPresenter(
 
     override fun onBuildYourOwnSelected() {
         val userRobot = UserRobot(
-            buildStatus = BuildStatus.INVALID_CONFIGURATION,
+            buildStatus = BuildStatus.COMPLETED,
             lastModified = Date(System.currentTimeMillis()),
             name = ""
         )
