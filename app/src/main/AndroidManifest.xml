@@ -40,9 +40,5 @@
                     android:resource="@xml/file_providers"/>
         </provider>
 
-        <!-- ~~~~~~~~~~~~~~~~~~~~~~~ METADATA ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-        <meta-data
-                android:name="io.fabric.ApiKey"
-                android:value="67f938d8e574a4ead3786995193bd4fec3d43c01"/>
     </application>
 </manifest>
