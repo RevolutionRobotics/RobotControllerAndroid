@@ -40,5 +40,9 @@
                     android:resource="@xml/file_providers"/>
         </provider>
 
+        <meta-data
+                android:name="firebase_crashlytics_collection_enabled"
+                android:value="${enableCrashReporting}"/>
+
     </application>
 </manifest>
