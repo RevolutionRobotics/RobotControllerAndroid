@@ -16,7 +16,6 @@ interface ConfigureMvp : Mvp {
         fun updateConfig(userConfiguration: UserConfiguration)
         fun showSaveDialog(name: String, description: String)
         fun hideDrawer()
-        fun showAdvancedSettingsPopup()
     }
 
     interface Presenter : Mvp.Presenter<View, ConfigureViewModel> {

@@ -119,19 +119,6 @@ class ConfigureFragment : BaseFragment<FragmentConfigureBinding, ConfigureViewMo
         SaveRobotDialog.newInstance(name, description).show(fragmentManager)
     }
 
-    override fun showAdvancedSettingsPopup() {
-        activity?.let { activity ->
-            val overflowMenuButton: View? = binding?.root?.findViewById(ConfigureToolbarViewModel.OVERFLOW_ID)
-            overflowMenuButton?.let { view ->
-                PopupMenu(activity, view).apply {
-                    setOnMenuItemClickListener(this@ConfigureFragment)
-                    inflate(R.menu.configuration_overflow)
-                    show()
-                }
-            }
-        }
-    }
-
     override fun onMenuItemClick(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.change_controller_type -> {
