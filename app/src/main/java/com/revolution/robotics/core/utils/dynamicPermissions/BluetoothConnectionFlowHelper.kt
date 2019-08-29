@@ -38,7 +38,7 @@ class BluetoothConnectionFlowHelper(kodein: Kodein) : DialogEventBus.Listener {
 
     fun startConnectionFlow(activity: Activity) {
         if (dynamicPermissionHandler.hasPermissions(REQUIRED_PERMISSIONS, activity)) {
-            TurnOnTheBrainDialog.newInstance().show(fragmentManager)
+            ConnectDialog.newInstance().show(fragmentManager)
         } else {
             BluetoothPermissionDialog.newInstance().show(fragmentManager)
         }
@@ -46,7 +46,7 @@ class BluetoothConnectionFlowHelper(kodein: Kodein) : DialogEventBus.Listener {
 
     override fun onDialogEvent(event: DialogEvent) {
         when (event) {
-            DialogEvent.PERMISSION_GRANTED -> TurnOnTheBrainDialog.newInstance().show(fragmentManager)
+            DialogEvent.PERMISSION_GRANTED -> ConnectDialog.newInstance().show(fragmentManager)
             DialogEvent.BRAIN_TURNED_ON -> ConnectDialog.newInstance().show(fragmentManager)
             DialogEvent.ROBOT_CONNECTED -> ConnectionSuccessDialog.newInstance().show(fragmentManager)
             DialogEvent.ROBOT_CONNECTION_FAILED -> ConnectionFailedDialog.newInstance().show(fragmentManager)
