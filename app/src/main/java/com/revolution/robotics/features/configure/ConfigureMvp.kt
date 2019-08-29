@@ -27,6 +27,7 @@ interface ConfigureMvp : Mvp {
         fun onDuplicateClicked()
         fun onRobotImageClicked()
         fun onBackgroundProgramsClicked()
+        fun onQrScanningClicked()
         fun onPriorityClicked()
         fun editRobotDetails()
         fun onConnectionsTabSelected()

@@ -205,6 +205,10 @@ class ConfigurePresenter(
     override fun onAdvancedSettingsClicked() {
     }
 
+    override fun onQrScanningClicked() {
+        navigator.navigate(ConfigureFragmentDirections.toQrScanning())
+    }
+
     override fun onDuplicateClicked() {
         userRobot?.let {
             duplicateUserRobotInteractor.currentRobot = it

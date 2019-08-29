@@ -133,6 +133,8 @@
         <action android:id="@+id/toProgramSelector" app:destination="@id/program_selector"/>
         <action android:id="@+id/toProgramPriority"
                 app:destination="@id/programPriorityFragment"/>
+        <action
+                app:destination="@id/qrScannerFragment" android:id="@+id/toQrScanning"/>
     </fragment>
 
     <!-- Controller setup -->
@@ -177,4 +179,6 @@
     <fragment android:id="@+id/communityFragment"
               android:name="com.revolution.robotics.features.community.CommunityFragment"
               android:label="CommunityFragment"/>
+    <fragment android:id="@+id/qrScannerFragment" android:name="com.revolution.robotics.features.qr.QrScannerFragment"
+              android:label="QrScannerFragment"/>
 </navigation>
