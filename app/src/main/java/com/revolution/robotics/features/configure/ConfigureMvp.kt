@@ -8,6 +8,7 @@ import com.revolution.robotics.core.domain.local.UserRobot
 interface ConfigureMvp : Mvp {
     interface View : Mvp.View {
         fun showDialog(baseDialog: BaseDialog)
+        fun setRobotId(robotId: Int)
         fun showConnectionsScreen(configId: Int)
         fun showControllerScreen(configId: Int)
         fun openMotorConfig(configId: Int, motorPort: MotorPort)
@@ -19,7 +20,7 @@ interface ConfigureMvp : Mvp {
     }
 
     interface Presenter : Mvp.Presenter<View, ConfigureViewModel> {
-        fun loadRobot(robotId: Int, toolbarViewModel: ConfigureToolbarViewModel)
+        fun loadRobot(toolbarViewModel: ConfigureToolbarViewModel)
         fun onControllerTypeClicked()
         fun onDeleteClicked()
         fun deleteRobot()

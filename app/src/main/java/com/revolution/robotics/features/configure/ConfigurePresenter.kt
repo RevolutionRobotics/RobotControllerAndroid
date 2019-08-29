@@ -19,7 +19,7 @@ import com.revolution.robotics.features.myRobots.MyRobotsFragmentDirections
 
 @Suppress("TooManyFunctions")
 class ConfigurePresenter(
-    private val getUserRobotInteractor: GetUserRobotInteractor,
+    private val getTestRobotInteractor: GetTestRobotInteractor,
     private val configurationEventBus: ConfigurationEventBus,
     private val duplicateUserRobotInteractor: DuplicateUserRobotInteractor,
     private val deleteRobotInteractor: DeleteRobotInteractor,
@@ -49,12 +49,12 @@ class ConfigurePresenter(
         dialogEventBus.register(this)
     }
 
-    override fun loadRobot(robotId: Int, toolbarViewModel: ConfigureToolbarViewModel) {
-        getUserRobotInteractor.robotId = robotId
-        getUserRobotInteractor.execute { userRobot ->
+    override fun loadRobot(toolbarViewModel: ConfigureToolbarViewModel) {
+        getTestRobotInteractor.execute { userRobot ->
             userRobot?.let {
                 this.userRobot = it
                 this.toolbarViewModel = toolbarViewModel
+                view?.setRobotId(userRobot.instanceId)
                 toolbarViewModel.title.set(
                     if (it.name.isNullOrEmpty()) {
                         resourceResolver.string(R.string.untitled_robot_name)

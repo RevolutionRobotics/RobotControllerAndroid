@@ -41,15 +41,15 @@ class ConfigureFragment : BaseFragment<FragmentConfigureBinding, ConfigureViewMo
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         presenter.register(this, viewModel)
-        arguments?.robotId?.let { robotId ->
-            binding?.toolbarViewModel = ConfigureToolbarViewModel(presenter).apply {
-                presenter.loadRobot(robotId, this)
-            }
-            cameraHelper = CameraHelper(robotId)
-        }
+
+        binding?.toolbarViewModel = ConfigureToolbarViewModel(presenter).apply { presenter.loadRobot(this) }
 
         binding?.drawerConfiguration?.addDrawerListener(this)
         dialogEventBus.register(this)
+    }
+
+    override fun setRobotId(robotId: Int) {
+        cameraHelper = CameraHelper(robotId)
     }
 
     override fun hideDrawer() {

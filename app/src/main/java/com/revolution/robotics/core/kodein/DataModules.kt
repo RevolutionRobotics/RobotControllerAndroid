@@ -119,6 +119,7 @@ fun createInteractorModule() =
         bind<SaveUserChallengeCategoryInteractor>() with p { SaveUserChallengeCategoryInteractor(i()) }
         bind<GetUserProgramsInteractor>() with p { GetUserProgramsInteractor(i()) }
         bind<GetControllerTypeInteractor>() with p { GetControllerTypeInteractor(i(), i()) }
+        bind<GetTestRobotInteractor>() with p { GetTestRobotInteractor(i(), i(), i()) }
         bind<FirebaseInitInteractor>() with p { FirebaseInitInteractor() }
         bind<SaveUserRobotInteractor>() with p { SaveUserRobotInteractor(i()) }
         bind<DuplicateUserRobotInteractor>() with p { DuplicateUserRobotInteractor(i(), i(), i(), i(), i(), i()) }

@@ -18,18 +18,6 @@ class SplashPresenter(
 
     override fun register(view: SplashMvp.View, model: ViewModel?) {
         super.register(view, model)
-        firebaseInitInteractor.execute {
-            forceUpdateInteractor.checkUpdateNeeded { updateNeeded ->
-                if (updateNeeded) {
-                    this.view?.showUpdateNeededDialog()
-                } else {
-                    this.view?.startApp()
-                    programsInteractor.downloadAllPrograms { programs ->
-                        saveUserProgramsInteractor.programs = programs
-                        saveUserProgramsInteractor.execute()
-                    }
-                }
-            }
-        }
+        this.view?.startApp()
     }
 }
