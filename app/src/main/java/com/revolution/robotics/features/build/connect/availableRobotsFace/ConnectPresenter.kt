@@ -2,6 +2,8 @@ package com.revolution.robotics.features.build.connect.availableRobotsFace
 
 import android.annotation.SuppressLint
 import com.revolution.robotics.core.kodein.utils.ApplicationContextProvider
+import com.revolution.robotics.core.utils.dynamicPermissions.BluetoothConnectionFlowHelper
+import com.revolution.robotics.features.build.connect.ConnectDialog
 import com.revolution.robotics.features.build.connect.adapter.ConnectRobotItem
 import org.revolutionrobotics.robotcontroller.bluetooth.communication.RoboticsDeviceConnector
 import org.revolutionrobotics.robotcontroller.bluetooth.discover.RoboticsDeviceDiscoverer
@@ -24,7 +26,13 @@ class ConnectPresenter(
         bleDeviceDiscoverer.discoverRobots(applicationContextProvider.applicationContext) { devices ->
             model?.availableRobots?.value = HashSet<ConnectRobotItem>().apply {
                 model?.availableRobots?.value?.let { addAll(it) }
-                addAll(devices.map { device -> ConnectRobotItem(device, this@ConnectPresenter) })
+                addAll(devices.map { device ->
+                    val item = ConnectRobotItem(device, this@ConnectPresenter)
+                    if (device.name == ConnectDialog.autoConnectDeviceName) {
+                        onItemClicked(item)
+                    }
+                    item
+                })
             }
             model?.isDiscovering?.set(model.availableRobots.value?.isEmpty() == true)
         }

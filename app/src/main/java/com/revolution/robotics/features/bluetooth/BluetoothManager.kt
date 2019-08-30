@@ -29,9 +29,9 @@ class BluetoothManager(private var kodein: Kodein) : RoboticsConnectionStatusLis
         bleConnectionHandler.registerConnectionListener(this)
     }
 
-    fun startConnectionFlow() {
+    fun startConnectionFlow(robotName: String? = null) {
         activity?.let {
-            connectionFlowHelper?.startConnectionFlow(it)
+            connectionFlowHelper?.startConnectionFlow(it, robotName)
         }
     }
 

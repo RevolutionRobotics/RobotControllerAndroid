@@ -10,6 +10,7 @@ import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
 import com.revolution.robotics.core.interactor.*
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.core.utils.Navigator
+import com.revolution.robotics.features.bluetooth.BluetoothManager
 import com.revolution.robotics.features.configure.controller.ControllerButton
 import com.revolution.robotics.features.configure.delete.DeleteRobotDialog
 import com.revolution.robotics.features.configure.robotPicture.RobotPictureDialog
@@ -19,6 +20,7 @@ import com.revolution.robotics.features.myRobots.MyRobotsFragmentDirections
 
 @Suppress("TooManyFunctions")
 class ConfigurePresenter(
+    private val bluetoothManager: BluetoothManager,
     private val getTestRobotInteractor: GetTestRobotInteractor,
     private val configurationEventBus: ConfigurationEventBus,
     private val duplicateUserRobotInteractor: DuplicateUserRobotInteractor,
@@ -206,6 +208,7 @@ class ConfigurePresenter(
     }
 
     override fun onQrScanningClicked() {
+        bluetoothManager.disconnect()
         navigator.navigate(ConfigureFragmentDirections.toQrScanning())
     }
 

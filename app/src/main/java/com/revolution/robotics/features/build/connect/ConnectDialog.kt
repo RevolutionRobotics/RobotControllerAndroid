@@ -6,8 +6,13 @@ import com.revolution.robotics.views.dialogs.RoboticsDialog
 
 class ConnectDialog : RoboticsDialog() {
 
+
     companion object {
-        fun newInstance() = ConnectDialog()
+        fun newInstance(autoConnectDeviceName: String? = null) : ConnectDialog{
+            this.autoConnectDeviceName = autoConnectDeviceName
+            return ConnectDialog()
+        }
+        var autoConnectDeviceName: String? = null
     }
 
     override val hasCloseButton = true

@@ -16,7 +16,6 @@ import com.revolution.robotics.core.interactor.PortTestFileCreatorInteractor
 import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.features.bluetooth.BluetoothConnectionListener
 import com.revolution.robotics.features.bluetooth.BluetoothManager
-import com.revolution.robotics.features.build.testing.TestDialog
 import me.dm7.barcodescanner.zxing.ZXingScannerView
 import org.kodein.di.KodeinAware
 import org.kodein.di.LateInitKodein
@@ -36,7 +35,7 @@ class QrScannerFragment : Fragment(), ZXingScannerView.ResultHandler, BluetoothC
     private var mScannerView: ZXingScannerView? = null
     private val bleDeviceDiscoverer = RoboticsDeviceDiscoverer()
 
-    protected var kodein = LateInitKodein()
+    private var kodein = LateInitKodein()
 
     private val navigator: Navigator by kodein.instance()
     private val bluetoothManager: BluetoothManager by kodein.instance()
@@ -98,7 +97,7 @@ class QrScannerFragment : Fragment(), ZXingScannerView.ResultHandler, BluetoothC
         if (bluetoothManager.isServiceDiscovered) {
             uploadTest()
         } else {
-            bluetoothManager.startConnectionFlow()
+            bluetoothManager.startConnectionFlow(rawResult.text)
         }
     }
 
@@ -122,7 +121,7 @@ class QrScannerFragment : Fragment(), ZXingScannerView.ResultHandler, BluetoothC
         }
     }
 
-    fun uploadTest() {
+    private fun uploadTest() {
         portTestFileCreatorInteractor.assetFileName = "${QrScannerFragment.TEST_FOLDER}/productiontest.py"
         portTestFileCreatorInteractor.replaceablePairs = emptyList()
         portTestFileCreatorInteractor.execute(onResponse = {
@@ -131,14 +130,6 @@ class QrScannerFragment : Fragment(), ZXingScannerView.ResultHandler, BluetoothC
             Log.e("TEST", it.localizedMessage)
             it.printStackTrace()
         })
-    }
-
-    private fun generateReplaceablePairs(): List<Pair<String, String>> {
-        val replaceablePairs = mutableListOf<Pair<String, String>>()
-        replaceablePairs.add(TestDialog.REPLACEABLE_TEXT_MOTOR to "1")
-        replaceablePairs.add(TestDialog.REPLACEABLE_TEXT_MOTOR_DIR to TestDialog.VALUE_CLOCKWISE)
-        replaceablePairs.add(TestDialog.REPLACEABLE_TEXT_MOTOR_SIDE to TestDialog.VALUE_SIDE_LEFT)
-        return replaceablePairs
     }
 
     private fun sendConfiguration(uri: Uri) {

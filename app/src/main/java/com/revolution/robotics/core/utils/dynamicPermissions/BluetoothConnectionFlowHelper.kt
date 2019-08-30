@@ -36,9 +36,9 @@ class BluetoothConnectionFlowHelper(kodein: Kodein) : DialogEventBus.Listener {
         fragmentManager = null
     }
 
-    fun startConnectionFlow(activity: Activity) {
+    fun startConnectionFlow(activity: Activity, deviceName: String? = null) {
         if (dynamicPermissionHandler.hasPermissions(REQUIRED_PERMISSIONS, activity)) {
-            ConnectDialog.newInstance().show(fragmentManager)
+            ConnectDialog.newInstance(deviceName).show(fragmentManager)
         } else {
             BluetoothPermissionDialog.newInstance().show(fragmentManager)
         }
