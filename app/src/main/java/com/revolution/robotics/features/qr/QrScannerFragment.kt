@@ -1,28 +1,51 @@
 package com.revolution.robotics.features.qr
 
 import android.Manifest
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.zxing.Result
+import com.revolution.robotics.core.interactor.PortTestFileCreatorInteractor
+import com.revolution.robotics.core.utils.Navigator
+import com.revolution.robotics.features.bluetooth.BluetoothConnectionListener
+import com.revolution.robotics.features.bluetooth.BluetoothManager
+import com.revolution.robotics.features.build.testing.TestDialog
 import me.dm7.barcodescanner.zxing.ZXingScannerView
-import android.content.Intent
-import android.Manifest.permission
-import androidx.core.app.ActivityCompat
-import android.content.pm.PackageManager
-import androidx.core.content.ContextCompat
-import android.widget.Toast
+import org.kodein.di.KodeinAware
+import org.kodein.di.LateInitKodein
+import org.kodein.di.erased.instance
+import org.revolutionrobotics.robotcontroller.bluetooth.discover.RoboticsDeviceDiscoverer
 
 
-class QrScannerFragment : Fragment(), ZXingScannerView.ResultHandler {
+class QrScannerFragment : Fragment(), ZXingScannerView.ResultHandler, BluetoothConnectionListener {
 
+
+    companion object {
+        private const val TEST_FOLDER = "testscripts"
+    }
 
     private val ZXING_CAMERA_PERMISSION = 1
 
     private var mScannerView: ZXingScannerView? = null
+    private val bleDeviceDiscoverer = RoboticsDeviceDiscoverer()
+
+    protected var kodein = LateInitKodein()
+
+    private val navigator: Navigator by kodein.instance()
+    private val bluetoothManager: BluetoothManager by kodein.instance()
+    private val portTestFileCreatorInteractor: PortTestFileCreatorInteractor by kodein.instance()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        kodein.baseKodein = (requireContext().applicationContext as KodeinAware).kodein
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         mScannerView = ZXingScannerView(context)
@@ -38,13 +61,23 @@ class QrScannerFragment : Fragment(), ZXingScannerView.ResultHandler {
             ) != PackageManager.PERMISSION_GRANTED
         ) {
             requestPermissions(
-                arrayOf(Manifest.permission.CAMERA), ZXING_CAMERA_PERMISSION
+                arrayOf(
+                    Manifest.permission.CAMERA
+                ), ZXING_CAMERA_PERMISSION
             )
         } else {
             startScanning()
         }
+    }
 
-        // Start camera on resume
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        bluetoothManager.registerListener(this)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        bluetoothManager.unregisterListener(this)
     }
 
     private fun startScanning() {
@@ -55,15 +88,18 @@ class QrScannerFragment : Fragment(), ZXingScannerView.ResultHandler {
     override fun onPause() {
         super.onPause()
         mScannerView!!.stopCamera()           // Stop camera on pause
+        bleDeviceDiscoverer.stopDiscovering()
     }
 
     override fun handleResult(rawResult: Result) {
         // Do something with the result here
         Log.v("Scanning", rawResult.text) // Prints scan results
         Log.v("Scanning", rawResult.barcodeFormat.toString()) // Prints the scan format (qrcode, pdf417 etc.)
-
-        // If you would like to resume scanning, call this method below:
-        //mScannerView!!.resumeCameraPreview(this)
+        if (bluetoothManager.isServiceDiscovered) {
+            uploadTest()
+        } else {
+            bluetoothManager.startConnectionFlow()
+        }
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -78,5 +114,42 @@ class QrScannerFragment : Fragment(), ZXingScannerView.ResultHandler {
                 return
             }
         }
+    }
+
+    override fun onBluetoothConnectionStateChanged(connected: Boolean, serviceDiscovered: Boolean) {
+        if (connected && serviceDiscovered) {
+            uploadTest()
+        }
+    }
+
+    fun uploadTest() {
+        portTestFileCreatorInteractor.assetFileName = "${QrScannerFragment.TEST_FOLDER}/productiontest.py"
+        portTestFileCreatorInteractor.replaceablePairs = emptyList()
+        portTestFileCreatorInteractor.execute(onResponse = {
+            sendConfiguration(it)
+        }, onError = {
+            Log.e("TEST", it.localizedMessage)
+            it.printStackTrace()
+        })
+    }
+
+    private fun generateReplaceablePairs(): List<Pair<String, String>> {
+        val replaceablePairs = mutableListOf<Pair<String, String>>()
+        replaceablePairs.add(TestDialog.REPLACEABLE_TEXT_MOTOR to "1")
+        replaceablePairs.add(TestDialog.REPLACEABLE_TEXT_MOTOR_DIR to TestDialog.VALUE_CLOCKWISE)
+        replaceablePairs.add(TestDialog.REPLACEABLE_TEXT_MOTOR_SIDE to TestDialog.VALUE_SIDE_LEFT)
+        return replaceablePairs
+    }
+
+    private fun sendConfiguration(uri: Uri) {
+        bluetoothManager.getConfigurationService().testKit(uri,
+            onSuccess = {
+                Log.e("TEST", "Test script sent")
+                navigator.back()
+            },
+            onError = {
+                Log.e("TEST", it.localizedMessage)
+                navigator.back()
+            })
     }
 }
