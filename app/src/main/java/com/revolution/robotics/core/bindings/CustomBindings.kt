@@ -140,3 +140,8 @@ fun setColor(view: View, color: String?) {
 fun setSelected(view: View, selected: Boolean?) {
     view.isSelected = selected == true
 }
+
+@BindingAdapter("visible")
+fun setVisible(view: View, visible: Boolean?) {
+    view.visibility = if (visible != null && visible) View.VISIBLE else View.GONE
+}

@@ -19,7 +19,9 @@ class MainMenuPresenter(
 
     override fun register(view: MainMenuMvp.View, model: MainMenuViewModel?) {
         super.register(view, model)
-        if (appPrefs.showTutorial) {
+        if (!appPrefs.userTypeSelected) {
+            navigator.navigate(MainMenuFragmentDirections.toUserTypeSelection())
+        } else if (appPrefs.showTutorial) {
             tutorialViewModel = TutorialViewModel(resourceResolver, this).apply {
                 view.createTutorialLayout(this)
             }

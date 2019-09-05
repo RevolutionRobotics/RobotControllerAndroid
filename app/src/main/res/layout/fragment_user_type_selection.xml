@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="com.revolution.robotics.core.domain.local.UserType"/>
+        <variable name="viewModel"
+                  type="com.revolution.robotics.features.onboarding.userTypeSelection.UserTypeSelectionViewModel"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <LinearLayout android:layout_width="match_parent"
+                      android:orientation="vertical"
+                      android:padding="48dp"
+                      android:layout_height="match_parent">
+
+            <TextView android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:text="@string/onboarding_user_type_label"/>
+            <RadioGroup
+                    android:id="@+id/user_type_radio_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:checkedButton="@+id/radio_student"
+                    android:orientation="vertical">
+                <RadioButton android:id="@+id/radio_student"
+                             android:layout_width="wrap_content"
+                             android:layout_height="wrap_content"
+                             android:text="@string/onboarding_user_type_student"
+                             android:onClick="@{()->viewModel.onUserTypeSelected(UserType.STUDENT)}"/>
+                <RadioButton android:id="@+id/parent"
+                             android:layout_width="wrap_content"
+                             android:layout_height="wrap_content"
+                             android:text="@string/onboarding_user_type_parent"
+                             android:onClick="@{()->viewModel.onUserTypeSelected(UserType.PARENT)}"/>
+                <RadioButton android:id="@+id/radio_mentor"
+                             android:layout_width="wrap_content"
+                             android:layout_height="wrap_content"
+                             android:text="@string/onboarding_user_type_teacher"
+                             android:onClick="@{()->viewModel.onUserTypeSelected(UserType.TEACHER)}"/>
+                <RadioButton android:id="@+id/radio_hobbyist"
+                             android:layout_width="wrap_content"
+                             android:layout_height="wrap_content"
+                             android:text="@string/onboarding_user_type_hobbyist"
+                             android:onClick="@{()->viewModel.onUserTypeSelected(UserType.HOBBYIST)}"/>
+            </RadioGroup>
+
+            <TextView
+                    app:visible="@{viewModel.displayYearSelector}"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="@dimen/dimen_16dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/onboarding_year_of_birth_label"/>
+            <Spinner
+                    app:visible="@{viewModel.displayYearSelector}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    entries="@{viewModel.selectableYears}"/>
+
+        </LinearLayout>
+
+
+        <com.revolution.robotics.views.RoboticsButton
+                android:layout_width="@dimen/robotics_button_width"
+                android:layout_height="@dimen/robotics_button_height"
+                android:layout_margin="@dimen/dimen_4dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:onClick="@{()->viewModel.onNextClicked()}"
+                app:text="@{@string/onboarding_save}"
+                app:image="@{@drawable/ic_check}"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

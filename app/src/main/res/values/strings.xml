@@ -12,6 +12,15 @@
     <string name="force_update_exit_button_title">Quit</string>
     <string name="force_update_update_button_title">Update</string>
 
+    <!-- Onboarding -->
+    <string name="onboarding_user_type_label">What kind of superhero are you?</string>
+    <string name="onboarding_user_type_student">Student</string>
+    <string name="onboarding_user_type_parent">Parent</string>
+    <string name="onboarding_user_type_teacher">Teacher / Mentor</string>
+    <string name="onboarding_user_type_hobbyist">Hobbyist</string>
+    <string name="onboarding_year_of_birth_label">Select your year of birth</string>
+    <string name="onboarding_save">Save</string>
+
     <!-- Main menu -->
     <string name="menu_robots">robots</string>
     <string name="menu_coding">programs</string>
