@@ -174,7 +174,7 @@ fun createPresenterModule() =
         bind<SaveProgramMvp.Presenter>() with s { SaveProgramPresenter(i(), i()) }
         bind<CommunityMvp.Presenter>() with s { CommunityPresenter() }
         bind<TestMvp.Presenter>() with s { TestPresenter(i(), i(), i()) }
-        bind<UserTypeSelectionMvp.Presenter>() with s { UserTypeSelectionPresenter(i(), i()) }
+        bind<UserTypeSelectionMvp.Presenter>() with s { UserTypeSelectionPresenter(i(), i(), i()) }
     }
 
 fun createDbModule(context: Context) =

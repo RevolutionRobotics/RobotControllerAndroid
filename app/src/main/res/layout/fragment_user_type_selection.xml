@@ -40,7 +40,7 @@
                              android:layout_width="wrap_content"
                              android:layout_height="wrap_content"
                              android:text="@string/onboarding_user_type_teacher"
-                             android:onClick="@{()->viewModel.onUserTypeSelected(UserType.TEACHER)}"/>
+                             android:onClick="@{()->viewModel.onUserTypeSelected(UserType.TEACHER_MENTOR)}"/>
                 <RadioButton android:id="@+id/radio_hobbyist"
                              android:layout_width="wrap_content"
                              android:layout_height="wrap_content"
@@ -58,6 +58,7 @@
                     app:visible="@{viewModel.displayYearSelector}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:onItemSelected="@{(parent,view,pos,id)->viewModel.onYearSelected(pos)}"
                     entries="@{viewModel.selectableYears}"/>
 
         </LinearLayout>

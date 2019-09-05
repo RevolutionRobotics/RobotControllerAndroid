@@ -1,6 +1,8 @@
 package com.revolution.robotics.core.kodein
 
 import android.content.Context
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.revolution.robotics.analytics.Reporter
 import com.revolution.robotics.blockly.utils.BlocklyResultHolder
 import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
 import com.revolution.robotics.core.interactor.firebase.FirebaseFileDownloader
@@ -37,4 +39,6 @@ fun createAppModule(context: Context) =
         bind<AppPrefs>() with s { AppPrefs(context) }
         bind<ErrorHandler>() with s { ErrorHandler() }
         bind<FirebaseFileDownloader>() with p { FirebaseFileDownloader(i(), i()) }
+        bind<FirebaseAnalytics>() with s { FirebaseAnalytics.getInstance(context) }
+        bind<Reporter>() with s { Reporter(i()) }
     }

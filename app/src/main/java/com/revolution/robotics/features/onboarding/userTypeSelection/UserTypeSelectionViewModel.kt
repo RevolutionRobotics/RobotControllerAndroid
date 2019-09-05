@@ -13,4 +13,6 @@ class UserTypeSelectionViewModel(private val presenter: UserTypeSelectionMvp.Pre
 
     fun onUserTypeSelected(userType: UserType) = presenter.onUserTypeSelected(userType)
 
+    fun onYearSelected(position: Int) = presenter.onYearSelected(position)
+
 }

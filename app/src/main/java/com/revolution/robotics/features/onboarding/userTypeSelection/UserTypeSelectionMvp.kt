@@ -5,12 +5,11 @@ import com.revolution.robotics.core.domain.local.UserType
 
 interface UserTypeSelectionMvp : Mvp {
 
-    interface View : Mvp.View {
-
-    }
+    interface View : Mvp.View
 
     interface Presenter : Mvp.Presenter<View, UserTypeSelectionViewModel> {
         fun onNextClicked()
         fun onUserTypeSelected(userType: UserType)
+        fun onYearSelected(position: Int)
     }
 }
