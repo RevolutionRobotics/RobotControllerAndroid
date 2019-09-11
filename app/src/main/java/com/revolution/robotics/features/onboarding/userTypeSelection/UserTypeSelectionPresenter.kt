@@ -26,7 +26,12 @@ class UserTypeSelectionPresenter(
 
     override fun onUserTypeSelected(userType: UserType) {
         reporter.setUserProperty(Reporter.UserProperty.USER_TYPE, userType.reportName)
-        model?.displayYearSelector?.value = userType == UserType.STUDENT
+        if (userType == UserType.STUDENT) {
+
+        } else {
+            appPrefs.userTypeSelected = true
+            navigator.back()
+        }
     }
 
     override fun onYearSelected(position: Int) {
