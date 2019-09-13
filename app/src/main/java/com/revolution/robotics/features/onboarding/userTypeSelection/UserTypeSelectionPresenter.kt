@@ -21,6 +21,7 @@ class UserTypeSelectionPresenter(
             view?.showYearOfBirthPopup()
         } else {
             appPrefs.userTypeSelected = true
+            reporter.reportEvent(Reporter.Event.SELECTED_USER_TYPE)
             navigator.back()
         }
     }
