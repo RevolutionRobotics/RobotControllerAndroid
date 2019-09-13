@@ -21,10 +21,6 @@ class MainMenuPresenter(
         super.register(view, model)
         if (!appPrefs.userTypeSelected) {
             navigator.navigate(MainMenuFragmentDirections.toUserTypeSelection())
-        } else if (appPrefs.showTutorial) {
-            tutorialViewModel = TutorialViewModel(resourceResolver, this).apply {
-                view.createTutorialLayout(this)
-            }
         }
     }
 
