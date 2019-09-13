@@ -77,6 +77,8 @@ import com.revolution.robotics.features.mainmenu.settings.firmware.update.Firmwa
 import com.revolution.robotics.features.mainmenu.settings.firmware.update.FirmwareUpdateMvp
 import com.revolution.robotics.features.myRobots.MyRobotsMvp
 import com.revolution.robotics.features.myRobots.MyRobotsPresenter
+import com.revolution.robotics.features.onboarding.userTypeSelection.UserTypeSelectionMvp
+import com.revolution.robotics.features.onboarding.userTypeSelection.UserTypeSelectionPresenter
 import com.revolution.robotics.features.play.PlayMvp
 import com.revolution.robotics.features.play.PlayPresenter
 import com.revolution.robotics.features.splash.SplashMvp
@@ -172,6 +174,7 @@ fun createPresenterModule() =
         bind<SaveProgramMvp.Presenter>() with s { SaveProgramPresenter(i(), i()) }
         bind<CommunityMvp.Presenter>() with s { CommunityPresenter() }
         bind<TestMvp.Presenter>() with s { TestPresenter(i(), i(), i()) }
+        bind<UserTypeSelectionMvp.Presenter>() with s { UserTypeSelectionPresenter(i(), i(), i()) }
     }
 
 fun createDbModule(context: Context) =
