@@ -1,5 +1,7 @@
 package com.revolution.robotics.features.onboarding.robotRegistration
 
+import android.content.res.Resources
+import android.graphics.Typeface
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -7,8 +9,11 @@ import com.google.zxing.ResultPoint
 import com.journeyapps.barcodescanner.BarcodeCallback
 import com.journeyapps.barcodescanner.BarcodeResult
 import com.journeyapps.barcodescanner.CaptureManager
+import com.journeyapps.barcodescanner.Size
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
+import com.revolution.robotics.core.extensions.dp
+import com.revolution.robotics.core.extensions.px
 import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.databinding.FragmentRobotRegistrationBinding
 import org.kodein.di.erased.instance
@@ -32,6 +37,9 @@ class RobotRegistrationFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding?.barcodeView?.decodeSingle(this)
+        val height = Resources.getSystem().displayMetrics.heightPixels
+        binding?.barcodeView?.barcodeView?.framingRectSize = Size(height / 2, height / 2)
+        binding?.barcodeView?.statusView?.visibility = View.GONE
     }
 
     override fun onResume() {
