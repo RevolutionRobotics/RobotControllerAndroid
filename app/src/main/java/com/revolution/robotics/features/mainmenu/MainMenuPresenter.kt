@@ -21,6 +21,8 @@ class MainMenuPresenter(
         super.register(view, model)
         if (!appPrefs.userTypeSelected) {
             navigator.navigate(MainMenuFragmentDirections.toUserTypeSelection())
+        } else {
+            navigator.navigate(MainMenuFragmentDirections.toRobotRegistration())
         }
     }
 

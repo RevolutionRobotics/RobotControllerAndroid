@@ -20,6 +20,7 @@
     <string name="onboarding_user_type_hobbyist">Hobbyist</string>
     <string name="onboarding_year_of_birth_label">Select your year of birth</string>
     <string name="onboarding_save">Save</string>
+    <string name="onboarding_skip">Skip</string>
 
     <!-- Main menu -->
     <string name="menu_robots">robots</string>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+>
+
+    <data>
+        <variable name="viewModel"
+                  type="com.revolution.robotics.features.onboarding.robotRegistration.RobotRegistrationViewModel"/>
+    </data>
+    <FrameLayout android:orientation="vertical"
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent">
+
+        <com.journeyapps.barcodescanner.BarcodeView
+                android:id="@+id/barcode_view"
+                android:layout_width="match_parent"
+                app:zxing_framing_rect_width="240dp"
+                app:zxing_framing_rect_height="240dp"
+                android:layout_height="match_parent"/>
+
+
+        <com.revolution.robotics.views.RoboticsButton
+                android:layout_width="@dimen/robotics_button_width"
+                android:layout_height="@dimen/robotics_button_height"
+                android:layout_margin="@dimen/dimen_8dp"
+                android:layout_gravity="bottom|right"
+                app:text="@{@string/onboarding_skip}"
+                app:image="@{@drawable/ic_play}"/>
+    </FrameLayout>
+</layout>
