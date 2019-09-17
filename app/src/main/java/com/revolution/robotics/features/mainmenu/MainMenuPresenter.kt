@@ -1,15 +1,13 @@
 package com.revolution.robotics.features.mainmenu
 
 import com.revolution.robotics.R
-import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.core.utils.AppPrefs
 import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.features.mainmenu.tutorial.TutorialViewModel
 
 class MainMenuPresenter(
     private val navigator: Navigator,
-    private val appPrefs: AppPrefs,
-    private val resourceResolver: ResourceResolver
+    private val appPrefs: AppPrefs
 ) : MainMenuMvp.Presenter {
 
     override var view: MainMenuMvp.View? = null
@@ -21,7 +19,7 @@ class MainMenuPresenter(
         super.register(view, model)
         if (!appPrefs.userTypeSelected) {
             navigator.navigate(MainMenuFragmentDirections.toUserTypeSelection())
-        } else {
+        } else if(!appPrefs.robotRegistered) {
             navigator.navigate(MainMenuFragmentDirections.toRobotRegistration())
         }
     }

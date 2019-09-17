@@ -15,6 +15,7 @@ open class AppPrefs constructor(context: Context) {
 
     open var showTutorial by PreferenceFieldDelegate.Boolean(preferences, "tutorial", true)
     open var userTypeSelected by PreferenceFieldDelegate.Boolean(preferences, "user_type", false)
+    open var robotRegistered by PreferenceFieldDelegate.Boolean(preferences, "robot_registered", false)
 }
 
 sealed class PreferenceFieldDelegate<T>(
