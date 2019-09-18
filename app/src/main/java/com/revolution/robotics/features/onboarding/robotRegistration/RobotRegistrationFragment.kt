@@ -1,5 +1,6 @@
 package com.revolution.robotics.features.onboarding.robotRegistration
 
+import android.Manifest
 import android.content.res.Resources
 import android.graphics.Typeface
 import android.os.Bundle
@@ -17,16 +18,20 @@ import com.revolution.robotics.core.extensions.dp
 import com.revolution.robotics.core.extensions.px
 import com.revolution.robotics.core.utils.AppPrefs
 import com.revolution.robotics.core.utils.Navigator
+import com.revolution.robotics.core.utils.dynamicPermissions.BluetoothConnectionFlowHelper
+import com.revolution.robotics.core.utils.dynamicPermissions.DynamicPermissionHandler
+import com.revolution.robotics.core.utils.dynamicPermissions.DynamicPermissionListener
 import com.revolution.robotics.databinding.FragmentRobotRegistrationBinding
 import org.kodein.di.erased.instance
 
 class RobotRegistrationFragment :
     BaseFragment<FragmentRobotRegistrationBinding, RobotRegistrationViewModel>(R.layout.fragment_robot_registration),
-    BarcodeCallback {
+    BarcodeCallback, DynamicPermissionListener {
 
     private val navigator: Navigator by kodein.instance()
     private val reporter: Reporter by kodein.instance()
     private val appPrefs: AppPrefs by kodein.instance()
+    private val permissionHandler: DynamicPermissionHandler by kodein.instance()
 
     override val viewModelClass: Class<RobotRegistrationViewModel> = RobotRegistrationViewModel::class.java
 
@@ -43,6 +48,10 @@ class RobotRegistrationFragment :
     override fun onResume() {
         super.onResume()
         binding?.barcodeView?.resume()
+        permissionHandler
+            .permissions(listOf(Manifest.permission.CAMERA))
+            .listener(this)
+            .request(requireActivity())
     }
 
     override fun onPause() {
@@ -55,6 +64,14 @@ class RobotRegistrationFragment :
         appPrefs.robotRegistered = true
         navigator.back()
         return true
+    }
+
+    override fun onAllPermissionsGranted() {
+        binding?.barcodeView?.decodeSingle(this)
+    }
+
+    override fun onPermissionDenied(deniedPermissions: List<String>, showErrorMessage: Boolean) {
+        onBackPressed()
     }
 
     override fun barcodeResult(result: BarcodeResult?) {
