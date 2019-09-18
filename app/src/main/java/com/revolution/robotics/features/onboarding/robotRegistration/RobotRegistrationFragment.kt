@@ -2,23 +2,17 @@ package com.revolution.robotics.features.onboarding.robotRegistration
 
 import android.Manifest
 import android.content.res.Resources
-import android.graphics.Typeface
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import com.google.zxing.ResultPoint
 import com.journeyapps.barcodescanner.BarcodeCallback
 import com.journeyapps.barcodescanner.BarcodeResult
-import com.journeyapps.barcodescanner.CaptureManager
 import com.journeyapps.barcodescanner.Size
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
 import com.revolution.robotics.analytics.Reporter
-import com.revolution.robotics.core.extensions.dp
-import com.revolution.robotics.core.extensions.px
 import com.revolution.robotics.core.utils.AppPrefs
 import com.revolution.robotics.core.utils.Navigator
-import com.revolution.robotics.core.utils.dynamicPermissions.BluetoothConnectionFlowHelper
 import com.revolution.robotics.core.utils.dynamicPermissions.DynamicPermissionHandler
 import com.revolution.robotics.core.utils.dynamicPermissions.DynamicPermissionListener
 import com.revolution.robotics.databinding.FragmentRobotRegistrationBinding
