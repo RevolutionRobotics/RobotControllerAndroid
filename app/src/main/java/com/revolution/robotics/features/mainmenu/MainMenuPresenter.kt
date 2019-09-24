@@ -21,6 +21,8 @@ class MainMenuPresenter(
             navigator.navigate(MainMenuFragmentDirections.toUserTypeSelection())
         } else if(!appPrefs.robotRegistered) {
             navigator.navigate(MainMenuFragmentDirections.toRobotRegistration())
+        } else {
+            navigator.navigate(MainMenuFragmentDirections.toHaveYouBuiltCarby())
         }
     }
 

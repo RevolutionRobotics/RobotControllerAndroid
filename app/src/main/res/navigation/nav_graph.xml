@@ -22,6 +22,8 @@
                 app:destination="@id/userTypeSelectionFragment"/>
         <action android:id="@+id/toRobotRegistration"
                 app:destination="@id/robotRegistrationFragment"/>
+        <action android:id="@+id/toHaveYouBuiltCarby"
+                app:destination="@id/haveYouBuiltCarbyFragment"/>
     </fragment>
 
     <!-- My robots -->
@@ -187,4 +189,7 @@
     <fragment android:id="@+id/robotRegistrationFragment"
               android:name="com.revolution.robotics.features.onboarding.robotRegistration.RobotRegistrationFragment"
               android:label="RobotRegistrationFragment"/>
+    <fragment android:id="@+id/haveYouBuiltCarbyFragment"
+              android:name="com.revolution.robotics.features.onboarding.carby.HaveYouBuiltCarbyFragment"
+              android:label="HaveYouBuiltCarbyFragment"/>
 </navigation>
