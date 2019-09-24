@@ -97,6 +97,7 @@ import org.kodein.di.erased.bind
 
 fun createInteractorModule() =
     Kodein.Module("InteractorModule") {
+        bind<RobotsInteractor>() with p { RobotsInteractor() }
         bind<RobotInteractor>() with p { RobotInteractor() }
         bind<BuildStepInteractor>() with p { BuildStepInteractor() }
         bind<ConfigurationInteractor>() with p { ConfigurationInteractor() }

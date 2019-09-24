@@ -12,7 +12,7 @@ import com.revolution.robotics.core.interactor.firebase.BuildStepInteractor
 import com.revolution.robotics.core.interactor.firebase.ConfigurationInteractor
 import com.revolution.robotics.core.interactor.firebase.ControllerInteractor
 import com.revolution.robotics.core.interactor.firebase.ProgramsInteractor
-import com.revolution.robotics.core.interactor.firebase.RobotInteractor
+import com.revolution.robotics.core.interactor.firebase.RobotsInteractor
 import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.features.controllers.ControllerType
 import com.revolution.robotics.features.shared.ErrorHandler
@@ -24,7 +24,7 @@ class BuildRobotPresenter(
     private val configurationInteractor: ConfigurationInteractor,
     private val controllerInteractor: ControllerInteractor,
     private val programsInteractor: ProgramsInteractor,
-    private val robotInteractor: RobotInteractor,
+    private val robotsInteractor: RobotsInteractor,
     private val navigator: Navigator,
     private val dialogEventBus: DialogEventBus,
     private val errorHandler: ErrorHandler
@@ -69,7 +69,7 @@ class BuildRobotPresenter(
         if (createDefaultConfig) {
             view?.onRobotSaveStarted()
             this.userRobot = userRobot
-            robotInteractor.execute { robots ->
+            robotsInteractor.execute { robots ->
                 robots.find { it.id == userRobot.id }?.let { robot ->
                     configurationInteractor.configId = robot.configurationId ?: ""
                     configurationInteractor.execute { config ->

@@ -3,7 +3,6 @@ package com.revolution.robotics.features.whoToBuild
 import com.revolution.robotics.core.domain.PortMapping
 import com.revolution.robotics.core.domain.local.BuildStatus
 import com.revolution.robotics.core.domain.local.UserController
-import com.revolution.robotics.core.domain.local.UserControllerWithPrograms
 import com.revolution.robotics.core.domain.local.UserRobot
 import com.revolution.robotics.core.domain.remote.Configuration
 import com.revolution.robotics.core.domain.remote.Robot
@@ -11,7 +10,7 @@ import com.revolution.robotics.core.extensions.isEmptyOrNull
 import com.revolution.robotics.core.interactor.AssignConfigToRobotInteractor
 import com.revolution.robotics.core.interactor.SaveUserControllerInteractor
 import com.revolution.robotics.core.interactor.SaveUserRobotInteractor
-import com.revolution.robotics.core.interactor.firebase.RobotInteractor
+import com.revolution.robotics.core.interactor.firebase.RobotsInteractor
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.features.build.BuildRobotFragment
@@ -19,18 +18,16 @@ import com.revolution.robotics.features.controllers.ControllerType
 import com.revolution.robotics.features.whoToBuild.adapter.RobotsBuildYourOwnItem
 import com.revolution.robotics.features.whoToBuild.adapter.RobotsItem
 import java.util.Date
-import kotlin.collections.HashMap
 import kotlin.collections.emptyList
 import kotlin.collections.firstOrNull
 import kotlin.collections.indexOfFirst
 import kotlin.collections.isNotEmpty
 import kotlin.collections.map
-import kotlin.collections.mutableListOf
 import kotlin.collections.toMutableList
 import kotlin.math.max
 
 class WhoToBuildPresenter(
-    private val robotsInteractor: RobotInteractor,
+    private val robotsInteractor: RobotsInteractor,
     private val assignConfigToRobotInteractor: AssignConfigToRobotInteractor,
     private val saveUserRobotInteractor: SaveUserRobotInteractor,
     private val saveUserControllerInteractor: SaveUserControllerInteractor,
