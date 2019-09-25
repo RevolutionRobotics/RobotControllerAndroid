@@ -77,6 +77,8 @@ import com.revolution.robotics.features.mainmenu.settings.firmware.update.Firmwa
 import com.revolution.robotics.features.mainmenu.settings.firmware.update.FirmwareUpdateMvp
 import com.revolution.robotics.features.myRobots.MyRobotsMvp
 import com.revolution.robotics.features.myRobots.MyRobotsPresenter
+import com.revolution.robotics.features.onboarding.carby.haveyoubuilt.HaveYouBuiltCarbyMvp
+import com.revolution.robotics.features.onboarding.carby.haveyoubuilt.HaveYouBuiltCarbyPresenter
 import com.revolution.robotics.features.onboarding.userTypeSelection.UserTypeSelectionMvp
 import com.revolution.robotics.features.onboarding.userTypeSelection.UserTypeSelectionPresenter
 import com.revolution.robotics.features.play.PlayMvp
@@ -176,6 +178,7 @@ fun createPresenterModule() =
         bind<CommunityMvp.Presenter>() with s { CommunityPresenter() }
         bind<TestMvp.Presenter>() with s { TestPresenter(i(), i(), i()) }
         bind<UserTypeSelectionMvp.Presenter>() with s { UserTypeSelectionPresenter(i(), i(), i()) }
+        bind<HaveYouBuiltCarbyMvp.Presenter>() with s { HaveYouBuiltCarbyPresenter(i(), i(), i()) }
     }
 
 fun createDbModule(context: Context) =
