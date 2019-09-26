@@ -58,9 +58,6 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
         presenter.loadBuildSteps(arguments?.robot?.id ?: "")
 
         dialogEventBus.register(this)
-        if (!bluetoothManager.isServiceDiscovered) {
-            bluetoothManager.startConnectionFlow()
-        }
     }
 
     override fun goBack() {
