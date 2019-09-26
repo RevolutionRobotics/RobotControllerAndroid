@@ -38,7 +38,8 @@ class HaveYouBuiltCarbyPresenter(
                 onSuccess = { savedRobot, configuration, controllers ->
                     getControllerTypeInteractor.configurationId = savedRobot.configurationId
                     getControllerTypeInteractor.execute { type ->
-                        appPrefs.finishedOnboarding = true
+                        appPrefs.carbyBuild = true
+                        appPrefs.carbyDriven = true
                         when (type) {
                             ControllerType.GAMER ->
                                 navigator.navigate(MyRobotsFragmentDirections.toPlayGamer(savedRobot.configurationId))
@@ -56,7 +57,8 @@ class HaveYouBuiltCarbyPresenter(
 
     override fun buildCarby() {
         createCarby { userRobot ->
-            appPrefs.finishedOnboarding = true
+            appPrefs.carbyBuild = true
+            appPrefs.carbyDriven = true
             navigator.navigate(
                 HaveYouBuiltCarbyFragmentDirections.toBuildRobot(
                     userRobot
@@ -67,6 +69,8 @@ class HaveYouBuiltCarbyPresenter(
 
     override fun skipOnboarding() {
         appPrefs.finishedOnboarding = true
+        appPrefs.carbyBuild = true
+        appPrefs.carbyDriven = true
         navigator.back()
     }
 
