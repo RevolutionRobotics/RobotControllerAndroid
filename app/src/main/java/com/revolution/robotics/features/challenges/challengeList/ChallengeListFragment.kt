@@ -8,9 +8,11 @@ import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.remote.ChallengeCategory
 import com.revolution.robotics.core.extensions.withArguments
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
+import com.revolution.robotics.core.utils.AppPrefs
 import com.revolution.robotics.core.utils.BundleArgumentDelegate
 import com.revolution.robotics.databinding.FragmentChallengeListBinding
 import com.revolution.robotics.features.challenges.challengeList.adapter.ChallengeListAdapter
+import com.revolution.robotics.features.onboarding.congratulations.CongratulationsDialog
 import org.kodein.di.erased.instance
 
 class ChallengeListFragment :
@@ -30,6 +32,7 @@ class ChallengeListFragment :
     val presenter: ChallengeListMvp.Presenter by kodein.instance()
     val resourceResolver: ResourceResolver by kodein.instance()
     val adapter = ChallengeListAdapter()
+    val appPrefs: AppPrefs by kodein.instance()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -42,6 +45,10 @@ class ChallengeListFragment :
         arguments?.let { arguments ->
             binding?.toolbarViewModel?.title?.set(arguments.challenge.name?.getLocalizedString(resourceResolver) ?: "")
             presenter.setChallengeCategory(arguments.challenge)
+        }
+        if (!appPrefs.finishedOnboarding) {
+            appPrefs.finishedOnboarding = true
+            CongratulationsDialog().show(fragmentManager)
         }
     }
 

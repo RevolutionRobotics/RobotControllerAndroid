@@ -8,6 +8,7 @@ import android.view.WindowManager
 import androidx.databinding.ViewDataBinding
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
+import com.revolution.robotics.core.utils.AppPrefs
 import com.revolution.robotics.core.utils.BundleArgumentDelegate
 import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.databinding.FragmentPlayCoreBinding
@@ -26,7 +27,8 @@ abstract class PlayFragment : BaseFragment<FragmentPlayCoreBinding, PlayViewMode
 
     protected val presenter: PlayMvp.Presenter by kodein.instance()
     private val bluetoothManager: BluetoothManager by kodein.instance()
-    private val navigator: Navigator by kodein.instance()
+    protected val navigator: Navigator by kodein.instance()
+    protected val appPrefs: AppPrefs by kodein.instance()
 
     abstract fun createContentView(inflater: LayoutInflater, container: ViewGroup?)
 

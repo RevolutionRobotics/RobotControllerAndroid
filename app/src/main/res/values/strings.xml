@@ -27,6 +27,10 @@
     <string name="onboarding_skip">Skip</string>
     <string name="onboarding_have_you_built_carby">Have you already built Carby, the basic robot?</string>
     <string name="onboarding_skip_onboarding">Skip onboarding</string>
+    <string name="onboarding_ready">Ready</string>
+    <string name="onboarding_congratulations_title">Congratulations</string>
+    <string name="onboarding_congratulations_description">We have plenty of challenges that you can start now!</string>
+    <string name="onboarding_congratulations_button_label">Start</string>
 
     <!-- Main menu -->
     <string name="menu_robots">robots</string>
