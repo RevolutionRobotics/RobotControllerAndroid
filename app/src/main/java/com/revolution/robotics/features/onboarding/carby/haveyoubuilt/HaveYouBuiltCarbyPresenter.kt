@@ -2,11 +2,10 @@ package com.revolution.robotics.features.onboarding.carby.haveyoubuilt
 
 import com.revolution.robotics.core.domain.local.BuildStatus
 import com.revolution.robotics.core.domain.local.UserRobot
-import com.revolution.robotics.core.domain.remote.Configuration
-import com.revolution.robotics.core.domain.remote.Controller
 import com.revolution.robotics.core.interactor.GetControllerTypeInteractor
 import com.revolution.robotics.core.interactor.firebase.RobotInteractor
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
+import com.revolution.robotics.core.utils.AppPrefs
 import com.revolution.robotics.core.utils.CreateRobotInstanceHelper
 import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.features.build.BuildRobotFragment
@@ -21,7 +20,8 @@ class HaveYouBuiltCarbyPresenter(
     private val robotInteractor: RobotInteractor,
     private val getControllerTypeInteractor: GetControllerTypeInteractor,
     private val createRobotInstanceHelper: CreateRobotInstanceHelper,
-    private val errorHandler: ErrorHandler
+    private val errorHandler: ErrorHandler,
+    private val appPrefs: AppPrefs
 ) : HaveYouBuiltCarbyMvp.Presenter {
 
     companion object {
@@ -38,6 +38,7 @@ class HaveYouBuiltCarbyPresenter(
                 onSuccess = { savedRobot, configuration, controllers ->
                     getControllerTypeInteractor.configurationId = savedRobot.configurationId
                     getControllerTypeInteractor.execute { type ->
+                        appPrefs.finishedOnboarding = true
                         when (type) {
                             ControllerType.GAMER ->
                                 navigator.navigate(MyRobotsFragmentDirections.toPlayGamer(savedRobot.configurationId))
@@ -55,6 +56,7 @@ class HaveYouBuiltCarbyPresenter(
 
     override fun buildCarby() {
         createCarby { userRobot ->
+            appPrefs.finishedOnboarding = true
             navigator.navigate(
                 HaveYouBuiltCarbyFragmentDirections.toBuildRobot(
                     userRobot
@@ -64,7 +66,8 @@ class HaveYouBuiltCarbyPresenter(
     }
 
     override fun skipOnboarding() {
-
+        appPrefs.finishedOnboarding = true
+        navigator.back()
     }
 
     private fun createCarby(onResponse: (UserRobot) -> Unit) {

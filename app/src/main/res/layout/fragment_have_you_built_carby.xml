@@ -84,6 +84,7 @@
                 app:layout_constraintRight_toRightOf="parent"
                 android:text="@string/onboarding_skip_onboarding"
                 android:fontFamily="@font/jura_bold"
+                android:onClick="@{()->viewModel.skipOnboarding()}"
                 android:textSize="12sp"/>
 
         <View
