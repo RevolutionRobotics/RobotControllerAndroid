@@ -5,6 +5,8 @@
     <string name="cancel">Cancel</string>
     <string name="next">Next</string>
     <string name="done">Done</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 
     <!-- Force update -->
     <string name="force_update_title">Update needed</string>
@@ -23,6 +25,8 @@
     <string name="onboarding_scan_qr_title">Please scan the robot QR code</string>
     <string name="onboarding_scan_qr_description">The QR code can be found on the bottom of the Robot brain</string>
     <string name="onboarding_skip">Skip</string>
+    <string name="onboarding_have_you_built_carby">Have you already built Carby, the basic robot?</string>
+    <string name="onboarding_skip_onboarding">Skip onboarding</string>
 
     <!-- Main menu -->
     <string name="menu_robots">robots</string>

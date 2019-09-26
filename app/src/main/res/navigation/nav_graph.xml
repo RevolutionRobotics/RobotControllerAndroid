@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/nav_graph" app:startDestination="@id/mainMenuFragment">
+            xmlns:tools="http://schemas.android.com/tools" android:id="@+id/nav_graph" app:startDestination="@id/mainMenuFragment">
 
     <action android:id="@+id/toCommunity"
             app:destination="@id/communityFragment"/>
@@ -22,6 +22,8 @@
                 app:destination="@id/userTypeSelectionFragment"/>
         <action android:id="@+id/toRobotRegistration"
                 app:destination="@id/robotRegistrationFragment"/>
+        <action android:id="@+id/toHaveYouBuiltCarby"
+                app:destination="@id/haveYouBuiltCarbyFragment"/>
     </fragment>
 
     <!-- My robots -->
@@ -187,4 +189,12 @@
     <fragment android:id="@+id/robotRegistrationFragment"
               android:name="com.revolution.robotics.features.onboarding.robotRegistration.RobotRegistrationFragment"
               android:label="RobotRegistrationFragment"/>
+    <fragment android:id="@+id/haveYouBuiltCarbyFragment"
+              android:name="com.revolution.robotics.features.onboarding.carby.haveyoubuilt.HaveYouBuiltCarbyFragment"
+              android:label="HaveYouBuiltCarbyFragment">
+        <action android:id="@+id/toBuildRobot"
+                app:destination="@id/buildRobotFragment"/>
+        <action android:id="@+id/toPlayGamer"
+                app:destination="@id/playGamerFragment"/>
+    </fragment>
 </navigation>
