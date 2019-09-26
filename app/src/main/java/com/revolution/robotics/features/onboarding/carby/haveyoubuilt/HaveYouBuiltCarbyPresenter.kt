@@ -2,16 +2,26 @@ package com.revolution.robotics.features.onboarding.carby.haveyoubuilt
 
 import com.revolution.robotics.core.domain.local.BuildStatus
 import com.revolution.robotics.core.domain.local.UserRobot
+import com.revolution.robotics.core.domain.remote.Configuration
+import com.revolution.robotics.core.domain.remote.Controller
+import com.revolution.robotics.core.interactor.GetControllerTypeInteractor
 import com.revolution.robotics.core.interactor.firebase.RobotInteractor
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
+import com.revolution.robotics.core.utils.CreateRobotInstanceHelper
 import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.features.build.BuildRobotFragment
+import com.revolution.robotics.features.controllers.ControllerType
+import com.revolution.robotics.features.myRobots.MyRobotsFragmentDirections
+import com.revolution.robotics.features.shared.ErrorHandler
 import java.util.*
 
 class HaveYouBuiltCarbyPresenter(
     private val navigator: Navigator,
     private val resourceResolver: ResourceResolver,
-    private val robotInteractor: RobotInteractor
+    private val robotInteractor: RobotInteractor,
+    private val getControllerTypeInteractor: GetControllerTypeInteractor,
+    private val createRobotInstanceHelper: CreateRobotInstanceHelper,
+    private val errorHandler: ErrorHandler
 ) : HaveYouBuiltCarbyMvp.Presenter {
 
     companion object {
@@ -22,10 +32,42 @@ class HaveYouBuiltCarbyPresenter(
     override var model: HaveYouBuiltCarbyViewModel? = null
 
     override fun driveCarby() {
-
+        createCarby { userRobot ->
+            userRobot.buildStatus = BuildStatus.COMPLETED
+            createRobotInstanceHelper.setupConfigFromFirebase(userRobot,
+                onSuccess = { savedRobot, configuration, controllers ->
+                    getControllerTypeInteractor.configurationId = savedRobot.configurationId
+                    getControllerTypeInteractor.execute { type ->
+                        when (type) {
+                            ControllerType.GAMER ->
+                                navigator.navigate(MyRobotsFragmentDirections.toPlayGamer(savedRobot.configurationId))
+                            ControllerType.MULTITASKER ->
+                                navigator.navigate(MyRobotsFragmentDirections.toPlayMultitasker(savedRobot.configurationId))
+                            ControllerType.DRIVER ->
+                                navigator.navigate(MyRobotsFragmentDirections.toPlayDriver(savedRobot.configurationId))
+                        }
+                    }
+                }, onError = {
+                    errorHandler.onError()
+                })
+        }
     }
 
     override fun buildCarby() {
+        createCarby { userRobot ->
+            navigator.navigate(
+                HaveYouBuiltCarbyFragmentDirections.toBuildRobot(
+                    userRobot
+                )
+            )
+        }
+    }
+
+    override fun skipOnboarding() {
+
+    }
+
+    private fun createCarby(onResponse: (UserRobot) -> Unit) {
         robotInteractor.robotId = CARBY_ID
         robotInteractor.execute { robot ->
             val userRobot = UserRobot(
@@ -39,17 +81,7 @@ class HaveYouBuiltCarbyPresenter(
                 robot.coverImage,
                 robot.description?.getLocalizedString(resourceResolver) ?: ""
             )
-            navigator.navigate(
-                HaveYouBuiltCarbyFragmentDirections.toBuildRobot(
-                    userRobot
-                )
-            )
+            onResponse(userRobot)
         }
     }
-
-    override fun skipOnboarding() {
-
-    }
-
-
 }

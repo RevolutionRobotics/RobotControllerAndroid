@@ -21,8 +21,8 @@ class MainMenuPresenter(
             navigator.navigate(MainMenuFragmentDirections.toUserTypeSelection())
         } else if(!appPrefs.robotRegistered) {
             navigator.navigate(MainMenuFragmentDirections.toRobotRegistration())
-        } else {
-            navigator.navigate(MainMenuFragmentDirections.toHaveYouBuiltCarby())
+        } else if (!appPrefs.finishedOnboarding){
+            //navigator.navigate(MainMenuFragmentDirections.toHaveYouBuiltCarby())
         }
     }
 
@@ -39,7 +39,8 @@ class MainMenuPresenter(
     }
 
     override fun onCommunityClicked() {
-        navigator.navigate(R.id.toCommunity)
+        //navigator.navigate(R.id.toCommunity)
+        navigator.navigate(MainMenuFragmentDirections.toHaveYouBuiltCarby())
     }
 
     override fun onSettingsClicked() {
