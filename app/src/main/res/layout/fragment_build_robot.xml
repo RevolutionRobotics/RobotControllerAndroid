@@ -83,7 +83,8 @@
                 android:paddingTop="@dimen/dimen_16dp"
                 android:paddingBottom="@dimen/dimen_16dp"
                 android:paddingStart="@dimen/dimen_12dp"
-                android:paddingEnd="@dimen/dimen_12dp">
+                android:paddingEnd="@dimen/dimen_12dp"
+                app:gone="@{!safeUnbox(viewModel.hasParts)}">
 
             <ImageView
                     android:id="@+id/part_image"
@@ -120,7 +121,8 @@
                 app:layout_constraintTop_toBottomOf="@id/steps"
                 android:layout_marginTop="@dimen/dimen_2dp"
                 app:layout_constraintStart_toStartOf="@id/parts_wrapper"
-                app:layout_constraintEnd_toEndOf="@id/parts_wrapper"/>
+                app:layout_constraintEnd_toEndOf="@id/parts_wrapper"
+                app:gone="@{!safeUnbox(viewModel.hasParts)}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
