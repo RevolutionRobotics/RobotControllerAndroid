@@ -57,6 +57,7 @@ abstract class PlayFragment : BaseFragment<FragmentPlayCoreBinding, PlayViewMode
         if (!bluetoothManager.isServiceDiscovered) {
             bluetoothManager.startConnectionFlow()
         }
+        viewModel?.onboaringFinished?.value = appPrefs.finishedOnboarding
         presenter.register(this, viewModel)
     }
 
