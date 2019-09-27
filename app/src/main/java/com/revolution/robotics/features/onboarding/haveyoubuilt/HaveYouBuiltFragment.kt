@@ -1,18 +1,18 @@
-package com.revolution.robotics.features.onboarding.carby.haveyoubuilt
+package com.revolution.robotics.features.onboarding.haveyoubuilt
 
 import android.os.Bundle
 import android.view.View
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
-import com.revolution.robotics.databinding.FragmentHaveYouBuiltCarbyBinding
+import com.revolution.robotics.databinding.FragmentHaveYouBuiltBinding
 import org.kodein.di.KodeinAware
 import org.kodein.di.erased.instance
 
-class HaveYouBuiltCarbyFragment : BaseFragment<FragmentHaveYouBuiltCarbyBinding, HaveYouBuiltCarbyViewModel>(R.layout.fragment_have_you_built_carby),
-    HaveYouBuiltCarbyMvp.View {
+class HaveYouBuiltFragment : BaseFragment<FragmentHaveYouBuiltBinding, HaveYouBuiltViewModel>(R.layout.fragment_have_you_built),
+    HaveYouBuiltMvp.View {
 
-    override val viewModelClass: Class<HaveYouBuiltCarbyViewModel> = HaveYouBuiltCarbyViewModel::class.java
-    private val presenter: HaveYouBuiltCarbyMvp.Presenter by kodein.instance()
+    override val viewModelClass: Class<HaveYouBuiltViewModel> = HaveYouBuiltViewModel::class.java
+    private val presenter: HaveYouBuiltMvp.Presenter by kodein.instance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

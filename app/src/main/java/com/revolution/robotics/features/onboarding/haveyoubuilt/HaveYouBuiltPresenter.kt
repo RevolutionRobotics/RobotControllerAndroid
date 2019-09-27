@@ -1,4 +1,4 @@
-package com.revolution.robotics.features.onboarding.carby.haveyoubuilt
+package com.revolution.robotics.features.onboarding.haveyoubuilt
 
 import com.revolution.robotics.core.domain.local.BuildStatus
 import com.revolution.robotics.core.domain.local.UserRobot
@@ -14,7 +14,7 @@ import com.revolution.robotics.features.myRobots.MyRobotsFragmentDirections
 import com.revolution.robotics.features.shared.ErrorHandler
 import java.util.*
 
-class HaveYouBuiltCarbyPresenter(
+class HaveYouBuiltPresenter(
     private val navigator: Navigator,
     private val resourceResolver: ResourceResolver,
     private val robotInteractor: RobotInteractor,
@@ -22,24 +22,24 @@ class HaveYouBuiltCarbyPresenter(
     private val createRobotInstanceHelper: CreateRobotInstanceHelper,
     private val errorHandler: ErrorHandler,
     private val appPrefs: AppPrefs
-) : HaveYouBuiltCarbyMvp.Presenter {
+) : HaveYouBuiltMvp.Presenter {
 
     companion object {
-        private const val CARBY_ID: String = "2d9b67e-804e-4022-8cae-5a26071fa275"
+        private const val ROBOT_ID: String = "c92b9a90-e069-11e9-9d36-2a2ae2dbcce4"
     }
 
-    override var view: HaveYouBuiltCarbyMvp.View? = null
-    override var model: HaveYouBuiltCarbyViewModel? = null
+    override var view: HaveYouBuiltMvp.View? = null
+    override var model: HaveYouBuiltViewModel? = null
 
-    override fun driveCarby() {
-        createCarby { userRobot ->
+    override fun driveRobot() {
+        createRobot { userRobot ->
             userRobot.buildStatus = BuildStatus.COMPLETED
             createRobotInstanceHelper.setupConfigFromFirebase(userRobot,
                 onSuccess = { savedRobot, configuration, controllers ->
                     getControllerTypeInteractor.configurationId = savedRobot.configurationId
                     getControllerTypeInteractor.execute { type ->
-                        appPrefs.carbyBuild = true
-                        appPrefs.carbyDriven = true
+                        appPrefs.onboardingRobotBuild = true
+                        appPrefs.onboardingRobotDriven = true
                         when (type) {
                             ControllerType.GAMER ->
                                 navigator.navigate(MyRobotsFragmentDirections.toPlayGamer(savedRobot.configurationId))
@@ -55,27 +55,23 @@ class HaveYouBuiltCarbyPresenter(
         }
     }
 
-    override fun buildCarby() {
-        createCarby { userRobot ->
-            appPrefs.carbyBuild = true
-            appPrefs.carbyDriven = true
-            navigator.navigate(
-                HaveYouBuiltCarbyFragmentDirections.toBuildRobot(
-                    userRobot
-                )
-            )
+    override fun buildRobot() {
+        createRobot { userRobot ->
+            appPrefs.onboardingRobotBuild = true
+            appPrefs.onboardingRobotDriven = true
+            navigator.navigate(HaveYouBuiltFragmentDirections.toBuildRobot(userRobot))
         }
     }
 
     override fun skipOnboarding() {
         appPrefs.finishedOnboarding = true
-        appPrefs.carbyBuild = true
-        appPrefs.carbyDriven = true
+        appPrefs.onboardingRobotBuild = true
+        appPrefs.onboardingRobotDriven = true
         navigator.back()
     }
 
-    private fun createCarby(onResponse: (UserRobot) -> Unit) {
-        robotInteractor.robotId = CARBY_ID
+    private fun createRobot(onResponse: (UserRobot) -> Unit) {
+        robotInteractor.robotId = ROBOT_ID
         robotInteractor.execute { robot ->
             val userRobot = UserRobot(
                 0,
