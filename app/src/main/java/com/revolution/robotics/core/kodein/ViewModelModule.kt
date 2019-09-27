@@ -22,7 +22,7 @@ import com.revolution.robotics.features.mainmenu.settings.SettingsViewModel
 import com.revolution.robotics.features.mainmenu.settings.about.AboutViewModel
 import com.revolution.robotics.features.mainmenu.settings.firmware.FirmwareUpdateViewModel
 import com.revolution.robotics.features.myRobots.MyRobotsViewModel
-import com.revolution.robotics.features.onboarding.carby.haveyoubuilt.HaveYouBuiltCarbyViewModel
+import com.revolution.robotics.features.onboarding.haveyoubuilt.HaveYouBuiltViewModel
 import com.revolution.robotics.features.onboarding.robotRegistration.RobotRegistrationViewModel
 import com.revolution.robotics.features.onboarding.userTypeSelection.UserTypeSelectionViewModel
 import com.revolution.robotics.features.play.PlayViewModel
@@ -58,5 +58,5 @@ fun createViewModelModule() =
         bind<CommunityViewModel>() with p { CommunityViewModel(i()) }
         bind<UserTypeSelectionViewModel>() with p { UserTypeSelectionViewModel(i()) }
         bind<RobotRegistrationViewModel>() with p { RobotRegistrationViewModel() }
-        bind<HaveYouBuiltCarbyViewModel>() with p { HaveYouBuiltCarbyViewModel(i()) }
+        bind<HaveYouBuiltViewModel>() with p { HaveYouBuiltViewModel(i()) }
     }

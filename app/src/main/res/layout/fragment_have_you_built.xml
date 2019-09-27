@@ -6,7 +6,7 @@
 
     <data>
         <variable name="viewModel"
-                    type="com.revolution.robotics.features.onboarding.carby.haveyoubuilt.HaveYouBuiltCarbyViewModel"/>
+                    type="com.revolution.robotics.features.onboarding.haveyoubuilt.HaveYouBuiltViewModel"/>
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/root"
@@ -24,7 +24,7 @@
 
         <ImageView
                 app:layout_constraintHorizontal_chainStyle="packed"
-                android:id="@+id/carby_image"
+                android:id="@+id/robot_image"
                 app:layout_constraintTop_toTopOf="@id/half"
                 app:layout_constraintBottom_toBottomOf="@id/half"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -40,9 +40,9 @@
                 app:layout_constraintHorizontal_chainStyle="packed"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="@id/half"
-                app:layout_constraintLeft_toRightOf="@id/carby_image"
+                app:layout_constraintLeft_toRightOf="@id/robot_image"
                 app:layout_constraintRight_toRightOf="parent"
-                android:text="@string/onboarding_have_you_built_carby"
+                android:text="@string/onboarding_have_you_built_robot"
                 android:layout_marginLeft="24dp"
                 android:fontFamily="@font/jura_bold"
                 android:textSize="23sp"/>
@@ -54,10 +54,10 @@
                 android:layout_height="@dimen/robotics_button_height"
                 android:layout_margin="@dimen/dimen_4dp"
                 app:text="@{@string/yes}"
-                app:layout_constraintBottom_toBottomOf="@id/carby_image"
+                app:layout_constraintBottom_toBottomOf="@id/robot_image"
                 app:layout_constraintLeft_toLeftOf="@id/title"
                 app:layout_constraintRight_toLeftOf="@id/btn_no"
-                android:onClick="@{()->viewModel.driveCarby()}"
+                android:onClick="@{()->viewModel.driveRobot()}"
                 app:image="@{@drawable/ic_check}"/>
 
         <com.revolution.robotics.views.RoboticsButton
@@ -67,10 +67,10 @@
                 android:layout_height="@dimen/robotics_button_height"
                 android:layout_margin="@dimen/dimen_4dp"
                 app:text="@{@string/no}"
-                app:layout_constraintBottom_toBottomOf="@id/carby_image"
+                app:layout_constraintBottom_toBottomOf="@id/robot_image"
                 app:layout_constraintRight_toRightOf="@id/title"
                 app:layout_constraintLeft_toRightOf="@id/btn_yes"
-                android:onClick="@{()->viewModel.buildCarby()}"
+                android:onClick="@{()->viewModel.buildRobot()}"
                 app:image="@{@drawable/ic_close}"/>
 
         <TextView

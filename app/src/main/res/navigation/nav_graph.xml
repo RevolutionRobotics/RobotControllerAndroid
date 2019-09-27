@@ -193,7 +193,7 @@
               android:name="com.revolution.robotics.features.onboarding.robotRegistration.RobotRegistrationFragment"
               android:label="RobotRegistrationFragment"/>
     <fragment android:id="@+id/haveYouBuiltCarbyFragment"
-              android:name="com.revolution.robotics.features.onboarding.carby.haveyoubuilt.HaveYouBuiltCarbyFragment"
+              android:name="com.revolution.robotics.features.onboarding.haveyoubuilt.HaveYouBuiltFragment"
               android:label="HaveYouBuiltCarbyFragment">
         <action android:id="@+id/toBuildRobot"
                 app:destination="@id/buildRobotFragment"/>

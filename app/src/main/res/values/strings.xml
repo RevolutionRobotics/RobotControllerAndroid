@@ -25,7 +25,7 @@
     <string name="onboarding_scan_qr_title">Please scan the robot QR code</string>
     <string name="onboarding_scan_qr_description">The QR code can be found on the bottom of the Robot brain</string>
     <string name="onboarding_skip">Skip</string>
-    <string name="onboarding_have_you_built_carby">Have you already built Carby, the basic robot?</string>
+    <string name="onboarding_have_you_built_robot">Have you already built Revvy, the basic robot?</string>
     <string name="onboarding_skip_onboarding">Skip onboarding</string>
     <string name="onboarding_ready">Ready</string>
     <string name="onboarding_congratulations_title">Congratulations</string>
