@@ -121,7 +121,8 @@
                 app:layout_constraintStart_toStartOf="@id/vertical_guide"
                 app:layout_constraintBottom_toBottomOf="@id/horizontal_guide"
                 app:text="@{@string/onboarding_ready}"
-                app:image="@{@drawable/ic_play}"/>
+                app:image="@{@drawable/ic_play}"
+                app:gone="@{safeUnbox(viewModel.onboaringFinished)}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
