@@ -20,10 +20,10 @@ class ChallengeListFragment :
     ChallengeListMvp.View {
 
     companion object {
-        private var Bundle.challenge: ChallengeCategory by BundleArgumentDelegate.Parcelable("challenge")
+        private var Bundle.challengeCategoryId: String by BundleArgumentDelegate.String("challengeCategoryId")
 
-        fun newInstance(challenge: ChallengeCategory) = ChallengeListFragment().withArguments {
-            it.challenge = challenge
+        fun newInstance(challengeCategoryId: String) = ChallengeListFragment().withArguments {
+            it.challengeCategoryId = challengeCategoryId
         }
     }
 
@@ -42,9 +42,12 @@ class ChallengeListFragment :
         }
         presenter.register(this, viewModel)
         arguments?.let { arguments ->
-            binding?.toolbarViewModel?.title?.set(arguments.challenge.name?.getLocalizedString(resourceResolver) ?: "")
-            presenter.setChallengeCategory(arguments.challenge)
+            presenter.loadChallangeCategory(arguments.challengeCategoryId)
         }
+    }
+
+    override fun displayChallengeCategory(challengeCategory: ChallengeCategory) {
+        binding?.toolbarViewModel?.title?.set(challengeCategory.name?.getLocalizedString(resourceResolver) ?: "")
     }
 
     override fun onDestroyView() {
