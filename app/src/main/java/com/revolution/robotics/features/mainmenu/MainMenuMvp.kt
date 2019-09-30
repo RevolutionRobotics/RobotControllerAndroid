@@ -10,6 +10,7 @@ interface MainMenuMvp : Mvp {
         fun showDialog(baseDialog: BaseDialog)
         fun removeTutorialLayout()
         fun createTutorialLayout(tutorialViewModel: TutorialViewModel)
+        fun showCongratulationsDialog()
     }
 
     interface Presenter : Mvp.Presenter<View, MainMenuViewModel> {

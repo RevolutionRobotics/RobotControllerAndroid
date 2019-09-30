@@ -1,9 +1,12 @@
 package com.revolution.robotics.features.mainmenu
 
 import com.revolution.robotics.R
+import com.revolution.robotics.core.interactor.firebase.ChallengeCategoriesInteractor
 import com.revolution.robotics.core.utils.AppPrefs
 import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.features.mainmenu.tutorial.TutorialViewModel
+import com.revolution.robotics.features.onboarding.congratulations.CongratulationsDialog
+import com.revolution.robotics.features.play.instances.PlayGamerFragmentDirections
 
 class MainMenuPresenter(
     private val navigator: Navigator,
@@ -19,10 +22,15 @@ class MainMenuPresenter(
         super.register(view, model)
         if (!appPrefs.userTypeSelected) {
             navigator.navigate(MainMenuFragmentDirections.toUserTypeSelection())
-        } else if(!appPrefs.robotRegistered) {
+        } else if (!appPrefs.robotRegistered) {
             navigator.navigate(MainMenuFragmentDirections.toRobotRegistration())
-        } else if (!appPrefs.finishedOnboarding){
-            navigator.navigate(MainMenuFragmentDirections.toHaveYouBuiltCarby())
+        } else if (!appPrefs.finishedOnboarding) {
+            if (!appPrefs.onboardingRobotBuild) {
+                navigator.navigate(MainMenuFragmentDirections.toHaveYouBuiltCarby())
+            } else {
+                appPrefs.finishedOnboarding = true
+                view.showCongratulationsDialog()
+            }
         }
     }
 

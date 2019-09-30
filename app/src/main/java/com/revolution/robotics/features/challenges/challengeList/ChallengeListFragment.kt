@@ -32,7 +32,6 @@ class ChallengeListFragment :
     val presenter: ChallengeListMvp.Presenter by kodein.instance()
     val resourceResolver: ResourceResolver by kodein.instance()
     val adapter = ChallengeListAdapter()
-    val appPrefs: AppPrefs by kodein.instance()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -45,10 +44,6 @@ class ChallengeListFragment :
         arguments?.let { arguments ->
             binding?.toolbarViewModel?.title?.set(arguments.challenge.name?.getLocalizedString(resourceResolver) ?: "")
             presenter.setChallengeCategory(arguments.challenge)
-        }
-        if (!appPrefs.finishedOnboarding) {
-            appPrefs.finishedOnboarding = true
-            CongratulationsDialog().show(fragmentManager)
         }
     }
 

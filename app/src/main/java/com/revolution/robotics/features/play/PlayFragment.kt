@@ -101,4 +101,13 @@ abstract class PlayFragment : BaseFragment<FragmentPlayCoreBinding, PlayViewMode
     private fun uploadConfiguration() {
         arguments?.configId?.let { presenter.loadConfiguration(it) }
     }
+
+    override fun onBackPressed(): Boolean {
+        return if (appPrefs.finishedOnboarding) {
+            super.onBackPressed()
+        } else {
+            navigator.popUntil(R.id.mainMenuFragment)
+            true
+        }
+    }
 }
