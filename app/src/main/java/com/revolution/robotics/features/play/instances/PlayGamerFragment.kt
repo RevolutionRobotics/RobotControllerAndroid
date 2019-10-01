@@ -15,22 +15,11 @@ class PlayGamerFragment : PlayFragment(), JoystickView.JoystickEventListener {
     override val reverseXAxis: Boolean = false
 
     private lateinit var contentBinding: FragmentPlayGamerBinding
-    private val challengeCategoriesInteractor: ChallengeCategoriesInteractor by kodein.instance()
 
     override fun createContentView(inflater: LayoutInflater, container: ViewGroup?) {
         contentBinding = FragmentPlayGamerBinding.inflate(inflater, container, true)
         contentBinding.viewModel = viewModel
         contentBinding.joystick.listener = this
-        contentBinding.btnOnboardingReady.setOnClickListener {goToChallenges()
-        }
-    }
-
-    private fun goToChallenges() {
-        challengeCategoriesInteractor.execute { challengeCategories ->
-            challengeCategories.find { it.id == "ef504b31-d64f-4bfb-bd4b-5b96a9a0489f" }?.let {
-                navigator.navigate(PlayGamerFragmentDirections.toChallangeList(it))
-            }
-        }
     }
 
     override fun getContentBinding() = contentBinding
