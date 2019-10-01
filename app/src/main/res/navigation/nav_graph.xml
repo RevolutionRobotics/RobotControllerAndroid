@@ -24,6 +24,8 @@
                 app:destination="@id/robotRegistrationFragment"/>
         <action android:id="@+id/toHaveYouBuiltCarby"
                 app:destination="@id/haveYouBuiltCarbyFragment"/>
+        <action android:id="@+id/toChallangeList"
+                app:destination="@id/challengeListFragment"/>
     </fragment>
 
     <!-- My robots -->
