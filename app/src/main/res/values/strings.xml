@@ -396,6 +396,10 @@
     <string name="dialog_load_program_confirm_description">All your unsaved changes will be lost</string>
     <string name="dialog_load_program_confirm_button_negative">Discard changes</string>
     <string name="framework_stop_confirmation_title">Would you like to cancel the firmware update?</string>
+    <string name="dialog_new_program_confirm_button_positive">Save and create</string>
+    <string name="dialog_new_program_confirm_title">Would you like to create a new program?</string>
+    <string name="dialog_new_program_confirm_description">All your unsaved changes will be lost</string>
+    <string name="dialog_new_program_confirm_button_negative">Discard changes</string>
     <string name="framework_confirmation_dialog_yes_button">Yes</string>
     <string name="framework_confirmation_dialog_no_button">No</string>
     <string name="program_leave_confirmation_dialog_leave_button">Leave</string>

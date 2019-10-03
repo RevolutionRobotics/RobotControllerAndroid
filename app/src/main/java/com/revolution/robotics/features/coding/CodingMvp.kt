@@ -21,9 +21,10 @@ interface CodingMvp : Mvp {
         fun showProgramsDialog()
         fun showSaveProgramDialog(userProgram: UserProgram?, actionIdAfterSave: Int)
         fun setSavedProgramData(userProgram: UserProgram, actionId: Int)
-        fun newProgram()
+        fun showNewProgramDialog()
         fun removeProgram(userProgram: UserProgram)
         fun loadProgram(userProgram: UserProgram)
+        fun createNewProgram()
         fun showPythonCode()
         fun onBackPressed()
     }

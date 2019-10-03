@@ -18,7 +18,7 @@
                 android:scaleType="centerInside"
                 android:padding="@dimen/dimen_8dp"
                 android:src="@drawable/ic_new_program"
-                android:onClick="@{() -> viewModel.newProgram()}"
+                android:onClick="@{() -> viewModel.showNewProgramDialog()()}"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginTop="@dimen/dimen_8dp"

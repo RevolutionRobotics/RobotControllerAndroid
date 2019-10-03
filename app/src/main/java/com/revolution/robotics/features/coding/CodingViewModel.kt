@@ -19,7 +19,7 @@ class CodingViewModel(private val resourceResolver: ResourceResolver, private va
 
     fun showProgramsDialog() = presenter.showProgramsDialog()
 
-    fun newProgram() = presenter.newProgram()
+    fun showNewProgramDialog() = presenter.showNewProgramDialog()
 
     fun saveProgram() = presenter.showSaveProgramDialog(userProgram, -1)
 
