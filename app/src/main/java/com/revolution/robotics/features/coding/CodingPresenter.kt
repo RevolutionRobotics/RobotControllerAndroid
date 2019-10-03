@@ -33,6 +33,12 @@ class CodingPresenter(
     private var xmlSaved = false
     private var variablesSaved = false
 
+    override fun newProgram() {
+        model?.userProgram = null
+        model?.resetProgramName()
+        view?.clearBlocklyWorkspace()
+    }
+
     override fun loadProgram(userProgram: UserProgram) {
         model?.userProgram = userProgram
         model?.programName?.set(userProgram.name)
