@@ -6,6 +6,7 @@ import com.revolution.robotics.core.domain.local.UserProgram
 import com.revolution.robotics.core.interactor.RemoveUserProgramInteractor
 import com.revolution.robotics.core.interactor.SaveUserProgramInteractor
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
+import com.revolution.robotics.features.coding.new.NewProgramConfirmDialog
 import com.revolution.robotics.features.coding.programs.ProgramsDialog
 import com.revolution.robotics.features.coding.python.PythonDialog
 import com.revolution.robotics.features.coding.saveProgram.SaveProgramDialog
@@ -33,12 +34,22 @@ class CodingPresenter(
     private var xmlSaved = false
     private var variablesSaved = false
 
+    override fun showNewProgramDialog() {
+        view?.showDialog(NewProgramConfirmDialog.newInstance())
+    }
+
     override fun loadProgram(userProgram: UserProgram) {
         model?.userProgram = userProgram
         model?.programName?.set(userProgram.name)
         userProgram.xml?.let { xmlFile ->
             view?.loadProgramIntoTheBlockly(String(Base64.decode(xmlFile, Base64.NO_WRAP)))
         }
+    }
+
+    override fun createNewProgram() {
+        model?.userProgram = null
+        model?.resetProgramName()
+        view?.clearBlocklyWorkspace()
     }
 
     override fun showProgramsDialog() {
@@ -129,6 +140,7 @@ class CodingPresenter(
         when (actionId) {
             CodingFragment.ACTION_ID_LEAVE -> view?.onBackPressed(false)
             CodingFragment.ACTION_ID_LOAD_PROGRAMS -> view?.showDialog(ProgramsDialog.newInstance())
+            CodingFragment.ACTION_ID_CREATE_NEW_PROGRAM -> createNewProgram()
         }
     }
 

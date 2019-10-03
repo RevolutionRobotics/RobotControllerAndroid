@@ -34,6 +34,7 @@ class CodingFragment : BaseFragment<FragmentCodingBinding, CodingViewModel>(R.la
         const val KEY_ACTION_ID_AFTER_SAVE = "actionId"
         const val ACTION_ID_LEAVE = 1
         const val ACTION_ID_LOAD_PROGRAMS = 2
+        const val ACTION_ID_CREATE_NEW_PROGRAM = 3
 
         private var Bundle.program by BundleArgumentDelegate.ParcelableNullable<UserProgram>("program")
     }
@@ -149,6 +150,11 @@ class CodingFragment : BaseFragment<FragmentCodingBinding, CodingViewModel>(R.la
             DialogEvent.PROGRAM_CONFIRM_LOAD_WITHOUT_SAVE -> showDialog(
                 ProgramsDialog.newInstance()
             )
+            DialogEvent.PROGRAM_CONFIRM_CREATE_NEW_WITH_SAVE -> presenter.showSaveProgramDialog(
+                viewModel?.userProgram,
+                ACTION_ID_CREATE_NEW_PROGRAM
+            )
+            DialogEvent.PROGRAM_CONFIRM_CREATE_NEW_WITHOUT_SAVE -> presenter.createNewProgram()
             DialogEvent.PROGRAM_CONFIRM_CLOSE_WITHOUT_SAVE -> onBackPressed(false)
             else -> Unit
         }
