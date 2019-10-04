@@ -62,7 +62,7 @@ class ButtonlessProgramSelectorFragment :
     override fun onDialogEvent(event: DialogEvent) {
         if (event == DialogEvent.EDIT_PROGRAM) {
             val program = event.extras.getParcelable<UserProgram>(ProgramDialog.KEY_PROGRAM)
-            navigator.navigate(ButtonlessProgramSelectorFragmentDirections.toCoding(program))
+            navigator.navigate(ButtonlessProgramSelectorFragmentDirections.toCoding(program, true))
         }
     }
 

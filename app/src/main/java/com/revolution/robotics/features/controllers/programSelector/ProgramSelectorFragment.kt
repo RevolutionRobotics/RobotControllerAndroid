@@ -66,7 +66,7 @@ class ProgramSelectorFragment :
         if (event == DialogEvent.ADD_PROGRAM) {
             presenter.addProgram(event.program())
         } else if (event == DialogEvent.EDIT_PROGRAM) {
-            navigator.navigate(ProgramSelectorFragmentDirections.toCoding(event.program()))
+            navigator.navigate(ProgramSelectorFragmentDirections.toCoding(event.program(), true))
         }
     }
 

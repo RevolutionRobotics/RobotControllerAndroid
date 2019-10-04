@@ -138,7 +138,7 @@ class ConfigureControllerFragment :
     }
 
     override fun navigateToEditProgram(userProgram: UserProgram?) {
-        userProgram?.let { navigator.navigate(ConfigureFragmentDirections.toCoding(it)) }
+        userProgram?.let { navigator.navigate(ConfigureFragmentDirections.toCoding(it, true)) }
     }
 
     private fun DialogEvent.program() =
