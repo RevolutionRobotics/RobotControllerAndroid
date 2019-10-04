@@ -37,6 +37,7 @@ class CodingFragment : BaseFragment<FragmentCodingBinding, CodingViewModel>(R.la
         const val ACTION_ID_CREATE_NEW_PROGRAM = 3
 
         private var Bundle.program by BundleArgumentDelegate.ParcelableNullable<UserProgram>("program")
+        private var Bundle.isInEditMode by BundleArgumentDelegate.Boolean("edit_mode")
     }
 
     override val viewModelClass: Class<CodingViewModel> = CodingViewModel::class.java
@@ -53,7 +54,7 @@ class CodingFragment : BaseFragment<FragmentCodingBinding, CodingViewModel>(R.la
                 .chipSize(R.dimen.dimen_12dp)
                 .backgroundColorResource(R.color.grey_28)
                 .create()
-            viewModel?.isInEditMode?.set(arguments?.program != null)
+            viewModel?.isInEditMode?.set(arguments?.isInEditMode ?: false)
         }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

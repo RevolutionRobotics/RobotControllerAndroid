@@ -6,6 +6,7 @@ import com.revolution.robotics.core.domain.local.UserProgram
 import com.revolution.robotics.core.interactor.RemoveUserProgramInteractor
 import com.revolution.robotics.core.interactor.SaveUserProgramInteractor
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
+import com.revolution.robotics.core.utils.AppPrefs
 import com.revolution.robotics.features.coding.new.NewProgramConfirmDialog
 import com.revolution.robotics.features.coding.programs.ProgramsDialog
 import com.revolution.robotics.features.coding.python.PythonDialog
@@ -17,7 +18,8 @@ import java.util.concurrent.TimeUnit
 class CodingPresenter(
     private val removeUserProgramInteractor: RemoveUserProgramInteractor,
     private val saveUserProgramInteractor: SaveUserProgramInteractor,
-    private val resourceResolver: ResourceResolver
+    private val resourceResolver: ResourceResolver,
+    private val appPrefs: AppPrefs
 ) : CodingMvp.Presenter {
 
     companion object {
@@ -42,6 +44,7 @@ class CodingPresenter(
         model?.userProgram = userProgram
         model?.programName?.set(userProgram.name)
         userProgram.xml?.let { xmlFile ->
+            appPrefs.lastOpenedProgram = userProgram.name
             view?.loadProgramIntoTheBlockly(String(Base64.decode(xmlFile, Base64.NO_WRAP)))
         }
     }
