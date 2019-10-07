@@ -38,6 +38,6 @@ class ChallengeGroupPresenter(
     }
 
     override fun onItemClicked(challenge: ChallengeCategory) {
-        navigator.navigate(ChallengeGroupFragmentDirections.toChallengeList(challenge))
+        navigator.navigate(ChallengeGroupFragmentDirections.toChallengeList(challenge.id?:""))
     }
 }

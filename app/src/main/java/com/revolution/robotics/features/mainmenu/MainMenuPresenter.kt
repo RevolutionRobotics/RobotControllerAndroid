@@ -1,15 +1,18 @@
 package com.revolution.robotics.features.mainmenu
 
 import com.revolution.robotics.R
-import com.revolution.robotics.core.kodein.utils.ResourceResolver
+import com.revolution.robotics.core.interactor.GetUserProgramInteractor
+import com.revolution.robotics.core.interactor.firebase.ChallengeCategoriesInteractor
 import com.revolution.robotics.core.utils.AppPrefs
 import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.features.mainmenu.tutorial.TutorialViewModel
+import com.revolution.robotics.features.onboarding.congratulations.CongratulationsDialog
+import com.revolution.robotics.features.play.instances.PlayGamerFragmentDirections
 
 class MainMenuPresenter(
+    private val userProgramInteractor: GetUserProgramInteractor,
     private val navigator: Navigator,
-    private val appPrefs: AppPrefs,
-    private val resourceResolver: ResourceResolver
+    private val appPrefs: AppPrefs
 ) : MainMenuMvp.Presenter {
 
     override var view: MainMenuMvp.View? = null
@@ -19,9 +22,16 @@ class MainMenuPresenter(
 
     override fun register(view: MainMenuMvp.View, model: MainMenuViewModel?) {
         super.register(view, model)
-        if (appPrefs.showTutorial) {
-            tutorialViewModel = TutorialViewModel(resourceResolver, this).apply {
-                view.createTutorialLayout(this)
+        if (!appPrefs.userTypeSelected) {
+            navigator.navigate(MainMenuFragmentDirections.toUserTypeSelection())
+        } else if (!appPrefs.robotRegistered) {
+            navigator.navigate(MainMenuFragmentDirections.toRobotRegistration())
+        } else if (!appPrefs.finishedOnboarding) {
+            if (!appPrefs.onboardingRobotBuild) {
+                navigator.navigate(MainMenuFragmentDirections.toHaveYouBuiltCarby())
+            } else {
+                appPrefs.finishedOnboarding = true
+                view.showCongratulationsDialog()
             }
         }
     }
@@ -31,7 +41,10 @@ class MainMenuPresenter(
     }
 
     override fun navigateToCoding() {
-        navigator.navigate(MainMenuFragmentDirections.toCoding())
+        userProgramInteractor.name = appPrefs.lastOpenedProgram
+        userProgramInteractor.execute {
+            navigator.navigate(MainMenuFragmentDirections.toCoding(it, false))
+        }
     }
 
     override fun navigateToChallengeList() {

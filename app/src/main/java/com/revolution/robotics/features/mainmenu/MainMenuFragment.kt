@@ -9,6 +9,7 @@ import com.revolution.robotics.core.extensions.views
 import com.revolution.robotics.databinding.FragmentMainMenuBinding
 import com.revolution.robotics.databinding.LayoutTutorialBinding
 import com.revolution.robotics.features.mainmenu.tutorial.TutorialViewModel
+import com.revolution.robotics.features.onboarding.congratulations.CongratulationsDialog
 import org.kodein.di.erased.instance
 
 class MainMenuFragment : BaseFragment<FragmentMainMenuBinding, MainMenuViewModel>(R.layout.fragment_main_menu),
@@ -37,6 +38,10 @@ class MainMenuFragment : BaseFragment<FragmentMainMenuBinding, MainMenuViewModel
         tutorialBinding =
             LayoutTutorialBinding.inflate(LayoutInflater.from(context), binding?.constraintMainMenu, true)
         tutorialBinding?.tutorialViewModel = tutorialViewModel
+    }
+
+    override fun showCongratulationsDialog() {
+        CongratulationsDialog().show(fragmentManager)
     }
 
     override fun onDestroyView() {

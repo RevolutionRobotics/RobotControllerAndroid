@@ -26,16 +26,16 @@ class ConfigurationDrawerLayout @JvmOverloads constructor(context: Context, attr
         LayoutInflater.from(context).inflate(R.layout.drawer_sliding_layout, this)
     }
 
-    fun setMotor(motor: Motor, portName: String) {
+    fun setMotor(configId: Int, motor: Motor, portName: String) {
         (context as FragmentActivity).supportFragmentManager.beginTransaction()
-            .replace(R.id.container_motor_configuration, MotorConfigurationFragment.newInstance(motor, portName))
+            .replace(R.id.container_motor_configuration, MotorConfigurationFragment.newInstance(configId, motor, portName))
             .commitAllowingStateLoss()
         openDrawer(GravityCompat.END, true)
     }
 
-    fun setSensor(sensor: Sensor, portName: String) {
+    fun setSensor(configId: Int, sensor: Sensor, portName: String) {
         (context as FragmentActivity).supportFragmentManager.beginTransaction()
-            .replace(R.id.container_sensor_configuration, SensorConfigurationFragment.newInstance(sensor, portName))
+            .replace(R.id.container_sensor_configuration, SensorConfigurationFragment.newInstance(configId, sensor, portName))
             .commitAllowingStateLoss()
         openDrawer(GravityCompat.START, true)
     }

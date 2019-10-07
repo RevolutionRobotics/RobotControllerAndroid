@@ -41,10 +41,10 @@ class Converters {
 
     // BuildStatus
     @TypeConverter
-    fun toBuildStatus(buildStatus: Int): BuildStatus = BuildStatus.values()[buildStatus]
+    fun toBuildStatus(buildStatus: String): BuildStatus = BuildStatus.valueOf(buildStatus)
 
     @TypeConverter
-    fun fromBuildStatus(buildStatus: BuildStatus): Int = buildStatus.ordinal
+    fun fromBuildStatus(buildStatus: BuildStatus): String = buildStatus.name
 
     // Variables list
     @TypeConverter

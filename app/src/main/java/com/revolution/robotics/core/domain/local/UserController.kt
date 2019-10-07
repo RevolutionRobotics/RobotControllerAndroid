@@ -11,6 +11,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.PrimaryKey
 import androidx.room.Query
 import androidx.room.Update
+import com.revolution.robotics.features.configure.controller.ControllerButton
 import kotlinx.android.parcel.Parcelize
 
 @Entity(
@@ -39,6 +40,8 @@ data class UserController(
 
     fun getMappingList() = listOf(mapping?.b1, mapping?.b2, mapping?.b3, mapping?.b4, mapping?.b5, mapping?.b6)
 
+    fun getBoundButtonPrograms() = getMappingList().filterNotNull()
+
     fun removeProgramMapping(programName: String) {
         if (mapping?.b1?.programName == programName) {
             mapping?.b1 = null
@@ -59,6 +62,37 @@ data class UserController(
             mapping?.b6 = null
         }
     }
+
+    fun addButtonProgram(userProgram: UserProgram, buttonName: ControllerButton) {
+        when (buttonName) {
+            ControllerButton.B1 -> mapping?.b1 = UserProgramBinding(0, id, userProgram.name, nextPriority())
+            ControllerButton.B2 -> mapping?.b2 = UserProgramBinding(0, id, userProgram.name, nextPriority())
+            ControllerButton.B3 -> mapping?.b3 = UserProgramBinding(0, id, userProgram.name, nextPriority())
+            ControllerButton.B4 -> mapping?.b4 = UserProgramBinding(0, id, userProgram.name, nextPriority())
+            ControllerButton.B5 -> mapping?.b5 = UserProgramBinding(0, id, userProgram.name, nextPriority())
+            ControllerButton.B6 -> mapping?.b6 = UserProgramBinding(0, id, userProgram.name, nextPriority())
+        }
+    }
+
+    fun removeButtonProgram(buttonName: ControllerButton) {
+        when (buttonName) {
+            ControllerButton.B1 -> mapping?.b1 = null
+            ControllerButton.B2 -> mapping?.b2 = null
+            ControllerButton.B3 -> mapping?.b3 = null
+            ControllerButton.B4 -> mapping?.b4 = null
+            ControllerButton.B5 -> mapping?.b5 = null
+            ControllerButton.B6 -> mapping?.b6 = null
+        }
+    }
+
+    private fun nextPriority() = (listOfNotNull(
+        mapping?.b1?.priority,
+        mapping?.b2?.priority,
+        mapping?.b3?.priority,
+        mapping?.b4?.priority,
+        mapping?.b5?.priority,
+        mapping?.b6?.priority
+    ).max() ?: 0) + 1
 }
 
 @Dao
@@ -70,8 +104,8 @@ interface UserControllerDao {
     @Query("SELECT * FROM UserController WHERE id=:id")
     fun getUserController(id: Int): UserController?
 
-    @Query("SELECT * FROM UserController WHERE robotId=:robotId ORDER BY lastModified DESC")
-    fun getUserControllersForRobot(robotId: Int): List<UserController>
+    @Query("SELECT * FROM UserController WHERE robotId=:robotId")
+    fun getUserControllerForRobot(robotId: Int): UserController?
 
     @Insert(onConflict = OnConflictStrategy.ABORT)
     fun saveUserController(userController: UserController): Long

@@ -1,21 +1,24 @@
 package com.revolution.robotics.features.controllers.buttonless
 
 import com.revolution.robotics.R
+import com.revolution.robotics.core.domain.local.UserConfiguration
+import com.revolution.robotics.core.domain.local.UserControllerWithPrograms
 import com.revolution.robotics.core.domain.local.UserProgram
+import com.revolution.robotics.core.interactor.GetFullConfigurationInteractor
 import com.revolution.robotics.core.interactor.GetUserProgramsInteractor
-import com.revolution.robotics.core.utils.Navigator
-import com.revolution.robotics.features.configure.UserConfigurationStorage
+import com.revolution.robotics.core.interactor.SaveUserControllerInteractor
 import com.revolution.robotics.features.configure.controller.CompatibleProgramFilterer
 import com.revolution.robotics.features.controllers.ProgramOrderingHandler
 import com.revolution.robotics.features.controllers.buttonless.adapter.ButtonlessProgramViewModel
+import com.revolution.robotics.features.play.FullControllerData
 import kotlin.collections.set
 
 @Suppress("TooManyFunctions")
 class ButtonlessProgramSelectorPresenter(
+    private val getFullConfigurationInteractor: GetFullConfigurationInteractor,
     private val getUserProgramsInteractor: GetUserProgramsInteractor,
-    private val compatibleProgramFilterer: CompatibleProgramFilterer,
-    private val navigator: Navigator,
-    private val userConfigurationStorage: UserConfigurationStorage
+    private val saveUserControllerInteractor: SaveUserControllerInteractor,
+    private val compatibleProgramFilterer: CompatibleProgramFilterer
 ) : ButtonlessProgramSelectorMvp.Presenter {
 
     companion object {
@@ -25,6 +28,7 @@ class ButtonlessProgramSelectorPresenter(
     override var view: ButtonlessProgramSelectorMvp.View? = null
     override var model: ButtonlessProgramSelectorViewModel? = null
 
+    private var userConfiguration: UserConfiguration? = null
     private var allPrograms: List<ButtonlessProgramViewModel>? = null
     private var programs: MutableList<ButtonlessProgramViewModel> = mutableListOf()
     private var onlyShowCompatiblePrograms: Boolean? = null
@@ -34,7 +38,10 @@ class ButtonlessProgramSelectorPresenter(
         if (onlyShowCompatiblePrograms == null) {
             setShowOnlyCompatiblePrograms(SHOW_COMPATIBLE_PROGRAMS_ONLY_BY_DEFAULT)
         }
-        loadPrograms()
+    }
+
+    override fun load(userConfigurationId: Int) {
+        loadPrograms(userConfigurationId)
     }
 
     override fun clearSelections() {
@@ -45,30 +52,33 @@ class ButtonlessProgramSelectorPresenter(
         programs.clear()
     }
 
-    private fun loadPrograms() {
-        if (allPrograms != null) {
-            return
+    private fun loadPrograms(configId: Int) {
+        getFullConfigurationInteractor.userConfigId = configId
+        getFullConfigurationInteractor.execute { fullControllerData ->
+            userConfiguration = fullControllerData.userConfiguration
+            getUserProgramsInteractor.execute { userPrograms ->
+                val boundPrograms =
+                    fullControllerData.controller?.userController?.getBoundButtonPrograms() ?: emptyList()
+                allPrograms = userPrograms.filter { program ->
+                    boundPrograms.find { it.programName == program.name } == null
+                }.map { userProgram ->
+                    ButtonlessProgramViewModel(userProgram, this).apply {
+                        selected.set(fullControllerData.controller?.backgroundBindings?.find
+                        { it.programId == userProgram.name } != null && compatibleProgramFilterer.isProgramCompatible(
+                            userProgram,
+                            fullControllerData.userConfiguration
+                        ))
+                        enabled.set(compatibleProgramFilterer.isProgramCompatible(userProgram, userConfiguration))
+                    }
+                }.apply {
+                    programs.clear()
+                    programs.addAll(this)
+                }
+                orderAndFilterPrograms()
+                setOrderingIcons()
+            }
         }
 
-        getUserProgramsInteractor.execute { result ->
-            val boundPrograms = userConfigurationStorage.getBoundButtonPrograms()
-            allPrograms = result.filter { program ->
-                boundPrograms.find { it.programName == program.name } == null
-            }.map { userProgram ->
-                ButtonlessProgramViewModel(userProgram, this).apply {
-                    selected.set(userConfigurationStorage.controllerHolder?.backgroundBindings?.find
-                    { it.programId == userProgram.name } != null && compatibleProgramFilterer.isProgramCompatible(
-                        userProgram
-                    ))
-                    enabled.set(compatibleProgramFilterer.isProgramCompatible(userProgram))
-                }
-            }.apply {
-                programs.clear()
-                programs.addAll(this)
-            }
-            orderAndFilterPrograms()
-            setOrderingIcons()
-        }
     }
 
     private fun setShowOnlyCompatiblePrograms(onlyCompatible: Boolean) {
@@ -118,7 +128,9 @@ class ButtonlessProgramSelectorPresenter(
         model?.let { model ->
             val filteredPrograms =
                 if (onlyShowCompatiblePrograms == true) {
-                    programs.filter { compatibleProgramFilterer.isProgramCompatible(it.program) }
+                    programs.filter {
+                        compatibleProgramFilterer.isProgramCompatible(it.program, userConfiguration)
+                    }
                 } else {
                     allPrograms ?: emptyList()
                 }
@@ -135,6 +147,7 @@ class ButtonlessProgramSelectorPresenter(
                 }
             )
         }
+
     }
 
     override fun onShowCompatibleProgramsButtonClicked() {
@@ -144,48 +157,78 @@ class ButtonlessProgramSelectorPresenter(
         }
     }
 
-    override fun onNextButtonClicked() {
-        val priorities = HashMap<String, Int>()
-        programs.forEach { viewModel ->
-            if (viewModel.selected.get()) {
-                priorities[viewModel.program.name] = userConfigurationStorage.getPriority(viewModel.program.name)
+    fun save() {
+        userConfiguration?.id?.let { configurationId ->
+            getFullConfigurationInteractor.userConfigId = configurationId
+            getFullConfigurationInteractor.execute { fullControllerData ->
+                val priorities = HashMap<String, Int>()
+                programs.forEach { viewModel ->
+                    if (viewModel.selected.get()) {
+                        priorities[viewModel.program.name] = getPriority(fullControllerData.controller!!, viewModel.program.name)
+                    }
+                }
+
+                fullControllerData.controller?.clearBackgroundPrograms()
+                programs.forEach { viewModel ->
+                    if (viewModel.selected.get()) {
+                        val priority = priorities[viewModel.program.name]
+                        fullControllerData.controller?.addBackgroundProgram(
+                            viewModel.program,
+                            if (priority == -1) 0 else priority ?: 0
+                        )
+                    }
+                }
+
+                saveController(fullControllerData)
             }
         }
+    }
 
-        userConfigurationStorage.clearBackgroundPrograms()
-        programs.forEach { viewModel ->
-            if (viewModel.selected.get()) {
-                val priority = priorities[viewModel.program.name]
-                userConfigurationStorage.addBackgroundProgram(
-                    viewModel.program,
-                    if (priority == -1) 0 else priority ?: 0
-                )
-            }
+    private fun saveController(fullControllerData: FullControllerData) {
+        fullControllerData.controller?.userController?.let { userController ->
+            saveUserControllerInteractor.userController = userController
+            saveUserControllerInteractor.backgroundProgramBindings = fullControllerData.controller.backgroundBindings
+            saveUserControllerInteractor.execute()
         }
-
-        navigator.navigate(ButtonlessProgramSelectorFragmentDirections.toProgramPriority())
     }
 
     override fun onSelectAllClicked(checked: Boolean) {
         programs.forEach {
-            it.selected.set(compatibleProgramFilterer.isProgramCompatible(it.program) && checked)
+            it.selected.set(
+                compatibleProgramFilterer.isProgramCompatible(it.program, userConfiguration) && checked
+            )
         }
+        save()
     }
 
     override fun onProgramSelected(viewModel: ButtonlessProgramViewModel) {
-        if (compatibleProgramFilterer.isProgramCompatible(viewModel.program)) {
+        if (compatibleProgramFilterer.isProgramCompatible(viewModel.program, userConfiguration)
+        ) {
             viewModel.selected.set(!viewModel.selected.get())
+            save()
         }
     }
 
     override fun onInfoButtonClicked(userProgram: UserProgram) {
-        view?.showUserProgramDialog(userProgram, compatibleProgramFilterer.isProgramCompatible(userProgram))
+        view?.showUserProgramDialog(
+            userProgram,
+            compatibleProgramFilterer.isProgramCompatible(userProgram, userConfiguration)
+        )
     }
 
     override fun onProgramEdited(userProgram: UserProgram) {
         val viewModel = programs.find { it.program == userProgram }
-        if (viewModel?.selected?.get() == true && !compatibleProgramFilterer.isProgramCompatible(userProgram)) {
+        if (viewModel?.selected?.get() == true && !compatibleProgramFilterer.isProgramCompatible(
+                userProgram,
+                userConfiguration
+            )
+        ) {
             viewModel.selected.set(false)
         }
     }
+
+    private fun getPriority(controllerWithPrograms: UserControllerWithPrograms, userProgramName: String) =
+        controllerWithPrograms.userController.getMappingList().find { it?.programName == userProgramName }?.priority
+            ?: controllerWithPrograms.backgroundBindings.find { it.programId == userProgramName }?.priority ?: -1
+
 }

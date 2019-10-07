@@ -8,7 +8,9 @@ interface ConfigureConnectionsMvp : Mvp {
     interface View : Mvp.View
 
     interface Presenter : Mvp.Presenter<View, ConfigureConnectionsViewModel> {
+        fun loadConfiguration(configurationId: Int)
         fun setConfiguration(userConfiguration: UserConfiguration)
         fun clearSelection()
+        fun play()
     }
 }

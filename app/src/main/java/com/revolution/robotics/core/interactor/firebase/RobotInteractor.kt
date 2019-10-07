@@ -5,13 +5,13 @@ import com.google.firebase.database.GenericTypeIndicator
 import com.google.firebase.database.Query
 import com.revolution.robotics.core.domain.remote.Robot
 
-class RobotInteractor : FirebaseListInteractor<Robot>() {
+class RobotInteractor : FirebaseSingleObjectInteractor<Robot>() {
 
-    override val genericTypeIndicator: GenericTypeIndicator<HashMap<String, @JvmSuppressWildcards Robot>> =
-        object : GenericTypeIndicator<HashMap<String, Robot>>() {}
+    override val genericTypeIndicator: GenericTypeIndicator<HashMap<String, Robot>> =
+        object : GenericTypeIndicator<HashMap<String, @JvmSuppressWildcards Robot>>() {}
 
-    override fun getDatabaseReference(database: FirebaseDatabase): Query = database.getReference("robot")
-    override fun order(list: List<Robot>): List<Robot> = list.sortedBy { it.order }
+    lateinit var robotId: String
 
-    override fun filter(item: Robot) = true
+    override fun getDatabaseReference(database: FirebaseDatabase): Query =
+        database.getReference("robot").orderByChild("id").equalTo(robotId).limitToFirst(1)
 }

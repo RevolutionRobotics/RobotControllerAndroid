@@ -1,0 +1,156 @@
+buildscript {
+    repositories {
+        gradlePluginPortal()
+    }
+    dependencies {
+        classpath "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.0.0-RC14"
+        classpath "gradle.plugin.com.github.spotbugs:spotbugs-gradle-plugin:1.6.6"
+    }
+}
+
+apply plugin: 'checkstyle'
+apply plugin: com.github.spotbugs.SpotBugsPlugin
+apply plugin: 'pmd'
+apply plugin: io.gitlab.arturbosch.detekt.DetektPlugin
+
+checkstyle {
+    toolVersion = "8.19"
+}
+
+pmd {
+    toolVersion = '5.8.1'
+}
+
+spotbugs {
+    toolVersion = '3.1.12'
+}
+
+dependencies {
+    detektPlugins "io.gitlab.arturbosch.detekt:detekt-formatting:1.0.0-RC14"
+}
+
+def variants = (project.plugins.hasPlugin('android-library') ?
+        project.android.libraryVariants :
+        project.android.applicationVariants)
+
+variants.all { variant ->
+    def checkTask = tasks.register("check${variant.name.capitalize()}") {
+        description "Runs code style checks on ${variant.name}"
+        group "Verification"
+
+        dependsOn "lint${variant.name.capitalize()}"
+    }
+
+    tasks.named("check").configure {
+        dependsOn checkTask
+    }
+
+    addChecks(variant, checkTask)
+}
+
+private void addChecks(def variant, TaskProvider checkTask) {
+    def checkstyleTask = tasks.register("checkstyle${variant.name.capitalize()}", Checkstyle) {
+        description "Analyze ${variant.name} code with the checkstyle tool"
+        group "Verification"
+
+        ignoreFailures = false
+        configFile file("${project.code_quality_rootDir}/config/quality/checkstyle/checkstyle.xml")
+        configDir provider { file("${project.code_quality_rootDir}/config/quality/checkstyle") }
+
+        def javaCompile = variant.javaCompileProvider.get()
+
+        source files(variant.sourceSets.javaDirectories)
+        classpath = project.fileTree(javaCompile.destinationDir)
+        exclude '**/*.kt'
+        exclude '**/generated/**'
+
+        reports {
+            xml.enabled = true
+            xml.destination = file("${project.buildDir}/reports/checkstyle/checkstyle-${variant.name}-output.xml")
+
+            html.enabled = true
+            html.destination = file("${project.buildDir}/reports/checkstyle/checkstyle-${variant.name}-output.html")
+        }
+    }
+
+    def spotBugsTask = tasks.register("spotbugs${variant.name.capitalize()}", com.github.spotbugs.SpotBugsTask) {
+        description "Analyze ${variant.name} code with the spotbugs tool"
+        group "Verification"
+
+        ignoreFailures = false
+        effort = "max"
+        reportLevel = "high"
+
+        def javaCompile = variant.javaCompileProvider.get()
+
+        source = files(variant.sourceSets.javaDirectories)
+        classes = files(javaCompile.destinationDir)
+        classpath = javaCompile.classpath
+
+        excludeFilter = new File("${project.code_quality_rootDir}/config/quality/spotbugs/spotbugs-filter.xml")
+        exclude '**/*.kt'
+        exclude '**/generated/**'
+
+        reports {
+            html.enabled = false
+            html.destination = file("$project.buildDir/reports/spotbugs/spotbugs-${variant.name}-output.html")
+
+            xml.withMessages = true
+            xml.destination = file("$project.buildDir/reports/spotbugs/spotbugs-${variant.name}-output.xml")
+        }
+
+        dependsOn variant.javaCompileProvider
+    }
+
+    def pmdTask = tasks.register("pmd${variant.name.capitalize()}", Pmd) {
+        description "Analyze ${variant.name} code with the pmd tool"
+        group "Verification"
+
+        ignoreFailures = false
+        ruleSetFiles = files("${project.code_quality_rootDir}/config/quality/pmd/pmd-ruleset.xml")
+
+        source = files(variant.sourceSets.javaDirectories)
+        include '**/*.java'
+        exclude '**/*.kt'
+        exclude '**/generated/**'
+
+        reports {
+            xml.enabled = true
+            xml.destination = file("${project.buildDir}/reports/pmd/pmd-${variant.name}-output.xml")
+
+            html.enabled = true
+            html.destination = file("${project.buildDir}/reports/pmd/pmd-${variant.name}-output.html")
+        }
+    }
+
+    def detektTask = tasks.register("detekt${variant.name.capitalize()}", io.gitlab.arturbosch.detekt.Detekt) {
+        description "Analyze ${variant.name} code with the detekt tool"
+        group "Verification"
+
+        input = files(files(variant.sourceSets.javaDirectories).filter { it.exists() })
+        filters = '.*\\.java$,.*/generated/.*'
+
+        config = files("${project.code_quality_rootDir}/config/quality/detekt/detekt-config.yml")
+
+        reports {
+            html.enabled = true
+            html.destination = file("${project.buildDir}/reports/detekt/detekt-${variant.name}-output.html")
+
+            xml.enabled = true
+            xml.destination = file("${project.buildDir}/reports/detekt/detekt-${variant.name}-output.xml")
+        }
+    }
+
+    checkTask.configure {
+        dependsOn checkstyleTask, pmdTask, spotBugsTask, detektTask
+    }
+}
+
+android {
+    lintOptions {
+        abortOnError true
+        lintConfig file("${project.code_quality_rootDir}/config/quality/lint/lint.xml")
+        xmlReport true
+        htmlReport true
+    }
+}

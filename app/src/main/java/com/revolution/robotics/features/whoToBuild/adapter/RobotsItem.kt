@@ -5,8 +5,7 @@ import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.remote.Robot
 import com.revolution.robotics.features.whoToBuild.WhoToBuildMvp
 
-@Suppress("DataClassContainsFunctions")
-data class RobotsItem(
+open class RobotsItem(
     val robot: Robot,
     private val presenter: WhoToBuildMvp.Presenter
 ) {
@@ -17,7 +16,7 @@ data class RobotsItem(
     val defaultResource = R.drawable.robots_card_border_grey
     var isSelected: ObservableBoolean = ObservableBoolean(false)
 
-    fun onClicked() {
+    open fun onClicked() {
         if (isSelected.get()) {
             presenter.onRobotSelected(robot)
         } else {

@@ -34,8 +34,10 @@ class CodingFragment : BaseFragment<FragmentCodingBinding, CodingViewModel>(R.la
         const val KEY_ACTION_ID_AFTER_SAVE = "actionId"
         const val ACTION_ID_LEAVE = 1
         const val ACTION_ID_LOAD_PROGRAMS = 2
+        const val ACTION_ID_CREATE_NEW_PROGRAM = 3
 
         private var Bundle.program by BundleArgumentDelegate.ParcelableNullable<UserProgram>("program")
+        private var Bundle.isInEditMode by BundleArgumentDelegate.Boolean("edit_mode")
     }
 
     override val viewModelClass: Class<CodingViewModel> = CodingViewModel::class.java
@@ -52,7 +54,7 @@ class CodingFragment : BaseFragment<FragmentCodingBinding, CodingViewModel>(R.la
                 .chipSize(R.dimen.dimen_12dp)
                 .backgroundColorResource(R.color.grey_28)
                 .create()
-            viewModel?.isInEditMode?.set(arguments?.program != null)
+            viewModel?.isInEditMode?.set(arguments?.isInEditMode ?: false)
         }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -149,6 +151,11 @@ class CodingFragment : BaseFragment<FragmentCodingBinding, CodingViewModel>(R.la
             DialogEvent.PROGRAM_CONFIRM_LOAD_WITHOUT_SAVE -> showDialog(
                 ProgramsDialog.newInstance()
             )
+            DialogEvent.PROGRAM_CONFIRM_CREATE_NEW_WITH_SAVE -> presenter.showSaveProgramDialog(
+                viewModel?.userProgram,
+                ACTION_ID_CREATE_NEW_PROGRAM
+            )
+            DialogEvent.PROGRAM_CONFIRM_CREATE_NEW_WITHOUT_SAVE -> presenter.createNewProgram()
             DialogEvent.PROGRAM_CONFIRM_CLOSE_WITHOUT_SAVE -> onBackPressed(false)
             else -> Unit
         }

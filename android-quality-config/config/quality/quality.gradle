@@ -1,0 +1,14 @@
+allprojects { project ->
+
+    if (project.getPlugins().hasPlugin('com.android.application') ||
+            project.getPlugins().hasPlugin('com.android.library')) {
+        project.apply from: "${code_quality_rootDir}/config/quality/quality.android.gradle"
+    }
+
+    project.afterEvaluate {
+        if (project.getPlugins().hasPlugin('java') ||
+                project.getPlugins().hasPlugin('java-library')) {
+            project.apply from: "${code_quality_rootDir}/config/quality/quality.java.gradle"
+        }
+    }
+}

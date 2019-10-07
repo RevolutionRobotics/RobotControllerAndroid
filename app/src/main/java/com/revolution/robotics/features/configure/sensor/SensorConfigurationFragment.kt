@@ -10,6 +10,7 @@ import com.revolution.robotics.core.domain.remote.Sensor
 import com.revolution.robotics.core.extensions.withArguments
 import com.revolution.robotics.core.utils.BundleArgumentDelegate
 import com.revolution.robotics.databinding.FragmentSensorConfigurationBinding
+import org.kodein.di.erased.contextFinder
 import org.kodein.di.erased.instance
 
 class SensorConfigurationFragment :
@@ -19,11 +20,14 @@ class SensorConfigurationFragment :
     companion object {
         private var Bundle.sensor by BundleArgumentDelegate.Parcelable<Sensor>("sensor")
         private var Bundle.portName by BundleArgumentDelegate.String("portName")
+        private var Bundle.configId by BundleArgumentDelegate.Int("configId")
 
-        fun newInstance(sensor: Sensor, portName: String) = SensorConfigurationFragment().withArguments { bundle ->
-            bundle.sensor = sensor
-            bundle.portName = portName
-        }
+        fun newInstance(configId: Int, sensor: Sensor, portName: String) =
+            SensorConfigurationFragment().withArguments { bundle ->
+                bundle.configId = configId
+                bundle.sensor = sensor
+                bundle.portName = portName
+            }
     }
 
     override val viewModelClass: Class<SensorConfigurationViewModel> = SensorConfigurationViewModel::class.java
@@ -33,7 +37,7 @@ class SensorConfigurationFragment :
         super.onViewCreated(view, savedInstanceState)
         presenter.register(this, viewModel)
         arguments?.let {
-            presenter.setSensor(it.sensor, it.portName)
+            presenter.setSensor(it.configId, it.sensor, it.portName)
         }
         binding?.editSensor?.binding?.content?.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) = Unit

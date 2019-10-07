@@ -3,17 +3,10 @@ package com.revolution.robotics
 import android.app.Application
 import android.content.pm.ApplicationInfo
 import android.webkit.WebView
-import com.crashlytics.android.Crashlytics
 import com.google.firebase.FirebaseApp
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
-import com.revolution.robotics.core.kodein.createAppModule
-import com.revolution.robotics.core.kodein.createDbModule
-import com.revolution.robotics.core.kodein.createInteractorModule
-import com.revolution.robotics.core.kodein.createMainModule
-import com.revolution.robotics.core.kodein.createPresenterModule
-import com.revolution.robotics.core.kodein.createViewModelModule
-import io.fabric.sdk.android.Fabric
+import com.revolution.robotics.core.kodein.*
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 
@@ -43,9 +36,6 @@ class RoboticsApplication : Application(), KodeinAware {
 
     override fun onCreate() {
         super.onCreate()
-        if (!BuildConfig.DEBUG) {
-            Fabric.with(this, Crashlytics())
-        }
         FirebaseApp.initializeApp(this)
         FirebaseDatabase.getInstance().setPersistenceEnabled(true)
         FirebaseStorage.getInstance().maxDownloadRetryTimeMillis = DOWNLOAD_RETRY_TIME

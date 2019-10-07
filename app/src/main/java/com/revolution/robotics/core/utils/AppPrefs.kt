@@ -14,6 +14,12 @@ open class AppPrefs constructor(context: Context) {
     private val preferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
 
     open var showTutorial by PreferenceFieldDelegate.Boolean(preferences, "tutorial", true)
+    open var userTypeSelected by PreferenceFieldDelegate.Boolean(preferences, "user_type", false)
+    open var robotRegistered by PreferenceFieldDelegate.Boolean(preferences, "robot_registered", false)
+    open var onboardingRobotBuild by PreferenceFieldDelegate.Boolean(preferences, "carby_built", false)
+    open var onboardingRobotDriven by PreferenceFieldDelegate.Boolean(preferences, "carby_driven", false)
+    open var finishedOnboarding by PreferenceFieldDelegate.Boolean(preferences, "finished_onboarding", false)
+    open var lastOpenedProgram by PreferenceFieldDelegate.String(preferences, "last_opened_program")
 }
 
 sealed class PreferenceFieldDelegate<T>(

@@ -18,6 +18,7 @@ class BuildRobotViewModel(
     val partImage: MutableLiveData<String?> = MutableLiveData()
     val part2Image: MutableLiveData<String?> = MutableLiveData()
     val hasTwoParts: MutableLiveData<Boolean> = MutableLiveData()
+    val hasParts: MutableLiveData<Boolean> = MutableLiveData()
 
     fun setBuildStep(buildStep: BuildStep, totalSteps: Int) {
         imageUrl.value = buildStep.image
@@ -25,6 +26,7 @@ class BuildRobotViewModel(
         partImage.value = buildStep.partImage
         part2Image.value = buildStep.part2Image
         hasTwoParts.value = !part2Image.value.isNullOrEmpty()
+        hasParts.value = !partImage.value.isNullOrEmpty()
     }
 
     private fun createStepText(actualStep: Int, totalSteps: Int) =

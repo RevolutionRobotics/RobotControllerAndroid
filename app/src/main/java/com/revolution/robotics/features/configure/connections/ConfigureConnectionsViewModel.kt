@@ -3,7 +3,7 @@ package com.revolution.robotics.features.configure.connections
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class ConfigureConnectionsViewModel : ViewModel() {
+class ConfigureConnectionsViewModel(private val presenter: ConfigureConnectionsMvp.Presenter) : ViewModel() {
     var partM1: MutableLiveData<RobotPartModel> = MutableLiveData()
     var partM2: MutableLiveData<RobotPartModel> = MutableLiveData()
     var partM3: MutableLiveData<RobotPartModel> = MutableLiveData()
@@ -18,4 +18,6 @@ class ConfigureConnectionsViewModel : ViewModel() {
 
     var robotId: MutableLiveData<Int> = MutableLiveData()
     var firebaseImageUrl: MutableLiveData<String?> = MutableLiveData()
+
+    fun play() = presenter.play()
 }

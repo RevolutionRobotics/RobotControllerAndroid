@@ -9,18 +9,20 @@ import com.revolution.robotics.core.domain.remote.Motor
 import com.revolution.robotics.core.domain.remote.Sensor
 import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
+import com.revolution.robotics.core.interactor.GetUserConfigurationInteractor
+import com.revolution.robotics.core.interactor.GetUserRobotInteractor
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.features.configure.ConfigurationEventBus
 import com.revolution.robotics.features.configure.MotorPort
 import com.revolution.robotics.features.configure.SensorPort
-import com.revolution.robotics.features.configure.UserConfigurationStorage
 
 @Suppress("TooManyFunctions")
 class ConfigureConnectionsPresenter(
-    private val openConfigurationEventBus: ConfigurationEventBus,
+    private val getUserConfigurationInteractor: GetUserConfigurationInteractor,
+    private val getUserRobotInteractor: GetUserRobotInteractor,
+    private val configurationEventBus: ConfigurationEventBus,
     private val resourceResolver: ResourceResolver,
-    private val dialogEventBus: DialogEventBus,
-    private val userConfigurationStorage: UserConfigurationStorage
+    private val dialogEventBus: DialogEventBus
 ) :
     ConfigureConnectionsMvp.Presenter, DialogEventBus.Listener {
 
@@ -32,11 +34,6 @@ class ConfigureConnectionsPresenter(
 
     override fun register(view: ConfigureConnectionsMvp.View, model: ConfigureConnectionsViewModel?) {
         super.register(view, model)
-        userConfiguration = userConfigurationStorage.userConfiguration?.apply {
-            setConfiguration(this)
-            model?.firebaseImageUrl?.value = userConfigurationStorage.robot?.coverImage
-            model?.robotId?.value = userConfigurationStorage.robot?.instanceId
-        }
         dialogEventBus.register(this)
     }
 
@@ -53,6 +50,20 @@ class ConfigureConnectionsPresenter(
         }
     }
 
+    override fun loadConfiguration(configurationId: Int) {
+        getUserConfigurationInteractor.userConfigId = configurationId
+        getUserConfigurationInteractor.execute { config ->
+            userConfiguration = config?.apply {
+                setConfiguration(this)
+                getUserRobotInteractor.robotId
+                getUserRobotInteractor.execute { robot ->
+                    model?.firebaseImageUrl?.value = robot?.coverImage
+                    model?.robotId?.value = robot?.instanceId
+                }
+            }
+        }
+    }
+
     override fun setConfiguration(userConfiguration: UserConfiguration) {
         this.userConfiguration = userConfiguration
         model?.apply {
@@ -66,6 +77,10 @@ class ConfigureConnectionsPresenter(
         userConfiguration?.let {
             setConfiguration(it)
         }
+    }
+
+    override fun play() {
+        configurationEventBus.publishPlayEvent()
     }
 
     private fun setupSensors(model: ConfigureConnectionsViewModel) {
@@ -144,11 +159,11 @@ class ConfigureConnectionsPresenter(
     }
 
     private fun openMotorDrawer(motor: Motor?, portName: String?) {
-        openConfigurationEventBus.publishOpenMotorConfiguration(MotorPort(motor, portName))
+        configurationEventBus.publishOpenMotorConfiguration(MotorPort(motor, portName))
     }
 
     private fun openSensorDrawer(sensor: Sensor?, portName: String?) {
-        openConfigurationEventBus.publishOpenSensorConfiguration(SensorPort(sensor, portName))
+        configurationEventBus.publishOpenSensorConfiguration(SensorPort(sensor, portName))
     }
 
     private fun getRobotPartModel(

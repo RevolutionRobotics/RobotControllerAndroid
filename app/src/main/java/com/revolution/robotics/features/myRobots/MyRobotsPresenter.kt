@@ -10,6 +10,7 @@ import com.revolution.robotics.core.interactor.GetAllUserRobotsInteractor
 import com.revolution.robotics.core.interactor.GetControllerTypeInteractor
 import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.features.controllers.ControllerType
+import com.revolution.robotics.features.myRobots.adapter.MyRobotsAddItem
 import com.revolution.robotics.features.myRobots.adapter.MyRobotsItem
 import com.revolution.robotics.features.myRobots.info.InfoRobotDialog
 import kotlin.math.max
@@ -35,18 +36,18 @@ class MyRobotsPresenter(
 
     private fun loadRobots() {
         getAllUserRobotsInteractor.execute { robots ->
-            if (model?.robotsList?.get()?.size != robots.size) {
-                model?.currentPosition?.set(0)
+            if (model?.robotsList?.get()?.size != robots.size + 1) {
+                model?.currentPosition?.set(if (robots.isNotEmpty()) 1 else 0)
             }
             model?.robotsList?.set(robots.map { robot ->
                 MyRobotsItem(
                     robot.instanceId,
                     robot,
                     robot.lastModified?.formatYearMonthDay() ?: "",
-                    robot.buildStatus != BuildStatus.COMPLETED,
+                    robot.buildStatus == BuildStatus.IN_PROGRESS,
                     this
                 )
-            }.toMutableList())
+            }.toMutableList().also { it.add(0, MyRobotsAddItem(this)) })
             view?.onRobotsChanged()
 
             if (model?.robotsList?.get()?.isEmpty() == true && !isEmptyNavigationHappened) {
@@ -112,26 +113,28 @@ class MyRobotsPresenter(
         }
     }
 
-    override fun onContinueBuildingSelected(robot: UserRobot) {
-        if (robot.isCustomBuild() || robot.buildStatus == BuildStatus.INVALID_CONFIGURATION) {
-            navigator.navigate(MyRobotsFragmentDirections.toConfigure(robot))
+    override fun onContinueBuildingSelected(userRobot: UserRobot) {
+        if (userRobot.buildStatus == BuildStatus.IN_PROGRESS) {
+            navigator.navigate(MyRobotsFragmentDirections.toBuildRobot(userRobot))
         } else {
-            navigator.navigate(MyRobotsFragmentDirections.toBuildRobot(robot))
+            navigator.navigate(MyRobotsFragmentDirections.toConfigure(userRobot.instanceId))
         }
     }
 
     override fun onEditSelected(userRobot: UserRobot) {
-        navigator.navigate(MyRobotsFragmentDirections.toConfigure(userRobot))
+        if (userRobot.buildStatus == BuildStatus.IN_PROGRESS) {
+            navigator.navigate(MyRobotsFragmentDirections.toBuildRobot(userRobot))
+        } else {
+            navigator.navigate(MyRobotsFragmentDirections.toConfigure(userRobot.instanceId))
+        }
     }
 
     override fun onMoreInfoClicked(userRobot: UserRobot) {
         view?.showDialog(
-            if (userRobot.buildStatus == BuildStatus.COMPLETED ||
-                userRobot.buildStatus == BuildStatus.INVALID_CONFIGURATION
-            ) {
-                InfoRobotDialog.Edit.newInstance(userRobot)
-            } else {
+            if (userRobot.buildStatus == BuildStatus.IN_PROGRESS) {
                 InfoRobotDialog.InProgress.newInstance(userRobot)
+            } else {
+                InfoRobotDialog.Edit.newInstance(userRobot)
             }
         )
     }
@@ -157,7 +160,7 @@ class MyRobotsPresenter(
                         robot.instanceId,
                         robot,
                         robot.lastModified?.formatYearMonthDay() ?: "",
-                        robot.buildStatus != BuildStatus.COMPLETED,
+                        robot.buildStatus == BuildStatus.IN_PROGRESS,
                         this@MyRobotsPresenter
                     )
                 )

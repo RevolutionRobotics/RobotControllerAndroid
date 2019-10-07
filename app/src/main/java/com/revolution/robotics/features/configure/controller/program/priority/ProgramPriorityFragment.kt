@@ -9,12 +9,17 @@ import androidx.recyclerview.widget.SimpleItemAnimator
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
+import com.revolution.robotics.core.utils.BundleArgumentDelegate
 import com.revolution.robotics.databinding.FragmentProgramPriorityBinding
 import org.kodein.di.erased.instance
 
 class ProgramPriorityFragment :
     BaseFragment<FragmentProgramPriorityBinding, ProgramPriorityViewModel>(R.layout.fragment_program_priority),
     ProgramPriorityMvp.View {
+
+    companion object {
+        val Bundle.controllerId: Int by BundleArgumentDelegate.Int("controllerId")
+    }
 
     override val viewModelClass: Class<ProgramPriorityViewModel> = ProgramPriorityViewModel::class.java
     private val presenter: ProgramPriorityMvp.Presenter by kodein.instance()
@@ -25,7 +30,7 @@ class ProgramPriorityFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         presenter.register(this, viewModel)
-
+        arguments?.controllerId?.let { presenter.loadPrograms(it) }
         val callback = object : ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP or ItemTouchHelper.DOWN, 0) {
             override fun onMove(
                 recyclerView: RecyclerView,
@@ -59,6 +64,11 @@ class ProgramPriorityFragment :
             touchHelper.attachToRecyclerView(this)
         }
         binding?.toolbarViewModel = ProgramPriorityToolbarViewModel(resourceResolver)
+    }
+
+    override fun onBackPressed(): Boolean {
+        presenter.save()
+        return super.onBackPressed()
     }
 
     override fun onDestroyView() {

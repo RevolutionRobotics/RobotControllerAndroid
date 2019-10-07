@@ -35,7 +35,7 @@ class DuplicateUserRobotInteractor(
         robotCopy.instanceId = 0
         robotCopy.instanceId = userRobotDao.saveUserRobot(robotCopy).toInt()
 
-        copyControllers(selectedControllerId, robotCopy.instanceId, currentConfigCopy)
+        copyController(robotCopy.instanceId, currentConfigCopy)
         copyRobotImage(currentRobot.instanceId, robotCopy.instanceId)
         return robotCopy
     }
@@ -50,24 +50,20 @@ class DuplicateUserRobotInteractor(
         return currentConfigCopy
     }
 
-    private fun copyControllers(
-        selectedControllerId: Int,
+    private fun copyController(
         newRobotId: Int,
         currentConfigCopy: UserConfiguration?
     ) {
-        controllerDao.getUserControllersForRobot(currentRobot.instanceId).forEach { controller ->
-            val controllerCopy = controller.copy()
-            val saveAsDefault = controllerCopy.id == selectedControllerId
+        controllerDao.getUserControllerForRobot(currentRobot.instanceId)?.apply {
+            val controllerCopy = copy()
             controllerCopy.id = 0
             controllerCopy.robotId = newRobotId
             controllerCopy.id = controllerDao.saveUserController(controllerCopy).toInt()
-            if (saveAsDefault) {
-                currentConfigCopy?.let { copyConfig ->
-                    copyConfig.controller = controllerCopy.id
-                    userConfigurationDao.updateUserConfiguration(copyConfig)
-                }
+            currentConfigCopy?.let { copyConfig ->
+                copyConfig.controller = controllerCopy.id
+                userConfigurationDao.updateUserConfiguration(copyConfig)
             }
-            copyBackgroundPrograms(controller.id, controllerCopy.id)
+            copyBackgroundPrograms(id, controllerCopy.id)
         }
     }
 

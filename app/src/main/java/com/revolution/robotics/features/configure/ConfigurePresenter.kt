@@ -1,22 +1,35 @@
 package com.revolution.robotics.features.configure
 
 import com.revolution.robotics.R
+import com.revolution.robotics.core.domain.local.BuildStatus
 import com.revolution.robotics.core.domain.local.UserConfiguration
+import com.revolution.robotics.core.domain.local.UserProgram
 import com.revolution.robotics.core.domain.local.UserRobot
 import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
-import com.revolution.robotics.core.interactor.GetUserConfigurationInteractor
+import com.revolution.robotics.core.interactor.*
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
+import com.revolution.robotics.core.utils.Navigator
+import com.revolution.robotics.features.configure.controller.ControllerButton
+import com.revolution.robotics.features.configure.delete.DeleteRobotDialog
 import com.revolution.robotics.features.configure.robotPicture.RobotPictureDialog
 import com.revolution.robotics.features.configure.save.SaveRobotDialog
+import com.revolution.robotics.features.controllers.ControllerType
+import com.revolution.robotics.features.myRobots.MyRobotsFragmentDirections
 
 @Suppress("TooManyFunctions")
 class ConfigurePresenter(
+    private val getUserRobotInteractor: GetUserRobotInteractor,
     private val configurationEventBus: ConfigurationEventBus,
+    private val duplicateUserRobotInteractor: DuplicateUserRobotInteractor,
+    private val deleteRobotInteractor: DeleteRobotInteractor,
+    private val updateUserRobotInteractor: UpdateUserRobotInteractor,
     private val getUserConfigurationInteractor: GetUserConfigurationInteractor,
+    private val getUserControllerInteractor: GetUserControllerInteractor,
+    private val saveUserControllerInteractor: SaveUserControllerInteractor,
     private val dialogEventBus: DialogEventBus,
-    private val userConfigurationStorage: UserConfigurationStorage,
-    private val resourceResolver: ResourceResolver
+    private val resourceResolver: ResourceResolver,
+    private val navigator: Navigator
 ) : ConfigureMvp.Presenter,
     ConfigurationEventBus.Listener, DialogEventBus.Listener {
 
@@ -26,9 +39,9 @@ class ConfigurePresenter(
     private var toolbarViewModel: ConfigureToolbarViewModel? = null
 
     var userRobot: UserRobot? = null
+    var userConfiguration: UserConfiguration? = null
 
     private var selectedTab = ConfigurationTabs.CONNECTIONS
-    private var selectedConfigId = -1
 
     override fun register(view: ConfigureMvp.View, model: ConfigureViewModel?) {
         super.register(view, model)
@@ -36,43 +49,41 @@ class ConfigurePresenter(
         dialogEventBus.register(this)
     }
 
-    override fun initUI(userRobot: UserRobot, toolbarViewModel: ConfigureToolbarViewModel) {
-        this.userRobot = userRobot
-        this.toolbarViewModel = toolbarViewModel
-        toolbarViewModel.title.set(
-            if (userRobot.name.isNullOrEmpty()) {
-                resourceResolver.string(R.string.untitled_robot_name)
-            } else {
-                userRobot.name
-            }
-        )
+    override fun loadRobot(robotId: Int, toolbarViewModel: ConfigureToolbarViewModel) {
+        getUserRobotInteractor.robotId = robotId
+        getUserRobotInteractor.execute { userRobot ->
+            userRobot?.let {
+                this.userRobot = it
+                this.toolbarViewModel = toolbarViewModel
+                toolbarViewModel.title.set(
+                    if (it.name.isNullOrEmpty()) {
+                        resourceResolver.string(R.string.untitled_robot_name)
+                    } else {
+                        it.name
+                    }
+                )
 
-        if (userConfigurationStorage.userConfiguration == null ||
-            userConfigurationStorage.userConfiguration?.id != userRobot.configurationId
-        ) {
-            getUserConfigurationInteractor.userConfigId = userRobot.configurationId
-            getUserConfigurationInteractor.execute { config ->
-                onConfigurationLoaded(config)
+                getUserConfigurationInteractor.userConfigId = it.configurationId
+                getUserConfigurationInteractor.execute { config ->
+                    onConfigurationLoaded(config)
+                }
             }
-        } else {
-            onConfigurationLoaded(userConfigurationStorage.userConfiguration)
         }
     }
 
     private fun onConfigurationLoaded(config: UserConfiguration?) {
         setControllersTabName(config?.controller)
-        userConfigurationStorage.userConfiguration = config
         config?.apply {
-            if (selectedConfigId != config.id) {
+            if (config.id != userConfiguration?.id) {
                 selectedTab = ConfigurationTabs.CONNECTIONS
-                selectedConfigId = config.id
+                userConfiguration = config
             }
             model?.setScreen(selectedTab)
 
             if (selectedTab == ConfigurationTabs.CONNECTIONS) {
-                view?.showConnectionsScreen()
+                view?.showConnectionsScreen(config.id)
             } else {
-                view?.showControllerScreen()
+                view?.showControllerScreen(config.id)
             }
         }
     }
@@ -85,13 +96,13 @@ class ConfigurePresenter(
 
     override fun onDialogEvent(event: DialogEvent) {
         if (event == DialogEvent.SAVE_ROBOT) {
-            userConfigurationStorage.setRobotName(
-                event.extras.getString(SaveRobotDialog.KEY_NAME) ?: "",
-                event.extras.getString(SaveRobotDialog.KEY_DESCRIPTION) ?: ""
-            )
-            toolbarViewModel?.title?.set(event.extras.getString(SaveRobotDialog.KEY_NAME) ?: "")
-        } else if (event == DialogEvent.DEFAULT_CONTROLLER_CHANGED) {
-            setControllersTabName(userConfigurationStorage.userConfiguration?.controller)
+            userRobot?.let {
+                it.name = event.extras.getString(SaveRobotDialog.KEY_NAME) ?: ""
+                it.description = event.extras.getString(SaveRobotDialog.KEY_DESCRIPTION) ?: ""
+                save {
+                    toolbarViewModel?.title?.set(event.extras.getString(SaveRobotDialog.KEY_NAME) ?: "")
+                }
+            }
         }
     }
 
@@ -104,54 +115,135 @@ class ConfigurePresenter(
     }
 
     override fun onOpenMotorConfigEvent(event: MotorPort) {
-        view?.openMotorConfig(event)
+        userConfiguration?.let { config ->
+            view?.openMotorConfig(config.id, event)
+        }
     }
 
     override fun onOpenSensorConfigEvent(event: SensorPort) {
-        view?.openSensorConfig(event)
+        userConfiguration?.let { config ->
+            view?.openSensorConfig(config.id, event)
+        }
     }
 
     override fun onConnectionsTabSelected() {
-        selectedTab = ConfigurationTabs.CONNECTIONS
-        model?.setScreen(ConfigurationTabs.CONNECTIONS)
-        view?.showConnectionsScreen()
+        userConfiguration?.let { config ->
+            selectedTab = ConfigurationTabs.CONNECTIONS
+            model?.setScreen(ConfigurationTabs.CONNECTIONS)
+            view?.showConnectionsScreen(config.id)
+        }
     }
 
     override fun onControllerTabSelected() {
         selectedTab = ConfigurationTabs.CONTROLLERS
         model?.setScreen(ConfigurationTabs.CONTROLLERS)
-        view?.showControllerScreen()
-    }
-
-    override fun clearStorage() {
-        selectedConfigId = -1
-        userConfigurationStorage.userConfiguration = null
-        userConfigurationStorage.controllerHolder = null
+        if (userConfiguration != null) {
+            view?.showControllerScreen(userConfiguration!!.id)
+        }
     }
 
     override fun onMotorConfigChangedEvent(event: MotorPort) {
-        userConfigurationStorage.updateMotorPort(event)
-        userConfigurationStorage.userConfiguration?.let {
-            view?.updateConfig(it)
+        userConfiguration?.let { config ->
+            config.mappingId?.updateMotorPort(event)
+            save {
+                view?.updateConfig(config)
+                view?.hideDrawer()
+            }
         }
-        view?.hideDrawer()
     }
 
     override fun onSensorConfigChangedEvent(event: SensorPort) {
-        userConfigurationStorage.updateSensorPort(event)
-        userConfigurationStorage.userConfiguration?.let {
-            view?.updateConfig(it)
+        userConfiguration?.let { config ->
+            config.mappingId?.updateSensorPort(event)
+            save {
+                view?.updateConfig(config)
+                view?.hideDrawer()
+            }
         }
-        view?.hideDrawer()
     }
 
     override fun onRobotImageClicked() {
         userRobot?.let { robot -> view?.showDialog(RobotPictureDialog.newInstance(robot.instanceId, robot.coverImage)) }
     }
 
-    override fun saveConfiguration() {
+    override fun onDeleteClicked() {
+        userRobot?.let { view?.showDialog(DeleteRobotDialog.newInstance(it)) }
+    }
+
+    override fun onBackgroundProgramsClicked() {
+        userConfiguration?.let { navigator.navigate(ConfigureFragmentDirections.toButtonlessProgramSelector(it.id)) }
+    }
+
+    override fun onPriorityClicked() {
+        userConfiguration?.controller?.let { navigator.navigate(ConfigureFragmentDirections.toProgramPriority(it)) }
+    }
+
+    override fun deleteRobot() {
+        userRobot?.let {
+            deleteRobotInteractor.id = it.instanceId
+            deleteRobotInteractor.configId = it.configurationId
+            deleteRobotInteractor.execute()
+        }
+        navigator.back()
+    }
+
+    override fun onControllerTypeClicked() {
+        userConfiguration?.controller?.let { controllerId ->
+            getUserControllerInteractor.id = controllerId
+            getUserControllerInteractor.execute { controller ->
+                controller.userController.type =
+                    if (controller.userController.type == ControllerType.DRIVER.id) ControllerType.GAMER.id else ControllerType.DRIVER.id
+                saveUserControllerInteractor.userController = controller.userController
+                saveUserControllerInteractor.backgroundProgramBindings = controller.backgroundBindings
+                saveUserControllerInteractor.execute {
+                    onControllerTabSelected()
+                }
+            }
+        }
+    }
+
+    override fun onAdvancedSettingsClicked() {
+        view?.showAdvancedSettingsPopup()
+    }
+
+    override fun onDuplicateClicked() {
+        userRobot?.let {
+            duplicateUserRobotInteractor.currentRobot = it
+            duplicateUserRobotInteractor.execute {
+                navigator.back()
+            }
+        }
+    }
+
+    override fun editRobotDetails() {
         userRobot?.let { robot ->
             view?.showSaveDialog(robot.name ?: "", robot.description ?: "")
+        }
+    }
+
+    override fun onPlayEvent() {
+        userConfiguration?.controller?.let { controllerId ->
+            getUserControllerInteractor.id = controllerId
+            getUserControllerInteractor.execute { controller ->
+                when (controller.userController.type) {
+                    ControllerType.GAMER.id ->
+                        navigator.navigate(MyRobotsFragmentDirections.toPlayGamer(userConfiguration?.id!!))
+                    ControllerType.DRIVER.id ->
+                        navigator.navigate(MyRobotsFragmentDirections.toPlayDriver(userConfiguration?.id!!))
+                }
+            }
+        }
+    }
+
+    fun save(finished: (() -> Unit)? = null) {
+        userConfiguration?.let { config ->
+            userRobot?.let { robot ->
+                updateUserRobotInteractor.userConfiguration = config
+                updateUserRobotInteractor.userRobot = robot
+                updateUserRobotInteractor.execute(onResponse = {
+                    finished?.invoke()
+                }, onError = { finished?.invoke() })
+            }
         }
     }
 }

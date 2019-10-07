@@ -23,10 +23,6 @@ class ButtonlessProgramSelectorViewModel(private val presenter: ButtonlessProgra
     val dateOrderIconColor = ObservableInt(R.color.white)
     val nameOrderIconColor = ObservableInt(R.color.white)
 
-    fun onNextButtonClicked() {
-        presenter.onNextButtonClicked()
-    }
-
     fun onDateOrderClicked() {
         programOrderingHandler.onOrderByDateClicked()
         presenter.updateOrderingAndFiltering()

@@ -2,13 +2,14 @@ package com.revolution.robotics.features.configure.sensor
 
 import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.remote.Sensor
+import com.revolution.robotics.core.interactor.GetUserConfigurationInteractor
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.features.bluetooth.BluetoothManager
 import com.revolution.robotics.features.build.testing.BumperTestDialog
 import com.revolution.robotics.features.build.testing.UltrasonicTestDialog
 import com.revolution.robotics.features.configure.ConfigurationEventBus
+import com.revolution.robotics.features.configure.ConfigureFragment
 import com.revolution.robotics.features.configure.SensorPort
-import com.revolution.robotics.features.configure.UserConfigurationStorage
 import com.revolution.robotics.features.shared.ErrorHandler
 import com.revolution.robotics.views.ChippedEditTextViewModel
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
@@ -16,7 +17,7 @@ import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 class SensorConfigurationPresenter(
     private val resourceResolver: ResourceResolver,
     private val configurationEventBus: ConfigurationEventBus,
-    private val userConfigurationStorage: UserConfigurationStorage,
+    private val getUserConfigurationInteractor: GetUserConfigurationInteractor,
     private val bluetoothManager: BluetoothManager,
     private val errorHandler: ErrorHandler
 ) : SensorConfigurationMvp.Presenter {
@@ -24,6 +25,7 @@ class SensorConfigurationPresenter(
     override var view: SensorConfigurationMvp.View? = null
     override var model: SensorConfigurationViewModel? = null
 
+    private var configId: Int = -1
     private var portName: String? = null
     private var sensor: Sensor? = null
     private var variableName: String? = null
@@ -53,7 +55,8 @@ class SensorConfigurationPresenter(
         .borderSize(R.dimen.dimen_1dp)
         .create()
 
-    override fun setSensor(sensor: Sensor, portName: String) {
+    override fun setSensor(configId: Int, sensor: Sensor, portName: String) {
+        this.configId = configId
         this.portName = portName
         this.sensor = sensor
         previousUltrasonicName = null
@@ -67,7 +70,7 @@ class SensorConfigurationPresenter(
                 backgroundColor = R.color.grey_28,
                 textColor = R.color.white,
                 titleColor = R.color.white,
-                digits = UserConfigurationStorage.ALLOWED_DIGITS_REGEXP,
+                digits = ConfigureFragment.ALLOWED_DIGITS_REGEXP,
                 enabled = sensor.type == Sensor.TYPE_BUMPER || sensor.type == Sensor.TYPE_ULTRASONIC
             )
 
@@ -117,37 +120,44 @@ class SensorConfigurationPresenter(
 
     override fun onBumperButtonClicked() {
         model?.apply {
-            editTextModel.value = editTextModel.value?.apply {
-                enabled = true
+            getUserConfigurationInteractor.userConfigId = configId
+            getUserConfigurationInteractor.execute { userConfiguration ->
+                editTextModel.value = editTextModel.value?.apply {
+                    enabled = true
+                }
+                if (ultrasoundButton.isSelected.get()) {
+                    previousUltrasonicName = variableName
+                }
+                bumperButton.isSelected.set(true)
+                ultrasoundButton.isSelected.set(false)
+                emptyButton.isSelected.set(false)
+                setTestButton(true)
+                val newVariableName = previousBumperName ?: userConfiguration?.mappingId?.getDefaultBumperName()
+                editTextModel.value?.text = newVariableName
+                onVariableNameChanged(newVariableName)
             }
-            if (ultrasoundButton.isSelected.get()) {
-                previousUltrasonicName = variableName
-            }
-            bumperButton.isSelected.set(true)
-            ultrasoundButton.isSelected.set(false)
-            emptyButton.isSelected.set(false)
-            setTestButton(true)
-            val newVariableName = previousBumperName ?: userConfigurationStorage.getDefaultBumperName()
-            editTextModel.value?.text = newVariableName
-            onVariableNameChanged(newVariableName)
         }
     }
 
     override fun onUltrasoundButtonClicked() {
         model?.apply {
-            editTextModel.value = editTextModel.value?.apply {
-                enabled = true
+            getUserConfigurationInteractor.userConfigId = configId
+            getUserConfigurationInteractor.execute { userConfiguration ->
+                editTextModel.value = editTextModel.value?.apply {
+                    enabled = true
+                }
+                if (bumperButton.isSelected.get()) {
+                    previousBumperName = variableName
+                }
+                bumperButton.isSelected.set(false)
+                ultrasoundButton.isSelected.set(true)
+                emptyButton.isSelected.set(false)
+                setTestButton(true)
+                val newVariableName = previousUltrasonicName ?: userConfiguration?.mappingId?.getDefaultUltrasonicName()
+                editTextModel.value?.text = newVariableName
+                onVariableNameChanged(newVariableName)
             }
-            if (bumperButton.isSelected.get()) {
-                previousBumperName = variableName
-            }
-            bumperButton.isSelected.set(false)
-            ultrasoundButton.isSelected.set(true)
-            emptyButton.isSelected.set(false)
-            setTestButton(true)
-            val newVariableName = previousUltrasonicName ?: userConfigurationStorage.getDefaultUltrasonicName()
-            editTextModel.value?.text = newVariableName
-            onVariableNameChanged(newVariableName)
+
         }
     }
 
@@ -160,53 +170,61 @@ class SensorConfigurationPresenter(
 
     override fun onTestButtonClicked() {
         if (bluetoothManager.isServiceDiscovered) {
-            if (model?.bumperButton?.isSelected?.get() == true) {
-                view?.showDialog(
-                    BumperTestDialog.newInstance(
-                        (userConfigurationStorage.userConfiguration?.mappingId?.getSensorPortIndex(portName)
-                            ?: 0).toString()
+            getUserConfigurationInteractor.userConfigId = configId
+            getUserConfigurationInteractor.execute { userConfiguration ->
+                if (model?.bumperButton?.isSelected?.get() == true) {
+                    view?.showDialog(
+                        BumperTestDialog.newInstance(
+                            (userConfiguration?.mappingId?.getSensorPortIndex(portName)
+                                ?: 0).toString()
+                        )
                     )
-                )
+                }
+
+                if (model?.ultrasoundButton?.isSelected?.get() == true) {
+                    view?.showDialog(
+                        UltrasonicTestDialog.newInstance(
+                            (userConfiguration?.mappingId?.getSensorPortIndex(portName)
+                                ?: 0).toString()
+                        )
+                    )
+                }
             }
 
-            if (model?.ultrasoundButton?.isSelected?.get() == true) {
-                view?.showDialog(
-                    UltrasonicTestDialog.newInstance(
-                        (userConfigurationStorage.userConfiguration?.mappingId?.getSensorPortIndex(portName)
-                            ?: 0).toString()
-                    )
-                )
-            }
         } else {
             bluetoothManager.startConnectionFlow()
         }
     }
 
     override fun onDoneButtonClicked() {
-        sensor?.apply {
-            val isUsedVariable =
-                userConfigurationStorage.isUsedVariableName(
-                    this@SensorConfigurationPresenter.variableName ?: "",
-                    portName ?: ""
-                )
-            if (isUsedVariable) {
-                errorHandler.onError(R.string.error_variable_already_in_use)
-            } else {
-                type = when {
-                    model?.bumperButton?.isSelected?.get() == true -> Sensor.TYPE_BUMPER
-                    model?.ultrasoundButton?.isSelected?.get() == true -> Sensor.TYPE_ULTRASONIC
-                    else -> null
-                }
-
-                if (model?.emptyButton?.isSelected?.get() == true) {
-                    variableName = null
-                    configurationEventBus.publishSensorUpdateEvent(SensorPort(null, portName))
+        getUserConfigurationInteractor.userConfigId = configId
+        getUserConfigurationInteractor.execute { userConfiguration ->
+            sensor?.apply {
+                val isUsedVariable =
+                    userConfiguration?.mappingId?.isUsedVariableName(
+                        this@SensorConfigurationPresenter.variableName ?: "",
+                        portName ?: ""
+                    ) ?: false
+                if (isUsedVariable) {
+                    errorHandler.onError(R.string.error_variable_already_in_use)
                 } else {
-                    variableName = this@SensorConfigurationPresenter.variableName
-                    configurationEventBus.publishSensorUpdateEvent(SensorPort(this, portName))
+                    type = when {
+                        model?.bumperButton?.isSelected?.get() == true -> Sensor.TYPE_BUMPER
+                        model?.ultrasoundButton?.isSelected?.get() == true -> Sensor.TYPE_ULTRASONIC
+                        else -> null
+                    }
+
+                    if (model?.emptyButton?.isSelected?.get() == true) {
+                        variableName = null
+                        configurationEventBus.publishSensorUpdateEvent(SensorPort(null, portName))
+                    } else {
+                        variableName = this@SensorConfigurationPresenter.variableName
+                        configurationEventBus.publishSensorUpdateEvent(SensorPort(this, portName))
+                    }
                 }
             }
         }
+
     }
 
     private fun Sensor?.isTestable() =

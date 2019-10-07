@@ -98,6 +98,32 @@
         <include layout="@layout/include_play_button_labels"
                  app:viewModel="@{viewModel}"/>
 
+        <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/vertical_guide"
+                android:layout_width="1dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.5"/>
+
+        <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/horizontal_guide"
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.33"/>
+
+        <com.revolution.robotics.views.RoboticsButton
+                android:id="@+id/btn_onboarding_ready"
+                android:layout_width="@dimen/robotics_button_width"
+                android:layout_height="@dimen/robotics_button_height"
+                app:layout_constraintTop_toTopOf="@id/horizontal_guide"
+                app:layout_constraintEnd_toEndOf="@id/vertical_guide"
+                app:layout_constraintStart_toStartOf="@id/vertical_guide"
+                app:layout_constraintBottom_toBottomOf="@id/horizontal_guide"
+                app:text="@{@string/onboarding_ready}"
+                app:image="@{@drawable/ic_play}"
+                app:gone="@{safeUnbox(viewModel.onboaringFinished)}"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

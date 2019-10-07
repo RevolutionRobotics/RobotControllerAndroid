@@ -7,3 +7,4 @@
 /captures
 .externalNativeBuild
 /blockly/src/main/assets/blockly/**
+google-services.json
