@@ -16,7 +16,6 @@ open class MyRobotsItem(
     private val presenter: MyRobotsMvp.Presenter
 ) {
     val name = robot.name
-    val description = robot.description
     val imageUrl = robot.coverImage
 
     @DrawableRes

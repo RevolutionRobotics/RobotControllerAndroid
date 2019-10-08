@@ -60,41 +60,7 @@
                     android:layout_marginStart="@dimen/my_robots_content_horizontal_margin"
                     android:layout_marginEnd="@dimen/my_robots_content_horizontal_margin"
                     app:layout_constraintTop_toBottomOf="@id/robot_name"
-                    app:layout_constraintBottom_toTopOf="@id/robot_description"/>
-
-            <TextView
-                    android:id="@+id/robot_description"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:layout_marginStart="@dimen/my_robots_content_horizontal_margin"
-                    android:layout_marginEnd="@dimen/my_robots_content_horizontal_margin"
-                    android:maxLines="2"
-                    android:ellipsize="end"
-                    android:text="@{viewModel.description}"
-                    android:textColor="@color/white"
-                    android:fontFamily="@font/barlow_regular"
-                    android:textSize="@dimen/my_robots_robot_description_text_size"
-                    app:layout_constraintTop_toBottomOf="@id/robot_image"
-                    app:layout_constraintBottom_toTopOf="@id/robot_icon"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"/>
-
-            <ImageView
-                    android:id="@+id/robot_icon"
-                    android:layout_marginTop="@dimen/my_robots_robot_icon_margin_top"
-                    android:layout_marginBottom="@dimen/my_robots_robot_icon_margin_bottom"
-                    android:layout_marginStart="@dimen/my_robots_robot_icon_margin_start"
-                    android:layout_marginEnd="@dimen/my_robots_robot_icon_margin_end"
-                    android:src="@{viewModel.isUnderConstruction ? @drawable/ic_build : @drawable/ic_calendar }"
-                    android:layout_width="@dimen/my_robots_robot_icon_width"
-                    android:layout_height="0dp"
-                    android:scaleType="fitCenter"
-                    app:layout_constraintDimensionRatio="1.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/robot_icon_description"
-                    app:layout_constraintTop_toBottomOf="@id/robot_description"
-                    app:layout_constraintBottom_toTopOf="@id/icon_bottom_guide"/>
+                    app:layout_constraintBottom_toTopOf="@id/robot_icon"/>
 
             <TextView
                     android:id="@+id/robot_icon_description"
@@ -120,13 +86,32 @@
                     android:textColor="@color/white"
                     android:textSize="@dimen/my_robots_robot_icon_description_text_size"
                     android:fontFamily="@font/barlow_medium"
-                    android:layout_marginEnd="@dimen/my_robots_robot_description_margin_end"
                     app:visible="@{viewModel.isUnderConstruction}"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginEnd="2dp"
                     app:layout_constraintTop_toTopOf="@id/robot_icon"
                     app:layout_constraintBottom_toBottomOf="@id/robot_icon"
-                    app:layout_constraintStart_toEndOf="@id/robot_icon"
-                    android:layout_marginStart="@dimen/dimen_4dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:paddingStart="36dp"
+                    android:background="@drawable/under_construction_stripe"
+                    android:gravity="center_vertical"
                     app:layout_constraintEnd_toEndOf="parent"/>
+
+            <ImageView
+                    android:id="@+id/robot_icon"
+                    android:layout_marginTop="@dimen/my_robots_robot_icon_margin_top"
+                    android:layout_marginBottom="@dimen/my_robots_robot_icon_margin_bottom"
+                    android:layout_marginStart="@dimen/my_robots_robot_icon_margin_start"
+                    android:layout_marginEnd="@dimen/my_robots_robot_icon_margin_end"
+                    android:src="@{viewModel.isUnderConstruction ? @drawable/ic_build : @drawable/ic_calendar }"
+                    android:layout_width="@dimen/my_robots_robot_icon_width"
+                    android:layout_height="0dp"
+                    android:scaleType="fitCenter"
+                    app:layout_constraintDimensionRatio="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/robot_icon_description"
+                    app:layout_constraintTop_toBottomOf="@id/robot_image"
+                    app:layout_constraintBottom_toTopOf="@id/icon_bottom_guide"/>
 
             <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/icon_bottom_guide"
