@@ -7,5 +7,7 @@ class YearOfBirthSelectionViewModel(private val yearOfBirthSelectionDialog: Year
 
     val selectableYears = MutableLiveData<List<String>>()
 
+    val selectedPosition = MutableLiveData<Int>()
+
     fun onYearSelected(position: Int) = yearOfBirthSelectionDialog.onYearSelected(position)
 }

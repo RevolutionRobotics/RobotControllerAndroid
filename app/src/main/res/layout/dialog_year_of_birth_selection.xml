@@ -40,7 +40,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:onItemSelected="@{(parent,view,pos,id)->viewModel.onYearSelected(pos)}"
-                    entries="@{viewModel.selectableYears}"/>
+                    entries="@{viewModel.selectableYears}"
+                    android:selectedItemPosition="@={viewModel.selectedPosition}"/>
 
         </com.revolution.robotics.views.ChippedView>
     </androidx.constraintlayout.widget.ConstraintLayout>
