@@ -2,12 +2,9 @@ package com.revolution.robotics.features.mainmenu
 
 import com.revolution.robotics.R
 import com.revolution.robotics.core.interactor.GetUserProgramInteractor
-import com.revolution.robotics.core.interactor.firebase.ChallengeCategoriesInteractor
 import com.revolution.robotics.core.utils.AppPrefs
 import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.features.mainmenu.tutorial.TutorialViewModel
-import com.revolution.robotics.features.onboarding.congratulations.CongratulationsDialog
-import com.revolution.robotics.features.play.instances.PlayGamerFragmentDirections
 
 class MainMenuPresenter(
     private val userProgramInteractor: GetUserProgramInteractor,
