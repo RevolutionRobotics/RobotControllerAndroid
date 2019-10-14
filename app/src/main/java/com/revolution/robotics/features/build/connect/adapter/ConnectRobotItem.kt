@@ -5,7 +5,7 @@ import com.revolution.robotics.R
 import com.revolution.robotics.core.utils.recyclerview.DiffUtilRecyclerAdapter
 import com.revolution.robotics.features.build.connect.availableRobotsFace.ConnectMvp
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
-import org.revolutionrobotics.robotcontroller.bluetooth.domain.Device
+import org.revolutionrobotics.bluetooth.android.domain.Device
 
 @Suppress("DataClassContainsFunctions")
 data class ConnectRobotItem(val device: Device, private val presenter: ConnectMvp.Presenter) :

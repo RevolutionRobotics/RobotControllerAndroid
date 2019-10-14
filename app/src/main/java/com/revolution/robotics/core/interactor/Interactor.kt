@@ -10,7 +10,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.kodein.di.erased.instance
-import org.revolutionrobotics.robotcontroller.bluetooth.threading.moveToUIThread
+import org.revolutionrobotics.bluetooth.android.threading.moveToUIThread
 
 abstract class Interactor<T> {
 
