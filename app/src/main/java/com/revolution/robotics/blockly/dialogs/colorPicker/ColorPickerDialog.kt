@@ -13,7 +13,7 @@ import com.revolution.robotics.core.extensions.withArguments
 import com.revolution.robotics.core.utils.BundleArgumentDelegate
 import com.revolution.robotics.databinding.BlocklyDialogColorPickerBinding
 import org.kodein.di.erased.instance
-import org.revolutionrobotics.robotcontroller.blocklysdk.view.result.ColorResult
+import org.revolutionrobotics.blockly.android.view.result.ColorResult
 
 class ColorPickerDialog :
     JavascriptPromptDialog<BlocklyDialogColorPickerBinding>(R.layout.blockly_dialog_color_picker), ColorPickerMvp.View {

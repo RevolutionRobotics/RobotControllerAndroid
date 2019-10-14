@@ -1,7 +1,3 @@
 [submodule "bluetoothRobotics"]
     path = bluetoothRobotics
 url=https://github.com/RevolutionRobotics/RevolutionRoboticsBluetoothAndroid.git
-[submodule "blocklyRobotics"]
-    path = blocklyRobotics
-url=https://github.com/RevolutionRobotics/RevolutionRoboticsBlocklyAndroid.git
-    branch = handover

@@ -3,7 +3,7 @@ package com.revolution.robotics.features.coding
 import com.revolution.robotics.BaseDialog
 import com.revolution.robotics.core.Mvp
 import com.revolution.robotics.core.domain.local.UserProgram
-import org.revolutionrobotics.robotcontroller.blocklysdk.view.jsInterface.SaveBlocklyListener
+import org.revolutionrobotics.blockly.android.view.jsInterface.SaveBlocklyListener
 
 interface CodingMvp : Mvp {
 

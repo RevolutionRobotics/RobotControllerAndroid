@@ -10,7 +10,7 @@ import com.revolution.robotics.core.extensions.withArguments
 import com.revolution.robotics.core.utils.BundleArgumentDelegate
 import com.revolution.robotics.databinding.BlocklyDialogSliderBinding
 import org.kodein.di.erased.instance
-import org.revolutionrobotics.robotcontroller.blocklysdk.view.result.SliderResult
+import org.revolutionrobotics.blockly.android.view.result.SliderResult
 
 class SliderDialog : JavascriptPromptDialog<BlocklyDialogSliderBinding>(R.layout.blockly_dialog_slider),
     SliderMvp.View {
