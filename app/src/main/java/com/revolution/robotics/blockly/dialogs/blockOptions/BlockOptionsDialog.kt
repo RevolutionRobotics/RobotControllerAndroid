@@ -17,7 +17,7 @@ import com.revolution.robotics.views.ChippedEditTextViewModel
 import com.revolution.robotics.views.dialogs.DialogButton
 import com.revolution.robotics.views.dialogs.DialogButtonHelper
 import org.kodein.di.erased.instance
-import org.revolutionrobotics.robotcontroller.blocklysdk.view.result.BlockOptionResult
+import org.revolutionrobotics.blockly.android.view.result.BlockOptionResult
 
 class BlockOptionsDialog :
     JavascriptPromptDialog<BlocklyDialogBlockOptionsBinding>(R.layout.blockly_dialog_block_options) {

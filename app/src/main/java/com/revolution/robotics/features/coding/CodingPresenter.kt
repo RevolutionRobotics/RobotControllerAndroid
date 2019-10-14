@@ -11,7 +11,7 @@ import com.revolution.robotics.features.coding.new.NewProgramConfirmDialog
 import com.revolution.robotics.features.coding.programs.ProgramsDialog
 import com.revolution.robotics.features.coding.python.PythonDialog
 import com.revolution.robotics.features.coding.saveProgram.SaveProgramDialog
-import org.revolutionrobotics.robotcontroller.blocklysdk.view.jsInterface.SaveBlocklyListener
+import org.revolutionrobotics.blockly.android.view.jsInterface.SaveBlocklyListener
 import java.util.concurrent.TimeUnit
 
 @Suppress("TooManyFunctions")
