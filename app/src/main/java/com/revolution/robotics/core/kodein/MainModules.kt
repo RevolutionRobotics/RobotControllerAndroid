@@ -18,7 +18,7 @@ import com.revolution.robotics.features.configure.controller.CompatibleProgramFi
 import com.revolution.robotics.features.shared.ErrorHandler
 import org.kodein.di.Kodein
 import org.kodein.di.erased.bind
-import org.revolutionrobotics.robotcontroller.bluetooth.communication.RoboticsDeviceConnector
+import org.revolutionrobotics.bluetooth.android.communication.RoboticsDeviceConnector
 
 fun createMainModule() =
     Kodein.Module("MainModule") {
