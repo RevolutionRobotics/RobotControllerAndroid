@@ -87,12 +87,8 @@ class MotorConfigurationPresenter(
         buttonHandler?.onRightSideClicked()
     }
 
-    override fun onCounterClockwiseClicked() {
-        buttonHandler?.onCounterClockwiseClicked()
-    }
-
-    override fun onClockwiseClicked() {
-        buttonHandler?.onClockwiseClicked()
+    override fun onReversedChanged(reversed: Boolean) {
+        model?.reversed?.set(reversed)
     }
 
     override fun onTestButtonClicked() {
@@ -120,7 +116,7 @@ class MotorConfigurationPresenter(
 
     private fun generateDriveTrainDialog(portIndex: Int) = DrivetrainTestDialog.newInstance(
         (portIndex).toString(),
-        if (model?.clockwiseButton?.isSelected?.get() == true) {
+        if (model?.reversed?.get() == true) {
             TestDialog.VALUE_CLOCKWISE
         } else {
             TestDialog.VALUE_COUNTER_CLOCKWISE
@@ -132,24 +128,12 @@ class MotorConfigurationPresenter(
         }
     )
 
-    private fun generateMotorDialog(portIndex: Int) = MotorTestDialog.newInstance(
-        (portIndex).toString(),
-        if (model?.motorClockwiseButton?.isSelected?.get() == true) {
-            TestDialog.VALUE_CLOCKWISE
-        } else {
-            TestDialog.VALUE_COUNTER_CLOCKWISE
-        }
-    )
+    private fun generateMotorDialog(portIndex: Int) = MotorTestDialog.newInstance((portIndex).toString())
 
     private fun setDrivetrainValues(motor: Motor) {
         motor.apply {
             type = Motor.TYPE_DRIVETRAIN
-            rotation =
-                if (model?.clockwiseButton?.isSelected?.get() == true) {
-                    Motor.DIRECTION_CLOCKWISE
-                } else {
-                    Motor.DIRECTION_COUNTER_CLOCKWISE
-                }
+            reversed = model?.reversed?.get() ?: false
 
             side =
                 if (model?.sideLeftButton?.isSelected?.get() == true) {
@@ -164,12 +148,6 @@ class MotorConfigurationPresenter(
     private fun setMotorValues(motor: Motor) {
         motor.apply {
             type = Motor.TYPE_MOTOR
-            rotation =
-                if (model?.motorClockwiseButton?.isSelected?.get() == true) {
-                    Motor.DIRECTION_CLOCKWISE
-                } else {
-                    Motor.DIRECTION_COUNTER_CLOCKWISE
-                }
             side = null
             variableName = this@MotorConfigurationPresenter.variableName
         }
@@ -178,7 +156,7 @@ class MotorConfigurationPresenter(
     private fun setEmptyValues(motor: Motor) {
         motor.apply {
             type = null
-            rotation = null
+            reversed = false
         }
     }
 

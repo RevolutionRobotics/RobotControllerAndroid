@@ -1,5 +1,6 @@
 package com.revolution.robotics.features.configure.motor
 
+import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.revolution.robotics.R
@@ -41,30 +42,12 @@ class MotorConfigurationViewModel(
             R.drawable.ic_wheel_right,
             presenter::onRightSideClicked
         )
-    val counterClockwiseButton =
-        ConfigButtonViewModel(
-            R.string.configure_motor_counterclockwise_button_title,
-            R.drawable.ic_rotation_left,
-            presenter::onCounterClockwiseClicked
-        )
-    val clockwiseButton =
-        ConfigButtonViewModel(
-            R.string.configure_motor_clockwise_button_title,
-            R.drawable.ic_rotation_right_grey,
-            presenter::onClockwiseClicked
-        )
-    val motorCounterClockwiseButton =
-        ConfigButtonViewModel(
-            R.string.configure_motor_counterclockwise_button_title,
-            R.drawable.ic_rotation_left,
-            presenter::onCounterClockwiseClicked
-        )
-    val motorClockwiseButton =
-        ConfigButtonViewModel(
-            R.string.configure_motor_clockwise_button_title,
-            R.drawable.ic_rotation_right_grey,
-            presenter::onClockwiseClicked
-        )
+
+    var reversedCheckboxVisible = ObservableBoolean(false)
+    var reversed = ObservableBoolean(false)
+
+    fun onReversedChecked(checked: Boolean) = presenter.onReversedChanged(checked)
+
 
     val editTextModel = MutableLiveData<ChippedEditTextViewModel>()
 
