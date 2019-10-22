@@ -93,7 +93,7 @@ def photoview_version = "2.3.0"
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
-    implementation 'org.revolutionrobotics:blockly-android:0.2'
+    implementation 'org.revolutionrobotics:blockly-android:0.2.1'
     implementation 'org.revolutionrobotics:bluetooth-android:0.1'
     
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"

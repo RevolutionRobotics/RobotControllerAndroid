@@ -19,8 +19,7 @@ interface MotorConfigurationMvp : Mvp {
         fun onMotorClicked()
         fun onLeftSideClicked()
         fun onRightSideClicked()
-        fun onCounterClockwiseClicked()
-        fun onClockwiseClicked()
+        fun onReversedChanged(reversed: Boolean)
         fun onTestButtonClicked()
         fun onDoneButtonClicked()
     }

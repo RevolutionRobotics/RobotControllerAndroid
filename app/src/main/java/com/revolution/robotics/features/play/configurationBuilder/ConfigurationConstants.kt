@@ -17,8 +17,6 @@ class ConfigurationConstants private constructor() {
             Motor.TYPE_DRIVETRAIN to 2,
             Motor.SIDE_LEFT to 0,
             Motor.SIDE_RIGHT to 1,
-            Motor.DIRECTION_CLOCKWISE to 0,
-            Motor.DIRECTION_COUNTER_CLOCKWISE to 1,
 
             Sensor.TYPE_ULTRASONIC to 1,
             Sensor.TYPE_BUMPER to 2
