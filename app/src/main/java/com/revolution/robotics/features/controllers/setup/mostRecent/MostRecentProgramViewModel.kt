@@ -56,4 +56,12 @@ class MostRecentProgramViewModel(
             presenter.onProgramSelected(item.program, item.isBound)
         }
     }
+
+    fun onProgramLongClicked(index: Int): Boolean {
+        getItem(index)?.let { item ->
+            presenter.onProgramSelected(item.program, item.isBound)
+            return true
+        }
+        return false
+    }
 }
