@@ -21,8 +21,6 @@ class MainMenuPresenter(
         super.register(view, model)
         if (!appPrefs.userTypeSelected) {
             navigator.navigate(MainMenuFragmentDirections.toUserTypeSelection())
-        } else if (!appPrefs.robotRegistered) {
-            navigator.navigate(MainMenuFragmentDirections.toRobotRegistration())
         } else if (!appPrefs.finishedOnboarding) {
             if (!appPrefs.onboardingRobotBuild) {
                 navigator.navigate(MainMenuFragmentDirections.toHaveYouBuiltCarby())
