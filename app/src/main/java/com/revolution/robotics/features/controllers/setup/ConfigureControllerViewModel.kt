@@ -39,7 +39,7 @@ class ConfigureControllerViewModel(private val presenter: ConfigureControllerMvp
     fun onProgramLongClicked(index: Int) : Boolean {
         selectedProgram = index
         getProgram(index)?.let {
-            presenter.onProgramSelected(it, true)
+            presenter.showProgramDialog(it, true)
             return true
         }
         return false

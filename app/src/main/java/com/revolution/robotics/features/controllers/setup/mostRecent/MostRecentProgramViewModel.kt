@@ -59,7 +59,7 @@ class MostRecentProgramViewModel(
 
     fun onProgramLongClicked(index: Int): Boolean {
         getItem(index)?.let { item ->
-            presenter.onProgramSelected(item.program, item.isBound)
+            presenter.showProgramDialog(item.program, item.isBound)
             return true
         }
         return false
