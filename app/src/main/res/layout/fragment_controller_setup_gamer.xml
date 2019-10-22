@@ -263,7 +263,8 @@
                 android:layout_height="@dimen/controller_setup_program_button_height"
                 app:program="@{viewModel.getProgram(4)}"
                 app:isProgramSelected="@{viewModel.isProgramSelected(4)}"
-                android:onClick="@{() -> viewModel.selectProgram(4)}"/>
+                android:onClick="@{() -> viewModel.selectProgram(4)}"
+                android:onLongClick="@{() -> viewModel.onProgramLongClicked(4)}"/>
 
         <com.revolution.robotics.views.controllerSetup.ProgramConnectionButton
                 android:id="@+id/program_3"
@@ -275,7 +276,8 @@
                 android:layout_height="@dimen/controller_setup_program_button_height"
                 app:program="@{viewModel.getProgram(3)}"
                 app:isProgramSelected="@{viewModel.isProgramSelected(3)}"
-                android:onClick="@{() -> viewModel.selectProgram(3)}"/>
+                android:onClick="@{() -> viewModel.selectProgram(3)}"
+                android:onLongClick="@{() -> viewModel.onProgramLongClicked(3)}"/>
 
         <com.revolution.robotics.views.controllerSetup.ProgramConnectionButton
                 android:id="@+id/program_1"
@@ -287,7 +289,8 @@
                 android:layout_height="@dimen/controller_setup_program_button_height"
                 app:program="@{viewModel.getProgram(1)}"
                 app:isProgramSelected="@{viewModel.isProgramSelected(1)}"
-                android:onClick="@{() -> viewModel.selectProgram(1)}"/>
+                android:onClick="@{() -> viewModel.selectProgram(1)}"
+                android:onLongClick="@{() -> viewModel.onProgramLongClicked(1)}"/>
 
         <com.revolution.robotics.views.controllerSetup.ProgramConnectionButton
                 android:id="@+id/program_2"
@@ -299,7 +302,8 @@
                 android:layout_height="@dimen/controller_setup_program_button_height"
                 app:program="@{viewModel.getProgram(2)}"
                 app:isProgramSelected="@{viewModel.isProgramSelected(2)}"
-                android:onClick="@{() -> viewModel.selectProgram(2)}"/>
+                android:onClick="@{() -> viewModel.selectProgram(2)}"
+                android:onLongClick="@{() -> viewModel.onProgramLongClicked(2)}"/>
 
         <com.revolution.robotics.views.controllerSetup.ProgramConnectionButton
                 android:id="@+id/program_drivetrain"
@@ -320,7 +324,8 @@
                 android:layout_height="@dimen/controller_setup_program_button_height"
                 app:program="@{viewModel.getProgram(5)}"
                 app:isProgramSelected="@{viewModel.isProgramSelected(5)}"
-                android:onClick="@{() -> viewModel.selectProgram(5)}"/>
+                android:onClick="@{() -> viewModel.selectProgram(5)}"
+                android:onLongClick="@{() -> viewModel.onProgramLongClicked(5)}"/>
 
         <com.revolution.robotics.views.controllerSetup.ProgramConnectionButton
                 android:id="@+id/program_6"
@@ -332,7 +337,8 @@
                 android:layout_height="@dimen/controller_setup_program_button_height"
                 app:program="@{viewModel.getProgram(6)}"
                 app:isProgramSelected="@{viewModel.isProgramSelected(6)}"
-                android:onClick="@{() -> viewModel.selectProgram(6)}"/>
+                android:onClick="@{() -> viewModel.selectProgram(6)}"
+                android:onLongClick="@{() -> viewModel.onProgramLongClicked(6)}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

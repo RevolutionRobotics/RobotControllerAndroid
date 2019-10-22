@@ -36,6 +36,15 @@ class ConfigureControllerViewModel(private val presenter: ConfigureControllerMvp
         presenter.onProgramSlotSelected(index)
     }
 
+    fun onProgramLongClicked(index: Int) : Boolean {
+        selectedProgram = index
+        getProgram(index)?.let {
+            presenter.onProgramSelected(it, true)
+            return true
+        }
+        return false
+    }
+
     fun update(userControllerWithPrograms: UserControllerWithPrograms) {
         controllerType = ControllerType.fromId(userControllerWithPrograms.userController.type)!!
         userControllerWithPrograms.userController.getMappingList().forEachIndexed { index, userProgramBinding ->
