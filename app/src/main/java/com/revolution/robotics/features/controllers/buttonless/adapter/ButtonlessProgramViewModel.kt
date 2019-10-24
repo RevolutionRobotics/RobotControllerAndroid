@@ -45,4 +45,8 @@ class ButtonlessProgramViewModel(
     fun onInfoButtonClicked() {
         presenter.onInfoButtonClicked(program)
     }
+
+    fun onEditButtonClicked() {
+        presenter.onEditButtonClicked(program)
+    }
 }

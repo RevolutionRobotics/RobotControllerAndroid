@@ -7,6 +7,7 @@ import com.revolution.robotics.core.domain.local.UserProgram
 import com.revolution.robotics.core.interactor.GetFullConfigurationInteractor
 import com.revolution.robotics.core.interactor.GetUserProgramsInteractor
 import com.revolution.robotics.core.interactor.SaveUserControllerInteractor
+import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.features.configure.controller.CompatibleProgramFilterer
 import com.revolution.robotics.features.controllers.ProgramOrderingHandler
 import com.revolution.robotics.features.controllers.buttonless.adapter.ButtonlessProgramViewModel
@@ -18,7 +19,9 @@ class ButtonlessProgramSelectorPresenter(
     private val getFullConfigurationInteractor: GetFullConfigurationInteractor,
     private val getUserProgramsInteractor: GetUserProgramsInteractor,
     private val saveUserControllerInteractor: SaveUserControllerInteractor,
-    private val compatibleProgramFilterer: CompatibleProgramFilterer
+    private val compatibleProgramFilterer: CompatibleProgramFilterer,
+    private val navigator: Navigator
+
 ) : ButtonlessProgramSelectorMvp.Presenter {
 
     companion object {
@@ -214,6 +217,11 @@ class ButtonlessProgramSelectorPresenter(
             userProgram,
             compatibleProgramFilterer.isProgramCompatible(userProgram, userConfiguration)
         )
+    }
+
+    override fun onEditButtonClicked(userProgram: UserProgram) {
+
+        navigator.navigate(ButtonlessProgramSelectorFragmentDirections.toCoding(userProgram, true))
     }
 
     override fun onProgramEdited(userProgram: UserProgram) {
