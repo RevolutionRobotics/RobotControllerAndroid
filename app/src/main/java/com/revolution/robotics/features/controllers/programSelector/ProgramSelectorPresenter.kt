@@ -62,8 +62,7 @@ class ProgramSelectorPresenter(
                     }
                 }
                 programs = ArrayList<UserProgram>().apply { allPrograms?.let { addAll(it) } }
-                orderAndFilterPrograms()
-                onProgramsChanged()
+                updateOrderingAndFiltering()
             }
         }
     }
@@ -80,11 +79,6 @@ class ProgramSelectorPresenter(
     }
 
     override fun updateOrderingAndFiltering() {
-        orderAndFilterPrograms()
-        onProgramsChanged()
-    }
-
-    private fun orderAndFilterPrograms() {
         getFullConfigurationInteractor.userConfigId = userConfigurationId
         getFullConfigurationInteractor.execute {
             model?.let { model ->
@@ -98,6 +92,7 @@ class ProgramSelectorPresenter(
                         allPrograms ?: emptyList()
                     }
                 programs = filteredPrograms.sortedWith(model.programOrderingHandler.getComparator())
+                onProgramsChanged()
             }
         }
     }
