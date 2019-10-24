@@ -22,7 +22,9 @@ class ProgramViewModel(private val program: UserProgram, private val presenter: 
     val background = ProgramViewModel.background
     val formattedDate = program.lastModified.formatYearMonthDay()
 
-    fun onProgramClicked() {
-        presenter.onProgramSelected(program)
-    }
+    fun onProgramClicked() = presenter.onProgramSelected(program)
+
+    fun onProgramInfoClicked() = presenter.onProgramInfoClicked(program)
+
+    fun onEditProgramClicked() = presenter.onEditProgramClicked(program)
 }
