@@ -114,6 +114,10 @@ class ProgramSelectorPresenter(
     }
 
     override fun onProgramSelected(userProgram: UserProgram) {
+        addProgram(userProgram)
+    }
+
+    override fun onProgramInfoClicked(userProgram: UserProgram) {
         getFullConfigurationInteractor.userConfigId = userConfigurationId
         getFullConfigurationInteractor.execute {
             if (compatibleProgramFilterer.isProgramCompatible(userProgram, it.userConfiguration)) {
@@ -122,6 +126,10 @@ class ProgramSelectorPresenter(
                 view?.showDialog(ProgramDialog.CompatibilityIssue.newInstance(userProgram))
             }
         }
+    }
+
+    override fun onEditProgramClicked(userProgram: UserProgram) {
+        navigator.navigate(ProgramSelectorFragmentDirections.toCoding(userProgram, true))
     }
 
     override fun addProgram(userProgram: UserProgram) {
