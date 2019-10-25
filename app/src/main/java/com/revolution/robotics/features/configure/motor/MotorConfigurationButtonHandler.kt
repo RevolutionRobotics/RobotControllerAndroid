@@ -53,10 +53,8 @@ class MotorConfigurationButtonHandler(
             sideLeftButton.isVisible.set(true)
             sideLeftButton.isSelected.set(motor.side != Motor.SIDE_RIGHT)
 
-            clockwiseButton.isVisible.set(true)
-            counterClockwiseButton.isVisible.set(true)
-            clockwiseButton.isSelected.set(motor.rotation == Motor.DIRECTION_CLOCKWISE)
-            counterClockwiseButton.isSelected.set(motor.rotation != Motor.DIRECTION_CLOCKWISE)
+            reversedCheckboxVisible.set(true)
+            reversed.set(motor.reversed)
 
             setDoneButton()
             setTestButton(true)
@@ -70,11 +68,6 @@ class MotorConfigurationButtonHandler(
             previousMotorName = motor.variableName
             clearVisibilitiesAndSelections()
             motorButton.isSelected.set(true)
-
-            motorClockwiseButton.isVisible.set(true)
-            motorClockwiseButton.isSelected.set(motor.rotation == Motor.DIRECTION_CLOCKWISE)
-            motorCounterClockwiseButton.isVisible.set(true)
-            motorCounterClockwiseButton.isSelected.set(motor.rotation != Motor.DIRECTION_CLOCKWISE)
 
             setDoneButton()
             setTestButton(true)
@@ -140,15 +133,13 @@ class MotorConfigurationButtonHandler(
             clearVisibilitiesAndSelections()
             motorButton.isSelected.set(true)
 
-            motorClockwiseButton.isSelected.set(false)
-            motorClockwiseButton.isVisible.set(true)
-            motorCounterClockwiseButton.isSelected.set(false)
-            motorCounterClockwiseButton.isVisible.set(true)
+            reversed.set(false)
+            reversedCheckboxVisible.set(false)
 
             editTextModel.value?.text = previousMotorName ?: "motor$portNumber"
 
             setDoneButton()
-            setTestButton(false)
+            setTestButton(true)
         }
     }
 
@@ -157,11 +148,8 @@ class MotorConfigurationButtonHandler(
             sideLeftButton.isSelected.set(true)
             sideRightButton.isSelected.set(false)
 
-            counterClockwiseButton.isVisible.set(true)
-            counterClockwiseButton.isSelected.set(true)
-
-            clockwiseButton.isVisible.set(true)
-            clockwiseButton.isSelected.set(false)
+            reversedCheckboxVisible.set(true)
+            reversed.set(false)
 
             setDoneButton()
             setTestButton(true)
@@ -173,44 +161,11 @@ class MotorConfigurationButtonHandler(
             sideLeftButton.isSelected.set(false)
             sideRightButton.isSelected.set(true)
 
-            counterClockwiseButton.isVisible.set(true)
-            counterClockwiseButton.isSelected.set(false)
-
-            clockwiseButton.isVisible.set(true)
-            clockwiseButton.isSelected.set(true)
+            reversedCheckboxVisible.set(true)
+            reversed.set(false)
 
             setDoneButton()
             setTestButton(true)
-        }
-    }
-
-    fun onCounterClockwiseClicked() {
-        model.apply {
-            if (motorButton.isSelected.get()) {
-                motorClockwiseButton.isSelected.set(false)
-                motorCounterClockwiseButton.isSelected.set(true)
-
-                setDoneButton()
-                setTestButton(true)
-            } else {
-                counterClockwiseButton.isSelected.set(true)
-                clockwiseButton.isSelected.set(false)
-            }
-        }
-    }
-
-    fun onClockwiseClicked() {
-        model.apply {
-            if (motorButton.isSelected.get()) {
-                motorClockwiseButton.isSelected.set(true)
-                motorCounterClockwiseButton.isSelected.set(false)
-
-                setDoneButton()
-                setTestButton(true)
-            } else {
-                counterClockwiseButton.isSelected.set(false)
-                clockwiseButton.isSelected.set(true)
-            }
         }
     }
 
@@ -223,14 +178,8 @@ class MotorConfigurationButtonHandler(
             sideLeftButton.isVisible.set(false)
             sideRightButton.isSelected.set(false)
             sideRightButton.isVisible.set(false)
-            counterClockwiseButton.isSelected.set(false)
-            counterClockwiseButton.isVisible.set(false)
-            clockwiseButton.isSelected.set(false)
-            clockwiseButton.isVisible.set(false)
-            motorClockwiseButton.isSelected.set(false)
-            motorClockwiseButton.isVisible.set(false)
-            motorCounterClockwiseButton.isSelected.set(false)
-            motorCounterClockwiseButton.isVisible.set(false)
+            reversed.set(false)
+            reversedCheckboxVisible.set(false)
         }
     }
 
@@ -250,11 +199,9 @@ class MotorConfigurationButtonHandler(
 
     private fun drivetrainStateValid() = model.driveTrainButton.isSelected.get() &&
             (model.sideLeftButton.isSelected.get() || model.sideRightButton.isSelected.get()) &&
-            (model.clockwiseButton.isSelected.get() || model.counterClockwiseButton.isSelected.get()) &&
             !variableName.isNullOrEmpty()
 
     private fun motorStateValid() = model.motorButton.isSelected.get() &&
-            (model.motorClockwiseButton.isSelected.get() || model.motorCounterClockwiseButton.isSelected.get()) &&
             !variableName.isNullOrEmpty()
 
     private fun emptyStateValid() = model.emptyButton.isSelected.get()

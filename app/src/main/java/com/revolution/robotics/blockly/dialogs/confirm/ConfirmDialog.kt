@@ -10,7 +10,7 @@ import com.revolution.robotics.core.utils.BundleArgumentDelegate
 import com.revolution.robotics.databinding.BlocklyDialogConfirmBinding
 import com.revolution.robotics.views.dialogs.DialogButton
 import com.revolution.robotics.views.dialogs.DialogButtonHelper
-import org.revolutionrobotics.robotcontroller.blocklysdk.view.result.ConfirmResult
+import org.revolutionrobotics.blockly.android.view.result.ConfirmResult
 
 class ConfirmDialog : JavascriptPromptDialog<BlocklyDialogConfirmBinding>(R.layout.blockly_dialog_confirm) {
 

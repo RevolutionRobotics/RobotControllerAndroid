@@ -1,8 +1,4 @@
 include ':app'
-include ':bluetoothsdk'
-project(':bluetoothsdk').projectDir = new File(rootProject.projectDir, 'bluetoothRobotics/bluetoothsdk')
-include ':blocklysdk'
-project(':blocklysdk').projectDir = new File(rootProject.projectDir, 'blocklyRobotics/blocklysdk')
 
 ext.IS_CI_RUN = System.getenv().containsKey("BUILD_CACHE_CREDS")
 

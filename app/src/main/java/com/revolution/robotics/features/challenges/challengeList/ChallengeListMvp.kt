@@ -6,10 +6,12 @@ import com.revolution.robotics.core.domain.remote.ChallengeCategory
 
 interface ChallengeListMvp : Mvp {
 
-    interface View : Mvp.View
+    interface View : Mvp.View {
+        fun displayChallengeCategory(challengeCategory: ChallengeCategory)
+    }
 
     interface Presenter : Mvp.Presenter<View, ChallengeListViewModel> {
-        fun setChallengeCategory(challengeCategory: ChallengeCategory)
+        fun loadChallangeCategory(challengeCategoryId: String)
         fun onChallengeClicked(challengeStep: Challenge)
     }
 }

@@ -2,9 +2,12 @@ package com.revolution.robotics.features.play.instances
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.revolution.robotics.core.domain.remote.ChallengeCategory
+import com.revolution.robotics.core.interactor.firebase.ChallengeCategoriesInteractor
 import com.revolution.robotics.databinding.FragmentPlayGamerBinding
 import com.revolution.robotics.features.play.JoystickView
 import com.revolution.robotics.features.play.PlayFragment
+import org.kodein.di.erased.instance
 
 class PlayGamerFragment : PlayFragment(), JoystickView.JoystickEventListener {
 

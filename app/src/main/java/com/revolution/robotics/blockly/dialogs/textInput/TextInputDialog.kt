@@ -11,7 +11,7 @@ import com.revolution.robotics.databinding.BlocklyDialogTextInputBinding
 import com.revolution.robotics.views.ChippedEditTextViewModel
 import com.revolution.robotics.views.dialogs.DialogButton
 import com.revolution.robotics.views.dialogs.DialogButtonHelper
-import org.revolutionrobotics.robotcontroller.blocklysdk.view.result.TextResult
+import org.revolutionrobotics.blockly.android.view.result.TextResult
 
 class TextInputDialog : JavascriptPromptDialog<BlocklyDialogTextInputBinding>(R.layout.blockly_dialog_text_input) {
 

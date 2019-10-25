@@ -5,8 +5,8 @@ import com.revolution.robotics.core.kodein.utils.ApplicationContextProvider
 import com.revolution.robotics.core.utils.dynamicPermissions.BluetoothConnectionFlowHelper
 import com.revolution.robotics.features.build.connect.ConnectDialog
 import com.revolution.robotics.features.build.connect.adapter.ConnectRobotItem
-import org.revolutionrobotics.robotcontroller.bluetooth.communication.RoboticsDeviceConnector
-import org.revolutionrobotics.robotcontroller.bluetooth.discover.RoboticsDeviceDiscoverer
+import org.revolutionrobotics.bluetooth.android.communication.RoboticsDeviceConnector
+import org.revolutionrobotics.bluetooth.android.discover.RoboticsDeviceDiscoverer
 
 @SuppressLint("MissingPermission")
 class ConnectPresenter(

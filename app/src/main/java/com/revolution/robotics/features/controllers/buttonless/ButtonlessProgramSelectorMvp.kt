@@ -16,6 +16,7 @@ interface ButtonlessProgramSelectorMvp : Mvp {
         fun updateOrderingAndFiltering()
         fun onProgramSelected(viewModel: ButtonlessProgramViewModel)
         fun onInfoButtonClicked(userProgram: UserProgram)
+        fun onEditButtonClicked(userProgram: UserProgram)
         fun onProgramEdited(userProgram: UserProgram)
         fun clearSelections()
         fun load(userConfigurationId: Int)

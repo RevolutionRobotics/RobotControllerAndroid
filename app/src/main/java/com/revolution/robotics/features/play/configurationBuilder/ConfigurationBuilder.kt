@@ -16,7 +16,7 @@ class ConfigurationBuilder {
         MOTORS,
         NAME,
         TYPE,
-        DIRECTION,
+        REVERSED,
         SIDE,
         SENSORS,
         BLOCKLY_LIST("blocklyList"),
@@ -96,7 +96,7 @@ class ConfigurationBuilder {
             if (motor != null) {
                 put(Key.NAME, motor.variableName)
                 put(Key.TYPE, ConfigurationConstants.get(motor.type))
-                put(Key.DIRECTION, ConfigurationConstants.get(motor.rotation))
+                put(Key.REVERSED, if (motor.reversed) 1 else 0)
                 put(Key.SIDE, ConfigurationConstants.get(motor.side))
             }
         }

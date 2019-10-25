@@ -6,7 +6,7 @@ import com.revolution.robotics.core.interactor.GetFullConfigurationInteractor
 import com.revolution.robotics.core.interactor.GetUserRobotByConfigIdInteractor
 import com.revolution.robotics.features.bluetooth.BluetoothManager
 import com.revolution.robotics.features.shared.ErrorHandler
-import org.revolutionrobotics.robotcontroller.bluetooth.service.RoboticsLiveControllerService
+import org.revolutionrobotics.bluetooth.android.service.RoboticsLiveControllerService
 import kotlin.math.max
 
 class PlayPresenter(

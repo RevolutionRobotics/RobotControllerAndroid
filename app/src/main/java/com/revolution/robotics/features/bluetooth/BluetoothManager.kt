@@ -4,8 +4,8 @@ import androidx.fragment.app.FragmentActivity
 import com.revolution.robotics.core.utils.dynamicPermissions.BluetoothConnectionFlowHelper
 import org.kodein.di.Kodein
 import org.kodein.di.erased.instance
-import org.revolutionrobotics.robotcontroller.bluetooth.communication.RoboticsConnectionStatusListener
-import org.revolutionrobotics.robotcontroller.bluetooth.communication.RoboticsDeviceConnector
+import org.revolutionrobotics.bluetooth.android.communication.RoboticsConnectionStatusListener
+import org.revolutionrobotics.bluetooth.android.communication.RoboticsDeviceConnector
 
 @Suppress("TooManyFunctions")
 class BluetoothManager(private var kodein: Kodein) : RoboticsConnectionStatusListener {

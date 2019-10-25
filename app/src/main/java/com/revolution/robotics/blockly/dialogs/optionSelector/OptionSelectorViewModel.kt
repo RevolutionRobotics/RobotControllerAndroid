@@ -5,7 +5,7 @@ import com.revolution.robotics.R
 import com.revolution.robotics.blockly.dialogs.BlocklyDialogInterface
 import com.revolution.robotics.blockly.utils.BlocklyResultHolder
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
-import org.revolutionrobotics.robotcontroller.blocklysdk.view.result.OptionResult
+import org.revolutionrobotics.blockly.android.view.result.OptionResult
 
 class OptionSelectorViewModel(
     val options: List<Option>,

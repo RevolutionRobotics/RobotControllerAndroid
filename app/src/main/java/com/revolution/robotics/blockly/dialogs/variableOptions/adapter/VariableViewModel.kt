@@ -3,7 +3,7 @@ package com.revolution.robotics.blockly.dialogs.variableOptions.adapter
 import com.revolution.robotics.R
 import com.revolution.robotics.blockly.dialogs.variableOptions.VariableOptionsMvp
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
-import org.revolutionrobotics.robotcontroller.blocklysdk.BlocklyVariable
+import org.revolutionrobotics.blockly.android.BlocklyVariable
 
 class VariableViewModel(
     private val variable: BlocklyVariable,

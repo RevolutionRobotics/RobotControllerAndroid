@@ -86,11 +86,19 @@ class ConfigureControllerPresenter(
     }
 
 
-    override fun onProgramSelected(program: UserProgram, isBound: Boolean) {
+    override fun showProgramDialog(program: UserProgram, isBound: Boolean) {
         if (isBound) {
             view?.showDialog(ProgramDialog.Remove.newInstance(program))
         } else {
             view?.showDialog(ProgramDialog.Add.newInstance(program))
+        }
+    }
+
+    override fun onProgramSelected(program: UserProgram, isBound: Boolean) {
+        if (isBound) {
+            removeProgram()
+        } else {
+            addProgram(program)
         }
     }
 

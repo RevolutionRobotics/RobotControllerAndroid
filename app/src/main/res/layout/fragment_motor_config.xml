@@ -89,49 +89,19 @@
                 app:layout_constraintStart_toStartOf="@id/button_engine"
                 app:layout_constraintEnd_toEndOf="@id/button_engine"/>
 
-        <include
+        <CheckBox
+                android:text="Reversed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/button_direction_motor_left"
-                layout="@layout/layout_config_button"
-                app:viewModel="@{viewModel.motorCounterClockwiseButton}"
-                android:layout_marginTop="@dimen/dimen_12dp"
-                app:layout_constraintTop_toBottomOf="@id/button_drivetrain"
-                app:layout_constraintStart_toStartOf="@id/button_drivetrain"
-                app:layout_constraintEnd_toEndOf="@id/button_drivetrain"/>
-
-        <include
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/button_direction_motor_right"
-                layout="@layout/layout_config_button"
-                app:viewModel="@{viewModel.motorClockwiseButton}"
-                android:layout_marginTop="@dimen/dimen_12dp"
-                app:layout_constraintTop_toBottomOf="@id/button_engine"
-                app:layout_constraintStart_toStartOf="@id/button_engine"
-                app:layout_constraintEnd_toEndOf="@id/button_engine"/>
-
-        <include
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/button_counter_clockwise"
-                layout="@layout/layout_config_button"
-                app:viewModel="@{viewModel.counterClockwiseButton}"
                 android:layout_marginTop="@dimen/dimen_12dp"
                 app:layout_constraintTop_toBottomOf="@id/button_side_left"
                 app:layout_constraintStart_toStartOf="@id/button_side_left"
-                app:layout_constraintEnd_toEndOf="@id/button_side_left"/>
-
-        <include
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/button_clockwise"
-                layout="@layout/layout_config_button"
-                app:viewModel="@{viewModel.clockwiseButton}"
-                android:layout_marginTop="@dimen/dimen_12dp"
-                app:layout_constraintTop_toBottomOf="@id/button_side_right"
-                app:layout_constraintStart_toStartOf="@id/button_side_right"
-                app:layout_constraintEnd_toEndOf="@id/button_side_right"/>
+                app:layout_constraintEnd_toEndOf="@id/button_side_right"
+                android:fontFamily="@font/jura_bold"
+                android:textSize="12sp"
+                app:visible="@{viewModel.reversedCheckboxVisible}"
+                android:checked="@{viewModel.reversed}"
+                android:onCheckedChanged="@{(compoundButton, checked) -> viewModel.onReversedChecked(checked)}"/>
 
         <include layout="@layout/layout_configuration_action_buttons"
                  app:viewModel="@{viewModel.actionButtonsViewModel}"

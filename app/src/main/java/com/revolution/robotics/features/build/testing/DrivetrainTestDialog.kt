@@ -12,13 +12,13 @@ class DrivetrainTestDialog : TestDialog() {
 
     companion object {
 
-        private var Bundle.motorDirection: String by BundleArgumentDelegate.String("motorDirection")
+        private var Bundle.reversed: Boolean by BundleArgumentDelegate.Boolean("reversed")
         private var Bundle.side: String by BundleArgumentDelegate.String("side")
 
-        fun newInstance(portNumber: String, direction: String, side: String) =
+        fun newInstance(portNumber: String, reversed: Boolean, side: String) =
             DrivetrainTestDialog().withArguments { bundle ->
                 bundle.portNumber = portNumber
-                bundle.motorDirection = direction
+                bundle.reversed = reversed
                 bundle.side = side
             }
     }
@@ -48,7 +48,7 @@ class DrivetrainTestDialog : TestDialog() {
         val replaceablePairs = mutableListOf<Pair<String, String>>()
         arguments?.let { bundle ->
             replaceablePairs.add(REPLACEABLE_TEXT_MOTOR to bundle.portNumber)
-            replaceablePairs.add(REPLACEABLE_TEXT_MOTOR_DIR to bundle.motorDirection)
+            replaceablePairs.add(REPLACEABLE_TEXT_MOTOR_REVERSED to bundle.reversed.toString())
             replaceablePairs.add(REPLACEABLE_TEXT_MOTOR_SIDE to bundle.side)
         }
         return replaceablePairs

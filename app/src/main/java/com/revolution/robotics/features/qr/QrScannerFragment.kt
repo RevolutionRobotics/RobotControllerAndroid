@@ -20,7 +20,7 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView
 import org.kodein.di.KodeinAware
 import org.kodein.di.LateInitKodein
 import org.kodein.di.erased.instance
-import org.revolutionrobotics.robotcontroller.bluetooth.discover.RoboticsDeviceDiscoverer
+import org.revolutionrobotics.bluetooth.android.discover.RoboticsDeviceDiscoverer
 
 
 class QrScannerFragment : Fragment(), ZXingScannerView.ResultHandler, BluetoothConnectionListener {

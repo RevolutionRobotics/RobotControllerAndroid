@@ -21,6 +21,7 @@ interface ConfigureControllerMvp : Mvp {
         fun loadControllerAndPrograms(configId: Int)
         fun onProgramSlotSelected(index: Int)
         fun showAllPrograms()
+        fun showProgramDialog(program: UserProgram, isBound: Boolean)
         fun onProgramSelected(program: UserProgram, isBound: Boolean)
         fun addProgram(program: UserProgram)
         fun removeProgram()

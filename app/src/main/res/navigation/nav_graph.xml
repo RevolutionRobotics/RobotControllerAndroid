@@ -18,6 +18,8 @@
                 app:destination="@id/myRobotsFragment"/>
         <action android:id="@+id/toSettings"
                 app:destination="@id/settingFragment"/>
+        <action android:id="@+id/toChallangeList"
+                app:destination="@id/challengeListFragment"/>
     </fragment>
 
     <!-- My robots -->
@@ -69,6 +71,7 @@
                   android:defaultValue="@null"
                   app:nullable="true"
                   app:argType="com.revolution.robotics.core.domain.local.UserProgram"/>
+        <argument android:name="edit_mode" app:argType="boolean"/>
     </fragment>
 
     <!-- Play -->
@@ -98,8 +101,8 @@
     <fragment android:id="@+id/challengeListFragment"
               android:name="com.revolution.robotics.features.challenges.challengeList.ChallengeListFragment"
               android:label="ChallengeListFragment">
-        <argument app:argType="com.revolution.robotics.core.domain.remote.ChallengeCategory"
-                  android:name="challenge"/>
+        <argument app:argType="string"
+                  android:name="challengeCategoryId"/>
         <action android:id="@+id/toChallengeDetail"
                 app:destination="@id/challengeDetailFragment"/>
     </fragment>

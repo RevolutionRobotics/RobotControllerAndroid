@@ -8,9 +8,11 @@ import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.remote.ChallengeCategory
 import com.revolution.robotics.core.extensions.withArguments
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
+import com.revolution.robotics.core.utils.AppPrefs
 import com.revolution.robotics.core.utils.BundleArgumentDelegate
 import com.revolution.robotics.databinding.FragmentChallengeListBinding
 import com.revolution.robotics.features.challenges.challengeList.adapter.ChallengeListAdapter
+import com.revolution.robotics.features.onboarding.congratulations.CongratulationsDialog
 import org.kodein.di.erased.instance
 
 class ChallengeListFragment :
@@ -18,10 +20,10 @@ class ChallengeListFragment :
     ChallengeListMvp.View {
 
     companion object {
-        private var Bundle.challenge: ChallengeCategory by BundleArgumentDelegate.Parcelable("challenge")
+        private var Bundle.challengeCategoryId: String by BundleArgumentDelegate.String("challengeCategoryId")
 
-        fun newInstance(challenge: ChallengeCategory) = ChallengeListFragment().withArguments {
-            it.challenge = challenge
+        fun newInstance(challengeCategoryId: String) = ChallengeListFragment().withArguments {
+            it.challengeCategoryId = challengeCategoryId
         }
     }
 
@@ -40,9 +42,12 @@ class ChallengeListFragment :
         }
         presenter.register(this, viewModel)
         arguments?.let { arguments ->
-            binding?.toolbarViewModel?.title?.set(arguments.challenge.name?.getLocalizedString(resourceResolver) ?: "")
-            presenter.setChallengeCategory(arguments.challenge)
+            presenter.loadChallangeCategory(arguments.challengeCategoryId)
         }
+    }
+
+    override fun displayChallengeCategory(challengeCategory: ChallengeCategory) {
+        binding?.toolbarViewModel?.title?.set(challengeCategory.name?.getLocalizedString(resourceResolver) ?: "")
     }
 
     override fun onDestroyView() {

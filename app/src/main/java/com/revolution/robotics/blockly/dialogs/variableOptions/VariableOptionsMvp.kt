@@ -2,7 +2,7 @@ package com.revolution.robotics.blockly.dialogs.variableOptions
 
 import androidx.lifecycle.ViewModel
 import com.revolution.robotics.core.Mvp
-import org.revolutionrobotics.robotcontroller.blocklysdk.BlocklyVariable
+import org.revolutionrobotics.blockly.android.BlocklyVariable
 
 interface VariableOptionsMvp : Mvp {
 
