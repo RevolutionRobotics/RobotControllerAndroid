@@ -116,11 +116,7 @@ class MotorConfigurationPresenter(
 
     private fun generateDriveTrainDialog(portIndex: Int) = DrivetrainTestDialog.newInstance(
         (portIndex).toString(),
-        if (model?.reversed?.get() == true) {
-            TestDialog.VALUE_CLOCKWISE
-        } else {
-            TestDialog.VALUE_COUNTER_CLOCKWISE
-        },
+        model?.reversed?.get() == true,
         if (model?.sideLeftButton?.isSelected?.get() == true) {
             TestDialog.VALUE_SIDE_LEFT
         } else {

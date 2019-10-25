@@ -139,7 +139,7 @@ class MotorConfigurationButtonHandler(
             editTextModel.value?.text = previousMotorName ?: "motor$portNumber"
 
             setDoneButton()
-            setTestButton(false)
+            setTestButton(true)
         }
     }
 
