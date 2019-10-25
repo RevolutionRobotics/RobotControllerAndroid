@@ -18,7 +18,7 @@ while time.time() - start < 12:
 
 if test_ok:
     robot.led.set(list(range(1, 13)), "#000000")
-    robot.led.set([1, 2, 3, 4, 5, 8, 10], "#00FF00")
+    robot.led.set([1, 4, 5, 6, 7, 8, 11], "#00FF00")
     time.sleep(3)
 
 robot.led.set(list(range(1, 13)), "#000000")
