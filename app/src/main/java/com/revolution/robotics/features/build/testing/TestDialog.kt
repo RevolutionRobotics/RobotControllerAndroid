@@ -19,10 +19,7 @@ abstract class TestDialog : RoboticsDialog(), DialogController, TestMvp.View {
         const val REPLACEABLE_TEXT_SENSOR = "{SENSOR}"
         const val REPLACEABLE_TEXT_MOTOR = "{MOTOR}"
         const val REPLACEABLE_TEXT_MOTOR_SIDE = "{MOTOR_SIDE}"
-        const val REPLACEABLE_TEXT_MOTOR_DIR = "{MOTOR_DIR}"
-
-        const val VALUE_CLOCKWISE = "cw"
-        const val VALUE_COUNTER_CLOCKWISE = "ccw"
+        const val REPLACEABLE_TEXT_MOTOR_REVERSED = "{MOTOR_REVERSED}"
 
         const val VALUE_SIDE_LEFT = "left"
         const val VALUE_SIDE_RIGHT = "right"
