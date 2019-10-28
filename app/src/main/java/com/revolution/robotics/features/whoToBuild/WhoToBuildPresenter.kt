@@ -1,5 +1,6 @@
 package com.revolution.robotics.features.whoToBuild
 
+import android.util.Log
 import com.revolution.robotics.core.domain.PortMapping
 import com.revolution.robotics.core.domain.local.BuildStatus
 import com.revolution.robotics.core.domain.local.UserController
@@ -42,20 +43,27 @@ class WhoToBuildPresenter(
     override fun register(view: WhoToBuildMvp.View, model: WhoToBuildViewModel?) {
         super.register(view, model)
         loadRobots()
+        displayRobots(emptyList())
     }
 
     private fun loadRobots() {
-        robotsInteractor.execute { response ->
-            model?.apply {
-                currentPosition.set(if (response.isNotEmpty()) 1 else 0)
-                robotsList.value =
-                    response.map { robot -> RobotsItem(robot, this@WhoToBuildPresenter) }
-                        .toMutableList()
-                        .apply { add(0, RobotsBuildYourOwnItem(this@WhoToBuildPresenter)) }
-                robotsList.value?.firstOrNull()?.isSelected?.set(true)
-                updateButtonsVisibility(0)
-                view?.onRobotsLoaded()
-            }
+        robotsInteractor.execute({ response ->
+            displayRobots(response)
+        }, { error ->
+            Log.e("Error", error.localizedMessage)
+        })
+    }
+
+    private fun displayRobots(robots: List<Robot>) {
+        model?.apply {
+            currentPosition.set(if (robots.isNotEmpty()) 1 else 0)
+            robotsList.value =
+                robots.map { robot -> RobotsItem(robot, this@WhoToBuildPresenter) }
+                    .toMutableList()
+                    .apply { add(0, RobotsBuildYourOwnItem(this@WhoToBuildPresenter)) }
+            robotsList.value?.firstOrNull()?.isSelected?.set(true)
+            updateButtonsVisibility(0)
+            view?.onRobotsLoaded()
         }
     }
 
