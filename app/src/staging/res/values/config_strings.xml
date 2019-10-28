@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="file_provide_author" translatable="false">org.revolutionrobotics.robotcontroller.test.provider</string>
+</resources>
