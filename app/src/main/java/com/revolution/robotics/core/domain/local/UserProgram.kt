@@ -1,25 +1,24 @@
 package com.revolution.robotics.core.domain.local
 
 import android.os.Parcelable
-import androidx.room.Dao
-import androidx.room.Entity
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.PrimaryKey
-import androidx.room.Query
+import androidx.room.*
 import com.revolution.robotics.core.extensions.formatYearMonthDay
 import kotlinx.android.parcel.Parcelize
 
 @Suppress("DataClassContainsFunctions")
-@Entity
+@Entity(primaryKeys= [ "name", "robotInstanceId" ],
+    foreignKeys = [ForeignKey(entity = UserRobot::class,
+        parentColumns = arrayOf("instanceId"),
+        childColumns = arrayOf("robotInstanceId"),
+        onDelete = ForeignKey.CASCADE)])
 @Parcelize
 data class UserProgram(
     var description: String? = null,
     var lastModified: Long = 0,
-    @PrimaryKey
     var name: String = "",
     var python: String? = null,
     var xml: String? = null,
+    var robotInstanceId: Int,
     var variables: List<String> = emptyList(),
     var remoteId: String? = null
 ) : Parcelable {

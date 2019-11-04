@@ -140,7 +140,7 @@ class WhoToBuildPresenter(
     private fun assignEmptyConfig(userRobot: UserRobot) {
         assignConfigToRobotInteractor.userRobot = userRobot
         assignConfigToRobotInteractor.configuration = Configuration(mapping = PortMapping())
-        assignConfigToRobotInteractor.controllers = null
+        assignConfigToRobotInteractor.controller = null
         assignConfigToRobotInteractor.programs = emptyList()
         assignConfigToRobotInteractor.execute {
             createNewController(userRobot)

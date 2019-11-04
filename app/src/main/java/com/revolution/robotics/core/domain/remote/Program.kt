@@ -7,6 +7,7 @@ import kotlinx.android.parcel.Parcelize
 open class Program(
     var description: LocalizedString? = null,
     var id: String? = null,
+    var robotId: String? = null,
     var lastModified: Long = 0,
     var name: LocalizedString? = null,
     var python: String? = null,

@@ -17,14 +17,17 @@ class SaveProgramDialog : SaveDialog(), SaveProgramMvp.View {
 
     companion object {
         const val KEY_USER_PROGRAM = "userProgram"
+        const val KEY_ROBOT_INSTANCE_ID = "robotId"
         const val KEY_ACTION_ID = "actionId"
 
         private var Bundle.userProgram by BundleArgumentDelegate.ParcelableNullable<UserProgram>(KEY_USER_PROGRAM)
+        private var Bundle.robotInstsnceId by BundleArgumentDelegate.Int(KEY_ROBOT_INSTANCE_ID)
         private var Bundle.actionId by BundleArgumentDelegate.Int(KEY_ACTION_ID)
 
-        fun newInstance(userProgram: UserProgram?, actionId: Int) =
+        fun newInstance(userProgram: UserProgram?, robotInstanceId: Int, actionId: Int) =
             SaveProgramDialog().withArguments { bundle ->
                 bundle.userProgram = userProgram
+                bundle.robotInstsnceId = robotInstanceId
                 bundle.actionId = actionId
             }
     }
@@ -60,7 +63,7 @@ class SaveProgramDialog : SaveDialog(), SaveProgramMvp.View {
     }
 
     override fun onDoneClicked() {
-        val userProgram = arguments?.userProgram ?: UserProgram()
+        val userProgram = arguments?.userProgram ?: UserProgram(robotInstanceId = arguments?.robotInstsnceId ?: 0)
         userProgram.name = dialogFace.getName()
         userProgram.description = dialogFace.getDescription()
         presenter.onDoneButtonClicked(userProgram)

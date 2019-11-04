@@ -112,7 +112,7 @@ fun createInteractorModule() =
         bind<GetUserConfigurationInteractor>() with p { GetUserConfigurationInteractor(i()) }
         bind<ControllerInteractor>() with p { ControllerInteractor() }
         bind<ProgramInteractor>() with p { ProgramInteractor() }
-        bind<ProgramsInteractor>() with p { ProgramsInteractor() }
+        bind<GetProgramsForRobotInteractor>() with p { GetProgramsForRobotInteractor() }
         bind<ChallengeCategoriesInteractor>() with p { ChallengeCategoriesInteractor() }
         bind<GetUserControllerForUserRobotInteractor>() with p { GetUserControllerForUserRobotInteractor(i()) }
         bind<GetUserControllerInteractor>() with p { GetUserControllerInteractor(i(), i(), i()) }
@@ -129,7 +129,6 @@ fun createInteractorModule() =
         bind<SaveUserRobotInteractor>() with p { SaveUserRobotInteractor(i()) }
         bind<DuplicateUserRobotInteractor>() with p { DuplicateUserRobotInteractor(i(), i(), i(), i(), i(), i()) }
         bind<LocalFileSaver>() with p { LocalFileSaver() }
-        bind<SaveUserProgramsInteractor>() with p { SaveUserProgramsInteractor(i(), i()) }
         bind<GetFullConfigurationInteractor>() with p { GetFullConfigurationInteractor(i(), i(), i(), i()) }
         bind<GetUserProgramInteractor>() with p { GetUserProgramInteractor(i()) }
         bind<FirmwareInteractor>() with p { FirmwareInteractor() }
@@ -162,7 +161,7 @@ fun createPresenterModule() =
         bind<ProgramSelectorMvp.Presenter>() with s { ProgramSelectorPresenter(i(), i(), i(), i(), i()) }
         bind<ProgramPriorityMvp.Presenter>() with s { ProgramPriorityPresenter(i(), i()) }
         bind<ButtonlessProgramSelectorMvp.Presenter>() with s { ButtonlessProgramSelectorPresenter(i(), i(), i(), i(), i()) }
-        bind<SplashMvp.Presenter>() with s { SplashPresenter(i(), i(), i(), i(), i()) }
+        bind<SplashMvp.Presenter>() with s { SplashPresenter(i(), i(), i()) }
         bind<ChallengeGroupMvp.Presenter>() with s { ChallengeGroupPresenter(i(), i(), i()) }
         bind<ChallengeListMvp.Presenter>() with s { ChallengeListPresenter(i(), i(), i()) }
         bind<ChallengeDetailMvp.Presenter>() with s { ChallengeDetailPresenter(i(), i(), i(), i()) }

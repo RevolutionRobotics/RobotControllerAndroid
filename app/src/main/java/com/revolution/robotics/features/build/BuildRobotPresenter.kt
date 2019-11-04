@@ -5,12 +5,8 @@ import com.revolution.robotics.core.domain.remote.Configuration
 import com.revolution.robotics.core.domain.remote.Controller
 import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
-import com.revolution.robotics.core.interactor.AssignConfigToRobotInteractor
 import com.revolution.robotics.core.interactor.SaveUserRobotInteractor
 import com.revolution.robotics.core.interactor.firebase.BuildStepInteractor
-import com.revolution.robotics.core.interactor.firebase.ConfigurationInteractor
-import com.revolution.robotics.core.interactor.firebase.ProgramsInteractor
-import com.revolution.robotics.core.interactor.firebase.RobotsInteractor
 import com.revolution.robotics.core.utils.CreateRobotInstanceHelper
 import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.features.controllers.ControllerType
@@ -29,7 +25,7 @@ class BuildRobotPresenter(
     override var model: BuildRobotViewModel? = null
 
     private var configuration: Configuration? = null
-    private var controllers: List<Controller>? = null
+    private var controller: Controller? = null
     private var userRobot: UserRobot? = null
 
     override fun loadBuildSteps(robotId: String) {
@@ -40,24 +36,21 @@ class BuildRobotPresenter(
     }
 
     override fun letsDrive() {
-        configuration?.let { configuration ->
-            userRobot?.let { robot ->
-                startPlayFragment(configuration, robot, controllers)
-            }
+        userRobot?.let { robot ->
+            startPlayFragment(robot, controller)
         }
     }
 
-    private fun startPlayFragment(configuration: Configuration, robot: UserRobot, controllers: List<Controller>?) {
-        controllers?.find { it.id == configuration.controller }?.let { controller ->
-            when (ControllerType.fromId(controller.type)) {
-                ControllerType.GAMER ->
-                    navigator.navigate(BuildRobotFragmentDirections.toPlayGamer(robot.configurationId))
-                ControllerType.MULTITASKER ->
-                    navigator.navigate(BuildRobotFragmentDirections.toPlayMultitasker(robot.configurationId))
-                ControllerType.DRIVER ->
-                    navigator.navigate(BuildRobotFragmentDirections.toPlayDriver(robot.configurationId))
-            }
+    private fun startPlayFragment(robot: UserRobot, controller: Controller?) {
+        when (ControllerType.fromId(controller?.type)) {
+            ControllerType.GAMER ->
+                navigator.navigate(BuildRobotFragmentDirections.toPlayGamer(robot.configurationId))
+            ControllerType.MULTITASKER ->
+                navigator.navigate(BuildRobotFragmentDirections.toPlayMultitasker(robot.configurationId))
+            ControllerType.DRIVER ->
+                navigator.navigate(BuildRobotFragmentDirections.toPlayDriver(robot.configurationId))
         }
+
     }
 
     override fun saveUserRobot(userRobot: UserRobot, createDefaultConfig: Boolean) {
@@ -68,7 +61,7 @@ class BuildRobotPresenter(
                 onSuccess = { savedRobot, configuration, controllers ->
                     this.userRobot = savedRobot
                     this.configuration = configuration
-                    this.controllers = controllers
+                    this.controller = controllers
                     dialogEventBus.publish(DialogEvent.ROBOT_CREATED)
                 }, onError = {
                     errorHandler.onError()
