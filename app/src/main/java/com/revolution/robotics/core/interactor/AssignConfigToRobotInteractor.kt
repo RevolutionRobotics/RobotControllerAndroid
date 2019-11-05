@@ -23,14 +23,14 @@ class AssignConfigToRobotInteractor(
     private val userRobotDao: UserRobotDao,
     private val userConfigurationDao: UserConfigurationDao,
     private val controllerDao: UserControllerDao,
-    private val saveProgramDao: UserProgramDao,
+    private val userProgramDao: UserProgramDao,
     private val userBackgroundProgramBindingDao: UserBackgroundProgramBindingDao,
     private val resourceResolver: ResourceResolver
 ) : Interactor<UserRobot>() {
 
     lateinit var userRobot: UserRobot
     var configuration: Configuration? = null
-    var controllers: List<Controller>? = null
+    var controller: Controller? = null
     var programs: List<Program>? = null
 
     override fun getData(): UserRobot {
@@ -42,9 +42,9 @@ class AssignConfigToRobotInteractor(
             userRobotDao.updateUserRobot(userRobot)
 
             val programIdMap = saveUserPrograms()
-            controllers?.forEach {
-                saveUserController(it, userConfiguration, configuration?.controller == it.id, programIdMap)
-            }
+
+            controller?.let { saveUserController(it, userConfiguration, true, programIdMap) }
+
         }
 
         return userRobot
@@ -125,21 +125,20 @@ class AssignConfigToRobotInteractor(
 
     private fun saveUserPrograms() = hashMapOf<String, String>().apply {
         programs?.forEach { remoteProgram ->
-            val currentProgram = remoteProgram.id?.let { remoteId ->
-                val currentProgram = saveProgramDao.getUserProgramBasedOnRemoteId(remoteId)
-                currentProgram
-            }
+            val currentProgram =
+                remoteProgram.id?.let { remoteId -> userProgramDao.getUserProgramBasedOnRemoteId(remoteId) }
             val newProgram = UserProgram(
                 remoteProgram.description?.getLocalizedString(resourceResolver) ?: "",
                 remoteProgram.lastModified,
                 currentProgram?.name ?: remoteProgram.name?.getLocalizedString(resourceResolver) ?: "",
                 remoteProgram.python,
                 remoteProgram.xml,
+                userRobot.id,
                 remoteProgram.variables,
                 remoteProgram.id
             )
             this[remoteProgram.id ?: ""] = newProgram.name
-            saveProgramDao.saveUserProgram(newProgram)
+            userProgramDao.saveUserProgram(newProgram)
         }
     }
 
@@ -160,7 +159,7 @@ class AssignConfigToRobotInteractor(
 
     private fun createUserController(controller: Controller) = UserController(
         id = 0,
-        robotId = userRobot.instanceId,
+        robotId = userRobot.id,
         name = controller.name?.getLocalizedString(resourceResolver) ?: "",
         type = controller.type,
         description = controller.description?.getLocalizedString(resourceResolver) ?: "",

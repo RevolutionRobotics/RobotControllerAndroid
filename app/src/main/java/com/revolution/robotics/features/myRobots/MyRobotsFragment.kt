@@ -120,7 +120,7 @@ class MyRobotsFragment : BaseFragment<FragmentMyRobotsBinding, MyRobotsViewModel
             } else {
                 adapter.selectedPosition
             }
-            adapter.removeItems { it.id == robotToDelete.instanceId }
+            adapter.removeItems { it.id == robotToDelete.id }
             presenter.deleteRobot(robotToDelete, adapter.selectedPosition)
             binding?.myRobotsViewpager?.reInitTransformerWithDelay(selectedPosition)
         }

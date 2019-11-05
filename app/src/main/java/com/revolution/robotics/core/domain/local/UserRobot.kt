@@ -15,8 +15,9 @@ import java.util.Date
 @Parcelize
 @Suppress("DataClassContainsFunctions")
 data class UserRobot(
-    @PrimaryKey(autoGenerate = true) var instanceId: Int = 0,
-    var id: String? = null,
+    @PrimaryKey(autoGenerate = true)
+    var id: Int = 0,
+    var remoteId: String? = null,
     var buildStatus: BuildStatus? = null,
     var actualBuildStep: Int = 0,
     var lastModified: Date? = null,
@@ -26,7 +27,7 @@ data class UserRobot(
     var description: String? = null
 ) : Parcelable {
 
-    fun isCustomBuild() = id == null
+    fun isCustomBuild() = remoteId == null
 }
 
 @Dao
@@ -35,13 +36,13 @@ interface UserRobotDao {
     @Query("SELECT * FROM UserRobot ORDER BY lastModified DESC")
     fun getAllRobots(): List<UserRobot>
 
-    @Query("SELECT * FROM UserRobot WHERE instanceId=:robotId")
+    @Query("SELECT * FROM UserRobot WHERE id=:robotId")
     fun getRobotById(robotId: Int): UserRobot?
 
     @Query("SELECT * FROM UserRobot WHERE configurationId=:configurationId")
     fun getRobotByConfigId(configurationId: Int): UserRobot?
 
-    @Query("SELECT * FROM UserRobot WHERE id=:robotId AND buildStatus=:buildStatus")
+    @Query("SELECT * FROM UserRobot WHERE remoteId=:robotId AND buildStatus=:buildStatus")
     fun getRobotByStatus(robotId: Int, buildStatus: BuildStatus): UserRobot?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -50,6 +51,6 @@ interface UserRobotDao {
     @Update
     fun updateUserRobot(userRobot: UserRobot)
 
-    @Query("DELETE FROM UserRobot WHERE instanceId = :id")
+    @Query("DELETE FROM UserRobot WHERE id = :id")
     fun deleteRobotById(id: Int)
 }

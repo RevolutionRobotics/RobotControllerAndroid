@@ -55,7 +55,7 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
         }
 
         presenter.register(this, viewModel)
-        presenter.loadBuildSteps(arguments?.robot?.id ?: "")
+        presenter.loadBuildSteps(arguments?.robot?.remoteId ?: "")
 
         dialogEventBus.register(this)
     }

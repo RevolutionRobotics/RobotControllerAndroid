@@ -140,7 +140,7 @@ class WhoToBuildPresenter(
     private fun assignEmptyConfig(userRobot: UserRobot) {
         assignConfigToRobotInteractor.userRobot = userRobot
         assignConfigToRobotInteractor.configuration = Configuration(mapping = PortMapping())
-        assignConfigToRobotInteractor.controllers = null
+        assignConfigToRobotInteractor.controller = null
         assignConfigToRobotInteractor.programs = emptyList()
         assignConfigToRobotInteractor.execute {
             createNewController(userRobot)
@@ -148,11 +148,11 @@ class WhoToBuildPresenter(
     }
 
     private fun createNewController(userRobot: UserRobot) {
-        val controller = UserController(robotId = userRobot.instanceId, type = ControllerType.GAMER.id)
+        val controller = UserController(robotId = userRobot.id, type = ControllerType.GAMER.id)
         saveUserControllerInteractor.userController = controller
         saveUserControllerInteractor.backgroundProgramBindings = emptyList()
         saveUserControllerInteractor.execute {
-            navigator.navigate(WhoToBuildFragmentDirections.toConfigure(userRobot.instanceId))
+            navigator.navigate(WhoToBuildFragmentDirections.toConfigure(userRobot.id))
         }
     }
 }

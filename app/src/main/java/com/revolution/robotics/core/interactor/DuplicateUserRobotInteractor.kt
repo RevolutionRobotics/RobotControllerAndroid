@@ -32,11 +32,11 @@ class DuplicateUserRobotInteractor(
         robotCopy.lastModified = Date(System.currentTimeMillis())
         robotCopy.name = "${robotCopy.name} ${resourceResolver.string(R.string.duplicated_robot_name_suffix)}"
 
-        robotCopy.instanceId = 0
-        robotCopy.instanceId = userRobotDao.saveUserRobot(robotCopy).toInt()
+        robotCopy.id = 0
+        robotCopy.id = userRobotDao.saveUserRobot(robotCopy).toInt()
 
-        copyController(robotCopy.instanceId, currentConfigCopy)
-        copyRobotImage(currentRobot.instanceId, robotCopy.instanceId)
+        copyController(robotCopy.id, currentConfigCopy)
+        copyRobotImage(currentRobot.id, robotCopy.id)
         return robotCopy
     }
 
@@ -54,7 +54,7 @@ class DuplicateUserRobotInteractor(
         newRobotId: Int,
         currentConfigCopy: UserConfiguration?
     ) {
-        controllerDao.getUserControllerForRobot(currentRobot.instanceId)?.apply {
+        controllerDao.getUserControllerForRobot(currentRobot.id)?.apply {
             val controllerCopy = copy()
             controllerCopy.id = 0
             controllerCopy.robotId = newRobotId

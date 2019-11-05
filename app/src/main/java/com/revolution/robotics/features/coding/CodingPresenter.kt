@@ -35,6 +35,7 @@ class CodingPresenter(
     private var pythonSaved = false
     private var xmlSaved = false
     private var variablesSaved = false
+    private var robotInstanceId: Int? = null
 
     override fun showNewProgramDialog() {
         view?.showDialog(NewProgramConfirmDialog.newInstance())
@@ -43,6 +44,7 @@ class CodingPresenter(
     override fun loadProgram(userProgram: UserProgram) {
         model?.userProgram = userProgram
         model?.programName?.set(userProgram.name)
+        robotInstanceId = userProgram.robotId
         userProgram.xml?.let { xmlFile ->
             appPrefs.lastOpenedProgram = userProgram.name
             view?.loadProgramIntoTheBlockly(String(Base64.decode(xmlFile, Base64.NO_WRAP)))
@@ -50,6 +52,8 @@ class CodingPresenter(
     }
 
     override fun createNewProgram() {
+        //TODO Select robot
+        robotInstanceId = null
         model?.userProgram = null
         model?.resetProgramName()
         view?.clearBlocklyWorkspace()
@@ -66,7 +70,15 @@ class CodingPresenter(
     }
 
     override fun showSaveProgramDialog(userProgram: UserProgram?, actionIdAfterSave: Int) {
-        view?.showDialog(SaveProgramDialog.newInstance(userProgram, actionIdAfterSave))
+        robotInstanceId?.let {robotId ->
+            view?.showDialog(
+                SaveProgramDialog.newInstance(
+                    userProgram,
+                    robotId,
+                    actionIdAfterSave
+                )
+            )
+        }
     }
 
     override fun setSavedProgramData(userProgram: UserProgram, actionId: Int) {
