@@ -2,6 +2,8 @@ package com.revolution.robotics.features.mainmenu.settings.firmware.update
 
 import androidx.lifecycle.ViewModel
 import com.revolution.robotics.R
+import com.revolution.robotics.analytics.Reporter
+import com.revolution.robotics.analytics.reportUploadedToBrain
 import com.revolution.robotics.core.domain.remote.Firmware
 import com.revolution.robotics.core.interactor.firebase.FirebaseFileDownloader
 import com.revolution.robotics.core.interactor.firebase.FirmwareInteractor
@@ -15,7 +17,8 @@ class FirmwareUpdateDialogPresenter(
     private val fileDownloader: FirebaseFileDownloader,
     private val bluetoothManager: BluetoothManager,
     private val errorHandler: ErrorHandler,
-    private val resourceResolver: ResourceResolver
+    private val resourceResolver: ResourceResolver,
+    private val reporter: Reporter
 ) : FirmwareUpdateMvp.Presenter {
 
     companion object {
@@ -140,11 +143,13 @@ class FirmwareUpdateDialogPresenter(
     }
 
     private fun updateFirmware() {
+        val startTime = System.currentTimeMillis()
         latestFirmware?.url?.let { firmwareUrl ->
             view?.activateLoadingFace()
             fileDownloader.downloadFirestoreFile(FIRMWARE_FILENAME, firmwareUrl, { firmwareUri ->
                 bluetoothManager.getConfigurationService().updateFramework(firmwareUri,
                     onSuccess = {
+                        reportUploadedToBrain(reporter, "firmware", firmwareUri, startTime)
                         isUpdateFlowStarted = false
                         view?.activateSuccessFace()
                     },

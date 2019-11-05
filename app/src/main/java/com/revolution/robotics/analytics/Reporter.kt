@@ -16,7 +16,8 @@ class Reporter(private val firebaseAnalytics: FirebaseAnalytics) {
     enum class Event(val reportName: String) {
         SELECTED_USER_TYPE("selected_user_type"),
         REGISTERED_ROBOT("registered_robot"),
-        SKIPPED_ROBOT_REGISTRATION("skipped_robot_registration")
+        SKIPPED_ROBOT_REGISTRATION("skipped_robot_registration"),
+        UPLOADED_TO_BRAIN("uploaded_to_brain")
     }
 
     enum class UserProperty(val reportName: String) {
