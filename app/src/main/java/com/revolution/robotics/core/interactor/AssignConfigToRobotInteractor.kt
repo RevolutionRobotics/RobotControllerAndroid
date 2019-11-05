@@ -133,7 +133,7 @@ class AssignConfigToRobotInteractor(
                 currentProgram?.name ?: remoteProgram.name?.getLocalizedString(resourceResolver) ?: "",
                 remoteProgram.python,
                 remoteProgram.xml,
-                userRobot.instanceId,
+                userRobot.id,
                 remoteProgram.variables,
                 remoteProgram.id
             )
@@ -159,7 +159,7 @@ class AssignConfigToRobotInteractor(
 
     private fun createUserController(controller: Controller) = UserController(
         id = 0,
-        robotId = userRobot.instanceId,
+        robotId = userRobot.id,
         name = controller.name?.getLocalizedString(resourceResolver) ?: "",
         type = controller.type,
         description = controller.description?.getLocalizedString(resourceResolver) ?: "",

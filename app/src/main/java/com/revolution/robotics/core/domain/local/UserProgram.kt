@@ -6,10 +6,10 @@ import com.revolution.robotics.core.extensions.formatYearMonthDay
 import kotlinx.android.parcel.Parcelize
 
 @Suppress("DataClassContainsFunctions")
-@Entity(primaryKeys= [ "name", "robotInstanceId" ],
+@Entity(primaryKeys= [ "name", "robotId" ],
     foreignKeys = [ForeignKey(entity = UserRobot::class,
-        parentColumns = arrayOf("instanceId"),
-        childColumns = arrayOf("robotInstanceId"),
+        parentColumns = arrayOf("id"),
+        childColumns = arrayOf("robotId"),
         onDelete = ForeignKey.CASCADE)])
 @Parcelize
 data class UserProgram(
@@ -18,7 +18,7 @@ data class UserProgram(
     var name: String = "",
     var python: String? = null,
     var xml: String? = null,
-    var robotInstanceId: Int,
+    var robotId: Int,
     var variables: List<String> = emptyList(),
     var remoteId: String? = null
 ) : Parcelable {

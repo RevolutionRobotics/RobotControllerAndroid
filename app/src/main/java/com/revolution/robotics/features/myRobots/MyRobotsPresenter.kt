@@ -41,7 +41,7 @@ class MyRobotsPresenter(
             }
             model?.robotsList?.set(robots.map { robot ->
                 MyRobotsItem(
-                    robot.instanceId,
+                    robot.id,
                     robot,
                     robot.lastModified?.formatYearMonthDay() ?: "",
                     robot.buildStatus == BuildStatus.IN_PROGRESS,
@@ -117,7 +117,7 @@ class MyRobotsPresenter(
         if (userRobot.buildStatus == BuildStatus.IN_PROGRESS) {
             navigator.navigate(MyRobotsFragmentDirections.toBuildRobot(userRobot))
         } else {
-            navigator.navigate(MyRobotsFragmentDirections.toConfigure(userRobot.instanceId))
+            navigator.navigate(MyRobotsFragmentDirections.toConfigure(userRobot.id))
         }
     }
 
@@ -125,7 +125,7 @@ class MyRobotsPresenter(
         if (userRobot.buildStatus == BuildStatus.IN_PROGRESS) {
             navigator.navigate(MyRobotsFragmentDirections.toBuildRobot(userRobot))
         } else {
-            navigator.navigate(MyRobotsFragmentDirections.toConfigure(userRobot.instanceId))
+            navigator.navigate(MyRobotsFragmentDirections.toConfigure(userRobot.id))
         }
     }
 
@@ -140,11 +140,11 @@ class MyRobotsPresenter(
     }
 
     override fun deleteRobot(userRobot: UserRobot, selectedPosition: Int) {
-        deleteRobotInteractor.id = userRobot.instanceId
+        deleteRobotInteractor.id = userRobot.id
         deleteRobotInteractor.configId = userRobot.configurationId
         deleteRobotInteractor.execute()
         model?.robotsList?.apply {
-            get()?.removeAll { it.id == userRobot.instanceId }
+            get()?.removeAll { it.id == userRobot.id }
             notifyChange()
         }
         updateButtonsVisibility(selectedPosition)
@@ -157,7 +157,7 @@ class MyRobotsPresenter(
             model?.robotsList?.apply {
                 get()?.add(
                     0, MyRobotsItem(
-                        robot.instanceId,
+                        robot.id,
                         robot,
                         robot.lastModified?.formatYearMonthDay() ?: "",
                         robot.buildStatus == BuildStatus.IN_PROGRESS,

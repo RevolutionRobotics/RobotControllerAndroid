@@ -8,7 +8,7 @@ class SaveUserRobotInteractor(private val userRobotDao: UserRobotDao) : Interact
     lateinit var userRobot: UserRobot
 
     override fun getData(): UserRobot {
-        userRobot.instanceId = userRobotDao.saveUserRobot(userRobot).toInt()
+        userRobot.id = userRobotDao.saveUserRobot(userRobot).toInt()
         return userRobot
     }
 }

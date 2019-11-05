@@ -63,7 +63,7 @@ class SaveProgramDialog : SaveDialog(), SaveProgramMvp.View {
     }
 
     override fun onDoneClicked() {
-        val userProgram = arguments?.userProgram ?: UserProgram(robotInstanceId = arguments?.robotInstsnceId ?: 0)
+        val userProgram = arguments?.userProgram ?: UserProgram(robotId = arguments?.robotInstsnceId ?: 0)
         userProgram.name = dialogFace.getName()
         userProgram.description = dialogFace.getDescription()
         presenter.onDoneButtonClicked(userProgram)

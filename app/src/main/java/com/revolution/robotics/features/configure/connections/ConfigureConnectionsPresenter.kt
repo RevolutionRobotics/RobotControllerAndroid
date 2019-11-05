@@ -58,7 +58,7 @@ class ConfigureConnectionsPresenter(
                 getUserRobotInteractor.robotId
                 getUserRobotInteractor.execute { robot ->
                     model?.firebaseImageUrl?.value = robot?.coverImage
-                    model?.robotId?.value = robot?.instanceId
+                    model?.robotId?.value = robot?.id
                 }
             }
         }

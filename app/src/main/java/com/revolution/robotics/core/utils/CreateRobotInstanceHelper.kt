@@ -33,11 +33,11 @@ class CreateRobotInstanceHelper(
         this.userRobot = userRobot
         this.onSuccess = onSuccess
         this.onError = onError
-        if (userRobot.id != null) {
+        if (userRobot.remoteId != null) {
             saveUserRobotInteractor.userRobot = userRobot
             saveUserRobotInteractor.execute(onResponse = { savedRobot ->
                 this.userRobot = savedRobot
-                robotInteractor.robotId = userRobot.id!!
+                robotInteractor.robotId = userRobot.remoteId!!
                 robotInteractor.execute { robot ->
                     configurationInteractor.configId = robot.configurationId ?: ""
                     configurationInteractor.execute { config ->

@@ -18,7 +18,7 @@ class ProgramViewModel(private val program: UserProgram, private val presenter: 
             .create()
     }
 
-    val programName = program.name + " " + program.robotInstanceId
+    val programName = program.name + " " + program.robotId
     val background = ProgramViewModel.background
     val formattedDate = program.lastModified.formatYearMonthDay()
 

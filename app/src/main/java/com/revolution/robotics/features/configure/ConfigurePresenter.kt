@@ -163,7 +163,7 @@ class ConfigurePresenter(
     }
 
     override fun onRobotImageClicked() {
-        userRobot?.let { robot -> view?.showDialog(RobotPictureDialog.newInstance(robot.instanceId, robot.coverImage)) }
+        userRobot?.let { robot -> view?.showDialog(RobotPictureDialog.newInstance(robot.id, robot.coverImage)) }
     }
 
     override fun onDeleteClicked() {
@@ -180,7 +180,7 @@ class ConfigurePresenter(
 
     override fun deleteRobot() {
         userRobot?.let {
-            deleteRobotInteractor.id = it.instanceId
+            deleteRobotInteractor.id = it.id
             deleteRobotInteractor.configId = it.configurationId
             deleteRobotInteractor.execute()
         }

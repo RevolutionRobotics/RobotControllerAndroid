@@ -17,7 +17,7 @@ import kotlinx.android.parcel.Parcelize
 @Entity(
     foreignKeys = [ForeignKey(
         entity = UserRobot::class,
-        parentColumns = arrayOf("instanceId"),
+        parentColumns = arrayOf("id"),
         childColumns = arrayOf("robotId"),
         onDelete = ForeignKey.CASCADE
     )],

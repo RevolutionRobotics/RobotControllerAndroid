@@ -44,7 +44,7 @@ class CodingPresenter(
     override fun loadProgram(userProgram: UserProgram) {
         model?.userProgram = userProgram
         model?.programName?.set(userProgram.name)
-        robotInstanceId = userProgram.robotInstanceId
+        robotInstanceId = userProgram.robotId
         userProgram.xml?.let { xmlFile ->
             appPrefs.lastOpenedProgram = userProgram.name
             view?.loadProgramIntoTheBlockly(String(Base64.decode(xmlFile, Base64.NO_WRAP)))
