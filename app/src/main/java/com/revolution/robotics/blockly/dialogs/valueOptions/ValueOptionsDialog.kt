@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.StringRes
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.revolution.robotics.R
 import com.revolution.robotics.blockly.JavascriptPromptDialog
@@ -29,12 +30,14 @@ class ValueOptionsDialog :
         private var Bundle.title by BundleArgumentDelegate.String("title")
         private var Bundle.selectedValue by BundleArgumentDelegate.String("selected-value")
         private var Bundle.values by BundleArgumentDelegate.StringArray("values")
+        private var Bundle.errorMessageResId by BundleArgumentDelegate.Int("error-message")
 
-        fun newInstance(title: String, defaultValue: String?, values: List<String>) =
+        fun newInstance(title: String, defaultValue: String?, values: List<String>, @StringRes errorMessageResId: Int) =
             ValueOptionsDialog().withArguments { bundle ->
                 bundle.title = title
                 defaultValue?.let { bundle.selectedValue = it }
                 bundle.values = values.toTypedArray()
+                bundle.errorMessageResId = errorMessageResId
             }
     }
 
@@ -54,8 +57,12 @@ class ValueOptionsDialog :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val selectedKey = arguments?.selectedValue
-        arguments?.values?.map { ValueViewModel(it, it == selectedKey, this) }?.let {
-            adapter.setItems(it)
+        arguments?.values?.map { ValueViewModel(it, it == selectedKey, this) }?.let { items ->
+            if (items.isNotEmpty()) {
+                adapter.setItems(items)
+            } else {
+                arguments?.errorMessageResId?.let { binding.error.setText(it) }
+            }
         }
     }
 
