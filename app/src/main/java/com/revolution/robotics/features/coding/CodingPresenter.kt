@@ -3,8 +3,7 @@ package com.revolution.robotics.features.coding
 import android.util.Base64
 import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.local.UserProgram
-import com.revolution.robotics.core.interactor.RemoveUserProgramInteractor
-import com.revolution.robotics.core.interactor.SaveUserProgramInteractor
+import com.revolution.robotics.core.interactor.*
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.core.utils.AppPrefs
 import com.revolution.robotics.features.coding.new.NewProgramConfirmDialog
@@ -16,6 +15,7 @@ import java.util.concurrent.TimeUnit
 
 @Suppress("TooManyFunctions")
 class CodingPresenter(
+    private val getUserConfigForRobotInteractor: GetUserConfigForRobotInteractor,
     private val removeUserProgramInteractor: RemoveUserProgramInteractor,
     private val saveUserProgramInteractor: SaveUserProgramInteractor,
     private val resourceResolver: ResourceResolver,
@@ -35,7 +35,7 @@ class CodingPresenter(
     private var pythonSaved = false
     private var xmlSaved = false
     private var variablesSaved = false
-    private var robotInstanceId: Int? = null
+    private var robotId: Int? = null
 
     override fun showNewProgramDialog() {
         view?.showDialog(NewProgramConfirmDialog.newInstance())
@@ -44,7 +44,8 @@ class CodingPresenter(
     override fun loadProgram(userProgram: UserProgram) {
         model?.userProgram = userProgram
         model?.programName?.set(userProgram.name)
-        robotInstanceId = userProgram.robotId
+        robotId = userProgram.robotId
+        loadConfig()
         userProgram.xml?.let { xmlFile ->
             appPrefs.lastOpenedProgram = userProgram.name
             view?.loadProgramIntoTheBlockly(String(Base64.decode(xmlFile, Base64.NO_WRAP)))
@@ -53,7 +54,8 @@ class CodingPresenter(
 
     override fun createNewProgram() {
         //TODO Select robot
-        robotInstanceId = null
+        robotId = null
+        loadConfig()
         model?.userProgram = null
         model?.resetProgramName()
         view?.clearBlocklyWorkspace()
@@ -70,7 +72,7 @@ class CodingPresenter(
     }
 
     override fun showSaveProgramDialog(userProgram: UserProgram?, actionIdAfterSave: Int) {
-        robotInstanceId?.let {robotId ->
+        robotId?.let { robotId ->
             view?.showDialog(
                 SaveProgramDialog.newInstance(
                     userProgram,
@@ -131,6 +133,16 @@ class CodingPresenter(
             }
         variablesSaved = true
         saveUserProgramWhenEveryDataIsReady()
+    }
+
+    private fun loadConfig() {
+        robotId?.let {
+            getUserConfigForRobotInteractor.robotId = it
+            getUserConfigForRobotInteractor.execute { config ->
+                view?.onConfigLoaded(config)
+            }
+        }
+
     }
 
     private fun saveUserProgramWhenEveryDataIsReady() {

@@ -13,13 +13,18 @@ import com.revolution.robotics.blockly.dialogs.optionSelector.OptionSelectorDial
 import com.revolution.robotics.blockly.dialogs.slider.SliderDialog
 import com.revolution.robotics.blockly.dialogs.soundPicker.SoundPickerDialog
 import com.revolution.robotics.blockly.dialogs.textInput.TextInputDialog
+import com.revolution.robotics.blockly.dialogs.valueOptions.ValueOptionsDialog
 import com.revolution.robotics.blockly.dialogs.variableOptions.VariableOptionsDialog
 import com.revolution.robotics.blockly.utils.BlocklyResultHolder
+import com.revolution.robotics.core.domain.local.UserConfiguration
+import com.revolution.robotics.core.domain.remote.Motor
+import com.revolution.robotics.core.domain.remote.Sensor
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import org.revolutionrobotics.blockly.android.BlocklyOption
 import org.revolutionrobotics.blockly.android.BlocklyVariable
 import org.revolutionrobotics.blockly.android.view.result.*
 import org.revolutionrobotics.blockly.android.view.DialogFactory
+import org.revolutionrobotics.bluetooth.android.service.RoboticsMotorService
 
 @Suppress("TooManyFunctions")
 class DialogFactory(
@@ -27,6 +32,8 @@ class DialogFactory(
     private val resourceResolver: ResourceResolver,
     private val fragmentManager: FragmentManager?
 ) : DialogFactory {
+
+    var userConfiguration: UserConfiguration? = null
 
     override fun showAlertDialog(message: String, result: ConfirmResult) {
         blocklyResultHolder.result = result
@@ -88,6 +95,26 @@ class DialogFactory(
     ) {
         blocklyResultHolder.result = result
         VariableOptionsDialog.newInstance(title, defaultValue, variables).show(fragmentManager)
+    }
+
+    override fun showBumperSelector(title: String, subtitle: String?, defaultValue: String?, result: TextResult) {
+        blocklyResultHolder.result = result
+        ValueOptionsDialog.newInstance(title, defaultValue, userConfiguration?.mappingId?.getSensorNames(Sensor.TYPE_BUMPER)?.filterNotNull() ?: emptyList()).show(fragmentManager)
+    }
+
+    override fun showMotorSelector(title: String, subtitle: String?, defaultValue: String?, result: TextResult) {
+        blocklyResultHolder.result = result
+        ValueOptionsDialog.newInstance(title, defaultValue, userConfiguration?.mappingId?.getMotorNames(Motor.TYPE_MOTOR)?.filterNotNull() ?: emptyList()).show(fragmentManager)
+    }
+
+    override fun showUltrasonicSensorSelector(
+        title: String,
+        subtitle: String?,
+        defaultValue: String?,
+        result: TextResult
+    ) {
+        blocklyResultHolder.result = result
+        ValueOptionsDialog.newInstance(title, defaultValue, userConfiguration?.mappingId?.getSensorNames(Sensor.TYPE_ULTRASONIC)?.filterNotNull() ?: emptyList()).show(fragmentManager)
     }
 
     override fun showTextInput(title: String, subtitle: String?, defaultValue: String?, result: TextResult) {

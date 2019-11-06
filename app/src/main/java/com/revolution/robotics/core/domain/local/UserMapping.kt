@@ -95,6 +95,12 @@ class UserMapping(var userConfigId: Int = 0) : PortMapping(), Parcelable {
         }
     }
 
+    fun getMotorNames(motorType: String) =
+        listOfNotNull(M1, M2, M3, M4, M5, M6).filter { motor -> motor.type == motorType }.map { motor -> motor.variableName }
+
+    fun getSensorNames(sensorType: String) =
+        listOfNotNull(S1, S2, S3, S4).filter { sensor -> sensor.type == sensorType }.map { sensor -> sensor.variableName }
+
     private fun collectVariableNames(excludedPortName: String): List<String> {
         val variableNames = getVariables().toMutableList()
         excludeVariableName(excludedPortName, variableNames)
