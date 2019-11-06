@@ -124,6 +124,7 @@ fun createInteractorModule() =
         bind<GetUserChallengeCategoriesInteractor>() with p { GetUserChallengeCategoriesInteractor(i()) }
         bind<SaveUserChallengeCategoryInteractor>() with p { SaveUserChallengeCategoryInteractor(i()) }
         bind<GetUserProgramsInteractor>() with p { GetUserProgramsInteractor(i()) }
+        bind<GetUserProgramsForRobotInteractor>() with p { GetUserProgramsForRobotInteractor(i()) }
         bind<GetControllerTypeInteractor>() with p { GetControllerTypeInteractor(i(), i()) }
         bind<FirebaseConnectionInteractor>() with p { FirebaseConnectionInteractor() }
         bind<FirebaseInitInteractor>() with p { FirebaseInitInteractor() }
@@ -158,7 +159,7 @@ fun createPresenterModule() =
         bind<FirmwareUpdateMvp.Presenter>() with s { FirmwareUpdateDialogPresenter(i(), i(), i(), i(), i(), i()) }
         bind<PlayMvp.Presenter>() with s { PlayPresenter(i(), i(), i(), i(), i()) }
         bind<TypeSelectorMvp.Presenter>() with s { TypeSelectorPresenter(i()) }
-        bind<ConfigureControllerMvp.Presenter>() with s { ConfigureControllerPresenter(i(), i(), i(), i(), i()) }
+        bind<ConfigureControllerMvp.Presenter>() with s { ConfigureControllerPresenter(i(), i(), i(), i(), i(), i()) }
         bind<ProgramSelectorMvp.Presenter>() with s { ProgramSelectorPresenter(i(), i(), i(), i(), i()) }
         bind<ProgramPriorityMvp.Presenter>() with s { ProgramPriorityPresenter(i(), i()) }
         bind<ButtonlessProgramSelectorMvp.Presenter>() with s { ButtonlessProgramSelectorPresenter(i(), i(), i(), i(), i()) }

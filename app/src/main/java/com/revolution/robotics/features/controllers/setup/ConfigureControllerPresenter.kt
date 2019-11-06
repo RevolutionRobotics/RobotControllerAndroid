@@ -1,9 +1,7 @@
 package com.revolution.robotics.features.controllers.setup
 
 import com.revolution.robotics.core.domain.local.UserProgram
-import com.revolution.robotics.core.interactor.AssignProgramToButtonInteractor
-import com.revolution.robotics.core.interactor.GetFullConfigurationInteractor
-import com.revolution.robotics.core.interactor.GetUserProgramsInteractor
+import com.revolution.robotics.core.interactor.*
 import com.revolution.robotics.features.configure.ConfigurationEventBus
 import com.revolution.robotics.features.configure.controller.CompatibleProgramFilterer
 import com.revolution.robotics.features.configure.controller.ControllerButton
@@ -12,9 +10,10 @@ import com.revolution.robotics.features.controllers.setup.mostRecent.MostRecentI
 import com.revolution.robotics.features.controllers.setup.mostRecent.MostRecentProgramViewModel
 
 class ConfigureControllerPresenter(
+    private val getUserRobotByConfigIdInteractor: GetUserRobotByConfigIdInteractor,
     private val getFullConfigurationInteractor: GetFullConfigurationInteractor,
     private val compatibleProgramFilterer: CompatibleProgramFilterer,
-    private val getUserProgramsInteractor: GetUserProgramsInteractor,
+    private val getUserProgramsForRobotInteractor: GetUserProgramsForRobotInteractor,
     private val assignProgramToButtonInteractor: AssignProgramToButtonInteractor,
     private val configurationEventBus: ConfigurationEventBus
 
@@ -45,9 +44,15 @@ class ConfigureControllerPresenter(
     }
 
     private fun loadPrograms() {
-        getUserProgramsInteractor.execute { result ->
-            allPrograms.clear()
-            allPrograms.addAll(result)
+        getUserRobotByConfigIdInteractor.configId = configId
+        getUserRobotByConfigIdInteractor.execute { robot->
+            robot?.id?.let {
+                getUserProgramsForRobotInteractor.robotId = it
+                getUserProgramsForRobotInteractor.execute { result ->
+                    allPrograms.clear()
+                    allPrograms.addAll(result)
+                }
+            }
         }
     }
 

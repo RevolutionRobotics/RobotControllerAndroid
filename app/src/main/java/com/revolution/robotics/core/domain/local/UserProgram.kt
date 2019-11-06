@@ -42,4 +42,7 @@ interface UserProgramDao {
 
     @Query("SELECT * FROM UserProgram WHERE remoteId=:remoteId")
     fun getUserProgramBasedOnRemoteId(remoteId: String): UserProgram?
+
+    @Query("SELECT * FROM UserProgram WHERE robotId=:robotId ORDER BY lastModified DESC")
+    fun getUserProgramsForRobot(robotId: Int): List<UserProgram>
 }
