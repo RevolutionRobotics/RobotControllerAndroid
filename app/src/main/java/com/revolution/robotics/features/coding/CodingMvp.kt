@@ -2,12 +2,14 @@ package com.revolution.robotics.features.coding
 
 import com.revolution.robotics.BaseDialog
 import com.revolution.robotics.core.Mvp
+import com.revolution.robotics.core.domain.local.UserConfiguration
 import com.revolution.robotics.core.domain.local.UserProgram
 import org.revolutionrobotics.blockly.android.view.jsInterface.SaveBlocklyListener
 
 interface CodingMvp : Mvp {
 
     interface View : Mvp.View {
+        fun onConfigLoaded(userConfiguration: UserConfiguration?)
         fun showDialog(baseDialog: BaseDialog)
         fun loadProgramIntoTheBlockly(xml: String)
         fun clearBlocklyWorkspace()

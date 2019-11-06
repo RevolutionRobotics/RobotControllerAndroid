@@ -9,6 +9,7 @@ import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
 import com.revolution.robotics.blockly.DialogFactory
 import com.revolution.robotics.blockly.utils.BlocklyResultHolder
+import com.revolution.robotics.core.domain.local.UserConfiguration
 import com.revolution.robotics.core.domain.local.UserProgram
 import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
@@ -31,7 +32,6 @@ class CodingFragment : BaseFragment<FragmentCodingBinding, CodingViewModel>(R.la
     companion object {
         private const val BLOCKLY_DELAY_MS = 125L
 
-        const val KEY_ACTION_ID_AFTER_SAVE = "actionId"
         const val ACTION_ID_LEAVE = 1
         const val ACTION_ID_LOAD_PROGRAMS = 2
         const val ACTION_ID_CREATE_NEW_PROGRAM = 3
@@ -48,6 +48,8 @@ class CodingFragment : BaseFragment<FragmentCodingBinding, CodingViewModel>(R.la
     private val dialogEventBus: DialogEventBus by kodein.instance()
     private val navigator: Navigator by kodein.instance()
 
+    private var dialogFactory: DialogFactory? = null
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
         super.onCreateView(inflater, container, savedInstanceState).apply {
             binding?.buttonBackground = ChippedBoxConfig.Builder()
@@ -58,8 +60,9 @@ class CodingFragment : BaseFragment<FragmentCodingBinding, CodingViewModel>(R.la
         }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        dialogFactory = DialogFactory(blocklyResultHolder, resourceResolver, fragmentManager)
         binding?.viewBlockly?.apply {
-            init(DialogFactory(blocklyResultHolder, resourceResolver, fragmentManager))
+            init(dialogFactory!!)
             listener = this@CodingFragment
         }
         presenter.register(this, viewModel)
@@ -70,6 +73,10 @@ class CodingFragment : BaseFragment<FragmentCodingBinding, CodingViewModel>(R.la
         presenter.unregister()
         dialogEventBus.unregister(this)
         super.onDestroyView()
+    }
+
+    override fun onConfigLoaded(userConfiguration: UserConfiguration?) {
+        dialogFactory?.userConfiguration = userConfiguration
     }
 
     override fun loadProgramIntoTheBlockly(xml: String) {
