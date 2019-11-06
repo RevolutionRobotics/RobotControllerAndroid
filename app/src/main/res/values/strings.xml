@@ -338,6 +338,9 @@
     <!-- Blockly -->
     <string name="blockly_dialog_choose_a_direction">Choose a direction!</string>
     <string name="blockly_donut_selector_select_all">Select all"</string>
+    <string name="blockly_no_motor_configured">This robot doesn\’t have any non-drivetrain motors configured</string>
+    <string name="blockly_no_distance_sensor_configured">This robot doesn\’t have a distance sensor configured</string>
+    <string name="blockly_no_bumper_configured">This robot doesn\’t have a bumper configured</string>
 
     <!-- Community -->
     <string name="community_title">Community</string>

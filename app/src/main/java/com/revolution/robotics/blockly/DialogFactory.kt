@@ -1,6 +1,7 @@
 package com.revolution.robotics.blockly
 
 import androidx.fragment.app.FragmentManager
+import com.revolution.robotics.R
 import com.revolution.robotics.blockly.dialogs.blockOptions.BlockOptionsDialog
 import com.revolution.robotics.blockly.dialogs.colorPicker.ColorPickerDialog
 import com.revolution.robotics.blockly.dialogs.confirm.ConfirmDialog
@@ -99,12 +100,22 @@ class DialogFactory(
 
     override fun showBumperSelector(title: String, subtitle: String?, defaultValue: String?, result: TextResult) {
         blocklyResultHolder.result = result
-        ValueOptionsDialog.newInstance(title, defaultValue, userConfiguration?.mappingId?.getSensorNames(Sensor.TYPE_BUMPER)?.filterNotNull() ?: emptyList()).show(fragmentManager)
+        ValueOptionsDialog.newInstance(
+            title,
+            defaultValue,
+            userConfiguration?.mappingId?.getSensorNames(Sensor.TYPE_BUMPER)?.filterNotNull() ?: emptyList(),
+            R.string.blockly_no_bumper_configured
+        ).show(fragmentManager)
     }
 
     override fun showMotorSelector(title: String, subtitle: String?, defaultValue: String?, result: TextResult) {
         blocklyResultHolder.result = result
-        ValueOptionsDialog.newInstance(title, defaultValue, userConfiguration?.mappingId?.getMotorNames(Motor.TYPE_MOTOR)?.filterNotNull() ?: emptyList()).show(fragmentManager)
+        ValueOptionsDialog.newInstance(
+            title,
+            defaultValue,
+            userConfiguration?.mappingId?.getMotorNames(Motor.TYPE_MOTOR)?.filterNotNull() ?: emptyList(),
+            R.string.blockly_no_motor_configured
+        ).show(fragmentManager)
     }
 
     override fun showUltrasonicSensorSelector(
@@ -114,7 +125,12 @@ class DialogFactory(
         result: TextResult
     ) {
         blocklyResultHolder.result = result
-        ValueOptionsDialog.newInstance(title, defaultValue, userConfiguration?.mappingId?.getSensorNames(Sensor.TYPE_ULTRASONIC)?.filterNotNull() ?: emptyList()).show(fragmentManager)
+        ValueOptionsDialog.newInstance(
+            title,
+            defaultValue,
+            userConfiguration?.mappingId?.getSensorNames(Sensor.TYPE_ULTRASONIC)?.filterNotNull() ?: emptyList(),
+            R.string.blockly_no_distance_sensor_configured
+        ).show(fragmentManager)
     }
 
     override fun showTextInput(title: String, subtitle: String?, defaultValue: String?, result: TextResult) {
