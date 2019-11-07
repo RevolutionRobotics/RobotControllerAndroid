@@ -32,7 +32,7 @@ class ProgramSelectorPresenter(
     private var onlyShowCompatiblePrograms: Boolean? = null
 
     private var controllerButton: ControllerButton? = null
-    private var userConfigurationId: Int = -1
+    private var robotId: Int = -1
 
     override fun register(view: ProgramSelectorMvp.View, model: ProgramSelectorViewModel?) {
         super.register(view, model)
@@ -47,10 +47,10 @@ class ProgramSelectorPresenter(
             ProgramOrderingHandler.OrderBy.DATE to ProgramOrderingHandler.Order.DESCENDING
     }
 
-    override fun loadPrograms(controllerButton: ControllerButton, configurationId: Int) {
+    override fun loadPrograms(controllerButton: ControllerButton, robotId: Int) {
         this.controllerButton = controllerButton
-        this.userConfigurationId = configurationId
-        getFullConfigurationInteractor.userConfigId = configurationId
+        this.robotId = robotId
+        getFullConfigurationInteractor.robotId = robotId
         getFullConfigurationInteractor.execute { fullControllerData ->
             getUserProgramsInteractor.execute { userPrograms ->
                 allPrograms = userPrograms.toMutableList().apply {
@@ -79,7 +79,7 @@ class ProgramSelectorPresenter(
     }
 
     override fun updateOrderingAndFiltering() {
-        getFullConfigurationInteractor.userConfigId = userConfigurationId
+        getFullConfigurationInteractor.robotId = robotId
         getFullConfigurationInteractor.execute {
             model?.let { model ->
                 val filteredPrograms =
@@ -113,7 +113,7 @@ class ProgramSelectorPresenter(
     }
 
     override fun onProgramInfoClicked(userProgram: UserProgram) {
-        getFullConfigurationInteractor.userConfigId = userConfigurationId
+        getFullConfigurationInteractor.robotId = robotId
         getFullConfigurationInteractor.execute {
             if (compatibleProgramFilterer.isProgramCompatible(userProgram, it.userConfiguration)) {
                 view?.showDialog(ProgramDialog.Add.newInstance(userProgram))
@@ -128,7 +128,7 @@ class ProgramSelectorPresenter(
     }
 
     override fun addProgram(userProgram: UserProgram) {
-        assignProgramToButtonInteractor.userConfigurationId = userConfigurationId
+        assignProgramToButtonInteractor.robotId = robotId
         assignProgramToButtonInteractor.userProgram = userProgram
         assignProgramToButtonInteractor.button = controllerButton
         assignProgramToButtonInteractor.execute {

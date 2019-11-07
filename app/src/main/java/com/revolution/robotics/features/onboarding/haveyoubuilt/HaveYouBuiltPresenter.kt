@@ -1,6 +1,7 @@
 package com.revolution.robotics.features.onboarding.haveyoubuilt
 
 import com.revolution.robotics.core.domain.local.BuildStatus
+import com.revolution.robotics.core.domain.local.UserConfiguration
 import com.revolution.robotics.core.domain.local.UserRobot
 import com.revolution.robotics.core.interactor.GetControllerTypeInteractor
 import com.revolution.robotics.core.interactor.firebase.RobotInteractor
@@ -35,18 +36,18 @@ class HaveYouBuiltPresenter(
         createRobot { userRobot ->
             userRobot.buildStatus = BuildStatus.COMPLETED
             createRobotInstanceHelper.setupConfigFromFirebase(userRobot,
-                onSuccess = { savedRobot, configuration, controllers ->
-                    getControllerTypeInteractor.configurationId = savedRobot.configurationId
+                onSuccess = { savedRobot, _, _ ->
+                    getControllerTypeInteractor.robotId = savedRobot.id
                     getControllerTypeInteractor.execute { type ->
                         appPrefs.onboardingRobotBuild = true
                         appPrefs.onboardingRobotDriven = true
                         when (type) {
                             ControllerType.GAMER ->
-                                navigator.navigate(MyRobotsFragmentDirections.toPlayGamer(savedRobot.configurationId))
+                                navigator.navigate(MyRobotsFragmentDirections.toPlayGamer(savedRobot.id))
                             ControllerType.MULTITASKER ->
-                                navigator.navigate(MyRobotsFragmentDirections.toPlayMultitasker(savedRobot.configurationId))
+                                navigator.navigate(MyRobotsFragmentDirections.toPlayMultitasker(savedRobot.id))
                             ControllerType.DRIVER ->
-                                navigator.navigate(MyRobotsFragmentDirections.toPlayDriver(savedRobot.configurationId))
+                                navigator.navigate(MyRobotsFragmentDirections.toPlayDriver(savedRobot.id))
                         }
                     }
                 }, onError = {
@@ -79,7 +80,7 @@ class HaveYouBuiltPresenter(
                 BuildStatus.IN_PROGRESS,
                 BuildRobotFragment.DEFAULT_STARTING_INDEX,
                 Date(System.currentTimeMillis()),
-                0,
+                UserConfiguration(),
                 robot.name?.getLocalizedString(resourceResolver) ?: "",
                 robot.coverImage,
                 robot.description?.getLocalizedString(resourceResolver) ?: ""

@@ -2,7 +2,7 @@ package com.revolution.robotics.features.configure.motor
 
 import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.remote.Motor
-import com.revolution.robotics.core.interactor.GetUserConfigurationInteractor
+import com.revolution.robotics.core.interactor.GetUserRobotInteractor
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.features.bluetooth.BluetoothManager
 import com.revolution.robotics.features.build.testing.DrivetrainTestDialog
@@ -18,7 +18,7 @@ import com.revolution.robotics.views.ChippedEditTextViewModel
 class MotorConfigurationPresenter(
     private val resourceResolver: ResourceResolver,
     private val configurationEventBus: ConfigurationEventBus,
-    private val getUserConfigurationInteractor: GetUserConfigurationInteractor,
+    private val getUserRobotInteractor: GetUserRobotInteractor,
     private val bluetoothManager: BluetoothManager,
     private val errorHandler: ErrorHandler
 ) : MotorConfigurationMvp.Presenter {
@@ -27,7 +27,7 @@ class MotorConfigurationPresenter(
     override var model: MotorConfigurationViewModel? = null
 
     private var buttonHandler: MotorConfigurationButtonHandler? = null
-    private var configId: Int = -1
+    private var robotId: Int = -1
     private var motor: Motor? = null
     private var portName: String? = null
     private var variableName: String? = null
@@ -45,10 +45,10 @@ class MotorConfigurationPresenter(
         buttonHandler?.setVariableName(name)
     }
 
-    override fun setMotor(configId: Int, motor: Motor, portName: String) {
+    override fun setMotor(robotId: Int, motor: Motor, portName: String) {
         this.motor = motor
         this.portName = portName
-        this.configId = configId
+        this.robotId = robotId
         model?.editTextModel?.value = ChippedEditTextViewModel(
             title = "$portName - ${resourceResolver.string(R.string.configure_motor_name_inputfield_title)}",
             text = motor.variableName,
@@ -93,20 +93,20 @@ class MotorConfigurationPresenter(
 
     override fun onTestButtonClicked() {
         if (bluetoothManager.isServiceDiscovered) {
-            getUserConfigurationInteractor.userConfigId = configId
-            getUserConfigurationInteractor.execute { userConfiguration ->
-                if (model?.driveTrainButton?.isSelected?.get() == true && userConfiguration?.mappingId?.getMotorPortIndex(
+            getUserRobotInteractor.robotId = robotId
+            getUserRobotInteractor.execute { userRobot ->
+                if (model?.driveTrainButton?.isSelected?.get() == true && userRobot?.configuration?.mappingId?.getMotorPortIndex(
                         portName
                     ) != null
                 ) {
-                    view?.showDialog(generateDriveTrainDialog(userConfiguration.mappingId?.getMotorPortIndex(portName)!!))
+                    view?.showDialog(generateDriveTrainDialog(userRobot.configuration.mappingId?.getMotorPortIndex(portName)!!))
                 }
 
-                if (model?.motorButton?.isSelected?.get() == true && userConfiguration?.mappingId?.getMotorPortIndex(
+                if (model?.motorButton?.isSelected?.get() == true && userRobot?.configuration?.mappingId?.getMotorPortIndex(
                         portName
                     ) != null
                 ) {
-                    view?.showDialog(generateMotorDialog(userConfiguration.mappingId?.getMotorPortIndex(portName)!!))
+                    view?.showDialog(generateMotorDialog(userRobot.configuration.mappingId?.getMotorPortIndex(portName)!!))
                 }
             }
         } else {
@@ -157,10 +157,10 @@ class MotorConfigurationPresenter(
     }
 
     override fun onDoneButtonClicked() {
-        getUserConfigurationInteractor.userConfigId = configId
-        getUserConfigurationInteractor.execute { userConfiguration ->
+        getUserRobotInteractor.robotId = robotId
+        getUserRobotInteractor.execute { userRobot ->
             motor?.apply {
-                if (userConfiguration?.mappingId != null && userConfiguration.mappingId!!.isUsedVariableName(
+                if (userRobot?.configuration?.mappingId != null && userRobot.configuration.mappingId!!.isUsedVariableName(
                         this@MotorConfigurationPresenter.variableName ?: "",
                         portName ?: ""
                     )

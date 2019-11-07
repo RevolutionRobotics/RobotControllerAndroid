@@ -17,10 +17,10 @@ class ConfigureConnectionsFragment :
     companion object {
 
         fun newInstance() = ConfigureConnectionsFragment()
-        private var Bundle.userConfigurationId by BundleArgumentDelegate.Int("configuration")
+        private var Bundle.robotId by BundleArgumentDelegate.Int("robotId")
 
-        fun newInstance(userConfigurationId: Int) = ConfigureConnectionsFragment().withArguments { bundle ->
-            bundle.userConfigurationId = userConfigurationId
+        fun newInstance(robotId: Int) = ConfigureConnectionsFragment().withArguments { bundle ->
+            bundle.robotId = robotId
         }
     }
 
@@ -30,7 +30,7 @@ class ConfigureConnectionsFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         presenter.register(this, viewModel)
-        arguments?.userConfigurationId?.let {presenter.loadConfiguration(it) }
+        arguments?.robotId?.let { presenter.loadConfiguration(it) }
     }
 
     override fun onDestroyView() {

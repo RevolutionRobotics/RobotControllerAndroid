@@ -1,16 +1,12 @@
 package com.revolution.robotics.features.configure
 
 import com.revolution.robotics.R
-import com.revolution.robotics.core.domain.local.BuildStatus
-import com.revolution.robotics.core.domain.local.UserConfiguration
-import com.revolution.robotics.core.domain.local.UserProgram
 import com.revolution.robotics.core.domain.local.UserRobot
 import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
 import com.revolution.robotics.core.interactor.*
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.core.utils.Navigator
-import com.revolution.robotics.features.configure.controller.ControllerButton
 import com.revolution.robotics.features.configure.delete.DeleteRobotDialog
 import com.revolution.robotics.features.configure.robotPicture.RobotPictureDialog
 import com.revolution.robotics.features.configure.save.SaveRobotDialog
@@ -24,7 +20,6 @@ class ConfigurePresenter(
     private val duplicateUserRobotInteractor: DuplicateUserRobotInteractor,
     private val deleteRobotInteractor: DeleteRobotInteractor,
     private val updateUserRobotInteractor: UpdateUserRobotInteractor,
-    private val getUserConfigurationInteractor: GetUserConfigurationInteractor,
     private val getUserControllerInteractor: GetUserControllerInteractor,
     private val saveUserControllerInteractor: SaveUserControllerInteractor,
     private val dialogEventBus: DialogEventBus,
@@ -39,7 +34,6 @@ class ConfigurePresenter(
     private var toolbarViewModel: ConfigureToolbarViewModel? = null
 
     var userRobot: UserRobot? = null
-    var userConfiguration: UserConfiguration? = null
 
     private var selectedTab = ConfigurationTabs.CONNECTIONS
 
@@ -63,27 +57,9 @@ class ConfigurePresenter(
                     }
                 )
 
-                getUserConfigurationInteractor.userConfigId = it.configurationId
-                getUserConfigurationInteractor.execute { config ->
-                    onConfigurationLoaded(config)
-                }
-            }
-        }
-    }
-
-    private fun onConfigurationLoaded(config: UserConfiguration?) {
-        setControllersTabName(config?.controller)
-        config?.apply {
-            if (config.id != userConfiguration?.id) {
-                selectedTab = ConfigurationTabs.CONNECTIONS
-                userConfiguration = config
-            }
-            model?.setScreen(selectedTab)
-
-            if (selectedTab == ConfigurationTabs.CONNECTIONS) {
-                view?.showConnectionsScreen(config.id)
-            } else {
-                view?.showControllerScreen(config.id)
+                setControllersTabName(userRobot.configuration.controller)
+                model?.setScreen(selectedTab)
+                view?.showConnectionsScreen(userRobot.id)
             }
         }
     }
@@ -115,35 +91,35 @@ class ConfigurePresenter(
     }
 
     override fun onOpenMotorConfigEvent(event: MotorPort) {
-        userConfiguration?.let { config ->
-            view?.openMotorConfig(config.id, event)
+        userRobot?.let { robot ->
+            view?.openMotorConfig(robot.id, event)
         }
     }
 
     override fun onOpenSensorConfigEvent(event: SensorPort) {
-        userConfiguration?.let { config ->
-            view?.openSensorConfig(config.id, event)
+        userRobot?.let { robot ->
+            view?.openSensorConfig(robot.id, event)
         }
     }
 
     override fun onConnectionsTabSelected() {
-        userConfiguration?.let { config ->
+        userRobot?.let { robot ->
             selectedTab = ConfigurationTabs.CONNECTIONS
             model?.setScreen(ConfigurationTabs.CONNECTIONS)
-            view?.showConnectionsScreen(config.id)
+            view?.showConnectionsScreen(robot.id)
         }
     }
 
     override fun onControllerTabSelected() {
         selectedTab = ConfigurationTabs.CONTROLLERS
         model?.setScreen(ConfigurationTabs.CONTROLLERS)
-        if (userConfiguration != null) {
-            view?.showControllerScreen(userConfiguration!!.id)
+        userRobot?.let { robot ->
+            view?.showControllerScreen(robot.id)
         }
     }
 
     override fun onMotorConfigChangedEvent(event: MotorPort) {
-        userConfiguration?.let { config ->
+        userRobot?.configuration?.let { config ->
             config.mappingId?.updateMotorPort(event)
             save {
                 view?.updateConfig(config)
@@ -153,7 +129,7 @@ class ConfigurePresenter(
     }
 
     override fun onSensorConfigChangedEvent(event: SensorPort) {
-        userConfiguration?.let { config ->
+        userRobot?.configuration?.let { config ->
             config.mappingId?.updateSensorPort(event)
             save {
                 view?.updateConfig(config)
@@ -171,24 +147,23 @@ class ConfigurePresenter(
     }
 
     override fun onBackgroundProgramsClicked() {
-        userConfiguration?.let { navigator.navigate(ConfigureFragmentDirections.toButtonlessProgramSelector(it.id)) }
+        userRobot?.let { navigator.navigate(ConfigureFragmentDirections.toButtonlessProgramSelector(it.id)) }
     }
 
     override fun onPriorityClicked() {
-        userConfiguration?.controller?.let { navigator.navigate(ConfigureFragmentDirections.toProgramPriority(it)) }
+        userRobot?.configuration?.controller?.let { navigator.navigate(ConfigureFragmentDirections.toProgramPriority(it)) }
     }
 
     override fun deleteRobot() {
         userRobot?.let {
             deleteRobotInteractor.id = it.id
-            deleteRobotInteractor.configId = it.configurationId
             deleteRobotInteractor.execute()
         }
         navigator.back()
     }
 
     override fun onControllerTypeClicked() {
-        userConfiguration?.controller?.let { controllerId ->
+        userRobot?.configuration?.controller?.let { controllerId ->
             getUserControllerInteractor.id = controllerId
             getUserControllerInteractor.execute { controller ->
                 controller.userController.type =
@@ -222,28 +197,26 @@ class ConfigurePresenter(
     }
 
     override fun onPlayEvent() {
-        userConfiguration?.controller?.let { controllerId ->
+        userRobot?.configuration?.controller?.let { controllerId ->
             getUserControllerInteractor.id = controllerId
             getUserControllerInteractor.execute { controller ->
                 when (controller.userController.type) {
                     ControllerType.GAMER.id ->
-                        navigator.navigate(MyRobotsFragmentDirections.toPlayGamer(userConfiguration?.id!!))
+                        navigator.navigate(MyRobotsFragmentDirections.toPlayGamer(userRobot?.id!!))
                     ControllerType.DRIVER.id ->
-                        navigator.navigate(MyRobotsFragmentDirections.toPlayDriver(userConfiguration?.id!!))
+                        navigator.navigate(MyRobotsFragmentDirections.toPlayDriver(userRobot?.id!!))
                 }
             }
         }
     }
 
     fun save(finished: (() -> Unit)? = null) {
-        userConfiguration?.let { config ->
-            userRobot?.let { robot ->
-                updateUserRobotInteractor.userConfiguration = config
-                updateUserRobotInteractor.userRobot = robot
-                updateUserRobotInteractor.execute(onResponse = {
-                    finished?.invoke()
-                }, onError = { finished?.invoke() })
-            }
+        userRobot?.let { robot ->
+            updateUserRobotInteractor.userRobot = robot
+            updateUserRobotInteractor.execute(onResponse = {
+                finished?.invoke()
+            }, onError = { finished?.invoke() })
         }
+
     }
 }

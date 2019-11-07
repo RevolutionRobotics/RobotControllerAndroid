@@ -73,20 +73,20 @@ class ConfigureFragment : BaseFragment<FragmentConfigureBinding, ConfigureViewMo
         super.onDestroyView()
     }
 
-    override fun openMotorConfig(configId: Int, motorPort: MotorPort) {
-        binding?.drawerConfiguration?.setMotor(configId, motorPort.motor ?: Motor(), motorPort.portName ?: "")
+    override fun openMotorConfig(robotId: Int, motorPort: MotorPort) {
+        binding?.drawerConfiguration?.setMotor(robotId, motorPort.motor ?: Motor(), motorPort.portName ?: "")
     }
 
-    override fun openSensorConfig(configId: Int, sensorPort: SensorPort) {
-        binding?.drawerConfiguration?.setSensor(configId, sensorPort.sensor ?: Sensor(), sensorPort.portName ?: "")
+    override fun openSensorConfig(robotId: Int, sensorPort: SensorPort) {
+        binding?.drawerConfiguration?.setSensor(robotId, sensorPort.sensor ?: Sensor(), sensorPort.portName ?: "")
     }
 
-    override fun showConnectionsScreen(configId: Int) {
-        commitFragmentToFrame(ConfigureConnectionsFragment.newInstance(configId))
+    override fun showConnectionsScreen(robotId: Int) {
+        commitFragmentToFrame(ConfigureConnectionsFragment.newInstance(robotId))
     }
 
-    override fun showControllerScreen(configId: Int) {
-        commitFragmentToFrame(ConfigureControllerFragment.newInstance(configId))
+    override fun showControllerScreen(robotId: Int) {
+        commitFragmentToFrame(ConfigureControllerFragment.newInstance(robotId))
     }
 
     private fun commitFragmentToFrame(fragment: Fragment) {
@@ -97,7 +97,7 @@ class ConfigureFragment : BaseFragment<FragmentConfigureBinding, ConfigureViewMo
 
     override fun updateConfig(userConfiguration: UserConfiguration) {
         (fragmentManager?.findFragmentById(R.id.configureFragmentFrame) as? ConfigureConnectionsFragment)?.apply {
-            updateConfiguration(userConfiguration.id)
+            arguments?.robotId?.let { updateConfiguration(it) }
             clearSelection()
         }
     }

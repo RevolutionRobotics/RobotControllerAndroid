@@ -3,14 +3,14 @@ package com.revolution.robotics.features.play
 import android.net.Uri
 import com.revolution.robotics.core.interactor.CreateConfigurationFileInteractor
 import com.revolution.robotics.core.interactor.GetFullConfigurationInteractor
-import com.revolution.robotics.core.interactor.GetUserRobotByConfigIdInteractor
+import com.revolution.robotics.core.interactor.GetUserRobotInteractor
 import com.revolution.robotics.features.bluetooth.BluetoothManager
 import com.revolution.robotics.features.shared.ErrorHandler
 import org.revolutionrobotics.bluetooth.android.service.RoboticsLiveControllerService
 import kotlin.math.max
 
 class PlayPresenter(
-    private val getUserRobotByConfigIdInteractor: GetUserRobotByConfigIdInteractor,
+    private val getUserRobotInteractor: GetUserRobotInteractor,
     private val getConfigurationInteractor: GetFullConfigurationInteractor,
     private val createConfigurationFileInteractor: CreateConfigurationFileInteractor,
     private val bluetoothManager: BluetoothManager,
@@ -34,15 +34,15 @@ class PlayPresenter(
         super.unregister(view)
     }
 
-    override fun loadRobotName(configId: Int) {
-        getUserRobotByConfigIdInteractor.configId = configId
-        getUserRobotByConfigIdInteractor.execute {
+    override fun loadRobotName(robotId: Int) {
+        getUserRobotInteractor.robotId = robotId
+        getUserRobotInteractor.execute {
             toolbarViewModel?.title?.set(it?.name ?: "")
         }
     }
 
-    override fun loadConfiguration(configId: Int) {
-        getConfigurationInteractor.userConfigId = configId
+    override fun loadConfiguration(robotId: Int) {
+        getConfigurationInteractor.robotId = robotId
         getConfigurationInteractor.execute { result ->
             view?.let {
                 createConfigurationFile(result)

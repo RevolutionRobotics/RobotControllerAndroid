@@ -19,6 +19,6 @@ interface ButtonlessProgramSelectorMvp : Mvp {
         fun onEditButtonClicked(userProgram: UserProgram)
         fun onProgramEdited(userProgram: UserProgram)
         fun clearSelections()
-        fun load(userConfigurationId: Int)
+        fun load(robotId: Int)
     }
 }

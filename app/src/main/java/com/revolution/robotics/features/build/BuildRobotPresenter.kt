@@ -44,11 +44,11 @@ class BuildRobotPresenter(
     private fun startPlayFragment(robot: UserRobot, controller: Controller?) {
         when (ControllerType.fromId(controller?.type)) {
             ControllerType.GAMER ->
-                navigator.navigate(BuildRobotFragmentDirections.toPlayGamer(robot.configurationId))
+                navigator.navigate(BuildRobotFragmentDirections.toPlayGamer(robot.id))
             ControllerType.MULTITASKER ->
-                navigator.navigate(BuildRobotFragmentDirections.toPlayMultitasker(robot.configurationId))
+                navigator.navigate(BuildRobotFragmentDirections.toPlayMultitasker(robot.id))
             ControllerType.DRIVER ->
-                navigator.navigate(BuildRobotFragmentDirections.toPlayDriver(robot.configurationId))
+                navigator.navigate(BuildRobotFragmentDirections.toPlayDriver(robot.id))
         }
 
     }

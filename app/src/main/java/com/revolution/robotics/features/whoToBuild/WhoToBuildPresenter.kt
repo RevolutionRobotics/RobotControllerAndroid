@@ -3,6 +3,7 @@ package com.revolution.robotics.features.whoToBuild
 import android.util.Log
 import com.revolution.robotics.core.domain.PortMapping
 import com.revolution.robotics.core.domain.local.BuildStatus
+import com.revolution.robotics.core.domain.local.UserConfiguration
 import com.revolution.robotics.core.domain.local.UserController
 import com.revolution.robotics.core.domain.local.UserRobot
 import com.revolution.robotics.core.domain.remote.Configuration
@@ -108,7 +109,7 @@ class WhoToBuildPresenter(
             BuildStatus.IN_PROGRESS,
             BuildRobotFragment.DEFAULT_STARTING_INDEX,
             Date(System.currentTimeMillis()),
-            0,
+            UserConfiguration(),
             robot.name?.getLocalizedString(resourceResolver) ?: "",
             robot.coverImage,
             robot.description?.getLocalizedString(resourceResolver) ?: ""
@@ -120,7 +121,8 @@ class WhoToBuildPresenter(
         val userRobot = UserRobot(
             buildStatus = BuildStatus.COMPLETED,
             lastModified = Date(System.currentTimeMillis()),
-            name = ""
+            name = "",
+            configuration = UserConfiguration()
         )
         saveUserRobotInteractor.userRobot = userRobot
         saveUserRobotInteractor.execute { savedRobot ->

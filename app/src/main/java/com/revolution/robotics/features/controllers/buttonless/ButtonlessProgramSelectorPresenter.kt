@@ -31,6 +31,7 @@ class ButtonlessProgramSelectorPresenter(
     override var view: ButtonlessProgramSelectorMvp.View? = null
     override var model: ButtonlessProgramSelectorViewModel? = null
 
+    private var robotId: Int? = null
     private var userConfiguration: UserConfiguration? = null
     private var allPrograms: List<ButtonlessProgramViewModel>? = null
     private var programs: MutableList<ButtonlessProgramViewModel> = mutableListOf()
@@ -43,8 +44,9 @@ class ButtonlessProgramSelectorPresenter(
         }
     }
 
-    override fun load(userConfigurationId: Int) {
-        loadPrograms(userConfigurationId)
+    override fun load(robotId: Int) {
+        this.robotId = robotId
+        loadPrograms(robotId)
     }
 
     override fun clearSelections() {
@@ -55,8 +57,8 @@ class ButtonlessProgramSelectorPresenter(
         programs.clear()
     }
 
-    private fun loadPrograms(configId: Int) {
-        getFullConfigurationInteractor.userConfigId = configId
+    private fun loadPrograms(robotId: Int) {
+        getFullConfigurationInteractor.robotId = robotId
         getFullConfigurationInteractor.execute { fullControllerData ->
             userConfiguration = fullControllerData.userConfiguration
             getUserProgramsInteractor.execute { userPrograms ->
@@ -161,8 +163,8 @@ class ButtonlessProgramSelectorPresenter(
     }
 
     fun save() {
-        userConfiguration?.id?.let { configurationId ->
-            getFullConfigurationInteractor.userConfigId = configurationId
+        robotId?.let { robotId ->
+            getFullConfigurationInteractor.robotId = robotId
             getFullConfigurationInteractor.execute { fullControllerData ->
                 val priorities = HashMap<String, Int>()
                 programs.forEach { viewModel ->

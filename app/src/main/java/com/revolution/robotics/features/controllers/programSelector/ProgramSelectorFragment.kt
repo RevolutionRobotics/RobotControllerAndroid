@@ -23,7 +23,7 @@ class ProgramSelectorFragment :
 
     companion object {
 
-        private var Bundle.configId by BundleArgumentDelegate.Int("configId")
+        private var Bundle.robotId by BundleArgumentDelegate.Int("robotId")
         private var Bundle.selectedButton by BundleArgumentDelegate.String("selectedButton")
     }
     override val viewModelClass = ProgramSelectorViewModel::class.java
@@ -40,7 +40,7 @@ class ProgramSelectorFragment :
             layoutManager = LinearLayoutManager(context)
             adapter = this@ProgramSelectorFragment.adapter
         }
-        arguments?.configId?.let { configId -> arguments?.selectedButton?.let { button -> presenter.loadPrograms(ControllerButton.valueOf(button), configId) } }
+        arguments?.robotId?.let { robotId -> arguments?.selectedButton?.let { button -> presenter.loadPrograms(ControllerButton.valueOf(button), robotId) } }
     }
 
     override fun onDestroyView() {

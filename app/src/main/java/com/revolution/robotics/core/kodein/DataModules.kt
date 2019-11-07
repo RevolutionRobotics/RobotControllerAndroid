@@ -17,7 +17,6 @@ import com.revolution.robotics.blockly.dialogs.variableOptions.VariableOptionsPr
 import com.revolution.robotics.core.db.RoboticsDatabase
 import com.revolution.robotics.core.domain.local.UserBackgroundProgramBindingDao
 import com.revolution.robotics.core.domain.local.UserChallengeCategoryDao
-import com.revolution.robotics.core.domain.local.UserConfigurationDao
 import com.revolution.robotics.core.domain.local.UserControllerDao
 import com.revolution.robotics.core.domain.local.UserProgramDao
 import com.revolution.robotics.core.domain.local.UserRobotDao
@@ -104,13 +103,11 @@ fun createInteractorModule() =
         bind<BuildStepInteractor>() with p { BuildStepInteractor() }
         bind<ConfigurationInteractor>() with p { ConfigurationInteractor() }
         bind<GetUserRobotInteractor>() with p { GetUserRobotInteractor(i()) }
-        bind<GetUserRobotByConfigIdInteractor>() with p { GetUserRobotByConfigIdInteractor(i()) }
-        bind<AssignConfigToRobotInteractor>() with p { AssignConfigToRobotInteractor(i(), i(), i(), i(), i(), i()) }
-        bind<UpdateUserRobotInteractor>() with p { UpdateUserRobotInteractor(i(), i()) }
+        bind<AssignConfigToRobotInteractor>() with p { AssignConfigToRobotInteractor(i(), i(), i(), i(), i()) }
+        bind<UpdateUserRobotInteractor>() with p { UpdateUserRobotInteractor(i()) }
         bind<GetAllUserRobotsInteractor>() with p { GetAllUserRobotsInteractor(i()) }
-        bind<DeleteRobotInteractor>() with p { DeleteRobotInteractor(i(), i()) }
-        bind<GetUserConfigurationInteractor>() with p { GetUserConfigurationInteractor(i()) }
-        bind<GetUserConfigForRobotInteractor>() with p { GetUserConfigForRobotInteractor(i(), i()) }
+        bind<DeleteRobotInteractor>() with p { DeleteRobotInteractor(i()) }
+        bind<GetUserConfigForRobotInteractor>() with p { GetUserConfigForRobotInteractor(i()) }
         bind<ControllerInteractor>() with p { ControllerInteractor() }
         bind<ProgramInteractor>() with p { ProgramInteractor() }
         bind<GetProgramsForRobotInteractor>() with p { GetProgramsForRobotInteractor() }
@@ -118,8 +115,8 @@ fun createInteractorModule() =
         bind<GetUserControllerForUserRobotInteractor>() with p { GetUserControllerForUserRobotInteractor(i()) }
         bind<GetUserControllerInteractor>() with p { GetUserControllerInteractor(i(), i(), i()) }
         bind<RemoveUserControllerInteractor>() with p { RemoveUserControllerInteractor(i()) }
-        bind<SaveUserControllerInteractor>() with p { SaveUserControllerInteractor(i(), i(), i(), i()) }
-        bind<SaveUserProgramInteractor>() with p { SaveUserProgramInteractor(i(), i(), i(), i(), i()) }
+        bind<SaveUserControllerInteractor>() with p { SaveUserControllerInteractor(i(), i(), i()) }
+        bind<SaveUserProgramInteractor>() with p { SaveUserProgramInteractor(i(), i(), i(), i()) }
         bind<RemoveUserProgramInteractor>() with p { RemoveUserProgramInteractor(i(), i(), i()) }
         bind<GetUserChallengeCategoriesInteractor>() with p { GetUserChallengeCategoriesInteractor(i()) }
         bind<SaveUserChallengeCategoryInteractor>() with p { SaveUserChallengeCategoryInteractor(i()) }
@@ -148,8 +145,8 @@ fun createPresenterModule() =
         bind<MyRobotsMvp.Presenter>() with s { MyRobotsPresenter(i(), i(), i(), i(), i()) }
         bind<BuildRobotMvp.Presenter>() with s { BuildRobotPresenter(i(), i(), i(), i(), i(), i()) }
         bind<ConnectMvp.Presenter>() with s { ConnectPresenter(i(), i()) }
-        bind<ConfigureMvp.Presenter>() with s { ConfigurePresenter(i(), i(), i(), i(), i(), i(), i(), i(), i(), i(), i()) }
-        bind<ConfigureConnectionsMvp.Presenter>() with s { ConfigureConnectionsPresenter(i(), i(), i(), i(), i()) }
+        bind<ConfigureMvp.Presenter>() with s { ConfigurePresenter(i(), i(), i(), i(), i(), i(), i(), i(), i(), i()) }
+        bind<ConfigureConnectionsMvp.Presenter>() with s { ConfigureConnectionsPresenter(i(), i(), i(), i()) }
         bind<MotorConfigurationMvp.Presenter>() with s { MotorConfigurationPresenter(i(), i(), i(), i(), i()) }
         bind<SensorConfigurationMvp.Presenter>() with s { SensorConfigurationPresenter(i(), i(), i(), i(), i()) }
         bind<BuildFinishedMvp.Presenter>() with s { BuildFinishedPresenter(i(), i()) }
@@ -191,7 +188,6 @@ fun createDbModule(context: Context) =
                 .build()
         }
         bind<UserRobotDao>() with p { i<RoboticsDatabase>().userRobotDao() }
-        bind<UserConfigurationDao>() with p { i<RoboticsDatabase>().userConfigurationDao() }
         bind<UserControllerDao>() with p { i<RoboticsDatabase>().userControllerDao() }
         bind<UserBackgroundProgramBindingDao>() with p { i<RoboticsDatabase>().userBackgroundProgramBindingDao() }
         bind<UserProgramDao>() with p { i<RoboticsDatabase>().userProgramDao() }

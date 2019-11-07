@@ -1,7 +1,6 @@
 package com.revolution.robotics.core.interactor
 
 import com.revolution.robotics.core.domain.local.UserBackgroundProgramBindingDao
-import com.revolution.robotics.core.domain.local.UserConfigurationDao
 import com.revolution.robotics.core.domain.local.UserController
 import com.revolution.robotics.core.domain.local.UserControllerDao
 import com.revolution.robotics.core.domain.local.UserProgram
@@ -12,8 +11,7 @@ class SaveUserProgramInteractor(
     private val userProgramDao: UserProgramDao,
     private val controllerDao: UserControllerDao,
     private val backgroundProgramBindingDao: UserBackgroundProgramBindingDao,
-    private val robotDao: UserRobotDao,
-    private val configurationDao: UserConfigurationDao
+    private val robotDao: UserRobotDao
 ) : Interactor<Unit>() {
 
     lateinit var userProgram: UserProgram
@@ -45,7 +43,7 @@ class SaveUserProgramInteractor(
 
     private fun isValidProgramForTheConfig(userController: UserController, userProgram: UserProgram): Boolean {
         robotDao.getRobotById(userController.robotId)?.let { robot ->
-            configurationDao.getUserConfiguration(robot.configurationId)?.let { config ->
+            robot.configuration.let { config ->
                 val configVariables = config.mappingId?.getVariables() ?: emptyList()
                 return checkVariables(configVariables, userProgram)
             }
