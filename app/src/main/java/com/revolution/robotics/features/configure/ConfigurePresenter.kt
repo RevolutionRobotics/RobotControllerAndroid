@@ -35,8 +35,6 @@ class ConfigurePresenter(
 
     var userRobot: UserRobot? = null
 
-    private var selectedTab = ConfigurationTabs.CONNECTIONS
-
     override fun register(view: ConfigureMvp.View, model: ConfigureViewModel?) {
         super.register(view, model)
         configurationEventBus.register(this)
@@ -58,7 +56,7 @@ class ConfigurePresenter(
                 )
 
                 setControllersTabName(userRobot.configuration.controller)
-                model?.setScreen(selectedTab)
+                model?.setScreen(ConfigurationTabs.CONNECTIONS)
                 view?.showConnectionsScreen(userRobot.id)
             }
         }
@@ -104,14 +102,12 @@ class ConfigurePresenter(
 
     override fun onConnectionsTabSelected() {
         userRobot?.let { robot ->
-            selectedTab = ConfigurationTabs.CONNECTIONS
             model?.setScreen(ConfigurationTabs.CONNECTIONS)
             view?.showConnectionsScreen(robot.id)
         }
     }
 
     override fun onControllerTabSelected() {
-        selectedTab = ConfigurationTabs.CONTROLLERS
         model?.setScreen(ConfigurationTabs.CONTROLLERS)
         userRobot?.let { robot ->
             view?.showControllerScreen(robot.id)
