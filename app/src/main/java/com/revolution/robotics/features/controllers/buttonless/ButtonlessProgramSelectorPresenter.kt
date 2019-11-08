@@ -5,6 +5,7 @@ import com.revolution.robotics.core.domain.local.UserConfiguration
 import com.revolution.robotics.core.domain.local.UserControllerWithPrograms
 import com.revolution.robotics.core.domain.local.UserProgram
 import com.revolution.robotics.core.interactor.GetFullConfigurationInteractor
+import com.revolution.robotics.core.interactor.GetUserProgramsForRobotInteractor
 import com.revolution.robotics.core.interactor.GetUserProgramsInteractor
 import com.revolution.robotics.core.interactor.SaveUserControllerInteractor
 import com.revolution.robotics.core.utils.Navigator
@@ -17,7 +18,7 @@ import kotlin.collections.set
 @Suppress("TooManyFunctions")
 class ButtonlessProgramSelectorPresenter(
     private val getFullConfigurationInteractor: GetFullConfigurationInteractor,
-    private val getUserProgramsInteractor: GetUserProgramsInteractor,
+    private val getUserProgramsForRobotInteractor: GetUserProgramsForRobotInteractor,
     private val saveUserControllerInteractor: SaveUserControllerInteractor,
     private val compatibleProgramFilterer: CompatibleProgramFilterer,
     private val navigator: Navigator
@@ -61,7 +62,8 @@ class ButtonlessProgramSelectorPresenter(
         getFullConfigurationInteractor.robotId = robotId
         getFullConfigurationInteractor.execute { fullControllerData ->
             userConfiguration = fullControllerData.userConfiguration
-            getUserProgramsInteractor.execute { userPrograms ->
+            getUserProgramsForRobotInteractor.robotId = robotId
+            getUserProgramsForRobotInteractor.execute { userPrograms ->
                 val boundPrograms =
                     fullControllerData.controller?.userController?.getBoundButtonPrograms() ?: emptyList()
                 allPrograms = userPrograms.filter { program ->
