@@ -4,6 +4,7 @@ import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.local.UserProgram
 import com.revolution.robotics.core.interactor.AssignProgramToButtonInteractor
 import com.revolution.robotics.core.interactor.GetFullConfigurationInteractor
+import com.revolution.robotics.core.interactor.GetUserProgramsForRobotInteractor
 import com.revolution.robotics.core.interactor.GetUserProgramsInteractor
 import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.features.configure.controller.CompatibleProgramFilterer
@@ -13,7 +14,7 @@ import com.revolution.robotics.features.controllers.programInfo.ProgramDialog
 import com.revolution.robotics.features.controllers.programSelector.adapter.ProgramViewModel
 
 class ProgramSelectorPresenter(
-    private val getUserProgramsInteractor: GetUserProgramsInteractor,
+    private val getUserProgramsForRobotInteractor: GetUserProgramsForRobotInteractor,
     private val getFullConfigurationInteractor: GetFullConfigurationInteractor,
     private val compatibleProgramFilterer: CompatibleProgramFilterer,
     private val assignProgramToButtonInteractor: AssignProgramToButtonInteractor,
@@ -52,7 +53,8 @@ class ProgramSelectorPresenter(
         this.robotId = robotId
         getFullConfigurationInteractor.robotId = robotId
         getFullConfigurationInteractor.execute { fullControllerData ->
-            getUserProgramsInteractor.execute { userPrograms ->
+            getUserProgramsForRobotInteractor.robotId = robotId
+            getUserProgramsForRobotInteractor.execute { userPrograms ->
                 allPrograms = userPrograms.toMutableList().apply {
                     fullControllerData.controller?.userController?.getBoundButtonPrograms()?.forEach { boundProgram ->
                         removeAll { it.name == boundProgram.programName }
