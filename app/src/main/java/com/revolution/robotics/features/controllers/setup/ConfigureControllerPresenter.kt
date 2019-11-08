@@ -72,7 +72,7 @@ class ConfigureControllerPresenter(
                         availablePrograms.removeAll { it.name == boundProgram.programName }
                     }
                     fullConfig.controller?.backgroundBindings?.forEach { backgroundBinding ->
-                        availablePrograms.removeAll { it.name == backgroundBinding.programId }
+                        availablePrograms.removeAll { it.name == backgroundBinding.programName }
                     }
 
                     var mostRecentPrograms = availablePrograms.sortedBy { it.lastModified }.reversed()

@@ -12,14 +12,15 @@ class RemoveUserProgramInteractor(
 ) : Interactor<Unit>() {
 
     lateinit var userProgramName: String
+    var robotId: Int = 0
 
     override fun getData() {
-        controllerDao.getUserControllers().forEach { controller ->
+        controllerDao.getUserControllersForRobot(robotId).forEach { controller ->
             removeProgramFromMapping(controller.mapping)
             controllerDao.updateUserController(controller)
+            backgroundProgramBindingDao.removeBackgroundProgram(userProgramName, controller.id)
         }
-        backgroundProgramBindingDao.removeBackgroundProgram(userProgramName)
-        userProgramDao.removeUserProgram(userProgramName)
+        userProgramDao.removeUserProgram(userProgramName, robotId)
     }
 
     private fun removeProgramFromMapping(mapping: UserButtonMapping?) {

@@ -28,8 +28,8 @@ data class UserProgram(
 @Dao
 interface UserProgramDao {
 
-    @Query("SELECT * FROM UserProgram WHERE name=:name")
-    fun getUserProgram(name: String): UserProgram?
+    @Query("SELECT * FROM UserProgram WHERE name=:name AND robotId=:robotId")
+    fun getUserProgram(name: String, robotId: Int): UserProgram?
 
     @Query("SELECT * FROM UserProgram ORDER BY lastModified DESC")
     fun getAllPrograms(): List<UserProgram>
@@ -37,11 +37,8 @@ interface UserProgramDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveUserProgram(userProgram: UserProgram)
 
-    @Query("DELETE FROM UserProgram WHERE name=:name")
-    fun removeUserProgram(name: String)
-
-    @Query("SELECT * FROM UserProgram WHERE remoteId=:remoteId")
-    fun getUserProgramBasedOnRemoteId(remoteId: String): UserProgram?
+    @Query("DELETE FROM UserProgram WHERE name=:name AND robotId=:robotId")
+    fun removeUserProgram(name: String, robotId: Int)
 
     @Query("SELECT * FROM UserProgram WHERE robotId=:robotId ORDER BY lastModified DESC")
     fun getUserProgramsForRobot(robotId: Int): List<UserProgram>

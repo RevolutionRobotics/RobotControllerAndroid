@@ -22,7 +22,7 @@ class UserControllerHelper {
         val backgroundProgramBindings = userProgramBindingDao.getBackgroundPrograms(id)
         val programs = mutableListOf<UserProgram>()
         backgroundProgramBindings.forEach { binding ->
-            userProgramDao.getUserProgram(binding.programId)?.let {
+            userProgramDao.getUserProgram(binding.programName, controller.robotId)?.let {
                 programs.add(it)
             }
         }
@@ -41,28 +41,28 @@ class UserControllerHelper {
         userController: UserController,
         userProgramDao: UserProgramDao
     ) {
-        getButtonProgram(userController.mapping?.b1, userProgramDao)?.let {
+        getButtonProgram(userController.mapping?.b1, userProgramDao, userController.robotId)?.let {
             programs.add(it)
         }
-        getButtonProgram(userController.mapping?.b2, userProgramDao)?.let {
+        getButtonProgram(userController.mapping?.b2, userProgramDao, userController.robotId)?.let {
             programs.add(it)
         }
-        getButtonProgram(userController.mapping?.b3, userProgramDao)?.let {
+        getButtonProgram(userController.mapping?.b3, userProgramDao, userController.robotId)?.let {
             programs.add(it)
         }
-        getButtonProgram(userController.mapping?.b4, userProgramDao)?.let {
+        getButtonProgram(userController.mapping?.b4, userProgramDao, userController.robotId)?.let {
             programs.add(it)
         }
-        getButtonProgram(userController.mapping?.b5, userProgramDao)?.let {
+        getButtonProgram(userController.mapping?.b5, userProgramDao, userController.robotId)?.let {
             programs.add(it)
         }
-        getButtonProgram(userController.mapping?.b6, userProgramDao)?.let {
+        getButtonProgram(userController.mapping?.b6, userProgramDao, userController.robotId)?.let {
             programs.add(it)
         }
     }
 
-    private fun getButtonProgram(programBinding: UserProgramBinding?, userProgramDao: UserProgramDao): UserProgram? =
+    private fun getButtonProgram(programBinding: UserProgramBinding?, userProgramDao: UserProgramDao, robotId: Int): UserProgram? =
         programBinding?.programName?.let {
-            userProgramDao.getUserProgram(it)
+            userProgramDao.getUserProgram(it, robotId)
         }
 }

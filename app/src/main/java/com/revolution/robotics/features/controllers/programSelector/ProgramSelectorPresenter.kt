@@ -60,7 +60,7 @@ class ProgramSelectorPresenter(
                         removeAll { it.name == boundProgram.programName }
                     }
                     fullControllerData.controller?.backgroundBindings?.forEach { backgroundBinding ->
-                        removeAll { it.name == backgroundBinding.programId }
+                        removeAll { it.name == backgroundBinding.programName }
                     }
                 }
                 programs = ArrayList<UserProgram>().apply { allPrograms?.let { addAll(it) } }

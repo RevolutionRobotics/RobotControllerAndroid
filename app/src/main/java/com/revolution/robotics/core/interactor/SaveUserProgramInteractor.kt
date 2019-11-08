@@ -32,7 +32,7 @@ class SaveUserProgramInteractor(
             }
 
             backgroundProgramBindingDao.getBackgroundPrograms(controller.id)
-                .find { it.programId == userProgram.name }?.let {
+                .find { it.programName == userProgram.name }?.let {
                     if (!isValidProgramForTheConfig(controller, userProgram)) {
                         backgroundProgramBindingDao.removeBackgroundProgram(userProgram.name, controller.id)
                         return

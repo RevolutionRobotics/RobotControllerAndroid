@@ -71,7 +71,7 @@ class ButtonlessProgramSelectorPresenter(
                 }.map { userProgram ->
                     ButtonlessProgramViewModel(userProgram, this).apply {
                         selected.set(fullControllerData.controller?.backgroundBindings?.find
-                        { it.programId == userProgram.name } != null && compatibleProgramFilterer.isProgramCompatible(
+                        { it.programName == userProgram.name } != null && compatibleProgramFilterer.isProgramCompatible(
                             userProgram,
                             fullControllerData.userConfiguration
                         ))
@@ -241,6 +241,6 @@ class ButtonlessProgramSelectorPresenter(
 
     private fun getPriority(controllerWithPrograms: UserControllerWithPrograms, userProgramName: String) =
         controllerWithPrograms.userController.getMappingList().find { it?.programName == userProgramName }?.priority
-            ?: controllerWithPrograms.backgroundBindings.find { it.programId == userProgramName }?.priority ?: -1
+            ?: controllerWithPrograms.backgroundBindings.find { it.programName == userProgramName }?.priority ?: -1
 
 }

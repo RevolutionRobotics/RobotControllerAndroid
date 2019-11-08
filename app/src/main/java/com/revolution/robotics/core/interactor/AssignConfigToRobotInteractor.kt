@@ -22,7 +22,7 @@ class AssignConfigToRobotInteractor(
 
     override fun getData(): UserRobot {
         configuration?.let { remoteConfig ->
-            userRobot.configuration = createUserConfiguration(remoteConfig, userRobot.id)
+            userRobot.configuration = createUserConfiguration(remoteConfig)
             val programIdMap = saveUserPrograms()
             controller?.let { saveUserController(it, userRobot.configuration, true, programIdMap) }
             val hasController = userRobot.configuration.controller != null && userRobot.configuration.controller != -1
@@ -107,12 +107,10 @@ class AssignConfigToRobotInteractor(
 
     private fun saveUserPrograms() = hashMapOf<String, String>().apply {
         programs?.forEach { remoteProgram ->
-            val currentProgram =
-                remoteProgram.id?.let { remoteId -> userProgramDao.getUserProgramBasedOnRemoteId(remoteId) }
             val newProgram = UserProgram(
                 remoteProgram.description?.getLocalizedString(resourceResolver) ?: "",
                 remoteProgram.lastModified,
-                currentProgram?.name ?: remoteProgram.name?.getLocalizedString(resourceResolver) ?: "",
+                remoteProgram.name?.getLocalizedString(resourceResolver) ?: "",
                 remoteProgram.python,
                 remoteProgram.xml,
                 userRobot.id,
@@ -124,7 +122,7 @@ class AssignConfigToRobotInteractor(
         }
     }
 
-    private fun createUserConfiguration(configuration: Configuration, robotId: Int) =
+    private fun createUserConfiguration(configuration: Configuration) =
         UserConfiguration(null, UserMapping().apply {
             M1 = configuration.mapping?.M1
             M2 = configuration.mapping?.M2

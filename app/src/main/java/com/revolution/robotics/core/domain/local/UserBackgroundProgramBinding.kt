@@ -25,7 +25,7 @@ data class UserBackgroundProgramBinding(
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0,
     var controllerId: Int = 0,
-    var programId: String = "",
+    var programName: String = "",
     var priority: Int = 0
 ) : Parcelable
 
@@ -41,9 +41,9 @@ interface UserBackgroundProgramBindingDao {
     @Query("DELETE FROM UserBackgroundProgramBinding WHERE controllerId=:controllerId")
     fun removeOldBackgroundBindings(controllerId: Int)
 
-    @Query("DELETE FROM UserBackgroundProgramBinding WHERE programId=:programId")
-    fun removeBackgroundProgram(programId: String)
+    @Query("DELETE FROM UserBackgroundProgramBinding WHERE id=:id")
+    fun removeBackgroundProgram(id: Int)
 
-    @Query("DELETE FROM UserBackgroundProgramBinding WHERE programId=:programId AND controllerId=:controllerId")
-    fun removeBackgroundProgram(programId: String, controllerId: Int)
+    @Query("DELETE FROM UserBackgroundProgramBinding WHERE programName=:programName AND controllerId=:controllerId")
+    fun removeBackgroundProgram(programName: String, controllerId: Int)
 }

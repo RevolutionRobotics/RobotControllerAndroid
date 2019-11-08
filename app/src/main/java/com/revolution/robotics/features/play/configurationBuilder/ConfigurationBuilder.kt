@@ -123,7 +123,7 @@ class ConfigurationBuilder {
 
     private fun backgroundProgramToJson(binding: UserBackgroundProgramBinding, sources: HashMap<String, String>) =
         JSONObject().apply {
-            put(Key.PYTHON_CODE, sources[binding.programId])
+            put(Key.PYTHON_CODE, sources[binding.programName])
             val assignmentWrapper = JSONObject().apply { put(Key.BACKGROUND, binding.priority) }
             put(Key.ASSIGNMENTS, assignmentWrapper)
         }

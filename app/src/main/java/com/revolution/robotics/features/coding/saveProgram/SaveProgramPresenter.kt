@@ -22,6 +22,7 @@ class SaveProgramPresenter(
 
     override fun onDoneButtonClicked(userProgram: UserProgram) {
         getUserProgramInteractor.name = userProgram.name
+        getUserProgramInteractor.robotId = userProgram.robotId
         getUserProgramInteractor.execute { program ->
             if (program == null || defaultProgram?.name == program.name && program.remoteId == null) {
                 view?.saveProgram(userProgram)

@@ -14,13 +14,13 @@ data class UserControllerWithPrograms(
                 priority
             )
         )
-        programs?.put(userProgram.name, userProgram)
+        programs[userProgram.name] = userProgram
     }
 
     fun clearBackgroundPrograms() {
-        backgroundBindings?.forEach {
-            programs?.remove(it.programId)
+        backgroundBindings.forEach {
+            programs.remove(it.programName)
         }
-        backgroundBindings?.clear()
+        backgroundBindings.clear()
     }
 }

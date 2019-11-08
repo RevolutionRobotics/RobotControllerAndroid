@@ -36,7 +36,8 @@ class MainMenuPresenter(
     }
 
     override fun navigateToCoding() {
-        userProgramInteractor.name = appPrefs.lastOpenedProgram
+        userProgramInteractor.name = appPrefs.lastOpenedProgramName
+        userProgramInteractor.robotId = appPrefs.lastOpenedProgramRobotId
         userProgramInteractor.execute {
             navigator.navigate(MainMenuFragmentDirections.toCoding(it, false))
         }
