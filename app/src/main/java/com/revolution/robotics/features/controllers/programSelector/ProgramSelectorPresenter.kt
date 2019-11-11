@@ -4,6 +4,7 @@ import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.local.UserProgram
 import com.revolution.robotics.core.interactor.AssignProgramToButtonInteractor
 import com.revolution.robotics.core.interactor.GetFullConfigurationInteractor
+import com.revolution.robotics.core.interactor.GetUserProgramsForRobotInteractor
 import com.revolution.robotics.core.interactor.GetUserProgramsInteractor
 import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.features.configure.controller.CompatibleProgramFilterer
@@ -13,7 +14,7 @@ import com.revolution.robotics.features.controllers.programInfo.ProgramDialog
 import com.revolution.robotics.features.controllers.programSelector.adapter.ProgramViewModel
 
 class ProgramSelectorPresenter(
-    private val getUserProgramsInteractor: GetUserProgramsInteractor,
+    private val getUserProgramsForRobotInteractor: GetUserProgramsForRobotInteractor,
     private val getFullConfigurationInteractor: GetFullConfigurationInteractor,
     private val compatibleProgramFilterer: CompatibleProgramFilterer,
     private val assignProgramToButtonInteractor: AssignProgramToButtonInteractor,
@@ -32,7 +33,7 @@ class ProgramSelectorPresenter(
     private var onlyShowCompatiblePrograms: Boolean? = null
 
     private var controllerButton: ControllerButton? = null
-    private var userConfigurationId: Int = -1
+    private var robotId: Int = -1
 
     override fun register(view: ProgramSelectorMvp.View, model: ProgramSelectorViewModel?) {
         super.register(view, model)
@@ -47,18 +48,19 @@ class ProgramSelectorPresenter(
             ProgramOrderingHandler.OrderBy.DATE to ProgramOrderingHandler.Order.DESCENDING
     }
 
-    override fun loadPrograms(controllerButton: ControllerButton, configurationId: Int) {
+    override fun loadPrograms(controllerButton: ControllerButton, robotId: Int) {
         this.controllerButton = controllerButton
-        this.userConfigurationId = configurationId
-        getFullConfigurationInteractor.userConfigId = configurationId
+        this.robotId = robotId
+        getFullConfigurationInteractor.robotId = robotId
         getFullConfigurationInteractor.execute { fullControllerData ->
-            getUserProgramsInteractor.execute { userPrograms ->
+            getUserProgramsForRobotInteractor.robotId = robotId
+            getUserProgramsForRobotInteractor.execute { userPrograms ->
                 allPrograms = userPrograms.toMutableList().apply {
                     fullControllerData.controller?.userController?.getBoundButtonPrograms()?.forEach { boundProgram ->
                         removeAll { it.name == boundProgram.programName }
                     }
                     fullControllerData.controller?.backgroundBindings?.forEach { backgroundBinding ->
-                        removeAll { it.name == backgroundBinding.programId }
+                        removeAll { it.name == backgroundBinding.programName }
                     }
                 }
                 programs = ArrayList<UserProgram>().apply { allPrograms?.let { addAll(it) } }
@@ -79,7 +81,7 @@ class ProgramSelectorPresenter(
     }
 
     override fun updateOrderingAndFiltering() {
-        getFullConfigurationInteractor.userConfigId = userConfigurationId
+        getFullConfigurationInteractor.robotId = robotId
         getFullConfigurationInteractor.execute {
             model?.let { model ->
                 val filteredPrograms =
@@ -113,7 +115,7 @@ class ProgramSelectorPresenter(
     }
 
     override fun onProgramInfoClicked(userProgram: UserProgram) {
-        getFullConfigurationInteractor.userConfigId = userConfigurationId
+        getFullConfigurationInteractor.robotId = robotId
         getFullConfigurationInteractor.execute {
             if (compatibleProgramFilterer.isProgramCompatible(userProgram, it.userConfiguration)) {
                 view?.showDialog(ProgramDialog.Add.newInstance(userProgram))
@@ -128,7 +130,7 @@ class ProgramSelectorPresenter(
     }
 
     override fun addProgram(userProgram: UserProgram) {
-        assignProgramToButtonInteractor.userConfigurationId = userConfigurationId
+        assignProgramToButtonInteractor.robotId = robotId
         assignProgramToButtonInteractor.userProgram = userProgram
         assignProgramToButtonInteractor.button = controllerButton
         assignProgramToButtonInteractor.execute {

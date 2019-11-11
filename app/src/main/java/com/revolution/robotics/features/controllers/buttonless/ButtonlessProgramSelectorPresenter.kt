@@ -5,6 +5,7 @@ import com.revolution.robotics.core.domain.local.UserConfiguration
 import com.revolution.robotics.core.domain.local.UserControllerWithPrograms
 import com.revolution.robotics.core.domain.local.UserProgram
 import com.revolution.robotics.core.interactor.GetFullConfigurationInteractor
+import com.revolution.robotics.core.interactor.GetUserProgramsForRobotInteractor
 import com.revolution.robotics.core.interactor.GetUserProgramsInteractor
 import com.revolution.robotics.core.interactor.SaveUserControllerInteractor
 import com.revolution.robotics.core.utils.Navigator
@@ -17,7 +18,7 @@ import kotlin.collections.set
 @Suppress("TooManyFunctions")
 class ButtonlessProgramSelectorPresenter(
     private val getFullConfigurationInteractor: GetFullConfigurationInteractor,
-    private val getUserProgramsInteractor: GetUserProgramsInteractor,
+    private val getUserProgramsForRobotInteractor: GetUserProgramsForRobotInteractor,
     private val saveUserControllerInteractor: SaveUserControllerInteractor,
     private val compatibleProgramFilterer: CompatibleProgramFilterer,
     private val navigator: Navigator
@@ -31,6 +32,7 @@ class ButtonlessProgramSelectorPresenter(
     override var view: ButtonlessProgramSelectorMvp.View? = null
     override var model: ButtonlessProgramSelectorViewModel? = null
 
+    private var robotId: Int? = null
     private var userConfiguration: UserConfiguration? = null
     private var allPrograms: List<ButtonlessProgramViewModel>? = null
     private var programs: MutableList<ButtonlessProgramViewModel> = mutableListOf()
@@ -43,8 +45,9 @@ class ButtonlessProgramSelectorPresenter(
         }
     }
 
-    override fun load(userConfigurationId: Int) {
-        loadPrograms(userConfigurationId)
+    override fun load(robotId: Int) {
+        this.robotId = robotId
+        loadPrograms(robotId)
     }
 
     override fun clearSelections() {
@@ -55,11 +58,12 @@ class ButtonlessProgramSelectorPresenter(
         programs.clear()
     }
 
-    private fun loadPrograms(configId: Int) {
-        getFullConfigurationInteractor.userConfigId = configId
+    private fun loadPrograms(robotId: Int) {
+        getFullConfigurationInteractor.robotId = robotId
         getFullConfigurationInteractor.execute { fullControllerData ->
             userConfiguration = fullControllerData.userConfiguration
-            getUserProgramsInteractor.execute { userPrograms ->
+            getUserProgramsForRobotInteractor.robotId = robotId
+            getUserProgramsForRobotInteractor.execute { userPrograms ->
                 val boundPrograms =
                     fullControllerData.controller?.userController?.getBoundButtonPrograms() ?: emptyList()
                 allPrograms = userPrograms.filter { program ->
@@ -67,7 +71,7 @@ class ButtonlessProgramSelectorPresenter(
                 }.map { userProgram ->
                     ButtonlessProgramViewModel(userProgram, this).apply {
                         selected.set(fullControllerData.controller?.backgroundBindings?.find
-                        { it.programId == userProgram.name } != null && compatibleProgramFilterer.isProgramCompatible(
+                        { it.programName == userProgram.name } != null && compatibleProgramFilterer.isProgramCompatible(
                             userProgram,
                             fullControllerData.userConfiguration
                         ))
@@ -161,8 +165,8 @@ class ButtonlessProgramSelectorPresenter(
     }
 
     fun save() {
-        userConfiguration?.id?.let { configurationId ->
-            getFullConfigurationInteractor.userConfigId = configurationId
+        robotId?.let { robotId ->
+            getFullConfigurationInteractor.robotId = robotId
             getFullConfigurationInteractor.execute { fullControllerData ->
                 val priorities = HashMap<String, Int>()
                 programs.forEach { viewModel ->
@@ -237,6 +241,6 @@ class ButtonlessProgramSelectorPresenter(
 
     private fun getPriority(controllerWithPrograms: UserControllerWithPrograms, userProgramName: String) =
         controllerWithPrograms.userController.getMappingList().find { it?.programName == userProgramName }?.priority
-            ?: controllerWithPrograms.backgroundBindings.find { it.programId == userProgramName }?.priority ?: -1
+            ?: controllerWithPrograms.backgroundBindings.find { it.programName == userProgramName }?.priority ?: -1
 
 }

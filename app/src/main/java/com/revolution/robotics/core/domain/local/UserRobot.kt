@@ -1,13 +1,7 @@
 package com.revolution.robotics.core.domain.local
 
 import android.os.Parcelable
-import androidx.room.Dao
-import androidx.room.Entity
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.PrimaryKey
-import androidx.room.Query
-import androidx.room.Update
+import androidx.room.*
 import kotlinx.android.parcel.Parcelize
 import java.util.Date
 
@@ -21,7 +15,8 @@ data class UserRobot(
     var buildStatus: BuildStatus? = null,
     var actualBuildStep: Int = 0,
     var lastModified: Date? = null,
-    var configurationId: Int = 0,
+    @Embedded
+    var configuration: UserConfiguration,
     var name: String? = null,
     var coverImage: String? = null,
     var description: String? = null
@@ -38,9 +33,6 @@ interface UserRobotDao {
 
     @Query("SELECT * FROM UserRobot WHERE id=:robotId")
     fun getRobotById(robotId: Int): UserRobot?
-
-    @Query("SELECT * FROM UserRobot WHERE configurationId=:configurationId")
-    fun getRobotByConfigId(configurationId: Int): UserRobot?
 
     @Query("SELECT * FROM UserRobot WHERE remoteId=:robotId AND buildStatus=:buildStatus")
     fun getRobotByStatus(robotId: Int, buildStatus: BuildStatus): UserRobot?

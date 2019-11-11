@@ -68,7 +68,7 @@ class ProgramPriorityPresenter(
     }
 
     private fun setPriority(userProgram: UserProgram, priority: Int) {
-        controllerWithPrograms?.backgroundBindings?.find { it.programId == userProgram.name }?.let {
+        controllerWithPrograms?.backgroundBindings?.find { it.programName == userProgram.name }?.let {
             it.priority = priority
         }
 
@@ -106,9 +106,9 @@ class ProgramPriorityPresenter(
                     binding.id,
                     binding.priority,
                     ProgramType.BACKGROUND,
-                    programs[binding.programId]?.lastModified ?: 0L,
-                    programs[binding.programId]?.name ?: "",
-                    programs[binding.programId]
+                    programs[binding.programName]?.lastModified ?: 0L,
+                    programs[binding.programName]?.name ?: "",
+                    programs[binding.programName]
                 )
             )
         }

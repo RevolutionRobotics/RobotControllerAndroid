@@ -20,11 +20,11 @@ class SensorConfigurationFragment :
     companion object {
         private var Bundle.sensor by BundleArgumentDelegate.Parcelable<Sensor>("sensor")
         private var Bundle.portName by BundleArgumentDelegate.String("portName")
-        private var Bundle.configId by BundleArgumentDelegate.Int("configId")
+        private var Bundle.robotId by BundleArgumentDelegate.Int("robotId")
 
-        fun newInstance(configId: Int, sensor: Sensor, portName: String) =
+        fun newInstance(robotId: Int, sensor: Sensor, portName: String) =
             SensorConfigurationFragment().withArguments { bundle ->
-                bundle.configId = configId
+                bundle.robotId = robotId
                 bundle.sensor = sensor
                 bundle.portName = portName
             }
@@ -37,7 +37,7 @@ class SensorConfigurationFragment :
         super.onViewCreated(view, savedInstanceState)
         presenter.register(this, viewModel)
         arguments?.let {
-            presenter.setSensor(it.configId, it.sensor, it.portName)
+            presenter.setSensor(it.robotId, it.sensor, it.portName)
         }
         binding?.editSensor?.binding?.content?.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) = Unit

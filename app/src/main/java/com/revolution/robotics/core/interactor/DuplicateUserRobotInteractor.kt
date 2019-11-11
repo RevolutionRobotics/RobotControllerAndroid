@@ -1,13 +1,7 @@
 package com.revolution.robotics.core.interactor
 
 import com.revolution.robotics.R
-import com.revolution.robotics.core.domain.local.UserBackgroundProgramBinding
-import com.revolution.robotics.core.domain.local.UserBackgroundProgramBindingDao
-import com.revolution.robotics.core.domain.local.UserConfiguration
-import com.revolution.robotics.core.domain.local.UserConfigurationDao
-import com.revolution.robotics.core.domain.local.UserControllerDao
-import com.revolution.robotics.core.domain.local.UserRobot
-import com.revolution.robotics.core.domain.local.UserRobotDao
+import com.revolution.robotics.core.domain.local.*
 import com.revolution.robotics.core.kodein.utils.ApplicationContextProvider
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.core.utils.CameraHelper
@@ -16,8 +10,8 @@ import java.util.Date
 class DuplicateUserRobotInteractor(
     private val userRobotDao: UserRobotDao,
     private val backgroundProgramBindingDao: UserBackgroundProgramBindingDao,
+    private val userProgramDao: UserProgramDao,
     private val controllerDao: UserControllerDao,
-    private val userConfigurationDao: UserConfigurationDao,
     private val applicationContextProvider: ApplicationContextProvider,
     private val resourceResolver: ResourceResolver
 ) : Interactor<UserRobot>() {
@@ -25,29 +19,38 @@ class DuplicateUserRobotInteractor(
     lateinit var currentRobot: UserRobot
     private var selectedControllerId = -1
 
+
     override fun getData(): UserRobot {
         val robotCopy = currentRobot.copy()
+
         val currentConfigCopy = copyConfig()
-        robotCopy.configurationId = currentConfigCopy?.id ?: 0
+        currentConfigCopy?.let { robotCopy.configuration = it }
         robotCopy.lastModified = Date(System.currentTimeMillis())
         robotCopy.name = "${robotCopy.name} ${resourceResolver.string(R.string.duplicated_robot_name_suffix)}"
 
         robotCopy.id = 0
         robotCopy.id = userRobotDao.saveUserRobot(robotCopy).toInt()
 
+        copyPrograms(robotCopy.id)
+
         copyController(robotCopy.id, currentConfigCopy)
+        userRobotDao.updateUserRobot(robotCopy)
         copyRobotImage(currentRobot.id, robotCopy.id)
         return robotCopy
     }
 
     private fun copyConfig(): UserConfiguration? {
-        val currentConfigCopy = userConfigurationDao.getUserConfiguration(currentRobot.configurationId)?.copy()
-        currentConfigCopy?.let { copyConfig ->
-            selectedControllerId = copyConfig.controller ?: -1
-            currentConfigCopy.id = 0
-            currentConfigCopy.id = userConfigurationDao.saveUserConfiguration(currentConfigCopy).toInt()
-        }
+        val currentConfigCopy = currentRobot.configuration.copy()
+        selectedControllerId = currentConfigCopy.controller ?: -1
         return currentConfigCopy
+    }
+
+    private fun copyPrograms(newRobotId: Int) {
+        val programsToDuplicate = userProgramDao.getUserProgramsForRobot(currentRobot.id)
+        programsToDuplicate.forEach { program ->
+            val newProgram = program.copy(robotId = newRobotId)
+            userProgramDao.saveUserProgram(newProgram)
+        }
     }
 
     private fun copyController(
@@ -59,10 +62,7 @@ class DuplicateUserRobotInteractor(
             controllerCopy.id = 0
             controllerCopy.robotId = newRobotId
             controllerCopy.id = controllerDao.saveUserController(controllerCopy).toInt()
-            currentConfigCopy?.let { copyConfig ->
-                copyConfig.controller = controllerCopy.id
-                userConfigurationDao.updateUserConfiguration(copyConfig)
-            }
+            currentConfigCopy?.let { copyConfig -> copyConfig.controller = controllerCopy.id }
             copyBackgroundPrograms(id, controllerCopy.id)
         }
     }

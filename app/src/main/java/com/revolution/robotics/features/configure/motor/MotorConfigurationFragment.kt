@@ -19,10 +19,10 @@ class MotorConfigurationFragment :
     companion object {
         private var Bundle.motor by BundleArgumentDelegate.Parcelable<Motor>("motor")
         private var Bundle.portName by BundleArgumentDelegate.String("portName")
-        private var Bundle.configId by BundleArgumentDelegate.Int("configId")
+        private var Bundle.robotId by BundleArgumentDelegate.Int("robotId")
 
-        fun newInstance(configId: Int, motor: Motor, portName: String) = MotorConfigurationFragment().withArguments { bundle ->
-            bundle.configId = configId
+        fun newInstance(robotId: Int, motor: Motor, portName: String) = MotorConfigurationFragment().withArguments { bundle ->
+            bundle.robotId = robotId
             bundle.motor = motor
             bundle.portName = portName
         }
@@ -35,7 +35,7 @@ class MotorConfigurationFragment :
         super.onViewCreated(view, savedInstanceState)
         presenter.register(this, viewModel)
         arguments?.let {
-            presenter.setMotor(it.configId, it.motor, it.portName)
+            presenter.setMotor(it.robotId, it.motor, it.portName)
         }
         binding?.editMotor?.binding?.content?.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) = Unit

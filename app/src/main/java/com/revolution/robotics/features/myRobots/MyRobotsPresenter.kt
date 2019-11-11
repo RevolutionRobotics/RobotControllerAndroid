@@ -99,16 +99,16 @@ class MyRobotsPresenter(
         navigator.navigate(MyRobotsFragmentDirections.toWhoToBuild())
     }
 
-    override fun onPlaySelected(configId: Int) {
-        getControllerTypeInteractor.configurationId = configId
+    override fun onPlaySelected(robotId: Int) {
+        getControllerTypeInteractor.robotId = robotId
         getControllerTypeInteractor.execute { type ->
             when (type) {
                 ControllerType.GAMER ->
-                    navigator.navigate(MyRobotsFragmentDirections.toPlayGamer(configId))
+                    navigator.navigate(MyRobotsFragmentDirections.toPlayGamer(robotId))
                 ControllerType.MULTITASKER ->
-                    navigator.navigate(MyRobotsFragmentDirections.toPlayMultitasker(configId))
+                    navigator.navigate(MyRobotsFragmentDirections.toPlayMultitasker(robotId))
                 ControllerType.DRIVER ->
-                    navigator.navigate(MyRobotsFragmentDirections.toPlayDriver(configId))
+                    navigator.navigate(MyRobotsFragmentDirections.toPlayDriver(robotId))
             }
         }
     }
@@ -141,7 +141,6 @@ class MyRobotsPresenter(
 
     override fun deleteRobot(userRobot: UserRobot, selectedPosition: Int) {
         deleteRobotInteractor.id = userRobot.id
-        deleteRobotInteractor.configId = userRobot.configurationId
         deleteRobotInteractor.execute()
         model?.robotsList?.apply {
             get()?.removeAll { it.id == userRobot.id }

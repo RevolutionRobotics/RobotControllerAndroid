@@ -2,7 +2,7 @@ package com.revolution.robotics.features.configure.sensor
 
 import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.remote.Sensor
-import com.revolution.robotics.core.interactor.GetUserConfigurationInteractor
+import com.revolution.robotics.core.interactor.GetUserRobotInteractor
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.features.bluetooth.BluetoothManager
 import com.revolution.robotics.features.build.testing.BumperTestDialog
@@ -17,7 +17,7 @@ import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 class SensorConfigurationPresenter(
     private val resourceResolver: ResourceResolver,
     private val configurationEventBus: ConfigurationEventBus,
-    private val getUserConfigurationInteractor: GetUserConfigurationInteractor,
+    private val getUserRobotInteractor: GetUserRobotInteractor,
     private val bluetoothManager: BluetoothManager,
     private val errorHandler: ErrorHandler
 ) : SensorConfigurationMvp.Presenter {
@@ -25,7 +25,7 @@ class SensorConfigurationPresenter(
     override var view: SensorConfigurationMvp.View? = null
     override var model: SensorConfigurationViewModel? = null
 
-    private var configId: Int = -1
+    private var robotId: Int = -1
     private var portName: String? = null
     private var sensor: Sensor? = null
     private var variableName: String? = null
@@ -55,8 +55,8 @@ class SensorConfigurationPresenter(
         .borderSize(R.dimen.dimen_1dp)
         .create()
 
-    override fun setSensor(configId: Int, sensor: Sensor, portName: String) {
-        this.configId = configId
+    override fun setSensor(robotId: Int, sensor: Sensor, portName: String) {
+        this.robotId = robotId
         this.portName = portName
         this.sensor = sensor
         previousUltrasonicName = null
@@ -120,8 +120,8 @@ class SensorConfigurationPresenter(
 
     override fun onBumperButtonClicked() {
         model?.apply {
-            getUserConfigurationInteractor.userConfigId = configId
-            getUserConfigurationInteractor.execute { userConfiguration ->
+            getUserRobotInteractor.robotId = robotId
+            getUserRobotInteractor.execute { userRobot ->
                 editTextModel.value = editTextModel.value?.apply {
                     enabled = true
                 }
@@ -132,7 +132,7 @@ class SensorConfigurationPresenter(
                 ultrasoundButton.isSelected.set(false)
                 emptyButton.isSelected.set(false)
                 setTestButton(true)
-                val newVariableName = previousBumperName ?: userConfiguration?.mappingId?.getDefaultBumperName()
+                val newVariableName = previousBumperName ?: userRobot?.configuration?.mappingId?.getDefaultBumperName()
                 editTextModel.value?.text = newVariableName
                 onVariableNameChanged(newVariableName)
             }
@@ -141,8 +141,8 @@ class SensorConfigurationPresenter(
 
     override fun onUltrasoundButtonClicked() {
         model?.apply {
-            getUserConfigurationInteractor.userConfigId = configId
-            getUserConfigurationInteractor.execute { userConfiguration ->
+            getUserRobotInteractor.robotId = robotId
+            getUserRobotInteractor.execute { userRobot ->
                 editTextModel.value = editTextModel.value?.apply {
                     enabled = true
                 }
@@ -153,7 +153,7 @@ class SensorConfigurationPresenter(
                 ultrasoundButton.isSelected.set(true)
                 emptyButton.isSelected.set(false)
                 setTestButton(true)
-                val newVariableName = previousUltrasonicName ?: userConfiguration?.mappingId?.getDefaultUltrasonicName()
+                val newVariableName = previousUltrasonicName ?: userRobot?.configuration?.mappingId?.getDefaultUltrasonicName()
                 editTextModel.value?.text = newVariableName
                 onVariableNameChanged(newVariableName)
             }
@@ -170,12 +170,12 @@ class SensorConfigurationPresenter(
 
     override fun onTestButtonClicked() {
         if (bluetoothManager.isServiceDiscovered) {
-            getUserConfigurationInteractor.userConfigId = configId
-            getUserConfigurationInteractor.execute { userConfiguration ->
+            getUserRobotInteractor.robotId = robotId
+            getUserRobotInteractor.execute { userRobot ->
                 if (model?.bumperButton?.isSelected?.get() == true) {
                     view?.showDialog(
                         BumperTestDialog.newInstance(
-                            (userConfiguration?.mappingId?.getSensorPortIndex(portName)
+                            (userRobot?.configuration?.mappingId?.getSensorPortIndex(portName)
                                 ?: 0).toString()
                         )
                     )
@@ -184,7 +184,7 @@ class SensorConfigurationPresenter(
                 if (model?.ultrasoundButton?.isSelected?.get() == true) {
                     view?.showDialog(
                         UltrasonicTestDialog.newInstance(
-                            (userConfiguration?.mappingId?.getSensorPortIndex(portName)
+                            (userRobot?.configuration?.mappingId?.getSensorPortIndex(portName)
                                 ?: 0).toString()
                         )
                     )
@@ -197,11 +197,11 @@ class SensorConfigurationPresenter(
     }
 
     override fun onDoneButtonClicked() {
-        getUserConfigurationInteractor.userConfigId = configId
-        getUserConfigurationInteractor.execute { userConfiguration ->
+        getUserRobotInteractor.robotId = robotId
+        getUserRobotInteractor.execute { userRobot ->
             sensor?.apply {
                 val isUsedVariable =
-                    userConfiguration?.mappingId?.isUsedVariableName(
+                    userRobot?.configuration?.mappingId?.isUsedVariableName(
                         this@SensorConfigurationPresenter.variableName ?: "",
                         portName ?: ""
                     ) ?: false

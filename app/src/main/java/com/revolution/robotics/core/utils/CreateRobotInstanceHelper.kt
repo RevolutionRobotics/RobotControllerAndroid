@@ -7,6 +7,7 @@ import com.revolution.robotics.core.domain.remote.Program
 import com.revolution.robotics.core.domain.remote.Robot
 import com.revolution.robotics.core.interactor.AssignConfigToRobotInteractor
 import com.revolution.robotics.core.interactor.SaveUserRobotInteractor
+import com.revolution.robotics.core.interactor.UpdateUserRobotInteractor
 import com.revolution.robotics.core.interactor.firebase.*
 
 class CreateRobotInstanceHelper(
@@ -15,7 +16,8 @@ class CreateRobotInstanceHelper(
     private val configurationInteractor: ConfigurationInteractor,
     private val controllerInteractor: ControllerInteractor,
     private val assignConfigToRobotInteractor: AssignConfigToRobotInteractor,
-    private val saveUserRobotInteractor: SaveUserRobotInteractor
+    private val saveUserRobotInteractor: SaveUserRobotInteractor,
+    private val updateUserRobotInteractor: UpdateUserRobotInteractor
 ) {
 
     var userRobot: UserRobot? = null
@@ -53,7 +55,6 @@ class CreateRobotInstanceHelper(
         controllerInteractor.configurationId = robot.configurationId ?: ""
         controllerInteractor.execute(onResponse = { controllers ->
             this.controller = controllers[0]
-            val programIds = mutableListOf<String>()
             downloadPrograms(robot)
         }, onError = onError)
     }
@@ -71,8 +72,8 @@ class CreateRobotInstanceHelper(
         programs: List<Program>
     ) {
         userRobot?.let { userRobot ->
-            saveUserRobotInteractor.userRobot = userRobot
-            saveUserRobotInteractor.execute(onResponse = { savedRobot ->
+            updateUserRobotInteractor.userRobot = userRobot
+            updateUserRobotInteractor.execute(onResponse = { savedRobot ->
                 this.userRobot = savedRobot
                 assignConfig(configuration, controller, programs)
             }, onError = onError)

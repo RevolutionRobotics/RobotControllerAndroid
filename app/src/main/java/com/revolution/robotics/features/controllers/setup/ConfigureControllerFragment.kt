@@ -32,10 +32,10 @@ class ConfigureControllerFragment :
     companion object {
         private const val PROGRAM_SELECTOR_ANIMATION_DURATION_MS = 250L
 
-        private var Bundle.configId by BundleArgumentDelegate.Int("configId")
+        private var Bundle.robotId by BundleArgumentDelegate.Int("robotId")
 
-        fun newInstance(configId: Int) = ConfigureControllerFragment().withArguments { bundle ->
-            bundle.configId = configId
+        fun newInstance(robotId: Int) = ConfigureControllerFragment().withArguments { bundle ->
+            bundle.robotId = robotId
         }
     }
 
@@ -47,7 +47,7 @@ class ConfigureControllerFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         presenter.register(this, viewModel)
-        arguments?.configId?.let { presenter.loadControllerAndPrograms(it) }
+        arguments?.robotId?.let { presenter.loadControllerAndPrograms(it) }
         dialogEventBus.register(this)
         binding?.apply {
             dimmer.setOnClickListener { hideProgramSelector() }
@@ -133,8 +133,8 @@ class ConfigureControllerFragment :
         })
     }
 
-    override fun showAllPrograms(controllerButton: ControllerButton, configId: Int) {
-        navigator.navigate(ConfigureFragmentDirections.toProgramSelector(controllerButton.name, configId))
+    override fun showAllPrograms(controllerButton: ControllerButton, robotId: Int) {
+        navigator.navigate(ConfigureFragmentDirections.toProgramSelector(controllerButton.name, robotId))
     }
 
     override fun navigateToEditProgram(userProgram: UserProgram?) {

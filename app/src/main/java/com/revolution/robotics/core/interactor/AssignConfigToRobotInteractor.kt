@@ -1,18 +1,6 @@
 package com.revolution.robotics.core.interactor
 
-import com.revolution.robotics.core.domain.local.UserBackgroundProgramBinding
-import com.revolution.robotics.core.domain.local.UserBackgroundProgramBindingDao
-import com.revolution.robotics.core.domain.local.UserButtonMapping
-import com.revolution.robotics.core.domain.local.UserConfiguration
-import com.revolution.robotics.core.domain.local.UserConfigurationDao
-import com.revolution.robotics.core.domain.local.UserController
-import com.revolution.robotics.core.domain.local.UserControllerDao
-import com.revolution.robotics.core.domain.local.UserMapping
-import com.revolution.robotics.core.domain.local.UserProgram
-import com.revolution.robotics.core.domain.local.UserProgramBinding
-import com.revolution.robotics.core.domain.local.UserProgramDao
-import com.revolution.robotics.core.domain.local.UserRobot
-import com.revolution.robotics.core.domain.local.UserRobotDao
+import com.revolution.robotics.core.domain.local.*
 import com.revolution.robotics.core.domain.remote.Configuration
 import com.revolution.robotics.core.domain.remote.Controller
 import com.revolution.robotics.core.domain.remote.Program
@@ -21,7 +9,6 @@ import com.revolution.robotics.core.kodein.utils.ResourceResolver
 
 class AssignConfigToRobotInteractor(
     private val userRobotDao: UserRobotDao,
-    private val userConfigurationDao: UserConfigurationDao,
     private val controllerDao: UserControllerDao,
     private val userProgramDao: UserProgramDao,
     private val userBackgroundProgramBindingDao: UserBackgroundProgramBindingDao,
@@ -35,16 +22,12 @@ class AssignConfigToRobotInteractor(
 
     override fun getData(): UserRobot {
         configuration?.let { remoteConfig ->
-            val userConfiguration = createUserConfiguration(remoteConfig)
-            val configurationId = userConfigurationDao.saveUserConfiguration(userConfiguration)
-            userConfiguration.id = configurationId.toInt()
-            userRobot.configurationId = configurationId.toInt()
-            userRobotDao.updateUserRobot(userRobot)
-
+            userRobot.configuration = createUserConfiguration(remoteConfig)
             val programIdMap = saveUserPrograms()
-
-            controller?.let { saveUserController(it, userConfiguration, true, programIdMap) }
-
+            controller?.let { saveUserController(it, userRobot.configuration, true, programIdMap) }
+            val hasController = userRobot.configuration.controller != null && userRobot.configuration.controller != -1
+            userRobot.buildStatus = if (hasController) BuildStatus.COMPLETED else BuildStatus.INVALID_CONFIGURATION
+            userRobotDao.updateUserRobot(userRobot)
         }
 
         return userRobot
@@ -59,7 +42,6 @@ class AssignConfigToRobotInteractor(
         val userController = saveUserController(controller)
         if (isDefault) {
             userConfiguration.controller = userController.id
-            userConfigurationDao.saveUserConfiguration(userConfiguration)
         }
 
         userController.mapping?.let { userMapping ->
@@ -125,12 +107,10 @@ class AssignConfigToRobotInteractor(
 
     private fun saveUserPrograms() = hashMapOf<String, String>().apply {
         programs?.forEach { remoteProgram ->
-            val currentProgram =
-                remoteProgram.id?.let { remoteId -> userProgramDao.getUserProgramBasedOnRemoteId(remoteId) }
             val newProgram = UserProgram(
                 remoteProgram.description?.getLocalizedString(resourceResolver) ?: "",
                 remoteProgram.lastModified,
-                currentProgram?.name ?: remoteProgram.name?.getLocalizedString(resourceResolver) ?: "",
+                remoteProgram.name?.getLocalizedString(resourceResolver) ?: "",
                 remoteProgram.python,
                 remoteProgram.xml,
                 userRobot.id,
@@ -143,7 +123,7 @@ class AssignConfigToRobotInteractor(
     }
 
     private fun createUserConfiguration(configuration: Configuration) =
-        UserConfiguration(0, null, UserMapping().apply {
+        UserConfiguration(null, UserMapping().apply {
             M1 = configuration.mapping?.M1
             M2 = configuration.mapping?.M2
             M3 = configuration.mapping?.M3

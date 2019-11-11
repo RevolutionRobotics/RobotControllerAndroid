@@ -22,7 +22,7 @@ class ButtonlessProgramSelectorFragment :
 
     companion object {
 
-        private var Bundle.userConfigurationId by BundleArgumentDelegate.Int("configuration")
+        private var Bundle.robotId by BundleArgumentDelegate.Int("robotId")
 
     }
 
@@ -45,7 +45,7 @@ class ButtonlessProgramSelectorFragment :
             adapter = this@ButtonlessProgramSelectorFragment.adapter
         }
 
-        arguments?.userConfigurationId?.let {presenter.load(it) }
+        arguments?.robotId?.let {presenter.load(it) }
     }
 
     override fun onDestroyView() {

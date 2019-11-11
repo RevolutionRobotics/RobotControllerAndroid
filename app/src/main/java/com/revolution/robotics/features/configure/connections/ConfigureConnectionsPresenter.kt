@@ -9,7 +9,6 @@ import com.revolution.robotics.core.domain.remote.Motor
 import com.revolution.robotics.core.domain.remote.Sensor
 import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
-import com.revolution.robotics.core.interactor.GetUserConfigurationInteractor
 import com.revolution.robotics.core.interactor.GetUserRobotInteractor
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.features.configure.ConfigurationEventBus
@@ -18,7 +17,6 @@ import com.revolution.robotics.features.configure.SensorPort
 
 @Suppress("TooManyFunctions")
 class ConfigureConnectionsPresenter(
-    private val getUserConfigurationInteractor: GetUserConfigurationInteractor,
     private val getUserRobotInteractor: GetUserRobotInteractor,
     private val configurationEventBus: ConfigurationEventBus,
     private val resourceResolver: ResourceResolver,
@@ -50,17 +48,15 @@ class ConfigureConnectionsPresenter(
         }
     }
 
-    override fun loadConfiguration(configurationId: Int) {
-        getUserConfigurationInteractor.userConfigId = configurationId
-        getUserConfigurationInteractor.execute { config ->
-            userConfiguration = config?.apply {
-                setConfiguration(this)
-                getUserRobotInteractor.robotId
-                getUserRobotInteractor.execute { robot ->
-                    model?.firebaseImageUrl?.value = robot?.coverImage
-                    model?.robotId?.value = robot?.id
-                }
+    override fun loadConfiguration(robotId: Int) {
+        getUserRobotInteractor.robotId = robotId
+        getUserRobotInteractor.execute { robot ->
+            robot?.configuration?.let {
+                userConfiguration = it
+                setConfiguration(it)
             }
+            model?.firebaseImageUrl?.value = robot?.coverImage
+            model?.robotId?.value = robot?.id
         }
     }
 
@@ -172,7 +168,8 @@ class ConfigureConnectionsPresenter(
         port: MutableLiveData<RobotPartModel>
     ): RobotPartModel? =
         when {
-            selectedPort == port -> RobotPartModel(portName, R.color.white, getSensorDrawable(sensor),
+            selectedPort == port -> RobotPartModel(
+                portName, R.color.white, getSensorDrawable(sensor),
                 isActive = true,
                 isSelected = true
             ) {
@@ -189,7 +186,8 @@ class ConfigureConnectionsPresenter(
                 handlePortSelection(port)
                 openSensorDrawer(sensor, resourceResolver.string(portName))
             }
-            else -> RobotPartModel(portName, R.color.golden_rod, getSensorDrawable(sensor),
+            else -> RobotPartModel(
+                portName, R.color.golden_rod, getSensorDrawable(sensor),
                 isActive = true,
                 isSelected = false
             ) {
@@ -204,7 +202,8 @@ class ConfigureConnectionsPresenter(
         port: MutableLiveData<RobotPartModel>
     ): RobotPartModel? =
         when {
-            selectedPort == port -> RobotPartModel(portName, R.color.white, getMotorDrawable(motor),
+            selectedPort == port -> RobotPartModel(
+                portName, R.color.white, getMotorDrawable(motor),
                 isActive = true,
                 isSelected = true
             ) {
@@ -221,7 +220,8 @@ class ConfigureConnectionsPresenter(
                 handlePortSelection(port)
                 openMotorDrawer(motor, resourceResolver.string(portName))
             }
-            else -> RobotPartModel(portName, R.color.robotics_red, getMotorDrawable(motor),
+            else -> RobotPartModel(
+                portName, R.color.robotics_red, getMotorDrawable(motor),
                 isActive = true,
                 isSelected = false
             ) {

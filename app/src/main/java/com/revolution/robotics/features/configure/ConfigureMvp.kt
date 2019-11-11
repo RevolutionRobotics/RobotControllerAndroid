@@ -8,10 +8,10 @@ import com.revolution.robotics.core.domain.local.UserRobot
 interface ConfigureMvp : Mvp {
     interface View : Mvp.View {
         fun showDialog(baseDialog: BaseDialog)
-        fun showConnectionsScreen(configId: Int)
-        fun showControllerScreen(configId: Int)
-        fun openMotorConfig(configId: Int, motorPort: MotorPort)
-        fun openSensorConfig(configId: Int, sensorPort: SensorPort)
+        fun showConnectionsScreen(robotId: Int)
+        fun showControllerScreen(robotId: Int)
+        fun openMotorConfig(robotId: Int, motorPort: MotorPort)
+        fun openSensorConfig(robotId: Int, sensorPort: SensorPort)
         fun updateConfig(userConfiguration: UserConfiguration)
         fun showSaveDialog(name: String, description: String)
         fun hideDrawer()

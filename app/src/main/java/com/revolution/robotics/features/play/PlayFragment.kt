@@ -20,7 +20,7 @@ abstract class PlayFragment : BaseFragment<FragmentPlayCoreBinding, PlayViewMode
     PlayMvp.View, BluetoothConnectionListener {
 
     companion object {
-        private var Bundle.configId by BundleArgumentDelegate.Int("configurationId")
+        private var Bundle.robotId by BundleArgumentDelegate.Int("robotId")
     }
 
     override val viewModelClass = PlayViewModel::class.java
@@ -50,7 +50,7 @@ abstract class PlayFragment : BaseFragment<FragmentPlayCoreBinding, PlayViewMode
         presenter.reverseXAxis = reverseXAxis
         binding?.toolbarViewModel = presenter.toolbarViewModel
         arguments?.let {
-            presenter.loadRobotName(it.configId)
+            presenter.loadRobotName(it.robotId)
         }
 
         bluetoothManager.registerListener(this)
@@ -99,7 +99,7 @@ abstract class PlayFragment : BaseFragment<FragmentPlayCoreBinding, PlayViewMode
     }
 
     private fun uploadConfiguration() {
-        arguments?.configId?.let { presenter.loadConfiguration(it) }
+        arguments?.robotId?.let { presenter.loadConfiguration(it) }
     }
 
     override fun onBackPressed(): Boolean {

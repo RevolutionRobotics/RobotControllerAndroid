@@ -47,7 +47,8 @@ class CodingPresenter(
         robotId = userProgram.robotId
         loadConfig()
         userProgram.xml?.let { xmlFile ->
-            appPrefs.lastOpenedProgram = userProgram.name
+            appPrefs.lastOpenedProgramName = userProgram.name
+            appPrefs.lastOpenedProgramRobotId = userProgram.robotId
             view?.loadProgramIntoTheBlockly(String(Base64.decode(xmlFile, Base64.NO_WRAP)))
         }
     }
@@ -97,6 +98,7 @@ class CodingPresenter(
             model?.programName?.set(resourceResolver.string(R.string.program_title_default))
         }
         removeUserProgramInteractor.userProgramName = userProgram.name
+        removeUserProgramInteractor.robotId = userProgram.robotId
         removeUserProgramInteractor.execute()
     }
 

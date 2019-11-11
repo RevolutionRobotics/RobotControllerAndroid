@@ -107,6 +107,9 @@ interface UserControllerDao {
     @Query("SELECT * FROM UserController WHERE robotId=:robotId")
     fun getUserControllerForRobot(robotId: Int): UserController?
 
+    @Query("SELECT * FROM UserController WHERE robotId=:robotId")
+    fun getUserControllersForRobot(robotId: Int): List<UserController>
+
     @Insert(onConflict = OnConflictStrategy.ABORT)
     fun saveUserController(userController: UserController): Long
 

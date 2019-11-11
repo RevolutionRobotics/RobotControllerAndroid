@@ -145,10 +145,6 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
-    //QR
-    implementation('com.journeyapps:zxing-android-embedded:3.6.0') { transitive = false }
-    implementation 'com.google.zxing:core:3.3.0'
-
     // Testing
     testImplementation "junit:junit:$junit"
     androidTestImplementation "androidx.test:runner:$test_runner"

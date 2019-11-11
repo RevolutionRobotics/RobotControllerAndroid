@@ -14,7 +14,7 @@ interface ProgramSelectorMvp : Mvp {
     }
 
     interface Presenter : Mvp.Presenter<View, ProgramSelectorViewModel> {
-        fun loadPrograms(controllerButton: ControllerButton, configurationId: Int)
+        fun loadPrograms(controllerButton: ControllerButton, robotId: Int)
         fun back()
         fun updateOrderingAndFiltering()
         fun showCompatibleProgramsClicked()

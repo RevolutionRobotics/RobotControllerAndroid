@@ -19,7 +19,8 @@ open class AppPrefs constructor(context: Context) {
     open var onboardingRobotBuild by PreferenceFieldDelegate.Boolean(preferences, "carby_built", false)
     open var onboardingRobotDriven by PreferenceFieldDelegate.Boolean(preferences, "carby_driven", false)
     open var finishedOnboarding by PreferenceFieldDelegate.Boolean(preferences, "finished_onboarding", false)
-    open var lastOpenedProgram by PreferenceFieldDelegate.String(preferences, "last_opened_program")
+    open var lastOpenedProgramName by PreferenceFieldDelegate.String(preferences, "last_opened_program_name")
+    open var lastOpenedProgramRobotId by PreferenceFieldDelegate.Integer(preferences, "last_opened_program_robot_id")
 }
 
 sealed class PreferenceFieldDelegate<T>(

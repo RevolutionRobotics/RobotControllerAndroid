@@ -15,8 +15,8 @@ interface PlayMvp : Mvp {
         var reverseYAxis: Boolean
         var reverseXAxis: Boolean
 
-        fun loadRobotName(configId: Int)
-        fun loadConfiguration(configId: Int)
+        fun loadRobotName(robotId: Int)
+        fun loadConfiguration(robotId: Int)
         fun onDeviceDisconnected()
         fun onJoystickXAxisChanged(value: Int)
         fun onJoystickYAxisChanged(value: Int)
