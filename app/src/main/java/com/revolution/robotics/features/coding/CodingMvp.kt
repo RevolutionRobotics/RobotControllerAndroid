@@ -26,7 +26,8 @@ interface CodingMvp : Mvp {
         fun showNewProgramDialog()
         fun removeProgram(userProgram: UserProgram)
         fun loadProgram(userProgram: UserProgram)
-        fun createNewProgram()
+        fun showRobotSelectionDialog()
+        fun createNewProgram(robotId: Int)
         fun showPythonCode()
         fun onBackPressed()
     }

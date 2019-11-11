@@ -40,6 +40,8 @@ import com.revolution.robotics.features.challenges.challengeList.ChallengeListMv
 import com.revolution.robotics.features.challenges.challengeList.ChallengeListPresenter
 import com.revolution.robotics.features.coding.CodingMvp
 import com.revolution.robotics.features.coding.CodingPresenter
+import com.revolution.robotics.features.coding.new.robotSelector.RobotSelectorMvp
+import com.revolution.robotics.features.coding.new.robotSelector.RobotSelectorPresenter
 import com.revolution.robotics.features.coding.programs.ProgramsMvp
 import com.revolution.robotics.features.coding.programs.ProgramsPresenter
 import com.revolution.robotics.features.coding.saveProgram.SaveProgramMvp
@@ -171,6 +173,7 @@ fun createPresenterModule() =
         bind<SliderMvp.Presenter>() with s { SliderPresenter() }
         bind<CodingMvp.Presenter>() with s { CodingPresenter(i(), i(), i(), i(), i()) }
         bind<ProgramsMvp.Presenter>() with s { ProgramsPresenter(i()) }
+        bind<RobotSelectorMvp.Presenter>() with s { RobotSelectorPresenter(i()) }
         bind<TestBuildDialogMvp.Presenter>() with s { TestBuildDialogPresenter(i(), i(), i(), i()) }
         bind<VariableOptionsMvp.Presenter>() with s { VariableOptionsPresenter() }
         bind<SaveProgramMvp.Presenter>() with s { SaveProgramPresenter(i(), i()) }

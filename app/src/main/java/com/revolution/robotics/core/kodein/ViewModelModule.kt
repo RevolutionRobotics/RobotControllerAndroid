@@ -6,6 +6,7 @@ import com.revolution.robotics.features.challenges.challengeDetail.ChallengeDeta
 import com.revolution.robotics.features.challenges.challengeGroup.ChallengeGroupViewModel
 import com.revolution.robotics.features.challenges.challengeList.ChallengeListViewModel
 import com.revolution.robotics.features.coding.CodingViewModel
+import com.revolution.robotics.features.coding.new.robotSelector.RobotSelectorViewModel
 import com.revolution.robotics.features.coding.programs.ProgramsViewModel
 import com.revolution.robotics.features.community.CommunityViewModel
 import com.revolution.robotics.features.configure.ConfigureViewModel
@@ -54,6 +55,7 @@ fun createViewModelModule() =
         bind<ChallengeListViewModel>() with p { ChallengeListViewModel() }
         bind<ChallengeDetailViewModel>() with p { ChallengeDetailViewModel() }
         bind<ProgramsViewModel>() with p { ProgramsViewModel(i()) }
+        bind<RobotSelectorViewModel>() with p { RobotSelectorViewModel(i()) }
         bind<CommunityViewModel>() with p { CommunityViewModel(i()) }
         bind<UserTypeSelectionViewModel>() with p { UserTypeSelectionViewModel(i()) }
         bind<HaveYouBuiltViewModel>() with p { HaveYouBuiltViewModel(i()) }

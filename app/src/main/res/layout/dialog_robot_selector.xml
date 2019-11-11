@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="@dimen/dimen_32dp"
+                android:layout_marginStart="@dimen/dimen_32dp"
+                android:layout_marginEnd="@dimen/dimen_32dp"
+                android:textAllCaps="true"
+                android:fontFamily="@font/jura_bold"
+                android:textSize="18sp"
+                android:text="@string/dialog_programs_title"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/dimen_32dp"
+                android:layout_marginEnd="@dimen/dimen_32dp"
+                android:layout_marginTop="@dimen/dimen_16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/title"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <View android:layout_width="0dp"
+              android:layout_height="@dimen/dimen_44dp"
+              app:layout_constraintStart_toStartOf="@id/recycler"
+              app:layout_constraintEnd_toEndOf="@id/recycler"
+              android:background="@drawable/recycler_bottom_shadow"
+              app:layout_constraintBottom_toBottomOf="@id/recycler"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

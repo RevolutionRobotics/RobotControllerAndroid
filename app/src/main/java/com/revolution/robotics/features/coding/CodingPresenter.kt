@@ -7,6 +7,7 @@ import com.revolution.robotics.core.interactor.*
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.core.utils.AppPrefs
 import com.revolution.robotics.features.coding.new.NewProgramConfirmDialog
+import com.revolution.robotics.features.coding.new.robotSelector.RobotSelectorDialog
 import com.revolution.robotics.features.coding.programs.ProgramsDialog
 import com.revolution.robotics.features.coding.python.PythonDialog
 import com.revolution.robotics.features.coding.saveProgram.SaveProgramDialog
@@ -53,9 +54,18 @@ class CodingPresenter(
         }
     }
 
-    override fun createNewProgram() {
+    override fun showRobotSelectionDialog() {
+
+        view?.showDialog(RobotSelectorDialog.newInstance())
+        /*
         //TODO Select robot
         robotId = null
+
+        */
+    }
+
+    override fun createNewProgram(robotId: Int) {
+        this.robotId = robotId
         loadConfig()
         model?.userProgram = null
         model?.resetProgramName()
@@ -169,7 +179,7 @@ class CodingPresenter(
         when (actionId) {
             CodingFragment.ACTION_ID_LEAVE -> view?.onBackPressed(false)
             CodingFragment.ACTION_ID_LOAD_PROGRAMS -> view?.showDialog(ProgramsDialog.newInstance())
-            CodingFragment.ACTION_ID_CREATE_NEW_PROGRAM -> createNewProgram()
+            CodingFragment.ACTION_ID_CREATE_NEW_PROGRAM -> showRobotSelectionDialog()
         }
     }
 
