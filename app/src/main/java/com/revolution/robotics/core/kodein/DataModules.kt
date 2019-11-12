@@ -172,7 +172,7 @@ fun createPresenterModule() =
         bind<SoundPickerMvp.Presenter>() with s { SoundPickerPresenter(i()) }
         bind<SliderMvp.Presenter>() with s { SliderPresenter() }
         bind<CodingMvp.Presenter>() with s { CodingPresenter(i(), i(), i(), i(), i()) }
-        bind<ProgramsMvp.Presenter>() with s { ProgramsPresenter(i()) }
+        bind<ProgramsMvp.Presenter>() with s { ProgramsPresenter(i(), i()) }
         bind<RobotSelectorMvp.Presenter>() with s { RobotSelectorPresenter(i()) }
         bind<TestBuildDialogMvp.Presenter>() with s { TestBuildDialogPresenter(i(), i(), i(), i()) }
         bind<VariableOptionsMvp.Presenter>() with s { VariableOptionsPresenter() }
