@@ -406,6 +406,7 @@
     <string name="framework_confirmation_dialog_yes_button">Yes</string>
     <string name="framework_confirmation_dialog_no_button">No</string>
     <string name="program_leave_confirmation_dialog_leave_button">Leave</string>
+    <string name="dialog_select_robot_title">Select robot to add new program</string>
 
     <string name="language_id">en</string>
     <string name="error_internet">Something went wrong, please check your internet connection</string>

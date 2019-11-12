@@ -11,12 +11,14 @@ import com.revolution.robotics.blockly.DialogFactory
 import com.revolution.robotics.blockly.utils.BlocklyResultHolder
 import com.revolution.robotics.core.domain.local.UserConfiguration
 import com.revolution.robotics.core.domain.local.UserProgram
+import com.revolution.robotics.core.domain.local.UserRobot
 import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.core.utils.BundleArgumentDelegate
 import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.databinding.FragmentCodingBinding
+import com.revolution.robotics.features.coding.new.robotSelector.RobotSelectorDialog
 import com.revolution.robotics.features.coding.programs.ProgramsDialog
 import com.revolution.robotics.features.coding.saveProgram.SaveProgramDialog
 import com.revolution.robotics.features.controllers.programInfo.ProgramDialog
@@ -90,7 +92,11 @@ class CodingFragment : BaseFragment<FragmentCodingBinding, CodingViewModel>(R.la
     override fun onBlocklyLoaded() {
         binding?.root?.postDelayed(BLOCKLY_DELAY_MS) {
             viewModel?.isBlocklyLoaded?.set(true)
-            arguments?.program?.let { presenter.loadProgram(it) }
+            if (arguments?.program != null) {
+                arguments?.program?.let { presenter.loadProgram(it) }
+            } else {
+                presenter.showRobotSelectionDialog()
+            }
         }
     }
 
@@ -162,8 +168,12 @@ class CodingFragment : BaseFragment<FragmentCodingBinding, CodingViewModel>(R.la
                 viewModel?.userProgram,
                 ACTION_ID_CREATE_NEW_PROGRAM
             )
-            DialogEvent.PROGRAM_CONFIRM_CREATE_NEW_WITHOUT_SAVE -> presenter.createNewProgram()
+            DialogEvent.PROGRAM_CONFIRM_CREATE_NEW_WITHOUT_SAVE -> presenter.showRobotSelectionDialog()
             DialogEvent.PROGRAM_CONFIRM_CLOSE_WITHOUT_SAVE -> onBackPressed(false)
+            DialogEvent.ROBOT_SELECTED ->
+                event.extras.getParcelable<UserRobot>(RobotSelectorDialog.KEY_ROBOT)?.let { robot ->
+                    presenter.createNewProgram(robot.id)
+                }
             else -> Unit
         }
     }
