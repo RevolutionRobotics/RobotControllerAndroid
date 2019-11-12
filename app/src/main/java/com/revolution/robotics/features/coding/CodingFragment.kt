@@ -92,7 +92,11 @@ class CodingFragment : BaseFragment<FragmentCodingBinding, CodingViewModel>(R.la
     override fun onBlocklyLoaded() {
         binding?.root?.postDelayed(BLOCKLY_DELAY_MS) {
             viewModel?.isBlocklyLoaded?.set(true)
-            arguments?.program?.let { presenter.loadProgram(it) }
+            if (arguments?.program != null) {
+                arguments?.program?.let { presenter.loadProgram(it) }
+            } else {
+                presenter.showRobotSelectionDialog()
+            }
         }
     }
 

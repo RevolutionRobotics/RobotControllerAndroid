@@ -55,13 +55,7 @@ class CodingPresenter(
     }
 
     override fun showRobotSelectionDialog() {
-
         view?.showDialog(RobotSelectorDialog.newInstance())
-        /*
-        //TODO Select robot
-        robotId = null
-
-        */
     }
 
     override fun createNewProgram(robotId: Int) {
@@ -154,7 +148,6 @@ class CodingPresenter(
                 view?.onConfigLoaded(config)
             }
         }
-
     }
 
     private fun saveUserProgramWhenEveryDataIsReady() {
