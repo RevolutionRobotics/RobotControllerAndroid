@@ -7,7 +7,7 @@ import com.revolution.robotics.views.toolbar.ToolbarOption
 class ConfigureToolbarViewModel(presenter: ConfigureMvp.Presenter) : RoboticsBluetoothToolbarViewModel() {
 
     companion object {
-        val OVERFLOW_ID: Int = -123
+        const val OVERFLOW_ID: Int = 123
     }
 
     override val isLogoVisible = false
