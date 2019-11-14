@@ -49,6 +49,7 @@ class ConfigurePresenter(
                 this.toolbarViewModel = toolbarViewModel
                 toolbarViewModel.title.set(
                     if (it.name.isNullOrEmpty()) {
+                        editRobotDetails()
                         resourceResolver.string(R.string.untitled_robot_name)
                     } else {
                         it.name
