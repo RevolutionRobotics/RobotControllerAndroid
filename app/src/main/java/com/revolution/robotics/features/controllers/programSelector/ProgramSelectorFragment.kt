@@ -2,6 +2,7 @@ package com.revolution.robotics.features.controllers.programSelector
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
@@ -60,6 +61,10 @@ class ProgramSelectorFragment :
             viewModel = this@ProgramSelectorFragment.viewModel
             executePendingBindings()
         }
+    }
+
+    override fun showIncompatibilityMessage() {
+        Toast.makeText(context, R.string.program_info_compatibility_issue, Toast.LENGTH_SHORT).show()
     }
 
     override fun onDialogEvent(event: DialogEvent) {

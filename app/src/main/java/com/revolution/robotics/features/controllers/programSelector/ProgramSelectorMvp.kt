@@ -11,6 +11,7 @@ interface ProgramSelectorMvp : Mvp {
     interface View : Mvp.View {
         fun showDialog(baseDialog: BaseDialog)
         fun onProgramsChanged(programs: List<ProgramViewModel>)
+        fun showIncompatibilityMessage()
     }
 
     interface Presenter : Mvp.Presenter<View, ProgramSelectorViewModel> {
