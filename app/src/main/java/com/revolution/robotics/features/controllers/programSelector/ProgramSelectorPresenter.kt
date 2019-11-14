@@ -111,7 +111,14 @@ class ProgramSelectorPresenter(
     }
 
     override fun onProgramSelected(userProgram: UserProgram) {
-        addProgram(userProgram)
+        getFullConfigurationInteractor.robotId = robotId
+        getFullConfigurationInteractor.execute {
+            if (compatibleProgramFilterer.isProgramCompatible(userProgram, it.userConfiguration)) {
+                addProgram(userProgram)
+            } else {
+                view?.showIncompatibilityMessage()
+            }
+        }
     }
 
     override fun onProgramInfoClicked(userProgram: UserProgram) {
