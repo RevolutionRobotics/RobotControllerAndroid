@@ -12,8 +12,8 @@ open class RobotsItem(
     val name = robot.name
     val time = robot.buildTime
     val imageUrl = robot.coverImage
-    val selectedResource = R.drawable.robots_card_border_red_selector
-    val defaultResource = R.drawable.robots_card_border_grey
+    open val selectedResource = R.drawable.robots_card_border_red_selector
+    open val defaultResource = R.drawable.robots_card_border_grey
     var isSelected: ObservableBoolean = ObservableBoolean(false)
 
     open fun onClicked() {
