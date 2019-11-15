@@ -30,7 +30,7 @@ class FirmwareUpdatePresenter(
                 onCompleted = {
                     model?.robotName?.value = it
                 }, onError = {
-                    errorHandler.onError()
+                    errorHandler.onError(it)
                 })
         }
     }

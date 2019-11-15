@@ -165,7 +165,7 @@ class MotorConfigurationPresenter(
                         portName ?: ""
                     )
                 ) {
-                    errorHandler.onError(R.string.error_variable_already_in_use)
+                    errorHandler.onError(customMessage = R.string.error_variable_already_in_use)
                 } else {
                     when {
                         model?.driveTrainButton?.isSelected?.get() == true -> setDrivetrainValues(this)

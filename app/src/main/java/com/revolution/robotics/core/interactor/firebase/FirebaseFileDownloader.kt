@@ -37,7 +37,7 @@ class FirebaseFileDownloader(
         reference.getFile(outputFile).addOnSuccessListener {
             this.onResponse?.invoke(Uri.fromFile(outputFile))
         }.addOnFailureListener {
-            this.onError?.invoke(it) ?: errorHandler.onError()
+            this.onError?.invoke(it) ?: errorHandler.onError(it)
         }
     }
 }

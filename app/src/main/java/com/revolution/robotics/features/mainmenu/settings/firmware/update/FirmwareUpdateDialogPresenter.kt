@@ -11,6 +11,7 @@ import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.features.bluetooth.BluetoothManager
 import com.revolution.robotics.features.shared.ErrorHandler
 import com.revolution.robotics.views.dialogs.DialogButton
+import java.lang.RuntimeException
 
 class FirmwareUpdateDialogPresenter(
     private val interactor: FirmwareInteractor,
@@ -88,7 +89,7 @@ class FirmwareUpdateDialogPresenter(
 
     override fun onCheckForUpdatesClicked() {
         if (!resourceResolver.isInternetConnectionAvailable()) {
-            errorHandler.onError(R.string.error_internet)
+            errorHandler.onError(RuntimeException(), R.string.error_internet)
             return
         }
 
@@ -138,7 +139,7 @@ class FirmwareUpdateDialogPresenter(
     @Suppress("UnusedPrivateMember")
     private fun readError(throwable: Throwable) {
         if (!isUpdateFlowStarted) {
-            errorHandler.onError()
+            errorHandler.onError(throwable)
         }
     }
 

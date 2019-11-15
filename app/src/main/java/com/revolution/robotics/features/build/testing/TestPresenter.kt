@@ -26,7 +26,7 @@ class TestPresenter(
             sendConfiguration(it)
         }, onError = {
             view?.onTestUploaded()
-            errorHandler.onError()
+            errorHandler.onError(it)
         })
     }
 
@@ -37,7 +37,7 @@ class TestPresenter(
             },
             onError = {
                 view?.onTestUploaded()
-                errorHandler.onError()
+                errorHandler.onError(it)
             })
     }
 }

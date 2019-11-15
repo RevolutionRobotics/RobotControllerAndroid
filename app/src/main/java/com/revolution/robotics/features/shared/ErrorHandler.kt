@@ -2,6 +2,8 @@ package com.revolution.robotics.features.shared
 
 import android.content.Context
 import android.widget.Toast
+import com.crashlytics.android.Crashlytics
+import com.revolution.robotics.BuildConfig
 import com.revolution.robotics.R
 
 class ErrorHandler {
@@ -18,11 +20,19 @@ class ErrorHandler {
         }
     }
 
-    fun onError(customMessage: Int = R.string.error_general) {
+    fun onError(throwable: Throwable? = null, customMessage: Int = R.string.error_general) {
+
+        if (throwable != null && !BuildConfig.DEBUG) {
+            Crashlytics.logException(throwable)
+        }
+
         context?.let { Toast.makeText(it, customMessage, Toast.LENGTH_LONG).show() }
     }
 
-    fun onError(customMessage: String) {
+    fun onError(throwable: Throwable? = null, customMessage: String) {
+        if (throwable != null && !BuildConfig.DEBUG) {
+            Crashlytics.logException(throwable)
+        }
         context?.let { Toast.makeText(it, customMessage, Toast.LENGTH_LONG).show() }
     }
 }

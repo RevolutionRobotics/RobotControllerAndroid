@@ -206,7 +206,7 @@ class SensorConfigurationPresenter(
                         portName ?: ""
                     ) ?: false
                 if (isUsedVariable) {
-                    errorHandler.onError(R.string.error_variable_already_in_use)
+                    errorHandler.onError(customMessage = R.string.error_variable_already_in_use)
                 } else {
                     type = when {
                         model?.bumperButton?.isSelected?.get() == true -> Sensor.TYPE_BUMPER

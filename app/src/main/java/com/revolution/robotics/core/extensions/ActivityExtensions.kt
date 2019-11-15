@@ -12,6 +12,6 @@ fun Activity.openUrl(url: String, errorHandler: ErrorHandler? = null) {
     try {
         startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
     } catch (exception: ActivityNotFoundException) {
-        errorHandler?.onError(R.string.error_cannot_open_url)
+        errorHandler?.onError(exception, R.string.error_cannot_open_url)
     }
 }

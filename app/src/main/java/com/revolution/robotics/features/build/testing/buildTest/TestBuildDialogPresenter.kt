@@ -37,7 +37,7 @@ class TestBuildDialogPresenter(
                 view?.activateBuildFace()
             },
             onError = {
-                errorHandler.onError(R.string.error_test_code_upload)
+                errorHandler.onError(it, R.string.error_test_code_upload)
                 view?.showTips()
             })
     }

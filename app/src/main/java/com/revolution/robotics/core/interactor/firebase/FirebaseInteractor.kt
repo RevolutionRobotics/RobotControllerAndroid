@@ -26,7 +26,7 @@ abstract class FirebaseInteractor<T> : ValueEventListener {
     }
 
     override fun onCancelled(error: DatabaseError) {
-        onError?.invoke(error.toException()) ?: errorHandler.onError()
+        onError?.invoke(error.toException()) ?: errorHandler.onError(error.toException())
     }
 
     abstract fun getDatabaseReference(database: FirebaseDatabase): Query
