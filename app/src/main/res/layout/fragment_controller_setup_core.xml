@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:bind="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View"/>
+        <import type="com.revolution.robotics.features.controllers.ControllerType"/>
+
+        <variable name="viewModel"
+                  type="com.revolution.robotics.features.controllers.setup.ConfigureControllerViewModel"/>
+        <variable name="mostRecent"
+                  type="com.revolution.robotics.features.controllers.setup.mostRecent.MostRecentProgramViewModel"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/content_wrapper"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+            <include layout="@layout/fragment_controller_setup_gamer"
+                     bind:viewModel="@{viewModel}"
+                     android:visibility="@{viewModel.controllerType == ControllerType.GAMER ? View.VISIBLE : View.GONE}"/>
+
+            <include layout="@layout/fragment_controller_setup_driver"
+                     android:visibility="@{viewModel.controllerType == ControllerType.DRIVER ? View.VISIBLE : View.GONE}"
+                     bind:viewModel="@{viewModel}"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.revolution.robotics.views.RoboticsButton
+                android:layout_width="@dimen/robotics_button_width"
+                android:layout_height="@dimen/robotics_button_height"
+                android:layout_margin="@dimen/dimen_4dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:onClick="@{()->viewModel.play()}"
+                app:text="@{@string/configure_play_button_text}"
+                app:image="@{@drawable/ic_play}"/>
+
+        <FrameLayout
+                android:id="@+id/dimmer"
+                android:visibility="invisible"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@color/overlay_black_b3"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/program_selector"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/controller_setup_program_selector_height"
+                android:background="@drawable/bg_setup_program_selector"
+                android:visibility="invisible"
+                android:padding="@dimen/dimen_4dp"
+                android:clickable="true"
+                android:focusable="true"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+            <TextView
+                    android:id="@+id/most_recent_1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="@dimen/dimen_4dp"
+                    android:fontFamily="@font/jura_bold"
+                    android:textSize="12sp"
+                    android:textColor="@color/white"
+                    android:gravity="center"
+                    android:padding="@dimen/dimen_8dp"
+                    android:onClick="@{() -> mostRecent.onProgramClicked(1)}"
+                    android:onLongClick="@{() -> mostRecent.onProgramLongClicked(1)}"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/most_recent_2"
+                    app:program="@{mostRecent.getProgram(1)}"
+                    app:chippedBoxConfig="@{mostRecent.getBackground(1)}"
+                    app:visible="@{mostRecent.getProgram(1) != null}"/>
+
+            <TextView
+                    android:id="@+id/most_recent_2"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="@dimen/dimen_4dp"
+                    android:fontFamily="@font/jura_bold"
+                    android:textSize="12sp"
+                    android:textColor="@color/white"
+                    android:gravity="center"
+                    android:padding="@dimen/dimen_8dp"
+                    android:onClick="@{() -> mostRecent.onProgramClicked(2)}"
+                    android:onLongClick="@{() -> mostRecent.onProgramLongClicked(2)}"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/most_recent_1"
+                    app:layout_constraintEnd_toStartOf="@id/most_recent_3"
+                    app:program="@{mostRecent.getProgram(2)}"
+                    app:chippedBoxConfig="@{mostRecent.getBackground(2)}"
+                    app:visible="@{mostRecent.getProgram(2) != null}"/>
+
+            <TextView
+                    android:id="@+id/most_recent_3"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="@dimen/dimen_4dp"
+                    android:fontFamily="@font/jura_bold"
+                    android:textSize="12sp"
+                    android:textColor="@color/white"
+                    android:gravity="center"
+                    android:padding="@dimen/dimen_8dp"
+                    android:onClick="@{() -> mostRecent.onProgramClicked(3)}"
+                    android:onLongClick="@{() -> mostRecent.onProgramLongClicked(3)}"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/most_recent_2"
+                    app:layout_constraintEnd_toStartOf="@id/most_recent_4"
+                    app:program="@{mostRecent.getProgram(3)}"
+                    app:chippedBoxConfig="@{mostRecent.getBackground(3)}"
+                    app:visible="@{mostRecent.getProgram(3) != null}"/>
+
+            <TextView
+                    android:id="@+id/most_recent_4"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="@dimen/dimen_4dp"
+                    android:fontFamily="@font/jura_bold"
+                    android:textSize="12sp"
+                    android:textColor="@color/white"
+                    android:gravity="center"
+                    android:padding="@dimen/dimen_8dp"
+                    android:onClick="@{() -> mostRecent.onProgramClicked(4)}"
+                    android:onLongClick="@{() -> mostRecent.onProgramLongClicked(4)}"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/most_recent_3"
+                    app:layout_constraintEnd_toStartOf="@id/most_recent_5"
+                    app:program="@{mostRecent.getProgram(4)}"
+                    app:chippedBoxConfig="@{mostRecent.getBackground(4)}"
+                    app:visible="@{mostRecent.getProgram(4) != null}"/>
+
+            <TextView
+                    android:id="@+id/most_recent_5"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="@dimen/dimen_4dp"
+                    android:fontFamily="@font/jura_bold"
+                    android:textSize="12sp"
+                    android:textColor="@color/white"
+                    android:gravity="center"
+                    android:padding="@dimen/dimen_8dp"
+                    android:onClick="@{() -> mostRecent.onProgramClicked(5)}"
+                    android:onLongClick="@{() -> mostRecent.onProgramLongClicked(5)}"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/most_recent_4"
+                    app:layout_constraintEnd_toStartOf="@id/most_recent_show_all"
+                    app:program="@{mostRecent.getProgram(5)}"
+                    app:chippedBoxConfig="@{mostRecent.getBackground(5)}"
+                    app:visible="@{mostRecent.getProgram(5) != null}"/>
+
+            <LinearLayout
+                    android:id="@+id/most_recent_show_all"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:onClick="@{() -> mostRecent.onShowMoreClicked()}"
+                    android:gravity="center"
+                    android:padding="@dimen/dimen_8dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/most_recent_5"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:chippedBoxConfig="@{mostRecent.getShowMoreBackground()}">
+
+                <ImageView
+                        android:layout_width="@dimen/dimen_16dp"
+                        android:layout_height="@dimen/dimen_16dp"
+                        android:src="@drawable/ic_add"
+                        android:layout_marginEnd="@dimen/dimen_8dp"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:textSize="14sp"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/barlow_medium"
+                        android:text="@string/most_recent_show_more"/>
+
+            </LinearLayout>
+
+            <TextView
+                    android:id="@+id/most_recent_empty"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textSize="12sp"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/barlow_regular"
+                    android:text="@string/most_recent_empty"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/most_recent_show_all"
+                    gone="@{!mostRecent.isEmpty()}"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

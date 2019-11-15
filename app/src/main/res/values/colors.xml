@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+
+    <color name="overlay_black_42">#42000000</color>
+    <color name="overlay_black_b3">#b3000000</color>
+    <color name="overlay_white_28">#28ffffff</color>
+
+    <color name="grey_1d">#FF1D1D1D</color>
+    <color name="grey_28">#FF282828</color>
+    <color name="grey_56">#FF565656</color>
+    <color name="grey_6d">#FF6D6D6D</color>
+    <color name="grey_8e">#FF8e8e8e</color>
+    <color name="grey_97">#FF979797</color>
+
+    <color name="pressed_button">#11FFFFFF</color>
+    <color name="robotics_red">#e60312</color>
+    <color name="robotics_orange">#d2592f</color>
+    <color name="golden_rod">#f8bc08</color>
+
+    <color name="transparent">#00000000</color>
+    <color name="bluetooth_blue">#0082FC</color>
+</resources>

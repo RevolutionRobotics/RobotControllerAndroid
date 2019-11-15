@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <merge
+            tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
+
+        <View
+                android:id="@+id/header_background"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/toolbar_header_height"
+                android:background="@color/grey_28"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+        <com.revolution.robotics.features.bluetooth.BluetoothStatusImageView
+                android:id="@+id/bluetooth_icon"
+                android:layout_width="@dimen/dimen_40dp"
+                android:layout_height="@dimen/dimen_40dp"
+                android:scaleType="centerInside"
+                android:padding="@dimen/dimen_2dp"
+                android:src="@drawable/ic_bluetooth"
+                android:layout_marginEnd="@dimen/dimen_8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/header_border"/>
+
+        <ImageView
+                android:id="@+id/header_border"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/toolbar_header_border_size"
+                android:scaleType="fitXY"
+                android:src="@drawable/bg_header_menu"
+                app:layout_constraintTop_toBottomOf="@id/header_background"/>
+
+    </merge>
+
+</layout>

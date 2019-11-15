@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable name="tutorialItem" type="com.revolution.robotics.features.mainmenu.tutorial.TutorialItemViewModel"/>
+    </data>
+
+    <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="vertical"
+            android:layout_width="212dp"
+            android:layout_height="191dp"
+            app:gone="@{!tutorialItem.isActive()}"
+            app:chippedBoxConfig="@{tutorialItem.background}">
+
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/barlow_bold"
+                android:layout_marginStart="@dimen/dimen_16dp"
+                android:layout_marginEnd="@dimen/dimen_16dp"
+                android:layout_marginTop="@dimen/dimen_16dp"
+                android:text="@{tutorialItem.tutorialItem.title}"
+                tools:text="Under robot you can .."/>
+
+        <TextView android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginStart="@dimen/dimen_16dp"
+                  android:layout_marginEnd="@dimen/dimen_16dp"
+                  android:layout_marginTop="@dimen/dimen_8dp"
+                  android:textColor="@color/white"
+                  android:textSize="12sp"
+                  android:text="@{tutorialItem.tutorialItem.description}"
+                  tools:text="@string/tutorial_programs_description"
+                  android:fontFamily="@font/barlow_regular"/>
+
+    </LinearLayout>
+</layout>

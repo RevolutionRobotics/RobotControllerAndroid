@@ -1,0 +1,694 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable name="viewModel"
+                  type="com.revolution.robotics.features.configure.connections.ConfigureConnectionsViewModel"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                app:layout_constraintStart_toStartOf="@id/brainImage"
+                app:layout_constraintEnd_toEndOf="@id/brainImage"
+                app:layout_constraintDimensionRatio="W, 1.0"
+                android:src="@drawable/ic_configure_connections_glow"
+        />
+
+        <ImageView
+                android:id="@+id/brainImage"
+                android:layout_width="@dimen/configure_connections_brain_width"
+                android:layout_height="@dimen/configure_connections_brain_height"
+                app:layout_constraintTop_toBottomOf="@id/buttonM2"
+                app:layout_constraintStart_toStartOf="@id/buttonM2"
+                app:layout_constraintEnd_toEndOf="@id/buttonM2"
+                app:layout_constraintBottom_toTopOf="@id/buttonM5"
+                android:layout_marginTop="@dimen/configure_connections_brain_horizontal_margin"
+                android:scaleType="fitCenter"
+                android:src="@drawable/bg_brain"
+                app:layout_constraintVertical_chainStyle="packed"
+        />
+
+
+        <!-- BUTTONS -->
+
+        <com.revolution.robotics.views.configure.PartConnectionButton
+                android:id="@+id/buttonM1"
+                android:layout_width="@dimen/configure_connections_button_width"
+                android:layout_height="@dimen/configure_connections_button_height"
+                android:elevation="@dimen/configure_connections_button_elevation"
+                app:bindRobotPartModel="@{viewModel.partM1}"
+                app:inactivePartIcon="@drawable/ic_config_add"
+                app:inactivePartName="@string/configure_connections_button_M1"
+                android:onClick="@{() -> viewModel.partM1.onClick.invoke()}"
+                app:layout_constraintTop_toTopOf="@id/buttonM2"
+                app:layout_constraintBottom_toBottomOf="@id/buttonM2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/buttonM2"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintVertical_chainStyle="packed"
+        />
+
+        <com.revolution.robotics.views.configure.PartConnectionButton
+                android:id="@+id/buttonM2"
+                android:layout_width="@dimen/configure_connections_button_width"
+                android:layout_height="@dimen/configure_connections_button_height"
+                android:elevation="@dimen/configure_connections_button_elevation"
+                app:bindRobotPartModel="@{viewModel.partM2}"
+                app:inactivePartIcon="@drawable/ic_config_add"
+                android:onClick="@{() -> viewModel.partM2.onClick.invoke()}"
+                app:inactivePartName="@string/configure_connections_button_M2"
+                app:layout_constraintStart_toEndOf="@id/buttonM1"
+                app:layout_constraintEnd_toStartOf="@id/buttonM3"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/brainImage"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintVertical_chainStyle="packed"
+                android:layout_marginStart="@dimen/configure_connections_buttons_horizontal_margin"
+        />
+        <com.revolution.robotics.views.configure.PartConnectionButton
+                android:id="@+id/buttonM3"
+                android:layout_width="@dimen/configure_connections_button_width"
+                android:layout_height="@dimen/configure_connections_button_height"
+                android:elevation="@dimen/configure_connections_button_elevation"
+                app:bindRobotPartModel="@{viewModel.partM3}"
+                app:inactivePartIcon="@drawable/ic_config_add"
+                android:onClick="@{() -> viewModel.partM3.onClick.invoke()}"
+                app:inactivePartName="@string/configure_connections_button_M3"
+                app:layout_constraintStart_toEndOf="@id/buttonM2"
+                app:layout_constraintTop_toTopOf="@id/buttonM2"
+                app:layout_constraintBottom_toBottomOf="@id/buttonM2"
+                app:layout_constraintEnd_toStartOf="@id/buttonS1"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                android:layout_marginStart="@dimen/configure_connections_buttons_horizontal_margin"
+        />
+
+        <com.revolution.robotics.views.configure.PartConnectionButton
+                android:id="@+id/buttonM5"
+                android:layout_width="@dimen/configure_connections_button_width"
+                android:layout_height="@dimen/configure_connections_button_height"
+                android:elevation="@dimen/configure_connections_button_elevation"
+                app:bindRobotPartModel="@{viewModel.partM5}"
+                app:inactivePartIcon="@drawable/ic_config_add"
+                android:onClick="@{() -> viewModel.partM5.onClick.invoke()}"
+                app:inactivePartName="@string/configure_connections_button_M5"
+                app:layout_constraintStart_toStartOf="@id/brainImage"
+                app:layout_constraintEnd_toEndOf="@id/brainImage"
+                app:layout_constraintTop_toBottomOf="@id/brainImage"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginTop="@dimen/configure_connections_brain_horizontal_margin"
+                app:layout_constraintVertical_chainStyle="packed"
+        />
+
+        <com.revolution.robotics.views.configure.PartConnectionButton
+                android:id="@+id/buttonM6"
+                android:layout_width="@dimen/configure_connections_button_width"
+                android:layout_height="@dimen/configure_connections_button_height"
+                android:elevation="@dimen/configure_connections_button_elevation"
+                app:bindRobotPartModel="@{viewModel.partM6}"
+                android:onClick="@{() -> viewModel.partM6.onClick.invoke()}"
+                app:inactivePartIcon="@drawable/ic_config_add"
+                app:inactivePartName="@string/configure_connections_button_M6"
+                app:layout_constraintStart_toEndOf="@id/buttonM5"
+                app:layout_constraintTop_toTopOf="@id/buttonM5"
+                app:layout_constraintBottom_toBottomOf="@id/buttonM5"
+                android:layout_marginStart="@dimen/configure_connections_buttons_horizontal_margin"
+        />
+
+        <com.revolution.robotics.views.configure.PartConnectionButton
+                android:id="@+id/buttonM4"
+                android:layout_width="@dimen/configure_connections_button_width"
+                android:layout_height="@dimen/configure_connections_button_height"
+                android:elevation="@dimen/configure_connections_button_elevation"
+                app:bindRobotPartModel="@{viewModel.partM4}"
+                app:inactivePartIcon="@drawable/ic_config_add"
+                android:onClick="@{() -> viewModel.partM4.onClick.invoke()}"
+                app:inactivePartName="@string/configure_connections_button_M4"
+                app:layout_constraintEnd_toStartOf="@id/buttonM5"
+                app:layout_constraintTop_toTopOf="@id/buttonM5"
+                app:layout_constraintBottom_toBottomOf="@id/buttonM5"
+                android:layout_marginEnd="@dimen/configure_connections_buttons_horizontal_margin"
+        />
+
+        <com.revolution.robotics.views.configure.PartConnectionButton
+                android:id="@+id/buttonS1"
+                android:layout_width="@dimen/configure_connections_button_width"
+                android:layout_height="@dimen/configure_connections_button_height"
+                android:elevation="@dimen/configure_connections_button_elevation"
+                app:bindRobotPartModel="@{viewModel.partS1}"
+                app:inactivePartIcon="@drawable/ic_config_add"
+                android:onClick="@{() -> viewModel.partS1.onClick.invoke()}"
+                app:inactivePartName="@string/configure_connections_button_S1"
+                app:layout_constraintStart_toEndOf="@id/buttonM3"
+                app:layout_constraintTop_toTopOf="@id/buttonM3"
+                app:layout_constraintBottom_toBottomOf="@id/buttonM3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                android:layout_marginStart="@dimen/configure_connections_side_buttons_margin_start"
+
+        />
+
+        <com.revolution.robotics.views.configure.PartConnectionButton
+                android:id="@+id/buttonS4"
+                android:layout_width="@dimen/configure_connections_button_width"
+                android:layout_height="@dimen/configure_connections_button_height"
+                android:elevation="@dimen/configure_connections_button_elevation"
+                app:bindRobotPartModel="@{viewModel.partS4}"
+                app:inactivePartIcon="@drawable/ic_config_add"
+                android:onClick="@{() -> viewModel.partS4.onClick.invoke()}"
+                app:inactivePartName="@string/configure_connections_button_S4"
+                app:layout_constraintStart_toEndOf="@id/buttonM6"
+                app:layout_constraintTop_toTopOf="@id/buttonM6"
+                app:layout_constraintBottom_toBottomOf="@id/buttonM6"
+                android:layout_marginStart="@dimen/configure_connections_side_buttons_margin_start"
+        />
+
+        <com.revolution.robotics.views.configure.PartConnectionButton
+                android:id="@+id/buttonS2"
+                android:layout_width="@dimen/configure_connections_button_width"
+                android:layout_height="@dimen/configure_connections_button_height"
+                android:elevation="@dimen/configure_connections_button_elevation"
+                app:bindRobotPartModel="@{viewModel.partS2}"
+                app:inactivePartIcon="@drawable/ic_config_add"
+                android:onClick="@{() -> viewModel.partS2.onClick.invoke()}"
+                app:inactivePartName="@string/configure_connections_button_S2"
+                app:layout_constraintStart_toStartOf="@id/buttonS1"
+                app:layout_constraintEnd_toEndOf="@id/buttonS1"
+                app:layout_constraintTop_toBottomOf="@id/buttonS1"
+                app:layout_constraintBottom_toTopOf="@id/buttonS3"
+                app:layout_constraintVertical_chainStyle="spread"
+        />
+
+        <com.revolution.robotics.views.configure.PartConnectionButton
+                android:id="@+id/buttonS3"
+                android:layout_width="@dimen/configure_connections_button_width"
+                android:layout_height="@dimen/configure_connections_button_height"
+                android:elevation="@dimen/configure_connections_button_elevation"
+                app:bindRobotPartModel="@{viewModel.partS3}"
+                app:inactivePartIcon="@drawable/ic_config_add"
+                android:onClick="@{() -> viewModel.partS3.onClick.invoke()}"
+                app:inactivePartName="@string/configure_connections_button_S3"
+                app:layout_constraintStart_toStartOf="@id/buttonS4"
+                app:layout_constraintEnd_toEndOf="@id/buttonS4"
+                app:layout_constraintBottom_toTopOf="@id/buttonS4"
+                app:layout_constraintTop_toBottomOf="@id/buttonS2"
+                app:layout_constraintVertical_chainStyle="spread"
+        />
+
+        <!-- BRAIN INDICATOR ICONS -->
+
+        <View
+                android:id="@+id/indicatorsTopGuide"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/configure_connections_icons_overflow_size"
+                app:layout_constraintStart_toStartOf="@id/brainImage"
+                app:layout_constraintEnd_toEndOf="@id/brainImage"
+                app:layout_constraintBottom_toTopOf="@id/brainImage"
+        />
+
+        <View
+                android:id="@+id/indicatorsBottomGuide"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/configure_connections_icons_overflow_size"
+                app:layout_constraintStart_toStartOf="@id/brainImage"
+                app:layout_constraintEnd_toEndOf="@id/brainImage"
+                app:layout_constraintTop_toBottomOf="@id/brainImage"
+        />
+
+        <View
+                android:id="@+id/indicatorsEndGuide"
+                android:layout_width="@dimen/configure_connections_icons_overflow_size"
+                android:layout_height="0dp"
+                app:layout_constraintStart_toEndOf="@id/brainImage"
+                app:layout_constraintTop_toBottomOf="@id/brainImage"
+                app:layout_constraintBottom_toBottomOf="@id/brainImage"
+        />
+
+        <com.revolution.robotics.views.configure.PartConnectionIconView
+                android:id="@+id/indicatorIconM1"
+                android:layout_width="@dimen/configure_connections_icons_size"
+                android:layout_height="@dimen/configure_connections_icons_size"
+                android:scaleType="fitCenter"
+                app:bindRobotPartModel="@{viewModel.partM1}"
+                app:layout_constraintTop_toTopOf="@id/indicatorIconM2"
+                app:layout_constraintBottom_toBottomOf="@id/indicatorIconM2"
+                app:layout_constraintEnd_toStartOf="@id/indicatorIconM2"
+                android:layout_marginEnd="@dimen/configure_connections_icons_horizontal_margin"
+        />
+
+        <com.revolution.robotics.views.configure.PartConnectionIconView
+                android:id="@+id/indicatorIconM2"
+                android:layout_width="@dimen/configure_connections_icons_size"
+                android:layout_height="@dimen/configure_connections_icons_size"
+                android:scaleType="fitCenter"
+                app:bindRobotPartModel="@{viewModel.partM2}"
+                app:layout_constraintTop_toTopOf="@id/indicatorsTopGuide"
+                app:layout_constraintStart_toStartOf="@id/brainImage"
+                app:layout_constraintEnd_toEndOf="@id/brainImage"
+        />
+
+        <com.revolution.robotics.views.configure.PartConnectionIconView
+                android:id="@+id/indicatorIconM3"
+                android:layout_width="@dimen/configure_connections_icons_size"
+                android:layout_height="@dimen/configure_connections_icons_size"
+                android:scaleType="fitCenter"
+                app:bindRobotPartModel="@{viewModel.partM3}"
+                app:layout_constraintTop_toTopOf="@id/indicatorIconM2"
+                app:layout_constraintBottom_toBottomOf="@id/indicatorIconM2"
+                app:layout_constraintStart_toEndOf="@id/indicatorIconM2"
+                android:layout_marginStart="@dimen/configure_connections_icons_horizontal_margin"
+        />
+
+        <com.revolution.robotics.views.configure.PartConnectionIconView
+                android:id="@+id/indicatorIconM4"
+                android:layout_width="@dimen/configure_connections_icons_size"
+                android:layout_height="@dimen/configure_connections_icons_size"
+                android:scaleType="fitCenter"
+                app:bindRobotPartModel="@{viewModel.partM4}"
+                app:layout_constraintTop_toTopOf="@id/indicatorIconM5"
+                app:layout_constraintBottom_toBottomOf="@id/indicatorIconM5"
+                app:layout_constraintEnd_toStartOf="@id/indicatorIconM5"
+                android:layout_marginEnd="@dimen/configure_connections_icons_horizontal_margin"
+        />
+
+        <com.revolution.robotics.views.configure.PartConnectionIconView
+                android:id="@+id/indicatorIconM5"
+                android:layout_width="@dimen/configure_connections_icons_size"
+                android:layout_height="@dimen/configure_connections_icons_size"
+                android:scaleType="fitCenter"
+                app:bindRobotPartModel="@{viewModel.partM5}"
+                app:layout_constraintBottom_toBottomOf="@id/indicatorsBottomGuide"
+                app:layout_constraintStart_toStartOf="@id/brainImage"
+                app:layout_constraintEnd_toEndOf="@id/brainImage"
+        />
+
+        <com.revolution.robotics.views.configure.PartConnectionIconView
+                android:id="@+id/indicatorIconM6"
+                android:layout_width="@dimen/configure_connections_icons_size"
+                android:layout_height="@dimen/configure_connections_icons_size"
+                android:scaleType="fitCenter"
+                app:bindRobotPartModel="@{viewModel.partM6}"
+                app:layout_constraintTop_toTopOf="@id/indicatorIconM5"
+                app:layout_constraintBottom_toBottomOf="@id/indicatorIconM5"
+                app:layout_constraintStart_toEndOf="@id/indicatorIconM5"
+                android:layout_marginStart="@dimen/configure_connections_icons_horizontal_margin"
+        />
+
+        <com.revolution.robotics.views.configure.PartConnectionIconView
+                android:id="@+id/indicatorIconS1"
+                android:layout_width="@dimen/configure_connections_icons_size"
+                android:layout_height="@dimen/configure_connections_icons_size"
+                android:scaleType="fitCenter"
+                app:bindRobotPartModel="@{viewModel.partS1}"
+                app:layout_constraintTop_toBottomOf="@id/indicatorIconM2"
+                app:layout_constraintEnd_toEndOf="@id/indicatorsEndGuide"
+        />
+
+        <com.revolution.robotics.views.configure.PartConnectionIconView
+                android:id="@+id/indicatorIconS2"
+                android:layout_width="@dimen/configure_connections_icons_size"
+                android:layout_height="@dimen/configure_connections_icons_size"
+                android:scaleType="fitCenter"
+                app:bindRobotPartModel="@{viewModel.partS2}"
+                app:layout_constraintTop_toBottomOf="@id/indicatorIconS1"
+                app:layout_constraintBottom_toTopOf="@id/indicatorIconS3"
+                app:layout_constraintStart_toStartOf="@id/indicatorIconS1"
+                app:layout_constraintEnd_toEndOf="@id/indicatorIconS1"
+                app:layout_constraintVertical_chainStyle="spread"
+        />
+
+        <com.revolution.robotics.views.configure.PartConnectionIconView
+                android:id="@+id/indicatorIconS3"
+                android:layout_width="@dimen/configure_connections_icons_size"
+                android:layout_height="@dimen/configure_connections_icons_size"
+                android:scaleType="fitCenter"
+                app:bindRobotPartModel="@{viewModel.partS3}"
+                app:layout_constraintTop_toBottomOf="@id/indicatorIconS2"
+                app:layout_constraintBottom_toTopOf="@id/indicatorIconS4"
+                app:layout_constraintStart_toStartOf="@id/indicatorIconS4"
+                app:layout_constraintEnd_toEndOf="@id/indicatorIconS4"
+                app:layout_constraintVertical_chainStyle="spread"
+        />
+
+        <com.revolution.robotics.views.configure.PartConnectionIconView
+                android:id="@+id/indicatorIconS4"
+                android:layout_width="@dimen/configure_connections_icons_size"
+                android:layout_height="@dimen/configure_connections_icons_size"
+                android:scaleType="fitCenter"
+                app:bindRobotPartModel="@{viewModel.partS4}"
+                app:layout_constraintBottom_toTopOf="@id/indicatorIconM5"
+                app:layout_constraintEnd_toEndOf="@id/indicatorsEndGuide"
+        />
+
+        <!-- DASHED LINES: M2 -->
+
+        <com.revolution.robotics.views.ConnectionLineView
+                android:layout_width="@dimen/configure_connections_line_view_width"
+                android:layout_height="0dp"
+                app:isLineVertical="true"
+                app:bindRobotPartModel="@{viewModel.partM2}"
+                android:layout_marginBottom="@dimen/configure_connections_line_to_icon_correction"
+                app:layout_constraintTop_toTopOf="@id/buttonM2"
+                app:layout_constraintBottom_toBottomOf="@id/indicatorIconM2"
+                app:layout_constraintStart_toStartOf="@id/indicatorIconM2"
+                app:layout_constraintEnd_toEndOf="@id/indicatorIconM2"
+        />
+
+        <!-- DASHED LINES: M5 -->
+
+        <com.revolution.robotics.views.ConnectionLineView
+                android:layout_width="@dimen/configure_connections_line_view_width"
+                android:layout_height="0dp"
+                app:isLineVertical="true"
+                app:bindRobotPartModel="@{viewModel.partM5}"
+                android:layout_marginTop="@dimen/configure_connections_line_to_icon_correction"
+                app:layout_constraintTop_toTopOf="@id/indicatorIconM5"
+                app:layout_constraintBottom_toBottomOf="@id/buttonM5"
+                app:layout_constraintStart_toStartOf="@id/buttonM5"
+                app:layout_constraintEnd_toEndOf="@id/buttonM5"
+        />
+
+        <!-- DASHED LINES: M1 -->
+
+        <View
+                android:id="@+id/dashHelperM1"
+                android:layout_width="1dp"
+                android:layout_height="1dp"
+                app:layout_constraintTop_toTopOf="@id/indicatorIconM1"
+                app:layout_constraintBottom_toBottomOf="@id/indicatorIconM1"
+                app:layout_constraintStart_toStartOf="@id/buttonM1"
+                android:layout_marginStart="@dimen/configure_connections_line_M1_button_margin"
+        />
+
+        <com.revolution.robotics.views.ConnectionLineView
+                android:layout_width="@dimen/configure_connections_line_view_width"
+                android:layout_height="0dp"
+                app:isLineVertical="true"
+                app:bindRobotPartModel="@{viewModel.partM1}"
+                app:layout_constraintTop_toTopOf="@id/buttonM1"
+                app:layout_constraintBottom_toBottomOf="@id/dashHelperM1"
+                app:layout_constraintStart_toStartOf="@id/dashHelperM1"
+                app:layout_constraintEnd_toEndOf="@id/dashHelperM1"
+        />
+
+        <com.revolution.robotics.views.ConnectionLineView
+                android:layout_width="0dp"
+                android:layout_height="@dimen/configure_connections_line_view_width"
+                app:isLineVertical="false"
+                app:bindRobotPartModel="@{viewModel.partM1}"
+                android:layout_marginEnd="@dimen/configure_connections_line_to_icon_correction"
+                app:layout_constraintTop_toTopOf="@id/dashHelperM1"
+                app:layout_constraintBottom_toBottomOf="@id/dashHelperM1"
+                app:layout_constraintStart_toStartOf="@id/dashHelperM1"
+                app:layout_constraintEnd_toEndOf="@id/indicatorIconM1"
+        />
+
+        <!-- DASHED LINES: M4 -->
+
+        <View
+                android:id="@+id/dashHelperM4"
+                android:layout_width="1dp"
+                android:layout_height="1dp"
+                app:layout_constraintTop_toTopOf="@id/indicatorIconM4"
+                app:layout_constraintBottom_toBottomOf="@id/indicatorIconM4"
+                app:layout_constraintStart_toStartOf="@id/buttonM4"
+                app:layout_constraintEnd_toEndOf="@id/buttonM4"
+                android:layout_marginStart="@dimen/configure_connections_line_M4_helper_margin"
+        />
+
+        <com.revolution.robotics.views.ConnectionLineView
+                android:layout_width="@dimen/configure_connections_line_view_width"
+                android:layout_height="0dp"
+                app:isLineVertical="true"
+                app:bindRobotPartModel="@{viewModel.partM4}"
+                app:layout_constraintTop_toTopOf="@id/dashHelperM4"
+                app:layout_constraintBottom_toBottomOf="@id/buttonM4"
+                app:layout_constraintStart_toStartOf="@id/dashHelperM4"
+                app:layout_constraintEnd_toEndOf="@id/dashHelperM4"
+        />
+
+        <com.revolution.robotics.views.ConnectionLineView
+                android:layout_width="0dp"
+                android:layout_height="@dimen/configure_connections_line_view_width"
+                app:isLineVertical="false"
+                app:bindRobotPartModel="@{viewModel.partM4}"
+                android:layout_marginEnd="@dimen/configure_connections_line_to_icon_correction"
+                app:layout_constraintTop_toTopOf="@id/dashHelperM4"
+                app:layout_constraintBottom_toBottomOf="@id/dashHelperM4"
+                app:layout_constraintStart_toStartOf="@id/dashHelperM4"
+                app:layout_constraintEnd_toEndOf="@id/indicatorIconM4"
+        />
+
+        <!-- DASHED LINES: M3 -->
+
+        <View
+                android:id="@+id/dashHelperM3"
+                android:layout_width="1dp"
+                android:layout_height="1dp"
+                app:layout_constraintTop_toTopOf="@id/indicatorIconM3"
+                app:layout_constraintBottom_toBottomOf="@id/indicatorIconM3"
+                app:layout_constraintStart_toStartOf="@id/buttonM3"
+                android:layout_marginStart="@dimen/configure_connections_line_M3_button_margin"
+        />
+
+        <com.revolution.robotics.views.ConnectionLineView
+                android:layout_width="0dp"
+                android:layout_height="@dimen/configure_connections_line_view_width"
+                app:isLineVertical="false"
+                app:bindRobotPartModel="@{viewModel.partM3}"
+                android:layout_marginStart="@dimen/configure_connections_line_to_icon_correction"
+                app:layout_constraintStart_toStartOf="@id/indicatorIconM3"
+                app:layout_constraintTop_toTopOf="@id/dashHelperM3"
+                app:layout_constraintBottom_toBottomOf="@id/dashHelperM3"
+                app:layout_constraintEnd_toEndOf="@id/dashHelperM3"
+        />
+
+        <com.revolution.robotics.views.ConnectionLineView
+                android:layout_width="@dimen/configure_connections_line_view_width"
+                android:layout_height="0dp"
+                app:isLineVertical="true"
+                app:bindRobotPartModel="@{viewModel.partM3}"
+                app:layout_constraintTop_toTopOf="@id/buttonM3"
+                app:layout_constraintStart_toStartOf="@id/dashHelperM3"
+                app:layout_constraintEnd_toEndOf="@id/dashHelperM3"
+                app:layout_constraintBottom_toBottomOf="@id/dashHelperM3"
+        />
+
+        <!-- DASHED LINES: M6 -->
+
+        <View
+                android:id="@+id/dashHelperM6"
+                android:layout_width="1dp"
+                android:layout_height="1dp"
+                app:layout_constraintTop_toTopOf="@id/indicatorIconM6"
+                app:layout_constraintBottom_toBottomOf="@id/indicatorIconM6"
+                app:layout_constraintStart_toStartOf="@id/buttonM6"
+                app:layout_constraintEnd_toEndOf="@id/buttonM6"
+        />
+
+        <com.revolution.robotics.views.ConnectionLineView
+                android:layout_width="0dp"
+                android:layout_height="@dimen/configure_connections_line_view_width"
+                app:isLineVertical="false"
+                app:bindRobotPartModel="@{viewModel.partM6}"
+                android:layout_marginStart="@dimen/configure_connections_line_to_icon_correction"
+                app:layout_constraintStart_toStartOf="@id/indicatorIconM6"
+                app:layout_constraintTop_toTopOf="@id/dashHelperM6"
+                app:layout_constraintBottom_toBottomOf="@id/dashHelperM6"
+                app:layout_constraintEnd_toEndOf="@id/dashHelperM6"
+        />
+
+        <com.revolution.robotics.views.ConnectionLineView
+                android:layout_width="@dimen/configure_connections_line_view_width"
+                android:layout_height="0dp"
+                app:isLineVertical="true"
+                app:bindRobotPartModel="@{viewModel.partM6}"
+                app:layout_constraintStart_toStartOf="@id/dashHelperM6"
+                app:layout_constraintTop_toTopOf="@id/dashHelperM6"
+                app:layout_constraintBottom_toBottomOf="@id/buttonM6"
+                app:layout_constraintEnd_toEndOf="@id/dashHelperM6"
+        />
+
+        <!-- DASHED LINES: S1 -->
+
+        <View
+                android:id="@+id/dashHelperS1Upper"
+                android:layout_width="1dp"
+                android:layout_height="1dp"
+                app:layout_constraintTop_toTopOf="@id/buttonS1"
+                app:layout_constraintBottom_toBottomOf="@id/buttonS1"
+                app:layout_constraintStart_toEndOf="@id/buttonM3"
+                app:layout_constraintEnd_toStartOf="@id/buttonS1"
+                android:layout_marginEnd="@dimen/configure_connections_line_button_inset_margin"
+        />
+
+        <View
+                android:id="@+id/dashHelperS1Lower"
+                android:layout_width="1dp"
+                android:layout_height="1dp"
+                app:layout_constraintTop_toTopOf="@id/indicatorIconS1"
+                app:layout_constraintBottom_toBottomOf="@id/indicatorIconS1"
+                app:layout_constraintStart_toEndOf="@id/dashHelperS1Upper"
+                app:layout_constraintEnd_toStartOf="@id/dashHelperS1Upper"
+        />
+
+        <com.revolution.robotics.views.ConnectionLineView
+                android:layout_width="0dp"
+                android:layout_height="@dimen/configure_connections_line_view_width"
+                app:isLineVertical="false"
+                app:bindRobotPartModel="@{viewModel.partS1}"
+                android:layout_marginStart="@dimen/configure_connections_line_to_icon_correction"
+                app:layout_constraintStart_toStartOf="@id/indicatorIconS1"
+                app:layout_constraintTop_toTopOf="@id/dashHelperS1Lower"
+                app:layout_constraintBottom_toBottomOf="@id/dashHelperS1Lower"
+                app:layout_constraintEnd_toEndOf="@id/dashHelperS1Lower"
+        />
+
+        <com.revolution.robotics.views.ConnectionLineView
+                android:layout_width="@dimen/configure_connections_line_view_width"
+                android:layout_height="0dp"
+                app:isLineVertical="true"
+                app:bindRobotPartModel="@{viewModel.partS1}"
+                app:layout_constraintStart_toStartOf="@id/dashHelperS1Upper"
+                app:layout_constraintTop_toTopOf="@id/dashHelperS1Upper"
+                app:layout_constraintBottom_toBottomOf="@id/dashHelperS1Lower"
+                app:layout_constraintEnd_toEndOf="@id/dashHelperS1Upper"
+        />
+
+        <com.revolution.robotics.views.ConnectionLineView
+                android:layout_width="0dp"
+                android:layout_height="@dimen/configure_connections_line_view_width"
+                app:isLineVertical="false"
+                app:bindRobotPartModel="@{viewModel.partS1}"
+                android:layout_marginEnd="@dimen/configure_connections_line_button_center_margin"
+                app:layout_constraintStart_toStartOf="@id/dashHelperS1Upper"
+                app:layout_constraintTop_toTopOf="@id/dashHelperS1Upper"
+                app:layout_constraintBottom_toBottomOf="@id/dashHelperS1Upper"
+                app:layout_constraintEnd_toEndOf="@id/buttonS1"
+        />
+
+        <!-- DASHED LINES: S4 -->
+
+        <View
+                android:id="@+id/dashHelperS4Lower"
+                android:layout_width="1dp"
+                android:layout_height="1dp"
+                app:layout_constraintTop_toTopOf="@id/buttonS4"
+                app:layout_constraintBottom_toBottomOf="@id/buttonS4"
+                app:layout_constraintStart_toEndOf="@id/buttonM6"
+                app:layout_constraintEnd_toStartOf="@id/buttonS4"
+                android:layout_marginEnd="@dimen/configure_connections_line_button_inset_margin"
+        />
+
+        <View
+                android:id="@+id/dashHelperS4Upper"
+                android:layout_width="1dp"
+                android:layout_height="1dp"
+                app:layout_constraintTop_toTopOf="@id/indicatorIconS4"
+                app:layout_constraintBottom_toBottomOf="@id/indicatorIconS4"
+                app:layout_constraintStart_toEndOf="@id/dashHelperS4Lower"
+                app:layout_constraintEnd_toStartOf="@id/dashHelperS4Lower"
+        />
+
+        <com.revolution.robotics.views.ConnectionLineView
+                android:layout_width="0dp"
+                android:layout_height="@dimen/configure_connections_line_view_width"
+                app:isLineVertical="false"
+                app:bindRobotPartModel="@{viewModel.partS4}"
+                android:layout_marginStart="@dimen/configure_connections_line_to_icon_correction"
+                app:layout_constraintStart_toStartOf="@id/indicatorIconS4"
+                app:layout_constraintTop_toTopOf="@id/dashHelperS4Upper"
+                app:layout_constraintBottom_toBottomOf="@id/dashHelperS4Upper"
+                app:layout_constraintEnd_toEndOf="@id/dashHelperS4Upper"
+        />
+
+        <com.revolution.robotics.views.ConnectionLineView
+                android:layout_width="@dimen/configure_connections_line_view_width"
+                android:layout_height="0dp"
+                app:isLineVertical="true"
+                app:bindRobotPartModel="@{viewModel.partS4}"
+                app:layout_constraintStart_toStartOf="@id/dashHelperS4Lower"
+                app:layout_constraintTop_toTopOf="@id/dashHelperS4Upper"
+                app:layout_constraintBottom_toBottomOf="@id/dashHelperS4Lower"
+                app:layout_constraintEnd_toEndOf="@id/dashHelperS4Lower"
+        />
+
+        <com.revolution.robotics.views.ConnectionLineView
+                android:layout_width="0dp"
+                android:layout_height="@dimen/configure_connections_line_view_width"
+                app:isLineVertical="false"
+                app:bindRobotPartModel="@{viewModel.partS4}"
+                android:layout_marginEnd="@dimen/configure_connections_line_button_center_margin"
+                app:layout_constraintStart_toStartOf="@id/dashHelperS4Lower"
+                app:layout_constraintTop_toTopOf="@id/dashHelperS4Lower"
+                app:layout_constraintBottom_toBottomOf="@id/dashHelperS4Lower"
+                app:layout_constraintEnd_toEndOf="@id/buttonS4"
+        />
+
+        <!-- DASHED LINES: S3 -->
+
+        <com.revolution.robotics.views.ConnectionLineView
+                android:layout_width="0dp"
+                android:layout_height="@dimen/configure_connections_line_view_width"
+                app:isLineVertical="false"
+                app:bindRobotPartModel="@{viewModel.partS3}"
+                android:layout_marginStart="@dimen/configure_connections_line_to_icon_correction"
+                android:layout_marginEnd="@dimen/configure_connections_line_button_center_margin"
+                app:layout_constraintStart_toStartOf="@id/indicatorIconS3"
+                app:layout_constraintTop_toTopOf="@id/indicatorIconS3"
+                app:layout_constraintBottom_toBottomOf="@id/indicatorIconS3"
+                app:layout_constraintEnd_toEndOf="@id/buttonS3"
+        />
+
+        <!-- DASHED LINES: S2 -->
+
+        <View
+                android:id="@+id/dashHelperS2"
+                android:layout_width="1dp"
+                android:layout_height="1dp"
+                app:layout_constraintStart_toStartOf="@id/buttonS2"
+                app:layout_constraintTop_toTopOf="@id/indicatorIconS2"
+                app:layout_constraintBottom_toBottomOf="@id/indicatorIconS2"
+                android:layout_marginStart="@dimen/configure_connections_line_button_inset_margin"
+        />
+
+        <com.revolution.robotics.views.ConnectionLineView
+                android:layout_width="0dp"
+                android:layout_height="@dimen/configure_connections_line_view_width"
+                app:isLineVertical="false"
+                app:bindRobotPartModel="@{viewModel.partS2}"
+                android:layout_marginStart="@dimen/configure_connections_line_to_icon_correction"
+                app:layout_constraintStart_toStartOf="@id/indicatorIconS2"
+                app:layout_constraintTop_toTopOf="@id/indicatorIconS2"
+                app:layout_constraintBottom_toBottomOf="@id/indicatorIconS2"
+                app:layout_constraintEnd_toEndOf="@id/dashHelperS2"
+        />
+
+        <com.revolution.robotics.views.ConnectionLineView
+                android:layout_width="@dimen/configure_connections_line_view_width"
+                android:layout_height="0dp"
+                app:isLineVertical="true"
+                app:bindRobotPartModel="@{viewModel.partS2}"
+                app:layout_constraintStart_toStartOf="@id/dashHelperS2"
+                app:layout_constraintTop_toTopOf="@id/buttonS2"
+                app:layout_constraintBottom_toBottomOf="@id/dashHelperS2"
+                app:layout_constraintEnd_toEndOf="@id/dashHelperS2"
+        />
+
+        <com.revolution.robotics.views.RoboticsButton
+                android:layout_width="@dimen/robotics_button_width"
+                android:layout_height="@dimen/robotics_button_height"
+                android:layout_margin="@dimen/dimen_4dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:onClick="@{()->viewModel.play()}"
+                app:text="@{@string/configure_play_button_text}"
+                app:image="@{@drawable/ic_play}"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

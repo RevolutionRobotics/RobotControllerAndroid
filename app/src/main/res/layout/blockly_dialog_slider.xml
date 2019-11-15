@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable name="viewModel"
+                  type="com.revolution.robotics.blockly.dialogs.slider.SliderDialogViewModel"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <LinearLayout
+                android:id="@+id/done"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dimen_40dp"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginStart="@dimen/dimen_4dp"
+                android:layout_marginEnd="@dimen/dimen_4dp"
+                android:layout_marginBottom="@dimen/dimen_4dp"
+                android:onClick="@{() -> viewModel.onDoneClicked()}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:chippedBoxConfig="@{viewModel.background}">
+
+            <ImageView
+                    android:layout_width="@dimen/dialog_icon_size"
+                    android:layout_height="@dimen/dialog_icon_size"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_check"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/done"
+                    android:layout_marginStart="@dimen/dimen_8dp"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/barlow_medium"
+                    android:textColor="@color/white"/>
+
+        </LinearLayout>
+
+        <SeekBar
+                android:id="@+id/slider"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:max="@{viewModel.maxValue}"
+                app:listener="@{viewModel}"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/label"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/done"
+                android:layout_marginStart="@dimen/dimen_32dp"/>
+
+        <TextView
+                android:id="@+id/label"
+                android:layout_width="@dimen/dimen_32dp"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.labelText}"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:fontFamily="@font/barlow_medium"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/done"
+                app:layout_constraintStart_toEndOf="@id/slider"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="@dimen/dimen_32dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

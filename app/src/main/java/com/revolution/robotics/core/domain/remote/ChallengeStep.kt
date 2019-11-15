@@ -1,0 +1,15 @@
+package com.revolution.robotics.core.domain.remote
+
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
+data class ChallengeStep(
+    var id: String? = null,
+    var title: LocalizedString? = null,
+    var description: LocalizedString? = null,
+    var image: String? = null,
+    var order: Int = 0,
+    var challengeType: String? = null,
+    var parts: HashMap<String, Part> = hashMapOf()
+) : Parcelable

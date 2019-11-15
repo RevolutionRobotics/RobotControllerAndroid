@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable name="viewModel"
+                  type="com.revolution.robotics.blockly.dialogs.directionSelector.DirectionSelectorViewModel"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <ImageView
+                android:id="@+id/direction_top"
+                android:layout_width="@dimen/option_selector_button_width"
+                android:layout_height="@dimen/option_selector_button_height"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/direction_bottom"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintVertical_chainStyle="packed"
+                android:src="@drawable/ic_blockly_motor_direction_fwd"
+                android:scaleType="centerInside"
+                android:onClick="@{() -> viewModel.onForwardSelected()}"
+                app:chippedBoxConfig="@{viewModel.forwardBackground}"/>
+
+        <ImageView
+                android:id="@+id/direction_bottom"
+                android:layout_width="@dimen/option_selector_button_width"
+                android:layout_height="@dimen/option_selector_button_height"
+                app:layout_constraintTop_toBottomOf="@id/direction_top"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="@dimen/dimen_40dp"
+                android:src="@drawable/ic_blockly_motor_direction_back"
+                android:scaleType="centerInside"
+                android:onClick="@{() -> viewModel.onBackwardSelected()}"
+                app:chippedBoxConfig="@{viewModel.backwardBackground}"/>
+
+        <ImageView
+                android:id="@+id/direction_left"
+                android:layout_width="@dimen/option_selector_button_width"
+                android:layout_height="@dimen/option_selector_button_height"
+                app:layout_constraintTop_toTopOf="@id/direction_top"
+                app:layout_constraintBottom_toBottomOf="@id/direction_bottom"
+                app:layout_constraintEnd_toStartOf="@id/direction_top"
+                android:layout_marginEnd="@dimen/dimen_12dp"
+                android:src="@drawable/ic_blockly_motor_direction_left"
+                android:scaleType="centerInside"
+                android:onClick="@{() -> viewModel.onTurnLeftSelected()}"
+                app:chippedBoxConfig="@{viewModel.turnLeftBackground}"
+                android:visibility="gone"/>
+
+        <ImageView
+                android:id="@+id/direction_right"
+                android:layout_width="@dimen/option_selector_button_width"
+                android:layout_height="@dimen/option_selector_button_height"
+                app:layout_constraintTop_toTopOf="@id/direction_top"
+                app:layout_constraintBottom_toBottomOf="@id/direction_bottom"
+                app:layout_constraintStart_toEndOf="@id/direction_top"
+                android:layout_marginStart="@dimen/dimen_12dp"
+                android:src="@drawable/ic_blockly_motor_direction_right"
+                android:scaleType="centerInside"
+                android:onClick="@{() -> viewModel.onTurnRightSelected()}"
+                app:chippedBoxConfig="@{viewModel.turnRightBackground}"
+                android:visibility="gone"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools" xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable name="viewModel" type="com.revolution.robotics.features.mainmenu.MainMenuButtonViewModel"/>
+        <variable name="translationZ" type="Float"/>
+        <variable name="onClickEnabled" type="Boolean"/>
+    </data>
+
+    <LinearLayout
+            android:orientation="vertical"
+            app:backgroundResource="@{viewModel.background}"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:background="@drawable/card_border_red"
+            android:clickable="@{safeUnbox(onClickEnabled)}"
+            android:onClick="@{() -> viewModel.onClick.invoke()}"
+            android:translationZ="@{safeUnbox(translationZ)}"
+            tools:layout_width="120dp"
+            tools:layout_height="160dp">
+
+        <TextView android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:gravity="center_horizontal"
+                  android:text="@{viewModel.text}"
+                  android:layout_marginTop="24dp"
+                  android:fontFamily="@font/jura_bold"
+                  android:textSize="16sp"
+                  tools:text="Robots"/>
+
+        <ImageView android:layout_width="match_parent"
+                   android:layout_height="0dp"
+                   android:layout_weight="1"
+                   tools:src="@drawable/robots"
+                   app:localResource="@{viewModel.image}"
+                   android:layout_marginBottom="20dp"/>
+
+
+    </LinearLayout>
+</layout>

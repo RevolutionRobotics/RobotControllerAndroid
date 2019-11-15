@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable name="toolbarViewModel" type="com.revolution.robotics.features.build.BuildRobotToolbarViewModel"/>
+        <variable name="viewModel" type="com.revolution.robotics.features.build.BuildRobotViewModel"/>
+        <variable name="background" type="com.revolution.robotics.views.chippedBox.ChippedBoxConfig"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/grey_56">
+
+        <com.github.chrisbanes.photoview.PhotoView
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:paddingTop="@dimen/toolbar_height"
+                android:paddingBottom="@dimen/dimen_48dp"
+                android:scaleType="centerInside"
+                app:animate="@{true}"
+                app:firebaseImageUrl="@{viewModel.imageUrl}"/>
+
+
+        <com.revolution.robotics.views.toolbar.RoboticsToolbar
+                android:id="@+id/toolbar"
+                app:viewModel="@{toolbarViewModel}"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/toolbar_height"/>
+
+        <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/toolbar_body_bottom"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintGuide_begin="@dimen/toolbar_header_height"
+                android:orientation="horizontal"/>
+
+        <TextView
+                android:id="@+id/steps"
+                android:layout_width="@dimen/build_robot_parts_wrapper_width"
+                android:layout_height="wrap_content"
+                android:textSize="17sp"
+                android:gravity="center"
+                android:textColor="@color/white"
+                app:layout_constraintTop_toTopOf="@id/toolbar"
+                app:layout_constraintBottom_toBottomOf="@id/toolbar_body_bottom"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="@{viewModel.step}"
+                android:layout_marginEnd="@dimen/dimen_48dp"/>
+
+        <com.revolution.robotics.views.slider.BuildStepSliderView
+                android:id="@+id/seekbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dimen_16dp"
+                android:layout_marginStart="@dimen/dimen_16dp"
+                android:layout_marginEnd="@dimen/dimen_16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+        <LinearLayout
+                android:id="@+id/parts_wrapper"
+                android:layout_width="@dimen/build_robot_parts_wrapper_width"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                app:layout_constraintStart_toStartOf="@id/steps"
+                app:layout_constraintEnd_toEndOf="@id/steps"
+                app:layout_constraintTop_toBottomOf="@id/steps"
+                android:layout_marginTop="9dp"
+                app:chippedBoxConfig="@{background}"
+                android:paddingTop="@dimen/dimen_16dp"
+                android:paddingBottom="@dimen/dimen_16dp"
+                android:paddingStart="@dimen/dimen_12dp"
+                android:paddingEnd="@dimen/dimen_12dp"
+                app:gone="@{!safeUnbox(viewModel.hasParts)}">
+
+            <ImageView
+                    android:id="@+id/part_image"
+                    android:layout_width="@dimen/build_robot_part_image_size_width"
+                    android:layout_height="@dimen/build_robot_part_image_size_height"
+                    android:scaleType="centerInside"
+                    app:firebaseImageUrl="@{viewModel.partImage}"
+                    app:errorDrawable="@{@drawable/ic_image_not_found_dark}"/>
+
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_1dp"
+                    android:background="@color/grey_6d"
+                    android:layout_marginTop="@dimen/dimen_16dp"
+                    app:gone="@{!safeUnbox(viewModel.hasTwoParts)}"/>
+
+            <ImageView
+                    android:id="@+id/part_2_image"
+                    android:layout_width="@dimen/build_robot_part_image_size_width"
+                    android:layout_height="@dimen/build_robot_part_image_size_height"
+                    android:scaleType="centerInside"
+                    android:layout_marginTop="@dimen/dimen_16dp"
+                    app:firebaseImageUrl="@{viewModel.part2Image}"
+                    app:errorDrawable="@{@drawable/ic_image_not_found_dark}"
+                    app:gone="@{!safeUnbox(viewModel.hasTwoParts)}"/>
+
+        </LinearLayout>
+
+        <ImageView
+                android:id="@+id/parts_pin"
+                android:layout_width="@dimen/dimen_16dp"
+                android:layout_height="@dimen/dimen_8dp"
+                android:src="@drawable/build_robot_parts_pin"
+                app:layout_constraintTop_toBottomOf="@id/steps"
+                android:layout_marginTop="@dimen/dimen_2dp"
+                app:layout_constraintStart_toStartOf="@id/parts_wrapper"
+                app:layout_constraintEnd_toEndOf="@id/parts_wrapper"
+                app:gone="@{!safeUnbox(viewModel.hasParts)}"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

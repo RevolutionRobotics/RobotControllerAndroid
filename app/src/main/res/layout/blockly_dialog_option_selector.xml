@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable name="viewModel"
+                  type="com.revolution.robotics.blockly.dialogs.optionSelector.OptionSelectorViewModel"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/dimen_16dp"
+            android:layout_marginBottom="@dimen/dimen_24dp">
+
+        <ImageView
+                android:id="@+id/option_1"
+                android:layout_width="@dimen/option_selector_button_width"
+                android:layout_height="@dimen/option_selector_button_height"
+                android:paddingStart="@dimen/option_selector_button_padding_horizontal"
+                android:paddingEnd="@dimen/option_selector_button_padding_horizontal"
+                android:paddingTop="@dimen/option_selector_button_padding_vertical"
+                android:paddingBottom="@dimen/option_selector_button_padding_vertical"
+                app:layout_constraintVertical_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/option_2"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/label_option_1"
+                app:gone="@{viewModel.getOption(1) == null}"
+                android:scaleType="centerInside"
+                android:onClick="@{() -> viewModel.onOptionClicked(1)}"
+                app:chippedBoxConfig="@{viewModel.getBackground(1)}"
+                app:drawable="@{viewModel.getOption(1).drawableRes}"/>
+
+        <TextView
+                android:id="@+id/label_option_1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                app:layout_constraintTop_toBottomOf="@id/option_1"
+                app:layout_constraintStart_toStartOf="@id/option_1"
+                app:layout_constraintEnd_toEndOf="@id/option_1"
+                app:layout_constraintBottom_toTopOf="@id/option_4"
+                android:text="@{viewModel.getOption(1).text}"
+                app:visible="@{viewModel.showLabels}"
+                android:layout_marginTop="@dimen/dimen_4dp"
+                android:fontFamily="@font/barlow_medium"
+                android:textColor="@color/white"
+                android:textSize="12sp"/>
+
+        <ImageView
+                android:id="@+id/option_2"
+                android:layout_width="@dimen/option_selector_button_width"
+                android:layout_height="@dimen/option_selector_button_height"
+                android:paddingStart="@dimen/option_selector_button_padding_horizontal"
+                android:paddingEnd="@dimen/option_selector_button_padding_horizontal"
+                android:paddingTop="@dimen/option_selector_button_padding_vertical"
+                android:paddingBottom="@dimen/option_selector_button_padding_vertical"
+                app:layout_constraintTop_toTopOf="@id/option_1"
+                app:layout_constraintBottom_toBottomOf="@id/option_1"
+                app:layout_constraintStart_toEndOf="@id/option_1"
+                app:layout_constraintEnd_toStartOf="@id/option_3"
+                app:gone="@{viewModel.getOption(2) == null}"
+                android:scaleType="centerInside"
+                android:onClick="@{() -> viewModel.onOptionClicked(2)}"
+                app:chippedBoxConfig="@{viewModel.getBackground(2)}"
+                app:drawable="@{viewModel.getOption(2).drawableRes}"/>
+
+        <TextView
+                android:id="@+id/label_option_2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                app:layout_constraintTop_toBottomOf="@id/option_2"
+                app:layout_constraintStart_toStartOf="@id/option_2"
+                app:layout_constraintEnd_toEndOf="@id/option_2"
+                android:text="@{viewModel.getOption(2).text}"
+                app:visible="@{viewModel.showLabels}"
+                android:layout_marginTop="@dimen/dimen_4dp"
+                android:fontFamily="@font/barlow_medium"
+                android:textColor="@color/white"
+                android:textSize="12sp"/>
+
+        <ImageView
+                android:id="@+id/option_3"
+                android:layout_width="@dimen/option_selector_button_width"
+                android:layout_height="@dimen/option_selector_button_height"
+                android:paddingStart="@dimen/option_selector_button_padding_horizontal"
+                android:paddingEnd="@dimen/option_selector_button_padding_horizontal"
+                android:paddingTop="@dimen/option_selector_button_padding_vertical"
+                android:paddingBottom="@dimen/option_selector_button_padding_vertical"
+                app:layout_constraintTop_toTopOf="@id/option_1"
+                app:layout_constraintBottom_toBottomOf="@id/option_1"
+                app:layout_constraintStart_toEndOf="@id/option_2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:gone="@{viewModel.getOption(3) == null}"
+                android:onClick="@{() -> viewModel.onOptionClicked(3)}"
+                android:scaleType="centerInside"
+                app:chippedBoxConfig="@{viewModel.getBackground(3)}"
+                app:drawable="@{viewModel.getOption(3).drawableRes}"/>
+
+        <TextView
+                android:id="@+id/label_option_3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                app:layout_constraintTop_toBottomOf="@id/option_3"
+                app:layout_constraintStart_toStartOf="@id/option_3"
+                app:layout_constraintEnd_toEndOf="@id/option_3"
+                android:text="@{viewModel.getOption(3).text}"
+                app:visible="@{viewModel.showLabels}"
+                android:layout_marginTop="@dimen/dimen_4dp"
+                android:fontFamily="@font/barlow_medium"
+                android:textColor="@color/white"
+                android:textSize="12sp"/>
+
+        <ImageView
+                android:id="@+id/option_4"
+                android:layout_width="@dimen/option_selector_button_width"
+                android:layout_height="@dimen/option_selector_button_height"
+                android:paddingStart="@dimen/option_selector_button_padding_horizontal"
+                android:paddingEnd="@dimen/option_selector_button_padding_horizontal"
+                android:paddingTop="@dimen/option_selector_button_padding_vertical"
+                android:paddingBottom="@dimen/option_selector_button_padding_vertical"
+                android:layout_marginTop="@dimen/dimen_16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/option_5"
+                app:layout_constraintTop_toBottomOf="@id/label_option_1"
+                app:layout_constraintBottom_toTopOf="@id/label_option_4"
+                app:gone="@{viewModel.getOption(4) == null}"
+                android:onClick="@{() -> viewModel.onOptionClicked(4)}"
+                android:scaleType="centerInside"
+                app:chippedBoxConfig="@{viewModel.getBackground(4)}"
+                app:drawable="@{viewModel.getOption(4).drawableRes}"/>
+
+        <TextView
+                android:id="@+id/label_option_4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                app:layout_constraintTop_toBottomOf="@id/option_4"
+                app:layout_constraintStart_toStartOf="@id/option_4"
+                app:layout_constraintEnd_toEndOf="@id/option_4"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:text="@{viewModel.getOption(4).text}"
+                app:visible="@{viewModel.showLabels}"
+                android:layout_marginTop="@dimen/dimen_4dp"
+                android:fontFamily="@font/barlow_medium"
+                android:textColor="@color/white"
+                android:textSize="12sp"/>
+
+        <ImageView
+                android:id="@+id/option_5"
+                android:layout_width="@dimen/option_selector_button_width"
+                android:layout_height="@dimen/option_selector_button_height"
+                android:paddingStart="@dimen/option_selector_button_padding_horizontal"
+                android:paddingEnd="@dimen/option_selector_button_padding_horizontal"
+                android:paddingTop="@dimen/option_selector_button_padding_vertical"
+                android:paddingBottom="@dimen/option_selector_button_padding_vertical"
+                app:visible="@{viewModel.showLabels}"
+                app:layout_constraintTop_toTopOf="@id/option_4"
+                app:layout_constraintBottom_toBottomOf="@id/option_4"
+                app:layout_constraintStart_toEndOf="@id/option_4"
+                app:layout_constraintEnd_toStartOf="@id/option_6"
+                app:gone="@{viewModel.getOption(5) == null}"
+                android:onClick="@{() -> viewModel.onOptionClicked(5)}"
+                android:scaleType="centerInside"
+                app:chippedBoxConfig="@{viewModel.getBackground(5)}"
+                app:drawable="@{viewModel.getOption(5).drawableRes}"/>
+
+        <TextView
+                android:id="@+id/label_option_5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                app:layout_constraintTop_toBottomOf="@id/option_5"
+                app:layout_constraintStart_toStartOf="@id/option_5"
+                app:layout_constraintEnd_toEndOf="@id/option_5"
+                android:text="@{viewModel.getOption(5).text}"
+                app:visible="@{viewModel.showLabels}"
+                android:layout_marginTop="@dimen/dimen_4dp"
+                android:fontFamily="@font/barlow_medium"
+                android:textColor="@color/white"
+                android:textSize="12sp"/>
+
+        <ImageView
+                android:id="@+id/option_6"
+                android:layout_width="@dimen/option_selector_button_width"
+                android:layout_height="@dimen/option_selector_button_height"
+                android:paddingStart="@dimen/option_selector_button_padding_horizontal"
+                android:paddingEnd="@dimen/option_selector_button_padding_horizontal"
+                android:paddingTop="@dimen/option_selector_button_padding_vertical"
+                android:paddingBottom="@dimen/option_selector_button_padding_vertical"
+                app:layout_constraintTop_toTopOf="@id/option_4"
+                app:layout_constraintBottom_toBottomOf="@id/option_4"
+                app:layout_constraintStart_toEndOf="@id/option_5"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:gone="@{viewModel.getOption(6) == null}"
+                android:onClick="@{() -> viewModel.onOptionClicked(6)}"
+                android:scaleType="centerInside"
+                app:chippedBoxConfig="@{viewModel.getBackground(6)}"
+                app:drawable="@{viewModel.getOption(6).drawableRes}"/>
+
+        <TextView
+                android:id="@+id/label_option_6"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                app:layout_constraintTop_toBottomOf="@id/option_6"
+                app:layout_constraintStart_toStartOf="@id/option_6"
+                app:layout_constraintEnd_toEndOf="@id/option_6"
+                android:text="@{viewModel.getOption(6).text}"
+                app:visible="@{viewModel.showLabels}"
+                android:layout_marginTop="@dimen/dimen_4dp"
+                android:fontFamily="@font/barlow_medium"
+                android:textColor="@color/white"
+                android:textSize="12sp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

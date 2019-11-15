@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable name="viewModel"
+                  type="com.revolution.robotics.features.controllers.programSelector.adapter.ProgramViewModel"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_40dp"
+            android:layout_marginBottom="@dimen/dimen_12dp"
+            android:onClick="@{() -> viewModel.onProgramClicked()}"
+            app:chippedBoxConfig="@{viewModel.background}">
+
+        <TextView
+                android:id="@+id/name"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/divider1"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_width="0dp"
+                android:layout_marginStart="@dimen/dimen_8dp"
+                android:padding="@dimen/dimen_8dp"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:fontFamily="@font/barlow_medium"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.programName}"/>
+        <View
+                android:id="@+id/divider1"
+                android:layout_width="@dimen/dimen_1dp"
+                android:layout_marginEnd="12dp"
+                android:layout_height="0dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/name"
+                app:layout_constraintEnd_toStartOf="@id/date"
+                android:background="@color/grey_8e"/>
+
+        <TextView
+                android:id="@+id/date"
+                android:layout_width="@dimen/dimen_128dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="12dp"
+                android:padding="@dimen/dimen_8dp"
+                android:text="@{viewModel.formattedDate}"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:gravity="center"
+                android:fontFamily="@font/barlow_medium"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/divider1"
+                app:layout_constraintEnd_toEndOf="@id/divider2"/>
+
+        <View
+                android:id="@+id/divider2"
+                android:layout_width="@dimen/dimen_1dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="12dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/date"
+                app:layout_constraintEnd_toStartOf="@id/btn_info"
+                android:background="@color/grey_8e"/>
+
+        <ImageView
+                android:id="@+id/btn_info"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="12dp"
+                android:padding="4dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/divider2"
+                app:layout_constraintEnd_toStartOf="@id/divider3"
+                android:src="@drawable/ic_info"
+                android:onClick="@{() -> viewModel.onProgramInfoClicked()}"/>
+
+        <View
+                android:id="@+id/divider3"
+                android:layout_width="@dimen/dimen_1dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="12dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/btn_info"
+                app:layout_constraintEnd_toStartOf="@id/btn_edit"
+                android:background="@color/grey_8e"/>
+
+        <ImageView
+                android:id="@+id/btn_edit"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:padding="4dp"
+                android:layout_marginEnd="4dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/divider3"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:src="@drawable/ic_edit"
+                android:onClick="@{() -> viewModel.onEditProgramClicked()}"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

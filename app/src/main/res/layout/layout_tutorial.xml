@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable name="tutorialViewModel" type="com.revolution.robotics.features.mainmenu.tutorial.TutorialViewModel"/>
+    </data>
+
+    <merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <View android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:tag="@string/tag_tutorial"
+              android:onClick="@{() -> tutorialViewModel.onOverlayClicked()}"
+              android:background="#AA000000"/>
+
+        <FrameLayout
+                android:id="@+id/layout_tutorial_robots"
+                app:layout_constraintTop_toBottomOf="@id/toolbar"
+                app:layout_constraintStart_toEndOf="@id/btn_robots"
+                android:layout_width="wrap_content"
+                android:tag="@string/tag_tutorial"
+                android:layout_height="wrap_content">
+
+            <include
+                    layout="@layout/item_tutorial"
+                    android:id="@+id/item_tutorial_robots"
+                    android:layout_width="@dimen/tutorial_dialog_width"
+                    android:layout_height="@dimen/tutorial_dialog_height"
+                    app:tutorialItem="@{tutorialViewModel.tutorialItems.get(0)}"/>
+        </FrameLayout>
+
+        <ImageView
+                app:layout_constraintTop_toTopOf="@id/layout_tutorial_robots"
+                app:layout_constraintEnd_toStartOf="@id/layout_tutorial_robots"
+                app:visible="@{tutorialViewModel.tutorialItems.get(0).isActive}"
+                android:tag="@string/tag_tutorial"
+                android:layout_marginTop="@dimen/dimen_64dp"
+                android:src="@drawable/ic_triangle_left"
+                android:translationZ="200dp"
+                android:scaleType="fitXY"
+                android:layout_width="@dimen/tutorial_triangle_width"
+                android:layout_height="@dimen/tutorial_triangle_height"/>
+
+        <FrameLayout
+                android:id="@+id/layout_tutorial_programs"
+                app:layout_constraintTop_toBottomOf="@id/toolbar"
+                app:layout_constraintStart_toEndOf="@id/btn_coding"
+                android:tag="@string/tag_tutorial"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <include
+                    layout="@layout/item_tutorial"
+                    android:id="@+id/item_tutorial_coding"
+                    app:tutorialItem="@{tutorialViewModel.tutorialItems.get(1)}"
+                    android:layout_width="@dimen/tutorial_dialog_width"
+                    android:layout_height="@dimen/tutorial_dialog_height"/>
+        </FrameLayout>
+
+        <ImageView
+                app:layout_constraintTop_toTopOf="@id/layout_tutorial_programs"
+                app:layout_constraintEnd_toStartOf="@id/layout_tutorial_programs"
+                android:tag="@string/tag_tutorial"
+                android:translationZ="200dp"
+                android:scaleType="fitXY"
+                app:visible="@{tutorialViewModel.tutorialItems.get(1).isActive}"
+                android:layout_marginTop="@dimen/dimen_64dp"
+                android:src="@drawable/ic_triangle_left"
+                android:layout_width="@dimen/tutorial_triangle_width"
+                android:layout_height="@dimen/tutorial_triangle_height"/>
+
+        <FrameLayout
+                android:id="@+id/layout_tutorial_challenges"
+                app:layout_constraintTop_toBottomOf="@id/toolbar"
+                app:layout_constraintEnd_toStartOf="@id/btn_challenges"
+                android:tag="@string/tag_tutorial"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <include
+                    layout="@layout/item_tutorial"
+                    android:id="@+id/item_tutorial_challenges"
+                    app:tutorialItem="@{tutorialViewModel.tutorialItems.get(2)}"
+                    android:layout_width="@dimen/tutorial_dialog_width"
+                    android:layout_height="@dimen/tutorial_dialog_height"/>
+        </FrameLayout>
+
+        <ImageView
+                app:layout_constraintTop_toTopOf="@id/layout_tutorial_challenges"
+                app:layout_constraintStart_toEndOf="@id/layout_tutorial_challenges"
+                android:tag="@string/tag_tutorial"
+                android:translationZ="200dp"
+                android:scaleType="fitXY"
+                app:visible="@{tutorialViewModel.tutorialItems.get(2).isActive}"
+                android:layout_marginTop="@dimen/dimen_64dp"
+                android:src="@drawable/ic_triangle_right"
+                android:layout_width="@dimen/tutorial_triangle_width"
+                android:layout_height="@dimen/tutorial_triangle_height"/>
+
+
+        <FrameLayout
+                android:id="@+id/layout_tutorial_settings"
+                app:layout_constraintTop_toBottomOf="@id/img_settings"
+                app:layout_constraintEnd_toEndOf="@id/img_settings"
+                android:layout_marginTop="@dimen/dimen_4dp"
+                android:tag="@string/tag_tutorial"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <include
+                    layout="@layout/item_tutorial"
+                    android:id="@+id/item_tutorial_settings"
+                    app:tutorialItem="@{tutorialViewModel.tutorialItems.get(4)}"
+                    android:layout_width="@dimen/tutorial_dialog_width"
+                    android:layout_height="@dimen/tutorial_dialog_height"/>
+        </FrameLayout>
+
+        <ImageView
+                app:layout_constraintBottom_toTopOf="@id/layout_tutorial_settings"
+                app:layout_constraintEnd_toEndOf="@id/layout_tutorial_settings"
+                android:tag="@string/tag_tutorial"
+                android:translationZ="200dp"
+                android:scaleType="fitXY"
+                app:visible="@{tutorialViewModel.tutorialItems.get(4).isActive}"
+                android:layout_marginEnd="@dimen/dimen_12dp"
+                android:src="@drawable/ic_triangle_top"
+                android:layout_width="@dimen/tutorial_triangle_height"
+                android:layout_height="@dimen/tutorial_triangle_width"/>
+
+        <FrameLayout
+                android:id="@+id/layout_tutorial_community"
+                app:layout_constraintTop_toBottomOf="@id/img_community"
+                app:layout_constraintEnd_toEndOf="@id/img_community"
+                android:layout_marginTop="@dimen/dimen_4dp"
+                android:tag="@string/tag_tutorial"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <include
+                    layout="@layout/item_tutorial"
+                    android:id="@+id/item_tutorial_community"
+                    app:tutorialItem="@{tutorialViewModel.tutorialItems.get(3)}"
+                    android:layout_width="@dimen/tutorial_dialog_width"
+                    android:layout_height="@dimen/tutorial_dialog_height"/>
+        </FrameLayout>
+
+        <ImageView
+                app:layout_constraintBottom_toTopOf="@id/layout_tutorial_community"
+                app:layout_constraintEnd_toEndOf="@id/layout_tutorial_community"
+                android:tag="@string/tag_tutorial"
+                android:translationZ="200dp"
+                app:visible="@{tutorialViewModel.tutorialItems.get(3).isActive}"
+                android:layout_marginEnd="@dimen/dimen_12dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_triangle_top"
+                android:layout_width="@dimen/tutorial_triangle_height"
+                android:layout_height="@dimen/tutorial_triangle_width"/>
+
+        <View
+                android:id="@+id/tutorial_step3"
+                android:layout_width="@dimen/dimen_10dp"
+                android:layout_height="@dimen/dimen_10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="@dimen/dimen_32dp"
+                android:tag="@string/tag_tutorial"
+                app:selected="@{tutorialViewModel.tutorialItems.get(2).isActive()}"
+                android:background="@drawable/tutorial_circle"/>
+
+        <View
+                android:id="@+id/tutorial_step2"
+                android:layout_width="@dimen/dimen_10dp"
+                android:layout_height="@dimen/dimen_10dp"
+                app:layout_constraintEnd_toStartOf="@id/tutorial_step3"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="@dimen/dimen_32dp"
+                android:layout_marginEnd="@dimen/dimen_10dp"
+                android:tag="@string/tag_tutorial"
+                app:selected="@{tutorialViewModel.tutorialItems.get(1).isActive()}"
+                android:background="@drawable/tutorial_circle"/>
+
+        <View
+                android:id="@+id/tutorial_step4"
+                android:layout_width="@dimen/dimen_10dp"
+                android:layout_height="@dimen/dimen_10dp"
+                app:layout_constraintStart_toEndOf="@id/tutorial_step3"
+                android:layout_marginStart="@dimen/dimen_10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="@dimen/dimen_32dp"
+                android:tag="@string/tag_tutorial"
+                app:selected="@{tutorialViewModel.tutorialItems.get(3).isActive()}"
+                android:background="@drawable/tutorial_circle"/>
+
+        <View
+                android:id="@+id/tutorial_step1"
+                android:layout_width="@dimen/dimen_10dp"
+                android:layout_height="@dimen/dimen_10dp"
+                app:layout_constraintEnd_toStartOf="@id/tutorial_step2"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="@dimen/dimen_32dp"
+                android:layout_marginEnd="@dimen/dimen_10dp"
+                android:tag="@string/tag_tutorial"
+                app:selected="@{tutorialViewModel.tutorialItems.get(0).isActive()}"
+                android:background="@drawable/tutorial_circle"/>
+
+        <View
+                android:id="@+id/tutorial_step5"
+                android:layout_width="@dimen/dimen_10dp"
+                android:layout_height="@dimen/dimen_10dp"
+                app:layout_constraintStart_toEndOf="@id/tutorial_step4"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="@dimen/dimen_32dp"
+                android:layout_marginStart="10dp"
+                android:tag="@string/tag_tutorial"
+                app:selected="@{tutorialViewModel.tutorialItems.get(4).isActive()}"
+                android:background="@drawable/tutorial_circle"/>
+
+        <ImageView
+                android:layout_width="@dimen/dimen_48dp"
+                android:layout_height="@dimen/dimen_48dp"
+                android:padding="@dimen/dimen_16dp"
+                android:tint="@{tutorialViewModel.isPreviousButtonEnabled ? @color/white : @color/grey_8e}"
+                app:layout_constraintEnd_toStartOf="@id/tutorial_step1"
+                android:layout_marginEnd="@dimen/dimen_16dp"
+                app:layout_constraintTop_toTopOf="@id/tutorial_step1"
+                app:layout_constraintTop_toBottomOf="@id/tutorial_step1"
+                android:onClick="@{() -> tutorialViewModel.onPreviousButtonClicked()}"
+                android:layout_marginBottom="@dimen/dimen_32dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:tag="@string/tag_tutorial"
+                android:src="@drawable/ic_tutorial_back"/>
+
+        <ImageView
+                android:layout_width="@dimen/dimen_48dp"
+                android:layout_height="@dimen/dimen_48dp"
+                android:padding="@dimen/dimen_16dp"
+                android:tint="@{tutorialViewModel.isNextButtonEnabled ? @color/white : @color/grey_8e}"
+                app:layout_constraintStart_toEndOf="@id/tutorial_step5"
+                android:layout_marginStart="@dimen/dimen_16dp"
+                app:layout_constraintTop_toTopOf="@id/tutorial_step5"
+                app:layout_constraintTop_toBottomOf="@id/tutorial_step5"
+                android:layout_marginBottom="32dp"
+                android:onClick="@{() -> tutorialViewModel.onNextButtonClicked()}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:tag="@string/tag_tutorial"
+                android:src="@drawable/ic_tutorial_next"/>
+
+        <com.revolution.robotics.views.RoboticsButton
+                android:layout_width="103dp"
+                android:layout_height="46dp"
+                app:image="@{tutorialViewModel.buttonImage}"
+                app:text="@{tutorialViewModel.buttonText}"
+                app:chippedBoxConfig="@{tutorialViewModel.buttonBackground}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginEnd="@dimen/dimen_4dp"
+                android:layout_marginBottom="@dimen/dimen_4dp"
+                android:tag="@string/tag_tutorial"
+                android:onClick="@{() -> tutorialViewModel.onDoneButtonClicked()}"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+    </merge>
+</layout>

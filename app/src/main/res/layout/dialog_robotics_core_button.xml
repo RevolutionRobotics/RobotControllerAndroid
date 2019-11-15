@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable name="viewModel" type="com.revolution.robotics.views.dialogs.DialogButtonViewModel"/>
+    </data>
+
+    <LinearLayout
+            app:chippedBoxConfig="@{viewModel.background}"
+            android:onClick="@{()-> viewModel.onClick()}"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_width="0dp"
+            tools:layout_width="130dp"
+            android:layout_height="@dimen/dialog_button_height">
+
+        <ImageView
+                android:id="@+id/icon"
+                android:layout_width="@dimen/dialog_icon_size"
+                android:layout_height="@dimen/dialog_icon_size"
+                tools:src="@drawable/ic_delete"
+                app:drawable="@{viewModel.icon}"
+                app:tintColorResource="@{viewModel.contentColorRes}"
+                android:scaleType="centerInside"/>
+
+        <TextView
+                android:id="@+id/text"
+                android:text="@{viewModel.text}"
+                android:layout_marginStart="@dimen/dimen_8dp"
+                app:textColorResource="@{viewModel.contentColorRes}"
+                android:layout_marginBottom="1dp"
+                tools:text="Add"
+                android:fontFamily="@font/barlow_medium"
+                android:textSize="14sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+</layout>

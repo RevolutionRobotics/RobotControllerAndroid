@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable name="viewModel"
+                  type="com.revolution.robotics.features.play.PlayViewModel"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <com.revolution.robotics.features.play.JoystickView
+                android:id="@+id/joystick"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="@dimen/dimen_40dp"
+                android:layout_width="@dimen/play_joystick_size"
+                android:layout_height="@dimen/play_joystick_size"/>
+
+        <View
+                android:id="@+id/button_3"
+                android:layout_width="@dimen/play_button_size_normal"
+                android:layout_height="@dimen/play_button_size_normal"
+                android:background="@drawable/bg_play_button"
+                app:layout_constraintTop_toTopOf="@id/joystick"
+                app:layout_constraintBottom_toBottomOf="@id/joystick"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="@dimen/dimen_40dp"
+                android:onClick="@{() -> viewModel.onButtonPressed(3)}"/>
+
+        <View
+                android:id="@+id/anchor_buttons"
+                android:layout_width="@dimen/play_button_size_normal"
+                android:layout_height="@dimen/play_button_size_normal"
+                app:layout_constraintTop_toTopOf="@id/joystick"
+                app:layout_constraintBottom_toBottomOf="@id/joystick"
+                app:layout_constraintEnd_toStartOf="@id/button_3"
+                android:layout_marginEnd="@dimen/dimen_12dp"/>
+
+        <View
+                android:id="@+id/button_2"
+                android:layout_width="@dimen/play_button_size_normal"
+                android:layout_height="@dimen/play_button_size_normal"
+                android:background="@drawable/bg_play_button"
+                app:layout_constraintTop_toTopOf="@id/joystick"
+                app:layout_constraintBottom_toBottomOf="@id/joystick"
+                app:layout_constraintEnd_toStartOf="@id/anchor_buttons"
+                android:layout_marginEnd="@dimen/dimen_12dp"
+                android:onClick="@{() -> viewModel.onButtonPressed(2)}"/>
+
+        <View
+                android:id="@+id/button_1"
+                android:layout_width="@dimen/play_button_size_normal"
+                android:layout_height="@dimen/play_button_size_normal"
+                android:background="@drawable/bg_play_button"
+                app:layout_constraintBottom_toTopOf="@id/anchor_buttons"
+                app:layout_constraintStart_toStartOf="@id/anchor_buttons"
+                app:layout_constraintEnd_toEndOf="@id/anchor_buttons"
+                android:layout_marginBottom="@dimen/dimen_12dp"
+                android:onClick="@{() -> viewModel.onButtonPressed(1)}"/>
+
+        <View
+                android:id="@+id/button_4"
+                android:layout_width="@dimen/play_button_size_normal"
+                android:layout_height="@dimen/play_button_size_normal"
+                android:background="@drawable/bg_play_button"
+                app:layout_constraintTop_toBottomOf="@id/anchor_buttons"
+                app:layout_constraintStart_toStartOf="@id/anchor_buttons"
+                app:layout_constraintEnd_toEndOf="@id/anchor_buttons"
+                android:layout_marginTop="@dimen/dimen_12dp"
+                android:onClick="@{() -> viewModel.onButtonPressed(4)}"/>
+
+        <View
+                android:id="@+id/button_5"
+                android:layout_width="@dimen/play_button_size_big"
+                android:layout_height="@dimen/play_button_size_big"
+                android:background="@drawable/bg_play_button"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintTop_toTopOf="@id/button_4"
+                android:layout_marginEnd="@dimen/dimen_32dp"
+                android:layout_marginTop="@dimen/dimen_12dp"
+                app:layout_constraintStart_toEndOf="@id/joystick"
+                app:layout_constraintEnd_toStartOf="@id/button_6"
+                android:onClick="@{() -> viewModel.onButtonPressed(5)}"/>
+
+        <View
+                android:id="@+id/button_6"
+                android:layout_width="@dimen/play_button_size_big"
+                android:layout_height="@dimen/play_button_size_big"
+                android:background="@drawable/bg_play_button"
+                app:layout_constraintTop_toTopOf="@id/button_5"
+                app:layout_constraintStart_toEndOf="@id/button_5"
+                app:layout_constraintEnd_toStartOf="@id/button_2"
+                android:onClick="@{() -> viewModel.onButtonPressed(6)}"/>
+
+        <include layout="@layout/include_play_button_labels"
+                 app:viewModel="@{viewModel}"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

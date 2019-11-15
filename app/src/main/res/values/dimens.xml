@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- GENERAL -->
+    <dimen name="dimen_1dp">1dp</dimen>
+    <dimen name="dimen_2dp">2dp</dimen>
+    <dimen name="dimen_4dp">4dp</dimen>
+    <dimen name="dimen_6dp">6dp</dimen>
+    <dimen name="dimen_8dp">8dp</dimen>
+    <dimen name="dimen_10dp">10dp</dimen>
+    <dimen name="dimen_12dp">12dp</dimen>
+    <dimen name="dimen_16dp">16dp</dimen>
+    <dimen name="dimen_20dp">20dp</dimen>
+    <dimen name="dimen_24dp">24dp</dimen>
+    <dimen name="dimen_32dp">32dp</dimen>
+    <dimen name="dimen_40dp">40dp</dimen>
+    <dimen name="dimen_44dp">44dp</dimen>
+    <dimen name="dimen_48dp">48dp</dimen>
+    <dimen name="dimen_56dp">56dp</dimen>
+    <dimen name="dimen_64dp">64dp</dimen>
+    <dimen name="dimen_72dp">72dp</dimen>
+    <dimen name="dimen_128dp">128dp</dimen>
+
+    <!-- CUSTOM VIEW: SEEKBAR -->
+    <dimen name="seekbar_progress_height">14dp</dimen>
+    <dimen name="seekbar_milestone_top_margin">6dp</dimen>
+    <dimen name="seekbar_thumb_width">13dp</dimen>
+
+    <!-- CUSTOM VIEW: TOOLBAR -->
+    <dimen name="toolbar_height">72dp</dimen>
+    <dimen name="toolbar_header_height">42dp</dimen>
+    <dimen name="toolbar_header_border_size">30dp</dimen>
+    <dimen name="toolbar_logo_size">38dp</dimen>
+    <dimen name="toolbar_back_size">40dp</dimen>
+    <dimen name="toolbar_box_size">66dp</dimen>
+    <dimen name="toolbar_icon_size">40dp</dimen>
+
+    <!-- CUSTOM VIEW: FLOATING BUTTON -->
+    <dimen name="floating_button_width">110dp</dimen>
+    <dimen name="floating_button_height">54dp</dimen>
+    <dimen name="floating_button_icon_width">30dp</dimen>
+
+    <!-- CUSTOM VIEW: CHIPPED EDIT TEXT -->
+    <dimen name="chipped_edit_text_title_horizontal_padding">6dp</dimen>
+    <dimen name="chipped_edit_text_title_margin_start">10dp</dimen>
+    <dimen name="chipped_edit_text_content_horizontal_margin">16dp</dimen>
+    <dimen name="chipped_edit_text_content_margin_top">5dp</dimen>
+    <dimen name="chipped_edit_text_content_margin_bottom">16dp</dimen>
+    <dimen name="chipped_edit_text_title_text_size">12sp</dimen>
+
+    <!-- CUSTOM VIEW: ROBOTICS BUTTON -->
+    <dimen name="robotics_button_width">103dp</dimen>
+    <dimen name="robotics_button_height">46dp</dimen>
+
+    <!-- CUSTOM DIALOG -->
+    <dimen name="dialog_width">460dp</dimen>
+    <dimen name="dialog_height">240dp</dimen>
+    <dimen name="dialog_chip_size">8dp</dimen>
+    <dimen name="dialog_content_width">452dp</dimen>
+    <dimen name="dialog_content_height">182dp</dimen>
+    <dimen name="dialog_button_height">46dp</dimen>
+    <dimen name="dialog_icon_size">16dp</dimen>
+
+    <!-- DIALOG: CONNECT TO ROBOT -->
+    <dimen name="dialog_connect_image_width">91dp</dimen>
+    <dimen name="dialog_connect_image_height">47dp</dimen>
+
+    <!-- DIALOG: BLUETOOTH PERMISSION -->
+    <dimen name="permission_image_width">234dp</dimen>
+    <dimen name="permission_image_height">62dp</dimen>
+
+    <!-- DIALOG: TURN ON THE BRAIN -->
+    <dimen name="brain_image_width">94dp</dimen>
+    <dimen name="brain_image_height">62dp</dimen>
+
+    <!-- DIALOG: TIPS -->
+    <dimen name="tips_dialog_layout_margin">32dp</dimen>
+    <dimen name="tips_dialog_title_top_margin">18dp</dimen>
+    <dimen name="tips_dialog_icon_end_margin">10dp</dimen>
+    <dimen name="tips_dialog_sub_title_top_margin">8dp</dimen>
+    <dimen name="tips_dialog_text_top_margin">5dp</dimen>
+    <dimen name="tips_dialog_title_text_size">18sp</dimen>
+    <dimen name="tips_dialog_sub_title_text_size">14sp</dimen>
+    <dimen name="tips_dialog_list_text_size">12sp</dimen>
+
+    <!-- DIALOG: TESTING -->
+    <dimen name="testing_dialog_title_size">18sp</dimen>
+    <dimen name="testing_dialog_text_size">12sp</dimen>
+    <dimen name="testing_dialog_question_size">14sp</dimen>
+    <dimen name="testing_dialog_icon_margin_top">3dp</dimen>
+    <dimen name="testing_dialog_icon_margin_end">8dp</dimen>
+    <dimen name="testing_dialog_image_width">115dp</dimen>
+    <dimen name="testing_dialog_image_margin_start">55dp</dimen>
+    <dimen name="testing_dialog_image_margin_end">24dp</dimen>
+    <dimen name="testing_dialog_text_margin_end">32sp</dimen>
+
+    <!-- DIALOG: CAMERA -->
+    <dimen name="camera_placeholder_width">190dp</dimen>
+    <dimen name="camera_placeholder_height">104dp</dimen>
+    <dimen name="camera_placeholder_padding">22dp</dimen>
+
+    <!-- DIALOG: DELETE ROBOT -->
+    <dimen name="delete_robot_image_width">46dp</dimen>
+    <dimen name="delete_robot_image_height">62dp</dimen>
+
+    <!-- DIALOG: BLOCKLY OPTION SELECTOR -->
+    <dimen name="option_selector_button_width">128dp</dimen>
+    <dimen name="option_selector_button_height">44dp</dimen>
+    <dimen name="option_selector_button_padding_horizontal">24dp</dimen>
+    <dimen name="option_selector_button_padding_vertical">12dp</dimen>
+
+    <!-- DIALOG: BLOCKLY DIALPAD -->
+    <dimen name="dialog_dialpad_width">176dp</dimen>
+    <dimen name="dialog_dialpad_result_width">152dp</dimen>
+
+    <!-- DIALOG: BLOCKLY DONUT SELECTOR -->
+    <dimen name="dialog_donut_size">208dp</dimen>
+    <dimen name="dialog_done_button_small_width">96dp</dimen>
+    <dimen name="dialog_donut_text_size">18sp</dimen>
+
+    <!-- DIALOG: BLOCKLY COLOR PICKER -->
+    <dimen name="dialog_color_picker_list_width">329dp</dimen>
+    <dimen name="dialog_color_picker_item_width">45dp</dimen>
+    <dimen name="dialog_color_picker_item_height">40dp</dimen>
+
+    <!-- DIALOG: BLOCKLY SOUND PICKER -->
+    <dimen name="dialog_sound_picker_image_width">72dp</dimen>
+    <dimen name="dialog_sound_picker_image_height">44dp</dimen>
+
+    <!-- SCREEN: MAIN MENU -->
+    <dimen name="main_menu_header_border_size">30dp</dimen>
+    <dimen name="main_menu_footer_height">28dp</dimen>
+
+    <!-- SCREEN: MY ROBOTS -->
+    <dimen name="my_robots_placeholder_width">285dp</dimen>
+    <dimen name="my_robots_placeholder_height">165dp</dimen>
+    <dimen name="my_robots_content_horizontal_margin">12dp</dimen>
+    <dimen name="my_robots_robot_name_margin_top">24dp</dimen>
+    <dimen name="my_robots_robot_image_vertical_margin">12dp</dimen>
+    <dimen name="my_robots_robot_icon_margin_start">12dp</dimen>
+    <dimen name="my_robots_robot_icon_margin_end">8dp</dimen>
+    <dimen name="my_robots_robot_icon_margin_top">10dp</dimen>
+    <dimen name="my_robots_robot_icon_margin_bottom">10dp</dimen>
+    <dimen name="my_robots_robot_icon_width">16dp</dimen>
+    <dimen name="my_robots_robot_description_margin_end">12dp</dimen>
+    <dimen name="my_robots_robot_play_margin_start">2dp</dimen>
+    <dimen name="my_robots_robot_edit_margin_start">2dp</dimen>
+    <dimen name="my_robots_robot_delete_margin_start">2dp</dimen>
+    <dimen name="my_robots_robot_delete_margin_end">2dp</dimen>
+    <dimen name="my_robots_robot_button_icon_size">20dp</dimen>
+    <dimen name="my_robots_robot_name_text_size">16sp</dimen>
+    <dimen name="my_robots_robot_description_text_size">12sp</dimen>
+    <dimen name="my_robots_robot_icon_description_text_size">12sp</dimen>
+    <dimen name="my_robots_robot_play_text_size">14sp</dimen>
+    <dimen name="my_robots_robot_icon_bottom_guide">0.825</dimen>
+    <dimen name="my_robots_robot_buttons_top_guide">0.835</dimen>
+    <dimen name="my_robots_robot_buttons_bottom_guide">0.992</dimen>
+
+
+    <!-- SCREEN: WHO_TO_BUILD -->
+    <dimen name="robots_header_background_percentage">0.1281</dimen>
+    <dimen name="robots_header_image_background_percentage">0.1031</dimen>
+    <dimen name="robots_viewpager_top_guide_percentage">0.2313</dimen>
+    <dimen name="robots_viewpager_bottom_guide_percentage">0.9313</dimen>
+    <dimen name="robots_buttons_center_guide_percentage">0.597</dimen>
+    <dimen name="robots_pager_button_width_percentage">0.0405</dimen>
+    <dimen name="robots_pager_button_height_percentage">0.16</dimen>
+    <dimen name="robots_card_text_guide_percentage">0.1071</dimen>
+    <dimen name="robots_card_image_top_guide_percentage">0.2946</dimen>
+    <dimen name="robots_card_image_bottom_guide_percentage">0.7054</dimen>
+    <dimen name="robots_card_time_top_guide_percentage">0.8088</dimen>
+    <dimen name="robots_card_clock_icon_height_percentage">0.0536</dimen>
+    <dimen name="robots_card_dimen_ratio">0.9509</dimen>
+    <dimen name="robots_card_title_text_size">16sp</dimen>
+    <dimen name="robots_card_time_text_size">16sp</dimen>
+
+    <!-- SCREEN: BUILD ROBOT -->
+    <dimen name="build_robot_parts_wrapper_width">112dp</dimen>
+    <dimen name="build_robot_part_image_size_height">52dp</dimen>
+    <dimen name="build_robot_part_image_size_width">110dp</dimen>
+    <dimen name="drawer_config_width">214dp</dimen>
+
+    <!-- SCREEN: CONFIGURE -->
+    <dimen name="configure_screen_nav_guide_height">10dp</dimen>
+    <dimen name="configure_button_vertical_padding">9dp</dimen>
+    <dimen name="configure_button_horizontal_padding">15dp</dimen>
+    <dimen name="configure_button_text_size">14sp</dimen>
+    <dimen name="configure_fragment_frame_vertical_padding">16dp</dimen>
+
+    <!-- SCREEN: CONFIGURE CONNECTIONS -->
+    <dimen name="configure_connections_button_width">80dp</dimen>
+    <dimen name="configure_connections_button_height">40dp</dimen>
+    <dimen name="configure_connections_brain_width">122dp</dimen>
+    <dimen name="configure_connections_brain_height">80dp</dimen>
+    <dimen name="configure_connections_brain_horizontal_margin">14dp</dimen>
+    <dimen name="configure_connections_button_elevation">2dp</dimen>
+    <dimen name="configure_connections_buttons_horizontal_margin">16dp</dimen>
+    <dimen name="configure_connections_side_buttons_margin_start">50dp</dimen>
+    <dimen name="configure_connections_icons_overflow_size">2dp</dimen>
+    <dimen name="configure_connections_icons_size">12dp</dimen>
+    <dimen name="configure_connections_line_to_icon_correction">11dp</dimen>
+    <dimen name="configure_connections_icons_horizontal_margin">16dp</dimen>
+    <dimen name="configure_connections_line_view_width">3dp</dimen>
+    <dimen name="configure_connections_line_M1_button_margin">2dp</dimen>
+    <dimen name="configure_connections_line_M4_helper_margin">8dp</dimen>
+    <dimen name="configure_connections_line_M3_button_margin">2dp</dimen>
+    <dimen name="configure_connections_line_button_inset_margin">3dp</dimen>
+    <dimen name="configure_connections_line_button_center_margin">40dp</dimen>
+    <dimen name="configure_connections_line_width">1dp</dimen>
+    <dimen name="configure_connections_line_dash_width">8dp</dimen>
+    <dimen name="configure_connections_line_gap_width">5dp</dimen>
+
+    <!-- SCREEN: CONFIGURE CONTROLLERS -->
+    <dimen name="configure_controllers_card_dimen_ratio">1.121</dimen>
+    <dimen name="configure_controllers_buttons_guide_percentage">0.4895</dimen>
+    <dimen name="configure_controllers_button_height_percentage">0.2632</dimen>
+    <dimen name="configure_controllers_button_width_percentage">0.0405</dimen>
+    <dimen name="configure_controllers_controller_icon_width">16dp</dimen>
+    <dimen name="configure_controllers_controller_icon_margin_bottom">12dp</dimen>
+    <dimen name="configure_controllers_controller_description_horizontal_margin">8dp</dimen>
+    <dimen name="configure_controllers_controller_content_horizontal_margin">12dp</dimen>
+    <dimen name="configure_controllers_controller_name_margin_top">24dp</dimen>
+    <dimen name="configure_controllers_controller_image_horizontal_margin">46dp</dimen>
+    <dimen name="configure_controllers_controller_image_vertical_margin">15dp</dimen>
+    <dimen name="configure_controllers_controller_card_border_margin">4dp</dimen>
+    <dimen name="configure_controllers_controller_button_icon_size">20dp</dimen>
+    <dimen name="configure_controllers_controller_icon_bottom_guide">0.7895</dimen>
+    <dimen name="configure_controllers_controller_buttons_top_guide">0.8</dimen>
+    <dimen name="configure_controllers_controller_buttons_bottom_guide">0.9895</dimen>
+    <dimen name="configure_controllers_name_text_size">16sp</dimen>
+    <dimen name="configure_controllers_icon_description_text_size">13sp</dimen>
+    <dimen name="configure_controllers_select_text_size">16sp</dimen>
+
+    <!-- SCREEN: CONTROLLER TYPE SELECTOR -->
+    <dimen name="controller_type_selector_wrapper_width">147dp</dimen>
+    <dimen name="controller_type_selector_wrapper_height">168dp</dimen>
+    <dimen name="controller_type_selector_image_width">121dp</dimen>
+    <dimen name="controller_type_selector_image_height">49dp</dimen>
+
+    <!-- SCREEN: SETUP CONTROLLER -->
+    <dimen name="controller_setup_body_width">313dp</dimen>
+    <dimen name="controller_setup_body_height">130dp</dimen>
+    <dimen name="controller_setup_joystick_size">72dp</dimen>
+    <dimen name="controller_setup_lever_width">28dp</dimen>
+    <dimen name="controller_setup_lever_height">98dp</dimen>
+    <dimen name="controller_setup_button_big_size">24dp</dimen>
+    <dimen name="controller_setup_button_normal_size">20dp</dimen>
+    <dimen name="controller_setup_program_button_width">70dp</dimen>
+    <dimen name="controller_setup_program_button_height">38dp</dimen>
+    <dimen name="controller_setup_program_selector_height">70dp</dimen>
+
+    <!-- SCREEN: ABOUT -->
+    <dimen name="about_social_icon_size">40dp</dimen>
+    <dimen name="about_permission_layout_width">450dp</dimen>
+    <dimen name="about_button_width">226dp</dimen>
+    <dimen name="about_button_height">52dp</dimen>
+
+    <!-- SCREEN: PLAY -->
+    <dimen name="play_background_width">305dp</dimen>
+    <dimen name="play_background_height">288dp</dimen>
+    <dimen name="play_joystick_size">193dp</dimen>
+    <dimen name="play_joystick_handle_size">58dp</dimen>
+    <dimen name="lever_width">32dp</dimen>
+    <dimen name="lever_height">244dp</dimen>
+    <dimen name="play_button_size_big">58dp</dimen>
+    <dimen name="play_button_size_normal">40dp</dimen>
+    <dimen name="challenge_list_size">167dp</dimen>
+    <dimen name="challenge_step_size">110dp</dimen>
+    <dimen name="size_challenge_part">86dp</dimen>
+
+    <!-- SCREEN: TUTORIAL-->
+    <dimen name="tutorial_dialog_width">212dp</dimen>
+    <dimen name="tutorial_dialog_height">192dp</dimen>
+    <dimen name="tutorial_triangle_width">12dp</dimen>
+    <dimen name="tutorial_triangle_height">24dp</dimen>
+
+    <!-- SCREEN: CODING -->
+    <dimen name="coding_icon_width">48dp</dimen>
+    <dimen name="coding_icon_height">40dp</dimen>
+    <dimen name="coding_program_title_width">166dp</dimen>
+    <dimen name="coding_program_title_height">40dp</dimen>
+    <dimen name="donut_checkbox_size">18dp</dimen>
+
+    <!-- SCREEN: COMMUNITY -->
+    <dimen name="community_button_width">226dp</dimen>
+
+    <integer name="challenge_span_count">4</integer>
+
+</resources>

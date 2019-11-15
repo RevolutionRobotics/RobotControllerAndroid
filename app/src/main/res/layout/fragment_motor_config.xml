@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable name="viewModel" type="com.revolution.robotics.features.configure.motor.MotorConfigurationViewModel"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="@dimen/dimen_16dp"
+            android:paddingBottom="@dimen/dimen_4dp"
+            android:paddingLeft="@dimen/dimen_4dp"
+            android:paddingRight="@dimen/dimen_4dp"
+            android:background="@color/grey_28"
+            tools:layout_width="@dimen/drawer_config_width">
+
+        <View android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:clickable="true"
+              android:focusable="true"/>
+
+        <com.revolution.robotics.views.ChippedEditText
+                android:id="@+id/edit_motor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginStart="@dimen/dimen_12dp"
+                app:chippedEditModel="@{viewModel.editTextModel}"
+                android:layout_marginEnd="@dimen/dimen_12dp"/>
+
+        <include
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/button_empty"
+                layout="@layout/layout_config_button"
+                app:viewModel="@{viewModel.emptyButton}"
+                android:layout_marginTop="@dimen/dimen_12dp"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                app:layout_constraintTop_toBottomOf="@id/edit_motor"
+                app:layout_constraintEnd_toStartOf="@id/button_drivetrain"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+        <include
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/button_drivetrain"
+                layout="@layout/layout_config_button"
+                app:viewModel="@{viewModel.driveTrainButton}"
+                android:layout_marginTop="@dimen/dimen_12dp"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                app:layout_constraintTop_toBottomOf="@id/edit_motor"
+                app:layout_constraintStart_toEndOf="@id/button_empty"
+                app:layout_constraintEnd_toStartOf="@id/button_engine"/>
+
+        <include
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/button_engine"
+                layout="@layout/layout_config_button"
+                app:viewModel="@{viewModel.motorButton}"
+                android:layout_marginTop="@dimen/dimen_12dp"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                app:layout_constraintTop_toBottomOf="@id/edit_motor"
+                app:layout_constraintStart_toEndOf="@id/button_drivetrain"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+        <include
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/button_side_left"
+                layout="@layout/layout_config_button"
+                app:viewModel="@{viewModel.sideLeftButton}"
+                android:layout_marginTop="@dimen/dimen_12dp"
+                app:layout_constraintTop_toBottomOf="@id/button_drivetrain"
+                app:layout_constraintStart_toStartOf="@id/button_drivetrain"
+                app:layout_constraintEnd_toEndOf="@id/button_drivetrain"/>
+
+        <include
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/button_side_right"
+                layout="@layout/layout_config_button"
+                app:viewModel="@{viewModel.sideRightButton}"
+                android:layout_marginTop="@dimen/dimen_12dp"
+                app:layout_constraintTop_toBottomOf="@id/button_engine"
+                app:layout_constraintStart_toStartOf="@id/button_engine"
+                app:layout_constraintEnd_toEndOf="@id/button_engine"/>
+
+        <CheckBox
+                android:text="Reversed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_12dp"
+                app:layout_constraintTop_toBottomOf="@id/button_side_left"
+                app:layout_constraintStart_toStartOf="@id/button_side_left"
+                app:layout_constraintEnd_toEndOf="@id/button_side_right"
+                android:fontFamily="@font/jura_bold"
+                android:textSize="12sp"
+                app:visible="@{viewModel.reversedCheckboxVisible}"
+                android:checked="@{viewModel.reversed}"
+                android:onCheckedChanged="@{(compoundButton, checked) -> viewModel.onReversedChecked(checked)}"/>
+
+        <include layout="@layout/layout_configuration_action_buttons"
+                 app:viewModel="@{viewModel.actionButtonsViewModel}"
+                 android:id="@+id/action_buttons"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

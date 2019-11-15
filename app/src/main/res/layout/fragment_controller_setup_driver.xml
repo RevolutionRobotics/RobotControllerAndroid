@@ -1,0 +1,573 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable name="viewModel"
+                  type="com.revolution.robotics.features.controllers.setup.ConfigureControllerViewModel"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <!-- CONTROLLER BODY (I.) -->
+
+        <View
+                android:id="@+id/controller_body"
+                android:layout_width="@dimen/controller_setup_body_width"
+                android:layout_height="@dimen/controller_setup_body_height"
+                android:background="@drawable/controller_setup_body_inactive"
+                android:layout_marginBottom="@dimen/dimen_32dp"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/program_5"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <View
+                android:id="@+id/lever_left"
+                android:layout_width="@dimen/controller_setup_lever_width"
+                android:layout_height="@dimen/controller_setup_lever_height"
+                app:layout_constraintTop_toTopOf="@id/controller_body"
+                app:layout_constraintBottom_toBottomOf="@id/controller_body"
+                app:layout_constraintStart_toStartOf="@id/controller_body"
+                android:layout_marginStart="@dimen/dimen_40dp"
+                android:background="@drawable/controller_setup_lever"/>
+
+        <View
+                android:id="@+id/lever_right"
+                android:layout_width="@dimen/controller_setup_lever_width"
+                android:layout_height="@dimen/controller_setup_lever_height"
+                app:layout_constraintTop_toTopOf="@id/controller_body"
+                app:layout_constraintBottom_toBottomOf="@id/controller_body"
+                app:layout_constraintEnd_toEndOf="@id/controller_body"
+                android:layout_marginEnd="@dimen/dimen_40dp"
+                android:background="@drawable/controller_setup_lever"/>
+
+        <!-- CONNECTIONS -->
+        <View
+                android:id="@+id/guide_button_2"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/program_2"
+                app:layout_constraintBottom_toTopOf="@id/button_2"/>
+
+        <View
+                android:id="@+id/guide_button_3"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/guide_button_2"
+                app:layout_constraintBottom_toTopOf="@id/button_3"/>
+
+        <View
+                android:id="@+id/guide_button_5_horizontal"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/button_5"
+                app:layout_constraintBottom_toBottomOf="@id/controller_body"/>
+
+        <View
+                android:id="@+id/guide_button_5_vertical"
+                android:layout_width="1dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/lever_right"
+                app:layout_constraintEnd_toStartOf="@id/program_5"
+                android:layout_height="0dp"/>
+
+        <View
+                android:id="@+id/guide_button_6_horizontal"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/button_6"
+                app:layout_constraintBottom_toBottomOf="@id/guide_button_5_horizontal"/>
+
+        <View
+                android:id="@+id/guide_button_6_vertical"
+                android:layout_width="1dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/lever_right"
+                app:layout_constraintEnd_toStartOf="@id/guide_button_5_vertical"
+                android:layout_height="0dp"/>
+
+        <View
+                android:id="@+id/guide_lever_vertical"
+                android:layout_width="1dp"
+                android:layout_height="0dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/guide_button_5_vertical"
+                app:layout_constraintEnd_toStartOf="@id/program_lever_2"/>
+
+        <!-- CONNECTION: LEVER LEFT -->
+        <com.revolution.robotics.views.ConnectionLineView
+                android:layout_width="@dimen/configure_connections_line_view_width"
+                android:layout_height="0dp"
+                app:isLineVertical="true"
+                app:layout_constraintTop_toBottomOf="@id/program_lever_1"
+                app:layout_constraintBottom_toTopOf="@id/lever_left"
+                app:layout_constraintStart_toStartOf="@id/lever_left"
+                app:layout_constraintEnd_toEndOf="@id/lever_left"/>
+
+        <!-- CONNECTION: LEVER RIGHT -->
+        <com.revolution.robotics.views.ConnectionLineView
+                android:id="@+id/line_lever_1"
+                android:layout_width="@dimen/configure_connections_line_view_width"
+                android:layout_height="0dp"
+                app:isLineVertical="true"
+                android:layout_marginTop="1dp"
+                app:layout_constraintTop_toTopOf="@id/line_lever_4"
+                app:layout_constraintBottom_toTopOf="@id/lever_right"
+                app:layout_constraintStart_toStartOf="@id/lever_right"
+                app:layout_constraintEnd_toEndOf="@id/lever_right"/>
+
+        <com.revolution.robotics.views.ConnectionLineView
+                android:id="@+id/line_lever_2"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/configure_connections_line_view_width"
+                app:isLineVertical="false"
+                app:layout_constraintTop_toTopOf="@id/program_lever_2"
+                app:layout_constraintBottom_toBottomOf="@id/program_lever_2"
+                app:layout_constraintStart_toStartOf="@id/guide_lever_vertical"
+                app:layout_constraintEnd_toStartOf="@id/program_lever_2"/>
+
+        <com.revolution.robotics.views.ConnectionLineView
+                android:id="@+id/line_lever_3"
+                android:layout_width="@dimen/configure_connections_line_view_width"
+                android:layout_height="0dp"
+                app:isLineVertical="true"
+                app:layout_constraintTop_toTopOf="@id/line_lever_2"
+                app:layout_constraintBottom_toBottomOf="@id/line_lever_4"
+                app:layout_constraintStart_toStartOf="@id/guide_lever_vertical"
+                app:layout_constraintEnd_toEndOf="@id/guide_lever_vertical"
+                android:layout_marginBottom="@dimen/dimen_1dp"
+                android:layout_marginTop="@dimen/dimen_1dp"/>
+
+        <com.revolution.robotics.views.ConnectionLineView
+                android:id="@+id/line_lever_4"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/configure_connections_line_view_width"
+                app:isLineVertical="false"
+                app:layout_constraintTop_toTopOf="@id/controller_body"
+                app:layout_constraintStart_toStartOf="@id/line_lever_1"
+                app:layout_constraintEnd_toEndOf="@id/line_lever_3"
+                android:layout_marginStart="@dimen/dimen_1dp"
+                android:layout_marginEnd="@dimen/dimen_1dp"
+                android:layout_marginTop="@dimen/dimen_4dp"/>
+
+        <!-- CONNECTION: PROGRAM 1 -->
+        <com.revolution.robotics.views.ConnectionLineView
+                android:layout_width="@dimen/configure_connections_line_view_width"
+                android:layout_height="0dp"
+                app:isLineVertical="true"
+                app:layout_constraintTop_toBottomOf="@id/program_1"
+                app:layout_constraintBottom_toTopOf="@id/button_1"
+                app:layout_constraintStart_toStartOf="@id/button_1"
+                app:layout_constraintEnd_toEndOf="@id/button_1"
+                app:program="@{viewModel.getProgram(1)}"
+                app:isProgramSelected="@{viewModel.isProgramSelected(1)}"/>
+
+        <!-- CONNECTION: PROGRAM 2 -->
+        <com.revolution.robotics.views.ConnectionLineView
+                android:id="@+id/line_p2_1"
+                android:layout_width="@dimen/configure_connections_line_view_width"
+                android:layout_height="0dp"
+                app:isLineVertical="true"
+                app:layout_constraintBottom_toTopOf="@id/button_2"
+                app:layout_constraintStart_toStartOf="@id/button_2"
+                app:layout_constraintEnd_toEndOf="@id/button_2"
+                app:layout_constraintTop_toBottomOf="@id/guide_button_2"
+                app:program="@{viewModel.getProgram(2)}"
+                app:isProgramSelected="@{viewModel.isProgramSelected(2)}"/>
+
+        <com.revolution.robotics.views.ConnectionLineView
+                android:id="@+id/line_p2_2"
+                android:layout_width="@dimen/configure_connections_line_view_width"
+                android:layout_height="0dp"
+                app:isLineVertical="true"
+                app:layout_constraintBottom_toBottomOf="@id/guide_button_2"
+                app:layout_constraintStart_toStartOf="@id/program_2"
+                app:layout_constraintEnd_toEndOf="@id/program_2"
+                app:layout_constraintTop_toBottomOf="@id/program_2"
+                app:program="@{viewModel.getProgram(2)}"
+                app:isProgramSelected="@{viewModel.isProgramSelected(2)}"/>
+
+        <com.revolution.robotics.views.ConnectionLineView
+                android:layout_width="0dp"
+                android:layout_height="@dimen/configure_connections_line_view_width"
+                app:isLineVertical="false"
+                app:layout_constraintTop_toTopOf="@id/guide_button_2"
+                app:layout_constraintBottom_toBottomOf="@id/guide_button_2"
+                app:layout_constraintStart_toStartOf="@id/line_p2_1"
+                app:layout_constraintEnd_toEndOf="@id/line_p2_2"
+                android:layout_marginStart="@dimen/dimen_1dp"
+                android:layout_marginEnd="@dimen/dimen_1dp"
+                app:program="@{viewModel.getProgram(2)}"
+                app:isProgramSelected="@{viewModel.isProgramSelected(2)}"/>
+
+        <!-- CONNECTION: PROGRAM 3 -->
+        <com.revolution.robotics.views.ConnectionLineView
+                android:id="@+id/line_p3_1"
+                android:layout_width="@dimen/configure_connections_line_view_width"
+                android:layout_height="0dp"
+                app:isLineVertical="true"
+                app:layout_constraintBottom_toTopOf="@id/button_3"
+                app:layout_constraintStart_toStartOf="@id/button_3"
+                app:layout_constraintEnd_toEndOf="@id/button_3"
+                app:layout_constraintTop_toBottomOf="@id/guide_button_3"
+                app:program="@{viewModel.getProgram(3)}"
+                app:isProgramSelected="@{viewModel.isProgramSelected(3)}"/>
+
+        <com.revolution.robotics.views.ConnectionLineView
+                android:id="@+id/line_p3_2"
+                android:layout_width="@dimen/configure_connections_line_view_width"
+                android:layout_height="0dp"
+                app:isLineVertical="true"
+                app:layout_constraintBottom_toBottomOf="@id/guide_button_3"
+                app:layout_constraintStart_toStartOf="@id/program_3"
+                android:layout_marginStart="@dimen/dimen_8dp"
+                app:layout_constraintTop_toBottomOf="@id/program_3"
+                app:program="@{viewModel.getProgram(3)}"
+                app:isProgramSelected="@{viewModel.isProgramSelected(3)}"/>
+
+        <com.revolution.robotics.views.ConnectionLineView
+                android:layout_width="0dp"
+                android:layout_height="@dimen/configure_connections_line_view_width"
+                app:isLineVertical="false"
+                app:layout_constraintTop_toTopOf="@id/guide_button_3"
+                app:layout_constraintBottom_toBottomOf="@id/guide_button_3"
+                app:layout_constraintStart_toStartOf="@id/line_p3_1"
+                app:layout_constraintEnd_toEndOf="@id/line_p3_2"
+                android:layout_marginStart="@dimen/dimen_1dp"
+                android:layout_marginEnd="@dimen/dimen_1dp"
+                app:program="@{viewModel.getProgram(3)}"
+                app:isProgramSelected="@{viewModel.isProgramSelected(3)}"/>
+
+        <!-- CONNECTION: PROGRAM 4 -->
+        <com.revolution.robotics.views.ConnectionLineView
+                android:id="@+id/line_p4_1"
+                android:layout_width="@dimen/configure_connections_line_view_width"
+                android:layout_height="0dp"
+                app:isLineVertical="true"
+                app:layout_constraintBottom_toBottomOf="@id/line_p4_2"
+                app:layout_constraintStart_toStartOf="@id/button_4"
+                app:layout_constraintEnd_toEndOf="@id/button_4"
+                app:layout_constraintTop_toBottomOf="@id/button_4"
+                android:layout_marginBottom="@dimen/dimen_1dp"
+                app:program="@{viewModel.getProgram(4)}"
+                app:isProgramSelected="@{viewModel.isProgramSelected(4)}"/>
+
+        <com.revolution.robotics.views.ConnectionLineView
+                android:id="@+id/line_p4_2"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/configure_connections_line_view_width"
+                app:isLineVertical="false"
+                app:layout_constraintBottom_toBottomOf="@id/controller_body"
+                app:layout_constraintStart_toStartOf="@id/line_p4_1"
+                app:layout_constraintEnd_toStartOf="@id/program_4"
+                android:layout_marginStart="@dimen/dimen_1dp"
+                android:layout_marginBottom="@dimen/dimen_8dp"
+                app:program="@{viewModel.getProgram(4)}"
+                app:isProgramSelected="@{viewModel.isProgramSelected(4)}"/>
+
+        <!-- CONNECTION: PROGRAM 5 -->
+        <com.revolution.robotics.views.ConnectionLineView
+                android:id="@+id/line_p5_1"
+                android:layout_width="@dimen/configure_connections_line_view_width"
+                android:layout_height="0dp"
+                app:isLineVertical="true"
+                app:layout_constraintBottom_toBottomOf="@id/guide_button_5_horizontal"
+                app:layout_constraintStart_toStartOf="@id/button_5"
+                app:layout_constraintEnd_toEndOf="@id/button_5"
+                app:layout_constraintTop_toBottomOf="@id/button_5"
+                app:program="@{viewModel.getProgram(5)}"
+                app:isProgramSelected="@{viewModel.isProgramSelected(5)}"/>
+
+        <com.revolution.robotics.views.ConnectionLineView
+                android:id="@+id/line_p5_2"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/configure_connections_line_view_width"
+                app:isLineVertical="false"
+                app:layout_constraintStart_toStartOf="@id/line_p5_1"
+                app:layout_constraintEnd_toEndOf="@id/line_p5_3"
+                app:layout_constraintTop_toTopOf="@id/guide_button_5_horizontal"
+                app:layout_constraintBottom_toBottomOf="@id/guide_button_5_horizontal"
+                android:layout_marginStart="@dimen/dimen_1dp"
+                android:layout_marginEnd="@dimen/dimen_1dp"
+                app:program="@{viewModel.getProgram(5)}"
+                app:isProgramSelected="@{viewModel.isProgramSelected(5)}"/>
+
+        <com.revolution.robotics.views.ConnectionLineView
+                android:id="@+id/line_p5_3"
+                android:layout_width="@dimen/configure_connections_line_view_width"
+                android:layout_height="0dp"
+                app:isLineVertical="true"
+                app:layout_constraintBottom_toBottomOf="@id/guide_button_5_horizontal"
+                app:layout_constraintStart_toStartOf="@id/guide_button_5_vertical"
+                app:layout_constraintEnd_toEndOf="@id/guide_button_5_vertical"
+                app:layout_constraintTop_toTopOf="@id/line_p5_4"
+                android:layout_marginTop="@dimen/dimen_1dp"
+                app:program="@{viewModel.getProgram(5)}"
+                app:isProgramSelected="@{viewModel.isProgramSelected(5)}"/>
+
+        <com.revolution.robotics.views.ConnectionLineView
+                android:id="@+id/line_p5_4"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/configure_connections_line_view_width"
+                app:isLineVertical="false"
+                app:layout_constraintStart_toStartOf="@id/line_p5_3"
+                app:layout_constraintEnd_toStartOf="@id/program_5"
+                app:layout_constraintTop_toTopOf="@id/program_5"
+                app:layout_constraintBottom_toBottomOf="@id/program_5"
+                android:layout_marginStart="@dimen/dimen_1dp"
+                android:layout_marginEnd="@dimen/dimen_1dp"
+                app:program="@{viewModel.getProgram(5)}"
+                app:isProgramSelected="@{viewModel.isProgramSelected(5)}"/>
+
+        <!-- CONNECTION: PROGRAM 6 -->
+        <com.revolution.robotics.views.ConnectionLineView
+                android:id="@+id/line_p6_1"
+                android:layout_width="@dimen/configure_connections_line_view_width"
+                android:layout_height="0dp"
+                app:isLineVertical="true"
+                app:layout_constraintBottom_toBottomOf="@id/guide_button_6_horizontal"
+                app:layout_constraintStart_toStartOf="@id/button_6"
+                app:layout_constraintEnd_toEndOf="@id/button_6"
+                app:layout_constraintTop_toBottomOf="@id/button_6"
+                app:program="@{viewModel.getProgram(6)}"
+                app:isProgramSelected="@{viewModel.isProgramSelected(6)}"/>
+
+        <com.revolution.robotics.views.ConnectionLineView
+                android:id="@+id/line_p6_2"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/configure_connections_line_view_width"
+                app:isLineVertical="false"
+                app:layout_constraintStart_toStartOf="@id/line_p6_1"
+                app:layout_constraintEnd_toEndOf="@id/line_p6_3"
+                app:layout_constraintTop_toTopOf="@id/guide_button_6_horizontal"
+                app:layout_constraintBottom_toBottomOf="@id/guide_button_6_horizontal"
+                android:layout_marginStart="@dimen/dimen_1dp"
+                android:layout_marginEnd="@dimen/dimen_1dp"
+                app:program="@{viewModel.getProgram(6)}"
+                app:isProgramSelected="@{viewModel.isProgramSelected(6)}"/>
+
+        <com.revolution.robotics.views.ConnectionLineView
+                android:id="@+id/line_p6_3"
+                android:layout_width="@dimen/configure_connections_line_view_width"
+                android:layout_height="0dp"
+                app:isLineVertical="true"
+                app:layout_constraintBottom_toBottomOf="@id/guide_button_6_horizontal"
+                app:layout_constraintStart_toStartOf="@id/guide_button_6_vertical"
+                app:layout_constraintEnd_toEndOf="@id/guide_button_6_vertical"
+                app:layout_constraintTop_toTopOf="@id/line_p6_4"
+                android:layout_marginTop="@dimen/dimen_1dp"
+                app:program="@{viewModel.getProgram(6)}"
+                app:isProgramSelected="@{viewModel.isProgramSelected(6)}"/>
+
+        <com.revolution.robotics.views.ConnectionLineView
+                android:id="@+id/line_p6_4"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/configure_connections_line_view_width"
+                app:isLineVertical="false"
+                app:layout_constraintStart_toStartOf="@id/line_p6_3"
+                app:layout_constraintEnd_toStartOf="@id/program_6"
+                app:layout_constraintTop_toTopOf="@id/program_6"
+                app:layout_constraintBottom_toBottomOf="@id/program_6"
+                android:layout_marginStart="@dimen/dimen_1dp"
+                android:layout_marginEnd="@dimen/dimen_1dp"
+                app:program="@{viewModel.getProgram(6)}"
+                app:isProgramSelected="@{viewModel.isProgramSelected(6)}"/>
+
+        <!-- CONTROLLER BODY (II.) -->
+
+        <View
+                android:id="@+id/button_1"
+                android:layout_width="@dimen/controller_setup_button_normal_size"
+                android:layout_height="@dimen/controller_setup_button_normal_size"
+                android:background="@drawable/controller_setup_button_unassigned"
+                app:layout_constraintVertical_chainStyle="packed"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintTop_toTopOf="@id/controller_body"
+                app:layout_constraintBottom_toTopOf="@id/button_4"
+                app:layout_constraintStart_toEndOf="@id/lever_left"
+                app:layout_constraintEnd_toStartOf="@id/button_2"
+                android:layout_marginEnd="@dimen/dimen_12dp"
+                android:layout_marginBottom="@dimen/dimen_12dp"
+                app:program="@{viewModel.getProgram(1)}"
+                app:isProgramSelected="@{viewModel.isProgramSelected(1)}"/>
+
+        <View
+                android:id="@+id/button_4"
+                android:layout_width="@dimen/controller_setup_button_normal_size"
+                android:layout_height="@dimen/controller_setup_button_normal_size"
+                android:background="@drawable/controller_setup_button_unassigned"
+                app:layout_constraintTop_toBottomOf="@id/button_1"
+                app:layout_constraintBottom_toBottomOf="@id/controller_body"
+                app:layout_constraintStart_toStartOf="@id/button_1"
+                app:layout_constraintEnd_toEndOf="@id/button_1"
+                app:program="@{viewModel.getProgram(4)}"
+                app:isProgramSelected="@{viewModel.isProgramSelected(4)}"/>
+
+        <View
+                android:id="@+id/button_2"
+                android:layout_width="@dimen/controller_setup_button_normal_size"
+                android:layout_height="@dimen/controller_setup_button_normal_size"
+                android:background="@drawable/controller_setup_button_unassigned"
+                app:layout_constraintVertical_chainStyle="packed"
+                app:layout_constraintTop_toTopOf="@id/button_1"
+                app:layout_constraintBottom_toBottomOf="@id/button_1"
+                app:layout_constraintStart_toEndOf="@id/button_1"
+                app:layout_constraintEnd_toStartOf="@id/button_3"
+                android:layout_marginEnd="@dimen/dimen_12dp"
+                app:program="@{viewModel.getProgram(2)}"
+                app:isProgramSelected="@{viewModel.isProgramSelected(2)}"/>
+
+        <View
+                android:id="@+id/button_5"
+                android:layout_width="@dimen/controller_setup_button_normal_size"
+                android:layout_height="@dimen/controller_setup_button_normal_size"
+                android:background="@drawable/controller_setup_button_unassigned"
+                app:layout_constraintTop_toTopOf="@id/button_4"
+                app:layout_constraintBottom_toBottomOf="@id/button_4"
+                app:layout_constraintStart_toStartOf="@id/button_2"
+                app:layout_constraintEnd_toEndOf="@id/button_2"
+                app:program="@{viewModel.getProgram(5)}"
+                app:isProgramSelected="@{viewModel.isProgramSelected(5)}"/>
+
+        <View
+                android:id="@+id/button_3"
+                android:layout_width="@dimen/controller_setup_button_normal_size"
+                android:layout_height="@dimen/controller_setup_button_normal_size"
+                android:background="@drawable/controller_setup_button_unassigned"
+                app:layout_constraintVertical_chainStyle="packed"
+                app:layout_constraintTop_toTopOf="@id/button_1"
+                app:layout_constraintBottom_toBottomOf="@id/button_1"
+                app:layout_constraintStart_toEndOf="@id/button_2"
+                app:layout_constraintEnd_toStartOf="@id/lever_right"
+                app:program="@{viewModel.getProgram(3)}"
+                app:isProgramSelected="@{viewModel.isProgramSelected(3)}"/>
+
+        <View
+                android:id="@+id/button_6"
+                android:layout_width="@dimen/controller_setup_button_normal_size"
+                android:layout_height="@dimen/controller_setup_button_normal_size"
+                android:background="@drawable/controller_setup_button_unassigned"
+                app:layout_constraintTop_toTopOf="@id/button_4"
+                app:layout_constraintBottom_toBottomOf="@id/button_4"
+                app:layout_constraintStart_toStartOf="@id/button_3"
+                app:layout_constraintEnd_toEndOf="@id/button_3"
+                app:program="@{viewModel.getProgram(6)}"
+                app:isProgramSelected="@{viewModel.isProgramSelected(6)}"/>
+
+
+        <!-- BUTTONS -->
+
+        <com.revolution.robotics.views.controllerSetup.ProgramConnectionButton
+                android:id="@+id/program_lever_1"
+                app:layout_constraintBottom_toTopOf="@id/controller_body"
+                app:layout_constraintStart_toStartOf="@id/controller_body"
+                android:layout_marginBottom="@dimen/dimen_8dp"
+                android:layout_width="@dimen/controller_setup_program_button_width"
+                android:layout_height="@dimen/controller_setup_program_button_height"
+                app:isDriveTrain="@{true}"/>
+
+        <com.revolution.robotics.views.controllerSetup.ProgramConnectionButton
+                android:id="@+id/program_1"
+                app:layout_constraintStart_toEndOf="@id/program_lever_1"
+                app:layout_constraintTop_toTopOf="@id/program_lever_1"
+                app:layout_constraintBottom_toBottomOf="@id/program_lever_1"
+                android:layout_marginStart="@dimen/dimen_8dp"
+                android:layout_width="@dimen/controller_setup_program_button_width"
+                android:layout_height="@dimen/controller_setup_program_button_height"
+                app:program="@{viewModel.getProgram(1)}"
+                app:isProgramSelected="@{viewModel.isProgramSelected(1)}"
+                android:onClick="@{() -> viewModel.selectProgram(1)}"
+                android:onLongClick="@{() -> viewModel.onProgramLongClicked(1)}"/>
+
+        <com.revolution.robotics.views.controllerSetup.ProgramConnectionButton
+                android:id="@+id/program_2"
+                app:layout_constraintStart_toEndOf="@id/program_1"
+                app:layout_constraintTop_toTopOf="@id/program_lever_1"
+                app:layout_constraintBottom_toBottomOf="@id/program_lever_1"
+                android:layout_marginStart="@dimen/dimen_8dp"
+                android:layout_width="@dimen/controller_setup_program_button_width"
+                android:layout_height="@dimen/controller_setup_program_button_height"
+                app:program="@{viewModel.getProgram(2)}"
+                app:isProgramSelected="@{viewModel.isProgramSelected(2)}"
+                android:onClick="@{() -> viewModel.selectProgram(2)}"
+                android:onLongClick="@{() -> viewModel.onProgramLongClicked(2)}"/>
+
+        <com.revolution.robotics.views.controllerSetup.ProgramConnectionButton
+                android:id="@+id/program_3"
+                app:layout_constraintStart_toEndOf="@id/program_2"
+                app:layout_constraintTop_toTopOf="@id/program_lever_1"
+                app:layout_constraintBottom_toBottomOf="@id/program_lever_1"
+                android:layout_marginStart="@dimen/dimen_8dp"
+                android:layout_width="@dimen/controller_setup_program_button_width"
+                android:layout_height="@dimen/controller_setup_program_button_height"
+                app:program="@{viewModel.getProgram(3)}"
+                app:isProgramSelected="@{viewModel.isProgramSelected(3)}"
+                android:onClick="@{() -> viewModel.selectProgram(3)}"
+                android:onLongClick="@{() -> viewModel.onProgramLongClicked(3)}"/>
+
+        <com.revolution.robotics.views.controllerSetup.ProgramConnectionButton
+                android:id="@+id/program_4"
+                app:layout_constraintStart_toStartOf="@id/program_5"
+                app:layout_constraintEnd_toEndOf="@id/program_5"
+                app:layout_constraintBottom_toBottomOf="@id/controller_body"
+                android:layout_width="@dimen/controller_setup_program_button_width"
+                android:layout_height="@dimen/controller_setup_program_button_height"
+                app:program="@{viewModel.getProgram(4)}"
+                app:isProgramSelected="@{viewModel.isProgramSelected(4)}"
+                android:onClick="@{() -> viewModel.selectProgram(4)}"
+                android:onLongClick="@{() -> viewModel.onProgramLongClicked(4)}"/>
+
+        <com.revolution.robotics.views.controllerSetup.ProgramConnectionButton
+                android:id="@+id/program_5"
+                app:layout_constraintStart_toEndOf="@id/controller_body"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/program_4"
+                android:layout_marginBottom="@dimen/dimen_8dp"
+                android:layout_marginStart="@dimen/dimen_8dp"
+                android:layout_width="@dimen/controller_setup_program_button_width"
+                android:layout_height="@dimen/controller_setup_program_button_height"
+                app:program="@{viewModel.getProgram(5)}"
+                app:isProgramSelected="@{viewModel.isProgramSelected(5)}"
+                android:onClick="@{() -> viewModel.selectProgram(5)}"
+                android:onLongClick="@{() -> viewModel.onProgramLongClicked(5)}"/>
+
+        <com.revolution.robotics.views.controllerSetup.ProgramConnectionButton
+                android:id="@+id/program_6"
+                app:layout_constraintStart_toStartOf="@id/program_5"
+                app:layout_constraintEnd_toEndOf="@id/program_5"
+                app:layout_constraintBottom_toTopOf="@id/program_5"
+                android:layout_marginBottom="@dimen/dimen_8dp"
+                android:layout_width="@dimen/controller_setup_program_button_width"
+                android:layout_height="@dimen/controller_setup_program_button_height"
+                app:program="@{viewModel.getProgram(6)}"
+                app:isProgramSelected="@{viewModel.isProgramSelected(6)}"
+                android:onClick="@{() -> viewModel.selectProgram(6)}"
+                android:onLongClick="@{() -> viewModel.onProgramLongClicked(6)}"/>
+
+        <com.revolution.robotics.views.controllerSetup.ProgramConnectionButton
+                android:id="@+id/program_lever_2"
+                app:layout_constraintBottom_toTopOf="@id/program_6"
+                app:layout_constraintStart_toStartOf="@id/program_6"
+                app:layout_constraintEnd_toEndOf="@id/program_6"
+                android:layout_marginBottom="@dimen/dimen_8dp"
+                android:layout_width="@dimen/controller_setup_program_button_width"
+                android:layout_height="@dimen/controller_setup_program_button_height"
+                app:isDriveTrain="@{true}"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

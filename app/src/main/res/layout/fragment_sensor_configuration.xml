@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable name="viewModel"
+                  type="com.revolution.robotics.features.configure.sensor.SensorConfigurationViewModel"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="@dimen/dimen_16dp"
+            android:paddingBottom="@dimen/dimen_4dp"
+            android:paddingLeft="@dimen/dimen_4dp"
+            android:paddingRight="@dimen/dimen_4dp"
+            android:background="@color/grey_28"
+            tools:layout_width="@dimen/drawer_config_width">
+
+        <View android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:clickable="true"
+              android:focusable="true"/>
+
+        <com.revolution.robotics.views.ChippedEditText
+                android:id="@+id/edit_sensor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginStart="@dimen/dimen_12dp"
+                app:chippedEditModel="@{viewModel.editTextModel}"
+                android:layout_marginEnd="@dimen/dimen_12dp"/>
+
+        <include
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/button_empty"
+                layout="@layout/layout_config_button"
+                app:viewModel="@{viewModel.emptyButton}"
+                android:layout_marginTop="@dimen/dimen_12dp"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                app:layout_constraintTop_toBottomOf="@id/edit_sensor"
+                app:layout_constraintEnd_toStartOf="@id/button_bumper"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+        <include
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/button_bumper"
+                layout="@layout/layout_config_button"
+                app:viewModel="@{viewModel.bumperButton}"
+                android:layout_marginTop="@dimen/dimen_12dp"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                app:layout_constraintTop_toBottomOf="@id/edit_sensor"
+                app:layout_constraintStart_toEndOf="@id/button_empty"
+                app:layout_constraintEnd_toStartOf="@id/button_ultrasound"/>
+
+        <include
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/button_ultrasound"
+                layout="@layout/layout_config_button"
+                app:viewModel="@{viewModel.ultrasoundButton}"
+                android:layout_marginTop="@dimen/dimen_12dp"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                app:layout_constraintTop_toBottomOf="@id/edit_sensor"
+                app:layout_constraintStart_toEndOf="@id/button_bumper"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+        <include layout="@layout/layout_configuration_action_buttons"
+                 app:viewModel="@{viewModel.actionButtonsViewModel}"
+                 android:id="@+id/action_buttons"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
