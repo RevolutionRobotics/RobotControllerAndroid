@@ -162,6 +162,8 @@ class CodingPresenter(
                     variablesSaved = false
                     handleSaveAction(actionIdAfterSave)
                     actionIdAfterSave = -1
+                    appPrefs.lastOpenedProgramName = userProgram.name
+                    appPrefs.lastOpenedProgramRobotId = userProgram.robotId
                     view?.onProgramSaved()
                 }
             }
