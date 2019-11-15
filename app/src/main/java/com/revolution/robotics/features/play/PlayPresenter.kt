@@ -70,7 +70,7 @@ class PlayPresenter(
             },
             onError = {
                 view?.onControllerLoadingError()
-                errorHandler.onError()
+                errorHandler.onError(it)
             })
     }
 

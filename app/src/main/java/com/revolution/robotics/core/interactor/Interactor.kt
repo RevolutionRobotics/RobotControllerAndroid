@@ -1,14 +1,8 @@
 package com.revolution.robotics.core.interactor
 
-import com.crashlytics.android.Crashlytics
-import com.revolution.robotics.BuildConfig
 import com.revolution.robotics.RoboticsApplication
 import com.revolution.robotics.features.shared.ErrorHandler
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import org.kodein.di.erased.instance
 import org.revolutionrobotics.bluetooth.android.threading.moveToUIThread
 
@@ -36,14 +30,11 @@ abstract class Interactor<T> {
             }.let { result ->
                 moveToUIThread {
                     if (result is Throwable) {
-                        if (!BuildConfig.DEBUG) {
-                            Crashlytics.logException(result)
-                        }
                         result.printStackTrace()
                         if (onError != null) {
                             onError.invoke(result)
                         } else {
-                            errorHandler.onError()
+                            errorHandler.onError(result)
                         }
                     } else {
                         onResponse.invoke(result as T)

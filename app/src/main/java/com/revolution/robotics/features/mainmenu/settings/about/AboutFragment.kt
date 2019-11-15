@@ -38,7 +38,7 @@ class AboutFragment :
         try {
             requireActivity().startActivity(intent)
         } catch (exception: ActivityNotFoundException) {
-            errorHandler.onError(R.string.error_cannot_open_url)
+            errorHandler.onError(exception, R.string.error_cannot_open_url)
         }
     }
 

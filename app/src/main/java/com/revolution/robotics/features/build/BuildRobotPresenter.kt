@@ -64,7 +64,7 @@ class BuildRobotPresenter(
                     this.controller = controllers
                     dialogEventBus.publish(DialogEvent.ROBOT_CREATED)
                 }, onError = {
-                    errorHandler.onError()
+                    errorHandler.onError(it)
                     dialogEventBus.publish(DialogEvent.ROBOT_CREATE_ERROR)
                 })
         } else {

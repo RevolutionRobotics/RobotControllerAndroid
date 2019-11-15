@@ -51,7 +51,7 @@ class HaveYouBuiltPresenter(
                         }
                     }
                 }, onError = {
-                    errorHandler.onError()
+                    errorHandler.onError(it)
                 })
         }
     }
