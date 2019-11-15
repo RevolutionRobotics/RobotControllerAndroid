@@ -19,9 +19,9 @@ open class MyRobotsItem(
     val imageUrl = robot.coverImage
 
     @DrawableRes
-    val selectedResource: Int = R.drawable.my_robots_border_red_selector
+    open val selectedResource: Int = R.drawable.my_robots_border_red_selector
     @DrawableRes
-    val defaultResource: Int = R.drawable.my_robots_border_white
+    open val defaultResource: Int = R.drawable.my_robots_border_white
     var isSelected: ObservableBoolean = ObservableBoolean(false)
 
     fun playButtonText() = if (isUnderConstruction) R.string.my_robots_under_construction_button else R.string.my_robots_play_button
