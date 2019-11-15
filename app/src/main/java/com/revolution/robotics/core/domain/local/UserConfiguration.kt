@@ -8,5 +8,5 @@ import kotlinx.android.parcel.Parcelize
 data class UserConfiguration(
     var controller: Int? = null,
     @Embedded
-    var mappingId: UserMapping? = null
+    var mappingId: UserMapping? = UserMapping()
 ) : Parcelable

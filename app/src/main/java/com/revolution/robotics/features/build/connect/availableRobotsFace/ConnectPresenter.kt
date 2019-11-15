@@ -1,6 +1,7 @@
 package com.revolution.robotics.features.build.connect.availableRobotsFace
 
 import android.annotation.SuppressLint
+import com.revolution.robotics.analytics.Reporter
 import com.revolution.robotics.core.kodein.utils.ApplicationContextProvider
 import com.revolution.robotics.features.build.connect.adapter.ConnectRobotItem
 import org.revolutionrobotics.bluetooth.android.communication.RoboticsDeviceConnector
@@ -8,6 +9,7 @@ import org.revolutionrobotics.bluetooth.android.discover.RoboticsDeviceDiscovere
 
 @SuppressLint("MissingPermission")
 class ConnectPresenter(
+    private val reporter: Reporter,
     private val applicationContextProvider: ApplicationContextProvider,
     private val bleHandler: RoboticsDeviceConnector
 ) : ConnectMvp.Presenter {
@@ -42,6 +44,7 @@ class ConnectPresenter(
             robot.setSelected(true)
             bleHandler.connect(applicationContextProvider.applicationContext, robot.device,
                 onConnected = {
+                    reporter.setUserProperty(Reporter.UserProperty.ROBOT_ID, robot.name)
                     view?.onConnectionSuccess()
                     isConnectionInProgress = false
                 },
