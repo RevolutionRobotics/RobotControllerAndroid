@@ -5,6 +5,7 @@ import android.view.View
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
+import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.databinding.FragmentSettingsBinding
 import org.kodein.di.erased.instance
 
@@ -14,6 +15,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
     override val viewModelClass: Class<SettingsViewModel> = SettingsViewModel::class.java
     private val resourceResolver: ResourceResolver by kodein.instance()
     private val presenter: SettingsMvp.Presenter by kodein.instance()
+    private val navigator: Navigator by kodein.instance()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         presenter.register(this, viewModel)
@@ -22,6 +24,11 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
 
     override fun showTutorialResetSuccessDialog() {
         TutorialResetDialog().show(fragmentManager)
+    }
+
+    override fun onBackPressed(): Boolean {
+        navigator.back()
+        return true
     }
 
     override fun onDestroyView() {
