@@ -4,7 +4,6 @@ import com.revolution.robotics.R
 import com.revolution.robotics.core.interactor.GetUserProgramInteractor
 import com.revolution.robotics.core.utils.AppPrefs
 import com.revolution.robotics.core.utils.Navigator
-import com.revolution.robotics.features.mainmenu.tutorial.TutorialViewModel
 
 class MainMenuPresenter(
     private val userProgramInteractor: GetUserProgramInteractor,
@@ -15,10 +14,7 @@ class MainMenuPresenter(
     override var view: MainMenuMvp.View? = null
     override var model: MainMenuViewModel? = null
 
-    var tutorialViewModel: TutorialViewModel? = null
-
-    override fun register(view: MainMenuMvp.View, model: MainMenuViewModel?) {
-        super.register(view, model)
+    override fun handleOnboarding() {
         if (!appPrefs.userTypeSelected) {
             navigator.navigate(MainMenuFragmentDirections.toUserTypeSelection())
         } else if (!appPrefs.finishedOnboarding) {
@@ -26,7 +22,7 @@ class MainMenuPresenter(
                 navigator.navigate(MainMenuFragmentDirections.toHaveYouBuiltCarby())
             } else {
                 appPrefs.finishedOnboarding = true
-                view.showCongratulationsDialog()
+                view?.showCongratulationsDialog()
             }
         }
     }
@@ -53,14 +49,5 @@ class MainMenuPresenter(
 
     override fun onSettingsClicked() {
         navigator.navigate(MainMenuFragmentDirections.toSettings())
-    }
-
-    override fun onTutorialButtonClicked() {
-        appPrefs.showTutorial = false
-        tutorialViewModel?.tutorialItems?.forEach {
-            it.isActive.set(false)
-        }
-        tutorialViewModel = null
-        view?.removeTutorialLayout()
     }
 }

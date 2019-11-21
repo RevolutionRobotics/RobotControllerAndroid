@@ -4,8 +4,6 @@
 
     <data>
         <variable name="viewModel" type="com.revolution.robotics.features.mainmenu.MainMenuButtonViewModel"/>
-        <variable name="translationZ" type="Float"/>
-        <variable name="onClickEnabled" type="Boolean"/>
     </data>
 
     <LinearLayout
@@ -14,9 +12,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:background="@drawable/card_border_red"
-            android:clickable="@{safeUnbox(onClickEnabled)}"
             android:onClick="@{() -> viewModel.onClick.invoke()}"
-            android:translationZ="@{safeUnbox(translationZ)}"
             tools:layout_width="120dp"
             tools:layout_height="160dp">
 
