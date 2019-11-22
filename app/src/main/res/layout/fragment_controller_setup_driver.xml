@@ -17,7 +17,7 @@
                 android:layout_width="@dimen/controller_setup_body_width"
                 android:layout_height="@dimen/controller_setup_body_height"
                 android:background="@drawable/controller_setup_body_inactive"
-                android:layout_marginBottom="@dimen/dimen_32dp"
+                android:layout_marginTop="@dimen/dimen_32dp"
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
