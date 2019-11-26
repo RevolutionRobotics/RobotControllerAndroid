@@ -2,6 +2,8 @@ package com.revolution.robotics.features.build
 
 import android.os.Bundle
 import android.view.View
+import android.view.ViewParent
+import androidx.viewpager.widget.ViewPager
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.local.BuildStatus
@@ -18,14 +20,17 @@ import com.revolution.robotics.features.bluetooth.BluetoothManager
 import com.revolution.robotics.features.build.buildFinished.BuildFinishedDialog
 import com.revolution.robotics.features.build.chapterFinished.ChapterFinishedDialog
 import com.revolution.robotics.features.build.testing.buildTest.TestBuildDialog
+import com.revolution.robotics.features.myRobots.adapter.MyRobotsCarouselAdapter
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 import com.revolution.robotics.views.slider.BuildStepSliderView
 import org.kodein.di.erased.instance
 import java.util.Date
 
 @Suppress("UnnecessaryApply")
-class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotViewModel>(R.layout.fragment_build_robot),
-    BuildRobotMvp.View, BuildStepSliderView.BuildStepSelectedListener, DialogEventBus.Listener {
+class BuildRobotFragment :
+    BaseFragment<FragmentBuildRobotBinding, BuildRobotViewModel>(R.layout.fragment_build_robot),
+    BuildRobotMvp.View, BuildStepSliderView.BuildStepSelectedListener, DialogEventBus.Listener,
+    ViewPager.OnPageChangeListener {
 
     companion object {
         const val DEFAULT_STARTING_INDEX = 1
@@ -43,6 +48,7 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
     private var buildStepCount = 0
     private var currentBuildStep: BuildStep? = null
     private var wasRobotFinished = false
+    private var buildSteps: List<BuildStep>? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding?.apply {
@@ -52,6 +58,7 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
                 .backgroundColorResource(R.color.grey_28)
                 .borderColorResource(R.color.grey_6d)
                 .create()
+            viewPager.addOnPageChangeListener(this@BuildRobotFragment)
         }
 
         presenter.register(this, viewModel)
@@ -86,15 +93,17 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
         when (event) {
             DialogEvent.CHAPTER_FINISHED ->
                 if (bluetoothManager.isServiceDiscovered) {
-                    event.extras.getParcelable<Milestone>(ChapterFinishedDialog.KEY_MILESTONE)?.let { milestone ->
-                        TestBuildDialog.newInstance(
-                            milestone.testImage ?: "",
-                            milestone.testDescription?.getLocalizedString(resourceResolver) ?: "",
-                            milestone.testCode ?: ""
-                        ).show(
-                            fragmentManager
-                        )
-                    }
+                    event.extras.getParcelable<Milestone>(ChapterFinishedDialog.KEY_MILESTONE)
+                        ?.let { milestone ->
+                            TestBuildDialog.newInstance(
+                                milestone.testImage ?: "",
+                                milestone.testDescription?.getLocalizedString(resourceResolver)
+                                    ?: "",
+                                milestone.testCode ?: ""
+                            ).show(
+                                fragmentManager
+                            )
+                        }
                 } else {
                     bluetoothManager.startConnectionFlow()
                 }
@@ -105,9 +114,11 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
     }
 
     override fun onBuildStepsLoaded(steps: List<BuildStep>) {
+        buildSteps = steps
         val startIndex = (arguments?.robot?.actualBuildStep ?: DEFAULT_STARTING_INDEX) - 1
         binding?.seekbar?.setBuildSteps(steps, this, startIndex)
         buildStepCount = steps.size
+        viewModel?.setBuildSteps(steps)
         onBuildStepSelected(steps[startIndex], true)
     }
 
@@ -117,6 +128,7 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
     }
 
     override fun onBuildStepSelected(buildStep: BuildStep, fromUser: Boolean) {
+        binding?.viewPager?.post { binding?.viewPager?.currentItem = buildStep.stepNumber - 1 }
         viewModel?.setBuildStep(buildStep, buildStepCount)
         currentBuildStep = buildStep
     }
@@ -132,5 +144,19 @@ class BuildRobotFragment : BaseFragment<FragmentBuildRobotBinding, BuildRobotVie
 
     override fun onRobotSaveStarted() {
         BuildFinishedDialog.newInstance().show(fragmentManager)
+    }
+
+    override fun onPageScrollStateChanged(state: Int) {
+    }
+
+    override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+    }
+
+    override fun onPageSelected(position: Int) {
+        buildSteps?.let {
+            viewModel?.setBuildStep(it[position], buildStepCount)
+            currentBuildStep = it[position]
+            binding?.seekbar?.setCurrentStep(position)
+        }
     }
 }
