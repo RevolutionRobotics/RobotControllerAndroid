@@ -19,10 +19,8 @@ class AboutPresenter(
         private const val FACEBOOK = "https://www.facebook.com/RevoRobotics"
         private const val INSTAGRAM = "https://www.instagram.com/revorobotics"
         private const val WEB_PAGE = "https://www.revolutionrobotics.org/"
-        // TODO update PP url
-        private const val PRIVACY_POLICY = "https://www.revolutionrobotics.org/"
-        // TODO update T&C url
-        private const val TERMS_AND_CONDITIONS = "https://www.revolutionrobotics.org/"
+        private const val PRIVACY_POLICY = "https://revolutionrobotics.org/pages/privacy-policy"
+        private const val TERMS_AND_CONDITIONS = "https://revolutionrobotics.org/pages/terms-and-conditions"
     }
 
     override var view: AboutMvp.View? = null
