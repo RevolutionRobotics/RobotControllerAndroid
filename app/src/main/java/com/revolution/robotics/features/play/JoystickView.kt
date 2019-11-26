@@ -46,6 +46,10 @@ class JoystickView @JvmOverloads constructor(context: Context, attrs: AttributeS
             center?.let { center ->
                 isTouched = true
                 joystickPosition.calculateAngle(center.first, center.second, event.x, event.y)
+                if (joystickPosition.angle > Math.PI * 0.4)
+                    joystickPosition.angle = Math.PI / 2
+                else if (joystickPosition.angle < -Math.PI * 0.4)
+                    joystickPosition.angle = -Math.PI / 2
                 joystickPosition.calculateDistance(
                     center.first,
                     center.second,
