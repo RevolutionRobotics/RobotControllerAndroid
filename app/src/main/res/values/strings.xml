@@ -329,9 +329,9 @@
 
     <!-- Community -->
     <string name="community_title">Community</string>
-    <string name="community_content_title">Share or get help</string>
-    <string name="community_content_description">Description of the forum with benefits</string>
-    <string name="community_begin_button">Begin!</string>
+    <string name="community_content_title">Welcome to our community forum!</string>
+    <string name="community_content_description">Share your robot creations with our community of robotics enthusiasts! Need help, found a bug, or have questions about how to build, code, or create? Click to enter our forum below to find questions to your answers!</string>
+    <string name="community_begin_button">Let\'s go!</string>
 
     <!-- Tutorial -->
     <string name="tutorial_reset_success">Successful onboarding reset</string>
