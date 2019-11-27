@@ -3,7 +3,9 @@ package com.revolution.robotics.features.coding
 import android.util.Base64
 import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.local.UserProgram
-import com.revolution.robotics.core.interactor.*
+import com.revolution.robotics.core.interactor.GetUserConfigForRobotInteractor
+import com.revolution.robotics.core.interactor.RemoveUserProgramInteractor
+import com.revolution.robotics.core.interactor.SaveUserProgramInteractor
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.core.utils.AppPrefs
 import com.revolution.robotics.features.coding.new.NewProgramConfirmDialog
@@ -11,6 +13,7 @@ import com.revolution.robotics.features.coding.new.robotSelector.RobotSelectorDi
 import com.revolution.robotics.features.coding.programs.ProgramsDialog
 import com.revolution.robotics.features.coding.python.PythonDialog
 import com.revolution.robotics.features.coding.saveProgram.SaveProgramDialog
+import com.revolution.robotics.features.coding.test.TestCodeDialog
 import org.revolutionrobotics.blockly.android.view.jsInterface.SaveBlocklyListener
 import java.util.concurrent.TimeUnit
 
@@ -122,6 +125,20 @@ class CodingPresenter(
         view?.getDataFromBlocklyView(object : SaveBlocklyListener {
             override fun onPythonProgramSaved(file: String) {
                 view?.showDialog(PythonDialog.newInstance(file))
+            }
+
+            override fun onXMLProgramSaved(file: String) = Unit
+
+            override fun onVariablesExported(variables: String) = Unit
+        })
+    }
+
+    override fun play() {
+        view?.getDataFromBlocklyView(object : SaveBlocklyListener {
+            override fun onPythonProgramSaved(file: String) {
+                robotId?.let {
+                    view?.showDialog(TestCodeDialog.newInstance(file, it))
+                }
             }
 
             override fun onXMLProgramSaved(file: String) = Unit

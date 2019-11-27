@@ -29,6 +29,7 @@ interface CodingMvp : Mvp {
         fun showRobotSelectionDialog()
         fun createNewProgram(robotId: Int)
         fun showPythonCode()
+        fun play()
         fun onBackPressed()
     }
 }

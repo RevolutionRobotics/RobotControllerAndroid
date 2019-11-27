@@ -15,11 +15,7 @@ import com.revolution.robotics.blockly.dialogs.soundPicker.SoundPickerPresenter
 import com.revolution.robotics.blockly.dialogs.variableOptions.VariableOptionsMvp
 import com.revolution.robotics.blockly.dialogs.variableOptions.VariableOptionsPresenter
 import com.revolution.robotics.core.db.RoboticsDatabase
-import com.revolution.robotics.core.domain.local.UserBackgroundProgramBindingDao
-import com.revolution.robotics.core.domain.local.UserChallengeCategoryDao
-import com.revolution.robotics.core.domain.local.UserControllerDao
-import com.revolution.robotics.core.domain.local.UserProgramDao
-import com.revolution.robotics.core.domain.local.UserRobotDao
+import com.revolution.robotics.core.domain.local.*
 import com.revolution.robotics.core.interactor.*
 import com.revolution.robotics.core.interactor.firebase.*
 import com.revolution.robotics.features.build.BuildRobotMvp
@@ -46,6 +42,8 @@ import com.revolution.robotics.features.coding.programs.ProgramsMvp
 import com.revolution.robotics.features.coding.programs.ProgramsPresenter
 import com.revolution.robotics.features.coding.saveProgram.SaveProgramMvp
 import com.revolution.robotics.features.coding.saveProgram.SaveProgramPresenter
+import com.revolution.robotics.features.coding.test.TestCodeMvp
+import com.revolution.robotics.features.coding.test.TestCodePresenter
 import com.revolution.robotics.features.community.CommunityMvp
 import com.revolution.robotics.features.community.CommunityPresenter
 import com.revolution.robotics.features.configure.ConfigureMvp
@@ -90,11 +88,7 @@ import com.revolution.robotics.features.whoToBuild.WhoToBuildMvp
 import com.revolution.robotics.features.whoToBuild.WhoToBuildPresenter
 import org.kodein.di.DKodeinAware
 import org.kodein.di.Kodein
-import org.kodein.di.bindings.NoArgBindingKodein
-import org.kodein.di.bindings.NoArgSimpleBindingKodein
-import org.kodein.di.bindings.Provider
-import org.kodein.di.bindings.RefMaker
-import org.kodein.di.bindings.Singleton
+import org.kodein.di.bindings.*
 import org.kodein.di.erased
 import org.kodein.di.erased.bind
 
@@ -181,6 +175,7 @@ fun createPresenterModule() =
         bind<TestMvp.Presenter>() with s { TestPresenter(i(), i(), i()) }
         bind<UserTypeSelectionMvp.Presenter>() with s { UserTypeSelectionPresenter(i(), i(), i()) }
         bind<HaveYouBuiltMvp.Presenter>() with s { HaveYouBuiltPresenter(i(), i(), i(), i(), i(), i(), i()) }
+        bind<TestCodeMvp.Presenter>() with s { TestCodePresenter(i(), i(), i()) }
     }
 
 fun createDbModule(context: Context) =
