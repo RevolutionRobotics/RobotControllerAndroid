@@ -130,6 +130,16 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:visible="@{viewModel.isBlocklyLoaded}"/>
 
+        <com.revolution.robotics.views.RoboticsButton
+                android:layout_width="@dimen/robotics_button_width"
+                android:layout_height="@dimen/robotics_button_height"
+                android:layout_margin="@dimen/dimen_16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:onClick="@{()->viewModel.play()}"
+                app:text="@{@string/blockly_test_button}"
+                app:image="@{@drawable/ic_play}"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
