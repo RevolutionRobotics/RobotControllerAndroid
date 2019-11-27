@@ -2,7 +2,6 @@ package com.revolution.robotics.features.coding.test
 
 import android.net.Uri
 import android.util.Base64
-import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import com.revolution.robotics.core.domain.local.UserController
 import com.revolution.robotics.core.domain.local.UserControllerWithPrograms

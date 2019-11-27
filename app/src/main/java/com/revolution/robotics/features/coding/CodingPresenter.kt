@@ -8,6 +8,8 @@ import com.revolution.robotics.core.interactor.RemoveUserProgramInteractor
 import com.revolution.robotics.core.interactor.SaveUserProgramInteractor
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.core.utils.AppPrefs
+import com.revolution.robotics.features.bluetooth.BluetoothConnectionListener
+import com.revolution.robotics.features.bluetooth.BluetoothManager
 import com.revolution.robotics.features.coding.new.NewProgramConfirmDialog
 import com.revolution.robotics.features.coding.new.robotSelector.RobotSelectorDialog
 import com.revolution.robotics.features.coding.programs.ProgramsDialog
@@ -23,8 +25,9 @@ class CodingPresenter(
     private val removeUserProgramInteractor: RemoveUserProgramInteractor,
     private val saveUserProgramInteractor: SaveUserProgramInteractor,
     private val resourceResolver: ResourceResolver,
+    private val bluetoothManager: BluetoothManager,
     private val appPrefs: AppPrefs
-) : CodingMvp.Presenter {
+) : CodingMvp.Presenter, BluetoothConnectionListener {
 
     companion object {
         private const val EMPTY_XML = "<xml xmlns=\"http://www.w3.org/1999/xhtml\"></xml>"
@@ -40,6 +43,17 @@ class CodingPresenter(
     private var xmlSaved = false
     private var variablesSaved = false
     private var robotId: Int? = null
+    private var showTestDialogAfterConnection = false
+
+    override fun register(view: CodingMvp.View, model: CodingViewModel?) {
+        super.register(view, model)
+        bluetoothManager.registerListener(this)
+    }
+
+    override fun unregister(view: CodingMvp.View?) {
+        super.unregister(view)
+        bluetoothManager.unregisterListener(this)
+    }
 
     override fun showNewProgramDialog() {
         view?.showDialog(NewProgramConfirmDialog.newInstance())
@@ -134,6 +148,15 @@ class CodingPresenter(
     }
 
     override fun play() {
+        if (bluetoothManager.isServiceDiscovered) {
+            showTestDialog()
+        } else {
+            showTestDialogAfterConnection = true
+            bluetoothManager.startConnectionFlow()
+        }
+    }
+
+    private fun showTestDialog() {
         view?.getDataFromBlocklyView(object : SaveBlocklyListener {
             override fun onPythonProgramSaved(file: String) {
                 robotId?.let {
@@ -218,5 +241,11 @@ class CodingPresenter(
 
     override fun onBackPressed() {
         isProgramChanged { view?.onBackPressed(it) }
+    }
+
+    override fun onBluetoothConnectionStateChanged(connected: Boolean, serviceDiscovered: Boolean) {
+        if (showTestDialogAfterConnection && connected && serviceDiscovered) {
+            showTestDialog()
+        }
     }
 }
