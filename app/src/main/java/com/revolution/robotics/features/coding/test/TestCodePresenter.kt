@@ -69,7 +69,7 @@ class TestCodePresenter(
                 liveControllerService?.start()
             },
             onError = {
-                view?.showError(it.localizedMessage)
+                view?.showError()
             })
     }
 }

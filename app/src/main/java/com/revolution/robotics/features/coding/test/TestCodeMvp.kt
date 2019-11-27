@@ -6,7 +6,7 @@ import com.revolution.robotics.core.Mvp
 interface TestCodeMvp : Mvp {
 
     interface View : Mvp.View {
-        fun showError(message: String)
+        fun showError()
         fun showConfigurationSent()
     }
 

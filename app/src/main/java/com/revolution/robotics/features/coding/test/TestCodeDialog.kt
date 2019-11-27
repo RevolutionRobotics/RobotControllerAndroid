@@ -8,6 +8,7 @@ import com.revolution.robotics.core.domain.local.UserProgram
 import com.revolution.robotics.core.extensions.withArguments
 import com.revolution.robotics.core.utils.BundleArgumentDelegate
 import com.revolution.robotics.databinding.DialogChallengeDetailFinishedBinding
+import com.revolution.robotics.databinding.DialogTestCodeBinding
 import com.revolution.robotics.features.challenges.challengeDetail.ChallengeDetailFinishedDialog
 import com.revolution.robotics.views.dialogs.DialogButton
 import com.revolution.robotics.views.dialogs.DialogFace
@@ -30,7 +31,8 @@ class TestCodeDialog : RoboticsDialog(), TestCodeMvp.View {
             }
     }
 
-    override val dialogFaces = listOf(TestCodeDialogFace(this))
+    private val testDialogFace = TestCodeDialogFace(this)
+    override val dialogFaces = listOf(testDialogFace)
     override val hasCloseButton = true
 
     private val presenter: TestCodeMvp.Presenter by kodein.instance()
@@ -57,12 +59,13 @@ class TestCodeDialog : RoboticsDialog(), TestCodeMvp.View {
         super.onDestroyView()
     }
 
-    override fun showError(message: String) {
-        Toast.makeText(context, "Error", Toast.LENGTH_LONG).show()
+    override fun showError() {
+        Toast.makeText(context, R.string.blockly_test_dialog_error, Toast.LENGTH_LONG).show()
+        dismiss()
     }
 
     override fun showConfigurationSent() {
-        Toast.makeText(context, "Config sent", Toast.LENGTH_LONG).show()
+        testDialogFace.showText(resources.getString(R.string.blockly_test_dialog_running))
     }
 
     private fun onDoneClicked() {
@@ -70,8 +73,12 @@ class TestCodeDialog : RoboticsDialog(), TestCodeMvp.View {
     }
 
     class TestCodeDialogFace(roboticsDialog: RoboticsDialog) :
-        DialogFace<DialogChallengeDetailFinishedBinding>(
+        DialogFace<DialogTestCodeBinding>(
             R.layout.dialog_test_code,
             roboticsDialog
-        )
+        ) {
+        fun showText(text: String) {
+            binding?.txtTestDialog?.text = text
+        }
+    }
 }
