@@ -15,7 +15,7 @@ class MainMenuViewModel(private val presenter: MainMenuMvp.Presenter) : ViewMode
     val codingButton = MainMenuButtonViewModel(
         R.string.menu_coding,
         R.drawable.bg_card_border_yellow_selector,
-        R.drawable.programs,
+        R.drawable.coding,
         presenter::navigateToCoding
     )
 
