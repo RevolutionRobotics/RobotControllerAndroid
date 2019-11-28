@@ -163,7 +163,7 @@
 
             <Button
                     android:id="@+id/more_button"
-                    android:layout_width="72dp"
+                    android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:background="@drawable/ic_your_robots_clipped_button_wide_bg_selector"
                     android:layout_marginStart="@dimen/my_robots_robot_delete_margin_start"
@@ -174,7 +174,8 @@
                     app:layout_constraintHorizontal_chainStyle="spread"
                     app:layout_constraintTop_toTopOf="@id/buttons_top_guide"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toBottomOf="@id/buttons_bottom_guide"/>
+                    app:layout_constraintBottom_toBottomOf="@id/buttons_bottom_guide"
+                    app:layout_constraintDimensionRatio="54:35"/>
 
             <ImageView
                     android:layout_width="@dimen/my_robots_robot_button_icon_size"
