@@ -31,11 +31,13 @@ class FirmwareUpdateDialogPresenter(
 
     private var infoViewModel: FirmwareUpdateInfoViewModel? = null
     private var isUpdateFlowStarted = false
+    private var firmwareUpdateInProgress = false
     private var latestFirmware: Firmware? = null
 
     override fun register(view: FirmwareUpdateMvp.View, model: ViewModel?) {
         super.register(view, model)
         isUpdateFlowStarted = false
+        firmwareUpdateInProgress = false
         infoViewModel = FirmwareUpdateInfoViewModel().apply {
             view.setInfoViewModel(this)
         }
@@ -136,6 +138,14 @@ class FirmwareUpdateDialogPresenter(
         }
     }
 
+    override fun onCloseClicked() {
+        if (firmwareUpdateInProgress) {
+            view?.activateConfirmationFace()
+        } else {
+            view?.closeDialog()
+        }
+    }
+
     @Suppress("UnusedPrivateMember")
     private fun readError(throwable: Throwable) {
         if (!isUpdateFlowStarted) {
@@ -144,17 +154,20 @@ class FirmwareUpdateDialogPresenter(
     }
 
     private fun updateFirmware() {
+        firmwareUpdateInProgress = true
         val startTime = System.currentTimeMillis()
         latestFirmware?.url?.let { firmwareUrl ->
             view?.activateLoadingFace()
             fileDownloader.downloadFirestoreFile(FIRMWARE_FILENAME, firmwareUrl, { firmwareUri ->
                 bluetoothManager.getConfigurationService().updateFramework(firmwareUri,
                     onSuccess = {
+                        firmwareUpdateInProgress = false
                         reportUploadedToBrain(reporter, "firmware", firmwareUri, startTime)
                         isUpdateFlowStarted = false
                         view?.activateSuccessFace()
                     },
                     onError = {
+                        firmwareUpdateInProgress = false
                         view?.activateErrorFace()
                     })
             }, {
