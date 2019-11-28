@@ -26,6 +26,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 tools:src="@drawable/img_logo"
                 app:firebaseImageUrl="@{viewModel.zoomableImage}"
+                app:originalSize="@{true}"
                 app:visible="@{viewModel.type == ChallengeType.ZOOMABLE}"/>
 
         <com.revolution.robotics.views.toolbar.RoboticsToolbar
@@ -108,7 +109,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintDimensionRatio="1:1"
                 android:layout_marginBottom="@dimen/dimen_8dp"
-                android:scaleType="fitXY"
+                android:scaleType="fitCenter"
                 android:layout_marginEnd="@dimen/dimen_40dp"
                 app:layout_constraintTop_toBottomOf="@id/toolbar"
                 app:layout_constraintBottom_toTopOf="@id/slider_challenge_detail"
