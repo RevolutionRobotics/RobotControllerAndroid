@@ -64,7 +64,8 @@
                 app:layout_constraintTop_toTopOf="@id/icon_new"
                 app:layout_constraintEnd_toStartOf="@id/icon_save"
                 android:layout_marginEnd="@dimen/dimen_8dp"
-                app:chippedBoxConfig="@{buttonBackground}"/>
+                app:chippedBoxConfig="@{buttonBackground}"
+                android:visibility="gone"/>
 
         <TextView
                 android:id="@+id/program_title"
@@ -135,7 +136,7 @@
                 android:layout_height="@dimen/robotics_button_height"
                 android:layout_margin="@dimen/dimen_16dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/divider"
                 android:onClick="@{()->viewModel.play()}"
                 app:text="@{@string/blockly_test_button}"
                 app:image="@{@drawable/ic_play}"/>
