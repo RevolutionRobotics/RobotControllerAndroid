@@ -1,6 +1,6 @@
 <resources>
     <!-- General strings -->
-    <string name="app_name">RevoRobotics</string>
+    <string name="app_name">Revolution Robotics</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="next">Next</string>
