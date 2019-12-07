@@ -156,6 +156,28 @@ class CodingPresenter(
         }
     }
 
+    override fun shareProgram() {
+        var code : String? = null
+        var xml : String? = null
+        view?.getDataFromBlocklyView(object : SaveBlocklyListener {
+            override fun onPythonProgramSaved(file: String) {
+                code = file
+                if (code != null && xml != null) {
+                    view?.shareCode(code!!, xml!!)
+                }
+            }
+
+            override fun onXMLProgramSaved(file: String) {
+                xml = file
+                if (code != null && xml != null) {
+                    view?.shareCode(code!!, xml!!)
+                }
+            }
+
+            override fun onVariablesExported(variables: String) = Unit
+        })
+    }
+
     private fun showTestDialog() {
         view?.getDataFromBlocklyView(object : SaveBlocklyListener {
             override fun onPythonProgramSaved(file: String) {
