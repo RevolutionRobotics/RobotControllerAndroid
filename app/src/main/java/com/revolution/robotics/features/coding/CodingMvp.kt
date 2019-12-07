@@ -17,6 +17,7 @@ interface CodingMvp : Mvp {
         fun onProgramSaved()
         fun onToolbarBackPressed()
         fun onBackPressed(showDialog: Boolean)
+        fun shareCode(code: String, xml: String)
     }
 
     interface Presenter : Mvp.Presenter<View, CodingViewModel>, SaveBlocklyListener {
@@ -31,5 +32,6 @@ interface CodingMvp : Mvp {
         fun showPythonCode()
         fun play()
         fun onBackPressed()
+        fun shareProgram()
     }
 }

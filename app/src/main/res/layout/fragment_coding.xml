@@ -67,6 +67,19 @@
                 app:chippedBoxConfig="@{buttonBackground}"
                 android:visibility="gone"/>
 
+        <ImageView
+                android:id="@+id/icon_export"
+                android:layout_width="@dimen/coding_icon_width"
+                android:layout_height="@dimen/coding_icon_height"
+                android:scaleType="centerInside"
+                android:padding="@dimen/dimen_8dp"
+                android:src="@drawable/ic_email"
+                android:onClick="@{() -> viewModel.shareProgram()}"
+                app:layout_constraintTop_toTopOf="@id/icon_new"
+                app:layout_constraintEnd_toStartOf="@id/icon_code"
+                android:layout_marginEnd="@dimen/dimen_8dp"
+                app:chippedBoxConfig="@{buttonBackground}"
+                app:gone="@{!viewModel.codeExportEnabled}" />
         <TextView
                 android:id="@+id/program_title"
                 android:layout_width="@dimen/coding_program_title_width"
@@ -84,7 +97,7 @@
                 app:autoSizeMinTextSize="10sp"
                 app:autoSizeMaxTextSize="16sp"
                 app:layout_constraintTop_toTopOf="@id/icon_new"
-                app:layout_constraintEnd_toStartOf="@id/icon_code"
+                app:layout_constraintEnd_toStartOf="@id/icon_export"
                 app:chippedBoxConfig="@{buttonBackground}"/>
 
         <View

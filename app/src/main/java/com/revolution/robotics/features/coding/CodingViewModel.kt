@@ -3,6 +3,7 @@ package com.revolution.robotics.features.coding
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModel
+import com.revolution.robotics.BuildConfig
 import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.local.UserProgram
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
@@ -19,6 +20,8 @@ class CodingViewModel(
     val isBlocklyLoaded = ObservableBoolean(false)
     val isInEditMode = ObservableBoolean(true)
 
+    val codeExportEnabled = BuildConfig.FLAVOR == "dev"
+
     fun showPythonCode() = presenter.showPythonCode()
 
     fun showProgramsDialog() = presenter.showProgramsDialog()
@@ -34,6 +37,8 @@ class CodingViewModel(
     }
 
     fun play() = presenter.play()
+
+    fun shareProgram() = presenter.shareProgram()
 
 
 }
