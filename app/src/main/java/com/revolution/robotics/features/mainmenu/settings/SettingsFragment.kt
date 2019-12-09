@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
+import com.revolution.robotics.analytics.Reporter
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.databinding.FragmentSettingsBinding
@@ -13,6 +14,8 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
     SettingsMvp.View {
 
     override val viewModelClass: Class<SettingsViewModel> = SettingsViewModel::class.java
+    override val screen = Reporter.Screen.SETTINGS
+
     private val resourceResolver: ResourceResolver by kodein.instance()
     private val presenter: SettingsMvp.Presenter by kodein.instance()
     private val navigator: Navigator by kodein.instance()

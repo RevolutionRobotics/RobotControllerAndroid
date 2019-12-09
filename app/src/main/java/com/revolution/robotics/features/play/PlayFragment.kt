@@ -8,6 +8,7 @@ import android.view.WindowManager
 import androidx.databinding.ViewDataBinding
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
+import com.revolution.robotics.analytics.Reporter
 import com.revolution.robotics.core.utils.AppPrefs
 import com.revolution.robotics.core.utils.BundleArgumentDelegate
 import com.revolution.robotics.core.utils.Navigator
@@ -24,6 +25,7 @@ abstract class PlayFragment : BaseFragment<FragmentPlayCoreBinding, PlayViewMode
     }
 
     override val viewModelClass = PlayViewModel::class.java
+    override val screen = Reporter.Screen.PLAY
 
     protected val presenter: PlayMvp.Presenter by kodein.instance()
     private val bluetoothManager: BluetoothManager by kodein.instance()

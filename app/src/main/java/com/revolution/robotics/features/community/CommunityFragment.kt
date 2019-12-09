@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
+import com.revolution.robotics.analytics.Reporter
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.databinding.FragmentCommunityBinding
 import com.revolution.robotics.features.shared.ErrorHandler
@@ -22,6 +23,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
     }
 
     override val viewModelClass = CommunityViewModel::class.java
+    override val screen = Reporter.Screen.COMMUNITY
 
     private val presenter: CommunityMvp.Presenter by kodein.instance()
     private val resourceResolver: ResourceResolver by kodein.instance()

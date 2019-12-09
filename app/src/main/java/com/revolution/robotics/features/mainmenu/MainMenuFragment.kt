@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
+import com.revolution.robotics.analytics.Reporter
 import com.revolution.robotics.databinding.FragmentMainMenuBinding
 import com.revolution.robotics.features.onboarding.congratulations.CongratulationsDialog
 import org.kodein.di.erased.instance
@@ -13,6 +14,8 @@ class MainMenuFragment :
     MainMenuMvp.View {
 
     override val viewModelClass: Class<MainMenuViewModel> = MainMenuViewModel::class.java
+    override val screen = Reporter.Screen.MAIN_MENU
+
     private val presenter: MainMenuMvp.Presenter by kodein.instance()
 
 

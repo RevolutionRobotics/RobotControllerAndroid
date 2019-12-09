@@ -5,6 +5,7 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
+import com.revolution.robotics.analytics.Reporter
 import com.revolution.robotics.core.domain.remote.ChallengeCategory
 import com.revolution.robotics.core.extensions.withArguments
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
@@ -28,6 +29,7 @@ class ChallengeListFragment :
     }
 
     override val viewModelClass: Class<ChallengeListViewModel> = ChallengeListViewModel::class.java
+    override val screen = Reporter.Screen.CHALLENGE_LIST
 
     val presenter: ChallengeListMvp.Presenter by kodein.instance()
     val resourceResolver: ResourceResolver by kodein.instance()

@@ -5,6 +5,7 @@ import android.view.View
 import androidx.viewpager.widget.ViewPager
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
+import com.revolution.robotics.analytics.Reporter
 import com.revolution.robotics.core.extensions.waitForLayout
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.databinding.FragmentWhoToBuildBinding
@@ -19,6 +20,8 @@ class WhoToBuildFragment : BaseFragment<FragmentWhoToBuildBinding, WhoToBuildVie
     WhoToBuildMvp.View, ViewPager.OnPageChangeListener {
 
     override val viewModelClass: Class<WhoToBuildViewModel> = WhoToBuildViewModel::class.java
+    override val screen = Reporter.Screen.CREATE_NEW_ROBOT
+
     private var adapter = RobotsCarouselAdapter()
     private val presenter: WhoToBuildMvp.Presenter by kodein.instance()
     private val resourceResolver: ResourceResolver by kodein.instance()

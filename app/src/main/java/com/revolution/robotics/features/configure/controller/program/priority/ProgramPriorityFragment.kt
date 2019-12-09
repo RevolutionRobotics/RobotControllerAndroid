@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
+import com.revolution.robotics.analytics.Reporter
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.core.utils.BundleArgumentDelegate
 import com.revolution.robotics.databinding.FragmentProgramPriorityBinding
@@ -22,6 +23,8 @@ class ProgramPriorityFragment :
     }
 
     override val viewModelClass: Class<ProgramPriorityViewModel> = ProgramPriorityViewModel::class.java
+    override val screen = Reporter.Screen.PROGRAM_PRIORITY
+
     private val presenter: ProgramPriorityMvp.Presenter by kodein.instance()
     private val resourceResolver: ResourceResolver by kodein.instance()
 
