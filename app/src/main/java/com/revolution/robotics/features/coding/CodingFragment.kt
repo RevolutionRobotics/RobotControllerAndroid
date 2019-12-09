@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.postDelayed
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
+import com.revolution.robotics.analytics.Reporter
 import com.revolution.robotics.blockly.DialogFactory
 import com.revolution.robotics.blockly.utils.BlocklyResultHolder
 import com.revolution.robotics.core.domain.local.UserConfiguration
@@ -46,6 +47,7 @@ class CodingFragment : BaseFragment<FragmentCodingBinding, CodingViewModel>(R.la
     }
 
     override val viewModelClass: Class<CodingViewModel> = CodingViewModel::class.java
+    override val screen = Reporter.Screen.CODING
 
     private val presenter: CodingMvp.Presenter by kodein.instance()
     private val blocklyResultHolder: BlocklyResultHolder by kodein.instance()

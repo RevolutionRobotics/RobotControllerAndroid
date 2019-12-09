@@ -5,6 +5,7 @@ import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
+import com.revolution.robotics.analytics.Reporter
 import com.revolution.robotics.core.domain.remote.Challenge
 import com.revolution.robotics.core.domain.remote.ChallengeStep
 import com.revolution.robotics.core.extensions.integer
@@ -30,6 +31,7 @@ class ChallengeDetailFragment :
     }
 
     override val viewModelClass: Class<ChallengeDetailViewModel> = ChallengeDetailViewModel::class.java
+    override val screen = Reporter.Screen.CHALLENGE_DETAILS
 
     private val presenter: ChallengeDetailMvp.Presenter by kodein.instance()
     private val adapter = ChallengePartAdapter()

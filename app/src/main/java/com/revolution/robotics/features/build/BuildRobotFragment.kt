@@ -2,10 +2,10 @@ package com.revolution.robotics.features.build
 
 import android.os.Bundle
 import android.view.View
-import android.view.ViewParent
 import androidx.viewpager.widget.ViewPager
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
+import com.revolution.robotics.analytics.Reporter
 import com.revolution.robotics.core.domain.local.BuildStatus
 import com.revolution.robotics.core.domain.local.UserRobot
 import com.revolution.robotics.core.domain.remote.BuildStep
@@ -20,7 +20,6 @@ import com.revolution.robotics.features.bluetooth.BluetoothManager
 import com.revolution.robotics.features.build.buildFinished.BuildFinishedDialog
 import com.revolution.robotics.features.build.chapterFinished.ChapterFinishedDialog
 import com.revolution.robotics.features.build.testing.buildTest.TestBuildDialog
-import com.revolution.robotics.features.myRobots.adapter.MyRobotsCarouselAdapter
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
 import com.revolution.robotics.views.slider.BuildStepSliderView
 import org.kodein.di.erased.instance
@@ -39,6 +38,7 @@ class BuildRobotFragment :
     }
 
     override val viewModelClass = BuildRobotViewModel::class.java
+    override val screen = Reporter.Screen.BUILD_INSTRUCTIONS
     private val presenter: BuildRobotMvp.Presenter by kodein.instance()
     private val dialogEventBus: DialogEventBus by kodein.instance()
     private val bluetoothManager: BluetoothManager by kodein.instance()

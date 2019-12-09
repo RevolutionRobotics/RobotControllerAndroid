@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
+import com.revolution.robotics.analytics.Reporter
 import com.revolution.robotics.core.extensions.openUrl
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.databinding.FragmentAboutBinding
@@ -17,6 +18,7 @@ class AboutFragment :
     AboutMvp.View {
 
     override val viewModelClass: Class<AboutViewModel> = AboutViewModel::class.java
+    override val screen = Reporter.Screen.ABOUT
 
     private val presenter: AboutMvp.Presenter by kodein.instance()
     private val resourceResolver: ResourceResolver by kodein.instance()
