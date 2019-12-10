@@ -162,6 +162,7 @@ class FirmwareUpdateDialogPresenter(
                 bluetoothManager.getConfigurationService().updateFramework(firmwareUri,
                     onSuccess = {
                         firmwareUpdateInProgress = false
+                        reporter.reportEvent(Reporter.Event.UPDATE_FIRMWARE)
                         reportUploadedToBrain(reporter, "firmware", firmwareUri, startTime)
                         isUpdateFlowStarted = false
                         view?.activateSuccessFace()
