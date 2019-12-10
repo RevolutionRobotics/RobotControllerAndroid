@@ -146,7 +146,7 @@ fun createPresenterModule() =
         bind<MotorConfigurationMvp.Presenter>() with s { MotorConfigurationPresenter(i(), i(), i(), i(), i()) }
         bind<SensorConfigurationMvp.Presenter>() with s { SensorConfigurationPresenter(i(), i(), i(), i(), i()) }
         bind<BuildFinishedMvp.Presenter>() with s { BuildFinishedPresenter(i(), i()) }
-        bind<SettingsMvp.Presenter>() with s { SettingsPresenter(i(), i()) }
+        bind<SettingsMvp.Presenter>() with s { SettingsPresenter(i(), i(), i()) }
         bind<AboutMvp.Presenter>() with s { AboutPresenter(i(), i()) }
         bind<FirmwareMvp.Presenter>() with s { FirmwareUpdatePresenter(i(), i()) }
         bind<FirmwareUpdateMvp.Presenter>() with s { FirmwareUpdateDialogPresenter(i(), i(), i(), i(), i(), i()) }
@@ -174,7 +174,7 @@ fun createPresenterModule() =
         bind<CommunityMvp.Presenter>() with s { CommunityPresenter() }
         bind<TestMvp.Presenter>() with s { TestPresenter(i(), i(), i()) }
         bind<UserTypeSelectionMvp.Presenter>() with s { UserTypeSelectionPresenter(i(), i(), i()) }
-        bind<HaveYouBuiltMvp.Presenter>() with s { HaveYouBuiltPresenter(i(), i(), i(), i(), i(), i(), i()) }
+        bind<HaveYouBuiltMvp.Presenter>() with s { HaveYouBuiltPresenter(i(), i(), i(), i(), i(), i(), i(), i()) }
         bind<TestCodeMvp.Presenter>() with s { TestCodePresenter(i(), i(), i()) }
     }
 

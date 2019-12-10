@@ -1,5 +1,6 @@
 package com.revolution.robotics.features.onboarding.haveyoubuilt
 
+import com.revolution.robotics.analytics.Reporter
 import com.revolution.robotics.core.domain.local.BuildStatus
 import com.revolution.robotics.core.domain.local.UserConfiguration
 import com.revolution.robotics.core.domain.local.UserRobot
@@ -22,7 +23,8 @@ class HaveYouBuiltPresenter(
     private val getControllerTypeInteractor: GetControllerTypeInteractor,
     private val createRobotInstanceHelper: CreateRobotInstanceHelper,
     private val errorHandler: ErrorHandler,
-    private val appPrefs: AppPrefs
+    private val appPrefs: AppPrefs,
+    private val reporter: Reporter
 ) : HaveYouBuiltMvp.Presenter {
 
     companion object {
@@ -33,6 +35,7 @@ class HaveYouBuiltPresenter(
     override var model: HaveYouBuiltViewModel? = null
 
     override fun driveRobot() {
+        reporter.reportEvent(Reporter.Event.BUILD_BASIC_ROBOT_OFFLINE)
         createRobot { userRobot ->
             userRobot.buildStatus = BuildStatus.COMPLETED
             createRobotInstanceHelper.setupConfigFromFirebase(userRobot,
@@ -57,6 +60,7 @@ class HaveYouBuiltPresenter(
     }
 
     override fun buildRobot() {
+        reporter.reportEvent(Reporter.Event.BUILD_BASIC_ROBOT_ONLINE)
         createRobot { userRobot ->
             appPrefs.onboardingRobotBuild = true
             appPrefs.onboardingRobotDriven = true
@@ -65,6 +69,7 @@ class HaveYouBuiltPresenter(
     }
 
     override fun skipOnboarding() {
+        reporter.reportEvent(Reporter.Event.SKIP_ONBOARDING)
         appPrefs.finishedOnboarding = true
         appPrefs.onboardingRobotBuild = true
         appPrefs.onboardingRobotDriven = true

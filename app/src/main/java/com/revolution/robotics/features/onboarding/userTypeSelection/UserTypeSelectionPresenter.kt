@@ -4,7 +4,6 @@ import com.revolution.robotics.analytics.Reporter
 import com.revolution.robotics.core.domain.local.UserType
 import com.revolution.robotics.core.utils.AppPrefs
 import com.revolution.robotics.core.utils.Navigator
-import com.revolution.robotics.features.onboarding.userTypeSelection.age.YearOfBirthSelectionDialog
 
 class UserTypeSelectionPresenter(
     private val appPrefs: AppPrefs,
@@ -21,7 +20,7 @@ class UserTypeSelectionPresenter(
             view?.showYearOfBirthPopup()
         } else {
             appPrefs.userTypeSelected = true
-            reporter.reportEvent(Reporter.Event.SELECTED_USER_TYPE)
+            reporter.reportEvent(Reporter.Event.SELECT_USER_TYPE)
             navigator.back()
         }
     }
