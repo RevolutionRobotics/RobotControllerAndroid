@@ -2,13 +2,15 @@ package com.revolution.robotics.features.build.buildFinished
 
 import androidx.lifecycle.ViewModel
 import com.revolution.robotics.R
+import com.revolution.robotics.analytics.Reporter
 import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
 import com.revolution.robotics.core.utils.Navigator
 
 class BuildFinishedPresenter(
     private val navigator: Navigator,
-    private val dialogEventBus: DialogEventBus
+    private val dialogEventBus: DialogEventBus,
+    private val reporter: Reporter
 ) : BuildFinishedMvp.Presenter, DialogEventBus.Listener {
 
     override var view: BuildFinishedMvp.View? = null
@@ -17,6 +19,7 @@ class BuildFinishedPresenter(
     override fun register(view: BuildFinishedMvp.View, model: ViewModel?) {
         super.register(view, model)
         dialogEventBus.register(this)
+        reporter.reportEvent(Reporter.Event.FINISH_BASIC_ROBOT)
     }
 
     override fun unregister(view: BuildFinishedMvp.View?) {
