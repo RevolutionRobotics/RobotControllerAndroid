@@ -141,7 +141,7 @@ fun createPresenterModule() =
         bind<MyRobotsMvp.Presenter>() with s { MyRobotsPresenter(i(), i(), i(), i(), i()) }
         bind<BuildRobotMvp.Presenter>() with s { BuildRobotPresenter(i(), i(), i(), i(), i(), i()) }
         bind<ConnectMvp.Presenter>() with s { ConnectPresenter(i(), i(), i()) }
-        bind<ConfigureMvp.Presenter>() with s { ConfigurePresenter(i(), i(), i(), i(), i(), i(), i(), i(), i(), i()) }
+        bind<ConfigureMvp.Presenter>() with s { ConfigurePresenter(i(), i(), i(), i(), i(), i(), i(), i(), i(), i(), i()) }
         bind<ConfigureConnectionsMvp.Presenter>() with s { ConfigureConnectionsPresenter(i(), i(), i(), i()) }
         bind<MotorConfigurationMvp.Presenter>() with s { MotorConfigurationPresenter(i(), i(), i(), i(), i(), i()) }
         bind<SensorConfigurationMvp.Presenter>() with s { SensorConfigurationPresenter(i(), i(), i(), i(), i(), i()) }
@@ -152,10 +152,10 @@ fun createPresenterModule() =
         bind<FirmwareUpdateMvp.Presenter>() with s { FirmwareUpdateDialogPresenter(i(), i(), i(), i(), i(), i()) }
         bind<PlayMvp.Presenter>() with s { PlayPresenter(i(), i(), i(), i(), i()) }
         bind<TypeSelectorMvp.Presenter>() with s { TypeSelectorPresenter(i()) }
-        bind<ConfigureControllerMvp.Presenter>() with s { ConfigureControllerPresenter(i(), i(), i(), i(), i(), i()) }
-        bind<ProgramSelectorMvp.Presenter>() with s { ProgramSelectorPresenter(i(), i(), i(), i(), i()) }
-        bind<ProgramPriorityMvp.Presenter>() with s { ProgramPriorityPresenter(i(), i()) }
-        bind<ButtonlessProgramSelectorMvp.Presenter>() with s { ButtonlessProgramSelectorPresenter(i(), i(), i(), i(), i()) }
+        bind<ConfigureControllerMvp.Presenter>() with s { ConfigureControllerPresenter(i(), i(), i(), i(), i(), i(), i()) }
+        bind<ProgramSelectorMvp.Presenter>() with s { ProgramSelectorPresenter(i(), i(), i(), i(), i(), i()) }
+        bind<ProgramPriorityMvp.Presenter>() with s { ProgramPriorityPresenter(i(), i(), i()) }
+        bind<ButtonlessProgramSelectorMvp.Presenter>() with s { ButtonlessProgramSelectorPresenter(i(), i(), i(), i(), i(), i()) }
         bind<SplashMvp.Presenter>() with s { SplashPresenter(i(), i(), i()) }
         bind<ChallengeGroupMvp.Presenter>() with s { ChallengeGroupPresenter(i(), i(), i()) }
         bind<ChallengeListMvp.Presenter>() with s { ChallengeListPresenter(i(), i(), i()) }

@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import com.revolution.robotics.R
+import com.revolution.robotics.analytics.Reporter
 import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.core.extensions.withArguments
 import com.revolution.robotics.core.utils.BundleArgumentDelegate
@@ -12,6 +13,7 @@ import com.revolution.robotics.databinding.DialogRobotPictureBinding
 import com.revolution.robotics.views.dialogs.DialogButton
 import com.revolution.robotics.views.dialogs.DialogFace
 import com.revolution.robotics.views.dialogs.RoboticsDialog
+import org.kodein.di.erased.instance
 
 class RobotPictureDialog : RoboticsDialog() {
 
@@ -31,6 +33,7 @@ class RobotPictureDialog : RoboticsDialog() {
     private val dialogFace = RobotPictureDialogFace()
     private lateinit var cameraHelper: CameraHelper
     private var defaultCoverImage: String? = null
+    private val reporter: Reporter by kodein.instance()
 
     override val hasCloseButton = true
     override val dialogFaces: List<DialogFace<*>> = listOf(dialogFace)
@@ -53,6 +56,7 @@ class RobotPictureDialog : RoboticsDialog() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_CODE_CAMERA && resultCode == Activity.RESULT_OK) {
             dialogFace.onCameraCaptured(false)
+            reporter.reportEvent(Reporter.Event.CHANGE_ROBOT_IMAGE)
         } else {
             super.onActivityResult(requestCode, resultCode, data)
         }

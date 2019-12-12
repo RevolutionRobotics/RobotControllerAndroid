@@ -1,5 +1,6 @@
 package com.revolution.robotics.features.controllers.setup
 
+import com.revolution.robotics.analytics.Reporter
 import com.revolution.robotics.core.domain.local.UserProgram
 import com.revolution.robotics.core.interactor.*
 import com.revolution.robotics.features.configure.ConfigurationEventBus
@@ -15,7 +16,8 @@ class ConfigureControllerPresenter(
     private val compatibleProgramFilterer: CompatibleProgramFilterer,
     private val getUserProgramsForRobotInteractor: GetUserProgramsForRobotInteractor,
     private val assignProgramToButtonInteractor: AssignProgramToButtonInteractor,
-    private val configurationEventBus: ConfigurationEventBus
+    private val configurationEventBus: ConfigurationEventBus,
+    private val reporter: Reporter
 
     ) : ConfigureControllerMvp.Presenter {
 
@@ -115,6 +117,7 @@ class ConfigureControllerPresenter(
             assignProgramToButtonInteractor.execute {
                 model?.onProgramSet(userProgram)
                 view?.hideProgramSelector()
+                reporter.reportEvent(Reporter.Event.ASSIGN_PROGRAM_TO_BUTTON)
             }
         }
     }

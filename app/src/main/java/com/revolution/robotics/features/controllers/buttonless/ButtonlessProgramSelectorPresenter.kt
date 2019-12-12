@@ -1,6 +1,7 @@
 package com.revolution.robotics.features.controllers.buttonless
 
 import com.revolution.robotics.R
+import com.revolution.robotics.analytics.Reporter
 import com.revolution.robotics.core.domain.local.UserConfiguration
 import com.revolution.robotics.core.domain.local.UserControllerWithPrograms
 import com.revolution.robotics.core.domain.local.UserProgram
@@ -21,7 +22,8 @@ class ButtonlessProgramSelectorPresenter(
     private val getUserProgramsForRobotInteractor: GetUserProgramsForRobotInteractor,
     private val saveUserControllerInteractor: SaveUserControllerInteractor,
     private val compatibleProgramFilterer: CompatibleProgramFilterer,
-    private val navigator: Navigator
+    private val navigator: Navigator,
+    private val reporter: Reporter
 
 ) : ButtonlessProgramSelectorMvp.Presenter {
 
@@ -213,6 +215,9 @@ class ButtonlessProgramSelectorPresenter(
         ) {
             viewModel.selected.set(!viewModel.selected.get())
             save()
+            if (viewModel.selected.get()) {
+                reporter.reportEvent(Reporter.Event.ADD_BACKGROUND_PROGRAM)
+            }
         }
     }
 

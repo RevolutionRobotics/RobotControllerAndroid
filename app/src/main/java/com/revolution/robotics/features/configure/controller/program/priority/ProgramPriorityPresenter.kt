@@ -1,5 +1,6 @@
 package com.revolution.robotics.features.configure.controller.program.priority
 
+import com.revolution.robotics.analytics.Reporter
 import com.revolution.robotics.core.domain.local.UserControllerWithPrograms
 import com.revolution.robotics.core.domain.local.UserProgram
 import com.revolution.robotics.core.domain.local.UserProgramBinding
@@ -11,8 +12,9 @@ import java.util.*
 @Suppress("TooManyFunctions")
 class ProgramPriorityPresenter(
     private val getUserControllerInteractor: GetUserControllerInteractor,
-    private val  saveUserControllerInteractor: SaveUserControllerInteractor
-) :ProgramPriorityMvp.Presenter {
+    private val saveUserControllerInteractor: SaveUserControllerInteractor,
+    private val reporter: Reporter
+) : ProgramPriorityMvp.Presenter {
 
     private companion object {
         const val DEFAULT_DRIVE_PRIORITY = -2
@@ -33,7 +35,11 @@ class ProgramPriorityPresenter(
                 viewModels.clear()
                 viewModels.addAll(generateItems(this, programs).mapIndexed { index, bindingItem ->
                     if (bindingItem is UserProgramBindingItem) {
-                        ProgramPriorityItemViewModel(bindingItem, index + 1, this@ProgramPriorityPresenter)
+                        ProgramPriorityItemViewModel(
+                            bindingItem,
+                            index + 1,
+                            this@ProgramPriorityPresenter
+                        )
                     } else {
                         ProgramPriorityJoystickViewModel(index + 1)
                     }
@@ -45,6 +51,7 @@ class ProgramPriorityPresenter(
     }
 
     override fun onDragEnded() {
+        reporter.reportEvent(Reporter.Event.CHANGE_PRIORITY)
         viewModels.forEachIndexed { index, programPriorityItemViewModel ->
             programPriorityItemViewModel.position = index + 1
         }
@@ -62,15 +69,17 @@ class ProgramPriorityPresenter(
         }
         controllerWithPrograms?.userController?.let { userController ->
             saveUserControllerInteractor.userController = userController
-            saveUserControllerInteractor.backgroundProgramBindings = controllerWithPrograms?.backgroundBindings ?: emptyList()
+            saveUserControllerInteractor.backgroundProgramBindings =
+                controllerWithPrograms?.backgroundBindings ?: emptyList()
             saveUserControllerInteractor.execute()
         }
     }
 
     private fun setPriority(userProgram: UserProgram, priority: Int) {
-        controllerWithPrograms?.backgroundBindings?.find { it.programName == userProgram.name }?.let {
-            it.priority = priority
-        }
+        controllerWithPrograms?.backgroundBindings?.find { it.programName == userProgram.name }
+            ?.let {
+                it.priority = priority
+            }
 
         controllerWithPrograms?.userController?.getMappingList()?.forEach { binding ->
             if (binding?.programName == userProgram.name) {
@@ -92,7 +101,13 @@ class ProgramPriorityPresenter(
     }
 
     override fun onInfoButtonClicked(item: ProgramPriorityItemViewModel) {
-        item.userProgramBindingItem.userProgram?.let { view?.showDialog(ProgramDialog.InfoNoEdit.newInstance(it)) }
+        item.userProgramBindingItem.userProgram?.let {
+            view?.showDialog(
+                ProgramDialog.InfoNoEdit.newInstance(
+                    it
+                )
+            )
+        }
     }
 
     private fun generateItems(
