@@ -1,6 +1,7 @@
 package com.revolution.robotics.features.configure.motor
 
 import com.revolution.robotics.R
+import com.revolution.robotics.analytics.Reporter
 import com.revolution.robotics.core.domain.remote.Motor
 import com.revolution.robotics.core.interactor.GetUserRobotInteractor
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
@@ -20,7 +21,8 @@ class MotorConfigurationPresenter(
     private val configurationEventBus: ConfigurationEventBus,
     private val getUserRobotInteractor: GetUserRobotInteractor,
     private val bluetoothManager: BluetoothManager,
-    private val errorHandler: ErrorHandler
+    private val errorHandler: ErrorHandler,
+    private val reporter: Reporter
 ) : MotorConfigurationMvp.Presenter {
 
     override var view: MotorConfigurationMvp.View? = null
@@ -99,14 +101,26 @@ class MotorConfigurationPresenter(
                         portName
                     ) != null
                 ) {
-                    view?.showDialog(generateDriveTrainDialog(userRobot.configuration.mappingId?.getMotorPortIndex(portName)!!))
+                    view?.showDialog(
+                        generateDriveTrainDialog(
+                            userRobot.configuration.mappingId?.getMotorPortIndex(
+                                portName
+                            )!!
+                        )
+                    )
                 }
 
                 if (model?.motorButton?.isSelected?.get() == true && userRobot?.configuration?.mappingId?.getMotorPortIndex(
                         portName
                     ) != null
                 ) {
-                    view?.showDialog(generateMotorDialog(userRobot.configuration.mappingId?.getMotorPortIndex(portName)!!))
+                    view?.showDialog(
+                        generateMotorDialog(
+                            userRobot.configuration.mappingId?.getMotorPortIndex(
+                                portName
+                            )!!
+                        )
+                    )
                 }
             }
         } else {
@@ -124,7 +138,8 @@ class MotorConfigurationPresenter(
         }
     )
 
-    private fun generateMotorDialog(portIndex: Int) = MotorTestDialog.newInstance((portIndex).toString())
+    private fun generateMotorDialog(portIndex: Int) =
+        MotorTestDialog.newInstance((portIndex).toString())
 
     private fun setDrivetrainValues(motor: Motor) {
         motor.apply {
@@ -168,9 +183,18 @@ class MotorConfigurationPresenter(
                     errorHandler.onError(customMessage = R.string.error_variable_already_in_use)
                 } else {
                     when {
-                        model?.driveTrainButton?.isSelected?.get() == true -> setDrivetrainValues(this)
-                        model?.motorButton?.isSelected?.get() == true -> setMotorValues(this)
-                        else -> setEmptyValues(this)
+                        model?.driveTrainButton?.isSelected?.get() == true -> {
+                            setDrivetrainValues(this)
+                            reporter.reportEvent(Reporter.Event.ADD_MOTOR)
+                        }
+                        model?.motorButton?.isSelected?.get() == true -> {
+                            setMotorValues(this)
+                            reporter.reportEvent(Reporter.Event.ADD_MOTOR)
+                        }
+                        else -> {
+                            setEmptyValues(this)
+                            reporter.reportEvent(Reporter.Event.REMOVE_MOTOR)
+                        }
                     }
 
                     if (model?.emptyButton?.isSelected?.get() == true) {
