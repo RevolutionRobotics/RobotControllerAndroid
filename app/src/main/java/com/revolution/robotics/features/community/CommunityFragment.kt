@@ -46,6 +46,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
 
     @Suppress("SwallowedException")
     override fun openCommunityForums() {
+        reporter.reportEvent(Reporter.Event.OPEN_FORUM)
         try {
             requireActivity().startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(COMMUNITY_FORUMS_URL)))
         } catch (exception: ActivityNotFoundException) {

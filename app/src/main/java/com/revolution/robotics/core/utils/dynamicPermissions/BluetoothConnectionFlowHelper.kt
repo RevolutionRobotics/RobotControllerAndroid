@@ -3,6 +3,8 @@ package com.revolution.robotics.core.utils.dynamicPermissions
 import android.Manifest
 import android.app.Activity
 import androidx.fragment.app.FragmentManager
+import com.google.firebase.database.core.Repo
+import com.revolution.robotics.analytics.Reporter
 import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
 import com.revolution.robotics.features.build.connect.ConnectDialog
@@ -24,6 +26,8 @@ class BluetoothConnectionFlowHelper(kodein: Kodein) : DialogEventBus.Listener {
 
     private val dynamicPermissionHandler: DynamicPermissionHandler by kodein.instance()
     private val dialogEventBus: DialogEventBus by kodein.instance()
+    private val reporter: Reporter by kodein.instance()
+
     private var fragmentManager: FragmentManager? = null
 
     fun init(fragmentManager: FragmentManager?) {
@@ -48,7 +52,10 @@ class BluetoothConnectionFlowHelper(kodein: Kodein) : DialogEventBus.Listener {
         when (event) {
             DialogEvent.PERMISSION_GRANTED -> TurnOnTheBrainDialog.newInstance().show(fragmentManager)
             DialogEvent.BRAIN_TURNED_ON -> ConnectDialog.newInstance().show(fragmentManager)
-            DialogEvent.ROBOT_CONNECTED -> ConnectionSuccessDialog.newInstance().show(fragmentManager)
+            DialogEvent.ROBOT_CONNECTED -> {
+                reporter.reportEvent(Reporter.Event.CONNECT_TO_BRAIN)
+                ConnectionSuccessDialog.newInstance().show(fragmentManager)
+            }
             DialogEvent.ROBOT_CONNECTION_FAILED -> ConnectionFailedDialog.newInstance().show(fragmentManager)
             DialogEvent.ROBOT_RECONNECT -> ConnectDialog.newInstance().show(fragmentManager)
             else -> Unit
