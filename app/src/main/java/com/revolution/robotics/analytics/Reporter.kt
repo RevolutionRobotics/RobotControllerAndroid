@@ -6,6 +6,8 @@ import com.google.firebase.analytics.FirebaseAnalytics
 
 class Reporter(private val firebaseAnalytics: FirebaseAnalytics) {
 
+    var lastOpenedScreen: Screen? = null
+
     fun setUserProperty(userProperty: UserProperty, value: String) {
         firebaseAnalytics.setUserProperty(userProperty.reportName, value)
     }
@@ -15,6 +17,7 @@ class Reporter(private val firebaseAnalytics: FirebaseAnalytics) {
     }
 
     fun setScreen(activity: Activity, screen: Screen) {
+        lastOpenedScreen = screen
         firebaseAnalytics.setCurrentScreen(activity, screen.screenName, null)
     }
 
@@ -86,5 +89,9 @@ class Reporter(private val firebaseAnalytics: FirebaseAnalytics) {
         ABOUT("About"),
         FIRMWARE_UPDATE("Firmware update"),
         PLAY("Play")
+    }
+
+    enum class Parameter(val parameterName: String) {
+        SCREEN("screen")
     }
 }

@@ -8,6 +8,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
+import com.revolution.robotics.analytics.Reporter
 import com.revolution.robotics.core.extensions.hideSystemUI
 import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.core.utils.dynamicPermissions.DynamicPermissionHandler
@@ -30,6 +31,7 @@ class MainActivity : AppCompatActivity(), KodeinAware, Navigator.NavigationEvent
     private val errorHandler: ErrorHandler by instance()
     private val bluetoothManager: BluetoothManager by instance()
     private val navController: NavController by lazy { findNavController(R.id.nav_host_fragment) }
+    private val reporter: Reporter by instance()
 
     private var windowHideHandler: WindowHideHandler? = null
 
@@ -63,6 +65,14 @@ class MainActivity : AppCompatActivity(), KodeinAware, Navigator.NavigationEvent
     }
 
     override fun onStop() {
+        reporter.reportEvent(
+            Reporter.Event.LEAVE_APP,
+            Bundle().apply {
+                putString(
+                    Reporter.Parameter.SCREEN.parameterName,
+                    reporter.lastOpenedScreen?.screenName ?: ""
+                )
+            })
         bluetoothManager.shutDown()
         errorHandler.releaseContext(this)
         super.onStop()
@@ -75,7 +85,8 @@ class MainActivity : AppCompatActivity(), KodeinAware, Navigator.NavigationEvent
 
     override fun onBackPressed() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment)
-        val currentFragment = (navHostFragment as NavHostFragment).childFragmentManager.primaryNavigationFragment
+        val currentFragment =
+            (navHostFragment as NavHostFragment).childFragmentManager.primaryNavigationFragment
         if ((currentFragment as? BaseFragment<*, *>)?.onBackPressed() != true) {
             super.onBackPressed()
         }
@@ -101,8 +112,17 @@ class MainActivity : AppCompatActivity(), KodeinAware, Navigator.NavigationEvent
         }
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) =
-        dynamicPermissionHandler.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) =
+        dynamicPermissionHandler.onRequestPermissionsResult(
+            requestCode,
+            permissions,
+            grantResults,
+            this
+        )
 
     private class WindowHideHandler(activity: MainActivity) : Handler() {
         private val mActivity: WeakReference<MainActivity> = WeakReference(activity)
