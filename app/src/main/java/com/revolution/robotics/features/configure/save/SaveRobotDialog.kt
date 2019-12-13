@@ -1,11 +1,14 @@
 package com.revolution.robotics.features.configure.save
 
 import android.os.Bundle
+import com.google.firebase.database.core.Repo
 import com.revolution.robotics.R
+import com.revolution.robotics.analytics.Reporter
 import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.core.extensions.withArguments
 import com.revolution.robotics.core.utils.BundleArgumentDelegate
 import com.revolution.robotics.views.dialogs.DialogFace
+import org.kodein.di.erased.instance
 
 class SaveRobotDialog : SaveDialog() {
 
@@ -26,8 +29,13 @@ class SaveRobotDialog : SaveDialog() {
     override val dialogFace = SaveRobotDialogFace()
     override val dialogFaces: List<DialogFace<*>> = listOf(dialogFace)
 
+    private val reporter: Reporter by kodein.instance()
+
     override fun onDoneClicked() {
         dismissAllowingStateLoss()
+        if (dialogFace.getName() != arguments?.name) {
+            reporter.reportEvent(Reporter.Event.RENAME_ROBOT)
+        }
         dialogEventBus.publish(DialogEvent.SAVE_ROBOT.apply {
             extras.description = dialogFace.getDescription()
             extras.name = dialogFace.getName()

@@ -2,6 +2,7 @@ package com.revolution.robotics.features.coding
 
 import android.util.Base64
 import com.revolution.robotics.R
+import com.revolution.robotics.analytics.Reporter
 import com.revolution.robotics.core.domain.local.UserProgram
 import com.revolution.robotics.core.interactor.GetUserConfigForRobotInteractor
 import com.revolution.robotics.core.interactor.RemoveUserProgramInteractor

@@ -1,6 +1,7 @@
 package com.revolution.robotics.features.configure.sensor
 
 import com.revolution.robotics.R
+import com.revolution.robotics.analytics.Reporter
 import com.revolution.robotics.core.domain.remote.Sensor
 import com.revolution.robotics.core.interactor.GetUserRobotInteractor
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
@@ -19,7 +20,8 @@ class SensorConfigurationPresenter(
     private val configurationEventBus: ConfigurationEventBus,
     private val getUserRobotInteractor: GetUserRobotInteractor,
     private val bluetoothManager: BluetoothManager,
-    private val errorHandler: ErrorHandler
+    private val errorHandler: ErrorHandler,
+    private val reporter: Reporter
 ) : SensorConfigurationMvp.Presenter {
 
     override var view: SensorConfigurationMvp.View? = null
@@ -217,9 +219,11 @@ class SensorConfigurationPresenter(
                     if (model?.emptyButton?.isSelected?.get() == true) {
                         variableName = null
                         configurationEventBus.publishSensorUpdateEvent(SensorPort(null, portName))
+                        reporter.reportEvent(Reporter.Event.REMOVE_SENSOR)
                     } else {
                         variableName = this@SensorConfigurationPresenter.variableName
                         configurationEventBus.publishSensorUpdateEvent(SensorPort(this, portName))
+                        reporter.reportEvent(Reporter.Event.ADD_SENSOR)
                     }
                 }
             }

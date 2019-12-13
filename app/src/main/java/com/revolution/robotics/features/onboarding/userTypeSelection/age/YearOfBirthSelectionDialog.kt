@@ -26,7 +26,8 @@ class YearOfBirthSelectionDialog : RoboticsDialog() {
     override val dialogButtons: List<DialogButton> = listOf(
         DialogButton(R.string.onboarding_save, R.drawable.ic_play) {
             appPrefs.userTypeSelected = true
-            reporter.reportEvent(Reporter.Event.SELECTED_USER_TYPE)
+            reporter.reportEvent(Reporter.Event.SELECT_USER_TYPE)
+            reporter.reportEvent(Reporter.Event.SELECT_YEAR_OF_BIRTH)
             dismiss()
             navigator.back()
         }

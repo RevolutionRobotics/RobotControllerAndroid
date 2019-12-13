@@ -63,6 +63,13 @@ abstract class PlayFragment : BaseFragment<FragmentPlayCoreBinding, PlayViewMode
         presenter.register(this, viewModel)
     }
 
+    override fun onResume() {
+        super.onResume()
+        if (!appPrefs.finishedOnboarding) {
+            reporter.reportEvent(Reporter.Event.DRIVE_BASIC_ROBOT)
+        }
+    }
+
     override fun onDestroyView() {
         presenter.unregister()
         bluetoothManager.unregisterListener(this)

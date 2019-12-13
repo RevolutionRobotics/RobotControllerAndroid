@@ -1,6 +1,7 @@
 package com.revolution.robotics.features.configure
 
 import com.revolution.robotics.R
+import com.revolution.robotics.analytics.Reporter
 import com.revolution.robotics.core.domain.local.UserRobot
 import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
@@ -24,7 +25,8 @@ class ConfigurePresenter(
     private val saveUserControllerInteractor: SaveUserControllerInteractor,
     private val dialogEventBus: DialogEventBus,
     private val resourceResolver: ResourceResolver,
-    private val navigator: Navigator
+    private val navigator: Navigator,
+    private val reporter: Reporter
 ) : ConfigureMvp.Presenter,
     ConfigurationEventBus.Listener, DialogEventBus.Listener {
 
@@ -144,10 +146,12 @@ class ConfigurePresenter(
     }
 
     override fun onBackgroundProgramsClicked() {
+        reporter.reportEvent(Reporter.Event.CLICK_BACKGROUND_PROGRAMS)
         userRobot?.let { navigator.navigate(ConfigureFragmentDirections.toButtonlessProgramSelector(it.id)) }
     }
 
     override fun onPriorityClicked() {
+        reporter.reportEvent(Reporter.Event.CLICK_PRIORITY_BUTTON)
         userRobot?.configuration?.controller?.let { navigator.navigate(ConfigureFragmentDirections.toProgramPriority(it)) }
     }
 
@@ -155,6 +159,7 @@ class ConfigurePresenter(
         userRobot?.let {
             deleteRobotInteractor.id = it.id
             deleteRobotInteractor.execute()
+            reporter.reportEvent(Reporter.Event.DELETE_ROBOT)
         }
         navigator.back()
     }
@@ -168,6 +173,7 @@ class ConfigurePresenter(
                 saveUserControllerInteractor.userController = controller.userController
                 saveUserControllerInteractor.backgroundProgramBindings = controller.backgroundBindings
                 saveUserControllerInteractor.execute {
+                    reporter.reportEvent(Reporter.Event.CHANGE_CONTROLLER_TYPE)
                     onControllerTabSelected()
                 }
             }
@@ -176,12 +182,14 @@ class ConfigurePresenter(
 
     override fun onAdvancedSettingsClicked() {
         view?.showAdvancedSettingsPopup()
+        reporter.reportEvent(Reporter.Event.OPEN_OVERFLOW_MENU)
     }
 
     override fun onDuplicateClicked() {
         userRobot?.let {
             duplicateUserRobotInteractor.currentRobot = it
             duplicateUserRobotInteractor.execute {
+                reporter.reportEvent(Reporter.Event.DUPLICATE_ROBOT)
                 navigator.back()
             }
         }

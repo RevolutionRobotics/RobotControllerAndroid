@@ -154,6 +154,7 @@ class CodingFragment : BaseFragment<FragmentCodingBinding, CodingViewModel>(R.la
                 }
             DialogEvent.LOAD_PROGRAM ->
                 event.extras.getParcelable<UserProgram>(ProgramDialog.KEY_PROGRAM)?.let {
+                    reporter.reportEvent(Reporter.Event.OPEN_PROGRAM)
                     presenter.loadProgram(it)
                 }
             DialogEvent.DELETE_PROGRAM ->
@@ -186,6 +187,7 @@ class CodingFragment : BaseFragment<FragmentCodingBinding, CodingViewModel>(R.la
             DialogEvent.PROGRAM_CONFIRM_CLOSE_WITHOUT_SAVE -> onBackPressed(false)
             DialogEvent.ROBOT_SELECTED ->
                 event.extras.getParcelable<UserRobot>(RobotSelectorDialog.KEY_ROBOT)?.let { robot ->
+                    reporter.reportEvent(Reporter.Event.CREATE_NEW_PROGRAM)
                     presenter.createNewProgram(robot.id)
                 }
             else -> Unit

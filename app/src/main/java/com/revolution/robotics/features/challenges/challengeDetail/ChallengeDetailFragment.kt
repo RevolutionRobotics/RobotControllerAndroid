@@ -50,6 +50,7 @@ class ChallengeDetailFragment :
 
         arguments?.let {
             presenter.setChallenge(it.challenge, it.categoryId)
+            reporter.reportEvent(Reporter.Event.START_NEW_CHALLENGE)
         }
     }
 
@@ -59,6 +60,7 @@ class ChallengeDetailFragment :
     }
 
     override fun showChallengeFinishedDialog(nextChallenge: Challenge?) {
+        reporter.reportEvent(Reporter.Event.FINISH_CHALLENGE)
         if (nextChallenge == null) {
             ChallengeDetailFinishedDialog.Latest.newInstance().show(fragmentManager)
         } else {
