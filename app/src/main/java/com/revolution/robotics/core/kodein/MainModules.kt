@@ -2,8 +2,10 @@ package com.revolution.robotics.core.kodein
 
 import android.content.Context
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.revolution.robotics.BuildConfig
 import com.revolution.robotics.analytics.Reporter
 import com.revolution.robotics.blockly.utils.BlocklyResultHolder
+import com.revolution.robotics.core.api.RoboticsService
 import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
 import com.revolution.robotics.core.interactor.firebase.FirebaseFileDownloader
 import com.revolution.robotics.core.kodein.utils.ApplicationContextProvider
@@ -16,9 +18,12 @@ import com.revolution.robotics.features.bluetooth.BluetoothManager
 import com.revolution.robotics.features.configure.ConfigurationEventBus
 import com.revolution.robotics.features.configure.controller.CompatibleProgramFilterer
 import com.revolution.robotics.features.shared.ErrorHandler
+import okhttp3.OkHttpClient
 import org.kodein.di.Kodein
 import org.kodein.di.erased.bind
 import org.revolutionrobotics.bluetooth.android.communication.RoboticsDeviceConnector
+import retrofit2.Retrofit
+import retrofit2.converter.scalars.ScalarsConverterFactory
 
 fun createMainModule() =
     Kodein.Module("MainModule") {
@@ -32,6 +37,17 @@ fun createMainModule() =
         bind<RoboticsDeviceConnector>() with s { RoboticsDeviceConnector() }
         bind<CompatibleProgramFilterer>() with p { CompatibleProgramFilterer() }
         bind<CreateRobotInstanceHelper>() with p { CreateRobotInstanceHelper(i(), i(), i(), i(), i(), i(), i()) }
+        bind<Retrofit>() with s {
+            Retrofit.Builder()
+                .client(OkHttpClient().newBuilder().build())
+                .baseUrl(BuildConfig.DATABASE_JSON_URL)
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .build()
+        }
+        bind<RoboticsService>() with s {
+            val retrofit: Retrofit = i()
+            retrofit.create(RoboticsService::class.java)
+        }
     }
 
 fun createAppModule(context: Context) =

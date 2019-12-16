@@ -49,13 +49,15 @@ android {
     flavorDimensions "default"
     productFlavors {
         dev {
+            buildConfigField "String", "DATABASE_JSON_URL",  '"https://revolutionroboticsdev.firebaseio.com"'
             applicationIdSuffix ".dev"
         }
         staging {
+        buildConfigField "String", "DATABASE_JSON_URL",  '"https://revolutionrobotics-afeb5.firebaseio.com"'
             applicationIdSuffix ".test"
         }
         prod {
-
+            buildConfigField "String", "DATABASE_JSON_URL",  '"https://revolutionroboticsprod.firebaseio.com"'
         }
     }
 
@@ -65,6 +67,10 @@ android {
 
     packagingOptions {
         exclude 'META-INF/main.kotlin_module'
+    }
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
     }
 }
 
@@ -83,6 +89,7 @@ def junit = "4.12"
 def test_runner = "1.1.1"
 def espresso = "3.1.1"
 def lifecycle_version = "2.0.0"
+def retrofit_version = "2.7.0"
 def kodein_version = "6.3.2"
 def fabric_version = "2.10.1"
 def firebase_version = "17.0.0"
@@ -118,6 +125,10 @@ dependencies {
     // Room
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
+
+    //Retrofit
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-scalars:$retrofit_version"
 
     // Kodein
     implementation "org.kodein.di:kodein-di-erased-jvm:$kodein_version"

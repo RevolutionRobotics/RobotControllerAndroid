@@ -3,13 +3,15 @@ package com.revolution.robotics.features.splash
 import androidx.lifecycle.ViewModel
 import com.google.firebase.database.FirebaseDatabase
 import com.revolution.robotics.core.interactor.FirebaseInitInteractor
+import com.revolution.robotics.core.interactor.api.LoadJsonFromFirebaseInteractor
 import com.revolution.robotics.core.interactor.firebase.FirebaseConnectionInteractor
 import com.revolution.robotics.core.interactor.firebase.ForceUpdateInteractor
 
 class SplashPresenter(
     private val firebaseConnectionInteractor: FirebaseConnectionInteractor,
     private val firebaseInitInteractor: FirebaseInitInteractor,
-    private val forceUpdateInteractor: ForceUpdateInteractor
+    private val forceUpdateInteractor: ForceUpdateInteractor,
+    private val loadJsonFromFirebaseInteractor: LoadJsonFromFirebaseInteractor
 ) : SplashMvp.Presenter {
 
     override var view: SplashMvp.View? = null
@@ -17,23 +19,13 @@ class SplashPresenter(
 
     override fun register(view: SplashMvp.View, model: ViewModel?) {
         super.register(view, model)
-        FirebaseDatabase.getInstance().goOnline()
-        firebaseConnectionInteractor.execute { connected ->
-            if (connected) {
-                firebaseInitInteractor.execute({
-                    forceUpdateInteractor.checkUpdateNeeded { updateNeeded ->
-                        if (updateNeeded) {
-                            this.view?.showUpdateNeededDialog()
-                        } else {
-                            this.view?.startApp()
-                        }
-                    }
-                }, {
-                    this.view?.startApp()
-                })
-            } else {
+        loadJsonFromFirebaseInteractor.execute (
+            onResponse = {
+                this.view?.startApp()
+            },
+            onError = {
                 this.view?.startApp()
             }
-        }
+        )
     }
 }

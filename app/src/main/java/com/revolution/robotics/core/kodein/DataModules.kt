@@ -17,6 +17,7 @@ import com.revolution.robotics.blockly.dialogs.variableOptions.VariableOptionsPr
 import com.revolution.robotics.core.db.RoboticsDatabase
 import com.revolution.robotics.core.domain.local.*
 import com.revolution.robotics.core.interactor.*
+import com.revolution.robotics.core.interactor.api.LoadJsonFromFirebaseInteractor
 import com.revolution.robotics.core.interactor.firebase.*
 import com.revolution.robotics.features.build.BuildRobotMvp
 import com.revolution.robotics.features.build.BuildRobotPresenter
@@ -131,6 +132,7 @@ fun createInteractorModule() =
         bind<CreateConfigurationFileInteractor>() with p { CreateConfigurationFileInteractor(i()) }
         bind<ForceUpdateInteractor>() with p { ForceUpdateInteractor() }
         bind<AssignProgramToButtonInteractor>() with p { AssignProgramToButtonInteractor(i(), i()) }
+        bind<LoadJsonFromFirebaseInteractor>() with p { LoadJsonFromFirebaseInteractor(i())}
     }
 
 @Suppress("LongMethod")
@@ -156,7 +158,7 @@ fun createPresenterModule() =
         bind<ProgramSelectorMvp.Presenter>() with s { ProgramSelectorPresenter(i(), i(), i(), i(), i(), i()) }
         bind<ProgramPriorityMvp.Presenter>() with s { ProgramPriorityPresenter(i(), i(), i()) }
         bind<ButtonlessProgramSelectorMvp.Presenter>() with s { ButtonlessProgramSelectorPresenter(i(), i(), i(), i(), i(), i()) }
-        bind<SplashMvp.Presenter>() with s { SplashPresenter(i(), i(), i()) }
+        bind<SplashMvp.Presenter>() with s { SplashPresenter(i(), i(), i(), i()) }
         bind<ChallengeGroupMvp.Presenter>() with s { ChallengeGroupPresenter(i(), i(), i()) }
         bind<ChallengeListMvp.Presenter>() with s { ChallengeListPresenter(i(), i(), i()) }
         bind<ChallengeDetailMvp.Presenter>() with s { ChallengeDetailPresenter(i(), i(), i(), i()) }
