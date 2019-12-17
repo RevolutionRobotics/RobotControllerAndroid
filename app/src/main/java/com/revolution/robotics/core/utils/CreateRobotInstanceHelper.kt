@@ -41,10 +41,12 @@ class CreateRobotInstanceHelper(
                 this.userRobot = savedRobot
                 robotInteractor.robotId = userRobot.remoteId!!
                 robotInteractor.execute { robot ->
-                    configurationInteractor.configId = robot.configurationId ?: ""
-                    configurationInteractor.execute { config ->
-                        configuration = config
-                        downloadControllerInfos(robot)
+                    robot?.let {
+                        configurationInteractor.configId = robot.configurationId ?: ""
+                        configurationInteractor.execute { config ->
+                            configuration = config
+                            downloadControllerInfos(robot)
+                        }
                     }
                 }
             }, onError = onError)

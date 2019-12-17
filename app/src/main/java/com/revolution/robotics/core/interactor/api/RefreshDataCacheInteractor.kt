@@ -18,8 +18,8 @@ class RefreshDataCacheInteractor(
         try {
             val databaseContents = roboticsService.getDatabaseContents().execute().body()
             if (databaseContents != null) {
-                fileManager.write(jsonFileName, databaseContents)
                 remoteDataCache.data = Gson().fromJson(databaseContents, FirebaseData::class.java)
+                fileManager.write(jsonFileName, databaseContents)
             } else {
                 remoteDataCache.data = Gson().fromJson(fileManager.read(jsonFileName), FirebaseData::class.java)
             }
