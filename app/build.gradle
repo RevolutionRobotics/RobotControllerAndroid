@@ -145,7 +145,6 @@ dependencies {
     }
 
     // FirebaseDB
-    implementation "com.google.firebase:firebase-database:$firebase_db_version"
     implementation "com.google.firebase:firebase-core:$firebase_version"
     implementation "com.firebaseui:firebase-ui-storage:$firebase_ui_storage"
 
