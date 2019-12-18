@@ -82,7 +82,7 @@ class PlayPresenter(
         if (reverseXAxis) {
             liveControllerService?.updateXDirection(max(0, DIRECTION_VALUE_MAX - value - 1))
         } else {
-            liveControllerService?.updateXDirection(value)
+            liveControllerService?.updateXDirection(64 + value / 2)
         }
     }
 
