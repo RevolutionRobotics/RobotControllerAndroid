@@ -174,7 +174,7 @@ fun createPresenterModule() =
         bind<CommunityMvp.Presenter>() with s { CommunityPresenter() }
         bind<TestMvp.Presenter>() with s { TestPresenter(i(), i(), i()) }
         bind<UserTypeSelectionMvp.Presenter>() with s { UserTypeSelectionPresenter(i(), i(), i()) }
-        bind<HaveYouBuiltMvp.Presenter>() with s { HaveYouBuiltPresenter(i(), i(), i(), i(), i(), i(), i(), i()) }
+        bind<HaveYouBuiltMvp.Presenter>() with s { HaveYouBuiltPresenter(i(), i(), i(), i(), i(), i(), i(), i(), i()) }
         bind<TestCodeMvp.Presenter>() with s { TestCodePresenter(i(), i(), i()) }
     }
 
