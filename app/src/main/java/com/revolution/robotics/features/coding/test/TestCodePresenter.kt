@@ -32,7 +32,7 @@ class TestCodePresenter(
                 )
             )
             val userControllerWithPrograms = UserControllerWithPrograms(
-                userController = UserController(),
+                userController = UserController(joystickPriority = 100),
                 programs = hashMapOf(),
                 backgroundBindings = mutableListOf()
             )
