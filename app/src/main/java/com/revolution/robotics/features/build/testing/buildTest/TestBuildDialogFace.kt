@@ -27,7 +27,7 @@ class TestBuildDialogFace(dialog: RoboticsDialog) :
     )
 
     override fun onActivated() {
-        binding?.testingImage?.let { loadFirebaseImage(it, dialog?.arguments?.getString("image"), null, true, false) }
+        binding?.testingImage?.let { loadFirebaseImage(it, dialog?.arguments?.getString("image"), null,null, true, false) }
         binding?.testingText?.text = dialog?.arguments?.getString("description")
     }
 
