@@ -1,12 +1,17 @@
 package com.revolution.robotics.core.bindings
 
 import android.graphics.drawable.Drawable
+import android.view.View
 import android.widget.ImageView
 import androidx.annotation.DrawableRes
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.request.target.Target.SIZE_ORIGINAL
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
@@ -67,11 +72,19 @@ fun loadFirebaseImage(imageView: ImageView, reference: StorageReference, errorDr
         .into(imageView)
 }
 
-@BindingAdapter("firebaseImageUrl", "errorDrawable", "animate", "originalSize", requireAll = false)
+@BindingAdapter(
+    "firebaseImageUrl",
+    "errorDrawable",
+    "progressView",
+    "animate",
+    "originalSize",
+    requireAll = false
+)
 fun loadFirebaseImage(
     imageView: ImageView,
     gsUrl: String?,
     errorDrawable: Drawable?,
+    progressView: View?,
     animate: Boolean?,
     originalSize: Boolean?
 ) {
@@ -87,6 +100,34 @@ fun loadFirebaseImage(
 
                 if (animate == true) {
                     transition(DrawableTransitionOptions.withCrossFade())
+                }
+            }
+            .apply {
+                if (progressView != null) {
+                    listener(object : RequestListener<Drawable> {
+                        override fun onLoadFailed(
+                            e: GlideException?,
+                            model: Any?,
+                            target: Target<Drawable>?,
+                            isFirstResource: Boolean
+                        ): Boolean {
+                            progressView.visibility = View.GONE
+                            return false
+                        }
+
+                        override fun onResourceReady(
+                            resource: Drawable?,
+                            model: Any?,
+                            target: Target<Drawable>?,
+                            dataSource: DataSource?,
+                            isFirstResource: Boolean
+                        ): Boolean {
+
+                            progressView.visibility = View.GONE
+                            return false
+                        }
+                    }
+                    )
                 }
             }
             .apply { if (originalSize == true) override(SIZE_ORIGINAL, SIZE_ORIGINAL) }
@@ -123,7 +164,7 @@ fun loadFirebaseImage(
         loadImageFromFile(remoteImageView, imageFile, null)
     } else if (!gsUrl.isNullOrEmpty()) {
         remoteImageView.empty.setImageResource(0)
-        loadFirebaseImage(remoteImageView.image, gsUrl, errorDrawable, animate, false)
+        loadFirebaseImage(remoteImageView.image, gsUrl, errorDrawable, remoteImageView.progress ,animate, false)
     } else {
         if (errorDrawable == null) {
             remoteImageView.empty.setImageResource(R.drawable.ic_image_not_found)
@@ -142,6 +183,6 @@ fun loadImageFromFile(imageView: RemoteImageView, file: File?, gsUrl: String?) {
             .skipMemoryCache(true)
             .into(imageView.image)
     } else if (!gsUrl.isNullOrEmpty()) {
-        loadFirebaseImage(imageView.image, gsUrl, null, false, false)
+        loadFirebaseImage(imageView.image, gsUrl, null, imageView.progress,false, false)
     }
 }
