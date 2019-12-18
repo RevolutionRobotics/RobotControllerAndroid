@@ -19,6 +19,7 @@ class PlayPresenter(
 
     companion object {
         const val DIRECTION_VALUE_MAX = 255
+        const val DIRECTION_VALUE_QUARTER = 64
     }
 
     override var view: PlayMvp.View? = null
@@ -82,7 +83,7 @@ class PlayPresenter(
         if (reverseXAxis) {
             liveControllerService?.updateXDirection(max(0, DIRECTION_VALUE_MAX - value - 1))
         } else {
-            liveControllerService?.updateXDirection(value)
+            liveControllerService?.updateXDirection(DIRECTION_VALUE_QUARTER + value / 2)
         }
     }
 
