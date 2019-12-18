@@ -1,14 +1,11 @@
 package com.revolution.robotics.core.interactor.firebase
 
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.GenericTypeIndicator
-import com.google.firebase.database.Query
+import com.revolution.robotics.core.cache.RemoteDataCache
 import com.revolution.robotics.core.domain.remote.Firmware
+import com.revolution.robotics.core.interactor.Interactor
 
-class FirmwareInteractor : FirebaseSingleObjectInteractor<Firmware>() {
-
-    override val genericTypeIndicator: GenericTypeIndicator<HashMap<String, Firmware>> =
-        object : GenericTypeIndicator<HashMap<String, Firmware>>() {}
-
-    override fun getDatabaseReference(database: FirebaseDatabase): Query = database.getReference("firmware")
+class FirmwareInteractor(
+    private val remoteDataCache: RemoteDataCache
+) : Interactor<Firmware?>() {
+    override fun getData(): Firmware? = remoteDataCache.data.firmware.values.firstOrNull()
 }

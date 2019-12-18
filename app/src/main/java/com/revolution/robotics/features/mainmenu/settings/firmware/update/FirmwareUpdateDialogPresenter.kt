@@ -102,7 +102,7 @@ class FirmwareUpdateDialogPresenter(
             infoViewModel?.loadingTextVisible?.value = false
             infoViewModel?.infoTextsVisible?.value = false
 
-            if (firmware.filename == infoViewModel?.firmwareVersionCode) {
+            if (firmware?.filename == infoViewModel?.firmwareVersionCode) {
                 onLatestFirmwareUsed()
             } else {
                 onFirmwareUpdateAvailable()

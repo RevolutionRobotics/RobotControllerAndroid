@@ -1,17 +1,12 @@
 package com.revolution.robotics.core.interactor.firebase
 
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.GenericTypeIndicator
-import com.google.firebase.database.Query
+import com.revolution.robotics.core.cache.RemoteDataCache
 import com.revolution.robotics.core.domain.remote.ChallengeCategory
+import com.revolution.robotics.core.interactor.Interactor
 
-class ChallengeCategoriesInteractor : FirebaseListInteractor<ChallengeCategory>() {
+class ChallengeCategoriesInteractor(
+    private val remoteDataCache: RemoteDataCache
+) : Interactor<List<ChallengeCategory>>() {
 
-    override val genericTypeIndicator: GenericTypeIndicator<HashMap<String, @JvmSuppressWildcards ChallengeCategory>> =
-        object : GenericTypeIndicator<HashMap<String, ChallengeCategory>>() {}
-
-    override fun filter(item: ChallengeCategory): Boolean = true
-    override fun order(list: List<ChallengeCategory>): List<ChallengeCategory> = list.sortedBy { it.order }
-
-    override fun getDatabaseReference(database: FirebaseDatabase): Query = database.getReference("challengeCategory")
+    override fun getData(): List<ChallengeCategory> = remoteDataCache.data.challengeCategory.values.sortedBy { it.order }
 }

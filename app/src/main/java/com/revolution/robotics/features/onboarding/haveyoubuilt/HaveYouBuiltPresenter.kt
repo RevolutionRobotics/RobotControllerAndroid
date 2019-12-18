@@ -79,18 +79,20 @@ class HaveYouBuiltPresenter(
     private fun createRobot(onResponse: (UserRobot) -> Unit) {
         robotInteractor.robotId = ROBOT_ID
         robotInteractor.execute { robot ->
-            val userRobot = UserRobot(
-                0,
-                robot.id,
-                BuildStatus.IN_PROGRESS,
-                BuildRobotFragment.DEFAULT_STARTING_INDEX,
-                Date(System.currentTimeMillis()),
-                UserConfiguration(),
-                robot.name?.getLocalizedString(resourceResolver) ?: "",
-                robot.coverImage,
-                robot.description?.getLocalizedString(resourceResolver) ?: ""
-            )
-            onResponse(userRobot)
+            robot?.apply {
+                val userRobot = UserRobot(
+                    0,
+                    id,
+                    BuildStatus.IN_PROGRESS,
+                    BuildRobotFragment.DEFAULT_STARTING_INDEX,
+                    Date(System.currentTimeMillis()),
+                    UserConfiguration(),
+                    name?.getLocalizedString(resourceResolver) ?: "",
+                    coverImage,
+                    description?.getLocalizedString(resourceResolver) ?: ""
+                )
+                onResponse(userRobot)
+            }
         }
     }
 }

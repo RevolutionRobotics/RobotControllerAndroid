@@ -3,7 +3,6 @@ package com.revolution.robotics.core.utils.dynamicPermissions
 import android.Manifest
 import android.app.Activity
 import androidx.fragment.app.FragmentManager
-import com.google.firebase.database.core.Repo
 import com.revolution.robotics.analytics.Reporter
 import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.core.eventBus.dialog.DialogEventBus

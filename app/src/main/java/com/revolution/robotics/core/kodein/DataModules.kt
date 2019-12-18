@@ -14,9 +14,11 @@ import com.revolution.robotics.blockly.dialogs.soundPicker.SoundPickerMvp
 import com.revolution.robotics.blockly.dialogs.soundPicker.SoundPickerPresenter
 import com.revolution.robotics.blockly.dialogs.variableOptions.VariableOptionsMvp
 import com.revolution.robotics.blockly.dialogs.variableOptions.VariableOptionsPresenter
+import com.revolution.robotics.core.cache.RemoteDataCache
 import com.revolution.robotics.core.db.RoboticsDatabase
 import com.revolution.robotics.core.domain.local.*
 import com.revolution.robotics.core.interactor.*
+import com.revolution.robotics.core.interactor.api.RefreshDataCacheInteractor
 import com.revolution.robotics.core.interactor.firebase.*
 import com.revolution.robotics.features.build.BuildRobotMvp
 import com.revolution.robotics.features.build.BuildRobotPresenter
@@ -94,20 +96,20 @@ import org.kodein.di.erased.bind
 
 fun createInteractorModule() =
     Kodein.Module("InteractorModule") {
-        bind<RobotsInteractor>() with p { RobotsInteractor() }
-        bind<RobotInteractor>() with p { RobotInteractor() }
-        bind<BuildStepInteractor>() with p { BuildStepInteractor() }
-        bind<ConfigurationInteractor>() with p { ConfigurationInteractor() }
+        bind<RobotsInteractor>() with p { RobotsInteractor(i()) }
+        bind<RobotInteractor>() with p { RobotInteractor(i()) }
+        bind<BuildStepInteractor>() with p { BuildStepInteractor(i()) }
+        bind<ConfigurationInteractor>() with p { ConfigurationInteractor(i()) }
         bind<GetUserRobotInteractor>() with p { GetUserRobotInteractor(i()) }
         bind<AssignConfigToRobotInteractor>() with p { AssignConfigToRobotInteractor(i(), i(), i(), i(), i()) }
         bind<UpdateUserRobotInteractor>() with p { UpdateUserRobotInteractor(i()) }
         bind<GetAllUserRobotsInteractor>() with p { GetAllUserRobotsInteractor(i()) }
         bind<DeleteRobotInteractor>() with p { DeleteRobotInteractor(i()) }
         bind<GetUserConfigForRobotInteractor>() with p { GetUserConfigForRobotInteractor(i()) }
-        bind<ControllerInteractor>() with p { ControllerInteractor() }
-        bind<ProgramInteractor>() with p { ProgramInteractor() }
-        bind<GetProgramsForRobotInteractor>() with p { GetProgramsForRobotInteractor() }
-        bind<ChallengeCategoriesInteractor>() with p { ChallengeCategoriesInteractor() }
+        bind<ControllerInteractor>() with p { ControllerInteractor(i()) }
+        bind<ProgramInteractor>() with p { ProgramInteractor(i()) }
+        bind<GetProgramsForRobotInteractor>() with p { GetProgramsForRobotInteractor(i()) }
+        bind<ChallengeCategoriesInteractor>() with p { ChallengeCategoriesInteractor(i()) }
         bind<GetUserControllerForUserRobotInteractor>() with p { GetUserControllerForUserRobotInteractor(i()) }
         bind<GetUserControllerInteractor>() with p { GetUserControllerInteractor(i(), i(), i()) }
         bind<RemoveUserControllerInteractor>() with p { RemoveUserControllerInteractor(i()) }
@@ -119,18 +121,16 @@ fun createInteractorModule() =
         bind<GetUserProgramsInteractor>() with p { GetUserProgramsInteractor(i()) }
         bind<GetUserProgramsForRobotInteractor>() with p { GetUserProgramsForRobotInteractor(i()) }
         bind<GetControllerTypeInteractor>() with p { GetControllerTypeInteractor(i(), i()) }
-        bind<FirebaseConnectionInteractor>() with p { FirebaseConnectionInteractor() }
-        bind<FirebaseInitInteractor>() with p { FirebaseInitInteractor() }
         bind<SaveUserRobotInteractor>() with p { SaveUserRobotInteractor(i()) }
         bind<DuplicateUserRobotInteractor>() with p { DuplicateUserRobotInteractor(i(), i(), i(), i(), i(), i()) }
         bind<LocalFileSaver>() with p { LocalFileSaver() }
         bind<GetFullConfigurationInteractor>() with p { GetFullConfigurationInteractor(i(), i(), i(), i()) }
         bind<GetUserProgramInteractor>() with p { GetUserProgramInteractor(i()) }
-        bind<FirmwareInteractor>() with p { FirmwareInteractor() }
+        bind<FirmwareInteractor>() with p { FirmwareInteractor(i()) }
         bind<PortTestFileCreatorInteractor>() with p { PortTestFileCreatorInteractor(i()) }
         bind<CreateConfigurationFileInteractor>() with p { CreateConfigurationFileInteractor(i()) }
-        bind<ForceUpdateInteractor>() with p { ForceUpdateInteractor() }
         bind<AssignProgramToButtonInteractor>() with p { AssignProgramToButtonInteractor(i(), i()) }
+        bind<RefreshDataCacheInteractor>() with p { RefreshDataCacheInteractor(i(), i(), i())}
     }
 
 @Suppress("LongMethod")
@@ -156,7 +156,7 @@ fun createPresenterModule() =
         bind<ProgramSelectorMvp.Presenter>() with s { ProgramSelectorPresenter(i(), i(), i(), i(), i(), i()) }
         bind<ProgramPriorityMvp.Presenter>() with s { ProgramPriorityPresenter(i(), i(), i()) }
         bind<ButtonlessProgramSelectorMvp.Presenter>() with s { ButtonlessProgramSelectorPresenter(i(), i(), i(), i(), i(), i()) }
-        bind<SplashMvp.Presenter>() with s { SplashPresenter(i(), i(), i()) }
+        bind<SplashMvp.Presenter>() with s { SplashPresenter(i(), i()) }
         bind<ChallengeGroupMvp.Presenter>() with s { ChallengeGroupPresenter(i(), i(), i()) }
         bind<ChallengeListMvp.Presenter>() with s { ChallengeListPresenter(i(), i(), i()) }
         bind<ChallengeDetailMvp.Presenter>() with s { ChallengeDetailPresenter(i(), i(), i(), i()) }
@@ -190,6 +190,7 @@ fun createDbModule(context: Context) =
         bind<UserBackgroundProgramBindingDao>() with p { i<RoboticsDatabase>().userBackgroundProgramBindingDao() }
         bind<UserProgramDao>() with p { i<RoboticsDatabase>().userProgramDao() }
         bind<UserChallengeCategoryDao>() with p { i<RoboticsDatabase>().userChallengeCategoryDao() }
+        bind<RemoteDataCache>() with s { RemoteDataCache() }
     }
 
 inline fun <reified T : Any> DKodeinAware.i(tag: Any? = null) = dkodein.Instance<T>(erased(), tag)
