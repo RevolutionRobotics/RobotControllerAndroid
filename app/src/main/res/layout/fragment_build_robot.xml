@@ -15,7 +15,7 @@
             android:layout_height="match_parent"
             android:background="@color/grey_56">
 
-        <androidx.viewpager.widget.ViewPager
+        <com.revolution.robotics.views.ExceptionCatcherViewPager
                 android:id="@+id/view_pager"
                 app:adapter="@{viewModel.adapter}"
                 android:layout_width="0dp"
