@@ -33,6 +33,8 @@ class CodingPresenter(
     companion object {
         private const val EMPTY_XML = "<xml xmlns=\"http://www.w3.org/1999/xhtml\"></xml>"
         private val REMOVE_ID_REGEXP = Regex("id=\"[^\"]*\"")
+        private val toolboxIds = listOf("level1", "level2", "level3")
+        private val toolboxLabels = listOf("beginner", "intermediate", "expert")
     }
 
     override var view: CodingMvp.View? = null
@@ -48,6 +50,7 @@ class CodingPresenter(
 
     override fun register(view: CodingMvp.View, model: CodingViewModel?) {
         super.register(view, model)
+        model?.selectableToolboxes?.value = toolboxLabels
         bluetoothManager.registerListener(this)
     }
 
@@ -177,6 +180,14 @@ class CodingPresenter(
 
             override fun onVariablesExported(variables: String) = Unit
         })
+    }
+
+    override fun showDefaultToobox() {
+        model?.selectedToolboxPosition?.value = 0
+    }
+
+    override fun onToolboxSelected(position: Int) {
+        view?.changeToolbox(toolboxIds[position])
     }
 
     private fun showTestDialog() {

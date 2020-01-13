@@ -18,6 +18,7 @@ interface CodingMvp : Mvp {
         fun onToolbarBackPressed()
         fun onBackPressed(showDialog: Boolean)
         fun shareCode(code: String, xml: String)
+        fun changeToolbox(toolboxID: String)
     }
 
     interface Presenter : Mvp.Presenter<View, CodingViewModel>, SaveBlocklyListener {
@@ -33,5 +34,7 @@ interface CodingMvp : Mvp {
         fun play()
         fun onBackPressed()
         fun shareProgram()
+        fun showDefaultToobox()
+        fun onToolboxSelected(position: Int)
     }
 }

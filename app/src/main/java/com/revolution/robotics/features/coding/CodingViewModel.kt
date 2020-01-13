@@ -2,6 +2,7 @@ package com.revolution.robotics.features.coding
 
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.revolution.robotics.BuildConfig
 import com.revolution.robotics.R
@@ -19,6 +20,10 @@ class CodingViewModel(
     var userProgram: UserProgram? = null
     val isBlocklyLoaded = ObservableBoolean(false)
     val isInEditMode = ObservableBoolean(true)
+
+    val selectableToolboxes = MutableLiveData<List<String>>()
+    val selectedToolboxPosition = MutableLiveData<Int>()
+
 
     val codeExportEnabled = BuildConfig.FLAVOR == "dev"
 
@@ -40,5 +45,8 @@ class CodingViewModel(
 
     fun shareProgram() = presenter.shareProgram()
 
+    fun onToolboxSelected(position: Int) {
+        presenter.onToolboxSelected(position)
+    }
 
 }

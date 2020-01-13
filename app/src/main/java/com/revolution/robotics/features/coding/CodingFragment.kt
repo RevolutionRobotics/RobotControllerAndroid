@@ -97,6 +97,7 @@ class CodingFragment : BaseFragment<FragmentCodingBinding, CodingViewModel>(R.la
     override fun onBlocklyLoaded() {
         binding?.root?.postDelayed(BLOCKLY_DELAY_MS) {
             viewModel?.isBlocklyLoaded?.set(true)
+            presenter.showDefaultToobox()
             if (arguments?.program != null) {
                 arguments?.program?.let { presenter.loadProgram(it) }
             } else {
@@ -192,5 +193,9 @@ class CodingFragment : BaseFragment<FragmentCodingBinding, CodingViewModel>(R.la
                 }
             else -> Unit
         }
+    }
+
+    override fun changeToolbox(toolboxID: String) {
+        binding?.viewBlockly?.changeToolbox(toolboxID)
     }
 }
