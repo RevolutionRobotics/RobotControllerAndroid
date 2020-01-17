@@ -196,6 +196,5 @@ class CodingFragment : BaseFragment<FragmentCodingBinding, CodingViewModel>(R.la
     }
 
     override fun changeToolbox(toolboxID: String) {
-        binding?.viewBlockly?.changeToolbox(toolboxID)
     }
 }

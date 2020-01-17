@@ -8,6 +8,8 @@ import com.revolution.robotics.blockly.dialogs.directionSelector.DirectionSelect
 import com.revolution.robotics.blockly.dialogs.directionSelector.DirectionSelectorPresenter
 import com.revolution.robotics.blockly.dialogs.donutSelector.DonutSelectorMvp
 import com.revolution.robotics.blockly.dialogs.donutSelector.DonutSelectorPresenter
+import com.revolution.robotics.blockly.dialogs.lightEffectPicker.LightEffectPickerMvp
+import com.revolution.robotics.blockly.dialogs.lightEffectPicker.LightEffectPickerPresenter
 import com.revolution.robotics.blockly.dialogs.slider.SliderMvp
 import com.revolution.robotics.blockly.dialogs.slider.SliderPresenter
 import com.revolution.robotics.blockly.dialogs.soundPicker.SoundPickerMvp
@@ -164,6 +166,7 @@ fun createPresenterModule() =
         bind<DonutSelectorMvp.Presenter>() with s { DonutSelectorPresenter() }
         bind<ColorPickerMvp.Presenter>() with s { ColorPickerPresenter() }
         bind<SoundPickerMvp.Presenter>() with s { SoundPickerPresenter(i()) }
+        bind<LightEffectPickerMvp.Presenter>() with s { LightEffectPickerPresenter() }
         bind<SliderMvp.Presenter>() with s { SliderPresenter() }
         bind<CodingMvp.Presenter>() with s { CodingPresenter(i(), i(), i(), i(), i(), i()) }
         bind<ProgramsMvp.Presenter>() with s { ProgramsPresenter(i(), i()) }

@@ -20,6 +20,7 @@ import com.revolution.robotics.views.dialogs.DialogButton
 import com.revolution.robotics.views.dialogs.DialogButtonHelper
 import org.kodein.di.erased.instance
 import org.revolutionrobotics.blockly.android.BlocklyVariable
+import org.revolutionrobotics.blockly.android.view.result.OptionResult
 import org.revolutionrobotics.blockly.android.view.result.TextResult
 import org.revolutionrobotics.blockly.android.view.result.VariableResult
 
@@ -67,7 +68,11 @@ class ValueOptionsDialog :
     }
 
     fun onValueSelected(value: String) {
-        (blocklyResultHolder.result as? TextResult)?.confirm(value)
+        if (blocklyResultHolder.result is TextResult) {
+            (blocklyResultHolder.result as? TextResult)?.confirm(value)
+        } else if (blocklyResultHolder.result is OptionResult) {
+            (blocklyResultHolder.result as? OptionResult)?.confirm(value)
+        }
         dismissAllowingStateLoss()
     }
 }
