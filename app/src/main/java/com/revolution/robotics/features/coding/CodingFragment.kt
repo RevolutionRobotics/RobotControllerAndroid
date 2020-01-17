@@ -1,12 +1,10 @@
 package com.revolution.robotics.features.coding
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ShareCompat
-import androidx.core.content.ContextCompat
 import androidx.core.view.postDelayed
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
@@ -97,7 +95,6 @@ class CodingFragment : BaseFragment<FragmentCodingBinding, CodingViewModel>(R.la
     override fun onBlocklyLoaded() {
         binding?.root?.postDelayed(BLOCKLY_DELAY_MS) {
             viewModel?.isBlocklyLoaded?.set(true)
-            presenter.showDefaultToobox()
             if (arguments?.program != null) {
                 arguments?.program?.let { presenter.loadProgram(it) }
             } else {
@@ -193,8 +190,5 @@ class CodingFragment : BaseFragment<FragmentCodingBinding, CodingViewModel>(R.la
                 }
             else -> Unit
         }
-    }
-
-    override fun changeToolbox(toolboxID: String) {
     }
 }

@@ -130,21 +130,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/icon_open" />
 
-        <com.revolution.robotics.views.ChippedView
-                android:layout_width="wrap_content"
-                android:layout_height="36dp"
-                app:layout_constraintLeft_toRightOf="@id/back"
-                app:layout_constraintTop_toTopOf="@id/back">
-
-            <Spinner
-                    entries="@{viewModel.selectableToolboxes}"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:onItemSelected="@{(parent,view,pos,id)->viewModel.onToolboxSelected(pos)}"
-                    android:selectedItemPosition="@={viewModel.selectedToolboxPosition}" />
-
-        </com.revolution.robotics.views.ChippedView>
-
         <ProgressBar
                 android:id="@+id/progress"
                 style="@style/Widget.AppCompat.ProgressBar"

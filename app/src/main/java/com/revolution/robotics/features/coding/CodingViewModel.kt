@@ -21,10 +21,6 @@ class CodingViewModel(
     val isBlocklyLoaded = ObservableBoolean(false)
     val isInEditMode = ObservableBoolean(true)
 
-    val selectableToolboxes = MutableLiveData<List<String>>()
-    val selectedToolboxPosition = MutableLiveData<Int>()
-
-
     val codeExportEnabled = BuildConfig.FLAVOR == "dev"
 
     fun showPythonCode() = presenter.showPythonCode()
@@ -44,9 +40,5 @@ class CodingViewModel(
     fun play() = presenter.play()
 
     fun shareProgram() = presenter.shareProgram()
-
-    fun onToolboxSelected(position: Int) {
-        presenter.onToolboxSelected(position)
-    }
 
 }
