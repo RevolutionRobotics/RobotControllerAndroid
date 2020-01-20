@@ -1,5 +1,6 @@
 package com.revolution.robotics.blockly
 
+import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import com.revolution.robotics.R
 import com.revolution.robotics.blockly.dialogs.blockOptions.BlockOptionsDialog
@@ -9,6 +10,7 @@ import com.revolution.robotics.blockly.dialogs.dialpad.DialpadDialog
 import com.revolution.robotics.blockly.dialogs.directionSelector.Direction
 import com.revolution.robotics.blockly.dialogs.directionSelector.DirectionSelectorDialog
 import com.revolution.robotics.blockly.dialogs.donutSelector.DonutSelectorDialog
+import com.revolution.robotics.blockly.dialogs.lightEffectPicker.LightEffectPickerDialog
 import com.revolution.robotics.blockly.dialogs.optionSelector.Option
 import com.revolution.robotics.blockly.dialogs.optionSelector.OptionSelectorDialog
 import com.revolution.robotics.blockly.dialogs.slider.SliderDialog
@@ -25,7 +27,6 @@ import org.revolutionrobotics.blockly.android.BlocklyOption
 import org.revolutionrobotics.blockly.android.BlocklyVariable
 import org.revolutionrobotics.blockly.android.view.result.*
 import org.revolutionrobotics.blockly.android.view.DialogFactory
-import org.revolutionrobotics.bluetooth.android.service.RoboticsMotorService
 
 @Suppress("TooManyFunctions")
 class DialogFactory(
@@ -69,13 +70,31 @@ class DialogFactory(
         result: OptionResult
     ) {
         blocklyResultHolder.result = result
-        val options = blocklyOptions.map { blocklyOption -> blocklyOption.toOption(defaultValue, resourceResolver) }
-        OptionSelectorDialog.newInstance(title, options, showLabels).show(fragmentManager)
+        if (blocklyOptions.size > 6) {
+            ValueOptionsDialog.newInstance(
+                title,
+                defaultValue?.value,
+                blocklyOptions.map { it.value },
+                R.string.blockly_no_distance_sensor_configured
+            ).show(fragmentManager)
+        } else {
+            val options = blocklyOptions.map { blocklyOption -> blocklyOption.toOption(defaultValue, resourceResolver) }
+            OptionSelectorDialog.newInstance(title, options, showLabels).show(fragmentManager)
+        }
     }
 
     override fun showColorPicker(title: String, colors: List<String>, defaultValue: String, result: ColorResult) {
         blocklyResultHolder.result = result
         ColorPickerDialog.newInstance(title, colors, defaultValue).show(fragmentManager)
+    }
+
+    override fun showLightEffectPicker(
+        title: String,
+        defaultValue: String?,
+        result: LightEffectResult
+    ) {
+        blocklyResultHolder.result = result
+        LightEffectPickerDialog.newInstance(title, defaultValue).show(fragmentManager)
     }
 
     override fun showSoundPicker(title: String, defaultValue: String?, result: SoundResult) {

@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <variable name="viewModel" type="com.revolution.robotics.features.coding.CodingViewModel"/>
-        <variable name="buttonBackground" type="com.revolution.robotics.views.chippedBox.ChippedBoxConfig"/>
+
+        <variable
+                name="viewModel"
+                type="com.revolution.robotics.features.coding.CodingViewModel" />
+
+        <variable
+                name="buttonBackground"
+                type="com.revolution.robotics.views.chippedBox.ChippedBoxConfig" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,122 +22,123 @@
                 android:id="@+id/icon_new"
                 android:layout_width="@dimen/coding_icon_width"
                 android:layout_height="@dimen/coding_icon_height"
-                android:scaleType="centerInside"
-                android:padding="@dimen/dimen_8dp"
-                android:src="@drawable/ic_add"
-                android:onClick="@{() -> viewModel.showNewProgramDialog()()}"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginTop="@dimen/dimen_8dp"
-                app:gone="@{viewModel.isInEditMode}"
                 android:layout_marginEnd="@dimen/dimen_8dp"
-                app:chippedBoxConfig="@{buttonBackground}"/>
+                android:onClick="@{() -> viewModel.showNewProgramDialog()()}"
+                android:padding="@dimen/dimen_8dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_add"
+                app:chippedBoxConfig="@{buttonBackground}"
+                app:gone="@{viewModel.isInEditMode}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
                 android:id="@+id/icon_open"
                 android:layout_width="@dimen/coding_icon_width"
                 android:layout_height="@dimen/coding_icon_height"
-                android:scaleType="centerInside"
-                android:padding="@dimen/dimen_8dp"
-                android:src="@drawable/ic_open"
-                android:onClick="@{() -> viewModel.showProgramsDialog()}"
-                app:layout_constraintTop_toTopOf="@id/icon_new"
-                app:layout_constraintEnd_toStartOf="@id/icon_new"
                 android:layout_marginEnd="@dimen/dimen_8dp"
+                android:onClick="@{() -> viewModel.showProgramsDialog()}"
+                android:padding="@dimen/dimen_8dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_open"
                 app:chippedBoxConfig="@{buttonBackground}"
-                app:gone="@{viewModel.isInEditMode}"/>
+                app:gone="@{viewModel.isInEditMode}"
+                app:layout_constraintEnd_toStartOf="@id/icon_new"
+                app:layout_constraintTop_toTopOf="@id/icon_new" />
 
         <ImageView
                 android:id="@+id/icon_save"
                 android:layout_width="@dimen/coding_icon_width"
                 android:layout_height="@dimen/coding_icon_height"
-                android:scaleType="centerInside"
-                android:padding="@dimen/dimen_8dp"
-                android:src="@drawable/ic_save"
-                android:onClick="@{() -> viewModel.saveProgram()}"
-                app:layout_constraintTop_toTopOf="@id/icon_new"
-                app:layout_constraintEnd_toStartOf="@id/icon_open"
                 android:layout_marginEnd="@dimen/dimen_8dp"
-                app:chippedBoxConfig="@{buttonBackground}"/>
+                android:onClick="@{() -> viewModel.saveProgram()}"
+                android:padding="@dimen/dimen_8dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_save"
+                app:chippedBoxConfig="@{buttonBackground}"
+                app:layout_constraintEnd_toStartOf="@id/icon_open"
+                app:layout_constraintTop_toTopOf="@id/icon_new" />
 
         <ImageView
                 android:id="@+id/icon_code"
                 android:layout_width="@dimen/coding_icon_width"
                 android:layout_height="@dimen/coding_icon_height"
-                android:scaleType="centerInside"
-                android:padding="@dimen/dimen_8dp"
-                android:src="@drawable/ic_code"
-                android:onClick="@{() -> viewModel.showPythonCode()}"
-                app:layout_constraintTop_toTopOf="@id/icon_new"
-                app:layout_constraintEnd_toStartOf="@id/icon_save"
                 android:layout_marginEnd="@dimen/dimen_8dp"
+                android:onClick="@{() -> viewModel.showPythonCode()}"
+                android:padding="@dimen/dimen_8dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_code"
+                android:visibility="gone"
                 app:chippedBoxConfig="@{buttonBackground}"
-                android:visibility="gone"/>
+                app:layout_constraintEnd_toStartOf="@id/icon_save"
+                app:layout_constraintTop_toTopOf="@id/icon_new" />
 
         <ImageView
                 android:id="@+id/icon_export"
                 android:layout_width="@dimen/coding_icon_width"
                 android:layout_height="@dimen/coding_icon_height"
-                android:scaleType="centerInside"
-                android:padding="@dimen/dimen_8dp"
-                android:src="@drawable/ic_email"
-                android:onClick="@{() -> viewModel.shareProgram()}"
-                app:layout_constraintTop_toTopOf="@id/icon_new"
-                app:layout_constraintEnd_toStartOf="@id/icon_code"
                 android:layout_marginEnd="@dimen/dimen_8dp"
+                android:onClick="@{() -> viewModel.shareProgram()}"
+                android:padding="@dimen/dimen_8dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_email"
                 app:chippedBoxConfig="@{buttonBackground}"
-                app:gone="@{!viewModel.codeExportEnabled}" />
+                app:gone="@{!viewModel.codeExportEnabled}"
+                app:layout_constraintEnd_toStartOf="@id/icon_code"
+                app:layout_constraintTop_toTopOf="@id/icon_new" />
+
         <TextView
                 android:id="@+id/program_title"
                 android:layout_width="@dimen/coding_program_title_width"
                 android:layout_height="@dimen/coding_program_title_height"
                 android:layout_marginEnd="@dimen/dimen_8dp"
                 android:fontFamily="@font/jura_bold"
-                android:textSize="16sp"
-                android:textColor="@color/white"
                 android:gravity="center"
+                android:maxLines="1"
                 android:paddingStart="@dimen/dimen_12dp"
                 android:paddingEnd="@dimen/dimen_12dp"
                 android:text="@{viewModel.programName}"
-                android:maxLines="1"
-                app:autoSizeTextType="uniform"
-                app:autoSizeMinTextSize="10sp"
+                android:textColor="@color/white"
+                android:textSize="16sp"
                 app:autoSizeMaxTextSize="16sp"
-                app:layout_constraintTop_toTopOf="@id/icon_new"
+                app:autoSizeMinTextSize="10sp"
+                app:autoSizeTextType="uniform"
+                app:chippedBoxConfig="@{buttonBackground}"
                 app:layout_constraintEnd_toStartOf="@id/icon_export"
-                app:chippedBoxConfig="@{buttonBackground}"/>
+                app:layout_constraintTop_toTopOf="@id/icon_new" />
 
         <View
                 android:id="@+id/divider"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/dimen_1dp"
-                app:layout_constraintTop_toBottomOf="@id/program_title"
-                android:background="@color/grey_28"
                 android:layout_marginTop="@dimen/dimen_2dp"
+                android:background="@color/grey_28"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintTop_toBottomOf="@id/program_title" />
 
         <ImageView
                 android:id="@+id/back"
                 android:layout_width="@dimen/coding_icon_width"
                 android:layout_height="@dimen/coding_icon_height"
-                android:scaleType="centerInside"
-                android:padding="@dimen/dimen_8dp"
-                android:src="@drawable/ic_back"
-                app:layout_constraintTop_toTopOf="@id/icon_open"
-                app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginEnd="@dimen/dimen_8dp"
-                android:onClick="@{() -> viewModel.onBackPressed()}"/>
+                android:onClick="@{() -> viewModel.onBackPressed()}"
+                android:padding="@dimen/dimen_8dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_back"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/icon_open" />
 
         <ProgressBar
                 android:id="@+id/progress"
+                style="@style/Widget.AppCompat.ProgressBar"
                 android:layout_width="@dimen/dimen_44dp"
                 android:layout_height="@dimen/dimen_44dp"
-                app:layout_constraintTop_toTopOf="@id/view_blockly"
-                app:layout_constraintStart_toStartOf="@id/view_blockly"
-                app:layout_constraintEnd_toEndOf="@id/view_blockly"
                 app:layout_constraintBottom_toBottomOf="@id/view_blockly"
-                style="@style/Widget.AppCompat.ProgressBar"/>
+                app:layout_constraintEnd_toEndOf="@id/view_blockly"
+                app:layout_constraintStart_toStartOf="@id/view_blockly"
+                app:layout_constraintTop_toTopOf="@id/view_blockly" />
 
         <org.revolutionrobotics.blockly.android.view.BlocklyView
                 android:id="@+id/view_blockly"
@@ -138,21 +146,21 @@
                 android:layout_height="0dp"
                 android:layout_marginTop="@dimen/dimen_2dp"
                 android:background="@color/black"
-                app:layout_constraintTop_toBottomOf="@id/divider"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:visible="@{viewModel.isBlocklyLoaded}"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/divider"
+                app:visible="@{viewModel.isBlocklyLoaded}" />
 
         <com.revolution.robotics.views.RoboticsButton
                 android:layout_width="@dimen/robotics_button_width"
                 android:layout_height="@dimen/robotics_button_height"
                 android:layout_margin="@dimen/dimen_16dp"
+                android:onClick="@{()->viewModel.play()}"
+                app:image="@{@drawable/ic_play}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/divider"
-                android:onClick="@{()->viewModel.play()}"
-                app:text="@{@string/blockly_test_button}"
-                app:image="@{@drawable/ic_play}"/>
+                app:text="@{@string/blockly_test_button}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

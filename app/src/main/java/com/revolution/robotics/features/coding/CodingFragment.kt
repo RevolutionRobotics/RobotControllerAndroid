@@ -1,12 +1,10 @@
 package com.revolution.robotics.features.coding
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ShareCompat
-import androidx.core.content.ContextCompat
 import androidx.core.view.postDelayed
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R

@@ -2,6 +2,7 @@ package com.revolution.robotics.features.coding
 
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.revolution.robotics.BuildConfig
 import com.revolution.robotics.R
@@ -39,6 +40,5 @@ class CodingViewModel(
     fun play() = presenter.play()
 
     fun shareProgram() = presenter.shareProgram()
-
 
 }
