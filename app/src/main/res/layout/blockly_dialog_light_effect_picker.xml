@@ -4,23 +4,123 @@
     <data>
         <variable name="background"
                   type="com.revolution.robotics.views.chippedBox.ChippedBoxConfig"/>
+        <variable name="viewModel"
+                type="com.revolution.robotics.blockly.dialogs.lightEffectPicker.LightEffectPickerViewModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
+        <TextView
+                android:id="@+id/option_1"
+                android:gravity="center"
+                android:layout_width="@dimen/option_selector_button_width"
+                android:layout_height="@dimen/option_selector_button_height"
+                android:paddingStart="@dimen/option_selector_button_padding_horizontal"
+                android:paddingEnd="@dimen/option_selector_button_padding_horizontal"
+                android:paddingTop="@dimen/option_selector_button_padding_vertical"
+                android:paddingBottom="@dimen/option_selector_button_padding_vertical"
+                app:layout_constraintVertical_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/option_2"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/option_4"
+                app:gone="@{viewModel.getOption(1) == null}"
+                android:onClick="@{() -> viewModel.onOptionClicked(1)}"
+                app:chippedBoxConfig="@{viewModel.getBackground(1)}"
+                app:text="@{viewModel.getOption(1).iconEmoji}"/>
+
+        <TextView
+                android:id="@+id/option_2"
+                android:gravity="center"
+                android:layout_width="@dimen/option_selector_button_width"
+                android:layout_height="@dimen/option_selector_button_height"
+                android:paddingStart="@dimen/option_selector_button_padding_horizontal"
+                android:paddingEnd="@dimen/option_selector_button_padding_horizontal"
+                android:paddingTop="@dimen/option_selector_button_padding_vertical"
+                android:paddingBottom="@dimen/option_selector_button_padding_vertical"
+                app:layout_constraintTop_toTopOf="@id/option_1"
+                app:layout_constraintBottom_toBottomOf="@id/option_1"
+                app:layout_constraintStart_toEndOf="@id/option_1"
+                app:layout_constraintEnd_toStartOf="@id/option_3"
+                app:gone="@{viewModel.getOption(2) == null}"
+                android:onClick="@{() -> viewModel.onOptionClicked(2)}"
+                app:chippedBoxConfig="@{viewModel.getBackground(2)}"
+                app:text="@{viewModel.getOption(2).iconEmoji}"/>
+
+        <TextView
+                android:id="@+id/option_3"
+                android:gravity="center"
+                android:layout_width="@dimen/option_selector_button_width"
+                android:layout_height="@dimen/option_selector_button_height"
+                android:paddingStart="@dimen/option_selector_button_padding_horizontal"
+                android:paddingEnd="@dimen/option_selector_button_padding_horizontal"
+                android:paddingTop="@dimen/option_selector_button_padding_vertical"
+                android:paddingBottom="@dimen/option_selector_button_padding_vertical"
+                app:layout_constraintTop_toTopOf="@id/option_1"
+                app:layout_constraintBottom_toBottomOf="@id/option_1"
+                app:layout_constraintStart_toEndOf="@id/option_2"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginStart="@dimen/dimen_32dp"
-                android:layout_marginEnd="@dimen/dimen_32dp"
-                android:layout_marginTop="@dimen/dimen_4dp"/>
+                app:gone="@{viewModel.getOption(3) == null}"
+                android:onClick="@{() -> viewModel.onOptionClicked(3)}"
+                app:chippedBoxConfig="@{viewModel.getBackground(3)}"
+                app:text="@{viewModel.getOption(3).iconEmoji}"/>
+
+        <TextView
+                android:id="@+id/option_4"
+                android:gravity="center"
+                android:layout_width="@dimen/option_selector_button_width"
+                android:layout_height="@dimen/option_selector_button_height"
+                android:paddingStart="@dimen/option_selector_button_padding_horizontal"
+                android:paddingEnd="@dimen/option_selector_button_padding_horizontal"
+                android:paddingTop="@dimen/option_selector_button_padding_vertical"
+                android:paddingBottom="@dimen/option_selector_button_padding_vertical"
+                android:layout_marginTop="@dimen/dimen_16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/option_5"
+                app:layout_constraintTop_toBottomOf="@id/option_1"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:gone="@{viewModel.getOption(4) == null}"
+                android:onClick="@{() -> viewModel.onOptionClicked(4)}"
+                app:chippedBoxConfig="@{viewModel.getBackground(4)}"
+                app:text="@{viewModel.getOption(4).iconEmoji}"/>
+
+        <TextView
+                android:id="@+id/option_5"
+                android:gravity="center"
+                android:layout_width="@dimen/option_selector_button_width"
+                android:layout_height="@dimen/option_selector_button_height"
+                android:paddingStart="@dimen/option_selector_button_padding_horizontal"
+                android:paddingEnd="@dimen/option_selector_button_padding_horizontal"
+                android:paddingTop="@dimen/option_selector_button_padding_vertical"
+                android:paddingBottom="@dimen/option_selector_button_padding_vertical"
+                app:layout_constraintTop_toTopOf="@id/option_4"
+                app:layout_constraintBottom_toBottomOf="@id/option_4"
+                app:layout_constraintStart_toEndOf="@id/option_4"
+                app:layout_constraintEnd_toStartOf="@id/option_6"
+                app:gone="@{viewModel.getOption(5) == null}"
+                android:onClick="@{() -> viewModel.onOptionClicked(5)}"
+                app:chippedBoxConfig="@{viewModel.getBackground(5)}"
+                app:text="@{viewModel.getOption(5).iconEmoji}"/>
+
+        <TextView
+                android:id="@+id/option_6"
+                android:gravity="center"
+                android:layout_width="@dimen/option_selector_button_width"
+                android:layout_height="@dimen/option_selector_button_height"
+                android:paddingStart="@dimen/option_selector_button_padding_horizontal"
+                android:paddingEnd="@dimen/option_selector_button_padding_horizontal"
+                android:paddingTop="@dimen/option_selector_button_padding_vertical"
+                android:paddingBottom="@dimen/option_selector_button_padding_vertical"
+                app:layout_constraintTop_toTopOf="@id/option_4"
+                app:layout_constraintBottom_toBottomOf="@id/option_4"
+                app:layout_constraintStart_toEndOf="@id/option_5"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:gone="@{viewModel.getOption(6) == null}"
+                android:onClick="@{() -> viewModel.onOptionClicked(6)}"
+                app:chippedBoxConfig="@{viewModel.getBackground(6)}"
+                app:text="@{viewModel.getOption(6).iconEmoji}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
