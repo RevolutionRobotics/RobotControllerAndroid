@@ -4,6 +4,8 @@ import android.util.Base64
 import com.revolution.robotics.R
 import com.revolution.robotics.analytics.Reporter
 import com.revolution.robotics.core.domain.local.UserProgram
+import com.revolution.robotics.core.eventBus.dialog.DialogEvent
+import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
 import com.revolution.robotics.core.interactor.GetUserConfigForRobotInteractor
 import com.revolution.robotics.core.interactor.RemoveUserProgramInteractor
 import com.revolution.robotics.core.interactor.SaveUserProgramInteractor
@@ -27,8 +29,9 @@ class CodingPresenter(
     private val saveUserProgramInteractor: SaveUserProgramInteractor,
     private val resourceResolver: ResourceResolver,
     private val bluetoothManager: BluetoothManager,
-    private val appPrefs: AppPrefs
-) : CodingMvp.Presenter, BluetoothConnectionListener {
+    private val appPrefs: AppPrefs,
+    private val dialogEventBus: DialogEventBus
+) : CodingMvp.Presenter, BluetoothConnectionListener, DialogEventBus.Listener {
 
     companion object {
         private const val EMPTY_XML = "<xml xmlns=\"http://www.w3.org/1999/xhtml\"></xml>"
@@ -49,11 +52,13 @@ class CodingPresenter(
     override fun register(view: CodingMvp.View, model: CodingViewModel?) {
         super.register(view, model)
         bluetoothManager.registerListener(this)
+        dialogEventBus.register(this)
     }
 
     override fun unregister(view: CodingMvp.View?) {
         super.unregister(view)
         bluetoothManager.unregisterListener(this)
+        dialogEventBus.unregister(this)
     }
 
     override fun showNewProgramDialog() {
@@ -266,9 +271,21 @@ class CodingPresenter(
         isProgramChanged { view?.onBackPressed(it) }
     }
 
-    override fun onBluetoothConnectionStateChanged(connected: Boolean, serviceDiscovered: Boolean) {
-        if (showTestDialogAfterConnection && connected && serviceDiscovered) {
+    override fun onBluetoothConnectionStateChanged(
+        connected: Boolean,
+        serviceDiscovered: Boolean,
+        firmwareCompatible: Boolean
+    ) {
+        if (showTestDialogAfterConnection && connected && serviceDiscovered && firmwareCompatible) {
             showTestDialog()
+        }
+    }
+
+    override fun onDialogEvent(event: DialogEvent) {
+        when (event) {
+            DialogEvent.FIRMWARE_INCOMPATIBLE_UPDATE_LATER -> showTestDialog()
+            DialogEvent.FIRMWARE_INCOMPATIBLE_UPDATE -> Unit
+            else -> Unit
         }
     }
 }

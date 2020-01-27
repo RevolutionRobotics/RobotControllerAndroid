@@ -9,16 +9,21 @@ import androidx.databinding.ViewDataBinding
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
 import com.revolution.robotics.analytics.Reporter
+import com.revolution.robotics.core.domain.remote.Milestone
+import com.revolution.robotics.core.eventBus.dialog.DialogEvent
+import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
 import com.revolution.robotics.core.utils.AppPrefs
 import com.revolution.robotics.core.utils.BundleArgumentDelegate
 import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.databinding.FragmentPlayCoreBinding
 import com.revolution.robotics.features.bluetooth.BluetoothConnectionListener
 import com.revolution.robotics.features.bluetooth.BluetoothManager
+import com.revolution.robotics.features.build.chapterFinished.ChapterFinishedDialog
+import com.revolution.robotics.features.build.testing.buildTest.TestBuildDialog
 import org.kodein.di.erased.instance
 
 abstract class PlayFragment : BaseFragment<FragmentPlayCoreBinding, PlayViewModel>(R.layout.fragment_play_core),
-    PlayMvp.View, BluetoothConnectionListener {
+    PlayMvp.View, BluetoothConnectionListener, DialogEventBus.Listener {
 
     companion object {
         private var Bundle.robotId by BundleArgumentDelegate.Int("robotId")
@@ -31,6 +36,7 @@ abstract class PlayFragment : BaseFragment<FragmentPlayCoreBinding, PlayViewMode
     private val bluetoothManager: BluetoothManager by kodein.instance()
     protected val navigator: Navigator by kodein.instance()
     protected val appPrefs: AppPrefs by kodein.instance()
+    private val dialogEventBus: DialogEventBus by kodein.instance()
 
     abstract fun createContentView(inflater: LayoutInflater, container: ViewGroup?)
 
@@ -61,6 +67,7 @@ abstract class PlayFragment : BaseFragment<FragmentPlayCoreBinding, PlayViewMode
         }
         viewModel?.onboaringFinished?.value = appPrefs.finishedOnboarding
         presenter.register(this, viewModel)
+        dialogEventBus.register(this)
     }
 
     override fun onResume() {
@@ -74,6 +81,7 @@ abstract class PlayFragment : BaseFragment<FragmentPlayCoreBinding, PlayViewMode
         presenter.unregister()
         bluetoothManager.unregisterListener(this)
         activity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        dialogEventBus.unregister(this)
         super.onDestroyView()
     }
 
@@ -99,8 +107,12 @@ abstract class PlayFragment : BaseFragment<FragmentPlayCoreBinding, PlayViewMode
         navigator.back()
     }
 
-    override fun onBluetoothConnectionStateChanged(connected: Boolean, serviceDiscovered: Boolean) {
-        if (connected && serviceDiscovered) {
+    override fun onBluetoothConnectionStateChanged(
+        connected: Boolean,
+        serviceDiscovered: Boolean,
+        firmwareCompatible: Boolean
+    ) {
+        if (connected && serviceDiscovered && firmwareCompatible) {
             uploadConfiguration()
         } else if (!connected) {
             presenter.onDeviceDisconnected()
@@ -117,6 +129,14 @@ abstract class PlayFragment : BaseFragment<FragmentPlayCoreBinding, PlayViewMode
         } else {
             navigator.popUntil(R.id.mainMenuFragment)
             true
+        }
+    }
+
+    override fun onDialogEvent(event: DialogEvent) {
+        when (event) {
+            DialogEvent.FIRMWARE_INCOMPATIBLE_UPDATE_LATER -> uploadConfiguration()
+            DialogEvent.FIRMWARE_INCOMPATIBLE_UPDATE -> navigator
+            else -> Unit
         }
     }
 }

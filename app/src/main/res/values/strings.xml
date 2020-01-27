@@ -301,6 +301,9 @@
     <string name="firmware_update_failed_update_later_button">Update later</string>
     <string name="firmware_update_failed_update_community_button">Community</string>
     <string name="firmware_update_failed_update_try_again_button">Try again</string>
+    <string name="firmware_incompatible_description">The robot you connected runs a deprecated firmware version which can lead to problems like features not working as expected or even crashes. We advise to update you robot firmware before proceeding.</string>
+    <string name="firmware_incompatible_update_button">Update</string>
+    <string name="firmware_incompatible_not_now_button">Not now</string>
 
     <!-- Programs -->
     <string name="program_title_default">Untitled program</string>

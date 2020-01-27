@@ -1,7 +1,9 @@
 package com.revolution.robotics.features.bluetooth
 
 import androidx.fragment.app.FragmentActivity
+import com.revolution.robotics.R
 import com.revolution.robotics.core.utils.dynamicPermissions.BluetoothConnectionFlowHelper
+import com.revolution.robotics.features.mainmenu.settings.firmware.compatibility.FirmwareIncompatibleDialog
 import org.kodein.di.Kodein
 import org.kodein.di.erased.instance
 import org.revolutionrobotics.bluetooth.android.communication.RoboticsConnectionStatusListener
@@ -39,7 +41,7 @@ class BluetoothManager(private var kodein: Kodein) : RoboticsConnectionStatusLis
         if (!listeners.contains(listener)) {
             listeners.add(listener)
         }
-        listener.onBluetoothConnectionStateChanged(isConnected, isServiceDiscovered)
+        listener.onBluetoothConnectionStateChanged(isConnected, isServiceDiscovered, true)
     }
 
     fun unregisterListener(listener: BluetoothConnectionListener) {
@@ -49,7 +51,22 @@ class BluetoothManager(private var kodein: Kodein) : RoboticsConnectionStatusLis
     override fun onConnectionStateChanged(connected: Boolean, serviceDiscovered: Boolean) {
         isConnected = connected
         isServiceDiscovered = serviceDiscovered
-        listeners.forEach { it.onBluetoothConnectionStateChanged(connected, serviceDiscovered) }
+        if (connected && serviceDiscovered) {
+            getDeviceInfoService().apply {
+                getSoftwareRevision({ version ->
+                    val compatible = version.substringAfterLast('.').toInt() >= MINIMUM_FIRMWARE_REVISION
+                    if (!compatible) {
+                        activity?.supportFragmentManager?.let { FirmwareIncompatibleDialog().show(it) }
+                    }
+                    listeners.forEach { it.onBluetoothConnectionStateChanged(connected, serviceDiscovered, compatible) }
+                }, {
+                    listeners.forEach { it.onBluetoothConnectionStateChanged(connected, serviceDiscovered, true) }
+                })
+            }
+        } else {
+            listeners.forEach { it.onBluetoothConnectionStateChanged(connected, serviceDiscovered, true) }
+        }
+
     }
 
     fun disconnect() {
@@ -58,7 +75,11 @@ class BluetoothManager(private var kodein: Kodein) : RoboticsConnectionStatusLis
 
     fun shutDown() {
         activity = null
-        listeners.forEach { it.onBluetoothConnectionStateChanged(connected = false, serviceDiscovered = false) }
+        listeners.forEach { it.onBluetoothConnectionStateChanged(
+            connected = false,
+            serviceDiscovered = false,
+            firmwareCompatible = true
+        ) }
         bleConnectionHandler.disconnect()
         bleConnectionHandler.unregisterConnectionListener(this)
         isConnected = false
@@ -77,4 +98,8 @@ class BluetoothManager(private var kodein: Kodein) : RoboticsConnectionStatusLis
     fun getMotorService() = bleConnectionHandler.motorService
 
     fun getSensorService() = bleConnectionHandler.sensorService
+
+    companion object {
+        private const val MINIMUM_FIRMWARE_REVISION = 957
+    }
 }
