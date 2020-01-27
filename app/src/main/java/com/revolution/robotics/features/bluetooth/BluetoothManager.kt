@@ -100,6 +100,6 @@ class BluetoothManager(private var kodein: Kodein) : RoboticsConnectionStatusLis
     fun getSensorService() = bleConnectionHandler.sensorService
 
     companion object {
-        private const val MINIMUM_FIRMWARE_REVISION = 957
+        private const val MINIMUM_FIRMWARE_REVISION = 959
     }
 }
