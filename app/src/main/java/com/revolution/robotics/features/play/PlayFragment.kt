@@ -45,16 +45,9 @@ class PlayFragment : BaseFragment<FragmentPlayCoreBinding, PlayViewModel>(R.layo
 
     private lateinit var contentBinding: ViewDataBinding
 
-    var reverseYAxis: Boolean = false
-    var reverseXAxis: Boolean = false
-
-
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         activity?.window?.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         presenter.toolbarViewModel = PlayToolbarViewModel()
-        presenter.reverseYAxis = reverseYAxis
-        presenter.reverseXAxis = reverseXAxis
         binding?.toolbarViewModel = presenter.toolbarViewModel
         arguments?.let {
             presenter.loadRobotName(it.robotId)
@@ -113,23 +106,23 @@ class PlayFragment : BaseFragment<FragmentPlayCoreBinding, PlayViewModel>(R.layo
                 contentBinding = FragmentPlayGamerBinding.inflate(LayoutInflater.from(context), binding?.contentWrapper, true).apply {
                     viewModel = viewModel
                     joystick.listener = this@PlayFragment
-                    reverseYAxis = true
-                    reverseXAxis = false
+                    presenter.reverseYAxis = true
+                    presenter.reverseXAxis = false
                 }
             ControllerType.MULTITASKER ->
-            contentBinding = FragmentPlayMultitaskerBinding.inflate(LayoutInflater.from(context), binding?.contentWrapper, true).apply {
-                viewModel = viewModel
-                joystick.listener = this@PlayFragment
-                reverseYAxis = true
-                reverseXAxis = false
-            }
+                contentBinding = FragmentPlayMultitaskerBinding.inflate(LayoutInflater.from(context), binding?.contentWrapper, true).apply {
+                    viewModel = viewModel
+                    joystick.listener = this@PlayFragment
+                    presenter.reverseYAxis = true
+                    presenter.reverseXAxis = false
+                }
             ControllerType.DRIVER ->
                 contentBinding = FragmentPlayDriverBinding.inflate(LayoutInflater.from(context), binding?.contentWrapper, true).apply {
                     viewModel = this@PlayFragment.viewModel
                     leverLeft.onAxisChanged { y -> presenter.onJoystickXAxisChanged(y) }
                     leverRight.onAxisChanged { x -> presenter.onJoystickYAxisChanged(x) }
-                    reverseYAxis = true
-                    reverseXAxis = true
+                    presenter.reverseYAxis = true
+                    presenter.reverseXAxis = true
                 }
         }
 
