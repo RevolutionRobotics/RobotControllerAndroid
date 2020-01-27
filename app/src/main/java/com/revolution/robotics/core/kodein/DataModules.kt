@@ -150,7 +150,7 @@ fun createPresenterModule() =
         bind<AboutMvp.Presenter>() with s { AboutPresenter(i(), i()) }
         bind<FirmwareMvp.Presenter>() with s { FirmwareUpdatePresenter(i(), i()) }
         bind<FirmwareUpdateMvp.Presenter>() with s { FirmwareUpdateDialogPresenter(i(), i(), i(), i(), i(), i()) }
-        bind<PlayMvp.Presenter>() with s { PlayPresenter(i(), i(), i(), i(), i()) }
+        bind<PlayMvp.Presenter>() with s { PlayPresenter(i(), i(), i(), i(), i(), i()) }
         bind<TypeSelectorMvp.Presenter>() with s { TypeSelectorPresenter(i()) }
         bind<ConfigureControllerMvp.Presenter>() with s { ConfigureControllerPresenter(i(), i(), i(), i(), i(), i(), i()) }
         bind<ProgramSelectorMvp.Presenter>() with s { ProgramSelectorPresenter(i(), i(), i(), i(), i(), i()) }

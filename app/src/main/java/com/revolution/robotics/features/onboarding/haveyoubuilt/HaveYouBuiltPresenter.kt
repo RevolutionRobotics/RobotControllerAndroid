@@ -45,19 +45,9 @@ class HaveYouBuiltPresenter(
             userRobot.buildStatus = BuildStatus.COMPLETED
             createRobotInstanceHelper.setupConfigFromFirebase(userRobot,
                 onSuccess = { savedRobot, _, _ ->
-                    getControllerTypeInteractor.robotId = savedRobot.id
-                    getControllerTypeInteractor.execute { type ->
-                        appPrefs.onboardingRobotBuild = true
-                        appPrefs.onboardingRobotDriven = true
-                        when (type) {
-                            ControllerType.GAMER ->
-                                navigator.navigate(MyRobotsFragmentDirections.toPlayGamer(savedRobot.id))
-                            ControllerType.MULTITASKER ->
-                                navigator.navigate(MyRobotsFragmentDirections.toPlayMultitasker(savedRobot.id))
-                            ControllerType.DRIVER ->
-                                navigator.navigate(MyRobotsFragmentDirections.toPlayDriver(savedRobot.id))
-                        }
-                    }
+                    appPrefs.onboardingRobotBuild = true
+                    appPrefs.onboardingRobotDriven = true
+                    navigator.navigate(MyRobotsFragmentDirections.toPlay(savedRobot.id))
                 }, onError = {
                     errorHandler.onError(it)
                 })

@@ -36,12 +36,9 @@
                 app:destination="@id/buildRobotFragment"/>
         <action android:id="@+id/toConfigure"
                 app:destination="@id/configureFragment"/>
-        <action android:id="@+id/toPlayGamer"
-                app:destination="@id/playGamerFragment"/>
-        <action android:id="@+id/toPlayMultitasker"
-                app:destination="@id/playMultitaskerFragment"/>
-        <action android:id="@+id/toPlayDriver"
-                app:destination="@id/playDriverFragment"/>
+        <action
+                android:id="@+id/toPlay"
+                app:destination="@+id/playFragment" />
     </fragment>
 
     <!-- Build -->
@@ -59,12 +56,10 @@
               android:label="BuildRobotFragment">
         <argument app:argType="com.revolution.robotics.core.domain.local.UserRobot"
                   android:name="robot"/>
-        <action android:id="@+id/toPlayMultitasker"
-                app:destination="@id/playMultitaskerFragment" app:popUpTo="@+id/myRobotsFragment"/>
-        <action android:id="@+id/toPlayDriver"
-                app:destination="@id/playDriverFragment" app:popUpTo="@+id/myRobotsFragment"/>
-        <action android:id="@+id/toPlayGamer"
-                app:destination="@id/playGamerFragment" app:popUpTo="@+id/myRobotsFragment"/>
+        <action
+                android:id="@+id/toPlay"
+                app:destination="@+id/playFragment"
+                app:popUpTo="@+id/myRobotsFragment" />
     </fragment>
 
     <!-- Coding -->
@@ -79,21 +74,6 @@
     </fragment>
 
     <!-- Play -->
-    <fragment android:id="@+id/playGamerFragment"
-              android:name="com.revolution.robotics.features.play.instances.PlayGamerFragment"
-              android:label="PlayGamerFragment">
-        <argument app:argType="integer" android:name="robotId"/>
-    </fragment>
-    <fragment android:id="@+id/playMultitaskerFragment"
-              android:name="com.revolution.robotics.features.play.instances.PlayMultitaskerFragment"
-              android:label="PlayMultitaskerFragment">
-        <argument app:argType="integer" android:name="robotId"/>
-    </fragment>
-    <fragment android:id="@+id/playDriverFragment"
-              android:name="com.revolution.robotics.features.play.instances.PlayDriverFragment"
-              android:label="PlayDriverFragment">
-        <argument app:argType="integer" android:name="robotId"/>
-    </fragment>
 
     <!-- Challenges -->
     <fragment android:id="@+id/challengeGroupFragment"
@@ -128,12 +108,9 @@
               android:label="ConfigureFragment">
         <argument android:name="robotId" app:argType="integer"/>
 
-        <action android:id="@+id/toPlayMultitasker"
-                app:destination="@id/playMultitaskerFragment"/>
-        <action android:id="@+id/toPlayDriver"
-                app:destination="@id/playDriverFragment"/>
-        <action android:id="@+id/toPlayGamer"
-                app:destination="@id/playGamerFragment"/>
+        <action
+                android:id="@+id/toPlay"
+                app:destination="@+id/playFragment" />
         <action android:id="@+id/toButtonlessProgramSelector"
                 app:destination="@id/buttonlessProgramSelectorFragment"/>
         <action android:id="@+id/toCoding" app:destination="@id/codingFragment"/>
@@ -192,7 +169,16 @@
               android:label="HaveYouBuiltCarbyFragment">
         <action android:id="@+id/toBuildRobot"
                 app:destination="@id/buildRobotFragment"/>
-        <action android:id="@+id/toPlayGamer"
-                app:destination="@id/playGamerFragment"/>
+        <action
+                android:id="@+id/toPlay"
+                app:destination="@+id/playFragment" />
+    </fragment>
+    <fragment
+            android:id="@+id/playFragment"
+            android:name="com.revolution.robotics.features.play.PlayFragment"
+            android:label="PlayFragment" >
+        <argument
+                android:name="robotId"
+                app:argType="integer" />
     </fragment>
 </navigation>
