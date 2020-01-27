@@ -104,14 +104,14 @@ class PlayFragment : BaseFragment<FragmentPlayCoreBinding, PlayViewModel>(R.layo
         when (controllerType) {
             ControllerType.GAMER ->
                 contentBinding = FragmentPlayGamerBinding.inflate(LayoutInflater.from(context), binding?.contentWrapper, true).apply {
-                    viewModel = viewModel
+                    viewModel = this@PlayFragment.viewModel
                     joystick.listener = this@PlayFragment
                     presenter.reverseYAxis = true
                     presenter.reverseXAxis = false
                 }
             ControllerType.MULTITASKER ->
                 contentBinding = FragmentPlayMultitaskerBinding.inflate(LayoutInflater.from(context), binding?.contentWrapper, true).apply {
-                    viewModel = viewModel
+                    viewModel = this@PlayFragment.viewModel
                     joystick.listener = this@PlayFragment
                     presenter.reverseYAxis = true
                     presenter.reverseXAxis = false
