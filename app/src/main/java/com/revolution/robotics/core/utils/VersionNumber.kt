@@ -20,7 +20,7 @@ data class VersionNumber(
         private const val DELIMITER = "."
 
         fun parse(versionString: String): VersionNumber {
-            val parts = versionString.split(DELIMITER)
+            val parts = versionString.trimStart('v').split(DELIMITER)
             return when (parts.size) {
                 1 -> VersionNumber(parts[0].toInt(), 0, 0)
                 2 -> VersionNumber(parts[0].toInt(), parts[1].toInt(), 0)
