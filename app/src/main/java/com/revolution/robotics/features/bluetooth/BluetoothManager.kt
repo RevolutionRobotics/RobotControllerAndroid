@@ -2,6 +2,7 @@ package com.revolution.robotics.features.bluetooth
 
 import androidx.fragment.app.FragmentActivity
 import com.revolution.robotics.R
+import com.revolution.robotics.core.utils.VersionNumber
 import com.revolution.robotics.core.utils.dynamicPermissions.BluetoothConnectionFlowHelper
 import com.revolution.robotics.features.mainmenu.settings.firmware.compatibility.FirmwareIncompatibleDialog
 import org.kodein.di.Kodein
@@ -54,7 +55,7 @@ class BluetoothManager(private var kodein: Kodein) : RoboticsConnectionStatusLis
         if (connected && serviceDiscovered) {
             getDeviceInfoService().apply {
                 getSoftwareRevision({ version ->
-                    val compatible = version.substringAfterLast('.').toInt() >= MINIMUM_FIRMWARE_REVISION
+                    val compatible = VersionNumber.parse(version) >= MINIMUM_FIRMWARE_VERSION
                     if (!compatible) {
                         activity?.supportFragmentManager?.let { FirmwareIncompatibleDialog().show(it) }
                     }
@@ -100,6 +101,6 @@ class BluetoothManager(private var kodein: Kodein) : RoboticsConnectionStatusLis
     fun getSensorService() = bleConnectionHandler.sensorService
 
     companion object {
-        private const val MINIMUM_FIRMWARE_REVISION = 959
+        private val MINIMUM_FIRMWARE_VERSION = VersionNumber(0, 1, 957)
     }
 }
