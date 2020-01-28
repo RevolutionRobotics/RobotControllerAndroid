@@ -2,6 +2,7 @@ package com.revolution.robotics.features.play
 
 import android.net.Uri
 import com.revolution.robotics.core.interactor.CreateConfigurationFileInteractor
+import com.revolution.robotics.core.interactor.GetControllerTypeInteractor
 import com.revolution.robotics.core.interactor.GetFullConfigurationInteractor
 import com.revolution.robotics.core.interactor.GetUserRobotInteractor
 import com.revolution.robotics.features.bluetooth.BluetoothManager
@@ -11,6 +12,7 @@ import kotlin.math.max
 
 class PlayPresenter(
     private val getUserRobotInteractor: GetUserRobotInteractor,
+    private val getControllerTypeInteractor: GetControllerTypeInteractor,
     private val getConfigurationInteractor: GetFullConfigurationInteractor,
     private val createConfigurationFileInteractor: CreateConfigurationFileInteractor,
     private val bluetoothManager: BluetoothManager,
@@ -39,6 +41,13 @@ class PlayPresenter(
         getUserRobotInteractor.robotId = robotId
         getUserRobotInteractor.execute {
             toolbarViewModel?.title?.set(it?.name ?: "")
+        }
+    }
+
+    override fun loadControllerType(robotId: Int) {
+        getControllerTypeInteractor.robotId = robotId
+        getControllerTypeInteractor.execute {
+            view?.onControllerTypeLoaded(it)
         }
     }
 

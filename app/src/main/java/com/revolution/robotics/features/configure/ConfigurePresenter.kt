@@ -202,17 +202,7 @@ class ConfigurePresenter(
     }
 
     override fun onPlayEvent() {
-        userRobot?.configuration?.controller?.let { controllerId ->
-            getUserControllerInteractor.id = controllerId
-            getUserControllerInteractor.execute { controller ->
-                when (controller.userController.type) {
-                    ControllerType.GAMER.id ->
-                        navigator.navigate(MyRobotsFragmentDirections.toPlayGamer(userRobot?.id!!))
-                    ControllerType.DRIVER.id ->
-                        navigator.navigate(MyRobotsFragmentDirections.toPlayDriver(userRobot?.id!!))
-                }
-            }
-        }
+        navigator.navigate(MyRobotsFragmentDirections.toPlay(userRobot?.id!!))
     }
 
     fun save(finished: (() -> Unit)? = null) {

@@ -25,7 +25,6 @@ class BuildRobotPresenter(
     override var model: BuildRobotViewModel? = null
 
     private var configuration: Configuration? = null
-    private var controller: Controller? = null
     private var userRobot: UserRobot? = null
 
     override fun loadBuildSteps(robotId: String) {
@@ -37,20 +36,12 @@ class BuildRobotPresenter(
 
     override fun letsDrive() {
         userRobot?.let { robot ->
-            startPlayFragment(robot, controller)
+            startPlayFragment(robot)
         }
     }
 
-    private fun startPlayFragment(robot: UserRobot, controller: Controller?) {
-        when (ControllerType.fromId(controller?.type)) {
-            ControllerType.GAMER ->
-                navigator.navigate(BuildRobotFragmentDirections.toPlayGamer(robot.id))
-            ControllerType.MULTITASKER ->
-                navigator.navigate(BuildRobotFragmentDirections.toPlayMultitasker(robot.id))
-            ControllerType.DRIVER ->
-                navigator.navigate(BuildRobotFragmentDirections.toPlayDriver(robot.id))
-        }
-
+    private fun startPlayFragment(robot: UserRobot) {
+        navigator.navigate(BuildRobotFragmentDirections.toPlay(robot.id))
     }
 
     override fun saveUserRobot(userRobot: UserRobot, createDefaultConfig: Boolean) {
@@ -61,7 +52,6 @@ class BuildRobotPresenter(
                 onSuccess = { savedRobot, configuration, controllers ->
                     this.userRobot = savedRobot
                     this.configuration = configuration
-                    this.controller = controllers
                     dialogEventBus.publish(DialogEvent.ROBOT_CREATED)
                 }, onError = {
                     errorHandler.onError(it)
