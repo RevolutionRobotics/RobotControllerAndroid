@@ -2,10 +2,12 @@ package com.revolution.robotics.features.mainmenu.settings.firmware.compatibilit
 
 import com.revolution.robotics.R
 import com.revolution.robotics.core.eventBus.dialog.DialogEvent
+import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.databinding.DialogFirmwareIncompatibleBinding
 import com.revolution.robotics.views.dialogs.DialogButton
 import com.revolution.robotics.views.dialogs.DialogFace
 import com.revolution.robotics.views.dialogs.RoboticsDialog
+import org.kodein.di.erased.instance
 
 class FirmwareIncompatibleDialog : RoboticsDialog() {
 
@@ -15,7 +17,7 @@ class FirmwareIncompatibleDialog : RoboticsDialog() {
         DialogButton(R.string.firmware_incompatible_update_button,
             R.drawable.ic_check, true) {
             dismissAllowingStateLoss()
-            dialogEventBus.publish(DialogEvent.FIRMWARE_INCOMPATIBLE_UPDATE)
+            navigator.navigate(R.id.toFirmware)
         },
         DialogButton(
             R.string.firmware_incompatible_not_now_button,

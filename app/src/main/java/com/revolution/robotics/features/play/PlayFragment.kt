@@ -164,7 +164,6 @@ class PlayFragment : BaseFragment<FragmentPlayCoreBinding, PlayViewModel>(R.layo
     override fun onDialogEvent(event: DialogEvent) {
         when (event) {
             DialogEvent.FIRMWARE_INCOMPATIBLE_UPDATE_LATER -> uploadConfiguration()
-            DialogEvent.FIRMWARE_INCOMPATIBLE_UPDATE -> navigator.navigate(PlayFragmentDirections.toFirmware())
             else -> Unit
         }
     }

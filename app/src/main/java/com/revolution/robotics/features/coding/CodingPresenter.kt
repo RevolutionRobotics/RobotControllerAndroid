@@ -286,7 +286,6 @@ class CodingPresenter(
     override fun onDialogEvent(event: DialogEvent) {
         when (event) {
             DialogEvent.FIRMWARE_INCOMPATIBLE_UPDATE_LATER -> showTestDialog()
-            DialogEvent.FIRMWARE_INCOMPATIBLE_UPDATE -> navigator.navigate(CodingFragmentDirections.toFirmware())
             else -> Unit
         }
     }

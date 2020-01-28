@@ -71,9 +71,6 @@
                   app:nullable="true"
                   app:argType="com.revolution.robotics.core.domain.local.UserProgram"/>
         <argument android:name="edit_mode" app:argType="boolean"/>
-        <action
-                android:id="@+id/toFirmware"
-                app:destination="@id/firmwareFragment" />
     </fragment>
 
     <!-- Play -->
@@ -183,8 +180,8 @@
         <argument
                 android:name="robotId"
                 app:argType="integer" />
-        <action
-                android:id="@+id/toFirmware"
-                app:destination="@id/firmwareFragment" />
     </fragment>
+    <action
+            android:id="@+id/toFirmware"
+            app:destination="@id/firmwareFragment" />
 </navigation>
