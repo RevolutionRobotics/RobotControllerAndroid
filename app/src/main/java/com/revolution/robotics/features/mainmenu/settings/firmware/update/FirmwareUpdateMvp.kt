@@ -12,6 +12,7 @@ interface FirmwareUpdateMvp : Mvp {
         fun activateLoadingFace()
         fun activateSuccessFace()
         fun activateErrorFace()
+        fun activateConfirmationFace()
         fun closeDialog()
     }
 
@@ -19,5 +20,6 @@ interface FirmwareUpdateMvp : Mvp {
         fun onCheckForUpdatesClicked()
         fun retryFirmwareUpdate()
         fun stopFirmwareUpdate()
+        fun onCloseClicked()
     }
 }

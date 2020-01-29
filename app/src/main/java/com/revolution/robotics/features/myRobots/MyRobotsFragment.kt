@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.viewpager.widget.ViewPager
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
+import com.revolution.robotics.analytics.Reporter
 import com.revolution.robotics.core.domain.local.UserRobot
 import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
@@ -25,6 +26,8 @@ class MyRobotsFragment : BaseFragment<FragmentMyRobotsBinding, MyRobotsViewModel
     MyRobotsMvp.View, ViewPager.OnPageChangeListener, DialogEventBus.Listener {
 
     override val viewModelClass: Class<MyRobotsViewModel> = MyRobotsViewModel::class.java
+    override val screen = Reporter.Screen.MY_ROBOTS
+
     private val resourceResolver: ResourceResolver by kodein.instance()
     private val presenter: MyRobotsMvp.Presenter by kodein.instance()
     private val dialogEventBus: DialogEventBus by kodein.instance()

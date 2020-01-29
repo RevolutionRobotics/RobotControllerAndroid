@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
+import com.revolution.robotics.analytics.Reporter
 import com.revolution.robotics.core.extensions.withArguments
 import com.revolution.robotics.core.utils.BundleArgumentDelegate
 import com.revolution.robotics.databinding.FragmentConfigureConnectionsBinding
@@ -25,6 +26,8 @@ class ConfigureConnectionsFragment :
     }
 
     override val viewModelClass: Class<ConfigureConnectionsViewModel> = ConfigureConnectionsViewModel::class.java
+    override val screen = Reporter.Screen.CONFIGURE_CONNECTIONS
+
     private val presenter: ConfigureConnectionsMvp.Presenter by kodein.instance()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

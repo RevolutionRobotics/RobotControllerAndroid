@@ -9,7 +9,7 @@ fun reportUploadedToBrain(reporter:Reporter, name:String, uri:Uri, startTimeMill
     val time = System.currentTimeMillis() - startTimeMillis
     val speed = size * 1000L / time
     reporter.reportEvent(
-        Reporter.Event.UPLOADED_TO_BRAIN,
+        Reporter.Event.UPLOAD_TO_BRAIN,
         bundleOf(
             "name" to name,
             "size" to size,

@@ -1,17 +1,14 @@
 package com.revolution.robotics.core.interactor.firebase
 
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.GenericTypeIndicator
-import com.google.firebase.database.Query
+import com.revolution.robotics.core.cache.RemoteDataCache
 import com.revolution.robotics.core.domain.remote.Robot
+import com.revolution.robotics.core.interactor.Interactor
 
-class RobotInteractor : FirebaseSingleObjectInteractor<Robot>() {
-
-    override val genericTypeIndicator: GenericTypeIndicator<HashMap<String, Robot>> =
-        object : GenericTypeIndicator<HashMap<String, @JvmSuppressWildcards Robot>>() {}
+class RobotInteractor(
+    private val remoteDataCache: RemoteDataCache
+) : Interactor<Robot?>() {
 
     lateinit var robotId: String
 
-    override fun getDatabaseReference(database: FirebaseDatabase): Query =
-        database.getReference("robot").orderByChild("id").equalTo(robotId).limitToFirst(1)
+    override fun getData(): Robot? = remoteDataCache.data.robot.values.firstOrNull { it.id == robotId }
 }

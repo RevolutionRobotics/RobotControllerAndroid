@@ -1,6 +1,7 @@
 package com.revolution.robotics.features.whoToBuild
 
 import android.util.Log
+import com.revolution.robotics.analytics.Reporter
 import com.revolution.robotics.core.domain.PortMapping
 import com.revolution.robotics.core.domain.local.BuildStatus
 import com.revolution.robotics.core.domain.local.UserConfiguration
@@ -34,7 +35,8 @@ class WhoToBuildPresenter(
     private val saveUserRobotInteractor: SaveUserRobotInteractor,
     private val saveUserControllerInteractor: SaveUserControllerInteractor,
     private val resourceResolver: ResourceResolver,
-    private val navigator: Navigator
+    private val navigator: Navigator,
+    private val reporter: Reporter
 ) :
     WhoToBuildMvp.Presenter {
 
@@ -114,6 +116,7 @@ class WhoToBuildPresenter(
             robot.coverImage,
             robot.description?.getLocalizedString(resourceResolver) ?: ""
         )
+        reporter.reportEvent(Reporter.Event.START_BASIC_ROBOT)
         navigator.navigate(WhoToBuildFragmentDirections.toBuildRobot(userRobot))
     }
 
@@ -124,6 +127,7 @@ class WhoToBuildPresenter(
             name = "",
             configuration = UserConfiguration()
         )
+        reporter.reportEvent(Reporter.Event.CREATE_CUSTOM_ROBOT)
         saveUserRobotInteractor.userRobot = userRobot
         saveUserRobotInteractor.execute { savedRobot ->
             assignEmptyConfig(savedRobot)

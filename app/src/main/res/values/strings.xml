@@ -1,6 +1,6 @@
 <resources>
     <!-- General strings -->
-    <string name="app_name">RevoRobotics</string>
+    <string name="app_name">Revolution Robotics</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="next">Next</string>
@@ -18,7 +18,7 @@
     <string name="onboarding_user_type_label">What kind of superhero are you?</string>
     <string name="onboarding_user_type_student">Student</string>
     <string name="onboarding_user_type_parent">Parent</string>
-    <string name="onboarding_user_type_teacher">Teacher / Mentor</string>
+    <string name="onboarding_user_type_teacher">Teacher</string>
     <string name="onboarding_user_type_hobbyist">Hobbyist</string>
     <string name="onboarding_year_of_birth_label">Select your year of birth</string>
     <string name="onboarding_save">Save</string>
@@ -109,14 +109,7 @@
     <string name="tips_dialog_button_skip_testing">Skip testing</string>
     <string name="tips_dialog_button_community">Community</string>
     <string name="tips_dialog_button_try_again">Try again</string>
-    <string name="tips_dialog_placeholder_1">Lorem ipsum dolor sit amet, eu commodo numquam comprehensam vel. Quo cu
-        alia placerat.
-    </string>
-    <string name="tips_dialog_placeholder_2">Per graece denique invidunt ei. Case ullum euripidis duo eu.</string>
-    <string name="tips_dialog_placeholder_3">Eos meis quidam omnesque et. Essent blandit ius ut, no ius melius
-        sanctus.
-    </string>
-    <string name="tips_dialog_placeholder_4">Get help from the Community!</string>
+    <string name="tips_dialog_placeholder_1">If you have any problems with your robot, please check the Community forum for help.</string>
 
     <!-- Testing Dialog -->
     <string name="testing_negative_button_title">Not really</string>
@@ -175,9 +168,6 @@
 
     <!-- Controller Info dialog-->
     <string name="controller_info_dialog_button_text">Got it</string>
-    <string name="controller_info_dialog_description">Lorem ipsum dolor sit amet, eu commodo numquam comprehensam vel.
-        Quo cu alia placerat. Per graece denique invidunt ei.
-    </string>
 
     <!--- Configuration Slider Motor-->
     <string name="configure_motor_name_inputfield_title">Name</string>
@@ -307,15 +297,13 @@
     <string name="firmware_done_button">Done</string>
     <string name="firmware_update_failed_title">Update failed</string>
     <string name="firmware_update_failed_tips_title">Try to…</string>
-    <string name="firmware_update_failed_tips">- Lorem ipsum dolor sit amet, eu commodo numquam comprehensam vel. Quo cu
-        alia placerat.\n
-        - Per graece denique invidunt ei. Case ullum euripidis duo eu.\n
-        - Eos meis quidam omnesque et. Essent blandit ius ut, no ius melius sanctus.\n
-        - Get help from the Community!
-    </string>
+    <string name="firmware_update_failed_tips">- If you have any problems with your robot, please check the Community forum for help.</string>
     <string name="firmware_update_failed_update_later_button">Update later</string>
     <string name="firmware_update_failed_update_community_button">Community</string>
     <string name="firmware_update_failed_update_try_again_button">Try again</string>
+    <string name="firmware_incompatible_description">Please update your robot in order to use it with the current app version</string>
+    <string name="firmware_incompatible_update_button">Update</string>
+    <string name="firmware_incompatible_not_now_button">Not now</string>
 
     <!-- Programs -->
     <string name="program_title_default">Untitled program</string>
@@ -341,12 +329,17 @@
     <string name="blockly_no_motor_configured">This robot doesn\’t have any non-drivetrain motors configured</string>
     <string name="blockly_no_distance_sensor_configured">This robot doesn\’t have a distance sensor configured</string>
     <string name="blockly_no_bumper_configured">This robot doesn\’t have a bumper configured</string>
+    <string name="blockly_test_button">Test</string>
+    <string name="blockly_test_dialog_uploading">Uploading</string>
+    <string name="blockly_test_dialog_running">Running</string>
+    <string name="blockly_test_dialog_button">Stop</string>
+    <string name="blockly_test_dialog_error">Could not run code</string>
 
     <!-- Community -->
     <string name="community_title">Community</string>
-    <string name="community_content_title">Share or get help</string>
-    <string name="community_content_description">Description of the forum with benefits</string>
-    <string name="community_begin_button">Begin!</string>
+    <string name="community_content_title">Welcome to our community forum!</string>
+    <string name="community_content_description">Share your robot creations with our community of robotics enthusiasts! Need help, found a bug, or have questions about how to build, code, or create? Click to enter our forum below to find questions to your answers!</string>
+    <string name="community_begin_button">Let\'s go</string>
 
     <!-- Tutorial -->
     <string name="tutorial_reset_success">Successful onboarding reset</string>

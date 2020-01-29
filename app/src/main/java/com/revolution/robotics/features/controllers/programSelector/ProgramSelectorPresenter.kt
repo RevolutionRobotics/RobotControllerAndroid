@@ -1,6 +1,7 @@
 package com.revolution.robotics.features.controllers.programSelector
 
 import com.revolution.robotics.R
+import com.revolution.robotics.analytics.Reporter
 import com.revolution.robotics.core.domain.local.UserProgram
 import com.revolution.robotics.core.interactor.AssignProgramToButtonInteractor
 import com.revolution.robotics.core.interactor.GetFullConfigurationInteractor
@@ -18,7 +19,8 @@ class ProgramSelectorPresenter(
     private val getFullConfigurationInteractor: GetFullConfigurationInteractor,
     private val compatibleProgramFilterer: CompatibleProgramFilterer,
     private val assignProgramToButtonInteractor: AssignProgramToButtonInteractor,
-    private val navigator: Navigator
+    private val navigator: Navigator,
+    private val reporter: Reporter
 ) : ProgramSelectorMvp.Presenter {
 
     companion object {
@@ -141,6 +143,8 @@ class ProgramSelectorPresenter(
         assignProgramToButtonInteractor.userProgram = userProgram
         assignProgramToButtonInteractor.button = controllerButton
         assignProgramToButtonInteractor.execute {
+
+            reporter.reportEvent(Reporter.Event.ASSIGN_PROGRAM_TO_BUTTON)
             navigator.back()
         }
     }

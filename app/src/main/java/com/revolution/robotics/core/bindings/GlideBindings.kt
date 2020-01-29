@@ -1,12 +1,18 @@
 package com.revolution.robotics.core.bindings
 
 import android.graphics.drawable.Drawable
+import android.view.View
 import android.widget.ImageView
 import androidx.annotation.DrawableRes
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
+import com.bumptech.glide.request.target.Target.SIZE_ORIGINAL
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.revolution.robotics.R
@@ -34,7 +40,10 @@ fun loadImage(imageView: ImageView, url: String?, errorDrawable: Drawable?) {
 }
 
 @BindingAdapter("localResource", "errorDrawable", requireAll = false)
-fun loadLocalResource(imageView: ImageView, @DrawableRes localResource: Int, errorDrawable: Drawable?) {
+fun loadLocalResource(
+    imageView: ImageView, @DrawableRes localResource: Int,
+    errorDrawable: Drawable?
+) {
     if (localResource != 0) {
         GlideApp.with(imageView)
             .load(localResource)
@@ -63,8 +72,22 @@ fun loadFirebaseImage(imageView: ImageView, reference: StorageReference, errorDr
         .into(imageView)
 }
 
-@BindingAdapter("firebaseImageUrl", "errorDrawable", "animate", requireAll = false)
-fun loadFirebaseImage(imageView: ImageView, gsUrl: String?, errorDrawable: Drawable?, animate: Boolean?) {
+@BindingAdapter(
+    "firebaseImageUrl",
+    "errorDrawable",
+    "progressView",
+    "animate",
+    "originalSize",
+    requireAll = false
+)
+fun loadFirebaseImage(
+    imageView: ImageView,
+    gsUrl: String?,
+    errorDrawable: Drawable?,
+    progressView: View?,
+    animate: Boolean?,
+    originalSize: Boolean?
+) {
     if (!gsUrl.isNullOrEmpty()) {
         GlideApp.with(imageView)
             .load(FirebaseStorage.getInstance().getReferenceFromUrl(gsUrl))
@@ -79,6 +102,35 @@ fun loadFirebaseImage(imageView: ImageView, gsUrl: String?, errorDrawable: Drawa
                     transition(DrawableTransitionOptions.withCrossFade())
                 }
             }
+            .apply {
+                if (progressView != null) {
+                    listener(object : RequestListener<Drawable> {
+                        override fun onLoadFailed(
+                            e: GlideException?,
+                            model: Any?,
+                            target: Target<Drawable>?,
+                            isFirstResource: Boolean
+                        ): Boolean {
+                            progressView.visibility = View.GONE
+                            return false
+                        }
+
+                        override fun onResourceReady(
+                            resource: Drawable?,
+                            model: Any?,
+                            target: Target<Drawable>?,
+                            dataSource: DataSource?,
+                            isFirstResource: Boolean
+                        ): Boolean {
+
+                            progressView.visibility = View.GONE
+                            return false
+                        }
+                    }
+                    )
+                }
+            }
+            .apply { if (originalSize == true) override(SIZE_ORIGINAL, SIZE_ORIGINAL) }
             .into(imageView)
     } else {
         setErrorDrawable(imageView, errorDrawable)
@@ -103,13 +155,16 @@ fun loadFirebaseImage(
     animate: Boolean?
 ) {
     val imageFile =
-        CameraHelper.getImageFile(remoteImageView.context, CameraHelper.generateFilenameForRobot(robotId ?: -1))
+        CameraHelper.getImageFile(
+            remoteImageView.context,
+            CameraHelper.generateFilenameForRobot(robotId ?: -1)
+        )
     if (imageFile.exists()) {
         remoteImageView.empty.setImageResource(0)
         loadImageFromFile(remoteImageView, imageFile, null)
     } else if (!gsUrl.isNullOrEmpty()) {
         remoteImageView.empty.setImageResource(0)
-        loadFirebaseImage(remoteImageView.image, gsUrl, errorDrawable, animate)
+        loadFirebaseImage(remoteImageView.image, gsUrl, errorDrawable, remoteImageView.progress ,animate, false)
     } else {
         if (errorDrawable == null) {
             remoteImageView.empty.setImageResource(R.drawable.ic_image_not_found)
@@ -128,6 +183,6 @@ fun loadImageFromFile(imageView: RemoteImageView, file: File?, gsUrl: String?) {
             .skipMemoryCache(true)
             .into(imageView.image)
     } else if (!gsUrl.isNullOrEmpty()) {
-        loadFirebaseImage(imageView.image, gsUrl, null, false)
+        loadFirebaseImage(imageView.image, gsUrl, null, imageView.progress,false, false)
     }
 }

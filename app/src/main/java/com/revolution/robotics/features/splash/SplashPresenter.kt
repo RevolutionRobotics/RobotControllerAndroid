@@ -1,15 +1,13 @@
 package com.revolution.robotics.features.splash
 
 import androidx.lifecycle.ViewModel
-import com.google.firebase.database.FirebaseDatabase
-import com.revolution.robotics.core.interactor.FirebaseInitInteractor
-import com.revolution.robotics.core.interactor.firebase.FirebaseConnectionInteractor
-import com.revolution.robotics.core.interactor.firebase.ForceUpdateInteractor
+import com.revolution.robotics.BuildConfig
+import com.revolution.robotics.core.cache.RemoteDataCache
+import com.revolution.robotics.core.interactor.api.RefreshDataCacheInteractor
 
 class SplashPresenter(
-    private val firebaseConnectionInteractor: FirebaseConnectionInteractor,
-    private val firebaseInitInteractor: FirebaseInitInteractor,
-    private val forceUpdateInteractor: ForceUpdateInteractor
+    private val refreshDataCacheInteractor: RefreshDataCacheInteractor,
+    private val remoteDataCache: RemoteDataCache
 ) : SplashMvp.Presenter {
 
     override var view: SplashMvp.View? = null
@@ -17,23 +15,17 @@ class SplashPresenter(
 
     override fun register(view: SplashMvp.View, model: ViewModel?) {
         super.register(view, model)
-        FirebaseDatabase.getInstance().goOnline()
-        firebaseConnectionInteractor.execute { connected ->
-            if (connected) {
-                firebaseInitInteractor.execute({
-                    forceUpdateInteractor.checkUpdateNeeded { updateNeeded ->
-                        if (updateNeeded) {
-                            this.view?.showUpdateNeededDialog()
-                        } else {
-                            this.view?.startApp()
-                        }
-                    }
-                }, {
+        refreshDataCacheInteractor.execute (
+            onResponse = {
+                if (remoteDataCache.data.minVersion.android > BuildConfig.VERSION_CODE) {
+                    this.view?.showUpdateNeededDialog()
+                } else {
                     this.view?.startApp()
-                })
-            } else {
+                }
+            },
+            onError = {
                 this.view?.startApp()
             }
-        }
+        )
     }
 }

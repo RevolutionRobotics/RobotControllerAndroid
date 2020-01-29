@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
+import com.revolution.robotics.analytics.Reporter
 import com.revolution.robotics.core.domain.local.UserProgram
 import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
@@ -28,6 +29,7 @@ class ProgramSelectorFragment :
         private var Bundle.selectedButton by BundleArgumentDelegate.String("selectedButton")
     }
     override val viewModelClass = ProgramSelectorViewModel::class.java
+    override val screen = Reporter.Screen.PROGRAM_SELECTOR
 
     private val presenter: ProgramSelectorMvp.Presenter by kodein.instance()
     private val dialogEventBus: DialogEventBus by kodein.instance()

@@ -1,9 +1,12 @@
 package com.revolution.robotics.features.onboarding.haveyoubuilt
 
+import com.revolution.robotics.analytics.Reporter
 import com.revolution.robotics.core.domain.local.BuildStatus
+import com.revolution.robotics.core.domain.local.UserChallengeCategory
 import com.revolution.robotics.core.domain.local.UserConfiguration
 import com.revolution.robotics.core.domain.local.UserRobot
 import com.revolution.robotics.core.interactor.GetControllerTypeInteractor
+import com.revolution.robotics.core.interactor.SaveUserChallengeCategoryInteractor
 import com.revolution.robotics.core.interactor.firebase.RobotInteractor
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.core.utils.AppPrefs
@@ -20,36 +23,31 @@ class HaveYouBuiltPresenter(
     private val resourceResolver: ResourceResolver,
     private val robotInteractor: RobotInteractor,
     private val getControllerTypeInteractor: GetControllerTypeInteractor,
+    private val saveUserChallengeCategoryInteractor: SaveUserChallengeCategoryInteractor,
     private val createRobotInstanceHelper: CreateRobotInstanceHelper,
     private val errorHandler: ErrorHandler,
-    private val appPrefs: AppPrefs
+    private val appPrefs: AppPrefs,
+    private val reporter: Reporter
 ) : HaveYouBuiltMvp.Presenter {
 
     companion object {
         private const val ROBOT_ID: String = "c92b9a90-e069-11e9-9d36-2a2ae2dbcce4"
+        private const val CHALLENGE_CATEGORY_ID = "ef504b31-d64f-4bfb-bd4b-5b96a9a0489f"
     }
 
     override var view: HaveYouBuiltMvp.View? = null
     override var model: HaveYouBuiltViewModel? = null
 
     override fun driveRobot() {
+        completeOnboardingChallenges()
+        reporter.reportEvent(Reporter.Event.BUILD_BASIC_ROBOT_OFFLINE)
         createRobot { userRobot ->
             userRobot.buildStatus = BuildStatus.COMPLETED
             createRobotInstanceHelper.setupConfigFromFirebase(userRobot,
                 onSuccess = { savedRobot, _, _ ->
-                    getControllerTypeInteractor.robotId = savedRobot.id
-                    getControllerTypeInteractor.execute { type ->
-                        appPrefs.onboardingRobotBuild = true
-                        appPrefs.onboardingRobotDriven = true
-                        when (type) {
-                            ControllerType.GAMER ->
-                                navigator.navigate(MyRobotsFragmentDirections.toPlayGamer(savedRobot.id))
-                            ControllerType.MULTITASKER ->
-                                navigator.navigate(MyRobotsFragmentDirections.toPlayMultitasker(savedRobot.id))
-                            ControllerType.DRIVER ->
-                                navigator.navigate(MyRobotsFragmentDirections.toPlayDriver(savedRobot.id))
-                        }
-                    }
+                    appPrefs.onboardingRobotBuild = true
+                    appPrefs.onboardingRobotDriven = true
+                    navigator.navigate(MyRobotsFragmentDirections.toPlay(savedRobot.id))
                 }, onError = {
                     errorHandler.onError(it)
                 })
@@ -57,6 +55,8 @@ class HaveYouBuiltPresenter(
     }
 
     override fun buildRobot() {
+        completeOnboardingChallenges()
+        reporter.reportEvent(Reporter.Event.BUILD_BASIC_ROBOT_ONLINE)
         createRobot { userRobot ->
             appPrefs.onboardingRobotBuild = true
             appPrefs.onboardingRobotDriven = true
@@ -65,6 +65,7 @@ class HaveYouBuiltPresenter(
     }
 
     override fun skipOnboarding() {
+        reporter.reportEvent(Reporter.Event.SKIP_ONBOARDING)
         appPrefs.finishedOnboarding = true
         appPrefs.onboardingRobotBuild = true
         appPrefs.onboardingRobotDriven = true
@@ -74,18 +75,25 @@ class HaveYouBuiltPresenter(
     private fun createRobot(onResponse: (UserRobot) -> Unit) {
         robotInteractor.robotId = ROBOT_ID
         robotInteractor.execute { robot ->
-            val userRobot = UserRobot(
-                0,
-                robot.id,
-                BuildStatus.IN_PROGRESS,
-                BuildRobotFragment.DEFAULT_STARTING_INDEX,
-                Date(System.currentTimeMillis()),
-                UserConfiguration(),
-                robot.name?.getLocalizedString(resourceResolver) ?: "",
-                robot.coverImage,
-                robot.description?.getLocalizedString(resourceResolver) ?: ""
-            )
-            onResponse(userRobot)
+            robot?.apply {
+                val userRobot = UserRobot(
+                    0,
+                    id,
+                    BuildStatus.IN_PROGRESS,
+                    BuildRobotFragment.DEFAULT_STARTING_INDEX,
+                    Date(System.currentTimeMillis()),
+                    UserConfiguration(),
+                    name?.getLocalizedString(resourceResolver) ?: "",
+                    coverImage,
+                    description?.getLocalizedString(resourceResolver) ?: ""
+                )
+                onResponse(userRobot)
+            }
         }
+    }
+
+    private fun completeOnboardingChallenges() {
+        saveUserChallengeCategoryInteractor.userChallengeCategory = UserChallengeCategory(CHALLENGE_CATEGORY_ID, 2)
+        saveUserChallengeCategoryInteractor.execute()
     }
 }

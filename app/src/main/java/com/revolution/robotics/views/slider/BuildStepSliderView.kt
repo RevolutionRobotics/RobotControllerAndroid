@@ -42,6 +42,12 @@ class BuildStepSliderView @JvmOverloads constructor(context: Context, attrs: Att
         binding.seekbarBuildSteps.selectNext()
     }
 
+    fun setCurrentStep(currentStep: Int) {
+        binding.seekbarBuildSteps.apply {
+            progress = currentStep
+        }
+    }
+
     fun setBuildSteps(steps: List<BuildStep>, listener: BuildStepSelectedListener, startIndex: Int = 0) {
         buildSteps = steps
         this.buildStepSelectedListener = listener

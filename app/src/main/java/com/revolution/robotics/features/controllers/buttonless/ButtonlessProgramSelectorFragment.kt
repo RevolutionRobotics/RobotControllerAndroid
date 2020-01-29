@@ -5,6 +5,7 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
+import com.revolution.robotics.analytics.Reporter
 import com.revolution.robotics.core.domain.local.UserProgram
 import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
@@ -28,6 +29,7 @@ class ButtonlessProgramSelectorFragment :
 
     override val viewModelClass: Class<ButtonlessProgramSelectorViewModel> =
         ButtonlessProgramSelectorViewModel::class.java
+    override val screen = Reporter.Screen.BACKGROUND_PROGRAMS
 
     private val presenter: ButtonlessProgramSelectorMvp.Presenter by kodein.instance()
     private val resourceResolver: ResourceResolver by kodein.instance()

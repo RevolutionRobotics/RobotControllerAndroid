@@ -4,8 +4,11 @@ import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothManager
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
+import android.view.View
 import androidx.core.content.ContextCompat
 import com.revolution.robotics.R
+import com.revolution.robotics.analytics.Reporter
 import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.core.extensions.openUrl
 import com.revolution.robotics.databinding.DialogTurnOnTheBrainBinding
@@ -25,6 +28,8 @@ class TurnOnTheBrainDialog : RoboticsDialog(), DialogController {
     }
 
     private val errorHandler: ErrorHandler by kodein.instance()
+    private val reporter: Reporter by kodein.instance()
+
     override val hasCloseButton = true
     override val dialogFaces: List<DialogFace<*>> = listOf(
         TurnOnTheBrainDialogFace(),
@@ -32,6 +37,10 @@ class TurnOnTheBrainDialog : RoboticsDialog(), DialogController {
     )
     override val dialogButtons = emptyList<DialogButton>()
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        reporter.reportEvent(Reporter.Event.OPEN_BT_CONNECT_DIALOG)
+    }
     override fun navigateToCommunity() {
         requireActivity().openUrl(CommunityFragment.COMMUNITY_FORUMS_URL, errorHandler)
     }

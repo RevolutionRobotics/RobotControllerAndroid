@@ -9,6 +9,7 @@ import androidx.databinding.BindingAdapter
 import com.revolution.robotics.RoboticsApplication.Companion.kodein
 import com.revolution.robotics.core.domain.remote.LocalizedString
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
+import com.revolution.robotics.views.RoboticsButton
 import org.kodein.di.erased.instance
 
 @BindingAdapter("backgroundResource")
@@ -27,6 +28,20 @@ fun setFormattedText(textView: TextView, text: LocalizedString?) {
             Html.FROM_HTML_MODE_LEGACY
         )
         else -> Html.fromHtml(text.getLocalizedString(resourceResolver))
+    }
+}
+
+@Suppress("DEPRECATION")
+@BindingAdapter("formattedText")
+fun setFormattedText(roboticsButton: RoboticsButton, text: LocalizedString?) {
+    val resourceResolver: ResourceResolver by kodein.instance()
+    roboticsButton.text = when {
+        text?.getLocalizedString(resourceResolver) == null -> ""
+        Build.VERSION.SDK_INT >= Build.VERSION_CODES.N -> Html.fromHtml(
+            text.getLocalizedString(resourceResolver),
+            Html.FROM_HTML_MODE_LEGACY
+        ).toString()
+        else -> Html.fromHtml(text.getLocalizedString(resourceResolver)).toString()
     }
 }
 

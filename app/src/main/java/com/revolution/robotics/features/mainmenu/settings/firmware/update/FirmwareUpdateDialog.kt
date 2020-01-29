@@ -45,8 +45,12 @@ class FirmwareUpdateDialog : RoboticsDialog(), FirmwareUpdateMvp.View {
     }
 
     override fun onDialogCloseButtonClicked(): Boolean {
-        activateFace(dialogFaces.first { it is FirmwareUpdateConfirmationDialogFace })
+        presenter.onCloseClicked()
         return false
+    }
+
+    override fun activateConfirmationFace() {
+        activateFace(dialogFaces.first { it is FirmwareUpdateConfirmationDialogFace })
     }
 
     fun stopFrameworkUpdate() {

@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.ShareCompat
 import androidx.core.view.postDelayed
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
+import com.revolution.robotics.analytics.Reporter
 import com.revolution.robotics.blockly.DialogFactory
 import com.revolution.robotics.blockly.utils.BlocklyResultHolder
 import com.revolution.robotics.core.domain.local.UserConfiguration
@@ -43,6 +45,7 @@ class CodingFragment : BaseFragment<FragmentCodingBinding, CodingViewModel>(R.la
     }
 
     override val viewModelClass: Class<CodingViewModel> = CodingViewModel::class.java
+    override val screen = Reporter.Screen.CODING
 
     private val presenter: CodingMvp.Presenter by kodein.instance()
     private val blocklyResultHolder: BlocklyResultHolder by kodein.instance()
@@ -122,6 +125,15 @@ class CodingFragment : BaseFragment<FragmentCodingBinding, CodingViewModel>(R.la
         }
     }
 
+    override fun shareCode(code: String, xml: String) {
+        ShareCompat.IntentBuilder.from(activity)
+            .setType("message/rfc822")
+            .setSubject("Blockly export")
+            .setText("$code\n________________________________________________\n$xml")
+            .setChooserTitle("Share code via")
+            .startChooser()
+    }
+
     override fun onBackPressed(): Boolean {
         presenter.onBackPressed()
         return true
@@ -140,6 +152,7 @@ class CodingFragment : BaseFragment<FragmentCodingBinding, CodingViewModel>(R.la
                 }
             DialogEvent.LOAD_PROGRAM ->
                 event.extras.getParcelable<UserProgram>(ProgramDialog.KEY_PROGRAM)?.let {
+                    reporter.reportEvent(Reporter.Event.OPEN_PROGRAM)
                     presenter.loadProgram(it)
                 }
             DialogEvent.DELETE_PROGRAM ->
@@ -172,6 +185,7 @@ class CodingFragment : BaseFragment<FragmentCodingBinding, CodingViewModel>(R.la
             DialogEvent.PROGRAM_CONFIRM_CLOSE_WITHOUT_SAVE -> onBackPressed(false)
             DialogEvent.ROBOT_SELECTED ->
                 event.extras.getParcelable<UserRobot>(RobotSelectorDialog.KEY_ROBOT)?.let { robot ->
+                    reporter.reportEvent(Reporter.Event.CREATE_NEW_PROGRAM)
                     presenter.createNewProgram(robot.id)
                 }
             else -> Unit

@@ -40,7 +40,11 @@ class BluetoothStatusImageView @JvmOverloads constructor(
         super.onDetachedFromWindow()
     }
 
-    override fun onBluetoothConnectionStateChanged(connected: Boolean, serviceDiscovered: Boolean) {
+    override fun onBluetoothConnectionStateChanged(
+        connected: Boolean,
+        serviceDiscovered: Boolean,
+        firmwareCompatible: Boolean
+    ) {
         setTintColor(this, if (serviceDiscovered) R.color.bluetooth_blue else R.color.white)
     }
 }

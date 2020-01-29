@@ -100,17 +100,7 @@ class MyRobotsPresenter(
     }
 
     override fun onPlaySelected(robotId: Int) {
-        getControllerTypeInteractor.robotId = robotId
-        getControllerTypeInteractor.execute { type ->
-            when (type) {
-                ControllerType.GAMER ->
-                    navigator.navigate(MyRobotsFragmentDirections.toPlayGamer(robotId))
-                ControllerType.MULTITASKER ->
-                    navigator.navigate(MyRobotsFragmentDirections.toPlayMultitasker(robotId))
-                ControllerType.DRIVER ->
-                    navigator.navigate(MyRobotsFragmentDirections.toPlayDriver(robotId))
-            }
-        }
+        navigator.navigate(MyRobotsFragmentDirections.toPlay(robotId))
     }
 
     override fun onContinueBuildingSelected(userRobot: UserRobot) {

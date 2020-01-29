@@ -12,11 +12,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import com.revolution.robotics.analytics.Reporter
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.LateInitKodein
 import org.kodein.di.TT
 import org.kodein.di.direct
+import org.kodein.di.erased.instance
 
 abstract class BaseFragment<B : ViewDataBinding, V : ViewModel>(@LayoutRes private val layoutResourceId: Int) :
     Fragment() {
@@ -24,8 +26,10 @@ abstract class BaseFragment<B : ViewDataBinding, V : ViewModel>(@LayoutRes priva
     protected var binding: B? = null
     protected var viewModel: V? = null
     protected var kodein = LateInitKodein()
+    protected val reporter: Reporter by kodein.instance()
 
     protected abstract val viewModelClass: Class<V>
+    protected open val screen: Reporter.Screen? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +44,13 @@ abstract class BaseFragment<B : ViewDataBinding, V : ViewModel>(@LayoutRes priva
             binding.setVariable(BR.viewModel, viewModel)
         }
         return binding?.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (screen != null) {
+            activity?.let { reporter.setScreen(it, screen!!) }
+        }
     }
 
     override fun onDestroy() {

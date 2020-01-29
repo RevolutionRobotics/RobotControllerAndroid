@@ -2,15 +2,24 @@ package com.revolution.robotics.features.coding
 
 import android.util.Base64
 import com.revolution.robotics.R
+import com.revolution.robotics.analytics.Reporter
 import com.revolution.robotics.core.domain.local.UserProgram
-import com.revolution.robotics.core.interactor.*
+import com.revolution.robotics.core.eventBus.dialog.DialogEvent
+import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
+import com.revolution.robotics.core.interactor.GetUserConfigForRobotInteractor
+import com.revolution.robotics.core.interactor.RemoveUserProgramInteractor
+import com.revolution.robotics.core.interactor.SaveUserProgramInteractor
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.core.utils.AppPrefs
+import com.revolution.robotics.core.utils.Navigator
+import com.revolution.robotics.features.bluetooth.BluetoothConnectionListener
+import com.revolution.robotics.features.bluetooth.BluetoothManager
 import com.revolution.robotics.features.coding.new.NewProgramConfirmDialog
 import com.revolution.robotics.features.coding.new.robotSelector.RobotSelectorDialog
 import com.revolution.robotics.features.coding.programs.ProgramsDialog
 import com.revolution.robotics.features.coding.python.PythonDialog
 import com.revolution.robotics.features.coding.saveProgram.SaveProgramDialog
+import com.revolution.robotics.features.coding.test.TestCodeDialog
 import org.revolutionrobotics.blockly.android.view.jsInterface.SaveBlocklyListener
 import java.util.concurrent.TimeUnit
 
@@ -20,8 +29,11 @@ class CodingPresenter(
     private val removeUserProgramInteractor: RemoveUserProgramInteractor,
     private val saveUserProgramInteractor: SaveUserProgramInteractor,
     private val resourceResolver: ResourceResolver,
-    private val appPrefs: AppPrefs
-) : CodingMvp.Presenter {
+    private val bluetoothManager: BluetoothManager,
+    private val appPrefs: AppPrefs,
+    private val dialogEventBus: DialogEventBus,
+    private val navigator: Navigator
+) : CodingMvp.Presenter, BluetoothConnectionListener, DialogEventBus.Listener {
 
     companion object {
         private const val EMPTY_XML = "<xml xmlns=\"http://www.w3.org/1999/xhtml\"></xml>"
@@ -37,6 +49,19 @@ class CodingPresenter(
     private var xmlSaved = false
     private var variablesSaved = false
     private var robotId: Int? = null
+    private var showTestDialogAfterConnection = false
+
+    override fun register(view: CodingMvp.View, model: CodingViewModel?) {
+        super.register(view, model)
+        bluetoothManager.registerListener(this)
+        dialogEventBus.register(this)
+    }
+
+    override fun unregister(view: CodingMvp.View?) {
+        super.unregister(view)
+        bluetoothManager.unregisterListener(this)
+        dialogEventBus.unregister(this)
+    }
 
     override fun showNewProgramDialog() {
         view?.showDialog(NewProgramConfirmDialog.newInstance())
@@ -130,6 +155,51 @@ class CodingPresenter(
         })
     }
 
+    override fun play() {
+        if (bluetoothManager.isServiceDiscovered) {
+            showTestDialog()
+        } else {
+            showTestDialogAfterConnection = true
+            bluetoothManager.startConnectionFlow()
+        }
+    }
+
+    override fun shareProgram() {
+        var code : String? = null
+        var xml : String? = null
+        view?.getDataFromBlocklyView(object : SaveBlocklyListener {
+            override fun onPythonProgramSaved(file: String) {
+                code = file
+                if (code != null && xml != null) {
+                    view?.shareCode(code!!, xml!!)
+                }
+            }
+
+            override fun onXMLProgramSaved(file: String) {
+                xml = file
+                if (code != null && xml != null) {
+                    view?.shareCode(code!!, xml!!)
+                }
+            }
+
+            override fun onVariablesExported(variables: String) = Unit
+        })
+    }
+
+    private fun showTestDialog() {
+        view?.getDataFromBlocklyView(object : SaveBlocklyListener {
+            override fun onPythonProgramSaved(file: String) {
+                robotId?.let {
+                    view?.showDialog(TestCodeDialog.newInstance(file, it))
+                }
+            }
+
+            override fun onXMLProgramSaved(file: String) = Unit
+
+            override fun onVariablesExported(variables: String) = Unit
+        })
+    }
+
     override fun onVariablesExported(variables: String) {
         userProgramForSave?.variables =
             if (variables.isEmpty()) {
@@ -201,5 +271,22 @@ class CodingPresenter(
 
     override fun onBackPressed() {
         isProgramChanged { view?.onBackPressed(it) }
+    }
+
+    override fun onBluetoothConnectionStateChanged(
+        connected: Boolean,
+        serviceDiscovered: Boolean,
+        firmwareCompatible: Boolean
+    ) {
+        if (showTestDialogAfterConnection && connected && serviceDiscovered && firmwareCompatible) {
+            showTestDialog()
+        }
+    }
+
+    override fun onDialogEvent(event: DialogEvent) {
+        when (event) {
+            DialogEvent.FIRMWARE_INCOMPATIBLE_UPDATE_LATER -> showTestDialog()
+            else -> Unit
+        }
     }
 }

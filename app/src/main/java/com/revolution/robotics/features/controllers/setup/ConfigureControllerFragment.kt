@@ -8,6 +8,7 @@ import android.view.animation.DecelerateInterpolator
 import androidx.annotation.AnimRes
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
+import com.revolution.robotics.analytics.Reporter
 import com.revolution.robotics.core.domain.local.UserProgram
 import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
@@ -40,6 +41,7 @@ class ConfigureControllerFragment :
     }
 
     override val viewModelClass = ConfigureControllerViewModel::class.java
+    override val screen = Reporter.Screen.CONFIGURE_CONTROLLER
 
     private val presenter: ConfigureControllerMvp.Presenter by kodein.instance()
     private val dialogEventBus: DialogEventBus by kodein.instance()

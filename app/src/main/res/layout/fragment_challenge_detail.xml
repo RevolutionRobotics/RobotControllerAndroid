@@ -26,6 +26,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 tools:src="@drawable/img_logo"
                 app:firebaseImageUrl="@{viewModel.zoomableImage}"
+                app:originalSize="@{true}"
                 app:visible="@{viewModel.type == ChallengeType.ZOOMABLE}"/>
 
         <com.revolution.robotics.views.toolbar.RoboticsToolbar
@@ -108,13 +109,43 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintDimensionRatio="1:1"
                 android:layout_marginBottom="@dimen/dimen_8dp"
-                android:scaleType="fitXY"
+                android:scaleType="fitCenter"
                 android:layout_marginEnd="@dimen/dimen_40dp"
                 app:layout_constraintTop_toBottomOf="@id/toolbar"
                 app:layout_constraintBottom_toTopOf="@id/slider_challenge_detail"
                 tools:src="@drawable/img_logo"
                 app:firebaseImageUrl="@{viewModel.image}"
                 app:visible="@{viewModel.type == ChallengeType.HORIZONTAL}"/>
+
+        <TextView
+                android:id="@+id/txt_title_button"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintTop_toBottomOf="@id/toolbar"
+                app:layout_constraintBottom_toTopOf="@id/button"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:fontFamily="@font/barlow_regular"
+                android:layout_marginStart="@dimen/dimen_64dp"
+                android:layout_marginEnd="@dimen/dimen_64dp"
+                android:layout_marginTop="@dimen/dimen_16dp"
+                app:formattedText="@{viewModel.title}"
+                app:visible="@{viewModel.type == ChallengeType.BUTTON}"
+                tools:text="In this challenge, you’ll learn a simple way to use gears to make your wheels rotate faster."/>
+
+        <com.revolution.robotics.views.RoboticsButton
+                android:id="@+id/button"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/robotics_button_height"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="@dimen/dimen_8dp"
+                android:layout_marginBottom="@dimen/dimen_32dp"
+                android:paddingRight="20dp"
+                android:onClick="@{()->viewModel.onButtonCLicked()}"
+                app:layout_constraintBottom_toTopOf="@id/slider_challenge_detail"
+                app:formattedText="@{viewModel.buttonText}"
+                app:visible="@{viewModel.type == ChallengeType.BUTTON}"/>
 
         <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_parts"
