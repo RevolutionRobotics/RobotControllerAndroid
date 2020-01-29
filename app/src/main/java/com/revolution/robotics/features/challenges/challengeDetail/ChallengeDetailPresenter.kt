@@ -24,6 +24,12 @@ class ChallengeDetailPresenter(
 
     private var categoryId: String? = null
     private var challengeId: String? = null
+    private var challengeStep: ChallengeStep? = null
+
+    override fun register(view: ChallengeDetailMvp.View, model: ChallengeDetailViewModel?) {
+        super.register(view, model)
+        model?.presenter = this
+    }
 
     override fun setChallenge(challenge: Challenge, categoryId: String?) {
         this.categoryId = categoryId
@@ -37,6 +43,7 @@ class ChallengeDetailPresenter(
     }
 
     private fun setChallengeStep(challengeStep: ChallengeStep) {
+        this.challengeStep = challengeStep
         toolbarViewModel?.title?.set(challengeStep.title?.getLocalizedString(resourceResolver) ?: "")
         model?.apply {
             when (val challengeType = ChallengeType.fromId(challengeStep.challengeType)) {
@@ -62,8 +69,20 @@ class ChallengeDetailPresenter(
                         ChallengePartItemViewModel(it.second)
                     }.sortedBy { it.part.order }
                 }
+                ChallengeType.BUTTON -> {
+                    image.value = null
+                    zoomableImage.value = null
+                    title.value = challengeStep.description
+                    type.value = challengeType
+                    parts.value = emptyList()
+                    buttonText.value = challengeStep.buttonText
+                }
             }
         }
+    }
+
+    override fun onButtonClicked() {
+        challengeStep?.buttonUrl?.apply { view?.openUrl(this) }
     }
 
     override fun onChallengeFinished() {

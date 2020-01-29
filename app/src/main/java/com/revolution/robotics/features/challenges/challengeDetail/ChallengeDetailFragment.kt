@@ -1,5 +1,8 @@
 package com.revolution.robotics.features.challenges.challengeDetail
 
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
@@ -14,6 +17,8 @@ import com.revolution.robotics.core.utils.BundleArgumentDelegate
 import com.revolution.robotics.databinding.FragmentChallengeDetailBinding
 import com.revolution.robotics.features.challenges.challengeDetail.adapter.ChallengePartAdapter
 import com.revolution.robotics.features.challenges.challengeList.ChallengeListFragment
+import com.revolution.robotics.features.community.CommunityFragment
+import com.revolution.robotics.features.shared.ErrorHandler
 import org.kodein.di.erased.instance
 
 class ChallengeDetailFragment :
@@ -34,6 +39,7 @@ class ChallengeDetailFragment :
     override val screen = Reporter.Screen.CHALLENGE_DETAILS
 
     private val presenter: ChallengeDetailMvp.Presenter by kodein.instance()
+    private val errorHandler: ErrorHandler by kodein.instance()
     private val adapter = ChallengePartAdapter()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -66,6 +72,14 @@ class ChallengeDetailFragment :
         } else {
             ChallengeDetailFinishedDialog.Intermediate.newInstance(nextChallenge, arguments?.categoryId ?: "")
                 .show(fragmentManager)
+        }
+    }
+
+    override fun openUrl(url: String) {
+        try {
+            requireActivity().startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+        } catch (exception: ActivityNotFoundException) {
+            errorHandler.onError(exception, R.string.error_cannot_open_url)
         }
     }
 
