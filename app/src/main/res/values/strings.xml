@@ -179,7 +179,7 @@
     <string name="configure_motor_counterclockwise_button_title">Counter clockwise</string>
     <string name="configure_motor_clockwise_button_title">Clockwise</string>
     <string name="configure_motor_done_button_title">Done</string>
-    <string name="configure_sensor_bumper_button_title">Bumper</string>
+    <string name="configure_sensor_bumper_button_title">Button</string>
     <string name="configure_sensor_ultrasound_button_title">Distance</string>
     <string name="configure_motor_test_button_title">Test</string>
 
@@ -328,7 +328,7 @@
     <string name="blockly_donut_selector_select_all">Select all"</string>
     <string name="blockly_no_motor_configured">This robot doesn\’t have any non-drivetrain motors configured</string>
     <string name="blockly_no_distance_sensor_configured">This robot doesn\’t have a distance sensor configured</string>
-    <string name="blockly_no_bumper_configured">This robot doesn\’t have a bumper configured</string>
+    <string name="blockly_no_bumper_configured">This robot doesn\’t have a button configured</string>
     <string name="blockly_test_button">Test</string>
     <string name="blockly_test_dialog_uploading">Uploading</string>
     <string name="blockly_test_dialog_running">Running</string>

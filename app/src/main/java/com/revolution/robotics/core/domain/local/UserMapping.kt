@@ -87,9 +87,9 @@ class UserMapping(var userConfigId: Int = 0) : PortMapping(), Parcelable {
         if (S4?.type == Sensor.TYPE_BUMPER) count++
 
         return if (count == 0) {
-            "bumper"
+            "button"
         } else {
-            "bumper${count + 1}"
+            "button${count + 1}"
         }
     }
 
