@@ -4,8 +4,10 @@ import android.view.View
 import androidx.databinding.BindingAdapter
 import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.local.UserProgram
+import com.revolution.robotics.features.play.ButtonPressListener
 import com.revolution.robotics.views.ConnectionLineView
 import com.revolution.robotics.views.controllerSetup.ProgramConnectionButton
+
 
 @BindingAdapter("program", "isProgramSelected")
 fun setProgramDetails(button: ProgramConnectionButton, program: UserProgram?, isProgramSelected: Boolean?) {
@@ -28,7 +30,7 @@ fun setDrivetrainButton(button: ProgramConnectionButton, isDrivetrain: Boolean) 
 @BindingAdapter("program", "isProgramSelected")
 fun setProgramDetails(line: ConnectionLineView, program: UserProgram?, isProgramSelected: Boolean?) {
     val (isDashed, color) = when {
-        isProgramSelected == true -> false to R.color.white
+        isProgramSelected == true -> false to com.revolution.robotics.R.color.white
         program != null -> false to R.color.robotics_red
         else -> true to R.color.grey_6d
     }
@@ -49,4 +51,12 @@ fun setProgramDetails(view: View, program: UserProgram?, isProgramSelected: Bool
             }
         }
     )
+}
+
+@BindingAdapter("buttonPressListener")
+fun setOnTouchListener(view: View, buttonPressListener: ButtonPressListener?) {
+    if (buttonPressListener != null)
+    {
+        view.setOnTouchListener(buttonPressListener)
+    }
 }
