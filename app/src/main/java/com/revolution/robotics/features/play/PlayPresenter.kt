@@ -107,4 +107,8 @@ class PlayPresenter(
     override fun onButtonPressed(ordinal: Int) {
         liveControllerService?.onButtonPressed(ordinal - 1)
     }
+
+    override fun onButtonReleased(ordinal: Int) {
+        liveControllerService?.onButtonReleased(ordinal - 1)
+    }
 }
