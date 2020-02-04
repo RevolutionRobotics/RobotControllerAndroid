@@ -22,7 +22,7 @@
                 app:layout_constraintTop_toTopOf="@id/lever_left"
                 app:layout_constraintBottom_toTopOf="@id/button_4"
                 android:layout_marginEnd="@dimen/dimen_32dp"
-                android:onClick="@{() -> viewModel.onButtonPressed(1)}"/>
+                app:buttonPressListener="@{viewModel.button1Listener}"/>
 
         <View
                 android:id="@+id/button_2"
@@ -33,7 +33,7 @@
                 app:layout_constraintEnd_toStartOf="@id/button_3"
                 app:layout_constraintTop_toTopOf="@id/button_1"
                 android:layout_marginEnd="@dimen/dimen_32dp"
-                android:onClick="@{() -> viewModel.onButtonPressed(2)}"/>
+                app:buttonPressListener="@{viewModel.button2Listener}"/>
 
         <View
                 android:id="@+id/button_3"
@@ -43,7 +43,7 @@
                 app:layout_constraintStart_toEndOf="@id/button_2"
                 app:layout_constraintEnd_toStartOf="@id/lever_right"
                 app:layout_constraintTop_toTopOf="@id/button_1"
-                android:onClick="@{() -> viewModel.onButtonPressed(3)}"/>
+                app:buttonPressListener="@{viewModel.button3Listener}"/>
 
         <View
                 android:id="@+id/button_4"
@@ -55,7 +55,7 @@
                 app:layout_constraintStart_toStartOf="@id/button_1"
                 app:layout_constraintEnd_toEndOf="@id/button_1"
                 android:layout_marginTop="40dp"
-                android:onClick="@{() -> viewModel.onButtonPressed(4)}"/>
+                app:buttonPressListener="@{viewModel.button4Listener}"/>
 
         <View
                 android:id="@+id/button_5"
@@ -66,7 +66,7 @@
                 app:layout_constraintTop_toTopOf="@id/button_4"
                 app:layout_constraintStart_toStartOf="@id/button_2"
                 app:layout_constraintEnd_toEndOf="@id/button_2"
-                android:onClick="@{() -> viewModel.onButtonPressed(5)}"/>
+                app:buttonPressListener="@{viewModel.button5Listener}"/>
 
         <View
                 android:id="@+id/button_6"
@@ -76,7 +76,7 @@
                 app:layout_constraintTop_toTopOf="@id/button_4"
                 app:layout_constraintStart_toStartOf="@id/button_3"
                 app:layout_constraintEnd_toEndOf="@id/button_3"
-                android:onClick="@{() -> viewModel.onButtonPressed(6)}"/>
+                app:buttonPressListener="@{viewModel.button6Listener}"/>
 
         <com.revolution.robotics.features.play.LeverView
                 android:id="@+id/lever_left"

@@ -24,5 +24,6 @@ interface PlayMvp : Mvp {
         fun onJoystickXAxisChanged(value: Int)
         fun onJoystickYAxisChanged(value: Int)
         fun onButtonPressed(ordinal: Int)
+        fun onButtonReleased(ordinal: Int)
     }
 }

@@ -19,7 +19,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
-        versionName "1.2.1"
+        versionName "1.2.3"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -101,8 +101,8 @@ def photoview_version = "2.3.0"
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
-    implementation 'org.revolutionrobotics:blockly-android:0.5.3'
-    implementation 'org.revolutionrobotics:bluetooth-android:0.1'
+    implementation 'org.revolutionrobotics:blockly-android:0.5.4'
+    implementation 'org.revolutionrobotics:bluetooth-android:0.2'
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines"

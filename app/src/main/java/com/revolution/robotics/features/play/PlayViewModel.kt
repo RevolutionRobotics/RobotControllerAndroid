@@ -12,10 +12,21 @@ class PlayViewModel(private val presenter: PlayMvp.Presenter) : ViewModel() {
 
     val programs = MutableList<UserProgram?>(PROGRAM_COUNT) { null }
     val onboaringFinished = MutableLiveData<Boolean>()
+    val button1Listener = ButtonPressListener { onButtonPressChanged(1, it) }
+    val button2Listener = ButtonPressListener { onButtonPressChanged(2, it) }
+    val button3Listener = ButtonPressListener { onButtonPressChanged(3, it) }
+    val button4Listener = ButtonPressListener { onButtonPressChanged(4, it) }
+    val button5Listener = ButtonPressListener { onButtonPressChanged(5, it) }
+    val button6Listener = ButtonPressListener { onButtonPressChanged(6, it) }
 
     fun getProgramLabel(index: Int) =
         programs[index - 1]?.name
 
-    fun onButtonPressed(ordinal: Int) =
-        presenter.onButtonPressed(ordinal)
+    private fun onButtonPressChanged(ordinal: Int, pressed: Boolean) {
+        if (pressed) {
+            presenter.onButtonPressed(ordinal)
+        } else {
+            presenter.onButtonReleased(ordinal)
+        }
+    }
 }
