@@ -42,7 +42,7 @@ class ChallengeDetailSlider @JvmOverloads constructor(context: Context, attrs: A
     override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
         binding.imgFinish.visible = buildSteps?.size == progress + 1
         buildSteps?.get(progress)?.let { step ->
-            buildStepSelectedListener?.onChallengeStepSelected(step, fromUser)
+            buildStepSelectedListener?.onChallengeStepSelected(step, progress, buildSteps!!.size, fromUser)
         }
     }
 
@@ -51,7 +51,7 @@ class ChallengeDetailSlider @JvmOverloads constructor(context: Context, attrs: A
     override fun onStopTrackingTouch(p0: SeekBar?) = Unit
 
     interface ChallengeStepSelectedListener {
-        fun onChallengeStepSelected(challengeStep: ChallengeStep, fromUser: Boolean)
+        fun onChallengeStepSelected(challengeStep: ChallengeStep, actualStep: Int, allSteps: Int, fromUser: Boolean)
         fun onChallengeFinished()
     }
 }
