@@ -134,6 +134,14 @@ class ConfigureFragment : BaseFragment<FragmentConfigureBinding, ConfigureViewMo
 
     override fun onMenuItemClick(item: MenuItem): Boolean {
         return when (item.itemId) {
+            R.id.background_programs -> {
+                presenter.onBackgroundProgramsClicked()
+                true
+            }
+            R.id.priority -> {
+                presenter.onPriorityClicked()
+                true
+            }
             R.id.change_controller_type -> {
                 presenter.onControllerTypeClicked()
                 true
