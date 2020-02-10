@@ -38,8 +38,16 @@ class ChallengeDetailPresenter(
         setChallengeStep(challenge.challengeSteps.toList().map { it.second }.sortedBy { it.order }.first())
     }
 
-    override fun onChallengeStepSelected(challengeStep: ChallengeStep, fromUser: Boolean) {
+    override fun onChallengeStepSelected(
+        challengeStep: ChallengeStep,
+        actualStep: Int,
+        allSteps: Int,
+        fromUser: Boolean
+    ) {
         setChallengeStep(challengeStep)
+        model?.apply {
+            updateStepText(actualStep + 1, allSteps)
+        }
     }
 
     private fun setChallengeStep(challengeStep: ChallengeStep) {
