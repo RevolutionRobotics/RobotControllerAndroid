@@ -18,7 +18,9 @@ class ConnectDialog : RoboticsDialog() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        reporter.reportEvent(Reporter.Event.OPEN_BT_DEVICE_LIST)
+        reporter.reportEvent(Reporter.Event.OPEN_BT_DEVICE_LIST, Bundle().apply {
+            putString(Reporter.Parameter.SCREEN.parameterName, reporter.lastOpenedScreen?.screenName)
+        })
     }
 
     override val hasCloseButton = true

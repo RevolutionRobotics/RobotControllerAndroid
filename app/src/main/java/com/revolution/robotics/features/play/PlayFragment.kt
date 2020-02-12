@@ -3,13 +3,11 @@ package com.revolution.robotics.features.play
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.databinding.ViewDataBinding
 import com.revolution.robotics.BaseFragment
 import com.revolution.robotics.R
 import com.revolution.robotics.analytics.Reporter
-import com.revolution.robotics.core.domain.remote.Milestone
 import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
 import com.revolution.robotics.core.utils.AppPrefs
@@ -21,14 +19,14 @@ import com.revolution.robotics.databinding.FragmentPlayGamerBinding
 import com.revolution.robotics.databinding.FragmentPlayMultitaskerBinding
 import com.revolution.robotics.features.bluetooth.BluetoothConnectionListener
 import com.revolution.robotics.features.bluetooth.BluetoothManager
-import com.revolution.robotics.features.build.chapterFinished.ChapterFinishedDialog
-import com.revolution.robotics.features.build.testing.buildTest.TestBuildDialog
 import com.revolution.robotics.features.controllers.ControllerType
-import com.revolution.robotics.features.myRobots.MyRobotsFragmentDirections
 import org.kodein.di.erased.instance
 
-class PlayFragment : BaseFragment<FragmentPlayCoreBinding, PlayViewModel>(R.layout.fragment_play_core),
-    PlayMvp.View, BluetoothConnectionListener, DialogEventBus.Listener, JoystickView.JoystickEventListener {
+
+class PlayFragment :
+    BaseFragment<FragmentPlayCoreBinding, PlayViewModel>(R.layout.fragment_play_core),
+    PlayMvp.View, BluetoothConnectionListener, DialogEventBus.Listener,
+    JoystickView.JoystickEventListener {
 
     companion object {
         private var Bundle.robotId by BundleArgumentDelegate.Int("robotId")
@@ -44,6 +42,7 @@ class PlayFragment : BaseFragment<FragmentPlayCoreBinding, PlayViewModel>(R.layo
     private val dialogEventBus: DialogEventBus by kodein.instance()
 
     private lateinit var contentBinding: ViewDataBinding
+    private var startTime = System.currentTimeMillis()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         activity?.window?.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
@@ -61,13 +60,7 @@ class PlayFragment : BaseFragment<FragmentPlayCoreBinding, PlayViewModel>(R.layo
         viewModel?.onboaringFinished?.value = appPrefs.finishedOnboarding
         presenter.register(this, viewModel)
         dialogEventBus.register(this)
-    }
-
-    override fun onResume() {
-        super.onResume()
-        if (!appPrefs.finishedOnboarding) {
-            reporter.reportEvent(Reporter.Event.DRIVE_BASIC_ROBOT)
-        }
+        startTime = System.currentTimeMillis()
     }
 
     override fun onDestroyView() {
@@ -103,21 +96,33 @@ class PlayFragment : BaseFragment<FragmentPlayCoreBinding, PlayViewModel>(R.layo
     private fun createContentView(controllerType: ControllerType) {
         when (controllerType) {
             ControllerType.GAMER ->
-                contentBinding = FragmentPlayGamerBinding.inflate(LayoutInflater.from(context), binding?.contentWrapper, true).apply {
+                contentBinding = FragmentPlayGamerBinding.inflate(
+                    LayoutInflater.from(context),
+                    binding?.contentWrapper,
+                    true
+                ).apply {
                     viewModel = this@PlayFragment.viewModel
                     joystick.listener = this@PlayFragment
                     presenter.reverseYAxis = true
                     presenter.reverseXAxis = false
                 }
             ControllerType.MULTITASKER ->
-                contentBinding = FragmentPlayMultitaskerBinding.inflate(LayoutInflater.from(context), binding?.contentWrapper, true).apply {
+                contentBinding = FragmentPlayMultitaskerBinding.inflate(
+                    LayoutInflater.from(context),
+                    binding?.contentWrapper,
+                    true
+                ).apply {
                     viewModel = this@PlayFragment.viewModel
                     joystick.listener = this@PlayFragment
                     presenter.reverseYAxis = true
                     presenter.reverseXAxis = false
                 }
             ControllerType.DRIVER ->
-                contentBinding = FragmentPlayDriverBinding.inflate(LayoutInflater.from(context), binding?.contentWrapper, true).apply {
+                contentBinding = FragmentPlayDriverBinding.inflate(
+                    LayoutInflater.from(context),
+                    binding?.contentWrapper,
+                    true
+                ).apply {
                     viewModel = this@PlayFragment.viewModel
                     leverLeft.onAxisChanged { y -> presenter.onJoystickXAxisChanged(y) }
                     leverRight.onAxisChanged { x -> presenter.onJoystickYAxisChanged(x) }
@@ -156,6 +161,10 @@ class PlayFragment : BaseFragment<FragmentPlayCoreBinding, PlayViewModel>(R.layo
         return if (appPrefs.finishedOnboarding) {
             super.onBackPressed()
         } else {
+            val duration: Int = ((System.currentTimeMillis() - startTime) / 1000).toInt()
+            reporter.reportEvent(Reporter.Event.DRIVE_BASIC_ROBOT, Bundle().apply {
+                putInt(Reporter.Parameter.DURATION.parameterName, duration)
+            })
             navigator.popUntil(R.id.mainMenuFragment)
             true
         }

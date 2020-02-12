@@ -1,5 +1,6 @@
 package com.revolution.robotics.features.whoToBuild
 
+import android.os.Bundle
 import android.util.Log
 import com.revolution.robotics.analytics.Reporter
 import com.revolution.robotics.core.domain.PortMapping
@@ -116,7 +117,9 @@ class WhoToBuildPresenter(
             robot.coverImage,
             robot.description?.getLocalizedString(resourceResolver) ?: ""
         )
-        reporter.reportEvent(Reporter.Event.START_BASIC_ROBOT)
+        reporter.reportEvent(Reporter.Event.START_BASIC_ROBOT, Bundle().apply {
+            putString(Reporter.Parameter.ID.parameterName, robot.id)
+        })
         navigator.navigate(WhoToBuildFragmentDirections.toBuildRobot(userRobot))
     }
 

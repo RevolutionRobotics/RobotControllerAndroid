@@ -28,7 +28,7 @@ class Reporter(private val firebaseAnalytics: FirebaseAnalytics) {
         BUILD_BASIC_ROBOT_OFFLINE("build_basic_robot_offline"),
         BUILD_BASIC_ROBOT_ONLINE("build_basic_robot_online"),
         SKIP_ONBOARDING("skip_onboarding"),
-        DRIVE_BASIC_ROBOT("drive_basic _robot"),
+        DRIVE_BASIC_ROBOT("drive_basic_robot"),
         RESET_TUTORIAL("reset_tutorial"),
         UPDATE_FIRMWARE("update_firmware"),
         START_BASIC_ROBOT("start_basic_robot"),
@@ -92,6 +92,14 @@ class Reporter(private val firebaseAnalytics: FirebaseAnalytics) {
     }
 
     enum class Parameter(val parameterName: String) {
-        SCREEN("screen")
+        YEAR("year"),
+        SCREEN("screen"),
+        DURATION("duration"),
+        VERSION("version"),
+        ID("id"),
+        ONE_SITTING("one_sitting"),
+        TYPE("type"),
+        REVERSED("reversed"),
+        CUSTOM("custom")
     }
 }

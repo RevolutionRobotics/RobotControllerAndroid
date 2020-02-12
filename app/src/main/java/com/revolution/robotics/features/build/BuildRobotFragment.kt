@@ -49,6 +49,7 @@ class BuildRobotFragment :
     private var currentBuildStep: BuildStep? = null
     private var wasRobotFinished = false
     private var buildSteps: List<BuildStep>? = null
+    private var oneSitting = false;
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding?.apply {
@@ -116,6 +117,7 @@ class BuildRobotFragment :
     override fun onBuildStepsLoaded(steps: List<BuildStep>) {
         buildSteps = steps
         val startIndex = (arguments?.robot?.actualBuildStep ?: DEFAULT_STARTING_INDEX) - 1
+        oneSitting = startIndex == 0
         binding?.seekbar?.setBuildSteps(steps, this, startIndex)
         buildStepCount = steps.size
         viewModel?.setBuildSteps(steps)
@@ -140,6 +142,9 @@ class BuildRobotFragment :
             lastModified = Date(System.currentTimeMillis())
             presenter.saveUserRobot(this, true)
         }
+        reporter.reportEvent(Reporter.Event.FINISH_BASIC_ROBOT, Bundle().apply {
+            putBoolean(Reporter.Parameter.ONE_SITTING.parameterName, oneSitting)
+        })
     }
 
     override fun onRobotSaveStarted() {

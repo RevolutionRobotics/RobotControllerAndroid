@@ -1,5 +1,6 @@
 package com.revolution.robotics.features.controllers.setup
 
+import android.os.Bundle
 import com.revolution.robotics.analytics.Reporter
 import com.revolution.robotics.core.domain.local.UserProgram
 import com.revolution.robotics.core.interactor.*
@@ -117,7 +118,9 @@ class ConfigureControllerPresenter(
             assignProgramToButtonInteractor.execute {
                 model?.onProgramSet(userProgram)
                 view?.hideProgramSelector()
-                reporter.reportEvent(Reporter.Event.ASSIGN_PROGRAM_TO_BUTTON)
+                reporter.reportEvent(Reporter.Event.ASSIGN_PROGRAM_TO_BUTTON, Bundle().apply {
+                    putBoolean(Reporter.Parameter.CUSTOM.parameterName, userProgram.remoteId == null)
+                })
             }
         }
     }
