@@ -2,6 +2,7 @@ package com.revolution.robotics.core.utils.dynamicPermissions
 
 import android.Manifest
 import android.app.Activity
+import android.os.Bundle
 import androidx.fragment.app.FragmentManager
 import com.revolution.robotics.analytics.Reporter
 import com.revolution.robotics.core.eventBus.dialog.DialogEvent
@@ -52,7 +53,9 @@ class BluetoothConnectionFlowHelper(kodein: Kodein) : DialogEventBus.Listener {
             DialogEvent.PERMISSION_GRANTED -> TurnOnTheBrainDialog.newInstance().show(fragmentManager)
             DialogEvent.BRAIN_TURNED_ON -> ConnectDialog.newInstance().show(fragmentManager)
             DialogEvent.ROBOT_CONNECTED -> {
-                reporter.reportEvent(Reporter.Event.CONNECT_TO_BRAIN)
+                reporter.reportEvent(Reporter.Event.CONNECT_TO_BRAIN, Bundle().apply {
+                    putString(Reporter.Parameter.SCREEN.parameterName, reporter.lastOpenedScreen?.screenName)
+                })
                 ConnectionSuccessDialog.newInstance().show(fragmentManager)
             }
             DialogEvent.ROBOT_CONNECTION_FAILED -> ConnectionFailedDialog.newInstance().show(fragmentManager)

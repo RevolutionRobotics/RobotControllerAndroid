@@ -9,8 +9,7 @@ import com.revolution.robotics.core.utils.Navigator
 
 class BuildFinishedPresenter(
     private val navigator: Navigator,
-    private val dialogEventBus: DialogEventBus,
-    private val reporter: Reporter
+    private val dialogEventBus: DialogEventBus
 ) : BuildFinishedMvp.Presenter, DialogEventBus.Listener {
 
     override var view: BuildFinishedMvp.View? = null
@@ -19,7 +18,6 @@ class BuildFinishedPresenter(
     override fun register(view: BuildFinishedMvp.View, model: ViewModel?) {
         super.register(view, model)
         dialogEventBus.register(this)
-        reporter.reportEvent(Reporter.Event.FINISH_BASIC_ROBOT)
     }
 
     override fun unregister(view: BuildFinishedMvp.View?) {

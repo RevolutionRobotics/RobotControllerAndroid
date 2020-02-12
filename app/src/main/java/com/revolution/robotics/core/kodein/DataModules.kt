@@ -145,7 +145,7 @@ fun createPresenterModule() =
         bind<ConfigureConnectionsMvp.Presenter>() with s { ConfigureConnectionsPresenter(i(), i(), i(), i()) }
         bind<MotorConfigurationMvp.Presenter>() with s { MotorConfigurationPresenter(i(), i(), i(), i(), i(), i()) }
         bind<SensorConfigurationMvp.Presenter>() with s { SensorConfigurationPresenter(i(), i(), i(), i(), i(), i()) }
-        bind<BuildFinishedMvp.Presenter>() with s { BuildFinishedPresenter(i(), i(), i()) }
+        bind<BuildFinishedMvp.Presenter>() with s { BuildFinishedPresenter(i(), i()) }
         bind<SettingsMvp.Presenter>() with s { SettingsPresenter(i(), i(), i()) }
         bind<AboutMvp.Presenter>() with s { AboutPresenter(i(), i()) }
         bind<FirmwareMvp.Presenter>() with s { FirmwareUpdatePresenter(i(), i()) }

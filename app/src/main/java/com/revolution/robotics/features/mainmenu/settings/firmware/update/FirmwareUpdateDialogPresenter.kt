@@ -1,5 +1,6 @@
 package com.revolution.robotics.features.mainmenu.settings.firmware.update
 
+import android.os.Bundle
 import androidx.lifecycle.ViewModel
 import com.revolution.robotics.R
 import com.revolution.robotics.analytics.Reporter
@@ -162,7 +163,9 @@ class FirmwareUpdateDialogPresenter(
                 bluetoothManager.getConfigurationService().updateFramework(firmwareUri,
                     onSuccess = {
                         firmwareUpdateInProgress = false
-                        reporter.reportEvent(Reporter.Event.UPDATE_FIRMWARE)
+                        reporter.reportEvent(Reporter.Event.UPDATE_FIRMWARE, Bundle().apply {
+                            putString(Reporter.Parameter.VERSION.parameterName, latestFirmware?.filename)
+                        })
                         reportUploadedToBrain(reporter, "firmware", firmwareUri, startTime)
                         isUpdateFlowStarted = false
                         view?.activateSuccessFace()

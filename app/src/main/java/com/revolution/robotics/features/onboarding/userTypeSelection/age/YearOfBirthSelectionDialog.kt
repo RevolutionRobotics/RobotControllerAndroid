@@ -1,5 +1,6 @@
 package com.revolution.robotics.features.onboarding.userTypeSelection.age
 
+import android.os.Bundle
 import com.revolution.robotics.R
 import com.revolution.robotics.analytics.Reporter
 import com.revolution.robotics.core.utils.AppPrefs
@@ -27,7 +28,6 @@ class YearOfBirthSelectionDialog : RoboticsDialog() {
         DialogButton(R.string.onboarding_save, R.drawable.ic_play) {
             appPrefs.userTypeSelected = true
             reporter.reportEvent(Reporter.Event.SELECT_USER_TYPE)
-            reporter.reportEvent(Reporter.Event.SELECT_YEAR_OF_BIRTH)
             dismiss()
             navigator.back()
         }
@@ -35,6 +35,7 @@ class YearOfBirthSelectionDialog : RoboticsDialog() {
 
     fun onYearSelected(position:Int) {
         reporter.setUserProperty(Reporter.UserProperty.YEAR_OF_BIRTH, (earliestYear + position).toString())
+        reporter.reportEvent(Reporter.Event.SELECT_YEAR_OF_BIRTH, Bundle().apply { putInt(Reporter.Parameter.YEAR.parameterName, earliestYear + position) })
     }
 
     class YearOfBirthSelectorDialogFace(dialog: RoboticsDialog, private val earliestYear: Int) :

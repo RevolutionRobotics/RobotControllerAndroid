@@ -1,5 +1,6 @@
 package com.revolution.robotics.features.controllers.buttonless
 
+import android.os.Bundle
 import com.revolution.robotics.R
 import com.revolution.robotics.analytics.Reporter
 import com.revolution.robotics.core.domain.local.UserConfiguration
@@ -216,7 +217,9 @@ class ButtonlessProgramSelectorPresenter(
             viewModel.selected.set(!viewModel.selected.get())
             save()
             if (viewModel.selected.get()) {
-                reporter.reportEvent(Reporter.Event.ADD_BACKGROUND_PROGRAM)
+                reporter.reportEvent(Reporter.Event.ADD_BACKGROUND_PROGRAM, Bundle().apply {
+                    putBoolean(Reporter.Parameter.CUSTOM.parameterName, viewModel.program.remoteId == null)
+                })
             }
         }
     }
