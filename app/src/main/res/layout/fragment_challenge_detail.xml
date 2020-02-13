@@ -1,167 +1,193 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
     <data>
-        <import type="com.revolution.robotics.core.domain.local.ChallengeType"/>
-        <variable name="viewModel"
-                  type="com.revolution.robotics.features.challenges.challengeDetail.ChallengeDetailViewModel"/>
-        <variable name="toolbarViewModel"
-                  type="com.revolution.robotics.features.challenges.challengeDetail.ChallengeDetailToolbarViewModel"/>
+
+        <import type="com.revolution.robotics.core.domain.local.ChallengeType" />
+
+        <variable
+            name="viewModel"
+            type="com.revolution.robotics.features.challenges.challengeDetail.ChallengeDetailViewModel" />
+
+        <variable
+            name="toolbarViewModel"
+            type="com.revolution.robotics.features.challenges.challengeDetail.ChallengeDetailToolbarViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/bg_glow">
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_glow">
 
         <com.github.chrisbanes.photoview.PhotoView
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:adjustViewBounds="true"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:paddingTop="@dimen/toolbar_height"
-                android:paddingBottom="@dimen/dimen_32dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                tools:src="@drawable/img_logo"
-                app:firebaseImageUrl="@{viewModel.zoomableImage}"
-                app:originalSize="@{true}"
-                app:visible="@{viewModel.type == ChallengeType.ZOOMABLE}"/>
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:adjustViewBounds="true"
+            android:paddingTop="@dimen/toolbar_height"
+            android:paddingBottom="@dimen/dimen_32dp"
+            app:firebaseImageUrl="@{viewModel.zoomableImage}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:originalSize="@{true}"
+            app:visible="@{viewModel.type == ChallengeType.ZOOMABLE}"
+            tools:src="@drawable/img_logo" />
 
         <com.revolution.robotics.views.toolbar.RoboticsToolbar
-                android:id="@+id/toolbar"
-                app:viewModel="@{toolbarViewModel}"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:background="@drawable/bg_glow"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/toolbar_height"/>
-
-        <com.revolution.robotics.features.challenges.challengeDetail.ChallengeDetailSlider
-                android:id="@+id/slider_challenge_detail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginBottom="16dp"/>
-
-        <TextView
-                android:id="@+id/txt_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/toolbar"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                android:fontFamily="@font/barlow_regular"
-                android:layout_marginStart="@dimen/dimen_64dp"
-                android:layout_marginEnd="@dimen/dimen_64dp"
-                android:gravity="center_horizontal"
-                android:layout_marginTop="@dimen/dimen_16dp"
-                app:formattedText="@{viewModel.title}"
-                app:visible="@{viewModel.type == ChallengeType.VERTICAL}"
-                tools:text="In this challenge, you’ll learn a simple way to use gears to make your wheels rotate faster."/>
-
-        <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:adjustViewBounds="true"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="@dimen/dimen_8dp"
-                android:layout_marginBottom="@dimen/dimen_8dp"
-                app:layout_constraintTop_toBottomOf="@id/txt_title"
-                app:layout_constraintBottom_toTopOf="@id/slider_challenge_detail"
-                tools:src="@drawable/img_logo"
-                app:firebaseImageUrl="@{viewModel.image}"
-                app:visible="@{viewModel.type == ChallengeType.VERTICAL}"/>
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/toolbar_height"
+            android:background="@drawable/bg_glow"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:viewModel="@{toolbarViewModel}" />
 
         <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline_center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.5" />
+            android:id="@+id/toolbar_body_bottom"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintGuide_begin="@dimen/toolbar_header_height"
+            android:orientation="horizontal"/>
 
         <TextView
-                android:id="@+id/txt_title_horizontal"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintTop_toTopOf="@id/img_horizontal"
-                app:layout_constraintBottom_toTopOf="@id/slider_challenge_detail"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/img_horizontal"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                android:fontFamily="@font/barlow_regular"
-                android:layout_marginStart="@dimen/dimen_24dp"
-                android:layout_marginEnd="@dimen/dimen_16dp"
-                android:layout_marginTop="@dimen/dimen_8dp"
-                app:formattedText="@{viewModel.title}"
-                app:visible="@{viewModel.type == ChallengeType.HORIZONTAL}"
-                tools:text="In this challenge, you’ll learn a simple way to use gears to make your wheels rotate faster."/>
+            android:id="@+id/steps"
+            android:layout_width="@dimen/build_robot_parts_wrapper_width"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dimen_48dp"
+            android:gravity="center"
+            android:text="@{viewModel.step}"
+            android:textColor="@color/white"
+            android:textSize="17sp"
+            app:layout_constraintBottom_toTopOf="@id/toolbar_body_bottom"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/toolbar" />
+
+        <com.revolution.robotics.features.challenges.challengeDetail.ChallengeDetailSlider
+            android:id="@+id/slider_challenge_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <TextView
+            android:id="@+id/txt_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_64dp"
+            android:layout_marginTop="@dimen/dimen_16dp"
+            android:layout_marginEnd="@dimen/dimen_64dp"
+            android:fontFamily="@font/barlow_regular"
+            android:gravity="center_horizontal"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:formattedText="@{viewModel.title}"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:visible="@{viewModel.type == ChallengeType.VERTICAL}"
+            tools:text="In this challenge, you’ll learn a simple way to use gears to make your wheels rotate faster." />
 
         <ImageView
-                android:id="@+id/img_horizontal"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:adjustViewBounds="true"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintDimensionRatio="1:1"
-                android:layout_marginBottom="@dimen/dimen_8dp"
-                android:scaleType="fitCenter"
-                android:layout_marginEnd="@dimen/dimen_40dp"
-                app:layout_constraintTop_toBottomOf="@id/toolbar"
-                app:layout_constraintBottom_toTopOf="@id/slider_challenge_detail"
-                tools:src="@drawable/img_logo"
-                app:firebaseImageUrl="@{viewModel.image}"
-                app:visible="@{viewModel.type == ChallengeType.HORIZONTAL}"/>
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/dimen_8dp"
+            android:layout_marginBottom="@dimen/dimen_8dp"
+            android:adjustViewBounds="true"
+            app:firebaseImageUrl="@{viewModel.image}"
+            app:layout_constraintBottom_toTopOf="@id/slider_challenge_detail"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txt_title"
+            app:visible="@{viewModel.type == ChallengeType.VERTICAL}"
+            tools:src="@drawable/img_logo" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
 
         <TextView
-                android:id="@+id/txt_title_button"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                app:layout_constraintTop_toBottomOf="@id/toolbar"
-                app:layout_constraintBottom_toTopOf="@id/button"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                android:fontFamily="@font/barlow_regular"
-                android:layout_marginStart="@dimen/dimen_64dp"
-                android:layout_marginEnd="@dimen/dimen_64dp"
-                android:layout_marginTop="@dimen/dimen_16dp"
-                app:formattedText="@{viewModel.title}"
-                app:visible="@{viewModel.type == ChallengeType.BUTTON}"
-                tools:text="In this challenge, you’ll learn a simple way to use gears to make your wheels rotate faster."/>
+            android:id="@+id/txt_title_horizontal"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/dimen_24dp"
+            android:layout_marginTop="@dimen/dimen_8dp"
+            android:layout_marginEnd="@dimen/dimen_16dp"
+            android:fontFamily="@font/barlow_regular"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:formattedText="@{viewModel.title}"
+            app:layout_constraintBottom_toTopOf="@id/slider_challenge_detail"
+            app:layout_constraintEnd_toStartOf="@id/img_horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/img_horizontal"
+            app:visible="@{viewModel.type == ChallengeType.HORIZONTAL}"
+            tools:text="In this challenge, you’ll learn a simple way to use gears to make your wheels rotate faster." />
+
+        <ImageView
+            android:id="@+id/img_horizontal"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="@dimen/dimen_40dp"
+            android:layout_marginBottom="@dimen/dimen_8dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            app:firebaseImageUrl="@{viewModel.image}"
+            app:layout_constraintBottom_toTopOf="@id/slider_challenge_detail"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:visible="@{viewModel.type == ChallengeType.HORIZONTAL}"
+            tools:src="@drawable/img_logo" />
+
+        <TextView
+            android:id="@+id/txt_title_button"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/dimen_64dp"
+            android:layout_marginTop="@dimen/dimen_16dp"
+            android:layout_marginEnd="@dimen/dimen_64dp"
+            android:fontFamily="@font/barlow_regular"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:formattedText="@{viewModel.title}"
+            app:layout_constraintBottom_toTopOf="@id/button"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:visible="@{viewModel.type == ChallengeType.BUTTON}"
+            tools:text="In this challenge, you’ll learn a simple way to use gears to make your wheels rotate faster." />
 
         <com.revolution.robotics.views.RoboticsButton
-                android:id="@+id/button"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/robotics_button_height"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="@dimen/dimen_8dp"
-                android:layout_marginBottom="@dimen/dimen_32dp"
-                android:paddingRight="20dp"
-                android:onClick="@{()->viewModel.onButtonCLicked()}"
-                app:layout_constraintBottom_toTopOf="@id/slider_challenge_detail"
-                app:formattedText="@{viewModel.buttonText}"
-                app:visible="@{viewModel.type == ChallengeType.BUTTON}"/>
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/robotics_button_height"
+            android:layout_marginTop="@dimen/dimen_8dp"
+            android:layout_marginBottom="@dimen/dimen_32dp"
+            android:onClick="@{()->viewModel.onButtonCLicked()}"
+            android:paddingRight="20dp"
+            app:formattedText="@{viewModel.buttonText}"
+            app:layout_constraintBottom_toTopOf="@id/slider_challenge_detail"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:visible="@{viewModel.type == ChallengeType.BUTTON}" />
 
         <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_parts"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                app:visible="@{viewModel.type == ChallengeType.PART_LIST}"
-                android:paddingStart="@dimen/dimen_8dp"
-                android:paddingEnd="@dimen/dimen_8dp"
-                android:paddingTop="@dimen/dimen_8dp"
-                android:paddingBottom="@dimen/dimen_20dp"
-                android:clipToPadding="false"
-                app:challengeParts="@{viewModel.parts}"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/toolbar"
-                app:layout_constraintBottom_toTopOf="@id/slider_challenge_detail"/>
+            android:id="@+id/recycler_parts"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:clipToPadding="false"
+            android:paddingStart="@dimen/dimen_8dp"
+            android:paddingTop="@dimen/dimen_8dp"
+            android:paddingEnd="@dimen/dimen_8dp"
+            android:paddingBottom="@dimen/dimen_20dp"
+            app:challengeParts="@{viewModel.parts}"
+            app:layout_constraintBottom_toTopOf="@id/slider_challenge_detail"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:visible="@{viewModel.type == ChallengeType.PART_LIST}" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

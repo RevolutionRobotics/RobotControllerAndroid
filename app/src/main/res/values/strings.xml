@@ -139,6 +139,8 @@
     <string name="configure_play_button_text">Play</string>
 
     <!-- Configuration -->
+    <string name="configure_background_programs">Background programs</string>
+    <string name="configure_program_priorities">Program priorities</string>
     <string name="configure_change_controller_type">Change controller type</string>
     <string name="configure_delete">Delete</string>
     <string name="configure_duplicate">Duplicate</string>

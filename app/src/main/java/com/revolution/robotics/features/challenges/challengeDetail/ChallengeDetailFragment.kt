@@ -15,6 +15,7 @@ import com.revolution.robotics.core.extensions.integer
 import com.revolution.robotics.core.extensions.withArguments
 import com.revolution.robotics.core.utils.BundleArgumentDelegate
 import com.revolution.robotics.databinding.FragmentChallengeDetailBinding
+import com.revolution.robotics.features.challenges.challengeDetail.ChallengeDetailFragment.Companion.challenge
 import com.revolution.robotics.features.challenges.challengeDetail.adapter.ChallengePartAdapter
 import com.revolution.robotics.features.challenges.challengeList.ChallengeListFragment
 import com.revolution.robotics.features.community.CommunityFragment
@@ -41,6 +42,7 @@ class ChallengeDetailFragment :
     private val presenter: ChallengeDetailMvp.Presenter by kodein.instance()
     private val errorHandler: ErrorHandler by kodein.instance()
     private val adapter = ChallengePartAdapter()
+    private var challengeId: String? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -55,8 +57,11 @@ class ChallengeDetailFragment :
         }
 
         arguments?.let {
+            challengeId = it.challenge.id
             presenter.setChallenge(it.challenge, it.categoryId)
-            reporter.reportEvent(Reporter.Event.START_NEW_CHALLENGE)
+            reporter.reportEvent(Reporter.Event.START_NEW_CHALLENGE, Bundle().apply {
+                putString(Reporter.Parameter.ID.parameterName, it.challenge.id)
+            })
         }
     }
 
@@ -66,7 +71,9 @@ class ChallengeDetailFragment :
     }
 
     override fun showChallengeFinishedDialog(nextChallenge: Challenge?) {
-        reporter.reportEvent(Reporter.Event.FINISH_CHALLENGE)
+        reporter.reportEvent(Reporter.Event.FINISH_CHALLENGE, Bundle().apply {
+            putString(Reporter.Parameter.ID.parameterName, challengeId)
+        })
         if (nextChallenge == null) {
             ChallengeDetailFinishedDialog.Latest.newInstance().show(fragmentManager)
         } else {

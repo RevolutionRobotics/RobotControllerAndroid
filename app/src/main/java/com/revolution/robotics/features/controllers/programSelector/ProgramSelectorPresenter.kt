@@ -1,5 +1,6 @@
 package com.revolution.robotics.features.controllers.programSelector
 
+import android.os.Bundle
 import com.revolution.robotics.R
 import com.revolution.robotics.analytics.Reporter
 import com.revolution.robotics.core.domain.local.UserProgram
@@ -144,7 +145,9 @@ class ProgramSelectorPresenter(
         assignProgramToButtonInteractor.button = controllerButton
         assignProgramToButtonInteractor.execute {
 
-            reporter.reportEvent(Reporter.Event.ASSIGN_PROGRAM_TO_BUTTON)
+            reporter.reportEvent(Reporter.Event.ASSIGN_PROGRAM_TO_BUTTON, Bundle().apply {
+                putBoolean(Reporter.Parameter.CUSTOM.parameterName, userProgram.remoteId == null)
+            })
             navigator.back()
         }
     }

@@ -1,5 +1,6 @@
 package com.revolution.robotics.features.configure.motor
 
+import android.os.Bundle
 import com.revolution.robotics.R
 import com.revolution.robotics.analytics.Reporter
 import com.revolution.robotics.core.domain.remote.Motor
@@ -185,11 +186,23 @@ class MotorConfigurationPresenter(
                     when {
                         model?.driveTrainButton?.isSelected?.get() == true -> {
                             setDrivetrainValues(this)
-                            reporter.reportEvent(Reporter.Event.ADD_MOTOR)
+                            reporter.reportEvent(Reporter.Event.ADD_MOTOR,
+                                Bundle().apply {
+                                    putString(Reporter.Parameter.TYPE.parameterName, "drive")
+                                    putBoolean(
+                                        Reporter.Parameter.REVERSED.parameterName,
+                                        model?.reversed?.get() ?: false
+                                    )
+                                }
+                            )
                         }
                         model?.motorButton?.isSelected?.get() == true -> {
                             setMotorValues(this)
-                            reporter.reportEvent(Reporter.Event.ADD_MOTOR)
+                            reporter.reportEvent(Reporter.Event.ADD_MOTOR,
+                                Bundle().apply {
+                                    putString(Reporter.Parameter.TYPE.parameterName, "motor")
+                                }
+                            )
                         }
                         else -> {
                             setEmptyValues(this)

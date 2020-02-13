@@ -39,7 +39,9 @@ class TurnOnTheBrainDialog : RoboticsDialog(), DialogController {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        reporter.reportEvent(Reporter.Event.OPEN_BT_CONNECT_DIALOG)
+        reporter.reportEvent(Reporter.Event.OPEN_BT_CONNECT_DIALOG, Bundle().apply {
+            putString(Reporter.Parameter.SCREEN.parameterName, reporter.lastOpenedScreen?.screenName)
+        })
     }
     override fun navigateToCommunity() {
         requireActivity().openUrl(CommunityFragment.COMMUNITY_FORUMS_URL, errorHandler)

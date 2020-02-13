@@ -53,7 +53,7 @@ fun createViewModelModule() =
         bind<ProgramPriorityViewModel>() with p { ProgramPriorityViewModel() }
         bind<ButtonlessProgramSelectorViewModel>() with p { ButtonlessProgramSelectorViewModel(i()) }
         bind<ChallengeListViewModel>() with p { ChallengeListViewModel() }
-        bind<ChallengeDetailViewModel>() with p { ChallengeDetailViewModel() }
+        bind<ChallengeDetailViewModel>() with p { ChallengeDetailViewModel(i()) }
         bind<ProgramsViewModel>() with p { ProgramsViewModel(i()) }
         bind<RobotSelectorViewModel>() with p { RobotSelectorViewModel(i()) }
         bind<CommunityViewModel>() with p { CommunityViewModel(i()) }
