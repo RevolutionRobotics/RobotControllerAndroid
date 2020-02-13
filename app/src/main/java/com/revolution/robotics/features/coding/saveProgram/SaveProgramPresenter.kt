@@ -24,7 +24,7 @@ class SaveProgramPresenter(
         getUserProgramInteractor.name = userProgram.name
         getUserProgramInteractor.robotId = userProgram.robotId
         getUserProgramInteractor.execute { program ->
-            if (program == null || defaultProgram?.name == program.name && program.remoteId == null) {
+            if (program == null || defaultProgram?.name == program.name) {
                 view?.saveProgram(userProgram)
             } else {
                 view?.showError(resourceResolver.string(R.string.error_program_already_in_use) ?: "")
