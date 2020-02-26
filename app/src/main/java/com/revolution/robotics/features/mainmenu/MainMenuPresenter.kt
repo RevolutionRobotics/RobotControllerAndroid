@@ -15,8 +15,8 @@ class MainMenuPresenter(
     override var model: MainMenuViewModel? = null
 
     override fun handleOnboarding() {
-        if (!appPrefs.userTypeSelected) {
-            navigator.navigate(MainMenuFragmentDirections.toUserTypeSelection())
+        if (!appPrefs.yearOfBirthSelected) {
+            navigator.navigate(MainMenuFragmentDirections.toYearOfBirthSelection())
         } else if (!appPrefs.finishedOnboarding) {
             if (!appPrefs.onboardingRobotBuild) {
                 navigator.navigate(MainMenuFragmentDirections.toHaveYouBuiltCarby())

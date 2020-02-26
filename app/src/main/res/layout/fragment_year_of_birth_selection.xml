@@ -4,7 +4,7 @@
 
     <data>
         <variable name="viewModel"
-                  type="com.revolution.robotics.features.onboarding.userTypeSelection.age.YearOfBirthSelectionViewModel"/>
+                  type="com.revolution.robotics.features.onboarding.yearOfBirth.YearOfBirthSelectionViewModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -44,5 +44,17 @@
                     android:selectedItemPosition="@={viewModel.selectedPosition}"/>
 
         </com.revolution.robotics.views.ChippedView>
+
+        <com.revolution.robotics.views.RoboticsButton
+            android:layout_width="@dimen/robotics_button_width"
+            android:layout_height="@dimen/robotics_button_height"
+            android:layout_margin="@dimen/dimen_16dp"
+            android:onClick="@{()->viewModel.onNextClicked()}"
+            app:image="@{@drawable/ic_check}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:text="@{@string/onboarding_save}" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

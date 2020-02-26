@@ -71,6 +71,7 @@ class Reporter(private val firebaseAnalytics: FirebaseAnalytics) {
     enum class Screen(val screenName: String) {
         MAIN_MENU("Main menu"),
         USER_TYPE_SELECTION("User type selection"),
+        YEAR_OF_BIRTH_SELECTION("Year of birth selection"),
         HAVE_YOU_BUILT("Have you built"),
         MY_ROBOTS("My robots"),
         CREATE_NEW_ROBOT("Create new robot"),

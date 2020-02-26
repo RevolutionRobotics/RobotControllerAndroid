@@ -18,12 +18,13 @@
                 app:destination="@id/myRobotsFragment"/>
         <action android:id="@+id/toSettings"
                 app:destination="@id/settingFragment"/>
-        <action android:id="@+id/toUserTypeSelection"
-                app:destination="@id/userTypeSelectionFragment"/>
         <action android:id="@+id/toHaveYouBuiltCarby"
                 app:destination="@id/haveYouBuiltCarbyFragment"/>
         <action android:id="@+id/toChallangeList"
                 app:destination="@id/challengeListFragment"/>
+        <action
+            android:id="@+id/toYearOfBirthSelection"
+            app:destination="@id/yearOfBirthSelectionFragment" />
     </fragment>
 
     <!-- My robots -->
@@ -161,9 +162,6 @@
     <fragment android:id="@+id/communityFragment"
               android:name="com.revolution.robotics.features.community.CommunityFragment"
               android:label="CommunityFragment"/>
-    <fragment android:id="@+id/userTypeSelectionFragment"
-              android:name="com.revolution.robotics.features.onboarding.userTypeSelection.UserTypeSelectionFragment"
-              android:label="UserTypeSelectionFragment"/>
     <fragment android:id="@+id/haveYouBuiltCarbyFragment"
               android:name="com.revolution.robotics.features.onboarding.haveyoubuilt.HaveYouBuiltFragment"
               android:label="HaveYouBuiltCarbyFragment">
@@ -184,4 +182,8 @@
     <action
             android:id="@+id/toFirmware"
             app:destination="@id/firmwareFragment" />
+    <fragment
+        android:id="@+id/yearOfBirthSelectionFragment"
+        android:name="com.revolution.robotics.features.onboarding.yearOfBirth.YearOfBirthSelectionFragment"
+        android:label="YearOfBirthSelectionFragment" />
 </navigation>
