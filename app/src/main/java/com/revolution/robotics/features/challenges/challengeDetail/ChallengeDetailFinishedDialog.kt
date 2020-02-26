@@ -1,7 +1,9 @@
 package com.revolution.robotics.features.challenges.challengeDetail
 
 import android.os.Bundle
+import android.view.View
 import com.revolution.robotics.R
+import com.revolution.robotics.blockly.utils.SoundHelper
 import com.revolution.robotics.core.domain.remote.Challenge
 import com.revolution.robotics.core.extensions.withArguments
 import com.revolution.robotics.core.utils.BundleArgumentDelegate
@@ -29,6 +31,7 @@ sealed class ChallengeDetailFinishedDialog(hasNextButton: Boolean) : RoboticsDia
             navigator.popUntil(R.id.challengeListFragment)
         }
     )
+    private val soundHelper = SoundHelper()
 
     init {
         if (hasNextButton) {
@@ -49,6 +52,11 @@ sealed class ChallengeDetailFinishedDialog(hasNextButton: Boolean) : RoboticsDia
                     }
                 })
         }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        soundHelper.playSound("sounds/ta_da.mp3", requireContext())
     }
 
     class ChallengeDetailFinishedDialogFace(roboticsDialog: RoboticsDialog) :
