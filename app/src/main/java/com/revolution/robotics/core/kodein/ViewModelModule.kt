@@ -24,7 +24,7 @@ import com.revolution.robotics.features.mainmenu.settings.about.AboutViewModel
 import com.revolution.robotics.features.mainmenu.settings.firmware.FirmwareUpdateViewModel
 import com.revolution.robotics.features.myRobots.MyRobotsViewModel
 import com.revolution.robotics.features.onboarding.haveyoubuilt.HaveYouBuiltViewModel
-import com.revolution.robotics.features.onboarding.userTypeSelection.UserTypeSelectionViewModel
+import com.revolution.robotics.features.onboarding.yearOfBirth.YearOfBirthSelectionViewModel
 import com.revolution.robotics.features.play.PlayViewModel
 import com.revolution.robotics.features.whoToBuild.WhoToBuildViewModel
 import org.kodein.di.Kodein
@@ -57,6 +57,6 @@ fun createViewModelModule() =
         bind<ProgramsViewModel>() with p { ProgramsViewModel(i()) }
         bind<RobotSelectorViewModel>() with p { RobotSelectorViewModel(i()) }
         bind<CommunityViewModel>() with p { CommunityViewModel(i()) }
-        bind<UserTypeSelectionViewModel>() with p { UserTypeSelectionViewModel(i()) }
+        bind<YearOfBirthSelectionViewModel>() with p { YearOfBirthSelectionViewModel() }
         bind<HaveYouBuiltViewModel>() with p { HaveYouBuiltViewModel(i()) }
     }

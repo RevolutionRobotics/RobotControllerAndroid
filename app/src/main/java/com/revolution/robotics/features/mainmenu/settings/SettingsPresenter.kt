@@ -15,7 +15,7 @@ class SettingsPresenter(
 
     override fun navigateToResetTutorial() {
         reporter.reportEvent(Reporter.Event.RESET_TUTORIAL)
-        appPrefs.userTypeSelected = false
+        appPrefs.yearOfBirthSelected = false
         appPrefs.onboardingRobotBuild = false
         appPrefs.onboardingRobotDriven = false
         appPrefs.finishedOnboarding = false

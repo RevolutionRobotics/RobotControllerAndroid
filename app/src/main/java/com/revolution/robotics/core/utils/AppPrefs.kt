@@ -13,7 +13,7 @@ open class AppPrefs constructor(context: Context) {
 
     private val preferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
 
-    open var userTypeSelected by PreferenceFieldDelegate.Boolean(preferences, "user_type", false)
+    open var yearOfBirthSelected by PreferenceFieldDelegate.Boolean(preferences, "year_of_birth_selected", false)
     open var onboardingRobotBuild by PreferenceFieldDelegate.Boolean(preferences, "carby_built", false)
     open var onboardingRobotDriven by PreferenceFieldDelegate.Boolean(preferences, "carby_driven", false)
     open var finishedOnboarding by PreferenceFieldDelegate.Boolean(preferences, "finished_onboarding", false)
