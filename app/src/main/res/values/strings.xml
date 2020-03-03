@@ -81,6 +81,8 @@
     <!-- Delete robot -->
     <string name="delete_robot_description">Are you sure you want to delete this robot?</string>
     <string name="delete_robot_confirm">Delete</string>
+    <string name="cannot_delete_robot_title">Cannot delete robot</string>
+    <string name="cannot_delete_robot_description">You must have at least one robot left</string>
     <string name="info_robot_delete">Delete</string>
     <string name="info_robot_duplicate">Duplicate</string>
     <string name="info_robot_edit">Edit</string>
