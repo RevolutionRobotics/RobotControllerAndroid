@@ -25,11 +25,10 @@ class FirmwareUpdatePresenter(
 
     override fun onBluetoothConnectionStateChanged(
         connected: Boolean,
-        serviceDiscovered: Boolean,
         firmwareCompatible: Boolean
     ) {
-        model?.hasConnectedRobot?.value = connected && serviceDiscovered
-        if (connected && serviceDiscovered) {
+        model?.hasConnectedRobot?.value = connected
+        if (connected) {
             bluetoothManager.getDeviceInfoService().getSystemId(
                 onCompleted = {
                     model?.robotName?.value = it

@@ -55,7 +55,7 @@ abstract class TestDialog : RoboticsDialog(), DialogController, TestMvp.View {
     }
 
     override fun onRetryClicked() {
-        if (bluetoothManager.isServiceDiscovered) {
+        if (bluetoothManager.isConnected) {
             presenter.uploadTest(testFileName, generateReplaceablePairs())
             activateFace(dialogFaces.first())
         } else {

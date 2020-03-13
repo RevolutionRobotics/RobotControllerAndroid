@@ -54,7 +54,7 @@ class PlayFragment :
         }
 
         bluetoothManager.registerListener(this)
-        if (!bluetoothManager.isServiceDiscovered) {
+        if (!bluetoothManager.isConnected) {
             bluetoothManager.startConnectionFlow()
         }
         viewModel?.onboaringFinished?.value = appPrefs.finishedOnboarding
@@ -138,10 +138,9 @@ class PlayFragment :
 
     override fun onBluetoothConnectionStateChanged(
         connected: Boolean,
-        serviceDiscovered: Boolean,
         firmwareCompatible: Boolean
     ) {
-        if (connected && serviceDiscovered && firmwareCompatible) {
+        if (connected && firmwareCompatible) {
             uploadConfiguration()
         } else if (!connected) {
             presenter.onDeviceDisconnected()

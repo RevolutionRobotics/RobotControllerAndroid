@@ -25,7 +25,7 @@ class BluetoothStatusImageView @JvmOverloads constructor(
         super.onAttachedToWindow()
         bluetoothManager.registerListener(this)
         setOnClickListener {
-            if (bluetoothManager.isServiceDiscovered) {
+            if (bluetoothManager.isConnected) {
                 (context as? FragmentActivity)?.supportFragmentManager?.let {
                     BluetoothDisconnectDialog.newInstance().show(it)
                 }
@@ -42,9 +42,8 @@ class BluetoothStatusImageView @JvmOverloads constructor(
 
     override fun onBluetoothConnectionStateChanged(
         connected: Boolean,
-        serviceDiscovered: Boolean,
         firmwareCompatible: Boolean
     ) {
-        setTintColor(this, if (serviceDiscovered) R.color.bluetooth_blue else R.color.white)
+        setTintColor(this, if (connected) R.color.bluetooth_blue else R.color.white)
     }
 }

@@ -69,7 +69,7 @@ class TestBuildDialog : RoboticsDialog(), DialogController, TestBuildDialogMvp.V
     }
 
     override fun onRetryClicked() {
-        if (bluetoothManager.isServiceDiscovered) {
+        if (bluetoothManager.isConnected) {
             activateFace(dialogFaces.first { it is TestLoadingDialogFace })
             arguments?.let { presenter.sendTestCode(it.code) }
         } else {

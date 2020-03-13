@@ -35,7 +35,6 @@ fun createMainModule() =
         bind<DialogEventBus>() with s { DialogEventBus() }
         bind<ConfigurationEventBus>() with s { ConfigurationEventBus() }
         bind<BluetoothManager>() with s { BluetoothManager(kodein) }
-        bind<RoboticsDeviceConnector>() with s { RoboticsDeviceConnector() }
         bind<CompatibleProgramFilterer>() with p { CompatibleProgramFilterer() }
         bind<CreateRobotInstanceHelper>() with p { CreateRobotInstanceHelper(i(), i(), i(), i(), i(), i(), i()) }
         bind<Retrofit>() with s {
@@ -53,6 +52,7 @@ fun createMainModule() =
 
 fun createAppModule(context: Context) =
     Kodein.Module("AppModule") {
+        bind<RoboticsDeviceConnector>() with s { RoboticsDeviceConnector(context) }
         bind<ResourceResolver>() with s { ResourceResolver(context) }
         bind<ApplicationContextProvider>() with s { ApplicationContextProvider(context) }
         bind<AppPrefs>() with s { AppPrefs(context) }

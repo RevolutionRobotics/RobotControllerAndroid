@@ -42,14 +42,10 @@ class ConnectPresenter(
             bleDeviceDiscoverer.stopDiscovering()
             isConnectionInProgress = true
             robot.setSelected(true)
-            bleHandler.connect(applicationContextProvider.applicationContext, robot.device,
+            bleHandler.connect(robot.device,
                 onConnected = {
                     reporter.setUserProperty(Reporter.UserProperty.ROBOT_ID, robot.name)
                     view?.onConnectionSuccess()
-                    isConnectionInProgress = false
-                },
-                onDisconnected = {
-                    robot.setSelected(false)
                     isConnectionInProgress = false
                 },
                 onError = {
