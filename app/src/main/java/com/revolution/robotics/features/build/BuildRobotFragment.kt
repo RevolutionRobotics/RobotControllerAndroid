@@ -93,7 +93,7 @@ class BuildRobotFragment :
     override fun onDialogEvent(event: DialogEvent) {
         when (event) {
             DialogEvent.CHAPTER_FINISHED ->
-                if (bluetoothManager.isServiceDiscovered) {
+                if (bluetoothManager.isConnected) {
                     event.extras.getParcelable<Milestone>(ChapterFinishedDialog.KEY_MILESTONE)
                         ?.let { milestone ->
                             TestBuildDialog.newInstance(

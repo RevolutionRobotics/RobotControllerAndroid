@@ -156,7 +156,7 @@ class CodingPresenter(
     }
 
     override fun play() {
-        if (bluetoothManager.isServiceDiscovered) {
+        if (bluetoothManager.isConnected) {
             showTestDialog()
         } else {
             showTestDialogAfterConnection = true
@@ -275,10 +275,9 @@ class CodingPresenter(
 
     override fun onBluetoothConnectionStateChanged(
         connected: Boolean,
-        serviceDiscovered: Boolean,
         firmwareCompatible: Boolean
     ) {
-        if (showTestDialogAfterConnection && connected && serviceDiscovered && firmwareCompatible) {
+        if (showTestDialogAfterConnection && connected && firmwareCompatible) {
             showTestDialog()
         }
     }

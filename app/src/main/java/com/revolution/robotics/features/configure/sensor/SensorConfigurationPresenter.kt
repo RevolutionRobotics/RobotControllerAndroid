@@ -171,7 +171,7 @@ class SensorConfigurationPresenter(
     }
 
     override fun onTestButtonClicked() {
-        if (bluetoothManager.isServiceDiscovered) {
+        if (bluetoothManager.isConnected) {
             getUserRobotInteractor.robotId = robotId
             getUserRobotInteractor.execute { userRobot ->
                 if (model?.bumperButton?.isSelected?.get() == true) {
