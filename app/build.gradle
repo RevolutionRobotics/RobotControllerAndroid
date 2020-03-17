@@ -102,7 +102,7 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
     implementation 'org.revolutionrobotics:blockly-android:0.5.12'
-    implementation 'org.revolutionrobotics:bluetooth-android:1.0.0'
+    implementation 'org.revolutionrobotics:bluetooth-android:1.0.1'
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines"
