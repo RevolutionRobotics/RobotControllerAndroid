@@ -1,10 +1,12 @@
 package com.revolution.robotics.core.interactor.firebase
 
 import android.net.Uri
-import com.google.firebase.storage.FirebaseStorage
 import com.revolution.robotics.core.kodein.utils.ApplicationContextProvider
 import com.revolution.robotics.features.shared.ErrorHandler
 import java.io.File
+import java.io.FileOutputStream
+import java.lang.Exception
+import java.net.URL
 
 class FirebaseFileDownloader(
     private val applicationContextProvider: ApplicationContextProvider,
@@ -24,20 +26,23 @@ class FirebaseFileDownloader(
 
     fun downloadFirestoreFile(
         outputFileName: String,
-        gsUrl: String,
+        url: String,
         onResponse: (uri: Uri) -> Unit,
         onError: ((throwable: Throwable) -> Unit)?
     ) {
         this.onResponse = onResponse
         this.onError = onError
 
-        val reference =
-            FirebaseStorage.getInstance().getReferenceFromUrl(gsUrl)
         val outputFile = File("${applicationContextProvider.applicationContext.filesDir}/$outputFileName")
-        reference.getFile(outputFile).addOnSuccessListener {
-            this.onResponse?.invoke(Uri.fromFile(outputFile))
-        }.addOnFailureListener {
-            this.onError?.invoke(it) ?: errorHandler.onError(it)
+        try {
+            URL(url).openStream().use { input ->
+                FileOutputStream(outputFile).use { output ->
+                    input.copyTo(output)
+                    this.onResponse?.invoke(Uri.fromFile(outputFile))
+                }
+            }
+        } catch (exception: Exception) {
+            this.onError?.invoke(exception) ?: errorHandler.onError(exception)
         }
     }
 }

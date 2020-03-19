@@ -36,7 +36,7 @@ fun createMainModule() =
         bind<ConfigurationEventBus>() with s { ConfigurationEventBus() }
         bind<BluetoothManager>() with s { BluetoothManager(kodein) }
         bind<CompatibleProgramFilterer>() with p { CompatibleProgramFilterer() }
-        bind<CreateRobotInstanceHelper>() with p { CreateRobotInstanceHelper(i(), i(), i(), i(), i(), i(), i()) }
+        bind<CreateRobotInstanceHelper>() with p { CreateRobotInstanceHelper(i(), i(), i(), i()) }
         bind<Retrofit>() with s {
             Retrofit.Builder()
                 .client(OkHttpClient().newBuilder().build())

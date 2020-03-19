@@ -10,5 +10,5 @@ class RobotInteractor(
 
     lateinit var robotId: String
 
-    override fun getData(): Robot? = remoteDataCache.data.robot.values.firstOrNull { it.id == robotId }
+    override fun getData(): Robot? = remoteDataCache.robots.firstOrNull { it.id == robotId }
 }

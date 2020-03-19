@@ -88,7 +88,7 @@
                     app:layout_constraintTop_toTopOf="@id/content_top"
                     app:layout_constraintBottom_toBottomOf="@id/content_bottom"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:firebaseImageUrl="@{viewModel.iconUrl}"
+                    app:imageUrl="@{viewModel.iconUrl}"
                     android:layout_marginStart="@dimen/dimen_16dp"/>
 
             <TextView

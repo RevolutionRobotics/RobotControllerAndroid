@@ -44,7 +44,7 @@ class HaveYouBuiltPresenter(
         createRobot { userRobot ->
             userRobot.buildStatus = BuildStatus.COMPLETED
             createRobotInstanceHelper.setupConfigFromFirebase(userRobot,
-                onSuccess = { savedRobot, _, _ ->
+                onSuccess = { savedRobot ->
                     appPrefs.onboardingRobotBuild = true
                     appPrefs.onboardingRobotDriven = true
                     navigator.navigate(MyRobotsFragmentDirections.toPlay(savedRobot.id))
