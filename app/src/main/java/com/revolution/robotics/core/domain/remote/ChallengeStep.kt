@@ -7,10 +7,9 @@ import kotlinx.android.parcel.Parcelize
 data class ChallengeStep(
     var id: String? = null,
     var title: LocalizedString? = null,
-    var description: LocalizedString? = null,
+    var text: LocalizedString? = null,
     var image: String? = null,
-    var order: Int = 0,
-    var challengeType: String? = null,
+    var type: String? = null,
     var buttonText: LocalizedString? = null,
     var buttonUrl: String? = null,
     var parts: HashMap<String, Part> = hashMapOf()

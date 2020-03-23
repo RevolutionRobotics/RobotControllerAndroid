@@ -8,5 +8,5 @@ data class Challenge(
     var id: String? = null,
     var name: LocalizedString? = null,
     var order: Int = 0,
-    var challengeSteps: HashMap<String, ChallengeStep> = hashMapOf()
+    var steps: List<ChallengeStep> = emptyList()
 ) : Parcelable

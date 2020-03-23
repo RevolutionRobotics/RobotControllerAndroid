@@ -29,7 +29,7 @@ class ChallengeListPresenter(
                     model?.description?.value = challengeCategory.description
                     val progress = userCategories.find { it.challengeCategoryId == challengeCategory.id }?.progress ?: 0
                     model?.items?.value =
-                        challengeCategory.challenges.toList().map { it.second }.sortedBy { it.order }
+                        challengeCategory.challenges.sortedBy { it.order }
                             .mapIndexed { index, challenge ->
                                 ChallengeListItem(
                                     name = challenge.name,
