@@ -103,7 +103,6 @@ fun createInteractorModule() =
         bind<GetAllUserRobotsInteractor>() with p { GetAllUserRobotsInteractor(i()) }
         bind<DeleteRobotInteractor>() with p { DeleteRobotInteractor(i()) }
         bind<GetUserConfigForRobotInteractor>() with p { GetUserConfigForRobotInteractor(i()) }
-        bind<ProgramInteractor>() with p { ProgramInteractor(i()) }
         bind<ChallengeCategoriesInteractor>() with p { ChallengeCategoriesInteractor(i()) }
         bind<GetUserControllerForUserRobotInteractor>() with p { GetUserControllerForUserRobotInteractor(i()) }
         bind<GetUserControllerInteractor>() with p { GetUserControllerInteractor(i(), i(), i()) }
