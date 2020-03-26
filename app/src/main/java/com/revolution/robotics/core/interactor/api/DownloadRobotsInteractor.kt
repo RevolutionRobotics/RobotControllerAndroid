@@ -4,8 +4,6 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.revolution.robotics.core.api.RoboticsService
 import com.revolution.robotics.core.cache.RemoteDataCache
-import com.revolution.robotics.core.domain.remote.ChallengeCategory
-import com.revolution.robotics.core.domain.remote.FirebaseData
 import com.revolution.robotics.core.domain.remote.Robot
 import com.revolution.robotics.core.interactor.Interactor
 import com.revolution.robotics.core.utils.FileManager

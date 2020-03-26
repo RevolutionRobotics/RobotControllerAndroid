@@ -40,7 +40,7 @@ fun createMainModule() =
         bind<Retrofit>() with s {
             Retrofit.Builder()
                 .client(OkHttpClient().newBuilder().build())
-                .baseUrl(BuildConfig.DATABASE_JSON_URL)
+                .baseUrl(BuildConfig.BASE_URL)
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .build()
         }

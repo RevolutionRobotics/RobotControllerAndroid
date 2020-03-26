@@ -20,7 +20,7 @@ import com.revolution.robotics.core.domain.local.*
 import com.revolution.robotics.core.interactor.*
 import com.revolution.robotics.core.interactor.api.DownloadChallengesInteractor
 import com.revolution.robotics.core.interactor.api.DownloadRobotsInteractor
-import com.revolution.robotics.core.interactor.api.RefreshDataCacheInteractor
+import com.revolution.robotics.core.interactor.api.GetFirmwareInteractor
 import com.revolution.robotics.core.interactor.firebase.*
 import com.revolution.robotics.features.build.BuildRobotMvp
 import com.revolution.robotics.features.build.BuildRobotPresenter
@@ -122,11 +122,10 @@ fun createInteractorModule() =
         bind<LocalFileSaver>() with p { LocalFileSaver() }
         bind<GetFullConfigurationInteractor>() with p { GetFullConfigurationInteractor(i(), i(), i(), i()) }
         bind<GetUserProgramInteractor>() with p { GetUserProgramInteractor(i()) }
-        bind<FirmwareInteractor>() with p { FirmwareInteractor(i()) }
+        bind<GetFirmwareInteractor>() with p { GetFirmwareInteractor(i()) }
         bind<PortTestFileCreatorInteractor>() with p { PortTestFileCreatorInteractor(i()) }
         bind<CreateConfigurationFileInteractor>() with p { CreateConfigurationFileInteractor(i()) }
         bind<AssignProgramToButtonInteractor>() with p { AssignProgramToButtonInteractor(i(), i()) }
-        bind<RefreshDataCacheInteractor>() with p { RefreshDataCacheInteractor(i(), i(), i())}
         bind<DownloadRobotsInteractor>() with p { DownloadRobotsInteractor(i(), i(), i())}
         bind<DownloadChallengesInteractor>() with p { DownloadChallengesInteractor(i(), i(), i())}
     }
@@ -154,7 +153,7 @@ fun createPresenterModule() =
         bind<ProgramSelectorMvp.Presenter>() with s { ProgramSelectorPresenter(i(), i(), i(), i(), i(), i()) }
         bind<ProgramPriorityMvp.Presenter>() with s { ProgramPriorityPresenter(i(), i(), i()) }
         bind<ButtonlessProgramSelectorMvp.Presenter>() with s { ButtonlessProgramSelectorPresenter(i(), i(), i(), i(), i(), i()) }
-        bind<SplashMvp.Presenter>() with s { SplashPresenter(i(), i(), i(), i()) }
+        bind<SplashMvp.Presenter>() with s { SplashPresenter(i(), i()) }
         bind<ChallengeGroupMvp.Presenter>() with s { ChallengeGroupPresenter(i(), i(), i()) }
         bind<ChallengeListMvp.Presenter>() with s { ChallengeListPresenter(i(), i(), i()) }
         bind<ChallengeDetailMvp.Presenter>() with s { ChallengeDetailPresenter(i(), i(), i(), i()) }

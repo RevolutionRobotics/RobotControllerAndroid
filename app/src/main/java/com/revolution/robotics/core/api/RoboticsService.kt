@@ -6,12 +6,16 @@ import retrofit2.http.GET
 
 interface RoboticsService {
 
-    @GET("https://api.myjson.com/bins/11v9zw")
+    companion object {
+        private const val API_VERSION = 1
+    }
+
+    @GET("v$API_VERSION/robots")
     fun getRobots(): Call<String>
 
-    @GET("https://api.myjson.com/bins/u5i2o")
+    @GET("v$API_VERSION/challenges")
     fun getChallenges(): Call<String>
 
-    @GET(".json")
-    fun getDatabaseContents(): Call<String>
+    @GET("v$API_VERSION//firmware")
+    fun getFirmware(): Call<String>
 }
