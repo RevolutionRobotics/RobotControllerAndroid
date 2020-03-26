@@ -13,6 +13,7 @@ import com.revolution.robotics.core.extensions.isEmptyOrNull
 import com.revolution.robotics.core.interactor.AssignConfigToRobotInteractor
 import com.revolution.robotics.core.interactor.SaveUserControllerInteractor
 import com.revolution.robotics.core.interactor.SaveUserRobotInteractor
+import com.revolution.robotics.core.interactor.api.DownloadRobotsInteractor
 import com.revolution.robotics.core.interactor.firebase.RobotsInteractor
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.core.utils.Navigator
@@ -30,6 +31,7 @@ import kotlin.collections.toMutableList
 import kotlin.math.max
 
 class WhoToBuildPresenter(
+    private val downloadRobotsInteractor: DownloadRobotsInteractor,
     private val robotsInteractor: RobotsInteractor,
     private val assignConfigToRobotInteractor: AssignConfigToRobotInteractor,
     private val saveUserRobotInteractor: SaveUserRobotInteractor,
@@ -45,8 +47,20 @@ class WhoToBuildPresenter(
 
     override fun register(view: WhoToBuildMvp.View, model: WhoToBuildViewModel?) {
         super.register(view, model)
+        refreshRobotList()
         loadRobots()
         displayRobots(emptyList())
+    }
+
+    private fun refreshRobotList() {
+        downloadRobotsInteractor.execute(
+            onResponse = {
+                loadRobots()
+            },
+            onError = {
+                loadRobots()
+            }
+        )
     }
 
     private fun loadRobots() {
