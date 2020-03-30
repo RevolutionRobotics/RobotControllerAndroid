@@ -1,13 +1,13 @@
 package com.revolution.robotics.features.splash
 
 import androidx.lifecycle.ViewModel
-import com.revolution.robotics.BuildConfig
 import com.revolution.robotics.core.cache.RemoteDataCache
-import com.revolution.robotics.core.interactor.api.RefreshDataCacheInteractor
+import com.revolution.robotics.core.interactor.api.DownloadChallengesInteractor
+import com.revolution.robotics.core.interactor.api.DownloadRobotsInteractor
 
 class SplashPresenter(
-    private val refreshDataCacheInteractor: RefreshDataCacheInteractor,
-    private val remoteDataCache: RemoteDataCache
+    private val downloadRobotsInteractor: DownloadRobotsInteractor,
+    private val downloadChallengesInteractor: DownloadChallengesInteractor
 ) : SplashMvp.Presenter {
 
     override var view: SplashMvp.View? = null
@@ -15,13 +15,24 @@ class SplashPresenter(
 
     override fun register(view: SplashMvp.View, model: ViewModel?) {
         super.register(view, model)
-        refreshDataCacheInteractor.execute (
+        downloadRobots()
+    }
+
+    private fun downloadRobots() {
+        downloadRobotsInteractor.execute(
             onResponse = {
-                if (remoteDataCache.data.minVersion.android > BuildConfig.VERSION_CODE) {
-                    this.view?.showUpdateNeededDialog()
-                } else {
-                    this.view?.startApp()
-                }
+                downloadChallenges()
+            },
+            onError = {
+                downloadChallenges()
+            }
+        )
+    }
+
+    private fun downloadChallenges() {
+        downloadChallengesInteractor.execute(
+            onResponse = {
+                this.view?.startApp()
             },
             onError = {
                 this.view?.startApp()

@@ -1,7 +1,7 @@
 package com.revolution.robotics.core.interactor
 
+import com.revolution.robotics.core.domain.PortMapping
 import com.revolution.robotics.core.domain.local.*
-import com.revolution.robotics.core.domain.remote.Configuration
 import com.revolution.robotics.core.domain.remote.Controller
 import com.revolution.robotics.core.domain.remote.Program
 import com.revolution.robotics.core.domain.remote.ProgramBinding
@@ -16,13 +16,13 @@ class AssignConfigToRobotInteractor(
 ) : Interactor<UserRobot>() {
 
     lateinit var userRobot: UserRobot
-    var configuration: Configuration? = null
+    var portMapping: PortMapping? = null
     var controller: Controller? = null
     var programs: List<Program>? = null
 
     override fun getData(): UserRobot {
-        configuration?.let { remoteConfig ->
-            userRobot.configuration = createUserConfiguration(remoteConfig)
+        portMapping?.let { mapping ->
+            userRobot.configuration = createUserConfiguration(mapping)
             val programIdMap = saveUserPrograms()
             controller?.let { saveUserController(it, userRobot.configuration, true, programIdMap) }
             val hasController = userRobot.configuration.controller != null && userRobot.configuration.controller != -1
@@ -45,29 +45,29 @@ class AssignConfigToRobotInteractor(
         }
 
         userController.mapping?.let { userMapping ->
-            controller.mapping?.b1?.let {
+            controller.buttons?.b1?.let {
                 userMapping.b1 = createUserButtonMapping(it, userController.id, programIdMap)
             }
-            controller.mapping?.b2?.let {
+            controller.buttons?.b2?.let {
                 userMapping.b2 = createUserButtonMapping(it, userController.id, programIdMap)
             }
-            controller.mapping?.b3?.let {
+            controller.buttons?.b3?.let {
                 userMapping.b3 = createUserButtonMapping(it, userController.id, programIdMap)
             }
-            controller.mapping?.b4?.let {
+            controller.buttons?.b4?.let {
                 userMapping.b4 = createUserButtonMapping(it, userController.id, programIdMap)
             }
-            controller.mapping?.b5?.let {
+            controller.buttons?.b5?.let {
                 userMapping.b5 = createUserButtonMapping(it, userController.id, programIdMap)
             }
-            controller.mapping?.b6?.let {
+            controller.buttons?.b6?.let {
                 userMapping.b6 = createUserButtonMapping(it, userController.id, programIdMap)
             }
         }
 
         userBackgroundProgramBindingDao.removeOldBackgroundBindings(userController.id)
         userBackgroundProgramBindingDao.saveBackgroundPrograms(
-            controller.backgroundProgramBindings.map {
+            controller.backgroundPrograms.map {
                 createBackgroundBinding(userController.id, it, programIdMap)
             }
         )
@@ -79,7 +79,7 @@ class AssignConfigToRobotInteractor(
         binding: ProgramBinding,
         idMap: HashMap<String, String>
     ): UserBackgroundProgramBinding =
-        UserBackgroundProgramBinding(0, controllerId, idMap[binding.programId] ?: "", binding.priority)
+        UserBackgroundProgramBinding(0, controllerId, idMap[binding.program] ?: "", binding.priority)
 
     private fun createUserButtonMapping(
         binding: ProgramBinding?,
@@ -90,7 +90,7 @@ class AssignConfigToRobotInteractor(
             UserProgramBinding(
                 id = 0,
                 controllerId = controllerId,
-                programName = programIdMap[remoteBinding.programId] ?: "",
+                programName = programIdMap[remoteBinding.program] ?: "",
                 priority = remoteBinding.priority
             )
         }
@@ -112,7 +112,7 @@ class AssignConfigToRobotInteractor(
                 remoteProgram.lastModified,
                 remoteProgram.name?.getLocalizedString(resourceResolver) ?: "",
                 remoteProgram.python,
-                remoteProgram.xml,
+                remoteProgram.blocklyXml,
                 userRobot.id,
                 remoteProgram.variables,
                 remoteProgram.id
@@ -122,29 +122,29 @@ class AssignConfigToRobotInteractor(
         }
     }
 
-    private fun createUserConfiguration(configuration: Configuration) =
+    private fun createUserConfiguration(portMapping: PortMapping) =
         UserConfiguration(null, UserMapping().apply {
-            M1 = configuration.mapping?.M1
-            M2 = configuration.mapping?.M2
-            M3 = configuration.mapping?.M3
-            M4 = configuration.mapping?.M4
-            M5 = configuration.mapping?.M5
-            M6 = configuration.mapping?.M6
+            M1 = portMapping.M1
+            M2 = portMapping.M2
+            M3 = portMapping.M3
+            M4 = portMapping.M4
+            M5 = portMapping.M5
+            M6 = portMapping.M6
 
-            S1 = configuration.mapping?.S1
-            S2 = configuration.mapping?.S2
-            S3 = configuration.mapping?.S3
-            S4 = configuration.mapping?.S4
+            S1 = portMapping.S1
+            S2 = portMapping.S2
+            S3 = portMapping.S3
+            S4 = portMapping.S4
         })
 
     private fun createUserController(controller: Controller) = UserController(
         id = 0,
         robotId = userRobot.id,
-        name = controller.name?.getLocalizedString(resourceResolver) ?: "",
+        name = "",
         type = controller.type,
-        description = controller.description?.getLocalizedString(resourceResolver) ?: "",
-        lastModified = controller.lastModified,
+        description = "",
+        lastModified = 0L,
         mapping = UserButtonMapping(),
-        joystickPriority = controller.joystickPriority?.toInt() ?: 0
+        joystickPriority = controller.drivetrainPriority?.toInt() ?: 0
     )
 }

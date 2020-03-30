@@ -8,5 +8,5 @@ class ChallengeCategoriesInteractor(
     private val remoteDataCache: RemoteDataCache
 ) : Interactor<List<ChallengeCategory>>() {
 
-    override fun getData(): List<ChallengeCategory> = remoteDataCache.data.challengeCategory.values.sortedBy { it.order }
+    override fun getData(): List<ChallengeCategory> = remoteDataCache.challenges.sortedBy { it.order }
 }

@@ -13,10 +13,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.request.target.Target.SIZE_ORIGINAL
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
 import com.revolution.robotics.R
-import com.revolution.robotics.core.glide.GlideApp
 import com.revolution.robotics.core.utils.CameraHelper
 import com.revolution.robotics.views.RemoteImageView
 import java.io.File
@@ -24,7 +21,7 @@ import java.io.File
 @BindingAdapter("android:src", "errorDrawable", requireAll = false)
 fun loadImage(imageView: ImageView, url: String?, errorDrawable: Drawable?) {
     if (!url.isNullOrEmpty()) {
-        GlideApp.with(imageView)
+        Glide.with(imageView)
             .load(url)
             .apply {
                 if (errorDrawable == null) {
@@ -45,7 +42,7 @@ fun loadLocalResource(
     errorDrawable: Drawable?
 ) {
     if (localResource != 0) {
-        GlideApp.with(imageView)
+        Glide.with(imageView)
             .load(localResource)
             .apply {
                 if (errorDrawable == null) {
@@ -58,22 +55,8 @@ fun loadLocalResource(
     }
 }
 
-@BindingAdapter("firebaseImage", "errorDrawable", requireAll = false)
-fun loadFirebaseImage(imageView: ImageView, reference: StorageReference, errorDrawable: Drawable?) {
-    GlideApp.with(imageView)
-        .load(reference)
-        .apply {
-            if (errorDrawable == null) {
-                error(R.drawable.ic_image_not_found)
-            } else {
-                error(errorDrawable)
-            }
-        }
-        .into(imageView)
-}
-
 @BindingAdapter(
-    "firebaseImageUrl",
+    "imageUrl",
     "errorDrawable",
     "progressView",
     "animate",
@@ -89,8 +72,8 @@ fun loadFirebaseImage(
     originalSize: Boolean?
 ) {
     if (!gsUrl.isNullOrEmpty()) {
-        GlideApp.with(imageView)
-            .load(FirebaseStorage.getInstance().getReferenceFromUrl(gsUrl))
+        Glide.with(imageView)
+            .load(gsUrl)
             .apply {
                 if (errorDrawable == null) {
                     error(R.drawable.ic_image_not_found)
@@ -146,7 +129,7 @@ private fun setErrorDrawable(imageView: ImageView, errorDrawable: Drawable?) {
     }
 }
 
-@BindingAdapter("firebaseImageUrl", "robotId", "errorDrawable", "animate", requireAll = false)
+@BindingAdapter("imageUrl", "robotId", "errorDrawable", "animate", requireAll = false)
 fun loadFirebaseImage(
     remoteImageView: RemoteImageView,
     gsUrl: String?,
@@ -174,7 +157,7 @@ fun loadFirebaseImage(
     }
 }
 
-@BindingAdapter("imageFile", "firebaseImageUrl")
+@BindingAdapter("imageFile", "imageUrl")
 fun loadImageFromFile(imageView: RemoteImageView, file: File?, gsUrl: String?) {
     if (file != null && file.exists()) {
         Glide.with(imageView)

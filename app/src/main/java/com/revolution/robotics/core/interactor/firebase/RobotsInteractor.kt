@@ -8,5 +8,5 @@ class RobotsInteractor(
     private val remoteDataCache: RemoteDataCache
 ) : Interactor<List<Robot>>() {
 
-    override fun getData(): List<Robot> = remoteDataCache.data.robot.values.sortedBy { it.order }
+    override fun getData(): List<Robot> = remoteDataCache.robots.sortedBy { it.order }
 }

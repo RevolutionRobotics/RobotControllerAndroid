@@ -18,7 +18,9 @@ import com.revolution.robotics.core.cache.RemoteDataCache
 import com.revolution.robotics.core.db.RoboticsDatabase
 import com.revolution.robotics.core.domain.local.*
 import com.revolution.robotics.core.interactor.*
-import com.revolution.robotics.core.interactor.api.RefreshDataCacheInteractor
+import com.revolution.robotics.core.interactor.api.DownloadChallengesInteractor
+import com.revolution.robotics.core.interactor.api.DownloadRobotsInteractor
+import com.revolution.robotics.core.interactor.api.GetFirmwareInteractor
 import com.revolution.robotics.core.interactor.firebase.*
 import com.revolution.robotics.features.build.BuildRobotMvp
 import com.revolution.robotics.features.build.BuildRobotPresenter
@@ -97,16 +99,12 @@ fun createInteractorModule() =
         bind<RobotsInteractor>() with p { RobotsInteractor(i()) }
         bind<RobotInteractor>() with p { RobotInteractor(i()) }
         bind<BuildStepInteractor>() with p { BuildStepInteractor(i()) }
-        bind<ConfigurationInteractor>() with p { ConfigurationInteractor(i()) }
         bind<GetUserRobotInteractor>() with p { GetUserRobotInteractor(i()) }
         bind<AssignConfigToRobotInteractor>() with p { AssignConfigToRobotInteractor(i(), i(), i(), i(), i()) }
         bind<UpdateUserRobotInteractor>() with p { UpdateUserRobotInteractor(i()) }
         bind<GetAllUserRobotsInteractor>() with p { GetAllUserRobotsInteractor(i()) }
         bind<DeleteRobotInteractor>() with p { DeleteRobotInteractor(i()) }
         bind<GetUserConfigForRobotInteractor>() with p { GetUserConfigForRobotInteractor(i()) }
-        bind<ControllerInteractor>() with p { ControllerInteractor(i()) }
-        bind<ProgramInteractor>() with p { ProgramInteractor(i()) }
-        bind<GetProgramsForRobotInteractor>() with p { GetProgramsForRobotInteractor(i()) }
         bind<ChallengeCategoriesInteractor>() with p { ChallengeCategoriesInteractor(i()) }
         bind<GetUserControllerForUserRobotInteractor>() with p { GetUserControllerForUserRobotInteractor(i()) }
         bind<GetUserControllerInteractor>() with p { GetUserControllerInteractor(i(), i(), i()) }
@@ -124,18 +122,19 @@ fun createInteractorModule() =
         bind<LocalFileSaver>() with p { LocalFileSaver() }
         bind<GetFullConfigurationInteractor>() with p { GetFullConfigurationInteractor(i(), i(), i(), i()) }
         bind<GetUserProgramInteractor>() with p { GetUserProgramInteractor(i()) }
-        bind<FirmwareInteractor>() with p { FirmwareInteractor(i()) }
+        bind<GetFirmwareInteractor>() with p { GetFirmwareInteractor(i()) }
         bind<PortTestFileCreatorInteractor>() with p { PortTestFileCreatorInteractor(i()) }
         bind<CreateConfigurationFileInteractor>() with p { CreateConfigurationFileInteractor(i()) }
         bind<AssignProgramToButtonInteractor>() with p { AssignProgramToButtonInteractor(i(), i()) }
-        bind<RefreshDataCacheInteractor>() with p { RefreshDataCacheInteractor(i(), i(), i())}
+        bind<DownloadRobotsInteractor>() with p { DownloadRobotsInteractor(i(), i(), i())}
+        bind<DownloadChallengesInteractor>() with p { DownloadChallengesInteractor(i(), i(), i())}
     }
 
 @Suppress("LongMethod")
 fun createPresenterModule() =
     Kodein.Module("PresenterModule") {
         bind<MainMenuMvp.Presenter>() with s { MainMenuPresenter(i(), i(), i()) }
-        bind<WhoToBuildMvp.Presenter>() with s { WhoToBuildPresenter(i(), i(), i(), i(), i(), i(), i()) }
+        bind<WhoToBuildMvp.Presenter>() with s { WhoToBuildPresenter(i(), i(), i(), i(), i(), i(), i(), i()) }
         bind<MyRobotsMvp.Presenter>() with s { MyRobotsPresenter(i(), i(), i(), i(), i()) }
         bind<BuildRobotMvp.Presenter>() with s { BuildRobotPresenter(i(), i(), i(), i(), i(), i()) }
         bind<ConnectMvp.Presenter>() with s { ConnectPresenter(i(), i(), i()) }
@@ -155,7 +154,7 @@ fun createPresenterModule() =
         bind<ProgramPriorityMvp.Presenter>() with s { ProgramPriorityPresenter(i(), i(), i()) }
         bind<ButtonlessProgramSelectorMvp.Presenter>() with s { ButtonlessProgramSelectorPresenter(i(), i(), i(), i(), i(), i()) }
         bind<SplashMvp.Presenter>() with s { SplashPresenter(i(), i()) }
-        bind<ChallengeGroupMvp.Presenter>() with s { ChallengeGroupPresenter(i(), i(), i()) }
+        bind<ChallengeGroupMvp.Presenter>() with s { ChallengeGroupPresenter(i(), i(), i(), i()) }
         bind<ChallengeListMvp.Presenter>() with s { ChallengeListPresenter(i(), i(), i()) }
         bind<ChallengeDetailMvp.Presenter>() with s { ChallengeDetailPresenter(i(), i(), i(), i()) }
         bind<DirectionSelectorMvp.Presenter>() with s { DirectionSelectorPresenter() }

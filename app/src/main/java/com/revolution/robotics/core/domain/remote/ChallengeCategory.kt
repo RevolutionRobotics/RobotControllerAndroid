@@ -10,5 +10,5 @@ data class ChallengeCategory(
     var image: String? = null,
     var description: LocalizedString? = null,
     var order: Int = 0,
-    var challenges: HashMap<String, Challenge> = hashMapOf()
+    var challenges: List<Challenge> = emptyList()
 ) : Parcelable

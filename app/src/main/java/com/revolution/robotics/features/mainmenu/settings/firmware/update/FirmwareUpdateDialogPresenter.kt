@@ -6,8 +6,8 @@ import com.revolution.robotics.R
 import com.revolution.robotics.analytics.Reporter
 import com.revolution.robotics.analytics.reportUploadedToBrain
 import com.revolution.robotics.core.domain.remote.Firmware
+import com.revolution.robotics.core.interactor.api.GetFirmwareInteractor
 import com.revolution.robotics.core.interactor.firebase.FirebaseFileDownloader
-import com.revolution.robotics.core.interactor.firebase.FirmwareInteractor
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.features.bluetooth.BluetoothManager
 import com.revolution.robotics.features.shared.ErrorHandler
@@ -15,7 +15,7 @@ import com.revolution.robotics.views.dialogs.DialogButton
 import java.lang.RuntimeException
 
 class FirmwareUpdateDialogPresenter(
-    private val interactor: FirmwareInteractor,
+    private val interactor: GetFirmwareInteractor,
     private val fileDownloader: FirebaseFileDownloader,
     private val bluetoothManager: BluetoothManager,
     private val errorHandler: ErrorHandler,

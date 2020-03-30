@@ -50,7 +50,7 @@
                 app:layout_constraintTop_toTopOf="@id/image_placeholder"
                 app:layout_constraintBottom_toBottomOf="@id/image_placeholder"
                 app:visible="@{!viewModel.showPlaceholder}"
-                app:firebaseImageUrl="@{viewModel.defaultCoverImage}"
+                app:imageUrl="@{viewModel.defaultCoverImage}"
                 app:imageFile="@{viewModel.image}"
                 android:scaleType="centerCrop"/>
 

@@ -34,8 +34,8 @@ class ChallengeDetailPresenter(
     override fun setChallenge(challenge: Challenge, categoryId: String?) {
         this.categoryId = categoryId
         this.challengeId = challenge.id
-        view?.initSlider(challenge.challengeSteps.toList().map { it.second }.sortedBy { it.order }, this)
-        setChallengeStep(challenge.challengeSteps.toList().map { it.second }.sortedBy { it.order }.first())
+        view?.initSlider(challenge.steps, this)
+        setChallengeStep(challenge.steps[0])
     }
 
     override fun onChallengeStepSelected(
@@ -54,18 +54,18 @@ class ChallengeDetailPresenter(
         this.challengeStep = challengeStep
         toolbarViewModel?.title?.set(challengeStep.title?.getLocalizedString(resourceResolver) ?: "")
         model?.apply {
-            when (val challengeType = ChallengeType.fromId(challengeStep.challengeType)) {
+            when (val challengeType = ChallengeType.fromId(challengeStep.type)) {
                 ChallengeType.HORIZONTAL, ChallengeType.VERTICAL -> {
                     image.value = challengeStep.image
                     zoomableImage.value = null
-                    title.value = challengeStep.description
+                    title.value = challengeStep.text
                     type.value = challengeType
                     parts.value = emptyList()
                 }
                 ChallengeType.ZOOMABLE -> {
                     zoomableImage.value = challengeStep.image
                     image.value = null
-                    title.value = challengeStep.description
+                    title.value = challengeStep.text
                     type.value = challengeType
                     parts.value = emptyList()
                 }
@@ -80,7 +80,7 @@ class ChallengeDetailPresenter(
                 ChallengeType.BUTTON -> {
                     image.value = null
                     zoomableImage.value = null
-                    title.value = challengeStep.description
+                    title.value = challengeStep.text
                     type.value = challengeType
                     parts.value = emptyList()
                     buttonText.value = challengeStep.buttonText
@@ -100,14 +100,13 @@ class ChallengeDetailPresenter(
     private fun saveProgress(currentProgress: Int) {
         getCategoriesInteractor.execute { categories ->
             categories.find { it.id == categoryId }?.let { category ->
-                category.challenges.toList().sortedBy { it.second.order }.map { it.second }
+                category.challenges.sortedBy { it.order }
                     .indexOfFirst { it.id == challengeId }.let { index ->
                         if (index + 1 > currentProgress) {
                             saveProgress(categoryId, index + 1)
                         }
                         view?.showChallengeFinishedDialog(
-                            category.challenges
-                                .toList().sortedBy { it.second.order }.map { it.second }.getOrNull(index + 1)
+                            category.challenges.sortedBy { it.order }.getOrNull(index + 1)
                         )
                     }
             }

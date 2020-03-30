@@ -65,61 +65,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
 
-        <LinearLayout
-                android:id="@+id/parts_wrapper"
-                android:layout_width="@dimen/build_robot_parts_wrapper_width"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center"
-                app:layout_constraintStart_toStartOf="@id/steps"
-                app:layout_constraintEnd_toEndOf="@id/steps"
-                app:layout_constraintTop_toBottomOf="@id/steps"
-                android:layout_marginTop="9dp"
-                app:chippedBoxConfig="@{background}"
-                android:paddingTop="@dimen/dimen_16dp"
-                android:paddingBottom="@dimen/dimen_16dp"
-                android:paddingStart="@dimen/dimen_12dp"
-                android:paddingEnd="@dimen/dimen_12dp"
-                app:gone="@{!safeUnbox(viewModel.hasParts)}">
-
-            <ImageView
-                    android:id="@+id/part_image"
-                    android:layout_width="@dimen/build_robot_part_image_size_width"
-                    android:layout_height="@dimen/build_robot_part_image_size_height"
-                    android:scaleType="centerInside"
-                    app:firebaseImageUrl="@{viewModel.partImage}"
-                    app:errorDrawable="@{@drawable/ic_image_not_found_dark}"/>
-
-            <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen_1dp"
-                    android:background="@color/grey_6d"
-                    android:layout_marginTop="@dimen/dimen_16dp"
-                    app:gone="@{!safeUnbox(viewModel.hasTwoParts)}"/>
-
-            <ImageView
-                    android:id="@+id/part_2_image"
-                    android:layout_width="@dimen/build_robot_part_image_size_width"
-                    android:layout_height="@dimen/build_robot_part_image_size_height"
-                    android:scaleType="centerInside"
-                    android:layout_marginTop="@dimen/dimen_16dp"
-                    app:firebaseImageUrl="@{viewModel.part2Image}"
-                    app:errorDrawable="@{@drawable/ic_image_not_found_dark}"
-                    app:gone="@{!safeUnbox(viewModel.hasTwoParts)}"/>
-
-        </LinearLayout>
-
-        <ImageView
-                android:id="@+id/parts_pin"
-                android:layout_width="@dimen/dimen_16dp"
-                android:layout_height="@dimen/dimen_8dp"
-                android:src="@drawable/build_robot_parts_pin"
-                app:layout_constraintTop_toBottomOf="@id/steps"
-                android:layout_marginTop="@dimen/dimen_2dp"
-                app:layout_constraintStart_toStartOf="@id/parts_wrapper"
-                app:layout_constraintEnd_toEndOf="@id/parts_wrapper"
-                app:gone="@{!safeUnbox(viewModel.hasParts)}"/>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

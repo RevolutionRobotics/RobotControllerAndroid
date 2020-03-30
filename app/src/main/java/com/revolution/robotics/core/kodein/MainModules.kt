@@ -19,6 +19,7 @@ import com.revolution.robotics.features.bluetooth.BluetoothManager
 import com.revolution.robotics.features.configure.ConfigurationEventBus
 import com.revolution.robotics.features.configure.controller.CompatibleProgramFilterer
 import com.revolution.robotics.features.shared.ErrorHandler
+import okhttp3.Cache
 import okhttp3.OkHttpClient
 import org.kodein.di.Kodein
 import org.kodein.di.erased.bind
@@ -36,14 +37,7 @@ fun createMainModule() =
         bind<ConfigurationEventBus>() with s { ConfigurationEventBus() }
         bind<BluetoothManager>() with s { BluetoothManager(kodein) }
         bind<CompatibleProgramFilterer>() with p { CompatibleProgramFilterer() }
-        bind<CreateRobotInstanceHelper>() with p { CreateRobotInstanceHelper(i(), i(), i(), i(), i(), i(), i()) }
-        bind<Retrofit>() with s {
-            Retrofit.Builder()
-                .client(OkHttpClient().newBuilder().build())
-                .baseUrl(BuildConfig.DATABASE_JSON_URL)
-                .addConverterFactory(ScalarsConverterFactory.create())
-                .build()
-        }
+        bind<CreateRobotInstanceHelper>() with p { CreateRobotInstanceHelper(i(), i(), i(), i()) }
         bind<RoboticsService>() with s {
             val retrofit: Retrofit = i()
             retrofit.create(RoboticsService::class.java)
@@ -61,4 +55,19 @@ fun createAppModule(context: Context) =
         bind<FirebaseAnalytics>() with s { FirebaseAnalytics.getInstance(context) }
         bind<Reporter>() with s { Reporter(i()) }
         bind<FileManager>() with s { FileManager(context) }
+        bind<Retrofit>() with s {
+            val CACHE_SIZE_BYTES: Long = 1024 * 1024 * 2;
+            val builder = OkHttpClient().newBuilder()
+            builder.cache(
+                Cache(context.cacheDir, CACHE_SIZE_BYTES)
+            )
+            val client = builder.build()
+            val retrofitBuilder = Retrofit.Builder()
+            retrofitBuilder
+                .baseUrl(BuildConfig.BASE_URL)
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .client(client)
+            retrofitBuilder.build()
+
+        }
     }

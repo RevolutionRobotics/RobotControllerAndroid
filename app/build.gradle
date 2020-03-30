@@ -49,15 +49,15 @@ android {
     flavorDimensions "default"
     productFlavors {
         dev {
-            buildConfigField "String", "DATABASE_JSON_URL",  '"https://revolutionroboticsdev.firebaseio.com"'
+            buildConfigField "String", "BASE_URL",  '"https://api-test.revolutionrobotics.org/api/"'
             applicationIdSuffix ".dev"
         }
         staging {
-        buildConfigField "String", "DATABASE_JSON_URL",  '"https://revolutionrobotics-afeb5.firebaseio.com"'
+        buildConfigField "String", "BASE_URL",  '"https://api-test.revolutionrobotics.org/api/"'
             applicationIdSuffix ".test"
         }
         prod {
-            buildConfigField "String", "DATABASE_JSON_URL",  '"https://revolutionroboticsprod.firebaseio.com"'
+            buildConfigField "String", "BASE_URL",  '"https://api-test.revolutionrobotics.org/api/"'
         }
     }
 
@@ -147,7 +147,6 @@ dependencies {
 
     // FirebaseDB
     implementation "com.google.firebase:firebase-core:$firebase_version"
-    implementation "com.firebaseui:firebase-ui-storage:$firebase_ui_storage"
 
     // Gson
     implementation "com.google.code.gson:gson:$gson_version"

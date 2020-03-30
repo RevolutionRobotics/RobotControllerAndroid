@@ -31,7 +31,7 @@ class HaveYouBuiltPresenter(
 ) : HaveYouBuiltMvp.Presenter {
 
     companion object {
-        private const val ROBOT_ID: String = "c92b9a90-e069-11e9-9d36-2a2ae2dbcce4"
+        private const val ROBOT_ID: String = "revvy"
         private const val CHALLENGE_CATEGORY_ID = "ef504b31-d64f-4bfb-bd4b-5b96a9a0489f"
     }
 
@@ -44,7 +44,7 @@ class HaveYouBuiltPresenter(
         createRobot { userRobot ->
             userRobot.buildStatus = BuildStatus.COMPLETED
             createRobotInstanceHelper.setupConfigFromFirebase(userRobot,
-                onSuccess = { savedRobot, _, _ ->
+                onSuccess = { savedRobot ->
                     appPrefs.onboardingRobotBuild = true
                     appPrefs.onboardingRobotDriven = true
                     navigator.navigate(MyRobotsFragmentDirections.toPlay(savedRobot.id))

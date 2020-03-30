@@ -8,12 +8,12 @@ import com.revolution.robotics.core.domain.local.BuildStatus
 import com.revolution.robotics.core.domain.local.UserConfiguration
 import com.revolution.robotics.core.domain.local.UserController
 import com.revolution.robotics.core.domain.local.UserRobot
-import com.revolution.robotics.core.domain.remote.Configuration
 import com.revolution.robotics.core.domain.remote.Robot
 import com.revolution.robotics.core.extensions.isEmptyOrNull
 import com.revolution.robotics.core.interactor.AssignConfigToRobotInteractor
 import com.revolution.robotics.core.interactor.SaveUserControllerInteractor
 import com.revolution.robotics.core.interactor.SaveUserRobotInteractor
+import com.revolution.robotics.core.interactor.api.DownloadRobotsInteractor
 import com.revolution.robotics.core.interactor.firebase.RobotsInteractor
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.core.utils.Navigator
@@ -31,6 +31,7 @@ import kotlin.collections.toMutableList
 import kotlin.math.max
 
 class WhoToBuildPresenter(
+    private val downloadRobotsInteractor: DownloadRobotsInteractor,
     private val robotsInteractor: RobotsInteractor,
     private val assignConfigToRobotInteractor: AssignConfigToRobotInteractor,
     private val saveUserRobotInteractor: SaveUserRobotInteractor,
@@ -46,8 +47,20 @@ class WhoToBuildPresenter(
 
     override fun register(view: WhoToBuildMvp.View, model: WhoToBuildViewModel?) {
         super.register(view, model)
+        refreshRobotList()
         loadRobots()
         displayRobots(emptyList())
+    }
+
+    private fun refreshRobotList() {
+        downloadRobotsInteractor.execute(
+            onResponse = { changed ->
+                if (changed) {
+                    loadRobots()
+                }
+            },
+            onError = {}
+        )
     }
 
     private fun loadRobots() {
@@ -148,7 +161,7 @@ class WhoToBuildPresenter(
 
     private fun assignEmptyConfig(userRobot: UserRobot) {
         assignConfigToRobotInteractor.userRobot = userRobot
-        assignConfigToRobotInteractor.configuration = Configuration(mapping = PortMapping())
+        assignConfigToRobotInteractor.portMapping = PortMapping()
         assignConfigToRobotInteractor.controller = null
         assignConfigToRobotInteractor.programs = emptyList()
         assignConfigToRobotInteractor.execute {

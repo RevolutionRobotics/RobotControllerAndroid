@@ -18,10 +18,6 @@ class BuildRobotViewModel(
     private val resourceResolver: ResourceResolver
 ) : ViewModel() {
     val step: MutableLiveData<Spannable?> = MutableLiveData()
-    val partImage: MutableLiveData<String?> = MutableLiveData()
-    val part2Image: MutableLiveData<String?> = MutableLiveData()
-    val hasTwoParts: MutableLiveData<Boolean> = MutableLiveData()
-    val hasParts: MutableLiveData<Boolean> = MutableLiveData()
     val adapter: MutableLiveData<BuildRobotAdapter> = MutableLiveData()
 
     fun setBuildSteps(buildSteps: List<BuildStep>) {
@@ -32,10 +28,6 @@ class BuildRobotViewModel(
 
     fun setBuildStep(buildStep: BuildStep, totalSteps: Int) {
         step.value = createStepText(buildStep.stepNumber, totalSteps)
-        partImage.value = buildStep.partImage
-        part2Image.value = buildStep.part2Image
-        hasTwoParts.value = !part2Image.value.isNullOrEmpty()
-        hasParts.value = !partImage.value.isNullOrEmpty()
     }
 
     private fun createStepText(actualStep: Int, totalSteps: Int) =

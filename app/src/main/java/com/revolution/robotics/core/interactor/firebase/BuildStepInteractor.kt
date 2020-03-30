@@ -10,5 +10,5 @@ class BuildStepInteractor(
 
     lateinit var robotId: String
 
-    override fun getData(): List<BuildStep> = remoteDataCache.data.buildStep.values.filter { it.robotId == robotId }.sortedBy { it.stepNumber }
+    override fun getData(): List<BuildStep> = remoteDataCache.robots.find { robot -> robot.id == robotId }?.buildSteps ?: emptyList()
 }

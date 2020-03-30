@@ -2,11 +2,13 @@ package com.revolution.robotics.features.challenges.challengeGroup
 
 import com.revolution.robotics.core.domain.remote.ChallengeCategory
 import com.revolution.robotics.core.interactor.GetUserChallengeCategoriesInteractor
+import com.revolution.robotics.core.interactor.api.DownloadChallengesInteractor
 import com.revolution.robotics.core.interactor.firebase.ChallengeCategoriesInteractor
 import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.features.challenges.challengeGroup.adapter.ChallengeGroupItem
 
 class ChallengeGroupPresenter(
+    private val downloadChallengesInteractor: DownloadChallengesInteractor,
     private val challengeCategoriesInteractor: ChallengeCategoriesInteractor,
     private val userChallengeInteractor: GetUserChallengeCategoriesInteractor,
     private val navigator: Navigator
@@ -18,6 +20,18 @@ class ChallengeGroupPresenter(
 
     override fun register(view: ChallengeGroupMvp.View, model: ChallengeGroupViewModel?) {
         super.register(view, model)
+        loadChallengeCategories()
+        downloadChallengesInteractor.execute(
+            onResponse = {changed ->
+                if (changed) {
+                    loadChallengeCategories()
+                }
+            },
+            onError = {}
+        )
+    }
+
+    private fun loadChallengeCategories() {
         challengeCategoriesInteractor.execute { populateChallengeGroups(it) }
     }
 

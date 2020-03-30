@@ -5,6 +5,6 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 open class ProgramBinding(
-    var programId: String? = null,
+    var program: String? = null,
     var priority: Int = 0
 ) : Parcelable
