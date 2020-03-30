@@ -54,12 +54,12 @@ class WhoToBuildPresenter(
 
     private fun refreshRobotList() {
         downloadRobotsInteractor.execute(
-            onResponse = {
-                loadRobots()
+            onResponse = { changed ->
+                if (changed) {
+                    loadRobots()
+                }
             },
-            onError = {
-                loadRobots()
-            }
+            onError = {}
         )
     }
 

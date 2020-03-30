@@ -22,8 +22,10 @@ class ChallengeGroupPresenter(
         super.register(view, model)
         loadChallengeCategories()
         downloadChallengesInteractor.execute(
-            onResponse = {
-                loadChallengeCategories()
+            onResponse = {changed ->
+                if (changed) {
+                    loadChallengeCategories()
+                }
             },
             onError = {}
         )

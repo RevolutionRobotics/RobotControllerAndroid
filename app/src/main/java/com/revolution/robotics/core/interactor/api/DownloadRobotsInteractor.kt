@@ -8,12 +8,13 @@ import com.revolution.robotics.core.domain.remote.Robot
 import com.revolution.robotics.core.interactor.Interactor
 import com.revolution.robotics.core.utils.FileManager
 import java.lang.reflect.Type
+import java.net.HttpURLConnection
 
 class DownloadRobotsInteractor(
     private val roboticsService: RoboticsService,
     private val fileManager: FileManager,
     private val remoteDataCache: RemoteDataCache
-) : Interactor<Unit>() {
+) : Interactor<Boolean>() {
 
     companion object {
         private const val robotsJsonFileName = "robots.json"
@@ -21,19 +22,26 @@ class DownloadRobotsInteractor(
 
     private val robotListType: Type = object : TypeToken<List<Robot?>?>() {}.type
 
-    override fun getData() {
+    override fun getData() : Boolean {
         try {
-            val robotsString = roboticsService.getRobots().execute().body()
-            if (robotsString != null) {
-                remoteDataCache.robots = Gson().fromJson(robotsString, robotListType)
-                fileManager.write(robotsJsonFileName, robotsString)
+            val response = roboticsService.getRobots().execute()
+            val changed = response.raw().networkResponse() != null
+                    && response.raw().networkResponse()?.code() != HttpURLConnection.HTTP_NOT_MODIFIED
+            if (changed) {
+                val robotsString = response.body()
+                if (robotsString != null) {
+                    remoteDataCache.robots = Gson().fromJson(robotsString, robotListType)
+                    fileManager.write(robotsJsonFileName, robotsString)
+                }
             } else {
                 remoteDataCache.robots =
                     Gson().fromJson(fileManager.read(robotsJsonFileName), robotListType)
             }
+            return changed
         } catch (e: Exception) {
             remoteDataCache.robots =
                 Gson().fromJson(fileManager.read(robotsJsonFileName), robotListType)
+            return false
         }
     }
 }
