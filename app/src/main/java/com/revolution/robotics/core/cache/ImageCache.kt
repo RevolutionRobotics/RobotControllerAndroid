@@ -18,6 +18,7 @@ class ImageCache(
 
     companion object {
         private const val TAG = "ImageCache"
+        private const val EXTENTION_SUFFIX = ".png"
     }
 
     private val imageFolder = context.getDir("ImageCache", Context.MODE_PRIVATE)
@@ -30,11 +31,16 @@ class ImageCache(
                 bitmap.compress(Bitmap.CompressFormat.PNG, 85, out)
                 out.flush()
                 out.close()
-                Log.i(TAG, "Image  from " + url + " saved to " + file.absoluteFile)
+                Log.i(TAG, "Image from " + url + " saved to " + file.absoluteFile)
             } catch (e: Exception) {
                 Log.i(TAG, "Failed to save image: $url")
             }
         }
+    }
+
+    fun deleteImage(url: String) {
+        Log.d(TAG, "Delete $url")
+        File(imageFolder, urlToFileName(url)).delete()
     }
 
     fun getImagePath(url: String?) = File(imageFolder, urlToFileName(url)).absolutePath
@@ -50,7 +56,13 @@ class ImageCache(
         }
     }
 
-    private fun urlToFileName(url: String?) = Base64.encodeToString(url?.toByteArray(charset("UTF-8")), Base64.DEFAULT).trim() + ".png"
+    fun getAllImages() :List<String> {
+        return imageFolder.listFiles().map { it -> fileNameToUrl(it.name) }
+    }
+
+    private fun urlToFileName(url: String?) = Base64.encodeToString(url?.toByteArray(charset("UTF-8")), Base64.NO_WRAP).trim() + EXTENTION_SUFFIX
+
+    private fun fileNameToUrl(fileName: String?) = Base64.decode(fileName?.removeSuffix(EXTENTION_SUFFIX), Base64.NO_WRAP).toString(charset("UTF-8"))
 
     fun isSaved(url: String) = File(imageFolder, urlToFileName(url)).exists()
 }

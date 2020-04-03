@@ -20,7 +20,7 @@ class ImageDownloader(
         var downloaded = 0;
         for (url in urls) {
             url?.let {
-                if (true || !imageCache.isSaved(it)) {
+                if (!imageCache.isSaved(it)) {
                     download(it)
                     downloaded++;
                 }
