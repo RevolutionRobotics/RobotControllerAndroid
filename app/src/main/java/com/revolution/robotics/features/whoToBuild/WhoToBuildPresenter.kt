@@ -3,6 +3,7 @@ package com.revolution.robotics.features.whoToBuild
 import android.os.Bundle
 import android.util.Log
 import com.revolution.robotics.analytics.Reporter
+import com.revolution.robotics.core.cache.ImageCache
 import com.revolution.robotics.core.domain.PortMapping
 import com.revolution.robotics.core.domain.local.BuildStatus
 import com.revolution.robotics.core.domain.local.UserConfiguration
@@ -37,6 +38,7 @@ class WhoToBuildPresenter(
     private val saveUserRobotInteractor: SaveUserRobotInteractor,
     private val saveUserControllerInteractor: SaveUserControllerInteractor,
     private val resourceResolver: ResourceResolver,
+    private val imageCache: ImageCache,
     private val navigator: Navigator,
     private val reporter: Reporter
 ) :
@@ -75,7 +77,7 @@ class WhoToBuildPresenter(
         model?.apply {
             currentPosition.set(if (robots.isNotEmpty()) 1 else 0)
             robotsList.value =
-                robots.map { robot -> RobotsItem(robot, this@WhoToBuildPresenter) }
+                robots.map { robot -> RobotsItem(robot,  imageCache.getImagePath(robot.coverImage),this@WhoToBuildPresenter) }
                     .toMutableList()
                     .apply { add(0, RobotsBuildYourOwnItem(this@WhoToBuildPresenter)) }
             robotsList.value?.firstOrNull()?.isSelected?.set(true)

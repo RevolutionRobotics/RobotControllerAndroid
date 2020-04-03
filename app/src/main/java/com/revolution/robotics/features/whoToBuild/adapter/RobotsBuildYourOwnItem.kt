@@ -8,7 +8,9 @@ import com.revolution.robotics.features.whoToBuild.WhoToBuildMvp
 class RobotsBuildYourOwnItem(
     private val presenter: WhoToBuildMvp.Presenter
 ) : RobotsItem(
-    Robot(), presenter
+    Robot(),
+    null,
+    presenter
 ) {
     @DrawableRes
     override val selectedResource: Int = R.drawable.card_border_build_new

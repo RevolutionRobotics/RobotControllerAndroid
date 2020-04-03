@@ -12,11 +12,11 @@ open class MyRobotsItem(
     val id: Int,
     val robot: UserRobot,
     val iconDescription: String,
+    val imagePath : String?,
     val isUnderConstruction: Boolean,
     private val presenter: MyRobotsMvp.Presenter
 ) {
     val name = robot.name
-    val imageUrl = robot.coverImage
 
     @DrawableRes
     open val selectedResource: Int = R.drawable.my_robots_border_red_selector

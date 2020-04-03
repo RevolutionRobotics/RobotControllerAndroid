@@ -57,10 +57,10 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"/>
 
-            <com.revolution.robotics.views.RemoteImageView
+            <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    app:imageUrl="@{viewModel.imageUrl}"
+                    app:imagePath="@{viewModel.imagePath}"
                     app:layout_constraintTop_toTopOf="@id/robotsCardImageTopGuide"
                     app:layout_constraintBottom_toBottomOf="@id/robotsCardImageBottomGuide"/>
 

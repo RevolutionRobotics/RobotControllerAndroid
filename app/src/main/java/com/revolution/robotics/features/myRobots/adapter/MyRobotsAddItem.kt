@@ -12,6 +12,7 @@ data class MyRobotsAddItem(
     0,
     UserRobot(configuration = UserConfiguration()),
     "",
+    null,
     false,
     presenter
 ) {

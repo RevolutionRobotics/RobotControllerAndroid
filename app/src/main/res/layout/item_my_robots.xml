@@ -49,12 +49,11 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"/>
 
-            <com.revolution.robotics.views.RemoteImageView
+            <ImageView
                     android:id="@+id/robot_image"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    app:robotId="@{viewModel.id}"
-                    app:imageUrl="@{viewModel.imageUrl}"
+                    app:imagePath="@{viewModel.imagePath}"
                     android:layout_marginTop="@dimen/my_robots_robot_image_vertical_margin"
                     android:layout_marginBottom="@dimen/my_robots_robot_image_vertical_margin"
                     android:layout_marginStart="@dimen/my_robots_content_horizontal_margin"

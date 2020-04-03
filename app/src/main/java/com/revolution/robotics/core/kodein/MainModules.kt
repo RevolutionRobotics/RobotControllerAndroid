@@ -6,7 +6,9 @@ import com.revolution.robotics.BuildConfig
 import com.revolution.robotics.analytics.Reporter
 import com.revolution.robotics.blockly.utils.BlocklyResultHolder
 import com.revolution.robotics.core.api.RoboticsService
+import com.revolution.robotics.core.cache.ImageCache
 import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
+import com.revolution.robotics.core.interactor.api.ImageDownloader
 import com.revolution.robotics.core.interactor.firebase.FirebaseFileDownloader
 import com.revolution.robotics.core.kodein.utils.ApplicationContextProvider
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
@@ -70,4 +72,6 @@ fun createAppModule(context: Context) =
             retrofitBuilder.build()
 
         }
+        bind<ImageCache>() with s { ImageCache(context) }
+        bind<ImageDownloader>() with s { ImageDownloader(i(), context) }
     }
