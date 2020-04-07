@@ -60,9 +60,9 @@ class ImageCache(
         return imageFolder.listFiles().map { it -> fileNameToUrl(it.name) }
     }
 
-    private fun urlToFileName(url: String?) = Base64.encodeToString(url?.toByteArray(charset("UTF-8")), Base64.NO_WRAP).trim() + EXTENTION_SUFFIX
+    fun urlToFileName(url: String?) = Base64.encodeToString(url?.toByteArray(charset("UTF-8")), Base64.NO_WRAP).trim() + EXTENTION_SUFFIX
 
-    private fun fileNameToUrl(fileName: String?) = Base64.decode(fileName?.removeSuffix(EXTENTION_SUFFIX), Base64.NO_WRAP).toString(charset("UTF-8"))
+    fun fileNameToUrl(fileName: String?) = Base64.decode(fileName?.removeSuffix(EXTENTION_SUFFIX), Base64.NO_WRAP).toString(charset("UTF-8"))
 
     fun isSaved(url: String) = File(imageFolder, urlToFileName(url)).exists()
 }

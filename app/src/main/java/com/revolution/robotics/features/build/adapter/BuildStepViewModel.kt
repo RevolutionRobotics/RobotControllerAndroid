@@ -1,5 +1,5 @@
 package com.revolution.robotics.features.build.adapter
 
 class BuildStepViewModel(
-    val imageUrl: String?
+    val imagePath: String?
 )

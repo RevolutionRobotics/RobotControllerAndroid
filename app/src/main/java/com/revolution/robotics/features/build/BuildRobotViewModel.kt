@@ -6,6 +6,7 @@ import androidx.core.text.toSpannable
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.revolution.robotics.R
+import com.revolution.robotics.core.cache.ImageCache
 import com.revolution.robotics.core.domain.remote.BuildStep
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.core.utils.CustomTypefaceSpan
@@ -15,14 +16,15 @@ import com.revolution.robotics.features.build.adapter.BuildStepViewModel
 
 
 class BuildRobotViewModel(
-    private val resourceResolver: ResourceResolver
+    private val resourceResolver: ResourceResolver,
+    private val imageCache: ImageCache
 ) : ViewModel() {
     val step: MutableLiveData<Spannable?> = MutableLiveData()
     val adapter: MutableLiveData<BuildRobotAdapter> = MutableLiveData()
 
     fun setBuildSteps(buildSteps: List<BuildStep>) {
         val buildRobotAdapter = BuildRobotAdapter()
-        buildRobotAdapter.buildSteps = buildSteps.map { step -> BuildStepViewModel(step.image) }
+        buildRobotAdapter.buildSteps = buildSteps.map { step -> BuildStepViewModel(imageCache.getImagePath(step.image)) }
         adapter.value = buildRobotAdapter
     }
 

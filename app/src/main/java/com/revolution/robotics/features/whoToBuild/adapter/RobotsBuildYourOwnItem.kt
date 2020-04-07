@@ -1,5 +1,8 @@
 package com.revolution.robotics.features.whoToBuild.adapter
 
+import android.graphics.ColorFilter
+import android.graphics.ColorMatrix
+import android.graphics.ColorMatrixColorFilter
 import androidx.annotation.DrawableRes
 import com.revolution.robotics.R
 import com.revolution.robotics.core.domain.remote.Robot
@@ -10,6 +13,7 @@ class RobotsBuildYourOwnItem(
 ) : RobotsItem(
     Robot(),
     null,
+    true,
     presenter
 ) {
     @DrawableRes

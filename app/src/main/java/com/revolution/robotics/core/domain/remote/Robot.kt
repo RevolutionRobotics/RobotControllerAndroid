@@ -14,5 +14,6 @@ data class Robot(
     var complexity: String? = null,
     var compatibility: List<String> = emptyList(),
     var buildSteps: List<BuildStep> = emptyList(),
+    var buildStepsArchive: String? = null,
     var programs: List<Program> = emptyList()
 )

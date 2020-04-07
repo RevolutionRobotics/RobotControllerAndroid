@@ -38,7 +38,7 @@ fun createViewModelModule() =
         bind<WhoToBuildViewModel>() with p { WhoToBuildViewModel(i()) }
         bind<MyRobotsViewModel>() with p { MyRobotsViewModel(i()) }
         bind<ConnectViewModel>() with p { ConnectViewModel() }
-        bind<BuildRobotViewModel>() with p { BuildRobotViewModel(i()) }
+        bind<BuildRobotViewModel>() with p { BuildRobotViewModel(i(), i()) }
         bind<ConfigureViewModel>() with p { ConfigureViewModel(i()) }
         bind<ConfigureConnectionsViewModel>() with p { ConfigureConnectionsViewModel(i()) }
         bind<MotorConfigurationViewModel>() with p { MotorConfigurationViewModel(i()) }

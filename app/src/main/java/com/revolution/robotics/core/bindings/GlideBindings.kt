@@ -1,5 +1,7 @@
 package com.revolution.robotics.core.bindings
 
+import android.graphics.ColorMatrix
+import android.graphics.ColorMatrixColorFilter
 import android.graphics.drawable.Drawable
 import android.view.View
 import android.widget.ImageView
@@ -18,9 +20,18 @@ import com.revolution.robotics.core.utils.CameraHelper
 import com.revolution.robotics.views.RemoteImageView
 import java.io.File
 
-@BindingAdapter("imagePath", "errorDrawable", requireAll = false)
+@BindingAdapter(
+    "imagePath",
+    "originalSize",
+    "grayScale",
+    "errorDrawable",
+    requireAll = false
+)
 fun loadLocalImage(
-    imageView: ImageView, imagePath: String,
+    imageView: ImageView,
+    imagePath: String,
+    originalSize: Boolean?,
+    grayScale: Boolean?,
     errorDrawable: Drawable?
 ) {
     Glide.with(imageView)
@@ -30,6 +41,17 @@ fun loadLocalImage(
                 error(R.drawable.ic_image_not_found)
             } else {
                 error(errorDrawable)
+            }
+        }
+        .apply { if (originalSize == true) override(SIZE_ORIGINAL, SIZE_ORIGINAL) }
+        .apply {
+            if (grayScale == true) {
+                val colorMatrix =  ColorMatrix()
+                colorMatrix.setSaturation(0.0f)
+                val filter =  ColorMatrixColorFilter(colorMatrix)
+                imageView.colorFilter = filter
+            } else {
+                imageView.clearColorFilter()
             }
         }
         .into(imageView)

@@ -19,6 +19,7 @@ import com.revolution.robotics.core.db.RoboticsDatabase
 import com.revolution.robotics.core.domain.local.*
 import com.revolution.robotics.core.interactor.*
 import com.revolution.robotics.core.interactor.api.DownloadChallengesInteractor
+import com.revolution.robotics.core.interactor.api.DownloadRobotInteractor
 import com.revolution.robotics.core.interactor.api.DownloadRobotsInteractor
 import com.revolution.robotics.core.interactor.api.GetFirmwareInteractor
 import com.revolution.robotics.core.interactor.firebase.*
@@ -128,13 +129,14 @@ fun createInteractorModule() =
         bind<AssignProgramToButtonInteractor>() with p { AssignProgramToButtonInteractor(i(), i()) }
         bind<DownloadRobotsInteractor>() with p { DownloadRobotsInteractor(i(), i(), i(), i())}
         bind<DownloadChallengesInteractor>() with p { DownloadChallengesInteractor(i(), i(), i())}
+        bind<DownloadRobotInteractor>() with p { DownloadRobotInteractor(i(), i(), i())}
     }
 
 @Suppress("LongMethod")
 fun createPresenterModule() =
     Kodein.Module("PresenterModule") {
         bind<MainMenuMvp.Presenter>() with s { MainMenuPresenter(i(), i(), i()) }
-        bind<WhoToBuildMvp.Presenter>() with s { WhoToBuildPresenter(i(), i(), i(), i(), i(), i(), i(), i(), i()) }
+        bind<WhoToBuildMvp.Presenter>() with s { WhoToBuildPresenter(i(), i(), i(), i(), i(), i(), i(), i(), i(), i(), i()) }
         bind<MyRobotsMvp.Presenter>() with s { MyRobotsPresenter(i(), i(), i(), i(), i(), i()) }
         bind<BuildRobotMvp.Presenter>() with s { BuildRobotPresenter(i(), i(), i(), i(), i(), i()) }
         bind<ConnectMvp.Presenter>() with s { ConnectPresenter(i(), i(), i()) }

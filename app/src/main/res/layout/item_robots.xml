@@ -61,6 +61,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     app:imagePath="@{viewModel.imagePath}"
+                    app:grayScale="@{!viewModel.downloaded}"
+                    android:alpha="@{viewModel.downloaded ? 1.0f : 0.5f}"
                     app:layout_constraintTop_toTopOf="@id/robotsCardImageTopGuide"
                     app:layout_constraintBottom_toBottomOf="@id/robotsCardImageBottomGuide"/>
 

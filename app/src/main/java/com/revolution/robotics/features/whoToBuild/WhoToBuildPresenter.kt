@@ -14,7 +14,9 @@ import com.revolution.robotics.core.extensions.isEmptyOrNull
 import com.revolution.robotics.core.interactor.AssignConfigToRobotInteractor
 import com.revolution.robotics.core.interactor.SaveUserControllerInteractor
 import com.revolution.robotics.core.interactor.SaveUserRobotInteractor
+import com.revolution.robotics.core.interactor.api.DownloadRobotInteractor
 import com.revolution.robotics.core.interactor.api.DownloadRobotsInteractor
+import com.revolution.robotics.core.interactor.firebase.FirebaseFileDownloader
 import com.revolution.robotics.core.interactor.firebase.RobotsInteractor
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.core.utils.Navigator
@@ -37,7 +39,9 @@ class WhoToBuildPresenter(
     private val assignConfigToRobotInteractor: AssignConfigToRobotInteractor,
     private val saveUserRobotInteractor: SaveUserRobotInteractor,
     private val saveUserControllerInteractor: SaveUserControllerInteractor,
+    private val downloadRobotInteractor: DownloadRobotInteractor,
     private val resourceResolver: ResourceResolver,
+    private val firebaseFileDownloader: FirebaseFileDownloader,
     private val imageCache: ImageCache,
     private val navigator: Navigator,
     private val reporter: Reporter
@@ -77,13 +81,29 @@ class WhoToBuildPresenter(
         model?.apply {
             currentPosition.set(if (robots.isNotEmpty()) 1 else 0)
             robotsList.value =
-                robots.map { robot -> RobotsItem(robot,  imageCache.getImagePath(robot.coverImage),this@WhoToBuildPresenter) }
+                robots.map { robot ->
+                    RobotsItem(
+                        robot,
+                        imageCache.getImagePath(robot.coverImage),
+                        isDownloaded(robot),
+                        this@WhoToBuildPresenter
+                    )
+                }
                     .toMutableList()
                     .apply { add(0, RobotsBuildYourOwnItem(this@WhoToBuildPresenter)) }
             robotsList.value?.firstOrNull()?.isSelected?.set(true)
             updateButtonsVisibility(0)
             view?.onRobotsLoaded()
         }
+    }
+
+    private fun isDownloaded(robot: Robot): Boolean {
+        for (step in robot.buildSteps) {
+            if (step.image != null && !imageCache.isSaved(step.image!!)) {
+                return false
+            }
+        }
+        return true
     }
 
     override fun onPageSelected(position: Int) {
@@ -121,6 +141,21 @@ class WhoToBuildPresenter(
     }
 
     override fun onRobotSelected(robot: Robot) {
+        if (isDownloaded(robot)) {
+            createRobot(robot)
+        } else {
+            var start = System.currentTimeMillis()
+            downloadRobotInteractor.robot = robot
+            downloadRobotInteractor.execute {
+                Log.d(
+                    "ROBOTS",
+                    robot.name?.en + " downloaded in " + (System.currentTimeMillis() - start) / 1000 + " sec"
+                )
+            }
+        }
+    }
+
+    private fun createRobot(robot: Robot) {
         val userRobot = UserRobot(
             0,
             robot.id,
