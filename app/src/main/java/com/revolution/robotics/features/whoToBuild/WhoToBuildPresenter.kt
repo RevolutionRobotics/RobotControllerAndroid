@@ -41,7 +41,6 @@ class WhoToBuildPresenter(
     private val saveUserControllerInteractor: SaveUserControllerInteractor,
     private val downloadRobotInteractor: DownloadRobotInteractor,
     private val resourceResolver: ResourceResolver,
-    private val firebaseFileDownloader: FirebaseFileDownloader,
     private val imageCache: ImageCache,
     private val navigator: Navigator,
     private val reporter: Reporter

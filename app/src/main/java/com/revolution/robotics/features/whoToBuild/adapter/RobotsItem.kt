@@ -12,10 +12,10 @@ open class RobotsItem(
     val downloaded: Boolean,
     private val presenter: WhoToBuildMvp.Presenter
 ) {
-    val name = if (downloaded) robot.name else LocalizedString("DOWNLOAD")
+    val name = robot.name
     val time = robot.buildTime
-    open val selectedResource = R.drawable.robots_card_border_red_selector
-    open val defaultResource = R.drawable.robots_card_border_grey
+    open val selectedResource = if (downloaded) R.drawable.robots_card_border_red_selector else R.drawable.robots_download_card_border_red_pressed
+    open val defaultResource = if (downloaded) R.drawable.robots_card_border_grey else R.drawable.robots_download_card_border_grey
     var isSelected: ObservableBoolean = ObservableBoolean(false)
 
     open fun onClicked() {
