@@ -27,7 +27,7 @@ class FirmwareFragment :
     }
 
     override fun onDestroyView() {
-        presenter.unregister()
+        presenter.unregister(this)
         super.onDestroyView()
     }
 
