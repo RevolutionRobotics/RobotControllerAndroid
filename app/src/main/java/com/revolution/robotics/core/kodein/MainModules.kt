@@ -51,7 +51,6 @@ fun createAppModule(context: Context) =
         bind<ApplicationContextProvider>() with s { ApplicationContextProvider(context) }
         bind<AppPrefs>() with s { AppPrefs(context) }
         bind<ErrorHandler>() with s { ErrorHandler() }
-        bind<FirebaseFileDownloader>() with p { FirebaseFileDownloader(i(), i()) }
         bind<FirebaseAnalytics>() with s { FirebaseAnalytics.getInstance(context) }
         bind<Reporter>() with s { Reporter(i()) }
         bind<FileManager>() with s { FileManager(context) }

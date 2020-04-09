@@ -6,21 +6,22 @@ import com.revolution.robotics.R
 import com.revolution.robotics.analytics.Reporter
 import com.revolution.robotics.analytics.reportUploadedToBrain
 import com.revolution.robotics.core.domain.remote.Firmware
+import com.revolution.robotics.core.interactor.api.DownloadFileInteractorBuilder
 import com.revolution.robotics.core.interactor.api.GetFirmwareInteractor
-import com.revolution.robotics.core.interactor.firebase.FirebaseFileDownloader
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.features.bluetooth.BluetoothManager
 import com.revolution.robotics.features.shared.ErrorHandler
 import com.revolution.robotics.views.dialogs.DialogButton
 import java.lang.RuntimeException
+import java.net.URL
 
 class FirmwareUpdateDialogPresenter(
     private val interactor: GetFirmwareInteractor,
-    private val fileDownloader: FirebaseFileDownloader,
     private val bluetoothManager: BluetoothManager,
     private val errorHandler: ErrorHandler,
     private val resourceResolver: ResourceResolver,
-    private val reporter: Reporter
+    private val reporter: Reporter,
+    private val donwloaderInteractorBuilder: DownloadFileInteractorBuilder
 ) : FirmwareUpdateMvp.Presenter {
 
     companion object {
@@ -158,8 +159,9 @@ class FirmwareUpdateDialogPresenter(
         firmwareUpdateInProgress = true
         val startTime = System.currentTimeMillis()
         latestFirmware?.url?.let { firmwareUrl ->
+            val downloader = donwloaderInteractorBuilder.createDownloader(URL(firmwareUrl), FIRMWARE_FILENAME)
             view?.activateLoadingFace()
-            fileDownloader.downloadFirestoreFile(FIRMWARE_FILENAME, firmwareUrl, { firmwareUri ->
+            downloader.execute({ firmwareUri ->
                 bluetoothManager.getConfigurationService().updateFramework(firmwareUri,
                     onSuccess = {
                         firmwareUpdateInProgress = false
