@@ -14,9 +14,7 @@ import com.revolution.robotics.core.extensions.isEmptyOrNull
 import com.revolution.robotics.core.interactor.AssignConfigToRobotInteractor
 import com.revolution.robotics.core.interactor.SaveUserControllerInteractor
 import com.revolution.robotics.core.interactor.SaveUserRobotInteractor
-import com.revolution.robotics.core.interactor.api.DownloadRobotInteractor
 import com.revolution.robotics.core.interactor.api.DownloadRobotsInteractor
-import com.revolution.robotics.core.interactor.firebase.FirebaseFileDownloader
 import com.revolution.robotics.core.interactor.firebase.RobotsInteractor
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.core.utils.Navigator
@@ -24,13 +22,7 @@ import com.revolution.robotics.features.build.BuildRobotFragment
 import com.revolution.robotics.features.controllers.ControllerType
 import com.revolution.robotics.features.whoToBuild.adapter.RobotsBuildYourOwnItem
 import com.revolution.robotics.features.whoToBuild.adapter.RobotsItem
-import java.util.Date
-import kotlin.collections.emptyList
-import kotlin.collections.firstOrNull
-import kotlin.collections.indexOfFirst
-import kotlin.collections.isNotEmpty
-import kotlin.collections.map
-import kotlin.collections.toMutableList
+import java.util.*
 import kotlin.math.max
 
 class WhoToBuildPresenter(
@@ -39,7 +31,6 @@ class WhoToBuildPresenter(
     private val assignConfigToRobotInteractor: AssignConfigToRobotInteractor,
     private val saveUserRobotInteractor: SaveUserRobotInteractor,
     private val saveUserControllerInteractor: SaveUserControllerInteractor,
-    private val downloadRobotInteractor: DownloadRobotInteractor,
     private val resourceResolver: ResourceResolver,
     private val imageCache: ImageCache,
     private val navigator: Navigator,
@@ -68,7 +59,7 @@ class WhoToBuildPresenter(
         )
     }
 
-    private fun loadRobots() {
+    override fun loadRobots() {
         robotsInteractor.execute({ response ->
             displayRobots(response)
         }, { error ->
@@ -78,7 +69,13 @@ class WhoToBuildPresenter(
 
     private fun displayRobots(robots: List<Robot>) {
         model?.apply {
-            currentPosition.set(if (robots.isNotEmpty()) 1 else 0)
+            if (currentPosition.get() > 0) {
+                currentPosition.set(robots.size.coerceAtMost(currentPosition.get()))
+            } else if (robots.isNotEmpty()){
+                currentPosition.set(1)
+            } else {
+                currentPosition.set(0)
+            }
             robotsList.value =
                 robots.map { robot ->
                     RobotsItem(
@@ -143,14 +140,7 @@ class WhoToBuildPresenter(
         if (isDownloaded(robot)) {
             createRobot(robot)
         } else {
-            var start = System.currentTimeMillis()
-            downloadRobotInteractor.robot = robot
-            downloadRobotInteractor.execute {
-                Log.d(
-                    "ROBOTS",
-                    robot.name?.en + " downloaded in " + (System.currentTimeMillis() - start) / 1000 + " sec"
-                )
-            }
+            robot.id?.let {view?.showDownloadDialog(it) }
         }
     }
 

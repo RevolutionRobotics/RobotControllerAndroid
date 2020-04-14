@@ -42,6 +42,12 @@
     <string name="who_to_build_download">download</string>
     <string name="who_to_build_searching_title">Searching for robots in the area</string>
 
+    <!-- Download robot -->
+    <string name="download_robot_downloading_robot">Downloading robot</string>
+    <string name="download_robot_please_wait">Please wait</string>
+    <string name="download_robot_success">Robot downloaded</string>
+    <string name="download_robot_error">Failed to download robot</string>
+
     <!-- Bluetooth permission -->
     <string name="permission_bluetooth_title">Bluetooth permissions</string>
     <string name="permission_bluetooth_description">We need your location permissions to search for bluetooth devices.

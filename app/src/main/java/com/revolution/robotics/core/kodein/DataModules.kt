@@ -89,6 +89,8 @@ import com.revolution.robotics.features.splash.SplashMvp
 import com.revolution.robotics.features.splash.SplashPresenter
 import com.revolution.robotics.features.whoToBuild.WhoToBuildMvp
 import com.revolution.robotics.features.whoToBuild.WhoToBuildPresenter
+import com.revolution.robotics.features.whoToBuild.download.DownloadRobotMVP
+import com.revolution.robotics.features.whoToBuild.download.DownloadRobotPresenter
 import org.kodein.di.DKodeinAware
 import org.kodein.di.Kodein
 import org.kodein.di.bindings.*
@@ -136,7 +138,7 @@ fun createInteractorModule() =
 fun createPresenterModule() =
     Kodein.Module("PresenterModule") {
         bind<MainMenuMvp.Presenter>() with s { MainMenuPresenter(i(), i(), i()) }
-        bind<WhoToBuildMvp.Presenter>() with s { WhoToBuildPresenter(i(), i(), i(), i(), i(), i(), i(), i(), i(), i()) }
+        bind<WhoToBuildMvp.Presenter>() with s { WhoToBuildPresenter(i(), i(), i(), i(), i(), i(), i(), i(), i()) }
         bind<MyRobotsMvp.Presenter>() with s { MyRobotsPresenter(i(), i(), i(), i(), i(), i()) }
         bind<BuildRobotMvp.Presenter>() with s { BuildRobotPresenter(i(), i(), i(), i(), i(), i()) }
         bind<ConnectMvp.Presenter>() with s { ConnectPresenter(i(), i(), i()) }
@@ -174,6 +176,7 @@ fun createPresenterModule() =
         bind<TestMvp.Presenter>() with s { TestPresenter(i(), i(), i()) }
         bind<HaveYouBuiltMvp.Presenter>() with s { HaveYouBuiltPresenter(i(), i(), i(), i(), i(), i(), i(), i(), i()) }
         bind<TestCodeMvp.Presenter>() with s { TestCodePresenter(i(), i(), i()) }
+        bind<DownloadRobotMVP.Presenter>() with s { DownloadRobotPresenter(i(), i()) }
     }
 
 fun createDbModule(context: Context) =

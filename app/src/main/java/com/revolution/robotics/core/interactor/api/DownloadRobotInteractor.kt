@@ -16,43 +16,37 @@ class DownloadRobotInteractor(
     private val applicationContextProvider: ApplicationContextProvider,
     private val imageCache: ImageCache,
     private val imageDownloader: ImageDownloader
-) : Interactor<Boolean>() {
+) : Interactor<Unit>() {
 
     var robot: Robot? = null
 
-    override fun getData(): Boolean {
+    override fun getData() {
         val missingImages =
             robot?.buildSteps?.map { it.image }?.filter { it != null && !imageCache.isSaved(it) }
                 ?.toList()
         missingImages?.let {
-            return if (it.size > 5)
+            if (it.size > 5)
                 downloadRobotZip()
             else {
                 imageDownloader.downloadImages(it) > 0
             }
         }
-        return false
     }
 
-    private fun downloadRobotZip(): Boolean {
+    private fun downloadRobotZip() {
         val outputFile =
             File("${applicationContextProvider.applicationContext.filesDir}/" + robot?.id + ".zip")
-        return try {
-            URL(robot?.buildStepsArchive).openStream().use { input ->
-                FileOutputStream(outputFile).use { output ->
-                    input.copyTo(output)
-                    unzip(
-                        outputFile.absolutePath,
-                        applicationContextProvider.applicationContext.getDir(
-                            "ImageCache",
-                            Context.MODE_PRIVATE
-                        ).absolutePath
-                    )
-                }
+        URL(robot?.buildStepsArchive).openStream().use { input ->
+            FileOutputStream(outputFile).use { output ->
+                input.copyTo(output)
+                unzip(
+                    outputFile.absolutePath,
+                    applicationContextProvider.applicationContext.getDir(
+                        "ImageCache",
+                        Context.MODE_PRIVATE
+                    ).absolutePath
+                )
             }
-            true
-        } catch (exception: Exception) {
-            false
         }
     }
 
