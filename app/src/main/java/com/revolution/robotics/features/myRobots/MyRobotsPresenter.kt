@@ -1,5 +1,6 @@
 package com.revolution.robotics.features.myRobots
 
+import com.revolution.robotics.core.cache.ImageCache
 import com.revolution.robotics.core.domain.local.BuildStatus
 import com.revolution.robotics.core.domain.local.UserRobot
 import com.revolution.robotics.core.extensions.formatYearMonthDay
@@ -21,6 +22,7 @@ class MyRobotsPresenter(
     private val deleteRobotInteractor: DeleteRobotInteractor,
     private val getControllerTypeInteractor: GetControllerTypeInteractor,
     private val duplicateUserRobotInteractor: DuplicateUserRobotInteractor,
+    private val imageCache: ImageCache,
     private val navigator: Navigator
 ) : MyRobotsMvp.Presenter {
 
@@ -44,6 +46,7 @@ class MyRobotsPresenter(
                     robot.id,
                     robot,
                     robot.lastModified?.formatYearMonthDay() ?: "",
+                    imageCache.getRobotImagePath(robot),
                     robot.buildStatus == BuildStatus.IN_PROGRESS,
                     this
                 )
@@ -149,6 +152,7 @@ class MyRobotsPresenter(
                         robot.id,
                         robot,
                         robot.lastModified?.formatYearMonthDay() ?: "",
+                        imageCache.getRobotImagePath(robot),
                         robot.buildStatus == BuildStatus.IN_PROGRESS,
                         this@MyRobotsPresenter
                     )

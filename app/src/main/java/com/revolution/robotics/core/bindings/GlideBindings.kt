@@ -1,5 +1,7 @@
 package com.revolution.robotics.core.bindings
 
+import android.graphics.ColorMatrix
+import android.graphics.ColorMatrixColorFilter
 import android.graphics.drawable.Drawable
 import android.view.View
 import android.widget.ImageView
@@ -18,22 +20,41 @@ import com.revolution.robotics.core.utils.CameraHelper
 import com.revolution.robotics.views.RemoteImageView
 import java.io.File
 
-@BindingAdapter("android:src", "errorDrawable", requireAll = false)
-fun loadImage(imageView: ImageView, url: String?, errorDrawable: Drawable?) {
-    if (!url.isNullOrEmpty()) {
-        Glide.with(imageView)
-            .load(url)
-            .apply {
-                if (errorDrawable == null) {
-                    error(R.drawable.ic_image_not_found)
-                } else {
-                    error(errorDrawable)
-                }
+@BindingAdapter(
+    "imagePath",
+    "originalSize",
+    "grayScale",
+    "errorDrawable",
+    requireAll = false
+)
+fun loadLocalImage(
+    imageView: ImageView,
+    imagePath: String,
+    originalSize: Boolean?,
+    grayScale: Boolean?,
+    errorDrawable: Drawable?
+) {
+    Glide.with(imageView)
+        .load(imagePath)
+        .apply {
+            if (errorDrawable == null) {
+                error(R.drawable.ic_image_not_found)
+            } else {
+                error(errorDrawable)
             }
-            .into(imageView)
-    } else {
-        setErrorDrawable(imageView, errorDrawable)
-    }
+        }
+        .apply { if (originalSize == true) override(SIZE_ORIGINAL, SIZE_ORIGINAL) }
+        .apply {
+            if (grayScale == true) {
+                val colorMatrix =  ColorMatrix()
+                colorMatrix.setSaturation(0.0f)
+                val filter =  ColorMatrixColorFilter(colorMatrix)
+                imageView.colorFilter = filter
+            } else {
+                imageView.clearColorFilter()
+            }
+        }
+        .into(imageView)
 }
 
 @BindingAdapter("localResource", "errorDrawable", requireAll = false)
@@ -147,7 +168,14 @@ fun loadFirebaseImage(
         loadImageFromFile(remoteImageView, imageFile, null)
     } else if (!gsUrl.isNullOrEmpty()) {
         remoteImageView.empty.setImageResource(0)
-        loadFirebaseImage(remoteImageView.image, gsUrl, errorDrawable, remoteImageView.progress ,animate, false)
+        loadFirebaseImage(
+            remoteImageView.image,
+            gsUrl,
+            errorDrawable,
+            remoteImageView.progress,
+            animate,
+            false
+        )
     } else {
         if (errorDrawable == null) {
             remoteImageView.empty.setImageResource(R.drawable.ic_image_not_found)
@@ -166,6 +194,6 @@ fun loadImageFromFile(imageView: RemoteImageView, file: File?, gsUrl: String?) {
             .skipMemoryCache(true)
             .into(imageView.image)
     } else if (!gsUrl.isNullOrEmpty()) {
-        loadFirebaseImage(imageView.image, gsUrl, null, imageView.progress,false, false)
+        loadFirebaseImage(imageView.image, gsUrl, null, imageView.progress, false, false)
     }
 }

@@ -57,10 +57,12 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"/>
 
-            <com.revolution.robotics.views.RemoteImageView
+            <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    app:imageUrl="@{viewModel.imageUrl}"
+                    app:imagePath="@{viewModel.imagePath}"
+                    app:grayScale="@{!viewModel.downloaded}"
+                    android:alpha="@{viewModel.downloaded ? 1.0f : 0.5f}"
                     app:layout_constraintTop_toTopOf="@id/robotsCardImageTopGuide"
                     app:layout_constraintBottom_toBottomOf="@id/robotsCardImageBottomGuide"/>
 
@@ -101,7 +103,8 @@
                     app:layout_constraintTop_toTopOf="@id/robotsCardTimerGuideView"
                     app:layout_constraintBottom_toBottomOf="@id/robotsCardTimerGuideView"
                     app:layout_constraintStart_toStartOf="@id/robotsCardTimerGuideView"
-                    app:layout_constraintEnd_toStartOf="@id/robotsCardTimeSpacer"/>
+                    app:layout_constraintEnd_toStartOf="@id/robotsCardTimeSpacer"
+                    app:visible="@{safeUnbox(viewModel.downloaded)}"/>
 
             <View
                     android:id="@+id/robotsCardTimeSpacer"
@@ -111,7 +114,8 @@
                     app:layout_constraintTop_toTopOf="@id/robotsCardTimerGuideView"
                     app:layout_constraintBottom_toBottomOf="@id/robotsCardTimerGuideView"
                     app:layout_constraintStart_toEndOf="@id/robotsCardClockIcon"
-                    app:layout_constraintEnd_toStartOf="@id/robotsCardTime"/>
+                    app:layout_constraintEnd_toStartOf="@id/robotsCardTime"
+                    app:visible="@{safeUnbox(viewModel.downloaded)}"/>
 
             <TextView
                     android:id="@+id/robotsCardTime"
@@ -123,7 +127,33 @@
                     android:textColor="@color/white"
                     app:layout_constraintBottom_toBottomOf="@id/robotsCardClockIcon"
                     app:layout_constraintStart_toEndOf="@id/robotsCardTimeSpacer"
-                    app:layout_constraintEnd_toEndOf="@id/robotsCardTimerGuideView"/>
+                    app:layout_constraintEnd_toEndOf="@id/robotsCardTimerGuideView"
+                    app:visible="@{safeUnbox(viewModel.downloaded)}"/>
+
+            <ImageView
+                android:layout_marginLeft="32sp"
+                android:id="@+id/robotDownloadIcon"
+                android:src="@drawable/ic_download_robot"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                app:layout_constraintStart_toStartOf="@id/robotsCardTimerGuideView"
+                app:layout_constraintTop_toTopOf="@id/robotsCardTimerGuideView"
+                app:layout_constraintBottom_toBottomOf="@id/robotsCardTimerGuideView"
+                app:visible="@{!safeUnbox(viewModel.downloaded)}"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/who_to_build_download"
+                android:textSize="18sp"
+                android:fontFamily="@font/barlow_medium"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toEndOf="@id/robotDownloadIcon"
+                android:textAllCaps="true"
+                app:layout_constraintTop_toTopOf="@id/robotsCardTimerGuideView"
+                app:layout_constraintBottom_toBottomOf="@id/robotsCardTimerGuideView"
+                android:layout_marginLeft="12dp"
+                app:visible="@{!safeUnbox(viewModel.downloaded)}"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

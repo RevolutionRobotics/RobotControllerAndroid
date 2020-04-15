@@ -20,6 +20,7 @@ import com.revolution.robotics.core.domain.local.*
 import com.revolution.robotics.core.interactor.*
 import com.revolution.robotics.core.interactor.api.DownloadChallengesInteractor
 import com.revolution.robotics.core.interactor.api.DownloadFileInteractorBuilder
+import com.revolution.robotics.core.interactor.api.DownloadRobotInteractor
 import com.revolution.robotics.core.interactor.api.DownloadRobotsInteractor
 import com.revolution.robotics.core.interactor.api.GetFirmwareInteractor
 import com.revolution.robotics.core.interactor.firebase.*
@@ -90,6 +91,8 @@ import com.revolution.robotics.features.splash.SplashMvp
 import com.revolution.robotics.features.splash.SplashPresenter
 import com.revolution.robotics.features.whoToBuild.WhoToBuildMvp
 import com.revolution.robotics.features.whoToBuild.WhoToBuildPresenter
+import com.revolution.robotics.features.whoToBuild.download.DownloadRobotMVP
+import com.revolution.robotics.features.whoToBuild.download.DownloadRobotPresenter
 import org.kodein.di.DKodeinAware
 import org.kodein.di.Kodein
 import org.kodein.di.bindings.*
@@ -128,18 +131,19 @@ fun createInteractorModule() =
         bind<PortTestFileCreatorInteractor>() with p { PortTestFileCreatorInteractor(i()) }
         bind<CreateConfigurationFileInteractor>() with p { CreateConfigurationFileInteractor(i()) }
         bind<AssignProgramToButtonInteractor>() with p { AssignProgramToButtonInteractor(i(), i()) }
-        bind<DownloadRobotsInteractor>() with p { DownloadRobotsInteractor(i(), i(), i())}
+        bind<DownloadRobotsInteractor>() with p { DownloadRobotsInteractor(i(), i(), i(), i())}
         bind<DownloadChallengesInteractor>() with p { DownloadChallengesInteractor(i(), i(), i())}
         bind<FileDownloader>() with p { FileDownloader(i()) }
         bind<DownloadFileInteractorBuilder>() with p { DownloadFileInteractorBuilder(i()) }
+        bind<DownloadRobotInteractor>() with p { DownloadRobotInteractor(i(), i(), i())}
     }
 
 @Suppress("LongMethod")
 fun createPresenterModule() =
     Kodein.Module("PresenterModule") {
         bind<MainMenuMvp.Presenter>() with s { MainMenuPresenter(i(), i(), i()) }
-        bind<WhoToBuildMvp.Presenter>() with s { WhoToBuildPresenter(i(), i(), i(), i(), i(), i(), i(), i()) }
-        bind<MyRobotsMvp.Presenter>() with s { MyRobotsPresenter(i(), i(), i(), i(), i()) }
+        bind<WhoToBuildMvp.Presenter>() with s { WhoToBuildPresenter(i(), i(), i(), i(), i(), i(), i(), i(), i()) }
+        bind<MyRobotsMvp.Presenter>() with s { MyRobotsPresenter(i(), i(), i(), i(), i(), i()) }
         bind<BuildRobotMvp.Presenter>() with s { BuildRobotPresenter(i(), i(), i(), i(), i(), i()) }
         bind<ConnectMvp.Presenter>() with s { ConnectPresenter(i(), i(), i()) }
         bind<ConfigureMvp.Presenter>() with s { ConfigurePresenter(i(), i(), i(), i(), i(), i(), i(), i(), i(), i(), i()) }
@@ -157,7 +161,7 @@ fun createPresenterModule() =
         bind<ProgramSelectorMvp.Presenter>() with s { ProgramSelectorPresenter(i(), i(), i(), i(), i(), i()) }
         bind<ProgramPriorityMvp.Presenter>() with s { ProgramPriorityPresenter(i(), i(), i()) }
         bind<ButtonlessProgramSelectorMvp.Presenter>() with s { ButtonlessProgramSelectorPresenter(i(), i(), i(), i(), i(), i()) }
-        bind<SplashMvp.Presenter>() with s { SplashPresenter(i(), i()) }
+        bind<SplashMvp.Presenter>() with s { SplashPresenter(i(), i(), i(), i()) }
         bind<ChallengeGroupMvp.Presenter>() with s { ChallengeGroupPresenter(i(), i(), i(), i()) }
         bind<ChallengeListMvp.Presenter>() with s { ChallengeListPresenter(i(), i(), i()) }
         bind<ChallengeDetailMvp.Presenter>() with s { ChallengeDetailPresenter(i(), i(), i(), i()) }
@@ -176,6 +180,7 @@ fun createPresenterModule() =
         bind<TestMvp.Presenter>() with s { TestPresenter(i(), i(), i()) }
         bind<HaveYouBuiltMvp.Presenter>() with s { HaveYouBuiltPresenter(i(), i(), i(), i(), i(), i(), i(), i(), i()) }
         bind<TestCodeMvp.Presenter>() with s { TestCodePresenter(i(), i(), i()) }
+        bind<DownloadRobotMVP.Presenter>() with s { DownloadRobotPresenter(i(), i()) }
     }
 
 fun createDbModule(context: Context) =

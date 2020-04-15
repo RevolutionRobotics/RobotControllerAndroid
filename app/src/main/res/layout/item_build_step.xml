@@ -17,7 +17,7 @@
                 android:paddingTop="@dimen/toolbar_height"
                 android:paddingBottom="@dimen/dimen_48dp"
                 android:scaleType="centerInside"
-                app:imageUrl="@{viewModel.imageUrl}"
+                app:imagePath="@{viewModel.imagePath}"
                 app:originalSize="@{true}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

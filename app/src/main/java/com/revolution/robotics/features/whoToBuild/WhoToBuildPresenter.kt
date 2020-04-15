@@ -3,6 +3,7 @@ package com.revolution.robotics.features.whoToBuild
 import android.os.Bundle
 import android.util.Log
 import com.revolution.robotics.analytics.Reporter
+import com.revolution.robotics.core.cache.ImageCache
 import com.revolution.robotics.core.domain.PortMapping
 import com.revolution.robotics.core.domain.local.BuildStatus
 import com.revolution.robotics.core.domain.local.UserConfiguration
@@ -21,13 +22,7 @@ import com.revolution.robotics.features.build.BuildRobotFragment
 import com.revolution.robotics.features.controllers.ControllerType
 import com.revolution.robotics.features.whoToBuild.adapter.RobotsBuildYourOwnItem
 import com.revolution.robotics.features.whoToBuild.adapter.RobotsItem
-import java.util.Date
-import kotlin.collections.emptyList
-import kotlin.collections.firstOrNull
-import kotlin.collections.indexOfFirst
-import kotlin.collections.isNotEmpty
-import kotlin.collections.map
-import kotlin.collections.toMutableList
+import java.util.*
 import kotlin.math.max
 
 class WhoToBuildPresenter(
@@ -37,6 +32,7 @@ class WhoToBuildPresenter(
     private val saveUserRobotInteractor: SaveUserRobotInteractor,
     private val saveUserControllerInteractor: SaveUserControllerInteractor,
     private val resourceResolver: ResourceResolver,
+    private val imageCache: ImageCache,
     private val navigator: Navigator,
     private val reporter: Reporter
 ) :
@@ -63,7 +59,7 @@ class WhoToBuildPresenter(
         )
     }
 
-    private fun loadRobots() {
+    override fun loadRobots() {
         robotsInteractor.execute({ response ->
             displayRobots(response)
         }, { error ->
@@ -73,15 +69,37 @@ class WhoToBuildPresenter(
 
     private fun displayRobots(robots: List<Robot>) {
         model?.apply {
-            currentPosition.set(if (robots.isNotEmpty()) 1 else 0)
+            if (currentPosition.get() > 0) {
+                currentPosition.set(robots.size.coerceAtMost(currentPosition.get()))
+            } else if (robots.isNotEmpty()){
+                currentPosition.set(1)
+            } else {
+                currentPosition.set(0)
+            }
             robotsList.value =
-                robots.map { robot -> RobotsItem(robot, this@WhoToBuildPresenter) }
+                robots.map { robot ->
+                    RobotsItem(
+                        robot,
+                        imageCache.getImagePath(robot.coverImage),
+                        isDownloaded(robot),
+                        this@WhoToBuildPresenter
+                    )
+                }
                     .toMutableList()
                     .apply { add(0, RobotsBuildYourOwnItem(this@WhoToBuildPresenter)) }
             robotsList.value?.firstOrNull()?.isSelected?.set(true)
             updateButtonsVisibility(0)
             view?.onRobotsLoaded()
         }
+    }
+
+    private fun isDownloaded(robot: Robot): Boolean {
+        for (step in robot.buildSteps) {
+            if (step.image != null && !imageCache.isSaved(step.image!!)) {
+                return false
+            }
+        }
+        return true
     }
 
     override fun onPageSelected(position: Int) {
@@ -119,6 +137,14 @@ class WhoToBuildPresenter(
     }
 
     override fun onRobotSelected(robot: Robot) {
+        if (isDownloaded(robot)) {
+            createRobot(robot)
+        } else {
+            robot.id?.let {view?.showDownloadDialog(it) }
+        }
+    }
+
+    private fun createRobot(robot: Robot) {
         val userRobot = UserRobot(
             0,
             robot.id,

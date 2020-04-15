@@ -1,5 +1,6 @@
 package com.revolution.robotics.features.build
 
+import com.revolution.robotics.core.cache.ImageCache
 import com.revolution.robotics.core.domain.local.UserRobot
 import com.revolution.robotics.core.eventBus.dialog.DialogEvent
 import com.revolution.robotics.core.eventBus.dialog.DialogEventBus

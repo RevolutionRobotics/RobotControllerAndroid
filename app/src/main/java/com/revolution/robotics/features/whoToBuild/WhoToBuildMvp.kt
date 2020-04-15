@@ -9,9 +9,11 @@ interface WhoToBuildMvp : Mvp {
         fun onRobotsLoaded()
         fun showNextRobot()
         fun showPreviousRobot()
+        fun showDownloadDialog(robotId: String)
     }
 
     interface Presenter : Mvp.Presenter<View, WhoToBuildViewModel> {
+        fun loadRobots()
         fun onPageSelected(position: Int)
         fun nextButtonClick()
         fun previousButtonClick()
