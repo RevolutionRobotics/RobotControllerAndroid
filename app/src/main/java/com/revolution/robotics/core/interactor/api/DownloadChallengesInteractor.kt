@@ -1,5 +1,6 @@
 package com.revolution.robotics.core.interactor.api
 
+import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.revolution.robotics.core.api.RoboticsService
@@ -14,6 +15,7 @@ import java.net.HttpURLConnection
 class DownloadChallengesInteractor(
     private val roboticsService: RoboticsService,
     private val fileManager: FileManager,
+    private val imageDownloader: ImageDownloader,
     private val remoteDataCache: RemoteDataCache
 ) : Interactor<Boolean>() {
 
@@ -43,6 +45,10 @@ class DownloadChallengesInteractor(
                         challengeCategoryListType
                     )
             }
+            val startTime = System.currentTimeMillis()
+            val downloadedImageCount = imageDownloader.downloadImages(remoteDataCache.challenges.map { challengeCategory -> challengeCategory.image })
+            Log.d("Image downloader", downloadedImageCount.toString() + " challenge profile pictures downloaded in " + (System.currentTimeMillis() - startTime) + " ms")
+
             return changed
         } catch (e: Exception) {
             remoteDataCache.challenges =

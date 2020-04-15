@@ -132,7 +132,7 @@ fun createInteractorModule() =
         bind<CreateConfigurationFileInteractor>() with p { CreateConfigurationFileInteractor(i()) }
         bind<AssignProgramToButtonInteractor>() with p { AssignProgramToButtonInteractor(i(), i()) }
         bind<DownloadRobotsInteractor>() with p { DownloadRobotsInteractor(i(), i(), i(), i())}
-        bind<DownloadChallengesInteractor>() with p { DownloadChallengesInteractor(i(), i(), i())}
+        bind<DownloadChallengesInteractor>() with p { DownloadChallengesInteractor(i(), i(), i(), i())}
         bind<FileDownloader>() with p { FileDownloader(i()) }
         bind<DownloadFileInteractorBuilder>() with p { DownloadFileInteractorBuilder(i()) }
         bind<DownloadRobotInteractor>() with p { DownloadRobotInteractor(i(), i(), i())}
