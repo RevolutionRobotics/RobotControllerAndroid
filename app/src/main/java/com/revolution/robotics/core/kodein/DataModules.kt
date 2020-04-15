@@ -19,10 +19,12 @@ import com.revolution.robotics.core.db.RoboticsDatabase
 import com.revolution.robotics.core.domain.local.*
 import com.revolution.robotics.core.interactor.*
 import com.revolution.robotics.core.interactor.api.DownloadChallengesInteractor
+import com.revolution.robotics.core.interactor.api.DownloadFileInteractorBuilder
 import com.revolution.robotics.core.interactor.api.DownloadRobotInteractor
 import com.revolution.robotics.core.interactor.api.DownloadRobotsInteractor
 import com.revolution.robotics.core.interactor.api.GetFirmwareInteractor
 import com.revolution.robotics.core.interactor.firebase.*
+import com.revolution.robotics.core.utils.FileDownloader
 import com.revolution.robotics.features.build.BuildRobotMvp
 import com.revolution.robotics.features.build.BuildRobotPresenter
 import com.revolution.robotics.features.build.buildFinished.BuildFinishedMvp
@@ -131,6 +133,8 @@ fun createInteractorModule() =
         bind<AssignProgramToButtonInteractor>() with p { AssignProgramToButtonInteractor(i(), i()) }
         bind<DownloadRobotsInteractor>() with p { DownloadRobotsInteractor(i(), i(), i(), i())}
         bind<DownloadChallengesInteractor>() with p { DownloadChallengesInteractor(i(), i(), i())}
+        bind<FileDownloader>() with p { FileDownloader(i()) }
+        bind<DownloadFileInteractorBuilder>() with p { DownloadFileInteractorBuilder(i()) }
         bind<DownloadRobotInteractor>() with p { DownloadRobotInteractor(i(), i(), i())}
     }
 
