@@ -3,6 +3,7 @@ package com.revolution.robotics.features.challenges.challengeGroup
 import com.revolution.robotics.core.cache.ImageCache
 import com.revolution.robotics.core.domain.remote.ChallengeCategory
 import com.revolution.robotics.core.interactor.GetUserChallengeCategoriesInteractor
+import com.revolution.robotics.core.interactor.api.DownloadChallengeCategoryInteractor
 import com.revolution.robotics.core.interactor.api.DownloadChallengesInteractor
 import com.revolution.robotics.core.interactor.firebase.ChallengeCategoriesInteractor
 import com.revolution.robotics.core.utils.Navigator
@@ -12,6 +13,7 @@ class ChallengeGroupPresenter(
     private val downloadChallengesInteractor: DownloadChallengesInteractor,
     private val challengeCategoriesInteractor: ChallengeCategoriesInteractor,
     private val userChallengeInteractor: GetUserChallengeCategoriesInteractor,
+    private val downloadChallengeCategoryInteractor: DownloadChallengeCategoryInteractor,
     private val imageCache: ImageCache,
     private val navigator: Navigator
 ) :
@@ -66,6 +68,11 @@ class ChallengeGroupPresenter(
     }
 
     override fun onItemClicked(challenge: ChallengeCategory) {
-        navigator.navigate(ChallengeGroupFragmentDirections.toChallengeList(challenge.id?:""))
+        if (isDownloaded(challenge)) {
+            navigator.navigate(ChallengeGroupFragmentDirections.toChallengeList(challenge.id?:""))
+        } else {
+            downloadChallengeCategoryInteractor.challengeCategory = challenge
+            downloadChallengeCategoryInteractor.execute()
+        }
     }
 }

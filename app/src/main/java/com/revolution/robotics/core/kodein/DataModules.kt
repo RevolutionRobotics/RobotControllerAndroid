@@ -18,11 +18,7 @@ import com.revolution.robotics.core.cache.RemoteDataCache
 import com.revolution.robotics.core.db.RoboticsDatabase
 import com.revolution.robotics.core.domain.local.*
 import com.revolution.robotics.core.interactor.*
-import com.revolution.robotics.core.interactor.api.DownloadChallengesInteractor
-import com.revolution.robotics.core.interactor.api.DownloadFileInteractorBuilder
-import com.revolution.robotics.core.interactor.api.DownloadRobotInteractor
-import com.revolution.robotics.core.interactor.api.DownloadRobotsInteractor
-import com.revolution.robotics.core.interactor.api.GetFirmwareInteractor
+import com.revolution.robotics.core.interactor.api.*
 import com.revolution.robotics.core.interactor.firebase.*
 import com.revolution.robotics.core.utils.FileDownloader
 import com.revolution.robotics.features.build.BuildRobotMvp
@@ -136,6 +132,7 @@ fun createInteractorModule() =
         bind<FileDownloader>() with p { FileDownloader(i()) }
         bind<DownloadFileInteractorBuilder>() with p { DownloadFileInteractorBuilder(i()) }
         bind<DownloadRobotInteractor>() with p { DownloadRobotInteractor(i(), i(), i())}
+        bind<DownloadChallengeCategoryInteractor>() with p { DownloadChallengeCategoryInteractor(i(), i())}
     }
 
 @Suppress("LongMethod")
@@ -162,7 +159,7 @@ fun createPresenterModule() =
         bind<ProgramPriorityMvp.Presenter>() with s { ProgramPriorityPresenter(i(), i(), i()) }
         bind<ButtonlessProgramSelectorMvp.Presenter>() with s { ButtonlessProgramSelectorPresenter(i(), i(), i(), i(), i(), i()) }
         bind<SplashMvp.Presenter>() with s { SplashPresenter(i(), i(), i(), i()) }
-        bind<ChallengeGroupMvp.Presenter>() with s { ChallengeGroupPresenter(i(), i(), i(), i(), i()) }
+        bind<ChallengeGroupMvp.Presenter>() with s { ChallengeGroupPresenter(i(), i(), i(), i(), i(), i()) }
         bind<ChallengeListMvp.Presenter>() with s { ChallengeListPresenter(i(), i(), i()) }
         bind<ChallengeDetailMvp.Presenter>() with s { ChallengeDetailPresenter(i(), i(), i(), i()) }
         bind<DirectionSelectorMvp.Presenter>() with s { DirectionSelectorPresenter() }

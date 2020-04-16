@@ -69,9 +69,4 @@ class DownloadRobotInteractor(
             }
         }
     }
-
-    private fun dirChecker(targetLocation: String) {
-        val file = File(targetLocation)
-        file.mkdirs()
-    }
 }
