@@ -18,7 +18,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:background="@{viewModel.isComplete() ? @drawable/bg_challenge_card_gold_selector : @drawable/bg_challenge_card_grey_selector}"
+                app:backgroundResource="@{viewModel.background}"
                 app:layout_constraintDimensionRatio="H, 162:98">
 
             <androidx.constraintlayout.widget.Guideline
@@ -49,6 +49,23 @@
                     android:orientation="horizontal"
                     app:layout_constraintGuide_percent="0.70408163"/>
 
+            <TextView
+                android:id="@+id/download_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/content_bottom"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/counter_text_start"
+                android:layout_marginStart="@dimen/dimen_24dp"
+                android:layout_marginEnd="@dimen/dimen_24dp"
+                android:text="DOWNLOAD"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/jura_bold"
+                android:gravity="center_horizontal"
+                app:visible="@{!safeUnbox(viewModel.downloaded)}"/>
+
             <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/progress_wrapper"
                     android:layout_width="0dp"
@@ -58,7 +75,8 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="@id/counter_text_start"
-                    android:layout_marginStart="@dimen/dimen_24dp">
+                    android:layout_marginStart="@dimen/dimen_24dp"
+                    app:visible="@{safeUnbox(viewModel.downloaded)}">
 
                 <View
                         android:id="@+id/progress"
@@ -88,7 +106,9 @@
                     app:layout_constraintTop_toTopOf="@id/content_top"
                     app:layout_constraintBottom_toBottomOf="@id/content_bottom"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:imageUrl="@{viewModel.iconUrl}"
+                    app:imagePath="@{viewModel.iconUrl}"
+                    app:grayScale="@{!viewModel.downloaded}"
+                    android:alpha="@{viewModel.downloaded ? 1.0f : 0.5f}"
                     android:layout_marginStart="@dimen/dimen_16dp"/>
 
             <TextView
@@ -104,7 +124,8 @@
                     android:textSize="16sp"
                     android:textColor="@color/white"
                     android:fontFamily="@font/jura_bold"
-                    app:localizedFirebaseText="@{viewModel.name}"/>
+                    app:localizedFirebaseText="@{viewModel.name}"
+                    android:alpha="@{viewModel.downloaded ? 1.0f : 0.5f}"/>
 
             <TextView
                     android:id="@+id/steps"

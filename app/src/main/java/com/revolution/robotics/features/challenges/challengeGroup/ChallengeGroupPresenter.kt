@@ -1,5 +1,6 @@
 package com.revolution.robotics.features.challenges.challengeGroup
 
+import com.revolution.robotics.core.cache.ImageCache
 import com.revolution.robotics.core.domain.remote.ChallengeCategory
 import com.revolution.robotics.core.interactor.GetUserChallengeCategoriesInteractor
 import com.revolution.robotics.core.interactor.api.DownloadChallengesInteractor
@@ -11,6 +12,7 @@ class ChallengeGroupPresenter(
     private val downloadChallengesInteractor: DownloadChallengesInteractor,
     private val challengeCategoriesInteractor: ChallengeCategoriesInteractor,
     private val userChallengeInteractor: GetUserChallengeCategoriesInteractor,
+    private val imageCache: ImageCache,
     private val navigator: Navigator
 ) :
     ChallengeGroupMvp.Presenter {
@@ -41,6 +43,7 @@ class ChallengeGroupPresenter(
                 ChallengeGroupItem(
                     iconUrl = remoteCategory.image ?: "",
                     name = remoteCategory.name,
+                    downloaded = isDownloaded(remoteCategory),
                     currentChallenge = userCategories.find { it.challengeCategoryId == remoteCategory.id }?.progress
                         ?: 0,
                     totalChallenge = remoteCategory.challenges.size,
@@ -49,6 +52,17 @@ class ChallengeGroupPresenter(
                 )
             }
         }
+    }
+
+    private fun isDownloaded(category: ChallengeCategory): Boolean {
+        for (challenge in category.challenges) {
+            for (step in challenge.steps) {
+                if (step.image != null && !imageCache.isSaved(step.image!!)) {
+                    return false
+                }
+            }
+        }
+        return true
     }
 
     override fun onItemClicked(challenge: ChallengeCategory) {
