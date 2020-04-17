@@ -13,7 +13,6 @@ class ChallengeGroupPresenter(
     private val downloadChallengesInteractor: DownloadChallengesInteractor,
     private val challengeCategoriesInteractor: ChallengeCategoriesInteractor,
     private val userChallengeInteractor: GetUserChallengeCategoriesInteractor,
-    private val downloadChallengeCategoryInteractor: DownloadChallengeCategoryInteractor,
     private val imageCache: ImageCache,
     private val navigator: Navigator
 ) :
@@ -35,7 +34,7 @@ class ChallengeGroupPresenter(
         )
     }
 
-    private fun loadChallengeCategories() {
+    override fun loadChallengeCategories() {
         challengeCategoriesInteractor.execute { populateChallengeGroups(it) }
     }
 
@@ -71,8 +70,7 @@ class ChallengeGroupPresenter(
         if (isDownloaded(challenge)) {
             navigator.navigate(ChallengeGroupFragmentDirections.toChallengeList(challenge.id?:""))
         } else {
-            downloadChallengeCategoryInteractor.challengeCategory = challenge
-            downloadChallengeCategoryInteractor.execute()
+            view?.showDownloadDialog(challenge.id)
         }
     }
 }

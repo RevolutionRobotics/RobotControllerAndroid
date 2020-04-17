@@ -35,6 +35,8 @@ import com.revolution.robotics.features.challenges.challengeDetail.ChallengeDeta
 import com.revolution.robotics.features.challenges.challengeDetail.ChallengeDetailPresenter
 import com.revolution.robotics.features.challenges.challengeGroup.ChallengeGroupMvp
 import com.revolution.robotics.features.challenges.challengeGroup.ChallengeGroupPresenter
+import com.revolution.robotics.features.challenges.challengeGroup.download.DownloadChallengeMVP
+import com.revolution.robotics.features.challenges.challengeGroup.download.DownloadChallengePresenter
 import com.revolution.robotics.features.challenges.challengeList.ChallengeListMvp
 import com.revolution.robotics.features.challenges.challengeList.ChallengeListPresenter
 import com.revolution.robotics.features.coding.CodingMvp
@@ -159,7 +161,7 @@ fun createPresenterModule() =
         bind<ProgramPriorityMvp.Presenter>() with s { ProgramPriorityPresenter(i(), i(), i()) }
         bind<ButtonlessProgramSelectorMvp.Presenter>() with s { ButtonlessProgramSelectorPresenter(i(), i(), i(), i(), i(), i()) }
         bind<SplashMvp.Presenter>() with s { SplashPresenter(i(), i(), i(), i()) }
-        bind<ChallengeGroupMvp.Presenter>() with s { ChallengeGroupPresenter(i(), i(), i(), i(), i(), i()) }
+        bind<ChallengeGroupMvp.Presenter>() with s { ChallengeGroupPresenter(i(), i(), i(), i(), i()) }
         bind<ChallengeListMvp.Presenter>() with s { ChallengeListPresenter(i(), i(), i()) }
         bind<ChallengeDetailMvp.Presenter>() with s { ChallengeDetailPresenter(i(), i(), i(), i(), i()) }
         bind<DirectionSelectorMvp.Presenter>() with s { DirectionSelectorPresenter() }
@@ -178,6 +180,7 @@ fun createPresenterModule() =
         bind<HaveYouBuiltMvp.Presenter>() with s { HaveYouBuiltPresenter(i(), i(), i(), i(), i(), i(), i(), i(), i()) }
         bind<TestCodeMvp.Presenter>() with s { TestCodePresenter(i(), i(), i()) }
         bind<DownloadRobotMVP.Presenter>() with s { DownloadRobotPresenter(i(), i()) }
+        bind<DownloadChallengeMVP.Presenter>() with s { DownloadChallengePresenter(i(), i()) }
     }
 
 fun createDbModule(context: Context) =

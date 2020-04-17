@@ -239,6 +239,13 @@
     <string name="challenge_finished_dialog_button_challenge_list">Challenge list</string>
     <string name="challenge_finished_dialog_button_next">Next challenge</string>
 
+
+    <!-- Download challenge -->
+    <string name="download_challenge_downloading_challenge">Downloading challenge</string>
+    <string name="download_challenge_please_wait">Please wait</string>
+    <string name="download_challenge_success">Challenge downloaded</string>
+    <string name="download_challenge_error">Failed to download challenge</string>
+
     <!-- Program selector -->
     <string name="program_selector_title">Choose a program!</string>
     <string name="program_selector_order_by_name">Name</string>
