@@ -1,5 +1,6 @@
 package com.revolution.robotics.features.challenges.challengeDetail
 
+import com.revolution.robotics.core.cache.ImageCache
 import com.revolution.robotics.core.domain.local.ChallengeType
 import com.revolution.robotics.core.domain.local.UserChallengeCategory
 import com.revolution.robotics.core.domain.remote.Challenge
@@ -14,6 +15,7 @@ class ChallengeDetailPresenter(
     private val saveUserChallengeCategoryInteractor: SaveUserChallengeCategoryInteractor,
     private val getCategoriesInteractor: ChallengeCategoriesInteractor,
     private val getUserChallengeCategoriesInteractor: GetUserChallengeCategoriesInteractor,
+    private val imageCache: ImageCache,
     private val resourceResolver: ResourceResolver
 ) :
     ChallengeDetailMvp.Presenter, ChallengeDetailSlider.ChallengeStepSelectedListener {
@@ -56,14 +58,14 @@ class ChallengeDetailPresenter(
         model?.apply {
             when (val challengeType = ChallengeType.fromId(challengeStep.type)) {
                 ChallengeType.HORIZONTAL, ChallengeType.VERTICAL -> {
-                    image.value = challengeStep.image
+                    image.value = imageCache.getImagePath(challengeStep.image)
                     zoomableImage.value = null
                     title.value = challengeStep.text
                     type.value = challengeType
                     parts.value = emptyList()
                 }
                 ChallengeType.ZOOMABLE -> {
-                    zoomableImage.value = challengeStep.image
+                    zoomableImage.value = imageCache.getImagePath(challengeStep.image)
                     image.value = null
                     title.value = challengeStep.text
                     type.value = challengeType

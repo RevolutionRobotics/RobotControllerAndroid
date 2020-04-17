@@ -5,9 +5,12 @@ import com.revolution.robotics.core.domain.remote.ChallengeCategory
 
 interface ChallengeGroupMvp : Mvp {
 
-    interface View : Mvp.View
+    interface View : Mvp.View {
+        fun showDownloadDialog(challengeCategoryId: String?)
+    }
 
     interface Presenter : Mvp.Presenter<View, ChallengeGroupViewModel> {
+        fun loadChallengeCategories()
         fun onItemClicked(challenge: ChallengeCategory)
     }
 }

@@ -8,5 +8,6 @@ data class Challenge(
     var id: String? = null,
     var name: LocalizedString? = null,
     var order: Int = 0,
-    var steps: List<ChallengeStep> = emptyList()
+    var steps: List<ChallengeStep> = emptyList(),
+    var stepsArchive: String? = null
 ) : Parcelable

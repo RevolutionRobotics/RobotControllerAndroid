@@ -29,7 +29,7 @@ import java.io.File
 )
 fun loadLocalImage(
     imageView: ImageView,
-    imagePath: String,
+    imagePath: String?,
     originalSize: Boolean?,
     grayScale: Boolean?,
     errorDrawable: Drawable?
