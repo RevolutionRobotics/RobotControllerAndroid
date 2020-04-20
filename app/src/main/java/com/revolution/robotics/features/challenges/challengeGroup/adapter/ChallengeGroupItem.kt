@@ -36,4 +36,8 @@ data class ChallengeGroupItem(
     fun onItemClicked() {
         presenter.onItemClicked(challengeCategory)
     }
+
+    fun onDeleteClicked() {
+        presenter.onDeleteClicked(challengeCategory)
+    }
 }
