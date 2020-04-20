@@ -25,4 +25,8 @@ open class RobotsItem(
             presenter.onDisabledItemClicked(this)
         }
     }
+
+    open fun onDeleteClicked() {
+        presenter.onDeleteClicked(robot)
+    }
 }

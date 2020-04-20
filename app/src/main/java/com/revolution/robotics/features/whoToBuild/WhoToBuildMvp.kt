@@ -20,5 +20,6 @@ interface WhoToBuildMvp : Mvp {
         fun onRobotSelected(robot: Robot)
         fun onBuildYourOwnSelected()
         fun onDisabledItemClicked(robotsItem: RobotsItem)
+        fun onDeleteClicked(robot: Robot)
     }
 }
