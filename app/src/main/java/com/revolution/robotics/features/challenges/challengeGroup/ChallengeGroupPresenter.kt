@@ -66,11 +66,22 @@ class ChallengeGroupPresenter(
         return true
     }
 
-    override fun onItemClicked(challenge: ChallengeCategory) {
-        if (isDownloaded(challenge)) {
-            navigator.navigate(ChallengeGroupFragmentDirections.toChallengeList(challenge.id?:""))
+    override fun onItemClicked(challengeCategory: ChallengeCategory) {
+        if (isDownloaded(challengeCategory)) {
+            navigator.navigate(ChallengeGroupFragmentDirections.toChallengeList(challengeCategory.id?:""))
         } else {
-            view?.showDownloadDialog(challenge.id)
+            view?.showDownloadDialog(challengeCategory.id)
         }
+    }
+
+    override fun onDeleteClicked(challengeCategory: ChallengeCategory) {
+        for (challenge in challengeCategory.challenges) {
+            for (step in challenge.steps) {
+                if (step.image != null && imageCache.isSaved(step.image!!)) {
+                    imageCache.deleteImage(step.image!!)
+                }
+            }
+        }
+        loadChallengeCategories()
     }
 }

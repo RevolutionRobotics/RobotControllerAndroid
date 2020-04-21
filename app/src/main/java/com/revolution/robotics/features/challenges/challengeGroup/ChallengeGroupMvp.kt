@@ -11,6 +11,7 @@ interface ChallengeGroupMvp : Mvp {
 
     interface Presenter : Mvp.Presenter<View, ChallengeGroupViewModel> {
         fun loadChallengeCategories()
-        fun onItemClicked(challenge: ChallengeCategory)
+        fun onItemClicked(challengeCategory: ChallengeCategory)
+        fun onDeleteClicked(challengeCategory: ChallengeCategory)
     }
 }

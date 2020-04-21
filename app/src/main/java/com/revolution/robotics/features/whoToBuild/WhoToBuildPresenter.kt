@@ -185,6 +185,17 @@ class WhoToBuildPresenter(
         }
     }
 
+    override fun onDeleteClicked(robot: Robot) {
+        for (step in robot.buildSteps) {
+            step.image?.let {
+                if (imageCache.isSaved(it)) {
+                    imageCache.deleteImage(it)
+                }
+            }
+        }
+        loadRobots()
+    }
+
     private fun assignEmptyConfig(userRobot: UserRobot) {
         assignConfigToRobotInteractor.userRobot = userRobot
         assignConfigToRobotInteractor.portMapping = PortMapping()
