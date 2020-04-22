@@ -9,7 +9,6 @@ import com.revolution.robotics.core.api.RoboticsService
 import com.revolution.robotics.core.cache.ImageCache
 import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
 import com.revolution.robotics.core.interactor.api.ImageDownloader
-import com.revolution.robotics.core.interactor.firebase.FirebaseFileDownloader
 import com.revolution.robotics.core.kodein.utils.ApplicationContextProvider
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.core.utils.AppPrefs
@@ -71,7 +70,6 @@ fun createAppModule(context: Context) =
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
             retrofitBuilder.build()
-
         }
         bind<ImageCache>() with s { ImageCache(context) }
         bind<ImageDownloader>() with s { ImageDownloader(i(), context) }
