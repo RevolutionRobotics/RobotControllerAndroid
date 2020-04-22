@@ -12,7 +12,6 @@ import com.revolution.robotics.analytics.Reporter
 import com.revolution.robotics.core.extensions.hideSystemUI
 import com.revolution.robotics.core.interactor.api.DownloadVersionDataInteractor
 import com.revolution.robotics.core.utils.Navigator
-import com.revolution.robotics.core.utils.VersionNumber
 import com.revolution.robotics.core.utils.dynamicPermissions.DynamicPermissionHandler
 import com.revolution.robotics.features.bluetooth.BluetoothManager
 import com.revolution.robotics.features.shared.ErrorHandler
