@@ -16,7 +16,7 @@ class DownloadVersionDataInteractor(
 ) : Interactor<Int>() {
 
     private companion object {
-        private const val cacheFileName = "robots.json"
+        private const val cacheFileName = "versionData.json"
         private const val LOG_TAG = "DownloadVersionData"
     }
 
