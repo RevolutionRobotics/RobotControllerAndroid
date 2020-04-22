@@ -18,4 +18,7 @@ interface RoboticsService {
 
     @GET("v$API_VERSION//firmware")
     fun getFirmware(): Call<String>
+
+    @GET("v$API_VERSION//versionData")
+    fun getVersionData(): Call<String>
 }
