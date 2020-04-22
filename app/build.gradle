@@ -130,6 +130,7 @@ dependencies {
     //Retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-scalars:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
 
     // Kodein
     implementation "org.kodein.di:kodein-di-erased-jvm:$kodein_version"
