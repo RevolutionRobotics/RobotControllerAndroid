@@ -1,5 +1,6 @@
 package com.revolution.robotics.core.api
 
+import com.revolution.robotics.core.domain.remote.VersionData
 import retrofit2.Call
 import retrofit2.http.GET
 
@@ -20,5 +21,5 @@ interface RoboticsService {
     fun getFirmware(): Call<String>
 
     @GET("v$API_VERSION//versionData")
-    fun getVersionData(): Call<String>
+    fun getVersionData(): Call<VersionData>
 }

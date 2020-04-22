@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity(), KodeinAware, Navigator.NavigationEvent
 
         readVersionDataInteractor.execute (
             onResponse = { minAppVersion ->
-                if (VersionNumber.parse(BuildConfig.VERSION_NAME) < minAppVersion) {
+                if (BuildConfig.VERSION_CODE < minAppVersion) {
                     ForceUpdateDialog.newInstance().show(supportFragmentManager)
                 }
             }
