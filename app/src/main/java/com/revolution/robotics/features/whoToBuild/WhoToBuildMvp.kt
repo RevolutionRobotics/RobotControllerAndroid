@@ -10,6 +10,7 @@ interface WhoToBuildMvp : Mvp {
         fun showNextRobot()
         fun showPreviousRobot()
         fun showDownloadDialog(robotId: String)
+        fun showCannotDeleteRobotDialog(robotName: String)
     }
 
     interface Presenter : Mvp.Presenter<View, WhoToBuildViewModel> {

@@ -15,6 +15,7 @@ import com.revolution.robotics.databinding.FragmentWhoToBuildBinding
 import com.revolution.robotics.features.build.chapterFinished.ChapterFinishedDialog
 import com.revolution.robotics.features.build.testing.buildTest.TestBuildDialog
 import com.revolution.robotics.features.whoToBuild.adapter.RobotsCarouselAdapter
+import com.revolution.robotics.features.whoToBuild.delete.CannotDeleteRobotDialog
 import com.revolution.robotics.features.whoToBuild.download.DownloadRobotDialog
 import com.revolution.robotics.views.carousel.initCarouselPadding
 import com.revolution.robotics.views.carousel.initCarouselVariables
@@ -71,6 +72,10 @@ class WhoToBuildFragment : BaseFragment<FragmentWhoToBuildBinding, WhoToBuildVie
 
     override fun showDownloadDialog(robotId: String) {
         DownloadRobotDialog.newInstance(robotId).show(fragmentManager)
+    }
+
+    override fun showCannotDeleteRobotDialog(robotName: String) {
+        CannotDeleteRobotDialog(robotName).show(fragmentManager)
     }
 
     override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) = Unit

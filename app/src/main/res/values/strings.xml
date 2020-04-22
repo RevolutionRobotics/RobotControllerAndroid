@@ -41,6 +41,8 @@
     <string name="who_to_build_build_your_own">build your own</string>
     <string name="who_to_build_download">download</string>
     <string name="who_to_build_searching_title">Searching for robots in the area</string>
+    <string name="who_to_build_cannot_delete_robot_title">Cannot delete robot!</string>
+    <string name="who_to_build_cannot_delete_robot_description">You have an unfinished %1$s in your robots list, finish or delete it first!</string>
 
     <!-- Download robot -->
     <string name="download_robot_downloading_robot">Downloading robot</string>

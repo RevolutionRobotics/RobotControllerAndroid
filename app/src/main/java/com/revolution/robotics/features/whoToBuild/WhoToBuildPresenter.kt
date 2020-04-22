@@ -12,6 +12,7 @@ import com.revolution.robotics.core.domain.local.UserRobot
 import com.revolution.robotics.core.domain.remote.Robot
 import com.revolution.robotics.core.extensions.isEmptyOrNull
 import com.revolution.robotics.core.interactor.AssignConfigToRobotInteractor
+import com.revolution.robotics.core.interactor.GetAllUserRobotsInteractor
 import com.revolution.robotics.core.interactor.SaveUserControllerInteractor
 import com.revolution.robotics.core.interactor.SaveUserRobotInteractor
 import com.revolution.robotics.core.interactor.api.DownloadRobotsInteractor
@@ -28,6 +29,7 @@ import kotlin.math.max
 class WhoToBuildPresenter(
     private val downloadRobotsInteractor: DownloadRobotsInteractor,
     private val robotsInteractor: RobotsInteractor,
+    private val getAllUserRobotsInteractor: GetAllUserRobotsInteractor,
     private val assignConfigToRobotInteractor: AssignConfigToRobotInteractor,
     private val saveUserRobotInteractor: SaveUserRobotInteractor,
     private val saveUserControllerInteractor: SaveUserControllerInteractor,
@@ -186,6 +188,17 @@ class WhoToBuildPresenter(
     }
 
     override fun onDeleteClicked(robot: Robot) {
+        getAllUserRobotsInteractor.execute() { robots ->
+            val idUsed = robots.any { it.remoteId == robot.id && it.buildStatus == BuildStatus.IN_PROGRESS }
+            if (idUsed) {
+                view?.showCannotDeleteRobotDialog(robot.name?.getLocalizedString(resourceResolver) ?: "robot")
+            } else {
+                deleteRobot(robot)
+            }
+        }
+    }
+
+    private fun deleteRobot(robot: Robot) {
         for (step in robot.buildSteps) {
             step.image?.let {
                 if (imageCache.isSaved(it)) {
