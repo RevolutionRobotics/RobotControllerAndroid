@@ -16,10 +16,14 @@ import com.revolution.robotics.blockly.dialogs.variableOptions.VariableOptionsMv
 import com.revolution.robotics.blockly.dialogs.variableOptions.VariableOptionsPresenter
 import com.revolution.robotics.core.cache.RemoteDataCache
 import com.revolution.robotics.core.db.RoboticsDatabase
+import com.revolution.robotics.core.db.migration.Migrations
 import com.revolution.robotics.core.domain.local.*
 import com.revolution.robotics.core.interactor.*
 import com.revolution.robotics.core.interactor.api.*
-import com.revolution.robotics.core.interactor.firebase.*
+import com.revolution.robotics.core.interactor.firebase.BuildStepInteractor
+import com.revolution.robotics.core.interactor.firebase.ChallengeCategoriesInteractor
+import com.revolution.robotics.core.interactor.firebase.RobotInteractor
+import com.revolution.robotics.core.interactor.firebase.RobotsInteractor
 import com.revolution.robotics.core.utils.FileDownloader
 import com.revolution.robotics.features.build.BuildRobotMvp
 import com.revolution.robotics.features.build.BuildRobotPresenter
@@ -187,6 +191,7 @@ fun createDbModule(context: Context) =
     Kodein.Module("DbModule") {
         bind<RoboticsDatabase>() with s {
             Room.databaseBuilder(context, RoboticsDatabase::class.java, "robotics-database")
+                .addMigrations(Migrations.MIGRATION_20_21)
                 .fallbackToDestructiveMigration()
                 .build()
         }
