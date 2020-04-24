@@ -9,8 +9,8 @@ import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.revolution.robotics.analytics.Reporter
-import com.revolution.robotics.core.cache.RemoteDataCache
 import com.revolution.robotics.core.extensions.hideSystemUI
+import com.revolution.robotics.core.interactor.api.DownloadVersionDataInteractor
 import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.core.utils.dynamicPermissions.DynamicPermissionHandler
 import com.revolution.robotics.features.bluetooth.BluetoothManager
@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity(), KodeinAware, Navigator.NavigationEvent
     private val bluetoothManager: BluetoothManager by instance()
     private val navController: NavController by lazy { findNavController(R.id.nav_host_fragment) }
     private val reporter: Reporter by instance()
-    private val remoteDataCache: RemoteDataCache by instance()
+    private val readVersionDataInteractor: DownloadVersionDataInteractor by instance()
 
     private var windowHideHandler: WindowHideHandler? = null
 
@@ -49,6 +49,14 @@ class MainActivity : AppCompatActivity(), KodeinAware, Navigator.NavigationEvent
         super.onStart()
         errorHandler.registerContext(this)
         bluetoothManager.init(this)
+
+        readVersionDataInteractor.execute (
+            onResponse = { minAppVersion ->
+                if (BuildConfig.VERSION_CODE < minAppVersion) {
+                    ForceUpdateDialog.newInstance().show(supportFragmentManager)
+                }
+            }
+        )
     }
 
     override fun onResume() {

@@ -140,6 +140,7 @@ fun createInteractorModule() =
         bind<DownloadRobotInteractor>() with p { DownloadRobotInteractor(i(), i(), i())}
         bind<DownloadChallengeCategoryInteractor>() with p { DownloadChallengeCategoryInteractor(i(), i())}
         bind<GetCompletedChallengesInteractor>() with p { GetCompletedChallengesInteractor(i()) }
+        bind<DownloadVersionDataInteractor>() with p { DownloadVersionDataInteractor(i(), i()) }
     }
 
 @Suppress("LongMethod")

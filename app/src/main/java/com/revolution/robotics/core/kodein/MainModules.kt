@@ -9,7 +9,6 @@ import com.revolution.robotics.core.api.RoboticsService
 import com.revolution.robotics.core.cache.ImageCache
 import com.revolution.robotics.core.eventBus.dialog.DialogEventBus
 import com.revolution.robotics.core.interactor.api.ImageDownloader
-import com.revolution.robotics.core.interactor.firebase.FirebaseFileDownloader
 import com.revolution.robotics.core.kodein.utils.ApplicationContextProvider
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.core.utils.AppPrefs
@@ -27,6 +26,7 @@ import org.kodein.di.Kodein
 import org.kodein.di.erased.bind
 import org.revolutionrobotics.bluetooth.android.communication.RoboticsDeviceConnector
 import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 
 fun createMainModule() =
@@ -57,7 +57,7 @@ fun createAppModule(context: Context) =
         bind<Reporter>() with s { Reporter(i()) }
         bind<FileManager>() with s { FileManager(context) }
         bind<Retrofit>() with s {
-            val CACHE_SIZE_BYTES: Long = 1024 * 1024 * 2;
+            val CACHE_SIZE_BYTES: Long = 1024 * 1024 * 2
             val builder = OkHttpClient().newBuilder()
             builder.cache(
                 Cache(context.cacheDir, CACHE_SIZE_BYTES)
@@ -67,9 +67,9 @@ fun createAppModule(context: Context) =
             retrofitBuilder
                 .baseUrl(BuildConfig.BASE_URL)
                 .addConverterFactory(ScalarsConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
             retrofitBuilder.build()
-
         }
         bind<ImageCache>() with s { ImageCache(context) }
         bind<ImageDownloader>() with s { ImageDownloader(i(), context) }
