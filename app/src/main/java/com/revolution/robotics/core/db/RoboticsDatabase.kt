@@ -11,8 +11,9 @@ import com.revolution.robotics.core.domain.local.*
         UserController::class,
         UserBackgroundProgramBinding::class,
         UserProgram::class,
-        UserChallengeCategory::class],
-    version = 20,
+        UserChallengeCategory::class,
+        CompletedChallenge::class],
+    version = 21,
     exportSchema = false
 )
 @TypeConverters(Converters::class)
@@ -22,4 +23,5 @@ abstract class RoboticsDatabase : RoomDatabase() {
     abstract fun userBackgroundProgramBindingDao(): UserBackgroundProgramBindingDao
     abstract fun userProgramDao(): UserProgramDao
     abstract fun userChallengeCategoryDao(): UserChallengeCategoryDao
+    abstract fun completedChallengeDao(): CompletedChallengeDao
 }

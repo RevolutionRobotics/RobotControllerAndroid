@@ -58,7 +58,7 @@ class ChallengeDetailFragment :
 
         arguments?.let {
             challengeId = it.challenge.id
-            presenter.setChallenge(it.challenge, it.categoryId)
+            presenter.setChallenge(it.challenge)
             reporter.reportEvent(Reporter.Event.START_NEW_CHALLENGE, Bundle().apply {
                 putString(Reporter.Parameter.ID.parameterName, it.challenge.id)
             })
