@@ -17,8 +17,8 @@ data class CompletedChallenge(
 interface CompletedChallengeDao {
 
     @Query("SELECT * FROM CompletedChallenge")
-    fun getUserChallengeCategories(): List<CompletedChallenge>
+    fun getCompletedChallenges(): List<CompletedChallenge>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun saveUserChallengeCategory(completedChallenge: CompletedChallenge)
+    fun saveCompletedChallenge(completedChallenge: CompletedChallenge)
 }

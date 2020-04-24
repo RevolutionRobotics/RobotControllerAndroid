@@ -2,8 +2,7 @@ package com.revolution.robotics.features.challenges.challengeGroup
 
 import com.revolution.robotics.core.cache.ImageCache
 import com.revolution.robotics.core.domain.remote.ChallengeCategory
-import com.revolution.robotics.core.interactor.GetUserChallengeCategoriesInteractor
-import com.revolution.robotics.core.interactor.api.DownloadChallengeCategoryInteractor
+import com.revolution.robotics.core.interactor.GetCompletedChallengesInteractor
 import com.revolution.robotics.core.interactor.api.DownloadChallengesInteractor
 import com.revolution.robotics.core.interactor.firebase.ChallengeCategoriesInteractor
 import com.revolution.robotics.core.utils.Navigator
@@ -12,7 +11,7 @@ import com.revolution.robotics.features.challenges.challengeGroup.adapter.Challe
 class ChallengeGroupPresenter(
     private val downloadChallengesInteractor: DownloadChallengesInteractor,
     private val challengeCategoriesInteractor: ChallengeCategoriesInteractor,
-    private val userChallengeInteractor: GetUserChallengeCategoriesInteractor,
+    private val completedChallengesInteractor: GetCompletedChallengesInteractor,
     private val imageCache: ImageCache,
     private val navigator: Navigator
 ) :
@@ -39,14 +38,14 @@ class ChallengeGroupPresenter(
     }
 
     private fun populateChallengeGroups(groups: List<ChallengeCategory>) {
-        userChallengeInteractor.execute { userCategories ->
+        completedChallengesInteractor.execute { completedChallenges ->
             model?.items?.value = groups.map { remoteCategory ->
-                ChallengeGroupItem(
+                val progress = remoteCategory.challenges.count { challenge -> completedChallenges.map { it.challengeId }.contains(challenge.id) }
+                    ChallengeGroupItem(
                     iconUrl = remoteCategory.image ?: "",
                     name = remoteCategory.name,
                     downloaded = isDownloaded(remoteCategory),
-                    currentChallenge = userCategories.find { it.challengeCategoryId == remoteCategory.id }?.progress
-                        ?: 0,
+                    currentChallenge = progress,
                     totalChallenge = remoteCategory.challenges.size,
                     challengeCategory = remoteCategory,
                     presenter = this

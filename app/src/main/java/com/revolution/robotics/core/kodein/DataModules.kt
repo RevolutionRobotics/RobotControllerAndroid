@@ -120,7 +120,7 @@ fun createInteractorModule() =
         bind<SaveUserProgramInteractor>() with p { SaveUserProgramInteractor(i(), i(), i(), i()) }
         bind<RemoveUserProgramInteractor>() with p { RemoveUserProgramInteractor(i(), i(), i()) }
         bind<GetUserChallengeCategoriesInteractor>() with p { GetUserChallengeCategoriesInteractor(i()) }
-        bind<SaveUserChallengeCategoryInteractor>() with p { SaveUserChallengeCategoryInteractor(i()) }
+        bind<SaveCompletedChallengeInteractor>() with p { SaveCompletedChallengeInteractor(i()) }
         bind<GetUserProgramsInteractor>() with p { GetUserProgramsInteractor(i()) }
         bind<GetUserProgramsForRobotInteractor>() with p { GetUserProgramsForRobotInteractor(i()) }
         bind<GetControllerTypeInteractor>() with p { GetControllerTypeInteractor(i(), i()) }
@@ -134,11 +134,12 @@ fun createInteractorModule() =
         bind<CreateConfigurationFileInteractor>() with p { CreateConfigurationFileInteractor(i()) }
         bind<AssignProgramToButtonInteractor>() with p { AssignProgramToButtonInteractor(i(), i()) }
         bind<DownloadRobotsInteractor>() with p { DownloadRobotsInteractor(i(), i(), i(), i())}
-        bind<DownloadChallengesInteractor>() with p { DownloadChallengesInteractor(i(), i(), i(), i())}
+        bind<DownloadChallengesInteractor>() with p { DownloadChallengesInteractor(i(), i(), i(), i(), i(), i())}
         bind<FileDownloader>() with p { FileDownloader(i()) }
         bind<DownloadFileInteractorBuilder>() with p { DownloadFileInteractorBuilder(i()) }
         bind<DownloadRobotInteractor>() with p { DownloadRobotInteractor(i(), i(), i())}
         bind<DownloadChallengeCategoryInteractor>() with p { DownloadChallengeCategoryInteractor(i(), i())}
+        bind<GetCompletedChallengesInteractor>() with p { GetCompletedChallengesInteractor(i()) }
     }
 
 @Suppress("LongMethod")
@@ -167,7 +168,7 @@ fun createPresenterModule() =
         bind<SplashMvp.Presenter>() with s { SplashPresenter(i(), i(), i(), i()) }
         bind<ChallengeGroupMvp.Presenter>() with s { ChallengeGroupPresenter(i(), i(), i(), i(), i()) }
         bind<ChallengeListMvp.Presenter>() with s { ChallengeListPresenter(i(), i(), i()) }
-        bind<ChallengeDetailMvp.Presenter>() with s { ChallengeDetailPresenter(i(), i(), i(), i(), i()) }
+        bind<ChallengeDetailMvp.Presenter>() with s { ChallengeDetailPresenter(i(), i(), i(), i()) }
         bind<DirectionSelectorMvp.Presenter>() with s { DirectionSelectorPresenter() }
         bind<DonutSelectorMvp.Presenter>() with s { DonutSelectorPresenter() }
         bind<ColorPickerMvp.Presenter>() with s { ColorPickerPresenter() }
@@ -181,7 +182,7 @@ fun createPresenterModule() =
         bind<SaveProgramMvp.Presenter>() with s { SaveProgramPresenter(i(), i()) }
         bind<CommunityMvp.Presenter>() with s { CommunityPresenter() }
         bind<TestMvp.Presenter>() with s { TestPresenter(i(), i(), i()) }
-        bind<HaveYouBuiltMvp.Presenter>() with s { HaveYouBuiltPresenter(i(), i(), i(), i(), i(), i(), i(), i(), i()) }
+        bind<HaveYouBuiltMvp.Presenter>() with s { HaveYouBuiltPresenter(i(), i(), i(), i(), i(), i(), i(), i()) }
         bind<TestCodeMvp.Presenter>() with s { TestCodePresenter(i(), i(), i()) }
         bind<DownloadRobotMVP.Presenter>() with s { DownloadRobotPresenter(i(), i()) }
         bind<DownloadChallengeMVP.Presenter>() with s { DownloadChallengePresenter(i(), i()) }
@@ -199,6 +200,7 @@ fun createDbModule(context: Context) =
         bind<UserControllerDao>() with p { i<RoboticsDatabase>().userControllerDao() }
         bind<UserBackgroundProgramBindingDao>() with p { i<RoboticsDatabase>().userBackgroundProgramBindingDao() }
         bind<UserProgramDao>() with p { i<RoboticsDatabase>().userProgramDao() }
+        bind<CompletedChallengeDao>() with p { i<RoboticsDatabase>().completedChallengeDao() }
         bind<UserChallengeCategoryDao>() with p { i<RoboticsDatabase>().userChallengeCategoryDao() }
         bind<RemoteDataCache>() with s { RemoteDataCache() }
     }

@@ -6,14 +6,13 @@ import com.revolution.robotics.core.domain.local.UserChallengeCategory
 import com.revolution.robotics.core.domain.local.UserConfiguration
 import com.revolution.robotics.core.domain.local.UserRobot
 import com.revolution.robotics.core.interactor.GetControllerTypeInteractor
-import com.revolution.robotics.core.interactor.SaveUserChallengeCategoryInteractor
+import com.revolution.robotics.core.interactor.SaveCompletedChallengeInteractor
 import com.revolution.robotics.core.interactor.firebase.RobotInteractor
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.core.utils.AppPrefs
 import com.revolution.robotics.core.utils.CreateRobotInstanceHelper
 import com.revolution.robotics.core.utils.Navigator
 import com.revolution.robotics.features.build.BuildRobotFragment
-import com.revolution.robotics.features.controllers.ControllerType
 import com.revolution.robotics.features.myRobots.MyRobotsFragmentDirections
 import com.revolution.robotics.features.shared.ErrorHandler
 import java.util.*
@@ -22,8 +21,7 @@ class HaveYouBuiltPresenter(
     private val navigator: Navigator,
     private val resourceResolver: ResourceResolver,
     private val robotInteractor: RobotInteractor,
-    private val getControllerTypeInteractor: GetControllerTypeInteractor,
-    private val saveUserChallengeCategoryInteractor: SaveUserChallengeCategoryInteractor,
+    private val saveCompletedChallengeInteractor: SaveCompletedChallengeInteractor,
     private val createRobotInstanceHelper: CreateRobotInstanceHelper,
     private val errorHandler: ErrorHandler,
     private val appPrefs: AppPrefs,
@@ -32,7 +30,7 @@ class HaveYouBuiltPresenter(
 
     companion object {
         private const val ROBOT_ID: String = "revvy"
-        private const val CHALLENGE_CATEGORY_ID = "ef504b31-d64f-4bfb-bd4b-5b96a9a0489f"
+        private val CHALLENGE_IDS = listOf("e32cbf06-3343-446b-a17f-af84e160cee5", "ce95005e-16e1-4d7b-ac9c-b24ba9b6625f")
     }
 
     override var view: HaveYouBuiltMvp.View? = null
@@ -93,7 +91,15 @@ class HaveYouBuiltPresenter(
     }
 
     private fun completeOnboardingChallenges() {
-        saveUserChallengeCategoryInteractor.userChallengeCategory = UserChallengeCategory(CHALLENGE_CATEGORY_ID, 2)
-        saveUserChallengeCategoryInteractor.execute()
+        markCompleted(0)
+    }
+
+    private fun markCompleted(challengeIndex: Int) {
+        saveCompletedChallengeInteractor.challengeId = CHALLENGE_IDS[challengeIndex]
+        saveCompletedChallengeInteractor.execute() {
+            if (challengeIndex < CHALLENGE_IDS.size - 1) {
+                markCompleted(challengeIndex + 1)
+            }
+        }
     }
 }

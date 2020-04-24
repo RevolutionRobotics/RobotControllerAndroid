@@ -6,15 +6,14 @@ import com.revolution.robotics.core.domain.local.UserChallengeCategory
 import com.revolution.robotics.core.domain.remote.Challenge
 import com.revolution.robotics.core.domain.remote.ChallengeStep
 import com.revolution.robotics.core.interactor.GetUserChallengeCategoriesInteractor
-import com.revolution.robotics.core.interactor.SaveUserChallengeCategoryInteractor
+import com.revolution.robotics.core.interactor.SaveCompletedChallengeInteractor
 import com.revolution.robotics.core.interactor.firebase.ChallengeCategoriesInteractor
 import com.revolution.robotics.core.kodein.utils.ResourceResolver
 import com.revolution.robotics.features.challenges.challengeDetail.adapter.ChallengePartItemViewModel
 
 class ChallengeDetailPresenter(
-    private val saveUserChallengeCategoryInteractor: SaveUserChallengeCategoryInteractor,
-    private val getCategoriesInteractor: ChallengeCategoriesInteractor,
-    private val getUserChallengeCategoriesInteractor: GetUserChallengeCategoriesInteractor,
+    private val saveCompletedChallengeInteractor: SaveCompletedChallengeInteractor,
+    private val getChallengeCategoriesInteractor: ChallengeCategoriesInteractor,
     private val imageCache: ImageCache,
     private val resourceResolver: ResourceResolver
 ) :
@@ -24,8 +23,7 @@ class ChallengeDetailPresenter(
     override var model: ChallengeDetailViewModel? = null
     override var toolbarViewModel: ChallengeDetailToolbarViewModel? = null
 
-    private var categoryId: String? = null
-    private var challengeId: String? = null
+    private var challenge: Challenge? = null
     private var challengeStep: ChallengeStep? = null
 
     override fun register(view: ChallengeDetailMvp.View, model: ChallengeDetailViewModel?) {
@@ -33,9 +31,8 @@ class ChallengeDetailPresenter(
         model?.presenter = this
     }
 
-    override fun setChallenge(challenge: Challenge, categoryId: String?) {
-        this.categoryId = categoryId
-        this.challengeId = challenge.id
+    override fun setChallenge(challenge: Challenge) {
+        this.challenge = challenge
         view?.initSlider(challenge.steps, this)
         setChallengeStep(challenge.steps[0])
     }
@@ -96,35 +93,20 @@ class ChallengeDetailPresenter(
     }
 
     override fun onChallengeFinished() {
-        getCurrentProgress(categoryId)
-    }
-
-    private fun saveProgress(currentProgress: Int) {
-        getCategoriesInteractor.execute { categories ->
-            categories.find { it.id == categoryId }?.let { category ->
-                category.challenges.sortedBy { it.order }
-                    .indexOfFirst { it.id == challengeId }.let { index ->
-                        if (index + 1 > currentProgress) {
-                            saveProgress(categoryId, index + 1)
-                        }
-                        view?.showChallengeFinishedDialog(
-                            category.challenges.sortedBy { it.order }.getOrNull(index + 1)
-                        )
-                    }
+        saveProgress()
+        getChallengeCategoriesInteractor.execute { categories ->
+            val category = categories.find { it.challenges.map { challenge -> challenge.id }.contains(challenge?.id) }
+            challenge?.order?.let { order ->
+                val nextChallenge = category?.challenges?.find { it.order == order + 1 }
+                view?.showChallengeFinishedDialog(nextChallenge)
             }
         }
     }
 
-    private fun getCurrentProgress(categoryId: String?) {
-        getUserChallengeCategoriesInteractor.execute { categories ->
-            saveProgress(categories.firstOrNull { it.challengeCategoryId == categoryId }?.progress ?: 0)
-        }
-    }
-
-    private fun saveProgress(categoryId: String?, progress: Int) {
-        categoryId?.let {
-            saveUserChallengeCategoryInteractor.userChallengeCategory = UserChallengeCategory(categoryId, progress)
-            saveUserChallengeCategoryInteractor.execute()
+    private fun saveProgress() {
+        challenge?.id?.let {
+            saveCompletedChallengeInteractor.challengeId = it
+            saveCompletedChallengeInteractor.execute()
         }
     }
 }

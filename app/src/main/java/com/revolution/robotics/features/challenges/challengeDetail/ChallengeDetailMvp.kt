@@ -15,7 +15,7 @@ interface ChallengeDetailMvp : Mvp {
     interface Presenter : Mvp.Presenter<View, ChallengeDetailViewModel> {
         var toolbarViewModel: ChallengeDetailToolbarViewModel?
 
-        fun setChallenge(challenge: Challenge, categoryId: String?)
+        fun setChallenge(challenge: Challenge)
         fun onButtonClicked()
     }
 }
