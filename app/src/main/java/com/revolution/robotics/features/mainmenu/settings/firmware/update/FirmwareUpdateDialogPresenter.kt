@@ -148,6 +148,17 @@ class FirmwareUpdateDialogPresenter(
         }
     }
 
+    override fun changeRobotName(name: String) {
+        bluetoothManager.getDeviceInfoService().setSystemId(name,
+            onCompleted = {
+                infoViewModel?.robotName?.value = it;
+                view?.activateInfoFace(null)
+            },
+            onError = {
+                view?.showRenameError()
+            })
+    }
+
     @Suppress("UnusedPrivateMember")
     private fun readError(throwable: Throwable) {
         if (!isUpdateFlowStarted) {

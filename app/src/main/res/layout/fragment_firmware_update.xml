@@ -80,7 +80,7 @@
                 android:gravity="center_horizontal"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                android:text="@string/firmware_check_for_updates"/>
+                android:text="@string/firmware_manage"/>
 
 
         <androidx.constraintlayout.widget.ConstraintLayout

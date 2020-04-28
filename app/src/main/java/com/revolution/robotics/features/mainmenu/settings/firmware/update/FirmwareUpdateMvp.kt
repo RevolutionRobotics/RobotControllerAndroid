@@ -7,12 +7,14 @@ import com.revolution.robotics.views.dialogs.DialogButton
 interface FirmwareUpdateMvp : Mvp {
 
     interface View : Mvp.View {
-        fun activateInfoFace(button: DialogButton)
+        fun activateInfoFace(button: DialogButton?)
         fun setInfoViewModel(viewModel: FirmwareUpdateInfoViewModel)
         fun activateLoadingFace()
         fun activateSuccessFace()
         fun activateErrorFace()
         fun activateConfirmationFace()
+        fun activateRenameBrainFace()
+        fun showRenameError()
         fun closeDialog()
     }
 
@@ -20,6 +22,7 @@ interface FirmwareUpdateMvp : Mvp {
         fun onCheckForUpdatesClicked()
         fun retryFirmwareUpdate()
         fun stopFirmwareUpdate()
+        fun changeRobotName(name: String)
         fun onCloseClicked()
     }
 }
