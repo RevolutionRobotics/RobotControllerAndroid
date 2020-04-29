@@ -16,6 +16,9 @@ class FirmwareUpdatePresenter(
     override fun register(view: FirmwareMvp.View, model: FirmwareUpdateViewModel?) {
         super.register(view, model)
         bluetoothManager.registerListener(this)
+        if (!bluetoothManager.isConnected) {
+            bluetoothManager.startConnectionFlow()
+        }
     }
 
     override fun unregister(view: FirmwareMvp.View?) {

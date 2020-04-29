@@ -292,6 +292,9 @@
 
     <!-- Firmware update -->
     <string name="firmware_new_connection_button">connect to new brain</string>
+    <string name="firmware_manage">Manage</string>
+    <string name="firmware_change_robot_name_label">Enter new robot name:</string>
+    <string name="firmware_change_robot_name_failed">Failed to rename robot</string>
     <string name="firmware_check_for_updates">Check for updates</string>
     <string name="firmware_screen_title">Firmware update</string>
     <string name="firmware_loading">Loading…</string>

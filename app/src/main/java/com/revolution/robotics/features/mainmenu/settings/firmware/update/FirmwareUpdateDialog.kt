@@ -3,6 +3,8 @@ package com.revolution.robotics.features.mainmenu.settings.firmware.update
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
+import android.widget.Toast
+import com.revolution.robotics.R
 import com.revolution.robotics.views.dialogs.DialogButton
 import com.revolution.robotics.views.dialogs.DialogFace
 import com.revolution.robotics.views.dialogs.RoboticsDialog
@@ -17,7 +19,8 @@ class FirmwareUpdateDialog : RoboticsDialog(), FirmwareUpdateMvp.View {
             FirmwareUpdateLoadingDialogFace(this),
             FirmwareUpdateSuccessDialogFace(this),
             FirmwareUpdateFailedDialogFace(this),
-            FirmwareUpdateConfirmationDialogFace(this)
+            FirmwareUpdateConfirmationDialogFace(this),
+            ChangeRobotBrainNameFace(this)
         )
     override val dialogButtons: List<DialogButton> = listOf()
 
@@ -36,10 +39,11 @@ class FirmwareUpdateDialog : RoboticsDialog(), FirmwareUpdateMvp.View {
         super.onDestroyView()
     }
 
-    override fun activateInfoFace(button: DialogButton) {
-        (dialogFaces[0] as FirmwareUpdateInfoFace).apply {
-            dialogFaceButtons.clear()
-            dialogFaceButtons.add(button)
+    override fun activateInfoFace(button: DialogButton?) {
+        if (button != null) {
+            (dialogFaces[0] as FirmwareUpdateInfoFace).apply {
+                dialogFaceButtons[0] = button
+            }
         }
         activateFace(dialogFaces.first { it is FirmwareUpdateInfoFace })
     }
@@ -53,13 +57,22 @@ class FirmwareUpdateDialog : RoboticsDialog(), FirmwareUpdateMvp.View {
         activateFace(dialogFaces.first { it is FirmwareUpdateConfirmationDialogFace })
     }
 
+    override fun activateRenameBrainFace() {
+        activateFace(dialogFaces.first { it is ChangeRobotBrainNameFace })
+    }
+
+    override fun showRenameError() {
+        Toast.makeText(context, R.string.firmware_change_robot_name_failed, Toast.LENGTH_SHORT).show()
+    }
+
     fun stopFrameworkUpdate() {
         presenter.stopFirmwareUpdate()
         dismissAllowingStateLoss()
     }
 
     override fun setInfoViewModel(viewModel: FirmwareUpdateInfoViewModel) {
-        (dialogFaces[0] as FirmwareUpdateInfoFace).setViewModel(viewModel)
+        (dialogFaces.first { it is FirmwareUpdateInfoFace } as FirmwareUpdateInfoFace).setViewModel(viewModel)
+        (dialogFaces.first { it is ChangeRobotBrainNameFace } as ChangeRobotBrainNameFace).setViewModel(viewModel)
     }
 
     override fun activateLoadingFace() {
