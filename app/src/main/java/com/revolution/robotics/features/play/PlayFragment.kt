@@ -20,6 +20,7 @@ import com.revolution.robotics.databinding.FragmentPlayMultitaskerBinding
 import com.revolution.robotics.features.bluetooth.BluetoothConnectionListener
 import com.revolution.robotics.features.bluetooth.BluetoothManager
 import com.revolution.robotics.features.controllers.ControllerType
+import com.revolution.robotics.features.play.confirmexit.ConformExitControllerDialog
 import org.kodein.di.erased.instance
 
 
@@ -157,22 +158,27 @@ class PlayFragment :
     }
 
     override fun onBackPressed(): Boolean {
-        return if (appPrefs.finishedOnboarding) {
-            super.onBackPressed()
+        ConformExitControllerDialog().show(fragmentManager)
+        return true
+    }
+
+    override fun onDialogEvent(event: DialogEvent) {
+        when (event) {
+            DialogEvent.FIRMWARE_INCOMPATIBLE_UPDATE_LATER -> uploadConfiguration()
+            DialogEvent.EXIT_CONTROLLER -> exit()
+            else -> Unit
+        }
+    }
+
+    private fun exit() {
+        if (appPrefs.finishedOnboarding) {
+            navigator.back()
         } else {
             val duration: Int = ((System.currentTimeMillis() - startTime) / 1000).toInt()
             reporter.reportEvent(Reporter.Event.DRIVE_BASIC_ROBOT, Bundle().apply {
                 putInt(Reporter.Parameter.DURATION.parameterName, duration)
             })
             navigator.popUntil(R.id.mainMenuFragment)
-            true
-        }
-    }
-
-    override fun onDialogEvent(event: DialogEvent) {
-        when (event) {
-            DialogEvent.FIRMWARE_INCOMPATIBLE_UPDATE_LATER -> uploadConfiguration()
-            else -> Unit
         }
     }
 }
