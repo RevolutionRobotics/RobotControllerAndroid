@@ -232,6 +232,8 @@
 
     <!-- Play -->
     <string name="play_screen_title">Play!</string>
+    <string name="play_screen_exit_confirmation">Would you like to leave the controller?</string>
+    <string name="play_screen_exit_button">Leave</string>
 
     <!-- Challenges -->
     <string name="challenges_screen_title">Challenges</string>
