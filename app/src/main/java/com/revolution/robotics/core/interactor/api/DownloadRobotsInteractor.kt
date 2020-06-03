@@ -29,12 +29,10 @@ class DownloadRobotsInteractor(
             val response = roboticsService.getRobots().execute()
             val changed = response.raw().networkResponse() != null
                     && response.raw().networkResponse()?.code() != HttpURLConnection.HTTP_NOT_MODIFIED
-            if (changed) {
-                val robotsString = response.body()
-                if (robotsString != null) {
-                    remoteDataCache.robots = Gson().fromJson(robotsString, robotListType)
-                    fileManager.write(robotsJsonFileName, robotsString)
-                }
+            val robotsString = response.body()
+            if (robotsString != null) {
+                remoteDataCache.robots = Gson().fromJson(robotsString, robotListType)
+                fileManager.write(robotsJsonFileName, robotsString)
             } else {
                 remoteDataCache.robots =
                     Gson().fromJson(fileManager.read(robotsJsonFileName), robotListType)

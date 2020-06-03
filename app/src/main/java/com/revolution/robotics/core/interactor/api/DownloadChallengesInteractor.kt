@@ -40,13 +40,11 @@ class DownloadChallengesInteractor(
             val response = roboticsService.getChallenges().execute()
             val changed = response.raw().networkResponse() != null
                     && response.raw().networkResponse()?.code() != HttpURLConnection.HTTP_NOT_MODIFIED
-            if (changed) {
-                val challengesString = response.body()
-                if (challengesString != null) {
-                    remoteDataCache.challenges =
-                        Gson().fromJson(challengesString, challengeCategoryListType)
-                    fileManager.write(challengesJsonFileName, challengesString)
-                }
+            val challengesString = response.body()
+            if (challengesString != null) {
+                remoteDataCache.challenges =
+                    Gson().fromJson(challengesString, challengeCategoryListType)
+                fileManager.write(challengesJsonFileName, challengesString)
             } else {
                 remoteDataCache.challenges =
                     Gson().fromJson(

@@ -19,6 +19,7 @@ open class AppPrefs constructor(context: Context) {
     open var finishedOnboarding by PreferenceFieldDelegate.Boolean(preferences, "finished_onboarding", false)
     open var lastOpenedProgramName by PreferenceFieldDelegate.String(preferences, "last_opened_program_name")
     open var lastOpenedProgramRobotId by PreferenceFieldDelegate.Integer(preferences, "last_opened_program_robot_id")
+    open var useAsiaApi by PreferenceFieldDelegate.Boolean(preferences, "use_asia_api", false)
 }
 
 sealed class PreferenceFieldDelegate<T>(

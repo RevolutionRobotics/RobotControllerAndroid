@@ -57,6 +57,11 @@ fun createAppModule(context: Context) =
         bind<Reporter>() with s { Reporter(i()) }
         bind<FileManager>() with s { FileManager(context) }
         bind<Retrofit>() with s {
+            var baseUrl = BuildConfig.BASE_URL;
+            val appPrefs: AppPrefs = i()
+            if (appPrefs.useAsiaApi) {
+                baseUrl = "https://api-asia.revolutionrobotics.org:5000/api/"
+            }
             val CACHE_SIZE_BYTES: Long = 1024 * 1024 * 2
             val builder = OkHttpClient().newBuilder()
             builder.cache(
@@ -65,7 +70,7 @@ fun createAppModule(context: Context) =
             val client = builder.build()
             val retrofitBuilder = Retrofit.Builder()
             retrofitBuilder
-                .baseUrl(BuildConfig.BASE_URL)
+                .baseUrl(baseUrl)
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
