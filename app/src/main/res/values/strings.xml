@@ -280,7 +280,15 @@
     <string name="settings_screen_title">Settings</string>
     <string name="settings_reset_tutorial">Reset onboarding</string>
     <string name="settings_firmware_update">Firmware update</string>
+    <string name="settings_change_server_location">Server location: %1$s</string>
     <string name="settings_about_applications">About application</string>
+
+    <!-- Change server -->
+    <string name="change_server_dialog_title">Select server location</string>
+    <string name="change_server_global">Global</string>
+    <string name="change_server_mainland_china">Mainland China</string>
+    <string name="change_server_restart_description">Please restart the app for the changes to take effect</string>
+    <string name="change_server_restart_btn">Quit</string>
 
     <!-- About -->
     <string name="about_screen_title">About application</string>

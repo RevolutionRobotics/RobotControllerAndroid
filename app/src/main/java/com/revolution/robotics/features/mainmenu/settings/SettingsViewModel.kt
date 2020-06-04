@@ -1,5 +1,6 @@
 package com.revolution.robotics.features.mainmenu.settings
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.revolution.robotics.R
 import com.revolution.robotics.views.chippedBox.ChippedBoxConfig
@@ -18,8 +19,10 @@ class SettingsViewModel(private val presenter: SettingsMvp.Presenter) : ViewMode
     }
 
     val buttonBackground = backgroundBuilder.create()
+    var changeServerLocationButtonText: MutableLiveData<String> = MutableLiveData()
 
     fun onResetTutorialClick() = presenter.navigateToResetTutorial()
     fun onFirmwareUpdateClick() = presenter.navigateToFirmwareUpdate()
+    fun onSelectServerClicked() = presenter.showServerSelectionPopup()
     fun onAboutApplicationClick() = presenter.navigateToAboutApplication()
 }

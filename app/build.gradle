@@ -53,11 +53,11 @@ android {
             applicationIdSuffix ".dev"
         }
         staging {
-        buildConfigField "String", "BASE_URL",  '"https://api-test.revolutionrobotics.org/api/"'
+            buildConfigField "String", "BASE_URL",  '"https://api-test.revolutionrobotics.org/api/"'
             applicationIdSuffix ".test"
         }
         prod {
-            buildConfigField "String", "BASE_URL",  '"https://api-test.revolutionrobotics.org/api/"'
+            buildConfigField "String", "BASE_URL",  '"https://api-global.revolutionrobotics.org/api/"'
         }
     }
 

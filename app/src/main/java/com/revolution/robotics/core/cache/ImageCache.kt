@@ -52,17 +52,19 @@ class ImageCache(
         return if (imageFile.exists()) {
             imageFile.absolutePath
         } else {
-            File(imageFolder, urlToFileName(userRobot.coverImage)).absolutePath
+            urlToFileName(userRobot.coverImage)?.let {
+                File(imageFolder, it).absolutePath
+            }
         }
     }
 
     fun getAllImages() :List<String> {
-        return imageFolder.listFiles().map { it -> fileNameToUrl(it.name) }
+        return imageFolder.listFiles().mapNotNull { it -> fileNameToUrl(it.name) }
     }
 
-    fun urlToFileName(url: String?) = Base64.encodeToString(url?.toByteArray(charset("UTF-8")), Base64.NO_WRAP).trim() + EXTENTION_SUFFIX
+    fun urlToFileName(url: String?) = if (url != null )Base64.encodeToString(url.toByteArray(charset("UTF-8")), Base64.NO_WRAP).trim() + EXTENTION_SUFFIX else null
 
-    fun fileNameToUrl(fileName: String?) = Base64.decode(fileName?.removeSuffix(EXTENTION_SUFFIX), Base64.NO_WRAP).toString(charset("UTF-8"))
+    fun fileNameToUrl(fileName: String?) = if (fileName != null) Base64.decode(fileName.removeSuffix(EXTENTION_SUFFIX), Base64.NO_WRAP).toString(charset("UTF-8")) else null
 
     fun isSaved(url: String) = File(imageFolder, urlToFileName(url)).exists()
 }

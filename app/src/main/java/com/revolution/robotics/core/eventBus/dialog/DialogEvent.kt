@@ -41,7 +41,9 @@ enum class DialogEvent {
     DEFAULT_CONTROLLER_CHANGED,
     ROBOT_DOWNLOADED,
     CHALLENGE_DOWNLOADED,
-    EXIT_CONTROLLER;
+    EXIT_CONTROLLER,
+    SERVER_LOCATION_CHANGED,
+    QUIT_APP;
 
     val extras = Bundle()
 }

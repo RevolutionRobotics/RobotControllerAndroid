@@ -24,5 +24,9 @@ class SettingsPresenter(
 
     override fun navigateToFirmwareUpdate() = navigator.navigate(SettingsFragmentDirections.toFirmware())
 
+    override fun showServerSelectionPopup() {
+        view?.showServerSelectionPopup()
+    }
+
     override fun navigateToAboutApplication() = navigator.navigate(SettingsFragmentDirections.toAbout())
 }
