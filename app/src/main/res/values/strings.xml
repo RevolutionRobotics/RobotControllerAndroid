@@ -321,7 +321,8 @@
     <string name="firmware_update_download">Download and update</string>
     <string name="firmware_download_info">Downloading &amp; updating</string>
     <string name="firmware_please_wait">This may take several minutes</string>
-    <string name="firmware_successful_update">Successful update</string>
+    <string name="firmware_successful_update_title">Update is in progress</string>
+    <string name="firmware_successful_update_description">Hang tight, we are updating your robot’s software. The robot will disconnect from the app during the update process, and it will automatically reconnect when the update is done. You can close this message.</string>
     <string name="firmware_done_button">Done</string>
     <string name="firmware_update_failed_title">Update failed</string>
     <string name="firmware_update_failed_tips_title">Try to…</string>
