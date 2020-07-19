@@ -320,7 +320,7 @@
     <string name="firmware_update_latest_used">You have the latest framework version</string>
     <string name="firmware_update_download">Download and update</string>
     <string name="firmware_download_info">Downloading &amp; updating</string>
-    <string name="firmware_please_wait">Please wait</string>
+    <string name="firmware_please_wait">This may take several minutes</string>
     <string name="firmware_successful_update">Successful update</string>
     <string name="firmware_done_button">Done</string>
     <string name="firmware_update_failed_title">Update failed</string>
